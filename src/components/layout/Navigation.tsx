@@ -7,8 +7,7 @@ import {
   Info,
   Menu,
   X,
-  Sparkles,
-  Stethoscope, // أضفنا أيقونة طبية بديلة
+  Stethoscope,
 } from 'lucide-react';
 import {Link} from 'react-router-dom';
 import type {Language} from '../../services/translations';
@@ -42,13 +41,17 @@ const Navigation = memo(
     setIsSidebarOpen: (open: boolean) => void;
   }) => {
     
-    // مكون اللوجو الجديد عشان نكرره في المكانين بسهولة وبشكل شيك
+    // اللوجو دلوقت بقى جواه اللينك بتاعه عشان يشتغل في أي مكان
     const BrandLogo = () => (
-      <div className="flex items-center gap-2 group">
+      <Link 
+        to="/" 
+        onClick={() => setIsSidebarOpen(false)} 
+        className="flex items-center gap-2 group cursor-pointer"
+      >
         <div className="bg-health-green p-1.5 rounded-xl group-hover:rotate-12 transition-transform duration-300 shadow-sm">
           <HeartPulse className="w-5 h-5 text-white" />
         </div>
-        <div className="flex flex-col justify-center">
+        <div className="flex flex-col justify-center text-left">
           <span className="text-lg font-black leading-[0.8] tracking-tight text-slate-900 italic">
             PHYSIO
           </span>
@@ -59,7 +62,7 @@ const Navigation = memo(
             <div className="h-[1px] w-3 bg-health-green/30" />
           </div>
         </div>
-      </div>
+      </Link>
     );
 
     return (
@@ -85,9 +88,8 @@ const Navigation = memo(
                 } bottom-0 w-80 bg-white z-[70] shadow-2xl flex flex-col`}
               >
                 <div className="p-6 border-b border-slate-100 flex items-center justify-between">
-                  <Link to="/" onClick={() => setIsSidebarOpen(false)}>
-                    <BrandLogo />
-                  </Link>
+                  {/* استدعاء اللوجو باللينك بتاعه */}
+                  <BrandLogo />
                   <button
                     onClick={() => setIsSidebarOpen(false)}
                     className="p-2 hover:bg-slate-100 rounded-full transition-colors"
@@ -97,7 +99,6 @@ const Navigation = memo(
                 </div>
 
                 <div className="flex-1 overflow-y-auto p-6 space-y-8">
-                  {/* قسم المساعد - تم تقليل الوهج ليكون طبياً أكثر */}
                   <div>
                     <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 px-2">
                       {lang === 'en' ? 'Clinical Support' : 'الدعم السريري'}
@@ -113,7 +114,7 @@ const Navigation = memo(
                         </div>
                         <div className="flex flex-col">
                           <span className="font-bold text-sm">{lang === 'en' ? 'Clinical Assistant' : 'المساعد السريري'}</span>
-                          <span className="text-[10px] text-slate-400 font-medium">Evidence-based AI</span>
+                          <span className="text-[10px] text-slate-400 font-medium italic">Evidence-based AI</span>
                         </div>
                       </div>
                       <span className="px-1.5 py-0.5 rounded-full text-[8px] font-black bg-slate-200 text-slate-600 uppercase">
@@ -122,7 +123,6 @@ const Navigation = memo(
                     </Link>
                   </div>
 
-                  {/* بقية الأقسام كما هي... */}
                   <div>
                     <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 px-2">
                       {t.nav.calculators}
@@ -188,7 +188,7 @@ const Navigation = memo(
                       <button onClick={() => setLang('ar')} className={`px-3 py-1 rounded-full text-[10px] font-black ${lang === 'ar' ? 'bg-health-green text-white shadow-md' : 'text-slate-400'}`}>AR</button>
                     </div>
                   </div>
-                  <button className="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-sm hover:bg-slate-800 transition-all shadow-lg">
+                  <button className="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-sm hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/10">
                     {t.nav.getStarted}
                   </button>
                 </div>
@@ -206,9 +206,9 @@ const Navigation = memo(
             >
               <Menu className="w-6 h-6" />
             </button>
-            <Link to="/">
-              <BrandLogo />
-            </Link>
+            
+            {/* اللوجو هنا بيشتغل فوراً كـ Link */}
+            <BrandLogo />
           </div>
 
           <div className="flex items-center gap-3 lg:gap-8">
@@ -220,9 +220,9 @@ const Navigation = memo(
 
             <Link 
               to="/assistant" 
-              className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 text-slate-700 rounded-xl border border-slate-200 hover:border-health-green/30 hover:bg-white transition-all shadow-sm"
+              className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 text-slate-700 rounded-xl border border-slate-200 hover:border-health-green/30 hover:bg-white transition-all shadow-sm group"
             >
-              <Stethoscope className="w-4 h-4 text-health-green" />
+              <Stethoscope className="w-4 h-4 text-health-green group-hover:scale-110 transition-transform" />
               <span className="text-xs font-bold hidden sm:inline">
                 {lang === 'en' ? 'Clinical Assistant' : 'المساعد السريري'}
               </span>
@@ -235,7 +235,7 @@ const Navigation = memo(
               <button onClick={() => setLang('ar')} className={`px-3 py-1 rounded-full text-xs font-bold ${lang === 'ar' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'}`}>AR</button>
             </div>
 
-            <button className="hidden md:block bg-health-green text-white px-5 py-2 rounded-full font-semibold hover:bg-health-green-dark transition-all">
+            <button className="hidden md:block bg-health-green text-white px-5 py-2 rounded-full font-semibold hover:bg-health-green-dark transition-all shadow-md shadow-health-green/10">
               {t.nav.getStarted}
             </button>
           </div>
