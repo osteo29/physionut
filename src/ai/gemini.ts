@@ -8,7 +8,7 @@ export type GeminiAskParams = {
 
 function getApiKey(): string | null {
   // Vite client-side env vars must be prefixed with VITE_
-  const viteKey = (import.meta as any)?.env?.VITE_GEMINI_API_KEY;
+  const viteKey = import.meta.env.VITE_GEMINI_API_KEY;
   if (typeof viteKey === 'string' && viteKey.trim().length > 0) return viteKey.trim();
 
   // Fallbacks for environments that inject process.env at runtime
@@ -23,6 +23,17 @@ function getApiKey(): string | null {
 export async function askGeminiText(params: GeminiAskParams): Promise<string> {
   const apiKey = getApiKey();
   if (!apiKey) {
+    // Debug (safe): do NOT print the key, only presence.
+    try {
+      console.log('[Gemini] Missing key debug', {
+        hasViteKey: Boolean(import.meta.env.VITE_GEMINI_API_KEY),
+        mode: import.meta.env.MODE,
+        baseUrl: import.meta.env.BASE_URL,
+        isLocalhost: typeof location !== 'undefined' ? location.hostname : undefined,
+      });
+    } catch {
+      // ignore
+    }
     throw new Error('Missing GEMINI API key (set VITE_GEMINI_API_KEY)');
   }
 
