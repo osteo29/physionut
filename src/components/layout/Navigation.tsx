@@ -222,6 +222,12 @@ const Navigation = memo(
                 <a href="#about" className="nav-link">
                   {t.nav.about}
                 </a>
+                <Link to="/assistant" className="nav-link flex items-center gap-2">
+                  <span>{lang === 'en' ? 'AI Assistant' : 'المساعد الذكي'}</span>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-amber-100 text-amber-800 border border-amber-200">
+                    {lang === 'en' ? 'Beta' : 'تجريبي'}
+                  </span>
+                </Link>
 
                 <div className="h-6 w-px bg-slate-200" />
 

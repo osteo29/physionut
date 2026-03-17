@@ -22,6 +22,8 @@ import Navigation from './components/layout/Navigation';
 import AboutSection from './components/home/AboutSection';
 import NewsletterSection from './components/home/NewsletterSection';
 import BlogSection from './components/home/BlogSection';
+import AskAboutResultChat from './components/ai/AskAboutResultChat';
+import DrugNutrientChecker from './components/ai/DrugNutrientChecker';
 import {
   Chart as ChartJS,
   ArcElement,
@@ -199,6 +201,7 @@ export default function App() {
   const [result, setResult] = useState<any>(null);
   const [healthInterpretation, setHealthInterpretation] = useState<HealthInterpretation | null>(null);
   const [error, setError] = useState<string>('');
+  const [justCalculated, setJustCalculated] = useState(false);
 
   useEffect(() => {
     checkEnvironment();
@@ -213,6 +216,39 @@ export default function App() {
     document.documentElement.lang = lang;
     localStorage.setItem('physiohub_lang', lang);
   }, [lang]);
+
+  useEffect(() => {
+    if (!justCalculated) return;
+
+    // Gentle “success” feedback: small haptic + subtle beep (best effort)
+    try {
+      if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+        (navigator as any).vibrate?.(15);
+      }
+
+      const AudioCtx = (window as any).AudioContext || (window as any).webkitAudioContext;
+      if (AudioCtx) {
+        const ctx = new AudioCtx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = 880;
+        gain.gain.value = 0.0001;
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        gain.gain.exponentialRampToValueAtTime(0.06, ctx.currentTime + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.12);
+        osc.stop(ctx.currentTime + 0.13);
+        setTimeout(() => ctx.close(), 250);
+      }
+    } catch {
+      // ignore
+    }
+
+    const t = setTimeout(() => setJustCalculated(false), 0);
+    return () => clearTimeout(t);
+  }, [justCalculated]);
 
   const resetForm = () => {
     setWeight('');
@@ -409,6 +445,7 @@ export default function App() {
         }
         break;
     }
+    setJustCalculated(true);
   };
 
   const showTooltip = (title: string, text: string) => {
@@ -1385,8 +1422,9 @@ export default function App() {
 
                   {result !== null && (
                     <motion.div 
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
+                      initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      transition={{ type: 'spring', stiffness: 220, damping: 22 }}
                       className="mt-10 p-8 bg-white/40 backdrop-blur-xl rounded-3xl border border-white/20 shadow-2xl relative overflow-hidden"
                     >
                       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-health-green to-medical-blue" />
@@ -1544,6 +1582,35 @@ export default function App() {
                       </div>
                     </motion.div>
                   )}
+
+                  {result !== null && activeCalculator && (
+                    <div className="mt-8">
+                      <AskAboutResultChat
+                        calculatorName={activeCalculator}
+                        lang={lang}
+                        hiddenContext={JSON.stringify(
+                          {
+                            calculator: activeCalculator,
+                            result,
+                            interpretation: healthInterpretation,
+                            inputs: {
+                              weight,
+                              height,
+                              age,
+                              gender,
+                              activity,
+                              goal,
+                              bodyType,
+                              unitSystem,
+                            },
+                            language: lang,
+                          },
+                          null,
+                          2,
+                        )}
+                      />
+                    </div>
+                  )}
                 </div>
               </motion.div>
             )}
@@ -1670,6 +1737,8 @@ export default function App() {
         setSelectedArticle={setSelectedArticle}
         IconComponent={IconComponent}
       />
+
+      <DrugNutrientChecker lang={lang} />
 
       {/* Custom Food Modal */}
       <AnimatePresence>
