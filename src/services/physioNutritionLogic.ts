@@ -38,21 +38,15 @@ export interface HealthMetrics {
 }
 
 import { getInjuryById } from './injuryDatabase';
+import {ClinicalCalculators} from '../logic/physioNutritionLogic';
 
 export const PhysioNutritionLogic = {
   calculateAllMetrics: (profile: HealthProfile): HealthMetrics => {
     const { age, weight, height, gender, activityLevel, goal, sleepHours, waterIntake, proteinCompliance, injuryType, recoveryWeek } = profile;
 
     // 1. BMI
-    const heightInMeters = height / 100;
-    const bmi = weight / (heightInMeters * heightInMeters);
-    let bmiCategory = '';
-    if (bmi < 18.5) bmiCategory = 'Underweight';
-    else if (bmi < 25) bmiCategory = 'Normal';
-    else if (bmi < 30) bmiCategory = 'Overweight';
-    else if (bmi < 35) bmiCategory = 'Obese Class I';
-    else if (bmi < 40) bmiCategory = 'Obese Class II';
-    else bmiCategory = 'Obese Class III';
+    const bmi = ClinicalCalculators.bmi(weight, height);
+    const bmiCategory = ClinicalCalculators.interpretBMI(bmi, 'en').category;
 
     // 1b. WHtR (Waist to Height Ratio)
     let whtr = 0;
@@ -66,35 +60,34 @@ export const PhysioNutritionLogic = {
     }
 
     // 2. BMR (Mifflin-St Jeor Equation)
-    let bmr = 10 * weight + 6.25 * height - 5 * age;
-    if (gender === 'male') bmr += 5;
-    else bmr -= 161;
+    const bmr = ClinicalCalculators.bmrMifflinStJeor({
+      weightKg: weight,
+      heightCm: height,
+      ageYears: age,
+      gender,
+    });
 
     // 3. TDEE
-    const tdee = bmr * activityLevel;
+    const tdee = ClinicalCalculators.tdee(bmr, activityLevel);
 
     // 4. Macros based on Goal
-    let targetCalories = tdee;
     const normalizedGoal = goal === 'weight_loss' || goal === 'lose' ? 'lose' : 
                           goal === 'muscle_gain' || goal === 'gain' ? 'gain' : 
                           goal === 'recovery' ? 'recovery' : 'maintain';
 
-    if (normalizedGoal === 'lose') targetCalories -= 500;
-    if (normalizedGoal === 'gain') targetCalories += 300;
-    if (normalizedGoal === 'recovery') targetCalories += 100;
+    const macros = ClinicalCalculators.macrosFromGoal(
+      tdee,
+      normalizedGoal === 'recovery' ? 'maintain' : (normalizedGoal as any),
+    );
 
-    // Protein requirement
-    let proteinPerKg = 1.6;
-    if (normalizedGoal === 'gain') proteinPerKg = 2.0;
-    if (normalizedGoal === 'lose') proteinPerKg = 1.8;
-    if (injuryType && injuryType !== 'none') proteinPerKg = Math.max(proteinPerKg, 2.0);
-
-    const protein = weight * proteinPerKg;
-    const fats = (targetCalories * 0.25) / 9;
-    const carbs = (targetCalories - (protein * 4 + fats * 9)) / 4;
+    // Injury/recovery protein emphasis (keep calories from macro calc, adjust protein as a minimum floor)
+    const proteinFloorPerKg =
+      normalizedGoal === 'gain' ? 2.0 : normalizedGoal === 'lose' ? 1.8 : 1.6;
+    const injuryFloor = injuryType && injuryType !== 'none' ? 2.0 : proteinFloorPerKg;
+    const proteinFloor = Math.round(weight * injuryFloor);
 
     // 5. Hydration Target (ml)
-    const hydrationTarget = (weight * 33) + (activityLevel > 1.5 ? 500 : 0);
+    const hydrationTarget = ClinicalCalculators.waterIntakeMl(weight, activityLevel);
 
     // 6. Injury Specifics
     let recoveryStage = 'General Health';
@@ -142,17 +135,17 @@ export const PhysioNutritionLogic = {
     const healthScore = Math.round(bmiScore + activityScore + proteinScore + waterScore + sleepScore);
 
     return {
-      bmi: parseFloat(bmi.toFixed(1)),
+      bmi,
       bmiCategory,
       whtr: parseFloat(whtr.toFixed(2)),
       whtrCategory,
-      bmr: Math.round(bmr),
-      tdee: Math.round(targetCalories),
+      bmr,
+      tdee: macros.totalCalories,
       macros: {
-        protein: Math.round(protein),
-        fats: Math.round(fats),
-        carbs: Math.round(carbs),
-        totalCalories: Math.round(targetCalories)
+        protein: Math.max(macros.protein, proteinFloor),
+        fats: macros.fats,
+        carbs: macros.carbs,
+        totalCalories: macros.totalCalories
       },
       healthScore,
       hydrationTarget: Math.round(hydrationTarget),

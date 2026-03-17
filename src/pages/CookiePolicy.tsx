@@ -1,10 +1,21 @@
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
+import Seo from '../components/seo/Seo';
 
 export default function CookiePolicy() {
   const lang = usePreferredLang();
   return (
-    <PageLayout title={lang === 'en' ? 'Cookie Policy' : 'سياسة ملفات الارتباط'}>
+    <>
+      <Seo
+        title={lang === 'en' ? 'Cookie Policy' : 'سياسة ملفات الارتباط'}
+        description={
+          lang === 'en'
+            ? 'PhysioHub cookie policy for clinical calculators and platform preferences.'
+            : 'سياسة ملفات الارتباط في PhysioHub الخاصة بالحاسبات والتفضيلات.'
+        }
+        canonicalPath="/cookies"
+      />
+      <PageLayout title={lang === 'en' ? 'Cookie Policy' : 'سياسة ملفات الارتباط'}>
       {lang === 'en' ? (
         <>
           <p>
@@ -61,7 +72,8 @@ export default function CookiePolicy() {
           </p>
         </>
       )}
-    </PageLayout>
+      </PageLayout>
+    </>
   );
 }
 

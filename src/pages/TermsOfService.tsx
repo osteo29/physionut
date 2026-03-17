@@ -1,10 +1,21 @@
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
+import Seo from '../components/seo/Seo';
 
 export default function TermsOfService() {
   const lang = usePreferredLang();
   return (
-    <PageLayout title={lang === 'en' ? 'Terms of Service' : 'الشروط والأحكام'}>
+    <>
+      <Seo
+        title={lang === 'en' ? 'Terms of Service' : 'الشروط والأحكام'}
+        description={
+          lang === 'en'
+            ? 'PhysioHub terms for using physical therapy calculators and clinical nutrition tools.'
+            : 'شروط استخدام PhysioHub لحاسبات العلاج الطبيعي وأدوات التغذية العلاجية.'
+        }
+        canonicalPath="/terms"
+      />
+      <PageLayout title={lang === 'en' ? 'Terms of Service' : 'الشروط والأحكام'}>
       {lang === 'en' ? (
         <>
           <p>
@@ -72,7 +83,8 @@ export default function TermsOfService() {
           </p>
         </>
       )}
-    </PageLayout>
+      </PageLayout>
+    </>
   );
 }
 

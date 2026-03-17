@@ -1,10 +1,21 @@
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
+import Seo from '../components/seo/Seo';
 
 export default function PrivacyPolicy() {
   const lang = usePreferredLang();
   return (
-    <PageLayout title={lang === 'en' ? 'Privacy Policy' : 'سياسة الخصوصية'}>
+    <>
+      <Seo
+        title={lang === 'en' ? 'Privacy Policy' : 'سياسة الخصوصية'}
+        description={
+          lang === 'en'
+            ? 'PhysioHub privacy policy for clinical calculators and clinical nutrition tools.'
+            : 'سياسة خصوصية PhysioHub لأدوات الحاسبات السريرية والتغذية العلاجية.'
+        }
+        canonicalPath="/privacy"
+      />
+      <PageLayout title={lang === 'en' ? 'Privacy Policy' : 'سياسة الخصوصية'}>
       {lang === 'en' ? (
         <>
           <p>
@@ -75,7 +86,8 @@ export default function PrivacyPolicy() {
           </p>
         </>
       )}
-    </PageLayout>
+      </PageLayout>
+    </>
   );
 }
 

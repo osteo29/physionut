@@ -7,13 +7,14 @@ import { 
 } from 'lucide-react';
 import { useState, useEffect, useMemo, memo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { CalculatorLogic, checkEnvironment, GoalType, BodyType } from './services/calculators';
+import { checkEnvironment } from './services/calculators';
 import { PhysioNutritionLogic, HealthProfile, HealthMetrics } from './services/physioNutritionLogic';
 import { injuryDatabase, getInjuryById } from './services/injuryDatabase';
 import { GoogleGenAI } from "@google/genai";
 import { translations, Language } from './services/translations';
 import { getArticles, Article } from './services/articles';
 import { foodDatabase, FoodItem } from './services/foodData';
+import {ClinicalCalculators, statusToTextClass, type HealthInterpretation, type GoalType, type BodyType} from './logic/physioNutritionLogic';
 import Hero from './components/home/Hero';
 import WhatsNew from './components/home/WhatsNew';
 import Footer from './components/layout/Footer';
@@ -196,6 +197,7 @@ export default function App() {
   });
 
   const [result, setResult] = useState<any>(null);
+  const [healthInterpretation, setHealthInterpretation] = useState<HealthInterpretation | null>(null);
   const [error, setError] = useState<string>('');
 
   useEffect(() => {
@@ -228,6 +230,7 @@ export default function App() {
     setPregnancy(false);
     setMealItems([{ id: '1', name: '', calories: '' }]);
     setResult(null);
+    setHealthInterpretation(null);
     setError('');
   };
 
@@ -252,6 +255,7 @@ export default function App() {
       return;
     }
     setError('');
+    setHealthInterpretation(null);
 
     const w = Number(weight);
     const h = Number(height);
@@ -263,25 +267,64 @@ export default function App() {
 
     switch (activeCalculator) {
       case 'BMI':
-        setResult(CalculatorLogic.calculateBMI(w, h));
+        {
+          const bmi = ClinicalCalculators.bmi(w, h);
+          setResult(bmi);
+          setHealthInterpretation(ClinicalCalculators.interpretBMI(bmi, lang));
+        }
         break;
       case 'BMR':
-        setResult(CalculatorLogic.calculateBMR({ weight: w, height: h, age: a, gender, bodyFat: knowBodyFat ? bf : undefined }));
+        {
+          const bmr = ClinicalCalculators.bmrMifflinStJeor({
+            weightKg: w,
+            heightCm: h,
+            ageYears: a,
+            gender,
+          });
+          setResult(bmr);
+          setHealthInterpretation(ClinicalCalculators.interpretBMR(bmr, lang));
+        }
         break;
       case 'TDEE':
-        const bmrT = CalculatorLogic.calculateBMR({ weight: w, height: h, age: a, gender, bodyFat: knowBodyFat ? bf : undefined });
-        setResult(CalculatorLogic.calculateTDEE(bmrT, Number(activity)));
+        {
+          const bmr = ClinicalCalculators.bmrMifflinStJeor({
+            weightKg: w,
+            heightCm: h,
+            ageYears: a,
+            gender,
+          });
+          const tdee = ClinicalCalculators.tdee(bmr, Number(activity));
+          setResult(tdee);
+          setHealthInterpretation(ClinicalCalculators.interpretTDEE(tdee, lang));
+        }
         break;
       case 'Macros':
-        const bmrM = CalculatorLogic.calculateBMR({ weight: w, height: h, age: a, gender, bodyFat: knowBodyFat ? bf : undefined });
-        const tdeeM = CalculatorLogic.calculateTDEE(bmrM, Number(activity));
-        setResult(CalculatorLogic.calculateMacros(tdeeM, goal, bodyType));
+        {
+          const bmr = ClinicalCalculators.bmrMifflinStJeor({
+            weightKg: w,
+            heightCm: h,
+            ageYears: a,
+            gender,
+          });
+          const tdee = ClinicalCalculators.tdee(bmr, Number(activity));
+          const macros = ClinicalCalculators.macrosFromGoal(tdee, goal);
+          setResult(macros);
+          setHealthInterpretation(ClinicalCalculators.interpretMacros(goal, lang));
+        }
         break;
       case 'Protein':
-        setResult(CalculatorLogic.calculateProteinIntake(w, Number(activity)));
+        {
+          const g = ClinicalCalculators.proteinNeedsG(w, Number(activity));
+          setResult(g);
+          setHealthInterpretation(ClinicalCalculators.interpretProtein(Number(activity), lang));
+        }
         break;
       case 'IdealWeight':
-        setResult(CalculatorLogic.calculateIdealWeight(h, gender));
+        {
+          const ibw = ClinicalCalculators.idealBodyWeightDevine(h, gender);
+          setResult(ibw);
+          setHealthInterpretation(ClinicalCalculators.interpretIBW(ibw, lang));
+        }
         break;
       case 'WHtR':
         let calcWaist = wa;
@@ -290,8 +333,25 @@ export default function App() {
           calcWaist = wa * 2.54;
           calcHeightW = h * 2.54;
         }
-        const whtrRes = CalculatorLogic.calculateWHtR(calcWaist, calcHeightW);
-        setResult(whtrRes);
+        // Kept as legacy (not part of the 10 requested clinical calculators)
+        {
+          const ratio = calcWaist > 0 && calcHeightW > 0 ? Number((calcWaist / calcHeightW).toFixed(2)) : 0;
+          const category =
+            ratio <= 0
+              ? '-'
+              : ratio < 0.5
+                ? lang === 'en'
+                  ? 'Healthy'
+                  : 'صحي'
+                : ratio < 0.6
+                  ? lang === 'en'
+                    ? 'Increased Risk'
+                    : 'مخاطر متزايدة'
+                  : lang === 'en'
+                    ? 'High Risk'
+                    : 'مخاطر عالية';
+          setResult({ ratio, category });
+        }
         break;
       case 'BodyFat':
         // Convert imperial to metric if needed for calculation
@@ -305,19 +365,48 @@ export default function App() {
           calcH = hi * 2.54;
           calcHeight = h * 2.54;
         }
-        setResult(CalculatorLogic.calculateBodyFat({ gender, height: calcHeight, waist: calcW, neck: calcN, hip: calcH }));
+        {
+          const bodyFat = ClinicalCalculators.bodyFatUSNavy({
+            gender,
+            heightCm: calcHeight,
+            waistCm: calcW,
+            neckCm: calcN,
+            hipCm: gender === 'female' ? calcH : undefined,
+          });
+          setResult(bodyFat);
+          setHealthInterpretation(ClinicalCalculators.interpretBodyFat(bodyFat, gender, lang));
+        }
         break;
       case 'Water':
-        setResult(CalculatorLogic.calculateWaterIntake(w, Number(activity), { hotClimate, pregnancy }));
+        {
+          const ml = ClinicalCalculators.waterIntakeMl(w, Number(activity), {
+            hotClimate,
+            pregnancy,
+          });
+          setResult(ml);
+          setHealthInterpretation(ClinicalCalculators.interpretWater(ml, lang));
+        }
         break;
       case 'Deficit':
-        const bmrD = CalculatorLogic.calculateBMR({ weight: w, height: h, age: a, gender, bodyFat: knowBodyFat ? bf : undefined });
-        const tdeeD = CalculatorLogic.calculateTDEE(bmrD, Number(activity));
-        setResult(CalculatorLogic.calculateDeficit(tdeeD, pace));
+        {
+          const bmr = ClinicalCalculators.bmrMifflinStJeor({
+            weightKg: w,
+            heightCm: h,
+            ageYears: a,
+            gender,
+          });
+          const tdee = ClinicalCalculators.tdee(bmr, Number(activity));
+          const deficit = ClinicalCalculators.calorieAdjustmentFromTDEE(tdee, pace);
+          setResult(deficit);
+          setHealthInterpretation(ClinicalCalculators.interpretCalorieAdjustment(pace, lang));
+        }
         break;
       case 'Meal':
-        const total = mealItems.reduce((sum, item) => sum + (Number(item.calories) || 0), 0);
-        setResult(total);
+        {
+          const total = ClinicalCalculators.mealCalories(mealItems);
+          setResult(total);
+          setHealthInterpretation(ClinicalCalculators.interpretMeal(total, lang));
+        }
         break;
     }
   };
@@ -334,6 +423,7 @@ export default function App() {
   const clearAllMealItems = () => {
     setMealItems([{ id: Date.now().toString(), name: '', calories: '' }]);
     setResult(null);
+    setHealthInterpretation(null);
   };
 
   const removeMealItem = (id: string) => {
@@ -852,7 +942,7 @@ export default function App() {
             {calculators.map((calc) => (
               <button 
                 key={calc.id}
-                onClick={() => { setActiveCalculator(calc.id as CalculatorType); resetForm(); }}
+                onClick={() => { setActiveCalculator(calc.id as CalculatorType); resetForm(); document.getElementById('calculators')?.scrollIntoView({ behavior: 'smooth' }); }}
                 aria-label={calc.title}
                 className={`medical-card p-4 md:p-6 flex flex-col items-start text-left transition-all relative group ${activeCalculator === calc.id ? 'ring-2 ring-health-green bg-soft-blue' : ''}`}
               >
@@ -1406,30 +1496,32 @@ export default function App() {
                           ) : activeCalculator === 'BodyFat' ? (
                             <div className="space-y-2">
                               <div className="text-5xl font-bold text-slate-900">{result}%</div>
-                              <div className={`text-lg font-bold uppercase ${
-                                Number(result) < (gender === 'male' ? 25 : 32) ? 'text-health-green' : 'text-rose-500'
-                              }`}>
-                                {CalculatorLogic.getBodyFatCategory(Number(result), gender, lang)}
-                              </div>
+                              {'category' in (healthInterpretation || ({} as any)) ? (
+                                <div className={`text-lg font-bold uppercase ${statusToTextClass((healthInterpretation as any).status)}`}>
+                                  {(healthInterpretation as any).category}
+                                </div>
+                              ) : null}
                             </div>
                           ) : activeCalculator === 'BMI' ? (
                             <div className="space-y-2">
                               <div className="text-5xl font-bold text-slate-900">{result}</div>
-                              <div className={`text-lg font-bold uppercase ${
-                                Number(result) >= 18.5 && Number(result) < 25 ? 'text-health-green' : 
-                                Number(result) >= 25 && Number(result) < 30 ? 'text-amber-500' : 'text-rose-500'
-                              }`}>
-                                {Number(result) < 18.5 ? (lang === 'en' ? 'Underweight' : 'نحيف') :
-                                 Number(result) < 25 ? (lang === 'en' ? 'Normal' : 'طبيعي') :
-                                 Number(result) < 30 ? (lang === 'en' ? 'Overweight' : 'وزن زائد') :
-                                 (lang === 'en' ? 'Obese' : 'سمنة')}
-                              </div>
+                              {'category' in (healthInterpretation || ({} as any)) ? (
+                                <div className={`text-lg font-bold uppercase ${statusToTextClass((healthInterpretation as any).status)}`}>
+                                  {(healthInterpretation as any).category}
+                                </div>
+                              ) : null}
                             </div>
                           ) : (
                             `${result}${activeCalculator === 'Water' ? (lang === 'en' ? ' ml' : ' مل') : activeCalculator === 'IdealWeight' ? (lang === 'en' ? ' kg' : ' كجم') : (lang === 'en' ? ' kcal' : ' سعرة')}`
                           )}
                           {activeCalculator === 'Protein' && (lang === 'en' ? 'g/day' : 'جم/يوم')}
                         </div>
+
+                        {healthInterpretation?.message && (
+                          <div className={`mt-3 text-sm font-bold ${statusToTextClass(healthInterpretation.status)}`}>
+                            {healthInterpretation.message}
+                          </div>
+                        )}
                         
                         <div className="flex items-start gap-3 text-left bg-soft-blue p-4 rounded-2xl mt-6">
                           <Info className="w-5 h-5 text-health-green shrink-0 mt-0.5" />

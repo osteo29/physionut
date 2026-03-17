@@ -1,11 +1,22 @@
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
+import Seo from '../components/seo/Seo';
 
 export default function MedicalDisclaimer() {
   const lang = usePreferredLang();
 
   return (
-    <PageLayout title={lang === 'en' ? 'Medical Disclaimer' : 'إخلاء المسؤولية الطبي'}>
+    <>
+      <Seo
+        title={lang === 'en' ? 'Medical Disclaimer' : 'إخلاء المسؤولية الطبي'}
+        description={
+          lang === 'en'
+            ? 'Medical disclaimer for PhysioHub physical therapy calculators and clinical nutrition tools.'
+            : 'إخلاء المسؤولية الطبي لمنصة PhysioHub وحاسبات العلاج الطبيعي والتغذية العلاجية.'
+        }
+        canonicalPath="/disclaimer"
+      />
+      <PageLayout title={lang === 'en' ? 'Medical Disclaimer' : 'إخلاء المسؤولية الطبي'}>
       {lang === 'en' ? (
         <>
           <p>
@@ -49,7 +60,8 @@ export default function MedicalDisclaimer() {
           </p>
         </>
       )}
-    </PageLayout>
+      </PageLayout>
+    </>
   );
 }
 

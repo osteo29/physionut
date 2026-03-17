@@ -32,46 +32,59 @@ const BlogSection = memo(
               </h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {articles.map((article) => (
-                <article
-                  key={article.id}
-                  className="bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all group flex flex-col"
-                >
-                  <div className="aspect-video bg-soft-blue relative overflow-hidden flex items-center justify-center">
-                    <div className="p-6 bg-white rounded-2xl shadow-sm group-hover:scale-110 transition-transform duration-500">
-                      <IconComponent
-                        name={article.icon}
-                        className="w-12 h-12 text-health-green"
-                      />
-                    </div>
-                    <div className="absolute top-4 left-4 rtl:left-auto rtl:right-4">
-                      <span className="px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm text-health-green text-xs font-bold shadow-sm flex items-center gap-1">
-                        <Tag className="w-3 h-3" /> {article.category}
-                      </span>
-                    </div>
+              {articles.length === 0 ? (
+                <div className="md:col-span-2 lg:col-span-3 bg-white rounded-3xl border border-slate-100 p-10 text-center text-slate-500">
+                  <div className="text-sm font-bold uppercase tracking-widest text-slate-400 mb-3">
+                    {lang === 'en' ? 'Coming Soon' : 'قريباً'}
                   </div>
-                  <div className="p-8 flex-1 flex flex-col">
-                    <div className="flex items-center gap-2 text-slate-400 text-xs mb-3">
-                      <Calendar className="w-3 h-3" /> {article.date}
+                  <p className="max-w-2xl mx-auto">
+                    {lang === 'en'
+                      ? 'Evidence-based articles will be published here soon.'
+                      : 'سيتم نشر مقالات مبنية على الأدلة هنا قريبًا.'}
+                  </p>
+                </div>
+              ) : (
+                articles.map((article) => (
+                  <article
+                    key={article.id}
+                    className="bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all group flex flex-col"
+                  >
+                    <div className="aspect-video bg-soft-blue relative overflow-hidden flex items-center justify-center">
+                      <div className="p-6 bg-white rounded-2xl shadow-sm group-hover:scale-110 transition-transform duration-500">
+                        <IconComponent
+                          name={article.icon}
+                          className="w-12 h-12 text-health-green"
+                        />
+                      </div>
+                      <div className="absolute top-4 left-4 rtl:left-auto rtl:right-4">
+                        <span className="px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm text-health-green text-xs font-bold shadow-sm flex items-center gap-1">
+                          <Tag className="w-3 h-3" /> {article.category}
+                        </span>
+                      </div>
                     </div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-health-green transition-colors">
-                      {article.title}
-                    </h3>
-                    <p className="text-slate-600 text-sm mb-6 line-clamp-3 flex-1">
-                      {article.excerpt}
-                    </p>
-                    <button
-                      onClick={() => setSelectedArticle(article)}
-                      className="inline-flex items-center gap-2 text-health-green font-bold hover:underline"
-                    >
-                      {t.blog.readMore}{' '}
-                      <ChevronRight
-                        className={`w-4 h-4 ${lang === 'ar' ? 'rotate-180' : ''}`}
-                      />
-                    </button>
-                  </div>
-                </article>
-              ))}
+                    <div className="p-8 flex-1 flex flex-col">
+                      <div className="flex items-center gap-2 text-slate-400 text-xs mb-3">
+                        <Calendar className="w-3 h-3" /> {article.date}
+                      </div>
+                      <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-health-green transition-colors">
+                        {article.title}
+                      </h3>
+                      <p className="text-slate-600 text-sm mb-6 line-clamp-3 flex-1">
+                        {article.excerpt}
+                      </p>
+                      <button
+                        onClick={() => setSelectedArticle(article)}
+                        className="inline-flex items-center gap-2 text-health-green font-bold hover:underline"
+                      >
+                        {t.blog.readMore}{' '}
+                        <ChevronRight
+                          className={`w-4 h-4 ${lang === 'ar' ? 'rotate-180' : ''}`}
+                        />
+                      </button>
+                    </div>
+                  </article>
+                ))
+              )}
             </div>
           </div>
         </section>

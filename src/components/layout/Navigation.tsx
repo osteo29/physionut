@@ -8,6 +8,7 @@ import {
   Menu,
   X,
 } from 'lucide-react';
+import {Link} from 'react-router-dom';
 import type {Language} from '../../services/translations';
 
 type CalculatorNavItem = {
@@ -62,12 +63,14 @@ const Navigation = memo(
               >
                 <div className="p-6 border-b border-slate-100 flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="bg-health-green p-1.5 rounded-lg">
-                      <HeartPulse className="w-5 h-5 text-white" />
-                    </div>
-                    <span className="text-xl font-bold tracking-tight text-slate-900">
-                      Physio<span className="text-health-green">Hub</span>
-                    </span>
+                    <Link to="/" className="flex items-center gap-2">
+                      <div className="bg-health-green p-1.5 rounded-lg">
+                        <HeartPulse className="w-5 h-5 text-white" />
+                      </div>
+                      <span className="text-xl font-bold tracking-tight text-slate-900">
+                        Physio<span className="text-health-green">Hub</span>
+                      </span>
+                    </Link>
                   </div>
                   <button
                     onClick={() => setIsSidebarOpen(false)}
@@ -198,12 +201,14 @@ const Navigation = memo(
                   <Menu className="w-6 h-6" />
                 </button>
                 <div className="flex items-center gap-2">
-                  <div className="bg-health-green p-1.5 rounded-lg">
-                    <HeartPulse className="w-6 h-6 text-white" />
-                  </div>
-                  <span className="text-xl font-bold tracking-tight text-slate-900">
-                    Physio<span className="text-health-green">Hub</span>
-                  </span>
+                  <Link to="/" className="flex items-center gap-2">
+                    <div className="bg-health-green p-1.5 rounded-lg">
+                      <HeartPulse className="w-6 h-6 text-white" />
+                    </div>
+                    <span className="text-xl font-bold tracking-tight text-slate-900">
+                      Physio<span className="text-health-green">Hub</span>
+                    </span>
+                  </Link>
                 </div>
               </div>
 
