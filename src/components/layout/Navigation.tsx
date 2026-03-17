@@ -4,12 +4,12 @@ import {
   BookOpen,
   Brain,
   HeartPulse,
-  Info,
   Menu,
   X,
   Stethoscope,
+  ChevronRight,
 } from 'lucide-react';
-import {Link} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import type {Language} from '../../services/translations';
 
 type CalculatorNavItem = {
@@ -40,26 +40,35 @@ const Navigation = memo(
     isSidebarOpen: boolean;
     setIsSidebarOpen: (open: boolean) => void;
   }) => {
-    
-    // اللوجو دلوقت بقى جواه اللينك بتاعه عشان يشتغل في أي مكان
-    const BrandLogo = () => (
+    const location = useLocation();
+
+    // دالة التعامل مع اللوجو: سكرول فوق أو رجوع للهوم
+    const handleLogoClick = (e: React.MouseEvent) => {
+      if (location.pathname === '/') {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      setIsSidebarOpen(false);
+    };
+
+    const BrandLogo = ({ className = "" }: { className?: string }) => (
       <Link 
         to="/" 
-        onClick={() => setIsSidebarOpen(false)} 
-        className="flex items-center gap-2 group cursor-pointer"
+        onClick={handleLogoClick} 
+        className={`flex items-center gap-2 group cursor-pointer ${className}`}
       >
         <div className="bg-health-green p-1.5 rounded-xl group-hover:rotate-12 transition-transform duration-300 shadow-sm">
           <HeartPulse className="w-5 h-5 text-white" />
         </div>
-        <div className="flex flex-col justify-center text-left">
-          <span className="text-lg font-black leading-[0.8] tracking-tight text-slate-900 italic">
-            PHYSIO
+        <div className="flex flex-col justify-center text-left leading-tight">
+          <span className="text-base font-black tracking-tight text-slate-900 italic uppercase">
+            Physio
           </span>
-          <div className="flex items-center gap-1">
-            <span className="text-[10px] font-bold tracking-[0.15em] text-health-green uppercase">
+          <div className="flex items-center gap-1 -mt-0.5">
+            <span className="text-[9px] font-bold tracking-[0.12em] text-health-green uppercase">
               Nutrition
             </span>
-            <div className="h-[1px] w-3 bg-health-green/30" />
+            <div className="h-[1px] w-2 bg-health-green/30" />
           </div>
         </div>
       </Link>
@@ -67,7 +76,7 @@ const Navigation = memo(
 
     return (
       <>
-        {/* Sidebar Navigation */}
+        {/* Sidebar Navigation - المحسن والملموم */}
         <AnimatePresence>
           {isSidebarOpen && (
             <>
@@ -76,57 +85,44 @@ const Navigation = memo(
                 animate={{opacity: 1}}
                 exit={{opacity: 0}}
                 onClick={() => setIsSidebarOpen(false)}
-                className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60]"
+                className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[60]"
               />
               <motion.div
                 initial={{x: lang === 'ar' ? '100%' : '-100%'}}
                 animate={{x: 0}}
                 exit={{x: lang === 'ar' ? '100%' : '-100%'}}
-                transition={{type: 'spring', damping: 25, stiffness: 200}}
-                className={`fixed top-0 ${
-                  lang === 'ar' ? 'right-0' : 'left-0'
-                } bottom-0 w-80 bg-white z-[70] shadow-2xl flex flex-col`}
+                transition={{type: 'spring', damping: 25, stiffness: 220}}
+                className={`fixed top-0 ${lang === 'ar' ? 'right-0' : 'left-0'} bottom-0 w-72 bg-white z-[70] shadow-2xl flex flex-col`}
               >
-                <div className="p-6 border-b border-slate-100 flex items-center justify-between">
-                  {/* استدعاء اللوجو باللينك بتاعه */}
-                  <BrandLogo />
-                  <button
-                    onClick={() => setIsSidebarOpen(false)}
-                    className="p-2 hover:bg-slate-100 rounded-full transition-colors"
-                  >
-                    <X className="w-5 h-5 text-slate-500" />
+                <div className="p-5 border-b border-slate-100 flex items-center justify-between">
+                  <BrandLogo className="scale-90 origin-left" />
+                  <button onClick={() => setIsSidebarOpen(false)} className="p-2 hover:bg-slate-100 rounded-full transition-colors">
+                    <X className="w-5 h-5 text-slate-400" />
                   </button>
                 </div>
 
-                <div className="flex-1 overflow-y-auto p-6 space-y-8">
+                <div className="flex-1 overflow-y-auto p-5 space-y-6">
+                  {/* قسم المساعد - شكل الكارد بقى أنحف */}
                   <div>
-                    <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 px-2">
-                      {lang === 'en' ? 'Clinical Support' : 'الدعم السريري'}
-                    </h3>
+                    <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.15em] mb-3 px-1">Clinic AI</h3>
                     <Link 
                       to="/assistant" 
                       onClick={() => setIsSidebarOpen(false)}
-                      className="flex items-center justify-between p-4 bg-slate-50 text-slate-700 rounded-2xl border border-slate-200 hover:border-health-green/30 hover:bg-white transition-all group"
+                      className="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-200 hover:border-health-green/40 transition-all group"
                     >
                       <div className="flex items-center gap-3">
                         <div className="p-2 rounded-lg bg-white shadow-sm group-hover:bg-health-green group-hover:text-white transition-colors">
-                          <Stethoscope className="w-5 h-5 text-health-green group-hover:text-white" />
+                          <Stethoscope className="w-4 h-4 text-health-green group-hover:text-white" />
                         </div>
-                        <div className="flex flex-col">
-                          <span className="font-bold text-sm">{lang === 'en' ? 'Clinical Assistant' : 'المساعد السريري'}</span>
-                          <span className="text-[10px] text-slate-400 font-medium italic">Evidence-based AI</span>
-                        </div>
+                        <span className="font-bold text-xs text-slate-700">{lang === 'en' ? 'Clinical Assistant' : 'المساعد السريري'}</span>
                       </div>
-                      <span className="px-1.5 py-0.5 rounded-full text-[8px] font-black bg-slate-200 text-slate-600 uppercase">
-                        Beta
-                      </span>
+                      <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-health-green transition-transform group-hover:translate-x-1" />
                     </Link>
                   </div>
 
+                  {/* قسم الأدوات */}
                   <div>
-                    <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 px-2">
-                      {t.nav.calculators}
-                    </h3>
+                    <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.15em] mb-3 px-1">{t.nav.calculators}</h3>
                     <div className="grid grid-cols-1 gap-1">
                       {calculators.map((calc) => (
                         <button
@@ -136,108 +132,68 @@ const Navigation = memo(
                             setIsSidebarOpen(false);
                             scrollToId('calculators');
                           }}
-                          className="flex items-center gap-3 p-3 rounded-xl hover:bg-soft-blue text-slate-600 hover:text-health-green transition-all group"
+                          className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-health-green/5 text-slate-600 hover:text-health-green transition-all group"
                         >
-                          <div className="p-2 rounded-lg bg-slate-50 group-hover:bg-white transition-colors">
-                            {calc.icon}
-                          </div>
-                          <span className="font-medium text-sm">
-                            {calc.title}
-                          </span>
+                          <span className="p-1.5 rounded-md bg-slate-50 group-hover:bg-white transition-colors">{calc.icon}</span>
+                          <span className="font-bold text-xs">{calc.title}</span>
                         </button>
                       ))}
                     </div>
                   </div>
-
-                  <div>
-                    <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 px-2">
-                      {lang === 'en' ? 'Main Sections' : 'الأقسام الرئيسية'}
-                    </h3>
-                    <div className="space-y-1">
-                      <a
-                        href="#architect"
-                        onClick={() => setIsSidebarOpen(false)}
-                        className="flex items-center gap-3 p-3 rounded-xl hover:bg-medical-blue/5 text-slate-600 hover:text-medical-blue transition-all group"
-                      >
-                        <div className="p-2 rounded-lg bg-slate-50 group-hover:bg-white transition-colors">
-                          <Brain className="w-5 h-5" />
-                        </div>
-                        <span className="font-medium text-sm">{t.architect.title}</span>
-                      </a>
-                      <a
-                        href="#blog"
-                        onClick={() => setIsSidebarOpen(false)}
-                        className="flex items-center gap-3 p-3 rounded-xl hover:bg-health-green/5 text-slate-600 hover:text-health-green transition-all group"
-                      >
-                        <div className="p-2 rounded-lg bg-slate-50 group-hover:bg-white transition-colors">
-                          <BookOpen className="w-5 h-5" />
-                        </div>
-                        <span className="font-medium text-sm">{t.nav.insights}</span>
-                      </a>
-                    </div>
-                  </div>
                 </div>
 
-                <div className="p-6 border-t border-slate-100 bg-slate-50/50">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-sm font-bold text-slate-500">
-                      {lang === 'en' ? 'Language' : 'اللغة'}
-                    </span>
-                    <div className="flex items-center gap-1 bg-white p-1 rounded-full border border-slate-200">
-                      <button onClick={() => setLang('en')} className={`px-3 py-1 rounded-full text-[10px] font-black ${lang === 'en' ? 'bg-health-green text-white shadow-md' : 'text-slate-400'}`}>EN</button>
-                      <button onClick={() => setLang('ar')} className={`px-3 py-1 rounded-full text-[10px] font-black ${lang === 'ar' ? 'bg-health-green text-white shadow-md' : 'text-slate-400'}`}>AR</button>
-                    </div>
-                  </div>
-                  <button className="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-sm hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/10">
-                    {t.nav.getStarted}
-                  </button>
+                {/* Footer Sidebar */}
+                <div className="p-5 border-t border-slate-100 bg-slate-50/50">
+                   <div className="flex items-center gap-1 bg-white p-1 rounded-lg border border-slate-200 mb-4">
+                      <button onClick={() => setLang('en')} className={`flex-1 py-1.5 rounded-md text-[10px] font-black transition-all ${lang === 'en' ? 'bg-health-green text-white shadow-sm' : 'text-slate-400'}`}>EN</button>
+                      <button onClick={() => setLang('ar')} className={`flex-1 py-1.5 rounded-md text-[10px] font-black transition-all ${lang === 'ar' ? 'bg-health-green text-white shadow-sm' : 'text-slate-400'}`}>AR</button>
+                   </div>
+                   <button className="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-xs shadow-lg shadow-slate-900/10">
+                     {t.nav.getStarted}
+                   </button>
                 </div>
               </motion.div>
             </>
           )}
         </AnimatePresence>
 
-        {/* Navigation Bar */}
-        <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => setIsSidebarOpen(true)}
-              className="p-2 hover:bg-slate-100 rounded-xl transition-colors text-slate-600"
-            >
-              <Menu className="w-6 h-6" />
-            </button>
+        {/* Navigation Bar - الـ Slim UI الجديد */}
+        <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50 h-14 flex items-center shadow-sm">
+          <div className="max-w-6xl mx-auto w-full px-4 flex justify-between items-center">
             
-            {/* اللوجو هنا بيشتغل فوراً كـ Link */}
-            <BrandLogo />
-          </div>
-
-          <div className="flex items-center gap-3 lg:gap-8">
-            <div className="hidden lg:flex items-center gap-8">
-              <a href="#calculators" className="nav-link">{t.nav.calculators}</a>
-              <a href="#blog" className="nav-link">{t.nav.insights}</a>
-              <a href="#about" className="nav-link">{t.nav.about}</a>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setIsSidebarOpen(true)}
+                className="p-1.5 hover:bg-slate-100 rounded-lg transition-colors text-slate-500 md:hidden"
+              >
+                <Menu className="w-5 h-5" />
+              </button>
+              <BrandLogo className="scale-90 origin-left" />
             </div>
 
-            <Link 
-              to="/assistant" 
-              className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 text-slate-700 rounded-xl border border-slate-200 hover:border-health-green/30 hover:bg-white transition-all shadow-sm group"
-            >
-              <Stethoscope className="w-4 h-4 text-health-green group-hover:scale-110 transition-transform" />
-              <span className="text-xs font-bold hidden sm:inline">
-                {lang === 'en' ? 'Clinical Assistant' : 'المساعد السريري'}
-              </span>
-            </Link>
-
-            <div className="h-6 w-px bg-slate-200 hidden sm:block" />
-
-            <div className="hidden sm:flex items-center gap-1 bg-slate-100 p-1 rounded-full border border-slate-200">
-              <button onClick={() => setLang('en')} className={`px-3 py-1 rounded-full text-xs font-bold ${lang === 'en' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'}`}>EN</button>
-              <button onClick={() => setLang('ar')} className={`px-3 py-1 rounded-full text-xs font-bold ${lang === 'ar' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'}`}>AR</button>
+            {/* روابط الكمبيوتر - ملمومة وشيك */}
+            <div className="hidden md:flex items-center bg-slate-100/60 p-1 rounded-full border border-slate-200/50">
+              <a href="#calculators" onClick={(e) => { e.preventDefault(); scrollToId('calculators'); }} className="px-5 py-1.5 text-[11px] font-black text-slate-500 hover:text-health-green transition-all uppercase tracking-wide">Tools</a>
+              <a href="#architect" className="px-5 py-1.5 text-[11px] font-black text-slate-500 hover:text-health-green transition-all uppercase tracking-wide">Roadmaps</a>
+              <a href="#blog" className="px-5 py-1.5 text-[11px] font-black text-slate-500 hover:text-health-green transition-all uppercase tracking-wide">Insights</a>
             </div>
 
-            <button className="hidden md:block bg-health-green text-white px-5 py-2 rounded-full font-semibold hover:bg-health-green-dark transition-all shadow-md shadow-health-green/10">
-              {t.nav.getStarted}
-            </button>
+            <div className="flex items-center gap-3">
+              <Link 
+                to="/assistant" 
+                className="flex items-center gap-2 px-3 py-1.5 bg-health-green/10 text-health-green rounded-lg border border-health-green/20 hover:bg-health-green hover:text-white transition-all group"
+              >
+                <Stethoscope className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                <span className="text-[11px] font-black hidden sm:inline uppercase">AI Clinic</span>
+              </Link>
+
+              <div className="h-4 w-px bg-slate-200 hidden md:block" />
+
+              <div className="hidden md:flex items-center gap-1 bg-slate-50 p-1 rounded-lg border border-slate-200">
+                <button onClick={() => setLang('en')} className={`px-2 py-0.5 rounded-md text-[9px] font-black ${lang === 'en' ? 'bg-white text-health-green shadow-sm' : 'text-slate-400'}`}>EN</button>
+                <button onClick={() => setLang('ar')} className={`px-2 py-0.5 rounded-md text-[9px] font-black ${lang === 'ar' ? 'bg-white text-health-green shadow-sm' : 'text-slate-400'}`}>AR</button>
+              </div>
+            </div>
           </div>
         </nav>
       </>
