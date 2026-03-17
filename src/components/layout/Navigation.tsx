@@ -7,6 +7,7 @@ import {
   Info,
   Menu,
   X,
+  Sparkles, // أضفنا أيقونة النجوم للذكاء الاصطناعي
 } from 'lucide-react';
 import {Link} from 'react-router-dom';
 import type {Language} from '../../services/translations';
@@ -63,7 +64,7 @@ const Navigation = memo(
               >
                 <div className="p-6 border-b border-slate-100 flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Link to="/" className="flex items-center gap-2">
+                    <Link to="/" onClick={() => setIsSidebarOpen(false)} className="flex items-center gap-2">
                       <div className="bg-health-green p-1.5 rounded-lg">
                         <HeartPulse className="w-5 h-5 text-white" />
                       </div>
@@ -81,6 +82,31 @@ const Navigation = memo(
                 </div>
 
                 <div className="flex-1 overflow-y-auto p-6 space-y-8">
+                  {/* قسم الذكاء الاصطناعي في السايد بار - متميز بصرياً */}
+                  <div>
+                    <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 px-2">
+                      {lang === 'en' ? 'Smart Assistant' : 'المساعد الذكي'}
+                    </h3>
+                    <Link 
+                      to="/assistant" 
+                      onClick={() => setIsSidebarOpen(false)}
+                      className="flex items-center justify-between p-4 bg-gradient-to-br from-amber-50 to-orange-50 text-amber-900 rounded-2xl border border-amber-100 hover:shadow-md transition-all group"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-white shadow-sm group-hover:scale-110 transition-transform text-amber-600">
+                          <Sparkles className="w-5 h-5" />
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="font-bold text-sm">{lang === 'en' ? 'AI Assistant' : 'المساعد الذكي'}</span>
+                          <span className="text-[10px] text-amber-700 opacity-80">Powered by Gemini</span>
+                        </div>
+                      </div>
+                      <span className="px-1.5 py-0.5 rounded-full text-[8px] font-black bg-amber-200 text-amber-900 uppercase">
+                        {lang === 'en' ? 'Beta' : 'تجريبي'}
+                      </span>
+                    </Link>
+                  </div>
+
                   <div>
                     <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 px-2">
                       {t.nav.calculators}
@@ -212,59 +238,38 @@ const Navigation = memo(
                 </div>
               </div>
 
-              <div className="hidden lg:flex items-center gap-8">
-                <a href="#calculators" className="nav-link">
-                  {t.nav.calculators}
-                </a>
-                <a href="#blog" className="nav-link">
-                  {t.nav.insights}
-                </a>
-                <a href="#about" className="nav-link">
-                  {t.nav.about}
-                </a>
-                <Link to="/assistant" className="nav-link flex items-center gap-2">
-                  <span>{lang === 'en' ? 'AI Assistant' : 'المساعد الذكي'}</span>
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-amber-100 text-amber-800 border border-amber-200">
+              {/* الروابط للشاشات الكبيرة + زر الـ AI للموبايل والكمبيوتر */}
+              <div className="flex items-center gap-3 lg:gap-8">
+                <div className="hidden lg:flex items-center gap-8">
+                  <a href="#calculators" className="nav-link">{t.nav.calculators}</a>
+                  <a href="#blog" className="nav-link">{t.nav.insights}</a>
+                  <a href="#about" className="nav-link">{t.nav.about}</a>
+                </div>
+
+                {/* زر الـ AI الذكي - يظهر في كل الأحجام الآن */}
+                <Link 
+                  to="/assistant" 
+                  className="flex items-center gap-2 px-3 py-1.5 bg-amber-50 text-amber-700 rounded-xl border border-amber-100 hover:bg-amber-100 transition-all shadow-sm"
+                >
+                  <Sparkles className="w-4 h-4 text-amber-600" />
+                  <span className="text-xs font-bold hidden sm:inline">
+                    {lang === 'en' ? 'AI Assistant' : 'المساعد الذكي'}
+                  </span>
+                  <span className="px-1.5 py-0.5 rounded-full text-[8px] font-black bg-amber-200 text-amber-900 uppercase">
                     {lang === 'en' ? 'Beta' : 'تجريبي'}
                   </span>
                 </Link>
 
-                <div className="h-6 w-px bg-slate-200" />
+                <div className="h-6 w-px bg-slate-200 hidden sm:block" />
 
-                <div className="flex items-center gap-2 bg-slate-100 p-1 rounded-full border border-slate-200">
-                  <button
-                    onClick={() => setLang('en')}
-                    className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
-                      lang === 'en'
-                        ? 'bg-white text-health-green shadow-sm'
-                        : 'text-slate-500 hover:text-slate-700'
-                    }`}
-                  >
-                    EN
-                  </button>
-                  <button
-                    onClick={() => setLang('ar')}
-                    className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
-                      lang === 'ar'
-                        ? 'bg-white text-health-green shadow-sm'
-                        : 'text-slate-500 hover:text-slate-700'
-                    }`}
-                  >
-                    AR
-                  </button>
+                {/* أزرار اللغة (تختفي في الموبايل لتوفير مساحة لأنها موجودة في السايد بار) */}
+                <div className="hidden sm:flex items-center gap-1 bg-slate-100 p-1 rounded-full border border-slate-200">
+                  <button onClick={() => setLang('en')} className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${lang === 'en' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'}`}>EN</button>
+                  <button onClick={() => setLang('ar')} className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${lang === 'ar' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'}`}>AR</button>
                 </div>
 
-                <button className="bg-health-green text-white px-5 py-2 rounded-full font-semibold hover:bg-health-green-dark transition-colors shadow-lg shadow-health-green/20">
+                <button className="hidden md:block bg-health-green text-white px-5 py-2 rounded-full font-semibold hover:bg-health-green-dark transition-all shadow-lg shadow-health-green/20">
                   {t.nav.getStarted}
-                </button>
-              </div>
-
-              <div className="lg:hidden flex items-center gap-2">
-                <button
-                  onClick={() => setLang(lang === 'en' ? 'ar' : 'en')}
-                  className="p-2 text-xs font-bold text-health-green hover:bg-soft-blue rounded-lg transition-colors"
-                >
-                  {lang === 'en' ? 'AR' : 'EN'}
                 </button>
               </div>
             </div>
@@ -278,4 +283,3 @@ const Navigation = memo(
 Navigation.displayName = 'Navigation';
 
 export default Navigation;
-
