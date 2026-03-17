@@ -65,6 +65,7 @@ const IconComponent = ({ name, className }: { name: string; className?: string }
 export default function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeCalculator, setActiveCalculator] = useState<CalculatorType>(null);
+  const [activeToolGroup, setActiveToolGroup] = useState<'all' | 'assessment' | 'metabolism' | 'nutrition' | 'planning'>('all');
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
   const [lang, setLang] = useState<Language>(() => {
     const saved = localStorage.getItem('physiohub_lang');
@@ -531,17 +532,72 @@ export default function App() {
   }, [foodSearch, foodCategory, customFoods]);
 
   const calculators = [
-    { id: 'BMI', title: t.calculators.bmi.title, icon: <Activity className="w-6 h-6" />, desc: t.calculators.bmi.desc, hint: t.calculators.bmi.hint },
-    { id: 'WHtR', title: t.calculators.whtr.title, icon: <Scale className="w-6 h-6" />, desc: t.calculators.whtr.desc, hint: t.calculators.whtr.hint },
-    { id: 'BMR', title: t.calculators.bmr.title, icon: <Calculator className="w-6 h-6" />, desc: t.calculators.bmr.desc, hint: t.calculators.bmr.hint },
-    { id: 'TDEE', title: t.calculators.tdee.title, icon: <ClipboardList className="w-6 h-6" />, desc: t.calculators.tdee.desc, hint: t.calculators.tdee.hint },
-    { id: 'Macros', title: t.calculators.macros.title, icon: <HeartPulse className="w-6 h-6" />, desc: t.calculators.macros.desc, hint: t.calculators.macros.hint },
-    { id: 'Protein', title: t.calculators.protein.title, icon: <Stethoscope className="w-6 h-6" />, desc: t.calculators.protein.desc, hint: t.calculators.protein.hint },
-    { id: 'IdealWeight', title: t.calculators.idealWeight.title, icon: <Scale className="w-6 h-6" />, desc: t.calculators.idealWeight.desc, hint: t.calculators.idealWeight.hint },
-    { id: 'BodyFat', title: t.calculators.bodyFat.title, icon: <Percent className="w-6 h-6" />, desc: t.calculators.bodyFat.desc, hint: t.calculators.bodyFat.hint },
-    { id: 'Water', title: t.calculators.water.title, icon: <Droplets className="w-6 h-6" />, desc: t.calculators.water.desc, hint: t.calculators.water.hint },
-    { id: 'Deficit', title: t.calculators.deficit.title, icon: <Flame className="w-6 h-6" />, desc: t.calculators.deficit.desc, hint: t.calculators.deficit.hint },
-    { id: 'Meal', title: t.calculators.meal.title, icon: <Utensils className="w-6 h-6" />, desc: t.calculators.meal.desc, hint: t.calculators.meal.hint },
+    { id: 'BMI', group: 'assessment', title: t.calculators.bmi.title, icon: <Activity className="w-6 h-6" />, desc: t.calculators.bmi.desc, hint: t.calculators.bmi.hint },
+    { id: 'WHtR', group: 'assessment', title: t.calculators.whtr.title, icon: <Scale className="w-6 h-6" />, desc: t.calculators.whtr.desc, hint: t.calculators.whtr.hint },
+    { id: 'BodyFat', group: 'assessment', title: t.calculators.bodyFat.title, icon: <Percent className="w-6 h-6" />, desc: t.calculators.bodyFat.desc, hint: t.calculators.bodyFat.hint },
+    { id: 'IdealWeight', group: 'assessment', title: t.calculators.idealWeight.title, icon: <Scale className="w-6 h-6" />, desc: t.calculators.idealWeight.desc, hint: t.calculators.idealWeight.hint },
+    { id: 'BMR', group: 'metabolism', title: t.calculators.bmr.title, icon: <Calculator className="w-6 h-6" />, desc: t.calculators.bmr.desc, hint: t.calculators.bmr.hint },
+    { id: 'TDEE', group: 'metabolism', title: t.calculators.tdee.title, icon: <ClipboardList className="w-6 h-6" />, desc: t.calculators.tdee.desc, hint: t.calculators.tdee.hint },
+    { id: 'Deficit', group: 'metabolism', title: t.calculators.deficit.title, icon: <Flame className="w-6 h-6" />, desc: t.calculators.deficit.desc, hint: t.calculators.deficit.hint },
+    { id: 'Macros', group: 'nutrition', title: t.calculators.macros.title, icon: <HeartPulse className="w-6 h-6" />, desc: t.calculators.macros.desc, hint: t.calculators.macros.hint },
+    { id: 'Protein', group: 'nutrition', title: t.calculators.protein.title, icon: <Stethoscope className="w-6 h-6" />, desc: t.calculators.protein.desc, hint: t.calculators.protein.hint },
+    { id: 'Water', group: 'nutrition', title: t.calculators.water.title, icon: <Droplets className="w-6 h-6" />, desc: t.calculators.water.desc, hint: t.calculators.water.hint },
+    { id: 'Meal', group: 'planning', title: t.calculators.meal.title, icon: <Utensils className="w-6 h-6" />, desc: t.calculators.meal.desc, hint: t.calculators.meal.hint },
+  ];
+
+  const toolGroups = [
+    {
+      id: 'all',
+      label: lang === 'en' ? 'All tools' : 'كل الأدوات',
+      desc: lang === 'en' ? 'Browse everything' : 'عرض كل الأدوات',
+    },
+    {
+      id: 'assessment',
+      label: lang === 'en' ? 'Body assessment' : 'تقييم الجسم',
+      desc: lang === 'en' ? 'BMI, fat, waist metrics' : 'BMI والدهون والخصر',
+    },
+    {
+      id: 'metabolism',
+      label: lang === 'en' ? 'Calories & energy' : 'السعرات والطاقة',
+      desc: lang === 'en' ? 'BMR, TDEE, deficit' : 'BMR و TDEE والعجز',
+    },
+    {
+      id: 'nutrition',
+      label: lang === 'en' ? 'Nutrition targets' : 'أهداف التغذية',
+      desc: lang === 'en' ? 'Macros, protein, water' : 'الماكروز والبروتين والماء',
+    },
+    {
+      id: 'planning',
+      label: lang === 'en' ? 'Meal planning' : 'تخطيط الوجبات',
+      desc: lang === 'en' ? 'Build and total a meal' : 'ابنِ وجبة واحسبها',
+    },
+  ] as const;
+
+  const visibleCalculators = activeToolGroup === 'all'
+    ? calculators
+    : calculators.filter((calc) => calc.group === activeToolGroup);
+
+  const activeCalculatorMeta = calculators.find((c) => c.id === activeCalculator);
+
+  const quickSections = [
+    {
+      id: 'calculators',
+      title: lang === 'en' ? 'Clinical calculators' : 'الحاسبات السريرية',
+      desc: lang === 'en' ? 'Start with the right tool.' : 'ابدأ بالأداة المناسبة.',
+      icon: Calculator,
+    },
+    {
+      id: 'architect',
+      title: t.architect.title,
+      desc: lang === 'en' ? 'Get a broader recovery dashboard.' : 'احصل على لوحة تعافٍ أشمل.',
+      icon: Brain,
+    },
+    {
+      id: 'food-db',
+      title: t.foodDb.title,
+      desc: lang === 'en' ? 'Search foods and add them quickly.' : 'ابحث عن الأطعمة وأضفها بسرعة.',
+      icon: Search,
+    },
   ];
 
   const articles = getArticles(lang);
@@ -560,6 +616,26 @@ export default function App() {
 
       {/* Hero Section */}
       <Hero t={t} />
+
+      <section className="py-8 bg-white border-b border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {quickSections.map((section) => (
+              <a
+                key={section.id}
+                href={`#${section.id}`}
+                className="group rounded-3xl border border-slate-200 bg-slate-50 p-5 hover:bg-white hover:border-health-green/30 hover:shadow-lg transition-all"
+              >
+                <div className="w-11 h-11 rounded-2xl bg-soft-blue text-health-green flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                  <section.icon className="w-5 h-5" />
+                </div>
+                <h2 className="font-bold text-slate-900 mb-1">{section.title}</h2>
+                <p className="text-sm text-slate-600 leading-6">{section.desc}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* What's New Section */}
       <WhatsNew lang={lang} />
@@ -973,34 +1049,99 @@ export default function App() {
       {/* Calculators Section */}
       <section id="calculators" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-slate-900 mb-12">{t.calculators.sectionTitle}</h2>
+          <div className="flex flex-col gap-8 mb-12">
+            <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-health-green/10 text-health-green text-xs font-bold uppercase tracking-[0.18em] mb-4">
+                  <Calculator className="w-3.5 h-3.5" />
+                  <span>{lang === 'en' ? 'Tool hub' : 'مركز الأدوات'}</span>
+                </div>
+                <h2 className="text-3xl font-bold text-slate-900 mb-3">{t.calculators.sectionTitle}</h2>
+                <p className="text-slate-600 max-w-2xl">
+                  {lang === 'en'
+                    ? 'Choose a tool category first, then open the calculator that matches your goal.'
+                    : 'اختر فئة الأداة أولاً، ثم افتح الحاسبة المناسبة لهدفك.'}
+                </p>
+              </div>
+
+              <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5 lg:max-w-sm">
+                <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400 mb-2">
+                  {lang === 'en' ? 'Selected tool' : 'الأداة المختارة'}
+                </div>
+                <div className="font-bold text-slate-900 mb-1">
+                  {activeCalculatorMeta?.title || (lang === 'en' ? 'No tool selected yet' : 'لم يتم اختيار أداة بعد')}
+                </div>
+                <p className="text-sm text-slate-600 leading-6">
+                  {activeCalculatorMeta?.desc || (lang === 'en' ? 'Pick a calculator to see only the inputs you need.' : 'اختر حاسبة لعرض الحقول المطلوبة فقط.')}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-3">
+              {toolGroups.map((group) => (
+                <button
+                  key={group.id}
+                  onClick={() => setActiveToolGroup(group.id)}
+                  className={`rounded-2xl border px-4 py-3 text-left transition-all ${
+                    activeToolGroup === group.id
+                      ? 'border-health-green bg-soft-blue text-health-green shadow-sm'
+                      : 'border-slate-200 bg-white text-slate-600 hover:border-health-green/30'
+                  }`}
+                >
+                  <div className="font-bold text-sm">{group.label}</div>
+                  <div className="text-xs mt-1 opacity-80">{group.desc}</div>
+                </button>
+              ))}
+            </div>
+          </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-12">
-            {calculators.map((calc) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mb-12">
+            {visibleCalculators.map((calc) => (
               <button 
                 key={calc.id}
-                onClick={() => { setActiveCalculator(calc.id as CalculatorType); resetForm(); document.getElementById('calculators')?.scrollIntoView({ behavior: 'smooth' }); }}
+                onClick={() => {
+                  setActiveCalculator(calc.id as CalculatorType);
+                  resetForm();
+                  document.getElementById('calculators')?.scrollIntoView({ behavior: 'smooth' });
+                }}
                 aria-label={calc.title}
-                className={`medical-card p-4 md:p-6 flex flex-col items-start text-left transition-all relative group ${activeCalculator === calc.id ? 'ring-2 ring-health-green bg-soft-blue' : ''}`}
+                className={`medical-card p-5 md:p-6 flex flex-col items-start text-left transition-all relative group ${activeCalculator === calc.id ? 'ring-2 ring-health-green bg-soft-blue' : ''}`}
               >
-                <div className={`p-2 md:p-3 rounded-xl mb-3 md:mb-4 ${activeCalculator === calc.id ? 'bg-health-green text-white' : 'bg-soft-blue text-health-green'}`}>
-                  {calc.icon}
+                <div className="flex items-start justify-between w-full gap-3 mb-4">
+                  <div className={`p-3 rounded-2xl ${activeCalculator === calc.id ? 'bg-health-green text-white' : 'bg-soft-blue text-health-green'}`}>
+                    {calc.icon}
+                  </div>
+                  <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">
+                    {toolGroups.find((group) => group.id === calc.group)?.label}
+                  </span>
                 </div>
-                <h3 className="font-bold text-slate-900 mb-1 text-sm md:text-base flex items-center gap-2">
+                <h3 className="font-bold text-slate-900 mb-2 text-base flex items-center gap-2">
                   {calc.title}
                   <div className="opacity-0 group-hover:opacity-100 transition-opacity">
                     <HelpCircle className="w-3 h-3 text-slate-400" />
                   </div>
                 </h3>
-                <p className="text-xs text-slate-500 hidden md:block">{calc.desc}</p>
-                
-                {/* Tooltip */}
-                <div className="absolute bottom-full left-0 mb-2 w-48 p-2 bg-slate-900 text-white text-[10px] rounded-lg opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-10 shadow-xl">
+                <p className="text-sm text-slate-600 leading-6 mb-3">{calc.desc}</p>
+                <div className="text-xs font-medium text-slate-400">
                   {calc.hint}
                 </div>
+                <div className="absolute inset-0 rounded-2xl ring-0 ring-health-green/10 group-hover:ring-4 pointer-events-none transition-all" />
               </button>
             ))}
           </div>
+
+          {!activeCalculator && (
+            <div className="mb-10 rounded-3xl border border-dashed border-slate-200 bg-slate-50 p-6 text-center">
+              <div className="font-bold text-slate-900 mb-2">
+                {lang === 'en' ? 'Pick a calculator to continue' : 'اختر حاسبة للمتابعة'}
+              </div>
+              <p className="text-sm text-slate-600 max-w-2xl mx-auto">
+                {lang === 'en'
+                  ? 'The form below adapts automatically based on the selected tool, so you only see the relevant inputs.'
+                  : 'النموذج بالأسفل يتغير تلقائيًا حسب الأداة المختارة، حتى ترى فقط الحقول المهمة.'}
+              </p>
+            </div>
+          )}
 
           <AnimatePresence mode="wait">
             {activeCalculator && (
@@ -1011,9 +1152,25 @@ export default function App() {
                 className="bg-slate-50 rounded-3xl p-6 md:p-8 border border-slate-200"
               >
                 <div className="max-w-2xl mx-auto">
-                  <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
-                    {calculators.find(c => c.id === activeCalculator)?.title}
-                  </h3>
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
+                    <div>
+                      <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-health-green mb-2">
+                        {toolGroups.find((group) => group.id === activeCalculatorMeta?.group)?.label}
+                      </div>
+                      <h3 className="text-2xl font-bold flex items-center gap-2">
+                        {activeCalculatorMeta?.title}
+                      </h3>
+                      <p className="text-sm text-slate-600 mt-2 leading-6">
+                        {activeCalculatorMeta?.desc}
+                      </p>
+                    </div>
+                    <button
+                      onClick={resetForm}
+                      className="px-4 py-2 rounded-xl border border-slate-200 text-slate-600 hover:border-health-green hover:text-health-green transition-all text-sm font-bold"
+                    >
+                      {lang === 'en' ? 'Clear inputs' : 'مسح الحقول'}
+                    </button>
+                  </div>
                   
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
                     <div className="space-y-2 sm:col-span-2">

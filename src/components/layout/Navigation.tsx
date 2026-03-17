@@ -4,10 +4,9 @@ import {
   BookOpen,
   Brain,
   HeartPulse,
-  Info,
   Menu,
-  X,
   Stethoscope,
+  X,
 } from 'lucide-react';
 import {Link} from 'react-router-dom';
 import type {Language} from '../../services/translations';
@@ -40,12 +39,10 @@ const Navigation = memo(
     isSidebarOpen: boolean;
     setIsSidebarOpen: (open: boolean) => void;
   }) => {
-    
-    // اللوجو دلوقت بقى جواه اللينك بتاعه عشان يشتغل في أي مكان
     const BrandLogo = () => (
-      <Link 
-        to="/" 
-        onClick={() => setIsSidebarOpen(false)} 
+      <Link
+        to="/"
+        onClick={() => setIsSidebarOpen(false)}
         className="flex items-center gap-2 group cursor-pointer"
       >
         <div className="bg-health-green p-1.5 rounded-xl group-hover:rotate-12 transition-transform duration-300 shadow-sm">
@@ -67,7 +64,6 @@ const Navigation = memo(
 
     return (
       <>
-        {/* Sidebar Navigation */}
         <AnimatePresence>
           {isSidebarOpen && (
             <>
@@ -88,7 +84,6 @@ const Navigation = memo(
                 } bottom-0 w-80 bg-white z-[70] shadow-2xl flex flex-col`}
               >
                 <div className="p-6 border-b border-slate-100 flex items-center justify-between">
-                  {/* استدعاء اللوجو باللينك بتاعه */}
                   <BrandLogo />
                   <button
                     onClick={() => setIsSidebarOpen(false)}
@@ -103,8 +98,8 @@ const Navigation = memo(
                     <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 px-2">
                       {lang === 'en' ? 'Clinical Support' : 'الدعم السريري'}
                     </h3>
-                    <Link 
-                      to="/assistant" 
+                    <Link
+                      to="/assistant"
                       onClick={() => setIsSidebarOpen(false)}
                       className="flex items-center justify-between p-4 bg-slate-50 text-slate-700 rounded-2xl border border-slate-200 hover:border-health-green/30 hover:bg-white transition-all group"
                     >
@@ -113,8 +108,12 @@ const Navigation = memo(
                           <Stethoscope className="w-5 h-5 text-health-green group-hover:text-white" />
                         </div>
                         <div className="flex flex-col">
-                          <span className="font-bold text-sm">{lang === 'en' ? 'Clinical Assistant' : 'المساعد السريري'}</span>
-                          <span className="text-[10px] text-slate-400 font-medium italic">Evidence-based AI</span>
+                          <span className="font-bold text-sm">
+                            {lang === 'en' ? 'Clinical Assistant' : 'المساعد السريري'}
+                          </span>
+                          <span className="text-[10px] text-slate-400 font-medium italic">
+                            Evidence-based AI
+                          </span>
                         </div>
                       </div>
                       <span className="px-1.5 py-0.5 rounded-full text-[8px] font-black bg-slate-200 text-slate-600 uppercase">
@@ -141,9 +140,7 @@ const Navigation = memo(
                           <div className="p-2 rounded-lg bg-slate-50 group-hover:bg-white transition-colors">
                             {calc.icon}
                           </div>
-                          <span className="font-medium text-sm">
-                            {calc.title}
-                          </span>
+                          <span className="font-medium text-sm">{calc.title}</span>
                         </button>
                       ))}
                     </div>
@@ -184,12 +181,36 @@ const Navigation = memo(
                       {lang === 'en' ? 'Language' : 'اللغة'}
                     </span>
                     <div className="flex items-center gap-1 bg-white p-1 rounded-full border border-slate-200">
-                      <button onClick={() => setLang('en')} className={`px-3 py-1 rounded-full text-[10px] font-black ${lang === 'en' ? 'bg-health-green text-white shadow-md' : 'text-slate-400'}`}>EN</button>
-                      <button onClick={() => setLang('ar')} className={`px-3 py-1 rounded-full text-[10px] font-black ${lang === 'ar' ? 'bg-health-green text-white shadow-md' : 'text-slate-400'}`}>AR</button>
+                      <button
+                        onClick={() => setLang('en')}
+                        className={`px-3 py-1 rounded-full text-[10px] font-black ${
+                          lang === 'en'
+                            ? 'bg-health-green text-white shadow-md'
+                            : 'text-slate-400'
+                        }`}
+                      >
+                        EN
+                      </button>
+                      <button
+                        onClick={() => setLang('ar')}
+                        className={`px-3 py-1 rounded-full text-[10px] font-black ${
+                          lang === 'ar'
+                            ? 'bg-health-green text-white shadow-md'
+                            : 'text-slate-400'
+                        }`}
+                      >
+                        AR
+                      </button>
                     </div>
                   </div>
-                  <button className="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-sm hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/10">
-                    {t.nav.getStarted}
+                  <button
+                    onClick={() => {
+                      setIsSidebarOpen(false);
+                      scrollToId('calculators');
+                    }}
+                    className="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-sm hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/10"
+                  >
+                    {lang === 'en' ? 'Open calculators' : 'افتح الحاسبات'}
                   </button>
                 </div>
               </motion.div>
@@ -197,7 +218,6 @@ const Navigation = memo(
           )}
         </AnimatePresence>
 
-        {/* Navigation Bar */}
         <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <button
@@ -206,20 +226,24 @@ const Navigation = memo(
             >
               <Menu className="w-6 h-6" />
             </button>
-            
-            {/* اللوجو هنا بيشتغل فوراً كـ Link */}
             <BrandLogo />
           </div>
 
           <div className="flex items-center gap-3 lg:gap-8">
             <div className="hidden lg:flex items-center gap-8">
-              <a href="#calculators" className="nav-link">{t.nav.calculators}</a>
-              <a href="#blog" className="nav-link">{t.nav.insights}</a>
-              <a href="#about" className="nav-link">{t.nav.about}</a>
+              <a href="#calculators" className="nav-link">
+                {t.nav.calculators}
+              </a>
+              <a href="#blog" className="nav-link">
+                {t.nav.insights}
+              </a>
+              <a href="#about" className="nav-link">
+                {t.nav.about}
+              </a>
             </div>
 
-            <Link 
-              to="/assistant" 
+            <Link
+              to="/assistant"
               className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 text-slate-700 rounded-xl border border-slate-200 hover:border-health-green/30 hover:bg-white transition-all shadow-sm group"
             >
               <Stethoscope className="w-4 h-4 text-health-green group-hover:scale-110 transition-transform" />
@@ -231,12 +255,29 @@ const Navigation = memo(
             <div className="h-6 w-px bg-slate-200 hidden sm:block" />
 
             <div className="hidden sm:flex items-center gap-1 bg-slate-100 p-1 rounded-full border border-slate-200">
-              <button onClick={() => setLang('en')} className={`px-3 py-1 rounded-full text-xs font-bold ${lang === 'en' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'}`}>EN</button>
-              <button onClick={() => setLang('ar')} className={`px-3 py-1 rounded-full text-xs font-bold ${lang === 'ar' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'}`}>AR</button>
+              <button
+                onClick={() => setLang('en')}
+                className={`px-3 py-1 rounded-full text-xs font-bold ${
+                  lang === 'en' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'
+                }`}
+              >
+                EN
+              </button>
+              <button
+                onClick={() => setLang('ar')}
+                className={`px-3 py-1 rounded-full text-xs font-bold ${
+                  lang === 'ar' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'
+                }`}
+              >
+                AR
+              </button>
             </div>
 
-            <button className="hidden md:block bg-health-green text-white px-5 py-2 rounded-full font-semibold hover:bg-health-green-dark transition-all shadow-md shadow-health-green/10">
-              {t.nav.getStarted}
+            <button
+              onClick={() => scrollToId('calculators')}
+              className="hidden md:block bg-health-green text-white px-5 py-2 rounded-full font-semibold hover:bg-health-green-dark transition-all shadow-md shadow-health-green/10"
+            >
+              {lang === 'en' ? 'Start assessment' : 'ابدأ التقييم'}
             </button>
           </div>
         </nav>

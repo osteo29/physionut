@@ -1,6 +1,6 @@
-import {useMemo, useRef, useState} from 'react';
+import {type KeyboardEvent, useMemo, useRef, useState} from 'react';
 import {motion} from 'motion/react';
-import {SendHorizonal} from 'lucide-react';
+import {CornerDownLeft, SendHorizonal, Sparkles} from 'lucide-react';
 import {askGeminiText, trackAiQuestion} from '../../ai/gemini';
 
 type ChatMessage = {
@@ -40,16 +40,17 @@ export default function ChatPanel({
   quickActions?: Array<{label: string; prompt: string}>;
 }) {
   const [messages, setMessages] = useState<ChatMessage[]>(
-    initialMessage
-      ? [{role: 'assistant', text: initialMessage}]
-      : [],
+    initialMessage ? [{role: 'assistant', text: initialMessage}] : [],
   );
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
-  const canSend = useMemo(() => input.trim().length > 0 && !isLoading, [input, isLoading]);
+  const canSend = useMemo(
+    () => input.trim().length > 0 && !isLoading,
+    [input, isLoading],
+  );
 
   const scrollToBottom = () => {
     bottomRef.current?.scrollIntoView({behavior: 'smooth'});
@@ -71,13 +72,20 @@ export default function ChatPanel({
         user: q,
         hiddenContext,
       });
-      setMessages((prev) => [...prev, {role: 'assistant', text: answer || '—'}]);
+      setMessages((prev) => [...prev, {role: 'assistant', text: answer || '-'}]);
       setTimeout(scrollToBottom, 0);
     } catch (e: any) {
       setError(e?.message || (lang === 'ar' ? 'خطأ في الذكاء الاصطناعي' : 'AI error'));
     } finally {
       setIsLoading(false);
       setTimeout(scrollToBottom, 0);
+    }
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      void onSend();
     }
   };
 
@@ -89,16 +97,30 @@ export default function ChatPanel({
         <div className="px-5 py-4 border-b border-slate-200 bg-soft-blue flex items-center justify-between">
           <div className="font-black text-slate-900">{title}</div>
           <div className="text-xs font-bold text-slate-500">
-            {isLoading ? (isAr ? 'جارٍ التفكير…' : 'Thinking…') : (isAr ? 'جاهز' : 'Ready')}
+            {isLoading
+              ? isAr
+                ? 'جارٍ التفكير...'
+                : 'Thinking...'
+              : isAr
+                ? 'جاهز'
+                : 'Ready'}
           </div>
         </div>
 
-        <div className="p-5 space-y-3 max-h-[420px] overflow-y-auto">
+        <div className="p-5 space-y-3 max-h-[420px] overflow-y-auto bg-[linear-gradient(180deg,rgba(240,249,255,0.55),rgba(255,255,255,0))]">
           {messages.length === 0 ? (
-            <div className="text-sm text-slate-500">
-              {isAr
-                ? 'اسأل سؤالاً للحصول على شرح سريري مبسّط.'
-                : 'Ask a question to get a clinically grounded explanation.'}
+            <div className="rounded-3xl border border-dashed border-slate-200 bg-white/80 p-5">
+              <div className="flex items-center gap-2 text-slate-900 font-bold mb-2">
+                <Sparkles className="w-4 h-4 text-health-green" />
+                {isAr
+                  ? 'ابدأ بسؤال واضح لتحصل على إجابة عملية'
+                  : 'Start with a clear question for a practical answer'}
+              </div>
+              <p className="text-sm text-slate-500 leading-6">
+                {isAr
+                  ? 'كلما كان سؤالك أكثر تحديدًا، كانت الإجابة أوضح وأسهل للتطبيق.'
+                  : 'The more specific the question, the more useful and actionable the answer will be.'}
+              </p>
             </div>
           ) : (
             messages.map((m, idx) => (
@@ -132,14 +154,17 @@ export default function ChatPanel({
           <div ref={bottomRef} />
         </div>
 
-        {messages.length === 0 && quickActions && quickActions.length > 0 && (
+        {quickActions && quickActions.length > 0 && (
           <div className="px-5 pb-2">
+            <div className="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400 mb-2">
+              {isAr ? 'اقتراحات سريعة' : 'Quick prompts'}
+            </div>
             <div className="flex flex-wrap gap-2">
               {quickActions.slice(0, 3).map((a, i) => (
                 <button
                   key={i}
                   onClick={() => setInput(a.prompt)}
-                  className="px-3 py-2 rounded-xl text-xs font-black border border-slate-200 bg-white hover:bg-soft-blue text-slate-700"
+                  className="px-3 py-2 rounded-xl text-xs font-black border border-slate-200 bg-white hover:bg-soft-blue text-slate-700 text-left"
                 >
                   {a.label}
                 </button>
@@ -148,19 +173,16 @@ export default function ChatPanel({
           </div>
         )}
 
-        {error && (
-          <div className="px-5 pb-0 text-sm text-rose-600 font-semibold">
-            {error}
-          </div>
-        )}
+        {error && <div className="px-5 pb-0 text-sm text-rose-600 font-semibold">{error}</div>}
 
         <div className="p-5 pt-4 border-t border-slate-200 bg-white">
           <div className="flex items-end gap-3">
             <textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
               rows={2}
-              placeholder={isAr ? 'اكتب سؤالك…' : 'Type your question…'}
+              placeholder={isAr ? 'اكتب سؤالك هنا...' : 'Type your question here...'}
               className="flex-1 resize-none rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-health-green/30"
             />
             <button
@@ -177,12 +199,17 @@ export default function ChatPanel({
             </button>
           </div>
 
-          <div className="mt-3 text-[11px] text-slate-500">
-            {disclaimer}
+          <div className="mt-3 flex flex-col gap-2 text-[11px] text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+            <span className="inline-flex items-center gap-1">
+              <CornerDownLeft className="w-3 h-3" />
+              {isAr
+                ? 'اضغط Enter للإرسال و Shift+Enter لسطر جديد'
+                : 'Press Enter to send and Shift+Enter for a new line'}
+            </span>
+            <span>{disclaimer}</span>
           </div>
         </div>
       </div>
     </div>
   );
 }
-
