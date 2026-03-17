@@ -7,14 +7,23 @@ export type GeminiAskParams = {
 };
 
 function getApiKey(): string | null {
-  const key = (process.env as any)?.GEMINI_API_KEY;
-  return typeof key === 'string' && key.trim().length > 0 ? key.trim() : null;
+  // Vite client-side env vars must be prefixed with VITE_
+  const viteKey = (import.meta as any)?.env?.VITE_GEMINI_API_KEY;
+  if (typeof viteKey === 'string' && viteKey.trim().length > 0) return viteKey.trim();
+
+  // Fallbacks for environments that inject process.env at runtime
+  const envKey =
+    (globalThis as any)?.process?.env?.GEMINI_API_KEY ??
+    (globalThis as any)?.process?.env?.VITE_GEMINI_API_KEY;
+  if (typeof envKey === 'string' && envKey.trim().length > 0) return envKey.trim();
+
+  return null;
 }
 
 export async function askGeminiText(params: GeminiAskParams): Promise<string> {
   const apiKey = getApiKey();
   if (!apiKey) {
-    throw new Error('Missing GEMINI_API_KEY');
+    throw new Error('Missing GEMINI API key (set VITE_GEMINI_API_KEY)');
   }
 
   const ai = new GoogleGenAI({apiKey});
