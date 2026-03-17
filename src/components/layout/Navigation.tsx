@@ -3,6 +3,8 @@ import {AnimatePresence, motion} from 'motion/react';
 import {
   BookOpen,
   Brain,
+  Pill,
+  Search,
   HeartPulse,
   Menu,
   Stethoscope,
@@ -160,6 +162,30 @@ const Navigation = memo(
                           <Brain className="w-5 h-5" />
                         </div>
                         <span className="font-medium text-sm">{t.architect.title}</span>
+                      </a>
+                      <a
+                        href="#food-db"
+                        onClick={() => setIsSidebarOpen(false)}
+                        className="flex items-center gap-3 p-3 rounded-xl hover:bg-amber-50 text-slate-600 hover:text-amber-600 transition-all group"
+                      >
+                        <div className="p-2 rounded-lg bg-slate-50 group-hover:bg-white transition-colors">
+                          <Search className="w-5 h-5" />
+                        </div>
+                        <span className="font-medium text-sm">
+                          {lang === 'en' ? 'Food Data' : 'قاعدة بيانات الطعام'}
+                        </span>
+                      </a>
+                      <a
+                        href="#drug-nutrient-checker"
+                        onClick={() => setIsSidebarOpen(false)}
+                        className="flex items-center gap-3 p-3 rounded-xl hover:bg-rose-50 text-slate-600 hover:text-rose-600 transition-all group"
+                      >
+                        <div className="p-2 rounded-lg bg-slate-50 group-hover:bg-white transition-colors">
+                          <Pill className="w-5 h-5" />
+                        </div>
+                        <span className="font-medium text-sm">
+                          {lang === 'en' ? 'Drug-Nutrient Checker' : 'فحص تداخلات الدواء والغذاء'}
+                        </span>
                       </a>
                       <a
                         href="#blog"

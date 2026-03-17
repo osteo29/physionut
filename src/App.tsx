@@ -251,6 +251,19 @@ export default function App() {
     return () => clearTimeout(t);
   }, [justCalculated]);
 
+  useEffect(() => {
+    if (!activeCalculator) return;
+
+    const t = setTimeout(() => {
+      document.getElementById('calculator-workspace')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }, 180);
+
+    return () => clearTimeout(t);
+  }, [activeCalculator]);
+
   const resetForm = () => {
     setWeight('');
     setHeight('');
@@ -1102,7 +1115,6 @@ export default function App() {
                 onClick={() => {
                   setActiveCalculator(calc.id as CalculatorType);
                   resetForm();
-                  document.getElementById('calculators')?.scrollIntoView({ behavior: 'smooth' });
                 }}
                 aria-label={calc.title}
                 className={`medical-card p-5 md:p-6 flex flex-col items-start text-left transition-all relative group ${activeCalculator === calc.id ? 'ring-2 ring-health-green bg-soft-blue' : ''}`}
@@ -1149,6 +1161,7 @@ export default function App() {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
+                id="calculator-workspace"
                 className="bg-slate-50 rounded-3xl p-6 md:p-8 border border-slate-200"
               >
                 <div className="max-w-2xl mx-auto">
