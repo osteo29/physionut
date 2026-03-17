@@ -20,7 +20,6 @@ import WhatsNew from './components/home/WhatsNew';
 import Footer from './components/layout/Footer';
 import Navigation from './components/layout/Navigation';
 import AboutSection from './components/home/AboutSection';
-import NewsletterSection from './components/home/NewsletterSection';
 import BlogSection from './components/home/BlogSection';
 import AskAboutResultChat from './components/ai/AskAboutResultChat';
 import DrugNutrientChecker from './components/ai/DrugNutrientChecker';
