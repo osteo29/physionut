@@ -1,4 +1,5 @@
 import {memo} from 'react';
+import {Link} from 'react-router-dom';
 import {
   Facebook,
   Github,
@@ -93,17 +94,32 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
               {[
                 {label: t.footer.links.about, href: '#about'},
                 {label: t.footer.links.contact, href: '#contact'},
-                {label: t.footer.links.privacy, href: '/privacy'},
-                {label: t.footer.links.terms, href: '/terms'},
+                {label: t.footer.links.privacy, href: '/privacy', isRoute: true},
+                {label: t.footer.links.terms, href: '/terms', isRoute: true},
+                {
+                  label: lang === 'en' ? 'Medical Disclaimer' : 'إخلاء المسؤولية الطبي',
+                  href: '/disclaimer',
+                  isRoute: true,
+                },
               ].map((link, idx) => (
                 <li key={idx}>
-                  <a
-                    href={link.href}
-                    className="text-slate-400 hover:text-health-green transition-colors flex items-center gap-2 group"
-                  >
-                    <div className="w-1.5 h-1.5 rounded-full bg-health-green scale-0 group-hover:scale-100 transition-transform" />
-                    {link.label}
-                  </a>
+                  {link.isRoute ? (
+                    <Link
+                      to={link.href}
+                      className="text-slate-400 hover:text-health-green transition-colors flex items-center gap-2 group"
+                    >
+                      <div className="w-1.5 h-1.5 rounded-full bg-health-green scale-0 group-hover:scale-100 transition-transform" />
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <a
+                      href={link.href}
+                      className="text-slate-400 hover:text-health-green transition-colors flex items-center gap-2 group"
+                    >
+                      <div className="w-1.5 h-1.5 rounded-full bg-health-green scale-0 group-hover:scale-100 transition-transform" />
+                      {link.label}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
@@ -187,24 +203,34 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
             © {currentYear} PhysioHub. {t.footer.rights}
           </p>
           <div className="flex items-center gap-8">
-            <a
-              href="/privacy"
+            <Link
+              replace
+              to="/privacy"
               className="text-slate-500 hover:text-white text-sm transition-colors"
             >
               {t.footer.links.privacy}
-            </a>
-            <a
-              href="/terms"
+            </Link>
+            <Link
+              replace
+              to="/terms"
               className="text-slate-500 hover:text-white text-sm transition-colors"
             >
               {t.footer.links.terms}
-            </a>
-            <a
-              href="/cookies"
+            </Link>
+            <Link
+              replace
+              to="/cookies"
               className="text-slate-500 hover:text-white text-sm transition-colors"
             >
               {lang === 'en' ? 'Cookie Policy' : 'سياسة ملفات الارتباط'}
-            </a>
+            </Link>
+            <Link
+              replace
+              to="/disclaimer"
+              className="text-slate-500 hover:text-white text-sm transition-colors"
+            >
+              {lang === 'en' ? 'Medical Disclaimer' : 'إخلاء المسؤولية الطبي'}
+            </Link>
           </div>
         </div>
       </div>
