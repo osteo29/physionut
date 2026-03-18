@@ -1,4 +1,4 @@
-import {ReactNode, memo} from 'react';
+import {type ReactNode, memo} from 'react';
 import {AnimatePresence, motion} from 'motion/react';
 import {
   BarChart3,
@@ -48,25 +48,24 @@ const Navigation = memo(
     isSidebarOpen: boolean;
     setIsSidebarOpen: (open: boolean) => void;
   }) => {
-    const BrandLogo = () => (
+    const isAr = lang === 'ar';
+
+    const brand = (
       <Link
         to="/"
         onClick={() => setIsSidebarOpen(false)}
-        className="flex items-center gap-2 group cursor-pointer"
+        className="group flex items-center gap-2"
       >
-        <div className="bg-health-green p-1.5 rounded-xl group-hover:rotate-12 transition-transform duration-300 shadow-sm">
-          <HeartPulse className="w-5 h-5 text-white" />
+        <div className="rounded-xl bg-health-green p-1.5 shadow-sm transition-transform duration-300 group-hover:rotate-6">
+          <HeartPulse className="h-5 w-5 text-white" />
         </div>
-        <div className="flex flex-col justify-center text-left">
-          <span className="text-lg font-black leading-[0.8] tracking-tight text-slate-900 italic">
+        <div className="flex flex-col text-left">
+          <span className="text-base font-black leading-[0.85] tracking-tight text-slate-900 sm:text-lg">
             PHYSIO
           </span>
-          <div className="flex items-center gap-1">
-            <span className="text-[10px] font-bold tracking-[0.15em] text-health-green uppercase">
-              Nutrition
-            </span>
-            <div className="h-[1px] w-3 bg-health-green/30" />
-          </div>
+          <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-health-green">
+            Nutrition
+          </span>
         </div>
       </Link>
     );
@@ -74,68 +73,65 @@ const Navigation = memo(
     return (
       <>
         <AnimatePresence>
-          {isSidebarOpen && (
+          {isSidebarOpen ? (
             <>
               <motion.div
                 initial={{opacity: 0}}
                 animate={{opacity: 1}}
                 exit={{opacity: 0}}
                 onClick={() => setIsSidebarOpen(false)}
-                className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60]"
+                className="fixed inset-0 z-[60] bg-slate-900/60 backdrop-blur-sm"
               />
-              <motion.div
-                initial={{x: lang === 'ar' ? '100%' : '-100%'}}
+              <motion.aside
+                initial={{x: isAr ? '100%' : '-100%'}}
                 animate={{x: 0}}
-                exit={{x: lang === 'ar' ? '100%' : '-100%'}}
-                transition={{type: 'spring', damping: 25, stiffness: 200}}
-                className={`fixed top-0 ${
-                  lang === 'ar' ? 'right-0' : 'left-0'
-                } bottom-0 w-80 bg-white z-[70] shadow-2xl flex flex-col`}
+                exit={{x: isAr ? '100%' : '-100%'}}
+                transition={{type: 'spring', damping: 24, stiffness: 220}}
+                className={`fixed top-0 z-[70] flex h-full w-[88vw] max-w-sm flex-col bg-white shadow-2xl ${
+                  isAr ? 'right-0' : 'left-0'
+                }`}
               >
-                <div className="p-6 border-b border-slate-100 flex items-center justify-between">
-                  <BrandLogo />
+                <div className="flex items-center justify-between border-b border-slate-100 p-5">
+                  {brand}
                   <button
                     onClick={() => setIsSidebarOpen(false)}
-                    className="p-2 hover:bg-slate-100 rounded-full transition-colors"
+                    className="rounded-full p-2 text-slate-500 transition-colors hover:bg-slate-100"
                   >
-                    <X className="w-5 h-5 text-slate-500" />
+                    <X className="h-5 w-5" />
                   </button>
                 </div>
 
-                <div className="flex-1 overflow-y-auto p-6 space-y-8">
-                  <div>
-                    <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 px-2">
-                      {lang === 'en' ? 'Clinical Support' : 'الدعم السريري'}
-                    </h3>
-                    <Link
-                      to="/assistant"
-                      onClick={() => setIsSidebarOpen(false)}
-                      className="flex items-center justify-between p-4 bg-slate-50 text-slate-700 rounded-2xl border border-slate-200 hover:border-health-green/30 hover:bg-white transition-all group"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 rounded-lg bg-white shadow-sm group-hover:bg-health-green group-hover:text-white transition-colors">
-                          <Stethoscope className="w-5 h-5 text-health-green group-hover:text-white" />
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="font-bold text-sm">
-                            {lang === 'en' ? 'Clinical Assistant' : 'المساعد السريري'}
-                          </span>
-                          <span className="text-[10px] text-slate-400 font-medium italic">
-                            Evidence-based AI
-                          </span>
-                        </div>
-                      </div>
-                      <span className="px-1.5 py-0.5 rounded-full text-[8px] font-black bg-slate-200 text-slate-600 uppercase">
-                        Beta
-                      </span>
-                    </Link>
+                <div className="flex-1 space-y-7 overflow-y-auto p-5">
+                  <div className="rounded-[1.75rem] border border-slate-200 bg-slate-50 p-4">
+                    <div className="mb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400">
+                      {isAr ? 'ابدأ بسرعة' : 'Quick start'}
+                    </div>
+                    <div className="grid grid-cols-1 gap-2">
+                      <button
+                        onClick={() => {
+                          setIsSidebarOpen(false);
+                          scrollToId('calculators');
+                        }}
+                        className="rounded-2xl bg-health-green px-4 py-3 text-sm font-bold text-white transition-all hover:bg-health-green-dark"
+                      >
+                        {isAr ? 'افتح الحاسبات' : 'Open calculators'}
+                      </button>
+                      <Link
+                        to="/assistant"
+                        onClick={() => setIsSidebarOpen(false)}
+                        className="flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-700 transition-all hover:border-health-green/30"
+                      >
+                        <Stethoscope className="h-4 w-4 text-health-green" />
+                        <span>{isAr ? 'المساعد السريري' : 'Clinical assistant'}</span>
+                      </Link>
+                    </div>
                   </div>
 
                   <div>
-                    <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 px-2">
+                    <h3 className="mb-3 px-1 text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400">
                       {t.nav.calculators}
                     </h3>
-                    <div className="grid grid-cols-1 gap-1">
+                    <div className="grid grid-cols-1 gap-2">
                       {calculators.map((calc) => (
                         <button
                           key={calc.id}
@@ -144,104 +140,97 @@ const Navigation = memo(
                             setIsSidebarOpen(false);
                             scrollToId('calculators');
                           }}
-                          className="flex items-center gap-3 p-3 rounded-xl hover:bg-soft-blue text-slate-600 hover:text-health-green transition-all group"
+                          className="flex items-center gap-3 rounded-2xl border border-transparent bg-slate-50 p-3 text-left text-slate-700 transition-all hover:border-health-green/20 hover:bg-soft-blue"
                         >
-                          <div className="p-2 rounded-lg bg-slate-50 group-hover:bg-white transition-colors">
+                          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-health-green shadow-sm">
                             {calc.icon}
                           </div>
-                          <span className="font-medium text-sm">{calc.title}</span>
+                          <span className="text-sm font-semibold">{calc.title}</span>
                         </button>
                       ))}
                     </div>
                   </div>
 
                   <div>
-                    <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 px-2">
-                      {lang === 'en' ? 'Main Sections' : 'الأقسام الرئيسية'}
+                    <h3 className="mb-3 px-1 text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400">
+                      {isAr ? 'الأقسام الرئيسية' : 'Main sections'}
                     </h3>
-                    <div className="space-y-1">
-                      <a
-                        href="#architect"
-                        onClick={() => setIsSidebarOpen(false)}
-                        className="flex items-center gap-3 p-3 rounded-xl hover:bg-medical-blue/5 text-slate-600 hover:text-medical-blue transition-all group"
-                      >
-                        <div className="p-2 rounded-lg bg-slate-50 group-hover:bg-white transition-colors">
-                          <Brain className="w-5 h-5" />
-                        </div>
-                        <span className="font-medium text-sm">{t.architect.title}</span>
-                      </a>
-                      <a
-                        href="#food-db"
-                        onClick={() => setIsSidebarOpen(false)}
-                        className="flex items-center gap-3 p-3 rounded-xl hover:bg-amber-50 text-slate-600 hover:text-amber-600 transition-all group"
-                      >
-                        <div className="p-2 rounded-lg bg-slate-50 group-hover:bg-white transition-colors">
-                          <Search className="w-5 h-5" />
-                        </div>
-                        <span className="font-medium text-sm">
-                          {lang === 'en' ? 'Food Data' : 'قاعدة بيانات الطعام'}
-                        </span>
-                      </a>
-                      <a
-                        href="#drug-nutrient-checker"
-                        onClick={() => setIsSidebarOpen(false)}
-                        className="flex items-center gap-3 p-3 rounded-xl hover:bg-rose-50 text-slate-600 hover:text-rose-600 transition-all group"
-                      >
-                        <div className="p-2 rounded-lg bg-slate-50 group-hover:bg-white transition-colors">
-                          <Pill className="w-5 h-5" />
-                        </div>
-                        <span className="font-medium text-sm">
-                          {lang === 'en' ? 'Drug-Nutrient Checker' : 'فحص تداخلات الدواء والغذاء'}
-                        </span>
-                      </a>
-                      <a
-                        href="/dashboard"
-                        onClick={() => setIsSidebarOpen(false)}
-                        className="flex items-center gap-3 p-3 rounded-xl hover:bg-soft-blue text-slate-600 hover:text-health-green transition-all group"
-                      >
-                        <div className="p-2 rounded-lg bg-slate-50 group-hover:bg-white transition-colors">
-                          <BarChart3 className="w-5 h-5" />
-                        </div>
-                        <span className="font-medium text-sm">
-                          {lang === 'en' ? 'Tracking Dashboard' : 'لوحة المتابعة'}
-                        </span>
-                      </a>
-                      <a
-                        href="#blog"
-                        onClick={() => setIsSidebarOpen(false)}
-                        className="flex items-center gap-3 p-3 rounded-xl hover:bg-health-green/5 text-slate-600 hover:text-health-green transition-all group"
-                      >
-                        <div className="p-2 rounded-lg bg-slate-50 group-hover:bg-white transition-colors">
-                          <BookOpen className="w-5 h-5" />
-                        </div>
-                        <span className="font-medium text-sm">{t.nav.insights}</span>
-                      </a>
+                    <div className="grid grid-cols-1 gap-2">
+                      {[
+                        {
+                          href: '#architect',
+                          icon: <Brain className="h-5 w-5" />,
+                          label: t.architect.title,
+                        },
+                        {
+                          href: '#food-db',
+                          icon: <Search className="h-5 w-5" />,
+                          label: isAr ? 'قاعدة الطعام' : 'Food data',
+                        },
+                        {
+                          href: '#drug-nutrient-checker',
+                          icon: <Pill className="h-5 w-5" />,
+                          label: isAr ? 'فحص الدواء والغذاء' : 'Drug-nutrient checker',
+                        },
+                        {
+                          href: '/dashboard',
+                          icon: <BarChart3 className="h-5 w-5" />,
+                          label: isAr ? 'لوحة المتابعة' : 'Tracking dashboard',
+                        },
+                        {
+                          href: '#blog',
+                          icon: <BookOpen className="h-5 w-5" />,
+                          label: t.nav.insights,
+                        },
+                      ].map((item) =>
+                        item.href.startsWith('/') ? (
+                          <Link
+                            key={item.href}
+                            to={item.href}
+                            onClick={() => setIsSidebarOpen(false)}
+                            className="flex items-center gap-3 rounded-2xl bg-slate-50 p-3 text-slate-700 transition-all hover:bg-soft-blue"
+                          >
+                            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-health-green shadow-sm">
+                              {item.icon}
+                            </div>
+                            <span className="text-sm font-semibold">{item.label}</span>
+                          </Link>
+                        ) : (
+                          <a
+                            key={item.href}
+                            href={item.href}
+                            onClick={() => setIsSidebarOpen(false)}
+                            className="flex items-center gap-3 rounded-2xl bg-slate-50 p-3 text-slate-700 transition-all hover:bg-soft-blue"
+                          >
+                            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-health-green shadow-sm">
+                              {item.icon}
+                            </div>
+                            <span className="text-sm font-semibold">{item.label}</span>
+                          </a>
+                        ),
+                      )}
                     </div>
                   </div>
                 </div>
 
-                <div className="p-6 border-t border-slate-100 bg-slate-50/50">
-                  <div className="flex items-center justify-between mb-4">
+                <div className="border-t border-slate-100 bg-slate-50/60 p-5">
+                  <div className="mb-3 flex items-center justify-between">
                     <span className="text-sm font-bold text-slate-500">
-                      {lang === 'en' ? 'Language' : 'اللغة'}
+                      {isAr ? 'اللغة' : 'Language'}
                     </span>
-                    <div className="flex items-center gap-1 bg-white p-1 rounded-full border border-slate-200">
+                    <div className="flex items-center gap-1 rounded-full border border-slate-200 bg-white p-1">
                       <button
                         onClick={() => setLang('en')}
-                        className={`px-3 py-1 rounded-full text-[10px] font-black ${
-                          lang === 'en'
-                            ? 'bg-health-green text-white shadow-md'
-                            : 'text-slate-400'
+                        className={`rounded-full px-3 py-1 text-[10px] font-black ${
+                          lang === 'en' ? 'bg-health-green text-white' : 'text-slate-400'
                         }`}
                       >
                         EN
                       </button>
                       <button
                         onClick={() => setLang('ar')}
-                        className={`px-3 py-1 rounded-full text-[10px] font-black ${
-                          lang === 'ar'
-                            ? 'bg-health-green text-white shadow-md'
-                            : 'text-slate-400'
+                        className={`rounded-full px-3 py-1 text-[10px] font-black ${
+                          lang === 'ar' ? 'bg-health-green text-white' : 'text-slate-400'
                         }`}
                       >
                         AR
@@ -251,107 +240,94 @@ const Navigation = memo(
 
                   <button
                     onClick={onToggleTheme}
-                    className="w-full mb-3 flex items-center justify-center gap-2 border border-slate-200 bg-white text-slate-700 py-3 rounded-xl font-bold text-sm hover:border-health-green/30 transition-all"
+                    className="mb-3 flex w-full items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-700 transition-all hover:border-health-green/30"
                   >
-                    {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                    {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
                     <span>
                       {theme === 'dark'
-                        ? lang === 'en'
-                          ? 'Switch to light mode'
-                          : 'الوضع الفاتح'
-                        : lang === 'en'
-                          ? 'Switch to dark mode'
-                          : 'الوضع الداكن'}
+                        ? isAr
+                          ? 'الوضع الفاتح'
+                          : 'Switch to light mode'
+                        : isAr
+                          ? 'الوضع الداكن'
+                          : 'Switch to dark mode'}
                     </span>
                   </button>
-
-                  <button
-                    onClick={() => {
-                      setIsSidebarOpen(false);
-                      scrollToId('calculators');
-                    }}
-                    className="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-sm hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/10"
-                  >
-                    {lang === 'en' ? 'Open calculators' : 'افتح الحاسبات'}
-                  </button>
                 </div>
-              </motion.div>
+              </motion.aside>
             </>
-          )}
+          ) : null}
         </AnimatePresence>
 
-        <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => setIsSidebarOpen(true)}
-              className="p-2 hover:bg-slate-100 rounded-xl transition-colors text-slate-600"
-            >
-              <Menu className="w-6 h-6" />
-            </button>
-            <BrandLogo />
-          </div>
-
-          <div className="flex items-center gap-3 lg:gap-8">
-            <div className="hidden lg:flex items-center gap-8">
-              <a href="#calculators" className="nav-link">
-                {t.nav.calculators}
-              </a>
-              <a href="#blog" className="nav-link">
-                {t.nav.insights}
-              </a>
-              <a href="/dashboard" className="nav-link">
-                {lang === 'en' ? 'Tracking' : 'المتابعة'}
-              </a>
-              <a href="#about" className="nav-link">
-                {t.nav.about}
-              </a>
+        <nav className="sticky top-0 z-50 border-b border-slate-100 bg-white/85 px-4 backdrop-blur-md sm:px-6 lg:px-8">
+          <div className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-3 py-2">
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setIsSidebarOpen(true)}
+                className="rounded-xl p-2 text-slate-600 transition-colors hover:bg-slate-100"
+              >
+                <Menu className="h-6 w-6" />
+              </button>
+              {brand}
             </div>
 
-            <Link
-              to="/assistant"
-              className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 text-slate-700 rounded-xl border border-slate-200 hover:border-health-green/30 hover:bg-white transition-all shadow-sm group"
-            >
-              <Stethoscope className="w-4 h-4 text-health-green group-hover:scale-110 transition-transform" />
-              <span className="text-xs font-bold hidden sm:inline">
-                {lang === 'en' ? 'Clinical Assistant' : 'المساعد السريري'}
-              </span>
-            </Link>
+            <div className="flex items-center gap-2 sm:gap-3 lg:gap-6">
+              <div className="hidden items-center gap-6 lg:flex">
+                <a href="#calculators" className="nav-link">
+                  {t.nav.calculators}
+                </a>
+                <a href="#blog" className="nav-link">
+                  {t.nav.insights}
+                </a>
+                <a href="/dashboard" className="nav-link">
+                  {isAr ? 'المتابعة' : 'Tracking'}
+                </a>
+              </div>
 
-            <div className="h-6 w-px bg-slate-200 hidden sm:block" />
-
-            <div className="hidden sm:flex items-center gap-1 bg-slate-100 p-1 rounded-full border border-slate-200">
-              <button
-                onClick={() => setLang('en')}
-                className={`px-3 py-1 rounded-full text-xs font-bold ${
-                  lang === 'en' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'
-                }`}
+              <Link
+                to="/assistant"
+                className="hidden items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-slate-700 transition-all hover:border-health-green/30 sm:flex"
               >
-                EN
+                <Stethoscope className="h-4 w-4 text-health-green" />
+                <span className="hidden text-xs font-bold lg:inline">
+                  {isAr ? 'المساعد' : 'Assistant'}
+                </span>
+              </Link>
+
+              <div className="hidden items-center gap-1 rounded-full border border-slate-200 bg-slate-100 p-1 sm:flex">
+                <button
+                  onClick={() => setLang('en')}
+                  className={`rounded-full px-3 py-1 text-xs font-bold ${
+                    lang === 'en' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'
+                  }`}
+                >
+                  EN
+                </button>
+                <button
+                  onClick={() => setLang('ar')}
+                  className={`rounded-full px-3 py-1 text-xs font-bold ${
+                    lang === 'ar' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'
+                  }`}
+                >
+                  AR
+                </button>
+              </div>
+
+              <button
+                onClick={onToggleTheme}
+                className="hidden rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-slate-700 transition-all hover:border-health-green/30 sm:flex"
+                aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              >
+                {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
               </button>
+
               <button
-                onClick={() => setLang('ar')}
-                className={`px-3 py-1 rounded-full text-xs font-bold ${
-                  lang === 'ar' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'
-                }`}
+                onClick={() => scrollToId('calculators')}
+                className="rounded-full bg-health-green px-4 py-2 text-sm font-semibold text-white shadow-md shadow-health-green/10 transition-all hover:bg-health-green-dark sm:px-5"
               >
-                AR
+                {isAr ? 'ابدأ' : 'Start'}
               </button>
             </div>
-
-            <button
-              onClick={onToggleTheme}
-              className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:border-health-green/30 transition-all"
-              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-            >
-              {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-            </button>
-
-            <button
-              onClick={() => scrollToId('calculators')}
-              className="hidden md:block bg-health-green text-white px-5 py-2 rounded-full font-semibold hover:bg-health-green-dark transition-all shadow-md shadow-health-green/10"
-            >
-              {lang === 'en' ? 'Start assessment' : 'ابدأ التقييم'}
-            </button>
           </div>
         </nav>
       </>

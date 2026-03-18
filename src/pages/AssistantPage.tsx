@@ -27,11 +27,11 @@ export default function AssistantPage({
     ? [
         {
           label: 'خطة تعافي',
-          prompt: 'أعطني خطوات عملية للتعافي بعد إصابة رياضية خفيفة مع نصائح تغذية.',
+          prompt: 'أعطني خطوات عملية للتعافي بعد إصابة رياضية خفيفة مع نصائح تغذية تناسب حالتي.',
         },
         {
           label: 'تحليل نتيجة',
-          prompt: 'اشرح لي نتيجة BMI أو السعرات اليومية بطريقة بسيطة وما الذي أفعله بعدها.',
+          prompt: 'اشرح لي نتيجة BMI أو السعرات اليومية بطريقة بسيطة وما الذي أفعله بعدها في حالتي.',
         },
         {
           label: 'قبل التمرين',
@@ -42,12 +42,12 @@ export default function AssistantPage({
         {
           label: 'Recovery plan',
           prompt:
-            'Give me a practical recovery plan for a mild sports injury with nutrition tips.',
+            'Give me a practical recovery plan for a mild sports injury with nutrition tips tailored to my case.',
         },
         {
           label: 'Explain a result',
           prompt:
-            'Explain a BMI or daily calorie result in simple terms and what to do next.',
+            'Explain a BMI or daily calorie result in simple terms and what I should do next in my case.',
         },
         {
           label: 'Pre/post workout',
@@ -60,18 +60,18 @@ export default function AssistantPage({
     ? [
         {
           icon: Sparkles,
-          title: 'إجابات أسرع',
+          title: 'بداية أسرع',
           desc: 'ابدأ من سؤال جاهز بدل الكتابة من الصفر.',
         },
         {
           icon: ShieldCheck,
-          title: 'لغة آمنة',
-          desc: 'الإجابات موجهة للتوعية وليست للتشخيص.',
+          title: 'سياق آمن',
+          desc: 'الإجابات تربط الكلام ببياناتك ولا تتعامل معك كنموذج عام.',
         },
         {
           icon: ClipboardList,
           title: 'أكثر عملية',
-          desc: 'اطلب خطوات يومية، وجبات، أو تفسير نتائجك مباشرة.',
+          desc: 'اسأل عن التعافي، التغذية، أو الخطوات التالية مباشرة.',
         },
       ]
     : [
@@ -82,33 +82,33 @@ export default function AssistantPage({
         },
         {
           icon: ShieldCheck,
-          title: 'Safer framing',
-          desc: 'Answers are educational and not intended as diagnosis.',
+          title: 'Safer context',
+          desc: 'Answers are tied to your profile instead of being generic.',
         },
         {
           icon: ClipboardList,
           title: 'More practical',
-          desc: 'Ask for day-to-day actions, meals, or result interpretation.',
+          desc: 'Ask about recovery, nutrition, or the best next step directly.',
         },
       ];
 
   return (
-    <div className="min-h-screen bg-soft-blue flex flex-col">
+    <div className="flex min-h-screen flex-col bg-soft-blue">
       <Seo
         title={isAr ? 'مساعد PhysioHub الذكي' : 'PhysioHub AI Assistant'}
         description={
           isAr
-            ? 'اسأل مساعدًا متخصصًا في العلاج الطبيعي والتغذية العلاجية عن نتائج الحاسبات والتعافي والتغذية.'
-            : 'Ask a Senior Physical Therapist and Clinical Nutritionist about clinical calculators, recovery nutrition, and training.'
+            ? 'اسأل مساعدًا متخصصًا في العلاج الطبيعي والتغذية العلاجية عن التعافي، التدريب، ونتائج الحاسبات.'
+            : 'Ask a Senior Physical Therapist and Clinical Nutritionist about recovery, rehab, nutrition, and calculator results.'
         }
         canonicalPath="/assistant"
       />
 
-      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto h-16 flex items-center justify-between gap-3">
+      <nav className="sticky top-0 z-50 border-b border-slate-100 bg-white/85 px-4 backdrop-blur-md sm:px-6 lg:px-8">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3">
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="bg-health-green p-1.5 rounded-lg group-hover:scale-110 transition-transform">
-              <HeartPulse className="w-5 h-5 text-white" />
+            <div className="rounded-lg bg-health-green p-1.5 transition-transform group-hover:scale-110">
+              <HeartPulse className="h-5 w-5 text-white" />
             </div>
             <span className="text-xl font-bold tracking-tight text-slate-900">
               Physio<span className="text-health-green">Hub</span>
@@ -118,11 +118,11 @@ export default function AssistantPage({
           <div className="flex items-center gap-3">
             <button
               onClick={onToggleTheme}
-              className="flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:border-health-green/30 transition-all"
+              className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-slate-700 transition-all hover:border-health-green/30"
               aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
             >
-              {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-              <span className="hidden sm:inline text-xs font-bold">
+              {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+              <span className="hidden text-xs font-bold sm:inline">
                 {theme === 'dark'
                   ? isAr
                     ? 'الوضع الفاتح'
@@ -135,57 +135,62 @@ export default function AssistantPage({
 
             <Link
               to="/"
-              className="flex items-center gap-1 text-sm font-bold text-slate-500 hover:text-health-green transition-colors"
+              className="flex items-center gap-1 text-sm font-bold text-slate-500 transition-colors hover:text-health-green"
             >
-              {isAr ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
+              {isAr ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
               {isAr ? 'العودة للرئيسية' : 'Back to Home'}
             </Link>
           </div>
         </div>
       </nav>
 
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <div className="max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 flex flex-col">
-          <div className="mb-6">
-            <div className="flex items-center gap-3 mb-2">
-              <span className="px-3 py-1 bg-amber-100 text-amber-700 text-[10px] font-black uppercase rounded-full border border-amber-200">
-                {isAr ? 'نسخة تجريبية' : 'Beta Version'}
-              </span>
+      <div className="flex flex-1 flex-col">
+        <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 py-5 sm:px-6 lg:px-8">
+          <div className="mb-6 rounded-[2rem] border border-slate-200 bg-white/80 p-5 shadow-sm sm:p-6">
+            <div className="mb-3 inline-flex items-center rounded-full border border-amber-200 bg-amber-100 px-3 py-1 text-[10px] font-black uppercase text-amber-700">
+              {isAr ? 'نسخة تجريبية' : 'Beta version'}
             </div>
-            <h1 className="text-3xl sm:text-4xl font-black text-slate-900">
+            <h1 className="text-3xl font-black text-slate-900 sm:text-4xl">
               {isAr ? 'مساعد PhysioHub' : 'PhysioHub Assistant'}
             </h1>
-            <p className="text-slate-600 mt-2 max-w-2xl text-sm sm:text-base">
+            <p className="mt-2 max-w-2xl text-sm text-slate-600 sm:text-base">
               {isAr
-                ? 'تحدث مع مساعد متخصص في العلاج الطبيعي والتغذية العلاجية. اسأل عن التعافي، التدريب، والتغذية.'
-                : 'Chat with a senior Physical Therapist and Clinical Nutritionist. Ask about recovery, training, and nutrition.'}
+                ? 'مساعد علاجي وغذائي يربط الإجابة بسياق المستخدم قدر الإمكان، مع لغة مهنية آمنة وغير تشخيصية.'
+                : 'A recovery-focused assistant that ties answers to the user context whenever possible, with a safe non-diagnostic tone.'}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div className="mb-6 grid grid-cols-1 gap-4 md:grid-cols-3">
             {highlights.map((item) => (
               <div
                 key={item.title}
-                className="rounded-2xl border border-slate-200 bg-white/80 backdrop-blur-sm p-4 shadow-sm"
+                className="rounded-[1.75rem] border border-slate-200 bg-white/85 p-4 shadow-sm"
               >
-                <div className="w-10 h-10 rounded-2xl bg-soft-blue text-health-green flex items-center justify-center mb-3">
-                  <item.icon className="w-5 h-5" />
+                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-2xl bg-soft-blue text-health-green">
+                  <item.icon className="h-5 w-5" />
                 </div>
-                <h2 className="font-bold text-slate-900 mb-1">{item.title}</h2>
-                <p className="text-sm text-slate-600 leading-6">{item.desc}</p>
+                <h2 className="mb-1 font-bold text-slate-900">{item.title}</h2>
+                <p className="text-sm leading-6 text-slate-600">{item.desc}</p>
               </div>
             ))}
           </div>
 
           <ChatPanel
             title={isAr ? 'المساعد الذكي' : 'AI Assistant'}
-            systemPrompt="You are a Senior Physical Therapist and Clinical Nutritionist. Provide evidence-based, practical guidance. Do not diagnose. Ask clarifying questions when needed."
+            systemPrompt={`You are a Physio-Nutrition Expert. Give personalized educational guidance, not generic advice.
+
+Rules:
+1. Tie every answer to the user's weight, age, goal, and injury context when available.
+2. Avoid exercise suggestions that conflict with the user's injury.
+3. Use a professional and encouraging tone, and address the user by name if available.
+4. Do not diagnose or prescribe treatment.
+5. End each reply with a short educational disclaimer that it does not replace clinical assessment.`}
             disclaimer={
               isAr
-                ? 'هذا الذكاء الاصطناعي لأغراض تعليمية فقط. استشر طبيبًا لاتخاذ قرارات طبية.'
-                : 'This AI is for educational purposes. Consult a doctor for medical decisions.'
+                ? 'هذا الذكاء الاصطناعي لأغراض تعليمية فقط. استشر مختصًا لاتخاذ قرارات طبية.'
+                : 'This AI is for educational purposes. Consult a clinician for medical decisions.'
             }
-            className="flex-1 shadow-xl shadow-slate-200/50 rounded-2xl overflow-hidden border border-slate-100"
+            className="flex-1 overflow-hidden rounded-2xl border border-slate-100 shadow-xl shadow-slate-200/50"
             initialMessage={
               isAr
                 ? 'مرحبًا، أنا هنا لمساعدتك في أسئلة العلاج الطبيعي والتغذية. كيف يمكنني دعمك اليوم؟'
@@ -194,6 +199,7 @@ export default function AssistantPage({
             analyticsMeta={{source: 'assistant_page'}}
             lang={lang}
             quickActions={quickActions}
+            cacheScope="assistant-page"
           />
         </div>
       </div>

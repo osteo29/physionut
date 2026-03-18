@@ -841,7 +841,7 @@ export default function App({
       {/* Hero Section */}
       <Hero lang={lang} />
 
-      <section className="py-8 bg-white border-b border-slate-100">
+      <section className="border-b border-slate-100 bg-white py-6 sm:py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {quickSections.map((section) => (
@@ -861,7 +861,7 @@ export default function App({
         </div>
       </section>
 
-      <section className="py-8 bg-slate-50 border-b border-slate-100">
+      <section className="border-b border-slate-100 bg-slate-50 py-5 sm:py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
@@ -1316,9 +1316,9 @@ export default function App({
       </section>
 
       {/* Calculators Section */}
-      <section id="calculators" className="py-24 bg-white">
+      <section id="calculators" className="bg-white py-16 sm:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col gap-8 mb-12">
+          <div className="mb-10 flex flex-col gap-6 sm:mb-12">
             <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5">
               <div>
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-health-green/10 text-health-green text-xs font-bold uppercase tracking-[0.18em] mb-4">
@@ -1333,7 +1333,7 @@ export default function App({
                 </p>
               </div>
 
-              <div className="rounded-3xl border border-slate-200 bg-slate-50 p-5 lg:max-w-sm">
+              <div className="rounded-[1.75rem] border border-slate-200 bg-slate-50 p-4 lg:max-w-sm">
                 <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400 mb-2">
                   {lang === 'en' ? 'Selected tool' : 'الأداة المختارة'}
                 </div>
@@ -1346,12 +1346,12 @@ export default function App({
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="flex gap-3 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible">
               {toolGroups.map((group) => (
                 <button
                   key={group.id}
                   onClick={() => setActiveToolGroup(group.id)}
-                  className={`rounded-2xl border px-4 py-3 text-left transition-all ${
+                  className={`min-w-[180px] rounded-2xl border px-4 py-3 text-left transition-all sm:min-w-0 ${
                     activeToolGroup === group.id
                       ? 'border-health-green bg-soft-blue text-health-green shadow-sm'
                       : 'border-slate-200 bg-white text-slate-600 hover:border-health-green/30'
@@ -1364,7 +1364,7 @@ export default function App({
             </div>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 mb-12">
+          <div className="mb-10 grid grid-cols-1 gap-4 sm:mb-12 sm:grid-cols-2 xl:grid-cols-3">
             {visibleCalculators.map((calc) => (
               <button 
                 key={calc.id}
@@ -1373,7 +1373,7 @@ export default function App({
                   resetForm();
                 }}
                 aria-label={calc.title}
-                className={`medical-card p-5 md:p-6 flex flex-col items-start text-left transition-all relative group ${activeCalculator === calc.id ? 'ring-2 ring-health-green bg-soft-blue' : ''}`}
+                className={`medical-card group relative flex h-full flex-col items-start p-4 text-left transition-all sm:p-5 md:p-6 ${activeCalculator === calc.id ? 'ring-2 ring-health-green bg-soft-blue' : ''}`}
               >
                 <div className="flex items-start justify-between w-full gap-3 mb-4">
                   <div className={`p-3 rounded-2xl ${activeCalculator === calc.id ? 'bg-health-green text-white' : 'bg-soft-blue text-health-green'}`}>
@@ -1399,7 +1399,7 @@ export default function App({
           </div>
 
           {!activeCalculator && (
-            <div className="mb-10 rounded-3xl border border-dashed border-slate-200 bg-slate-50 p-6 text-center">
+            <div className="mb-8 rounded-[1.75rem] border border-dashed border-slate-200 bg-slate-50 p-5 text-center sm:mb-10 sm:p-6">
               <div className="font-bold text-slate-900 mb-2">
                 {lang === 'en' ? 'Pick a calculator to continue' : 'اختر حاسبة للمتابعة'}
               </div>
@@ -1418,9 +1418,9 @@ export default function App({
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
                 id="calculator-workspace"
-                className="bg-slate-50 rounded-3xl p-6 md:p-8 border border-slate-200"
+                className="rounded-[2rem] border border-slate-200 bg-slate-50 p-4 sm:p-6 md:p-8"
               >
-                <div className="max-w-2xl mx-auto">
+                <div className="mx-auto max-w-3xl">
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
                     <div>
                       <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-health-green mb-2">

@@ -15,7 +15,7 @@ const Hero = memo(({lang}: {lang: Language}) => {
   const journey = [
     {
       icon: Calculator,
-      title: isAr ? 'اختر الحاسبة المناسبة' : 'Pick the right calculator',
+      title: isAr ? 'اختر الأداة المناسبة' : 'Pick the right tool',
       desc: isAr
         ? 'ابدأ من هدفك: سعرات، بروتين، تعافٍ، أو تقييم جسم.'
         : 'Start from your goal: calories, protein, recovery, or body assessment.',
@@ -24,38 +24,38 @@ const Hero = memo(({lang}: {lang: Language}) => {
       icon: Activity,
       title: isAr ? 'افهم النتيجة بسرعة' : 'Understand the result fast',
       desc: isAr
-        ? 'لا نعرض الرقم فقط، بل نشرح معناه وما الذي يجب الانتباه له.'
-        : 'Get more than a number with context and what it actually means.',
+        ? 'لا نعرض الرقم فقط، بل نشرح معناه وما الذي يستحق الانتباه.'
+        : 'Get more than a number with clear context and next-step meaning.',
     },
     {
       icon: MessageSquareText,
       title: isAr ? 'خذ خطوة عملية' : 'Take a practical next step',
       desc: isAr
-        ? 'حوّل النتيجة إلى وجبات، أهداف، وتوصيات للتعافي.'
-        : 'Turn the result into meals, targets, and recovery guidance.',
+        ? 'حوّل النتيجة إلى وجبات، أهداف، أو متابعة للتعافي.'
+        : 'Turn the result into meals, targets, or a recovery follow-up.',
     },
   ];
 
   const trustPoints = isAr
-    ? ['للإصابات والتعافي', 'مناسب للـ rehab', 'إرشادي وغير تشخيصي']
-    : ['Built for injury recovery', 'Useful for rehab planning', 'Educational, not diagnostic'];
+    ? ['للمصابين والتعافي', 'مفيد للـ rehab', 'إرشادي وغير تشخيصي']
+    : ['Built for recovery', 'Useful for rehab', 'Educational, not diagnostic'];
 
   return (
-    <section className="relative pt-20 pb-24 overflow-hidden bg-soft-blue">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.16),transparent_32%),radial-gradient(circle_at_bottom_left,rgba(59,130,246,0.14),transparent_28%)] pointer-events-none" />
+    <section className="relative overflow-hidden bg-soft-blue pb-16 pt-16 sm:pb-20 sm:pt-18 lg:pb-24 lg:pt-20">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(49,95,74,0.14),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(109,122,114,0.12),transparent_28%)]" />
       <div className="identity-watermark whitespace-pre-line">
         {isAr ? 'حركة\nتعافٍ\nتغذية' : 'Move\nRecover\nNourish'}
       </div>
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-health-green/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/4 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-medical-blue/5 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/4 pointer-events-none" />
+      <div className="pointer-events-none absolute right-0 top-0 h-[380px] w-[380px] -translate-y-1/3 translate-x-1/4 rounded-full bg-health-green/6 blur-[120px]" />
+      <div className="pointer-events-none absolute bottom-0 left-0 h-[380px] w-[380px] translate-y-1/3 -translate-x-1/4 rounded-full bg-medical-blue/8 blur-[120px]" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
+      <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
         <motion.div
           initial={{opacity: 0, y: 20}}
           animate={{opacity: 1, y: 0}}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 text-health-green text-sm font-bold mb-8 border border-health-green/20 shadow-sm"
+          className="mb-6 inline-flex items-center gap-2 rounded-full border border-health-green/20 bg-white/85 px-4 py-2 text-xs font-bold text-health-green shadow-sm sm:text-sm"
         >
-          <GraduationCap className="w-4 h-4" />
+          <GraduationCap className="h-4 w-4" />
           <span>
             {isAr
               ? 'حاسبات علاج طبيعي + تغذية للتعافي'
@@ -66,51 +66,38 @@ const Hero = memo(({lang}: {lang: Language}) => {
         <motion.h1
           initial={{opacity: 0, y: 20}}
           animate={{opacity: 1, y: 0}}
-          transition={{delay: 0.1}}
-          className="text-4xl md:text-6xl font-bold text-slate-900 leading-tight mb-6 tracking-tight"
+          transition={{delay: 0.08}}
+          className="mx-auto mb-5 max-w-4xl text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl"
         >
-          {isAr ? 'احسب احتياجات التعافي' : 'Calculate recovery needs'} <br />
-          <span className="text-health-green relative">
+          {isAr ? 'احسب احتياجات التعافي' : 'Calculate recovery needs'}{' '}
+          <span className="relative text-health-green">
             {isAr ? 'في أقل من 30 ثانية' : 'in under 30 seconds'}
-            <svg
-              className="absolute -bottom-2 left-0 w-full h-3 text-health-green/20"
-              viewBox="0 0 100 10"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M0 5 Q 25 0, 50 5 T 100 5"
-                stroke="currentColor"
-                strokeWidth="8"
-                fill="none"
-                strokeLinecap="round"
-              />
-            </svg>
           </span>
         </motion.h1>
 
         <motion.p
           initial={{opacity: 0, y: 20}}
           animate={{opacity: 1, y: 0}}
-          transition={{delay: 0.2}}
-          className="text-lg sm:text-xl text-slate-600 mb-8 max-w-3xl mx-auto leading-relaxed"
+          transition={{delay: 0.16}}
+          className="mx-auto mb-6 max-w-3xl text-base leading-8 text-slate-600 sm:text-lg"
         >
           {isAr
-            ? 'موقع مخصص للمصابين، التعافي، وأخصائيي العلاج الطبيعي: احسب السعرات، البروتين، الماء، والماكروز ثم خذ توصيات أوضح بدل أرقام فقط.'
-            : 'A focused tool for injury recovery, rehab, and clinicians: calculate calories, protein, hydration, and macros, then get clearer guidance instead of numbers alone.'}
+            ? 'منصة موجهة للتعافي والإصابات والـ rehab: احسب السعرات والبروتين والماء والماكروز، ثم خذ تفسيرًا أوضح وخطوة عملية بعدها.'
+            : 'A focused platform for injury recovery and rehab: calculate calories, protein, hydration, and macros, then get a clearer practical next step.'}
         </motion.p>
 
         <motion.div
           initial={{opacity: 0, y: 20}}
           animate={{opacity: 1, y: 0}}
-          transition={{delay: 0.25}}
-          className="flex flex-wrap justify-center gap-3 mb-10"
+          transition={{delay: 0.22}}
+          className="mb-8 flex snap-x gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:justify-center sm:overflow-visible"
         >
           {trustPoints.map((point) => (
             <div
               key={point}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200 bg-white/80 text-slate-700 text-sm font-semibold"
+              className="inline-flex min-w-max snap-start items-center gap-2 rounded-full border border-slate-200 bg-white/85 px-4 py-2 text-sm font-semibold text-slate-700"
             >
-              <ShieldCheck className="w-4 h-4 text-health-green" />
+              <ShieldCheck className="h-4 w-4 text-health-green" />
               <span>{point}</span>
             </div>
           ))}
@@ -120,46 +107,46 @@ const Hero = memo(({lang}: {lang: Language}) => {
           initial={{opacity: 0, y: 20}}
           animate={{opacity: 1, y: 0}}
           transition={{delay: 0.3}}
-          className="flex flex-wrap justify-center gap-4 mb-10"
+          className="mx-auto mb-10 grid max-w-3xl grid-cols-1 gap-3 sm:grid-cols-3"
         >
           <a
             href="#calculators"
-            className="px-8 py-4 bg-health-green text-white font-bold rounded-2xl hover:bg-health-green-dark transition-all shadow-xl shadow-health-green/20 flex items-center gap-2"
+            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-health-green px-6 py-4 text-sm font-bold text-white shadow-lg shadow-health-green/20 transition-all hover:bg-health-green-dark"
           >
-            <Calculator className="w-5 h-5" />
-            {isAr ? 'احسب الآن' : 'Calculate now'}
+            <Calculator className="h-5 w-5" />
+            {isAr ? 'ابدأ الحاسبات' : 'Start calculators'}
           </a>
           <a
             href="/assistant"
-            className="px-8 py-4 bg-white text-slate-900 font-bold rounded-2xl border border-slate-200 hover:border-health-green transition-all shadow-sm flex items-center gap-2"
+            className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-6 py-4 text-sm font-bold text-slate-900 transition-all hover:border-health-green"
           >
-            <MessageSquareText className="w-5 h-5 text-health-green" />
+            <MessageSquareText className="h-5 w-5 text-health-green" />
             {isAr ? 'اسأل المساعد' : 'Ask the assistant'}
           </a>
           <a
             href="#architect"
-            className="px-8 py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/15 flex items-center gap-2"
+            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-900 px-6 py-4 text-sm font-bold text-white shadow-lg shadow-slate-900/15 transition-all hover:bg-slate-800"
           >
-            <Activity className="w-5 h-5" />
-            {isAr ? 'افتح لوحة التعافي' : 'Open recovery dashboard'}
+            <Activity className="h-5 w-5" />
+            {isAr ? 'خطة التعافي' : 'Recovery planner'}
           </a>
         </motion.div>
 
         <motion.div
           initial={{opacity: 0, y: 20}}
           animate={{opacity: 1, y: 0}}
-          transition={{delay: 0.4}}
-          className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto text-left"
+          transition={{delay: 0.36}}
+          className="grid grid-cols-1 gap-4 text-left md:grid-cols-3"
         >
           {journey.map((item) => (
             <div
               key={item.title}
-              className="rounded-3xl border border-white/70 bg-white/80 backdrop-blur-sm p-5 shadow-sm"
+              className="rounded-[1.75rem] border border-white/70 bg-white/85 p-5 shadow-sm backdrop-blur-sm"
             >
-              <div className="w-11 h-11 rounded-2xl bg-soft-blue text-health-green flex items-center justify-center mb-4">
-                <item.icon className="w-5 h-5" />
+              <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-soft-blue text-health-green">
+                <item.icon className="h-5 w-5" />
               </div>
-              <div className="font-bold text-slate-900 mb-2">{item.title}</div>
+              <div className="mb-2 font-bold text-slate-900">{item.title}</div>
               <p className="text-sm leading-6 text-slate-600">{item.desc}</p>
             </div>
           ))}

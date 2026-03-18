@@ -110,7 +110,7 @@
 }
 
 .medical-card {
-  @apply bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow duration-300;
+  @apply rounded-[1.75rem] border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md;
 }
 
 .dark .medical-card {
@@ -138,6 +138,28 @@
   user-select: none;
 }
 
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.28);
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 .dark .identity-watermark {
   color: rgba(203, 213, 225, 0.06);
+}
+
+@media (max-width: 640px) {
+  .identity-watermark {
+    inset-inline-end: 1rem;
+    inset-block-start: 2rem;
+    font-size: clamp(2.4rem, 12vw, 4rem);
+  }
 }
