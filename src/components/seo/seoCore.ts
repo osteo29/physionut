@@ -86,5 +86,13 @@ export function applySeo(config: SeoConfig) {
     applicationCategory: 'HealthApplication',
     operatingSystem: 'All',
   });
-}
 
+  upsertJsonLd('organization', {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: DEFAULT_SITE_NAME,
+    url: siteUrl,
+    email: 'contact@physiohub.com',
+    sameAs: [],
+  });
+}

@@ -1,14 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Cairo:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Readex+Pro:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
   --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
-  --font-arabic: "Cairo", sans-serif;
+  --font-arabic: "Readex Pro", sans-serif;
 
-  --color-health-green: #10b981;
-  --color-health-green-dark: #059669;
-  --color-soft-blue: #f0f9ff;
-  --color-medical-blue: #3b82f6;
+  --color-health-green: #315f4a;
+  --color-health-green-dark: #234536;
+  --color-soft-blue: #f4efe7;
+  --color-medical-blue: #6d7a72;
 }
 
 @layer base {
@@ -19,8 +19,8 @@
   body {
     @apply bg-slate-50 text-slate-900 antialiased;
     background-image:
-      radial-gradient(circle at top right, rgba(16, 185, 129, 0.08), transparent 26%),
-      radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.08), transparent 24%);
+      radial-gradient(circle at top right, rgba(49, 95, 74, 0.09), transparent 26%),
+      radial-gradient(circle at bottom left, rgba(109, 122, 114, 0.08), transparent 24%);
     transition:
       background-color 200ms ease,
       color 200ms ease,
@@ -39,8 +39,8 @@
     background-color: #020617;
     color: #e2e8f0;
     background-image:
-      radial-gradient(circle at top right, rgba(16, 185, 129, 0.12), transparent 24%),
-      radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.12), transparent 24%);
+      radial-gradient(circle at top right, rgba(49, 95, 74, 0.14), transparent 24%),
+      radial-gradient(circle at bottom left, rgba(109, 122, 114, 0.14), transparent 24%);
   }
 
   .dark input,
@@ -123,4 +123,21 @@
 
 .dark .nav-link {
   @apply text-slate-300 hover:text-health-green;
+}
+
+.identity-watermark {
+  position: absolute;
+  inset-inline-end: 2rem;
+  inset-block-start: 1rem;
+  font-size: clamp(3rem, 10vw, 8rem);
+  line-height: 0.9;
+  font-weight: 700;
+  letter-spacing: -0.06em;
+  color: rgba(49, 95, 74, 0.06);
+  pointer-events: none;
+  user-select: none;
+}
+
+.dark .identity-watermark {
+  color: rgba(203, 213, 225, 0.06);
 }

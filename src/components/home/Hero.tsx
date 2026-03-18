@@ -43,6 +43,9 @@ const Hero = memo(({lang}: {lang: Language}) => {
   return (
     <section className="relative pt-20 pb-24 overflow-hidden bg-soft-blue">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.16),transparent_32%),radial-gradient(circle_at_bottom_left,rgba(59,130,246,0.14),transparent_28%)] pointer-events-none" />
+      <div className="identity-watermark whitespace-pre-line">
+        {isAr ? 'حركة\nتعافٍ\nتغذية' : 'Move\nRecover\nNourish'}
+      </div>
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-health-green/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/4 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-medical-blue/5 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/4 pointer-events-none" />
 

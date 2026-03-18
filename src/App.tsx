@@ -24,6 +24,9 @@ import BlogSection from './components/home/BlogSection';
 import TrustSection from './components/home/TrustSection';
 import AskAboutResultChat from './components/ai/AskAboutResultChat';
 import DrugNutrientChecker from './components/ai/DrugNutrientChecker';
+import ConsentBanner from './components/monetization/ConsentBanner';
+import AdSlot from './components/monetization/AdSlot';
+import ResultLeadCapture from './components/forms/ResultLeadCapture';
 import {
   Chart as ChartJS,
   ArcElement,
@@ -212,6 +215,27 @@ export default function App({
 
   useEffect(() => {
     checkEnvironment();
+  }, []);
+
+  useEffect(() => {
+    const clientId = import.meta.env.VITE_ADSENSE_CLIENT_ID;
+    if (!clientId) return;
+
+    const ensureAdSenseScript = () => {
+      if (localStorage.getItem('physiohub_cookie_consent') !== 'accepted') return;
+      if (document.querySelector('script[data-adsense-loader="true"]')) return;
+
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${clientId}`;
+      script.crossOrigin = 'anonymous';
+      script.setAttribute('data-adsense-loader', 'true');
+      document.head.appendChild(script);
+    };
+
+    ensureAdSenseScript();
+    window.addEventListener('physiohub-consent-change', ensureAdSenseScript);
+    return () => window.removeEventListener('physiohub-consent-change', ensureAdSenseScript);
   }, []);
 
   useEffect(() => {
@@ -731,6 +755,13 @@ export default function App({
 
   const articles = getArticles(lang);
 
+  const resultSummary =
+    result === null || !activeCalculator
+      ? ''
+      : typeof result === 'object'
+        ? JSON.stringify(result)
+        : String(result);
+
   return (
     <div className="min-h-screen flex flex-col font-sans">
       <Navigation
@@ -801,6 +832,17 @@ export default function App({
       </section>
 
       <TrustSection lang={lang} />
+
+      <section className="py-8 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AdSlot
+            lang={lang}
+            label={lang === 'en' ? 'Sponsored area' : 'مساحة إعلانية'}
+            slot={import.meta.env.VITE_ADSENSE_SLOT_INLINE}
+            format="horizontal"
+          />
+        </div>
+      </section>
 
       {/* What's New Section */}
       <WhatsNew lang={lang} />
@@ -1925,6 +1967,12 @@ export default function App({
 
                   {result !== null && activeCalculator && (
                     <div className="mt-8">
+                      <ResultLeadCapture
+                        lang={lang}
+                        calculatorName={activeCalculator}
+                        resultSummary={resultSummary}
+                      />
+
                       <AskAboutResultChat
                         calculatorName={activeCalculator}
                         lang={lang}
@@ -2261,6 +2309,8 @@ export default function App({
 
       {/* Footer */}
       <Footer t={t} lang={lang} />
+
+      <ConsentBanner lang={lang} />
     </div>
   );
 }
