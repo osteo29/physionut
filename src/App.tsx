@@ -7,6 +7,7 @@ import { 
 } from 'lucide-react';
 import { useState, useEffect, useMemo, memo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { Link } from 'react-router-dom';
 import { checkEnvironment } from './services/calculators';
 import { PhysioNutritionLogic, HealthProfile, HealthMetrics } from './services/physioNutritionLogic';
 import { injuryDatabase, getInjuryById } from './services/injuryDatabase';
@@ -212,6 +213,7 @@ export default function App({
   const [healthInterpretation, setHealthInterpretation] = useState<HealthInterpretation | null>(null);
   const [error, setError] = useState<string>('');
   const [justCalculated, setJustCalculated] = useState(false);
+  const [analysisPrompt, setAnalysisPrompt] = useState<string | null>(null);
 
   useEffect(() => {
     checkEnvironment();
@@ -312,6 +314,7 @@ export default function App({
     setResult(null);
     setHealthInterpretation(null);
     setError('');
+    setAnalysisPrompt(null);
   };
 
   const validate = () => {
@@ -761,6 +764,65 @@ export default function App({
       : typeof result === 'object'
         ? JSON.stringify(result)
         : String(result);
+
+  const assessmentSnapshot = useMemo(() => {
+    if (result === null || !activeCalculator) {
+      return {
+        valueLabel: '',
+        valueNumeric: null as number | null,
+        valueUnit: null as string | null,
+      };
+    }
+
+    if (activeCalculator === 'Macros' && typeof result === 'object') {
+      return {
+        valueLabel: `${result.totalCalories} kcal | P ${result.protein}g | C ${result.carbs}g | F ${result.fats}g`,
+        valueNumeric: Number(result.totalCalories) || null,
+        valueUnit: 'kcal',
+      };
+    }
+
+    if (activeCalculator === 'Deficit' && typeof result === 'object') {
+      return {
+        valueLabel: `${result.deficit} kcal`,
+        valueNumeric: Number(result.deficit) || null,
+        valueUnit: 'kcal',
+      };
+    }
+
+    if (activeCalculator === 'WHtR' && typeof result === 'object') {
+      return {
+        valueLabel: `${result.ratio} (${result.category})`,
+        valueNumeric: Number(result.ratio) || null,
+        valueUnit: 'ratio',
+      };
+    }
+
+    if (typeof result === 'number') {
+      return {
+        valueLabel: String(result),
+        valueNumeric: result,
+        valueUnit:
+          activeCalculator === 'Water'
+            ? 'ml'
+            : activeCalculator === 'Protein'
+              ? 'g/day'
+              : activeCalculator === 'IdealWeight'
+                ? 'kg'
+                : activeCalculator === 'BodyFat'
+                  ? '%'
+                  : activeCalculator === 'BMI'
+                    ? 'BMI'
+                    : 'kcal',
+      };
+    }
+
+    return {
+      valueLabel: resultSummary,
+      valueNumeric: null,
+      valueUnit: null,
+    };
+  }, [activeCalculator, result, resultSummary]);
 
   return (
     <div className="min-h-screen flex flex-col font-sans">
@@ -1967,36 +2029,67 @@ export default function App({
 
                   {result !== null && activeCalculator && (
                     <div className="mt-8">
+                      <div className="flex flex-wrap gap-3 mb-4">
+                        <button
+                          onClick={() => {
+                            setAnalysisPrompt(
+                              lang === 'en'
+                                ? `Analyze this ${activeCalculator} result and give me a short practical recommendation for rehab or nutrition follow-up.`
+                                : `حلل نتيجة ${activeCalculator} وأعطني توصية قصيرة وعملية للمتابعة في التعافي أو التغذية.`,
+                            );
+                            document.getElementById('result-ai-panel')?.scrollIntoView({
+                              behavior: 'smooth',
+                              block: 'start',
+                            });
+                          }}
+                          className="px-4 py-3 rounded-2xl bg-slate-900 text-white font-bold text-sm hover:bg-slate-800 transition-all"
+                        >
+                          {lang === 'en' ? 'Analyze with AI' : 'حلل بالذكاء الاصطناعي'}
+                        </button>
+
+                        <Link
+                          to="/dashboard"
+                          className="px-4 py-3 rounded-2xl border border-slate-200 bg-white text-slate-700 font-bold text-sm hover:border-health-green/30 transition-all"
+                        >
+                          {lang === 'en' ? 'Open tracking dashboard' : 'افتح لوحة المتابعة'}
+                        </Link>
+                      </div>
+
                       <ResultLeadCapture
                         lang={lang}
                         calculatorName={activeCalculator}
-                        resultSummary={resultSummary}
+                        valueLabel={assessmentSnapshot.valueLabel}
+                        valueNumeric={assessmentSnapshot.valueNumeric}
+                        valueUnit={assessmentSnapshot.valueUnit}
                       />
 
-                      <AskAboutResultChat
-                        calculatorName={activeCalculator}
-                        lang={lang}
-                        hiddenContext={JSON.stringify(
-                          {
-                            calculator: activeCalculator,
-                            result,
-                            interpretation: healthInterpretation,
-                            inputs: {
-                              weight,
-                              height,
-                              age,
-                              gender,
-                              activity,
-                              goal,
-                              bodyType,
-                              unitSystem,
+                      <div id="result-ai-panel">
+                        <AskAboutResultChat
+                          calculatorName={activeCalculator}
+                          lang={lang}
+                          autoPrompt={analysisPrompt}
+                          hiddenContext={JSON.stringify(
+                            {
+                              calculator: activeCalculator,
+                              result,
+                              interpretation: healthInterpretation,
+                              inputs: {
+                                weight,
+                                height,
+                                age,
+                                gender,
+                                activity,
+                                goal,
+                                bodyType,
+                                unitSystem,
+                              },
+                              language: lang,
                             },
-                            language: lang,
-                          },
-                          null,
-                          2,
-                        )}
-                      />
+                            null,
+                            2,
+                          )}
+                        />
+                      </div>
                     </div>
                   )}
                 </div>

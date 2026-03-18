@@ -7,6 +7,7 @@ import CookiePolicy from './pages/CookiePolicy';
 import MedicalDisclaimer from './pages/MedicalDisclaimer';
 import AssistantPage from './pages/AssistantPage';
 import NotFound from './pages/NotFound';
+import TrackingDashboardPage from './pages/TrackingDashboardPage';
 
 export default function RouterApp() {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -39,6 +40,7 @@ export default function RouterApp() {
         path="/assistant"
         element={<AssistantPage theme={theme} onToggleTheme={toggleTheme} />}
       />
+      <Route path="/dashboard" element={<TrackingDashboardPage />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

@@ -1,6 +1,7 @@
 import {ReactNode, memo} from 'react';
 import {AnimatePresence, motion} from 'motion/react';
 import {
+  BarChart3,
   BookOpen,
   Brain,
   HeartPulse,
@@ -194,6 +195,18 @@ const Navigation = memo(
                         </span>
                       </a>
                       <a
+                        href="/dashboard"
+                        onClick={() => setIsSidebarOpen(false)}
+                        className="flex items-center gap-3 p-3 rounded-xl hover:bg-soft-blue text-slate-600 hover:text-health-green transition-all group"
+                      >
+                        <div className="p-2 rounded-lg bg-slate-50 group-hover:bg-white transition-colors">
+                          <BarChart3 className="w-5 h-5" />
+                        </div>
+                        <span className="font-medium text-sm">
+                          {lang === 'en' ? 'Tracking Dashboard' : 'لوحة المتابعة'}
+                        </span>
+                      </a>
+                      <a
                         href="#blog"
                         onClick={() => setIsSidebarOpen(false)}
                         className="flex items-center gap-3 p-3 rounded-xl hover:bg-health-green/5 text-slate-600 hover:text-health-green transition-all group"
@@ -285,6 +298,9 @@ const Navigation = memo(
               </a>
               <a href="#blog" className="nav-link">
                 {t.nav.insights}
+              </a>
+              <a href="/dashboard" className="nav-link">
+                {lang === 'en' ? 'Tracking' : 'المتابعة'}
               </a>
               <a href="#about" className="nav-link">
                 {t.nav.about}

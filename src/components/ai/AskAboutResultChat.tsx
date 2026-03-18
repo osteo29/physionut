@@ -4,10 +4,12 @@ export default function AskAboutResultChat({
   hiddenContext,
   calculatorName,
   lang,
+  autoPrompt,
 }: {
   hiddenContext: string;
   calculatorName: string;
   lang: 'en' | 'ar';
+  autoPrompt?: string | null;
 }) {
   const quickActions =
     calculatorName === 'BMI'
@@ -98,6 +100,7 @@ export default function AskAboutResultChat({
       analyticsMeta={{source: 'calculator_chat', calculator: calculatorName}}
       lang={lang}
       quickActions={quickActions}
+      autoPrompt={autoPrompt}
     />
   );
 }

@@ -1,20 +1,38 @@
-import {useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {LoaderCircle, Save, ShieldCheck} from 'lucide-react';
-import {isSupabaseConfigured, saveAssessmentLead} from '../../lib/supabase';
+import {isSupabaseConfigured, saveAssessment} from '../../lib/supabase';
+
+const STORAGE_KEY = 'physiohub_tracking_profile';
 
 export default function ResultLeadCapture({
   lang,
   calculatorName,
-  resultSummary,
+  valueLabel,
+  valueNumeric,
+  valueUnit,
 }: {
   lang: 'en' | 'ar';
   calculatorName: string;
-  resultSummary: string;
+  valueLabel: string;
+  valueNumeric: number | null;
+  valueUnit: string | null;
 }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (!saved) return;
+      const parsed = JSON.parse(saved) as {name?: string; email?: string};
+      if (parsed.name) setName(parsed.name);
+      if (parsed.email) setEmail(parsed.email);
+    } catch {
+      // ignore malformed local profile
+    }
+  }, []);
 
   const isValid = useMemo(() => {
     return name.trim().length >= 2 && /\S+@\S+\.\S+/.test(email.trim());
@@ -37,26 +55,35 @@ export default function ResultLeadCapture({
     setMessage('');
 
     try {
-      await saveAssessmentLead({
+      await saveAssessment({
         name: name.trim(),
         email: email.trim(),
         calculator_type: calculatorName,
+        value_label: valueLabel,
+        value_numeric: valueNumeric,
+        value_unit: valueUnit,
         lang,
-        result_summary: resultSummary,
+        note: null,
       });
+
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({name: name.trim(), email: email.trim()}),
+      );
+
       setStatus('saved');
       setMessage(
         lang === 'en'
-          ? 'Saved. You can now use this contact for follow-up or future tracking.'
-          : 'تم الحفظ. يمكنك الآن استخدام هذا الاتصال للمتابعة أو التتبع لاحقًا.',
+          ? 'Saved to your follow-up log. Open the dashboard to review progress.'
+          : 'تم الحفظ في سجل المتابعة. افتح لوحة المتابعة لمراجعة التقدم.',
       );
     } catch (error: any) {
       setStatus('error');
       setMessage(
         error?.message ||
           (lang === 'en'
-            ? 'Could not save this lead right now.'
-            : 'تعذر حفظ هذه البيانات الآن.'),
+            ? 'Could not save this assessment right now.'
+            : 'تعذر حفظ هذا القياس الآن.'),
       );
     }
   };
@@ -65,7 +92,7 @@ export default function ResultLeadCapture({
     <div className="mt-8 rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm">
       <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-health-green mb-3">
         <Save className="w-3.5 h-3.5" />
-        <span>{lang === 'en' ? 'Save this result' : 'احفظ هذه النتيجة'}</span>
+        <span>{lang === 'en' ? 'Save to tracking log' : 'احفظ في سجل المتابعة'}</span>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_auto] gap-3">
@@ -96,9 +123,9 @@ export default function ResultLeadCapture({
               {lang === 'en' ? 'Saving' : 'جارٍ الحفظ'}
             </span>
           ) : lang === 'en' ? (
-            'Save lead'
+            'Save result'
           ) : (
-            'حفظ البيانات'
+            'حفظ النتيجة'
           )}
         </button>
       </div>
@@ -108,8 +135,8 @@ export default function ResultLeadCapture({
           <ShieldCheck className="w-4 h-4 text-health-green" />
           <span>
             {lang === 'en'
-              ? 'Use for follow-up or tracking only after explicit user consent.'
-              : 'استخدمه للمتابعة أو التتبع فقط بعد موافقة المستخدم الصريحة.'}
+              ? 'Every save includes date, calculator type, and measured value for follow-up.'
+              : 'كل حفظ يتضمن التاريخ ونوع الحاسبة والقيمة المسجلة للمتابعة.'}
           </span>
         </div>
         {message ? (

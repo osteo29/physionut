@@ -1,4 +1,4 @@
-import {type KeyboardEvent, useMemo, useRef, useState} from 'react';
+import {type KeyboardEvent, useEffect, useMemo, useRef, useState} from 'react';
 import {motion} from 'motion/react';
 import {CornerDownLeft, SendHorizonal, Sparkles} from 'lucide-react';
 import {askGeminiText, trackAiQuestion} from '../../ai/gemini';
@@ -28,6 +28,7 @@ export default function ChatPanel({
   analyticsMeta,
   lang,
   quickActions,
+  autoPrompt,
 }: {
   title: string;
   systemPrompt: string;
@@ -38,6 +39,7 @@ export default function ChatPanel({
   analyticsMeta?: Record<string, unknown>;
   lang?: 'en' | 'ar';
   quickActions?: Array<{label: string; prompt: string}>;
+  autoPrompt?: string | null;
 }) {
   const [messages, setMessages] = useState<ChatMessage[]>(
     initialMessage ? [{role: 'assistant', text: initialMessage}] : [],
@@ -56,8 +58,8 @@ export default function ChatPanel({
     bottomRef.current?.scrollIntoView({behavior: 'smooth'});
   };
 
-  const onSend = async () => {
-    const q = input.trim();
+  const sendPrompt = async (rawPrompt?: string) => {
+    const q = (rawPrompt ?? input).trim();
     if (!q || isLoading) return;
 
     setError(null);
@@ -82,6 +84,10 @@ export default function ChatPanel({
     }
   };
 
+  const onSend = async () => {
+    await sendPrompt();
+  };
+
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -90,6 +96,11 @@ export default function ChatPanel({
   };
 
   const isAr = lang === 'ar';
+
+  useEffect(() => {
+    if (!autoPrompt || isLoading) return;
+    void sendPrompt(autoPrompt);
+  }, [autoPrompt]);
 
   return (
     <div className={className || ''}>
