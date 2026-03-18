@@ -22,6 +22,8 @@ import {
 import {Line} from 'react-chartjs-2';
 import {
   deleteAssessment,
+  getSupabaseActionErrorMessage,
+  getSupabaseConfigurationMessage,
   isSupabaseConfigured,
   listAssessmentsByEmail,
   type AssessmentRecord,
@@ -46,28 +48,27 @@ export default function TrackingDashboardPage() {
       const parsed = JSON.parse(saved) as {email?: string};
       if (parsed.email) setEmail(parsed.email);
     } catch {
-      // ignore
+      // Ignore malformed local profile.
     }
   }, []);
 
   const load = async () => {
     if (!/\S+@\S+\.\S+/.test(email.trim())) return;
+
     if (!isSupabaseConfigured) {
       setStatus('error');
-      setMessage(
-        isAr
-          ? 'لم يتم إعداد Supabase بعد، لذلك لا يمكن تحميل السجل الآن.'
-          : 'Supabase is not configured yet, so tracking cannot load right now.',
-      );
+      setMessage(getSupabaseConfigurationMessage(lang));
       return;
     }
 
     setStatus('loading');
     setMessage('');
+
     try {
       const data = await listAssessmentsByEmail(email.trim());
       setRecords(data);
       setStatus('ready');
+
       if (data.length === 0) {
         setMessage(
           isAr
@@ -75,9 +76,9 @@ export default function TrackingDashboardPage() {
             : 'No saved assessments were found for this email yet.',
         );
       }
-    } catch (error: any) {
+    } catch (error) {
       setStatus('error');
-      setMessage(error?.message || (isAr ? 'تعذر تحميل السجل.' : 'Could not load tracking log.'));
+      setMessage(getSupabaseActionErrorMessage(error, lang, 'load'));
     }
   };
 
@@ -85,8 +86,8 @@ export default function TrackingDashboardPage() {
     try {
       await deleteAssessment(id);
       setRecords((prev) => prev.filter((item) => item.id !== id));
-    } catch {
-      setMessage(isAr ? 'تعذر حذف السجل.' : 'Could not delete this record.');
+    } catch (error) {
+      setMessage(getSupabaseActionErrorMessage(error, lang, 'delete'));
     }
   };
 
@@ -126,10 +127,10 @@ export default function TrackingDashboardPage() {
         canonicalPath="/dashboard"
       />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div className="flex items-center justify-between gap-4 mb-8">
+      <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+        <div className="mb-8 flex items-center justify-between gap-4">
           <div>
-            <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-health-green mb-2">
+            <div className="mb-2 text-[11px] font-bold uppercase tracking-[0.18em] text-health-green">
               {isAr ? 'لوحة المتابعة' : 'Tracking dashboard'}
             </div>
             <h1 className="text-3xl font-bold text-slate-900">
@@ -138,29 +139,29 @@ export default function TrackingDashboardPage() {
           </div>
           <Link
             to="/"
-            className="inline-flex items-center gap-2 px-4 py-3 rounded-2xl border border-slate-200 bg-white text-slate-700 font-bold"
+            className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 font-bold text-slate-700"
           >
-            <ArrowLeft className={`w-4 h-4 ${isAr ? 'rotate-180' : ''}`} />
+            <ArrowLeft className={`h-4 w-4 ${isAr ? 'rotate-180' : ''}`} />
             <span>{isAr ? 'العودة للرئيسية' : 'Back home'}</span>
           </Link>
         </div>
 
-        <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-3">
+        <div className="mb-8 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-[1fr_auto]">
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder={isAr ? 'أدخل البريد الإلكتروني' : 'Enter the tracking email'}
-              className="px-4 py-3 rounded-2xl border border-slate-200 outline-none focus:ring-2 focus:ring-health-green/30"
+              className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:ring-2 focus:ring-health-green/30"
             />
             <button
               onClick={load}
               disabled={status === 'loading'}
-              className="px-5 py-3 rounded-2xl bg-health-green text-white font-bold hover:bg-health-green-dark transition-all"
+              className="rounded-2xl bg-health-green px-5 py-3 font-bold text-white transition-all hover:bg-health-green-dark"
             >
               {status === 'loading' ? (
                 <span className="inline-flex items-center gap-2">
-                  <LoaderCircle className="w-4 h-4 animate-spin" />
+                  <LoaderCircle className="h-4 w-4 animate-spin" />
                   {isAr ? 'جارٍ التحميل' : 'Loading'}
                 </span>
               ) : isAr ? (
@@ -173,10 +174,10 @@ export default function TrackingDashboardPage() {
           {message ? <div className="mt-3 text-sm text-slate-500">{message}</div> : null}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-8">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.2fr_0.8fr]">
           <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
-            <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-health-green mb-4">
-              <LineChart className="w-3.5 h-3.5" />
+            <div className="mb-4 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-health-green">
+              <LineChart className="h-3.5 w-3.5" />
               <span>{isAr ? 'الرسم البياني' : 'Trend chart'}</span>
             </div>
             {numericRecords.length > 0 ? (
@@ -196,7 +197,7 @@ export default function TrackingDashboardPage() {
                 />
               </div>
             ) : (
-              <div className="h-[320px] rounded-[1.5rem] border border-dashed border-slate-200 bg-slate-50 flex items-center justify-center text-center px-8 text-slate-500">
+              <div className="flex h-[320px] items-center justify-center rounded-[1.5rem] border border-dashed border-slate-200 bg-slate-50 px-8 text-center text-slate-500">
                 {isAr
                   ? 'احفظ قياسات تحتوي على قيمة رقمية لتظهر هنا في الرسم البياني.'
                   : 'Save assessments with numeric values to see them plotted here.'}
@@ -205,17 +206,21 @@ export default function TrackingDashboardPage() {
           </div>
 
           <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
-            <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-health-green mb-4">
-              <BarChart3 className="w-3.5 h-3.5" />
+            <div className="mb-4 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-health-green">
+              <BarChart3 className="h-3.5 w-3.5" />
               <span>{isAr ? 'ملخص سريع' : 'Quick summary'}</span>
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <div className="rounded-2xl bg-slate-50 border border-slate-200 p-4">
-                <div className="text-xs text-slate-500 mb-2">{isAr ? 'إجمالي السجلات' : 'Total records'}</div>
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                <div className="mb-2 text-xs text-slate-500">
+                  {isAr ? 'إجمالي السجلات' : 'Total records'}
+                </div>
                 <div className="text-2xl font-bold text-slate-900">{records.length}</div>
               </div>
-              <div className="rounded-2xl bg-slate-50 border border-slate-200 p-4">
-                <div className="text-xs text-slate-500 mb-2">{isAr ? 'أنواع الحاسبات' : 'Calculator types'}</div>
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                <div className="mb-2 text-xs text-slate-500">
+                  {isAr ? 'أنواع الحاسبات' : 'Calculator types'}
+                </div>
                 <div className="text-2xl font-bold text-slate-900">
                   {new Set(records.map((item) => item.calculator_type)).size}
                 </div>
@@ -224,40 +229,38 @@ export default function TrackingDashboardPage() {
           </div>
         </div>
 
-        <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm mt-8">
-          <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-health-green mb-4">
-            <Calendar className="w-3.5 h-3.5" />
+        <div className="mt-8 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
+          <div className="mb-4 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-health-green">
+            <Calendar className="h-3.5 w-3.5" />
             <span>{isAr ? 'السجل الزمني' : 'Timeline log'}</span>
           </div>
 
           <div className="space-y-3">
             {records.length === 0 ? (
               <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-8 text-center text-slate-500">
-                {isAr
-                  ? 'لا توجد سجلات محفوظة حتى الآن.'
-                  : 'No saved assessment records yet.'}
+                {isAr ? 'لا توجد سجلات محفوظة حتى الآن.' : 'No saved assessment records yet.'}
               </div>
             ) : (
               records.map((item) => (
                 <div
                   key={item.id}
-                  className="rounded-2xl border border-slate-200 p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+                  className="flex flex-col gap-4 rounded-2xl border border-slate-200 p-4 md:flex-row md:items-center md:justify-between"
                 >
                   <div>
                     <div className="font-bold text-slate-900">{item.calculator_type}</div>
-                    <div className="text-sm text-slate-600 mt-1">
+                    <div className="mt-1 text-sm text-slate-600">
                       {item.value_label}
                       {item.value_unit ? ` ${item.value_unit}` : ''}
                     </div>
-                    <div className="text-xs text-slate-400 mt-2">
+                    <div className="mt-2 text-xs text-slate-400">
                       {new Date(item.created_at).toLocaleString(isAr ? 'ar-EG' : 'en-US')}
                     </div>
                   </div>
                   <button
                     onClick={() => handleDelete(item.id)}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-rose-200 text-rose-600 hover:bg-rose-50 transition-all font-semibold"
+                    className="inline-flex items-center gap-2 rounded-xl border border-rose-200 px-4 py-2 font-semibold text-rose-600 transition-all hover:bg-rose-50"
                   >
-                    <Trash2 className="w-4 h-4" />
+                    <Trash2 className="h-4 w-4" />
                     <span>{isAr ? 'حذف' : 'Delete'}</span>
                   </button>
                 </div>

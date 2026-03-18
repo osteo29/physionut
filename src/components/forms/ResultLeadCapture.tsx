@@ -1,6 +1,11 @@
 import {useEffect, useMemo, useState} from 'react';
 import {LoaderCircle, Save, ShieldCheck} from 'lucide-react';
-import {isSupabaseConfigured, saveAssessment} from '../../lib/supabase';
+import {
+  getSupabaseActionErrorMessage,
+  getSupabaseConfigurationMessage,
+  isSupabaseConfigured,
+  saveAssessment,
+} from '../../lib/supabase';
 
 const STORAGE_KEY = 'physiohub_tracking_profile';
 
@@ -30,7 +35,7 @@ export default function ResultLeadCapture({
       if (parsed.name) setName(parsed.name);
       if (parsed.email) setEmail(parsed.email);
     } catch {
-      // ignore malformed local profile
+      // Ignore malformed local profile.
     }
   }, []);
 
@@ -43,11 +48,7 @@ export default function ResultLeadCapture({
 
     if (!isSupabaseConfigured) {
       setStatus('error');
-      setMessage(
-        lang === 'en'
-          ? 'Supabase is not configured yet. Add your project URL and anon key first.'
-          : 'لم يتم إعداد Supabase بعد. أضف رابط المشروع و anon key أولاً.',
-      );
+      setMessage(getSupabaseConfigurationMessage(lang));
       return;
     }
 
@@ -77,41 +78,36 @@ export default function ResultLeadCapture({
           ? 'Saved to your follow-up log. Open the dashboard to review progress.'
           : 'تم الحفظ في سجل المتابعة. افتح لوحة المتابعة لمراجعة التقدم.',
       );
-    } catch (error: any) {
+    } catch (error) {
       setStatus('error');
-      setMessage(
-        error?.message ||
-          (lang === 'en'
-            ? 'Could not save this assessment right now.'
-            : 'تعذر حفظ هذا القياس الآن.'),
-      );
+      setMessage(getSupabaseActionErrorMessage(error, lang, 'save'));
     }
   };
 
   return (
     <div className="mt-8 rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm">
-      <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-health-green mb-3">
-        <Save className="w-3.5 h-3.5" />
+      <div className="mb-3 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-health-green">
+        <Save className="h-3.5 w-3.5" />
         <span>{lang === 'en' ? 'Save to tracking log' : 'احفظ في سجل المتابعة'}</span>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_auto] gap-3">
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-[1fr_1fr_auto]">
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder={lang === 'en' ? 'Name' : 'الاسم'}
-          className="px-4 py-3 rounded-2xl border border-slate-200 outline-none focus:ring-2 focus:ring-health-green/30"
+          className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:ring-2 focus:ring-health-green/30"
         />
         <input
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder={lang === 'en' ? 'Email address' : 'البريد الإلكتروني'}
-          className="px-4 py-3 rounded-2xl border border-slate-200 outline-none focus:ring-2 focus:ring-health-green/30"
+          className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:ring-2 focus:ring-health-green/30"
         />
         <button
           onClick={handleSave}
           disabled={!isValid || status === 'saving'}
-          className={`px-5 py-3 rounded-2xl font-bold transition-all ${
+          className={`rounded-2xl px-5 py-3 font-bold transition-all ${
             isValid && status !== 'saving'
               ? 'bg-health-green text-white hover:bg-health-green-dark'
               : 'bg-slate-100 text-slate-400'
@@ -119,7 +115,7 @@ export default function ResultLeadCapture({
         >
           {status === 'saving' ? (
             <span className="inline-flex items-center gap-2">
-              <LoaderCircle className="w-4 h-4 animate-spin" />
+              <LoaderCircle className="h-4 w-4 animate-spin" />
               {lang === 'en' ? 'Saving' : 'جارٍ الحفظ'}
             </span>
           ) : lang === 'en' ? (
@@ -130,9 +126,9 @@ export default function ResultLeadCapture({
         </button>
       </div>
 
-      <div className="mt-3 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+      <div className="mt-3 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
         <div className="inline-flex items-center gap-2 text-xs text-slate-500">
-          <ShieldCheck className="w-4 h-4 text-health-green" />
+          <ShieldCheck className="h-4 w-4 text-health-green" />
           <span>
             {lang === 'en'
               ? 'Every save includes date, calculator type, and measured value for follow-up.'
