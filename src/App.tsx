@@ -61,7 +61,13 @@ const IconComponent = ({ name, className }: { name: string; className?: string }
   return <Icon className={className} />;
 };
 
-export default function App() {
+export default function App({
+  theme,
+  onToggleTheme,
+}: {
+  theme: 'light' | 'dark';
+  onToggleTheme: () => void;
+}) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeCalculator, setActiveCalculator] = useState<CalculatorType>(null);
   const [activeToolGroup, setActiveToolGroup] = useState<'all' | 'assessment' | 'metabolism' | 'nutrition' | 'planning'>('all');
@@ -621,6 +627,8 @@ export default function App() {
         lang={lang}
         setLang={setLang}
         calculators={calculators}
+        theme={theme}
+        onToggleTheme={onToggleTheme}
         setActiveCalculator={(id) => setActiveCalculator(id as CalculatorType)}
         isSidebarOpen={isSidebarOpen}
         setIsSidebarOpen={setIsSidebarOpen}

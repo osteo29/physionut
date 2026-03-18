@@ -3,11 +3,13 @@ import {AnimatePresence, motion} from 'motion/react';
 import {
   BookOpen,
   Brain,
-  Pill,
-  Search,
   HeartPulse,
   Menu,
+  Moon,
+  Pill,
+  Search,
   Stethoscope,
+  Sun,
   X,
 } from 'lucide-react';
 import {Link} from 'react-router-dom';
@@ -29,6 +31,8 @@ const Navigation = memo(
     lang,
     setLang,
     calculators,
+    theme,
+    onToggleTheme,
     setActiveCalculator,
     isSidebarOpen,
     setIsSidebarOpen,
@@ -37,6 +41,8 @@ const Navigation = memo(
     lang: Language;
     setLang: (lang: Language) => void;
     calculators: CalculatorNavItem[];
+    theme: 'light' | 'dark';
+    onToggleTheme: () => void;
     setActiveCalculator: (id: string) => void;
     isSidebarOpen: boolean;
     setIsSidebarOpen: (open: boolean) => void;
@@ -229,6 +235,23 @@ const Navigation = memo(
                       </button>
                     </div>
                   </div>
+
+                  <button
+                    onClick={onToggleTheme}
+                    className="w-full mb-3 flex items-center justify-center gap-2 border border-slate-200 bg-white text-slate-700 py-3 rounded-xl font-bold text-sm hover:border-health-green/30 transition-all"
+                  >
+                    {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                    <span>
+                      {theme === 'dark'
+                        ? lang === 'en'
+                          ? 'Switch to light mode'
+                          : 'الوضع الفاتح'
+                        : lang === 'en'
+                          ? 'Switch to dark mode'
+                          : 'الوضع الداكن'}
+                    </span>
+                  </button>
+
                   <button
                     onClick={() => {
                       setIsSidebarOpen(false);
@@ -298,6 +321,14 @@ const Navigation = memo(
                 AR
               </button>
             </div>
+
+            <button
+              onClick={onToggleTheme}
+              className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:border-health-green/30 transition-all"
+              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
 
             <button
               onClick={() => scrollToId('calculators')}

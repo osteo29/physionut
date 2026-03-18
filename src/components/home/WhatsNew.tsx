@@ -15,17 +15,19 @@ const WhatsNew = memo(({lang}: {lang: Language}) => {
       ? [
           {
             title: 'PhysioNutrition Architect',
-            desc: 'New integrated health & recovery dashboard powered by AI.',
+            desc: 'New integrated health and recovery dashboard powered by AI.',
             icon: Brain,
             color: 'text-purple-500',
             bg: 'bg-purple-500/10',
+            href: '#architect',
           },
           {
             title: 'Injury Database',
-            desc: 'Detailed nutrition protocols for common PT injuries.',
+            desc: 'Detailed nutrition protocols for common physical therapy injuries.',
             icon: ClipboardList,
             color: 'text-health-green',
             bg: 'bg-health-green/10',
+            href: '#architect',
           },
           {
             title: 'AI Diet Plans',
@@ -33,6 +35,7 @@ const WhatsNew = memo(({lang}: {lang: Language}) => {
             icon: Sparkles,
             color: 'text-amber-500',
             bg: 'bg-amber-500/10',
+            href: '#architect',
           },
         ]
       : [
@@ -42,6 +45,7 @@ const WhatsNew = memo(({lang}: {lang: Language}) => {
             icon: Brain,
             color: 'text-purple-500',
             bg: 'bg-purple-500/10',
+            href: '#architect',
           },
           {
             title: 'قاعدة بيانات الإصابات',
@@ -49,13 +53,15 @@ const WhatsNew = memo(({lang}: {lang: Language}) => {
             icon: ClipboardList,
             color: 'text-health-green',
             bg: 'bg-health-green/10',
+            href: '#architect',
           },
           {
             title: 'خطط غذائية ذكية',
-            desc: 'أنشئ خطط تعافي مخصصة باستخدام ذكاء Gemini الاصطناعي.',
+            desc: 'أنشئ خطط تعافٍ مخصصة باستخدام ذكاء Gemini الاصطناعي.',
             icon: Sparkles,
             color: 'text-amber-500',
             bg: 'bg-amber-500/10',
+            href: '#architect',
           },
         ];
 
@@ -80,14 +86,15 @@ const WhatsNew = memo(({lang}: {lang: Language}) => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {updates.map((update, idx) => (
-            <motion.div
+            <motion.a
               key={idx}
+              href={update.href}
               initial={{opacity: 0, y: 20}}
               whileInView={{opacity: 1, y: 0}}
               viewport={{once: true}}
               transition={{delay: idx * 0.1}}
               whileHover={{y: -8}}
-              className="group p-8 rounded-[2.5rem] bg-slate-50 border border-slate-100 hover:bg-white hover:shadow-2xl hover:shadow-slate-200/50 transition-all duration-500"
+              className="group block p-8 rounded-[2.5rem] bg-slate-50 border border-slate-100 hover:bg-white hover:shadow-2xl hover:shadow-slate-200/50 transition-all duration-500"
             >
               <div
                 className={`${update.bg} w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500`}
@@ -104,7 +111,7 @@ const WhatsNew = memo(({lang}: {lang: Language}) => {
                 <span>{lang === 'en' ? 'Explore Feature' : 'استكشف الميزة'}</span>
                 <ChevronRight className={`w-4 h-4 ${lang === 'ar' ? 'rotate-180' : ''}`} />
               </div>
-            </motion.div>
+            </motion.a>
           ))}
         </div>
       </div>
@@ -115,4 +122,3 @@ const WhatsNew = memo(({lang}: {lang: Language}) => {
 WhatsNew.displayName = 'WhatsNew';
 
 export default WhatsNew;
-

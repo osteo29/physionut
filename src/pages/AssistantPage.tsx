@@ -7,11 +7,19 @@ import {
   ChevronRight,
   ClipboardList,
   HeartPulse,
+  Moon,
   ShieldCheck,
   Sparkles,
+  Sun,
 } from 'lucide-react';
 
-export default function AssistantPage() {
+export default function AssistantPage({
+  theme,
+  onToggleTheme,
+}: {
+  theme: 'light' | 'dark';
+  onToggleTheme: () => void;
+}) {
   const lang = usePreferredLang();
   const isAr = lang === 'ar';
 
@@ -97,7 +105,7 @@ export default function AssistantPage() {
       />
 
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto h-16 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto h-16 flex items-center justify-between gap-3">
           <Link to="/" className="flex items-center gap-2 group">
             <div className="bg-health-green p-1.5 rounded-lg group-hover:scale-110 transition-transform">
               <HeartPulse className="w-5 h-5 text-white" />
@@ -107,13 +115,32 @@ export default function AssistantPage() {
             </span>
           </Link>
 
-          <Link
-            to="/"
-            className="flex items-center gap-1 text-sm font-bold text-slate-500 hover:text-health-green transition-colors"
-          >
-            {isAr ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
-            {isAr ? 'العودة للرئيسية' : 'Back to Home'}
-          </Link>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={onToggleTheme}
+              className="flex items-center gap-2 px-3 py-2 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:border-health-green/30 transition-all"
+              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              <span className="hidden sm:inline text-xs font-bold">
+                {theme === 'dark'
+                  ? isAr
+                    ? 'الوضع الفاتح'
+                    : 'Light mode'
+                  : isAr
+                    ? 'الوضع الداكن'
+                    : 'Dark mode'}
+              </span>
+            </button>
+
+            <Link
+              to="/"
+              className="flex items-center gap-1 text-sm font-bold text-slate-500 hover:text-health-green transition-colors"
+            >
+              {isAr ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
+              {isAr ? 'العودة للرئيسية' : 'Back to Home'}
+            </Link>
+          </div>
         </div>
       </nav>
 
