@@ -21,6 +21,7 @@ import Footer from './components/layout/Footer';
 import Navigation from './components/layout/Navigation';
 import AboutSection from './components/home/AboutSection';
 import BlogSection from './components/home/BlogSection';
+import TrustSection from './components/home/TrustSection';
 import AskAboutResultChat from './components/ai/AskAboutResultChat';
 import DrugNutrientChecker from './components/ai/DrugNutrientChecker';
 import {
@@ -618,6 +619,116 @@ export default function App({
     },
   ];
 
+  const practicalGuide = useMemo(() => {
+    if (!activeCalculator || result === null) return null;
+
+    if (activeCalculator === 'Macros' && typeof result === 'object') {
+      return {
+        title: lang === 'en' ? 'Turn this into meals' : 'حوّل النتيجة إلى وجبات',
+        items:
+          lang === 'en'
+            ? [
+                `Aim for about ${Math.ceil(result.protein / 4)} protein feedings across the day.`,
+                `A simple split could be ${Math.round(result.protein / 4)}g protein, ${Math.round(result.carbs / 4)}g carbs, and ${Math.round(result.fats / 4)}g fats per meal.`,
+                'Use the food database below to build an example meal that matches your targets.',
+              ]
+            : [
+                `استهدف تقريبًا ${Math.ceil(result.protein / 4)} جرعات بروتين خلال اليوم.`,
+                `يمكنك تقسيمها مثلًا إلى ${Math.round(result.protein / 4)} جم بروتين و${Math.round(result.carbs / 4)} جم كارب و${Math.round(result.fats / 4)} جم دهون في الوجبة.`,
+                'استخدم قاعدة الطعام بالأسفل لبناء وجبة تناسب هدفك.',
+              ],
+      };
+    }
+
+    if (activeCalculator === 'Protein' && typeof result === 'number') {
+      return {
+        title: lang === 'en' ? 'Easy protein split' : 'تقسيم بروتين سهل',
+        items:
+          lang === 'en'
+            ? [
+                `Your target works well as ${Math.ceil(result / 4)}g protein over 4 meals.`,
+                'Prioritize one protein source in every meal or snack.',
+                'If you are recovering from injury, spread intake evenly instead of taking it all at night.',
+              ]
+            : [
+                `يمكن تقسيم هدفك إلى حوالي ${Math.ceil(result / 4)} جم بروتين على 4 وجبات.`,
+                'اجعل في كل وجبة أو سناك مصدر بروتين واضح.',
+                'إذا كنت في مرحلة تعافٍ، وزّع البروتين على اليوم بدل جمعه في وجبة واحدة.',
+              ],
+      };
+    }
+
+    if (activeCalculator === 'Water' && typeof result === 'number') {
+      return {
+        title: lang === 'en' ? 'Hydration plan' : 'خطة الترطيب',
+        items:
+          lang === 'en'
+            ? [
+                `That is about ${(result / 1000).toFixed(1)} liters for the day.`,
+                `Start with roughly ${Math.round(result / 5)} ml in each of 5 moments during the day.`,
+                'Increase around training, hot weather, or heavy sweating.',
+              ]
+            : [
+                `يعادل ذلك تقريبًا ${(result / 1000).toFixed(1)} لتر يوميًا.`,
+                `ابدأ بتقسيمه إلى نحو ${Math.round(result / 5)} مل في 5 مرات خلال اليوم.`,
+                'زد الكمية مع التمرين أو الجو الحار أو التعرق العالي.',
+              ],
+      };
+    }
+
+    if (activeCalculator === 'Deficit' && typeof result === 'object') {
+      return {
+        title: lang === 'en' ? 'How to use it safely' : 'كيف تستخدمه بأمان',
+        items:
+          lang === 'en'
+            ? [
+                'Treat this as a calorie target, not a reason to cut food quality.',
+                'Keep protein high and avoid aggressive cuts unless supervised.',
+                'Review progress weekly instead of changing calories every day.',
+              ]
+            : [
+                'تعامل مع الرقم كهدف سعرات، وليس كسبب لتقليل جودة الأكل.',
+                'حافظ على البروتين مرتفعًا وتجنب العجز العنيف إلا بإشراف.',
+                'راجع التقدم أسبوعيًا بدل تعديل السعرات كل يوم.',
+              ],
+      };
+    }
+
+    if ((activeCalculator === 'BMI' || activeCalculator === 'BodyFat' || activeCalculator === 'WHtR') && healthInterpretation) {
+      return {
+        title: lang === 'en' ? 'What to do next' : 'ماذا تفعل بعد ذلك',
+        items:
+          lang === 'en'
+            ? [
+                'Use this as a screening result, not a full diagnosis.',
+                'Combine it with waist, activity, sleep, and recovery context.',
+                'If the result looks concerning, move to the recovery dashboard or ask the assistant for context.',
+              ]
+            : [
+                'استخدم هذه النتيجة كمؤشر أولي وليس تشخيصًا كاملًا.',
+                'اربطها مع محيط الخصر والنشاط والنوم وسياق التعافي.',
+                'إذا كانت النتيجة مقلقة، انتقل إلى لوحة التعافي أو اسأل المساعد لفهمها أكثر.',
+              ],
+      };
+    }
+
+    return {
+      title: lang === 'en' ? 'Suggested next step' : 'الخطوة التالية المقترحة',
+      items:
+        lang === 'en'
+          ? [
+              'Use this result as a starting point for your recovery or nutrition decision.',
+              'Compare it with your current routine before making big changes.',
+              'Open the assistant if you want this translated into a practical plan.',
+            ]
+          : [
+              'استخدم هذه النتيجة كنقطة بداية لقرارك الغذائي أو التعافي.',
+              'قارنها بروتينك الحالي قبل عمل تغييرات كبيرة.',
+              'افتح المساعد إذا أردت تحويلها لخطة عملية.',
+            ],
+    };
+  }, [activeCalculator, healthInterpretation, lang, result]);
+
   const articles = getArticles(lang);
 
   return (
@@ -635,7 +746,7 @@ export default function App({
       />
 
       {/* Hero Section */}
-      <Hero t={t} />
+      <Hero lang={lang} />
 
       <section className="py-8 bg-white border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -656,6 +767,40 @@ export default function App({
           </div>
         </div>
       </section>
+
+      <section className="py-8 bg-slate-50 border-b border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              {
+                title: lang === 'en' ? 'Built for rehab and recovery' : 'مصمم للـ rehab والتعافي',
+                desc: lang === 'en'
+                  ? 'The positioning is now centered around injured users, recovery, and physio workflows.'
+                  : 'تم توجيه الرسالة لتناسب المصابين، التعافي، وسيناريوهات العلاج الطبيعي.',
+              },
+              {
+                title: lang === 'en' ? 'Clinical formulas + context' : 'معادلات سريرية + سياق',
+                desc: lang === 'en'
+                  ? 'Results are based on established formulas, then translated into easier next actions.'
+                  : 'النتائج مبنية على معادلات معروفة، ثم تتحول إلى خطوات أوضح وأسهل.',
+              },
+              {
+                title: lang === 'en' ? 'Educational, not diagnostic' : 'إرشادي وليس تشخيصيًا',
+                desc: lang === 'en'
+                  ? 'Useful for planning and education, while medical decisions should still involve professionals.'
+                  : 'مفيد للتخطيط والتوعية، مع بقاء القرارات الطبية عند المختصين.',
+              },
+            ].map((item) => (
+              <div key={item.title} className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+                <h2 className="font-bold text-slate-900 mb-2">{item.title}</h2>
+                <p className="text-sm text-slate-600 leading-6">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <TrustSection lang={lang} />
 
       {/* What's New Section */}
       <WhatsNew lang={lang} />
@@ -1756,6 +1901,24 @@ export default function App({
                             }
                           </p>
                         </div>
+
+                        {practicalGuide && (
+                          <div className="mt-6 text-left rounded-2xl border border-slate-200 bg-white/80 p-5">
+                            <div className="text-xs font-bold uppercase tracking-[0.16em] text-health-green mb-3">
+                              {practicalGuide.title}
+                            </div>
+                            <div className="space-y-2">
+                              {practicalGuide.items.map((item, index) => (
+                                <div key={`${item}-${index}`} className="flex items-start gap-3 text-sm text-slate-700 leading-6">
+                                  <div className="w-6 h-6 rounded-full bg-soft-blue text-health-green flex items-center justify-center shrink-0 text-xs font-black">
+                                    {index + 1}
+                                  </div>
+                                  <p>{item}</p>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </motion.div>
                   )}

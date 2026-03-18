@@ -5,26 +5,40 @@ import {
   Calculator,
   GraduationCap,
   MessageSquareText,
+  ShieldCheck,
 } from 'lucide-react';
+import type {Language} from '../../services/translations';
 
-const Hero = memo(({t}: {t: any}) => {
+const Hero = memo(({lang}: {lang: Language}) => {
+  const isAr = lang === 'ar';
+
   const journey = [
     {
       icon: Calculator,
-      title: t.nav.calculators,
-      desc: 'Start with the right calculator for a faster first answer.',
+      title: isAr ? 'اختر الحاسبة المناسبة' : 'Pick the right calculator',
+      desc: isAr
+        ? 'ابدأ من هدفك: سعرات، بروتين، تعافٍ، أو تقييم جسم.'
+        : 'Start from your goal: calories, protein, recovery, or body assessment.',
     },
     {
       icon: Activity,
-      title: t.nav.insights,
-      desc: 'See your result with clearer context and what it means.',
+      title: isAr ? 'افهم النتيجة بسرعة' : 'Understand the result fast',
+      desc: isAr
+        ? 'لا نعرض الرقم فقط، بل نشرح معناه وما الذي يجب الانتباه له.'
+        : 'Get more than a number with context and what it actually means.',
     },
     {
       icon: MessageSquareText,
-      title: t.hero?.assistantCta || 'Ask the assistant',
-      desc: 'Turn numbers into practical recovery and nutrition guidance.',
+      title: isAr ? 'خذ خطوة عملية' : 'Take a practical next step',
+      desc: isAr
+        ? 'حوّل النتيجة إلى وجبات، أهداف، وتوصيات للتعافي.'
+        : 'Turn the result into meals, targets, and recovery guidance.',
     },
   ];
+
+  const trustPoints = isAr
+    ? ['للإصابات والتعافي', 'مناسب للـ rehab', 'إرشادي وغير تشخيصي']
+    : ['Built for injury recovery', 'Useful for rehab planning', 'Educational, not diagnostic'];
 
   return (
     <section className="relative pt-20 pb-24 overflow-hidden bg-soft-blue">
@@ -39,18 +53,22 @@ const Hero = memo(({t}: {t: any}) => {
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 text-health-green text-sm font-bold mb-8 border border-health-green/20 shadow-sm"
         >
           <GraduationCap className="w-4 h-4" />
-          <span>{t.hero.badge}</span>
+          <span>
+            {isAr
+              ? 'حاسبات علاج طبيعي + تغذية للتعافي'
+              : 'Physio + nutrition calculators for recovery'}
+          </span>
         </motion.div>
 
         <motion.h1
           initial={{opacity: 0, y: 20}}
           animate={{opacity: 1, y: 0}}
           transition={{delay: 0.1}}
-          className="text-5xl md:text-7xl font-bold text-slate-900 leading-tight mb-8 tracking-tight"
+          className="text-4xl md:text-6xl font-bold text-slate-900 leading-tight mb-6 tracking-tight"
         >
-          {t.hero.title} <br />
+          {isAr ? 'احسب احتياجات التعافي' : 'Calculate recovery needs'} <br />
           <span className="text-health-green relative">
-            {t.hero.titleAccent}
+            {isAr ? 'في أقل من 30 ثانية' : 'in under 30 seconds'}
             <svg
               className="absolute -bottom-2 left-0 w-full h-3 text-health-green/20"
               viewBox="0 0 100 10"
@@ -73,8 +91,27 @@ const Hero = memo(({t}: {t: any}) => {
           transition={{delay: 0.2}}
           className="text-lg sm:text-xl text-slate-600 mb-8 max-w-3xl mx-auto leading-relaxed"
         >
-          {t.hero.subtitle}
+          {isAr
+            ? 'موقع مخصص للمصابين، التعافي، وأخصائيي العلاج الطبيعي: احسب السعرات، البروتين، الماء، والماكروز ثم خذ توصيات أوضح بدل أرقام فقط.'
+            : 'A focused tool for injury recovery, rehab, and clinicians: calculate calories, protein, hydration, and macros, then get clearer guidance instead of numbers alone.'}
         </motion.p>
+
+        <motion.div
+          initial={{opacity: 0, y: 20}}
+          animate={{opacity: 1, y: 0}}
+          transition={{delay: 0.25}}
+          className="flex flex-wrap justify-center gap-3 mb-10"
+        >
+          {trustPoints.map((point) => (
+            <div
+              key={point}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-slate-200 bg-white/80 text-slate-700 text-sm font-semibold"
+            >
+              <ShieldCheck className="w-4 h-4 text-health-green" />
+              <span>{point}</span>
+            </div>
+          ))}
+        </motion.div>
 
         <motion.div
           initial={{opacity: 0, y: 20}}
@@ -87,21 +124,21 @@ const Hero = memo(({t}: {t: any}) => {
             className="px-8 py-4 bg-health-green text-white font-bold rounded-2xl hover:bg-health-green-dark transition-all shadow-xl shadow-health-green/20 flex items-center gap-2"
           >
             <Calculator className="w-5 h-5" />
-            {t.nav.calculators}
+            {isAr ? 'احسب الآن' : 'Calculate now'}
           </a>
           <a
             href="/assistant"
             className="px-8 py-4 bg-white text-slate-900 font-bold rounded-2xl border border-slate-200 hover:border-health-green transition-all shadow-sm flex items-center gap-2"
           >
             <MessageSquareText className="w-5 h-5 text-health-green" />
-            {t.hero?.assistantCta || 'Talk to the assistant'}
+            {isAr ? 'اسأل المساعد' : 'Ask the assistant'}
           </a>
           <a
             href="#architect"
             className="px-8 py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/15 flex items-center gap-2"
           >
             <Activity className="w-5 h-5" />
-            {t.hero?.insightsCta || t.nav.insights}
+            {isAr ? 'افتح لوحة التعافي' : 'Open recovery dashboard'}
           </a>
         </motion.div>
 
