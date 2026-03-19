@@ -6,6 +6,8 @@ import usePreferredLang from './usePreferredLang';
 import {
   getCurrentUser,
   getSupabaseActionErrorMessage,
+  getSupabaseConfigurationMessage,
+  isSupabaseConfigured,
   onSupabaseAuthChange,
   signInWithEmail,
   signUpWithEmail,
@@ -23,7 +25,6 @@ export default function AuthPage({
   const isAr = lang === 'ar';
   const navigate = useNavigate();
   const location = useLocation();
-
   const redirectTo = (location.state as {from?: string} | null)?.from || '/dashboard';
 
   const [user, setUser] = useState<User | null>(null);
@@ -32,13 +33,19 @@ export default function AuthPage({
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [checkingSession, setCheckingSession] = useState(true);
   const [message, setMessage] = useState('');
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   useEffect(() => {
+    if (!isSupabaseConfigured) {
+      setCheckingSession(false);
+      return;
+    }
+
     let mounted = true;
 
-    const loadUser = async () => {
+    const bootstrap = async () => {
       try {
         const currentUser = await getCurrentUser();
         if (!mounted) return;
@@ -48,14 +55,17 @@ export default function AuthPage({
         }
       } catch {
         if (mounted) setUser(null);
+      } finally {
+        if (mounted) setCheckingSession(false);
       }
     };
 
-    void loadUser();
+    void bootstrap();
 
     const {data} = onSupabaseAuthChange((_, session) => {
       if (!mounted) return;
       setUser(session?.user || null);
+      setCheckingSession(false);
       if (session?.user) {
         navigate(redirectTo, {replace: true});
       }
@@ -70,6 +80,12 @@ export default function AuthPage({
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     if (loading) return;
+
+    if (!isSupabaseConfigured) {
+      setStatus('error');
+      setMessage(getSupabaseConfigurationMessage(lang));
+      return;
+    }
 
     setLoading(true);
     setStatus('idle');
@@ -99,9 +115,7 @@ export default function AuthPage({
       } else {
         await signInWithEmail(email.trim(), password);
         setStatus('success');
-        setMessage(
-          isAr ? 'تم تسجيل الدخول بنجاح.' : 'Signed in successfully.',
-        );
+        setMessage(isAr ? 'تم تسجيل الدخول بنجاح.' : 'Signed in successfully.');
       }
     } catch (error) {
       setStatus('error');
@@ -110,6 +124,17 @@ export default function AuthPage({
       setLoading(false);
     }
   };
+
+  if (checkingSession) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-soft-blue px-4">
+        <div className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-5 py-4 text-slate-600 shadow-sm">
+          <LoaderCircle className="h-4 w-4 animate-spin" />
+          <span>{isAr ? 'جارٍ التحقق من الجلسة' : 'Checking session'}</span>
+        </div>
+      </div>
+    );
+  }
 
   if (user) return null;
 
@@ -158,29 +183,23 @@ export default function AuthPage({
             </h1>
             <p className="mt-3 max-w-xl text-sm leading-7 text-slate-600 sm:text-base">
               {isAr
-                ? 'أنشئ حسابًا أو سجّل الدخول لحفظ القياسات، مراجعة السجل الزمني، وحماية البيانات بسياسات Supabase Auth + RLS.'
-                : 'Create an account or sign in to save assessments, review history, and protect data with Supabase Auth + RLS.'}
+                ? 'أنشئ حسابًا أو سجّل الدخول لحفظ القياسات، مراجعة السجل الزمني، والحفاظ على متابعتك مستمرة على نفس الجهاز وبعد كل تحديث للصفحة.'
+                : 'Create an account or sign in to save assessments, review history, and keep your session active after refreshes on the same device.'}
             </p>
 
             <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
               {[
                 {
                   title: isAr ? 'حفظ آمن' : 'Secure saves',
-                  desc: isAr
-                    ? 'كل نتيجة ترتبط بحسابك فقط.'
-                    : 'Each result is linked to your account only.',
+                  desc: isAr ? 'كل نتيجة ترتبط بحسابك فقط.' : 'Each result is linked to your account only.',
                 },
                 {
                   title: isAr ? 'متابعة واضحة' : 'Clear follow-up',
-                  desc: isAr
-                    ? 'راجع السجل والرسوم البيانية من لوحة واحدة.'
-                    : 'Review history and charts from one dashboard.',
+                  desc: isAr ? 'راجع السجل والرسوم من لوحة واحدة.' : 'Review history and charts from one dashboard.',
                 },
                 {
-                  title: isAr ? 'أمان أفضل' : 'Stronger security',
-                  desc: isAr
-                    ? 'لا حاجة لسياسات anon المفتوحة.'
-                    : 'No need for fully open anon policies.',
+                  title: isAr ? 'تسجيل مستمر' : 'Persistent login',
+                  desc: isAr ? 'يبقى دخولك محفوظًا على نفس الجهاز.' : 'Your login stays active on the same device.',
                 },
               ].map((item) => (
                 <div key={item.title} className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4">
@@ -192,74 +211,82 @@ export default function AuthPage({
           </div>
 
           <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/50 sm:p-8">
-            <div className="mb-6 flex gap-2 rounded-full border border-slate-200 bg-slate-100 p-1">
-              <button
-                onClick={() => setMode('signin')}
-                className={`flex-1 rounded-full px-4 py-2 text-sm font-bold transition-all ${
-                  mode === 'signin' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'
-                }`}
-              >
-                {isAr ? 'تسجيل الدخول' : 'Sign in'}
-              </button>
-              <button
-                onClick={() => setMode('signup')}
-                className={`flex-1 rounded-full px-4 py-2 text-sm font-bold transition-all ${
-                  mode === 'signup' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'
-                }`}
-              >
-                {isAr ? 'إنشاء حساب' : 'Create account'}
-              </button>
-            </div>
+            {!isSupabaseConfigured ? (
+              <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-600">
+                {getSupabaseConfigurationMessage(lang)}
+              </div>
+            ) : (
+              <>
+                <div className="mb-6 flex gap-2 rounded-full border border-slate-200 bg-slate-100 p-1">
+                  <button
+                    onClick={() => setMode('signin')}
+                    className={`flex-1 rounded-full px-4 py-2 text-sm font-bold transition-all ${
+                      mode === 'signin' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'
+                    }`}
+                  >
+                    {isAr ? 'تسجيل الدخول' : 'Sign in'}
+                  </button>
+                  <button
+                    onClick={() => setMode('signup')}
+                    className={`flex-1 rounded-full px-4 py-2 text-sm font-bold transition-all ${
+                      mode === 'signup' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'
+                    }`}
+                  >
+                    {isAr ? 'إنشاء حساب' : 'Create account'}
+                  </button>
+                </div>
 
-            <form className="space-y-4" onSubmit={handleSubmit}>
-              {mode === 'signup' ? (
-                <input
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  placeholder={isAr ? 'الاسم الكامل' : 'Full name'}
-                  className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:ring-2 focus:ring-health-green/30"
-                />
-              ) : null}
+                <form className="space-y-4" onSubmit={handleSubmit}>
+                  {mode === 'signup' ? (
+                    <input
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      placeholder={isAr ? 'الاسم الكامل' : 'Full name'}
+                      className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:ring-2 focus:ring-health-green/30"
+                    />
+                  ) : null}
 
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder={isAr ? 'البريد الإلكتروني' : 'Email address'}
-                className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:ring-2 focus:ring-health-green/30"
-                required
-              />
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder={isAr ? 'البريد الإلكتروني' : 'Email address'}
+                    className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:ring-2 focus:ring-health-green/30"
+                    required
+                  />
 
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder={isAr ? 'كلمة المرور' : 'Password'}
-                className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:ring-2 focus:ring-health-green/30"
-                required
-                minLength={6}
-              />
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder={isAr ? 'كلمة المرور' : 'Password'}
+                    className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:ring-2 focus:ring-health-green/30"
+                    required
+                    minLength={6}
+                  />
 
-              <button
-                disabled={loading}
-                className="flex w-full items-center justify-center gap-2 rounded-2xl bg-health-green px-5 py-3 font-bold text-white transition-all hover:bg-health-green-dark disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {loading ? <LoaderCircle className="h-4 w-4 animate-spin" /> : null}
-                <span>
-                  {loading
-                    ? isAr
-                      ? 'جارٍ التنفيذ'
-                      : 'Please wait'
-                    : mode === 'signup'
-                      ? isAr
-                        ? 'إنشاء حساب'
-                        : 'Create account'
-                      : isAr
-                        ? 'تسجيل الدخول'
-                        : 'Sign in'}
-                </span>
-              </button>
-            </form>
+                  <button
+                    disabled={loading}
+                    className="flex w-full items-center justify-center gap-2 rounded-2xl bg-health-green px-5 py-3 font-bold text-white transition-all hover:bg-health-green-dark disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {loading ? <LoaderCircle className="h-4 w-4 animate-spin" /> : null}
+                    <span>
+                      {loading
+                        ? isAr
+                          ? 'جارٍ التنفيذ'
+                          : 'Please wait'
+                        : mode === 'signup'
+                          ? isAr
+                            ? 'إنشاء حساب'
+                            : 'Create account'
+                          : isAr
+                            ? 'تسجيل الدخول'
+                            : 'Sign in'}
+                    </span>
+                  </button>
+                </form>
+              </>
+            )}
 
             {message ? (
               <div
