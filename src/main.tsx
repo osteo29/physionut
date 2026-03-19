@@ -14,8 +14,22 @@ createRoot(document.getElementById('root')!).render(
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch(() => {
-      // Ignore registration errors in unsupported environments.
+    navigator.serviceWorker.getRegistrations().then((registrations) => {
+      registrations.forEach((registration) => {
+        void registration.unregister();
+      });
+    });
+  });
+}
+
+if ('caches' in window) {
+  window.addEventListener('load', () => {
+    caches.keys().then((keys) => {
+      keys
+        .filter((key) => key.startsWith('physiohub-'))
+        .forEach((key) => {
+          void caches.delete(key);
+        });
     });
   });
 }
