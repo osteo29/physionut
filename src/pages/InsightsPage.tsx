@@ -2,11 +2,11 @@ import {Link} from 'react-router-dom';
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
 import Seo from '../components/seo/Seo';
-import {getArticles} from '../services/articles';
+import {usePublishedArticles} from '../services/articleStudio';
 
 export default function InsightsPage() {
   const lang = usePreferredLang();
-  const articles = getArticles(lang);
+  const {articles} = usePublishedArticles(lang);
 
   return (
     <>
@@ -15,7 +15,7 @@ export default function InsightsPage() {
         description={
           lang === 'en'
             ? 'Browse all PhysioHub articles about nutrition, recovery, rehabilitation, and fat loss.'
-            : 'تصفح كل مقالات PhysioHub عن التغذية، التعافي، التأهيل، وخسارة الدهون.'
+            : 'تصفح كل مقالات PhysioHub عن التغذية والتعافي والتأهيل وخسارة الدهون.'
         }
         canonicalPath="/insights"
       />

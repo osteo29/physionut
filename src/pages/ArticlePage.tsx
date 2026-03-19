@@ -3,7 +3,7 @@ import {Link, useParams} from 'react-router-dom';
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
 import Seo from '../components/seo/Seo';
-import {getArticleBySlug} from '../services/articles';
+import {usePublishedArticles} from '../services/articleStudio';
 
 function renderInline(text: string): ReactNode[] {
   const parts = text.split(/(\[[^\]]+\]\([^)]+\))/g).filter(Boolean);
@@ -33,10 +33,87 @@ function renderInline(text: string): ReactNode[] {
   });
 }
 
+function renderContent(content: string): ReactNode[] {
+  const lines = content.split('\n');
+  const nodes: ReactNode[] = [];
+  let paragraphBuffer: string[] = [];
+  let listBuffer: string[] = [];
+
+  const flushParagraph = () => {
+    if (!paragraphBuffer.length) return;
+    const text = paragraphBuffer.join(' ').trim();
+    if (text) nodes.push(<p key={`p-${nodes.length}`}>{renderInline(text)}</p>);
+    paragraphBuffer = [];
+  };
+
+  const flushList = () => {
+    if (!listBuffer.length) return;
+    nodes.push(
+      <ul key={`ul-${nodes.length}`} className="list-disc space-y-2 pl-6">
+        {listBuffer.map((item, index) => (
+          <li key={`li-${nodes.length}-${index}`}>{renderInline(item)}</li>
+        ))}
+      </ul>,
+    );
+    listBuffer = [];
+  };
+
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
+
+    if (!line) {
+      flushParagraph();
+      flushList();
+      continue;
+    }
+
+    if (line.startsWith('## ')) {
+      flushParagraph();
+      flushList();
+      nodes.push(
+        <h2 key={`h2-${nodes.length}`} className="pt-2 text-2xl font-bold text-slate-900">
+          {line.slice(3)}
+        </h2>,
+      );
+      continue;
+    }
+
+    if (line.startsWith('* ')) {
+      flushParagraph();
+      listBuffer.push(line.slice(2));
+      continue;
+    }
+
+    flushList();
+    paragraphBuffer.push(line);
+  }
+
+  flushParagraph();
+  flushList();
+  return nodes;
+}
+
 export default function ArticlePage() {
   const lang = usePreferredLang();
   const {slug = ''} = useParams();
-  const article = getArticleBySlug(lang, slug);
+  const {articles, loading} = usePublishedArticles(lang);
+  const article = articles.find((entry) => entry.slug === slug);
+
+  if (loading) {
+    return (
+      <>
+        <Seo
+          title={lang === 'en' ? 'Loading article' : 'جار تحميل المقال'}
+          description={lang === 'en' ? 'Loading article content.' : 'جار تحميل محتوى المقال.'}
+          canonicalPath={`/insights/${slug}`}
+          noIndex
+        />
+        <PageLayout title={lang === 'en' ? 'Loading article' : 'جار تحميل المقال'}>
+          <p>{lang === 'en' ? 'Please wait a moment.' : 'انتظر لحظة من فضلك.'}</p>
+        </PageLayout>
+      </>
+    );
+  }
 
   if (!article) {
     return (
@@ -63,15 +140,9 @@ export default function ArticlePage() {
     );
   }
 
-  const blocks = article.content.split('\n\n').filter(Boolean);
-
   return (
     <>
-      <Seo
-        title={article.title}
-        description={article.excerpt}
-        canonicalPath={`/insights/${article.slug}`}
-      />
+      <Seo title={article.title} description={article.excerpt} canonicalPath={`/insights/${article.slug}`} />
       <PageLayout title={article.title}>
         <div className="mb-6 flex flex-wrap gap-3 text-sm text-slate-500">
           <span>{article.category}</span>
@@ -81,40 +152,7 @@ export default function ArticlePage() {
 
         <p className="text-lg leading-8 text-slate-700">{article.excerpt}</p>
 
-        <div className="mt-8 space-y-5 text-slate-700 leading-8">
-          {blocks.map((block) => {
-            const lines = block.split('\n');
-            const first = lines[0];
-            const isHeading = first.startsWith('## ');
-            const bulletLines = lines.filter((line) => line.startsWith('* '));
-
-            if (isHeading) {
-              return (
-                <h2 key={block} className="pt-2 text-2xl font-bold text-slate-900">
-                  {first.slice(3)}
-                </h2>
-              );
-            }
-
-            if (bulletLines.length === lines.length) {
-              return (
-                <ul key={block} className="list-disc space-y-2 pl-6">
-                  {bulletLines.map((line) => (
-                    <li key={line}>{renderInline(line.slice(2))}</li>
-                  ))}
-                </ul>
-              );
-            }
-
-            return (
-              <div key={block} className="space-y-3">
-                {lines.map((line) => (
-                  <p key={line}>{renderInline(line)}</p>
-                ))}
-              </div>
-            );
-          })}
-        </div>
+        <div className="mt-8 space-y-5 leading-8 text-slate-700">{renderContent(article.content)}</div>
       </PageLayout>
     </>
   );

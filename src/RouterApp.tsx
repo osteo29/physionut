@@ -9,6 +9,7 @@ import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import ArticlePage from './pages/ArticlePage';
 import InsightsPage from './pages/InsightsPage';
+import ArticleStudioPage from './pages/ArticleStudioPage';
 import AssistantPage from './pages/AssistantPage';
 import NotFound from './pages/NotFound';
 import TrackingDashboardPage from './pages/TrackingDashboardPage';
@@ -45,6 +46,7 @@ export default function RouterApp() {
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/insights" element={<InsightsPage />} />
       <Route path="/insights/:slug" element={<ArticlePage />} />
+      <Route path="/studio/articles" element={<ArticleStudioPage />} />
       <Route
         path="/assistant"
         element={<AssistantPage theme={theme} onToggleTheme={toggleTheme} />}

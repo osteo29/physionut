@@ -1,4 +1,4 @@
-import {ReactNode} from 'react';
+import {type ReactNode} from 'react';
 import {Link, useLocation} from 'react-router-dom';
 import usePreferredLang from './usePreferredLang';
 
@@ -21,11 +21,11 @@ export default function PageLayout({
   return (
     <div className="min-h-screen bg-soft-blue" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
       <header className="border-b border-slate-200/70 bg-white/70 backdrop-blur">
-        <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-4xl items-center justify-between gap-6 px-4 py-5 sm:px-6 lg:px-8">
           <Link to="/" onClick={handleBrandClick} className="font-black tracking-tight text-slate-900">
             PhysioHub
           </Link>
-          <nav className="flex items-center gap-5 text-sm font-semibold text-slate-700">
+          <nav className="flex flex-wrap items-center gap-4 text-sm font-semibold text-slate-700">
             <Link className="hover:text-health-green" to="/privacy">
               {lang === 'en' ? 'Privacy' : 'الخصوصية'}
             </Link>

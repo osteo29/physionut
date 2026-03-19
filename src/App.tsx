@@ -12,7 +12,7 @@ import { checkEnvironment } from './services/calculators';
 import { PhysioNutritionLogic, HealthProfile, HealthMetrics } from './services/physioNutritionLogic';
 import { injuryDatabase, getInjuryById } from './services/injuryDatabase';
 import { translations, Language } from './services/translations';
-import { getArticles } from './services/articles';
+import { usePublishedArticles } from './services/articleStudio';
 import { foodDatabase, FoodItem } from './services/foodData';
 import {ClinicalCalculators, statusToTextClass, type HealthInterpretation, type GoalType, type BodyType} from './logic/physioNutritionLogic';
 import Hero from './components/home/Hero';
@@ -891,7 +891,7 @@ export default function App({
     };
   }, [activeCalculator, healthInterpretation, lang, result]);
 
-  const articles = getArticles(lang);
+  const {articles} = usePublishedArticles(lang);
 
   const resultSummary =
     result === null || !activeCalculator

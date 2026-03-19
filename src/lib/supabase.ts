@@ -4,6 +4,8 @@ import {
   type Session,
   type User,
 } from '@supabase/supabase-js';
+import type {Article} from '../services/articles';
+import type {Language} from '../services/translations';
 
 const rawSupabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const rawSupabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -43,6 +45,25 @@ export type AssessmentInsert = Omit<
   'id' | 'created_at' | 'user_id' | 'name' | 'email'
 >;
 
+export type PublishedArticleRecord = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  lang: Language;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  category: string;
+  date: string;
+  icon: string;
+  image: string | null;
+};
+
+const articleAdminEmailRaw = import.meta.env.VITE_ARTICLE_ADMIN_EMAIL;
+const articleAdminEmail =
+  typeof articleAdminEmailRaw === 'string' ? articleAdminEmailRaw.trim().toLowerCase() : '';
+
 export function getSupabaseConfigStatus() {
   return {
     hasUrl: Boolean(supabaseUrl),
@@ -61,6 +82,15 @@ export function getSupabaseConfigurationMessage(lang: 'en' | 'ar') {
   }
 
   return 'Supabase settings are not visible inside the app right now. Make sure VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are set, then restart npm run dev or rebuild the site.';
+}
+
+export function isArticleAdminUser(user: User | null) {
+  if (!user?.email || !articleAdminEmail) return false;
+  return user.email.trim().toLowerCase() === articleAdminEmail;
+}
+
+export function getArticleAdminEmail() {
+  return articleAdminEmail;
 }
 
 export function getSupabaseActionErrorMessage(
@@ -265,6 +295,62 @@ export async function deleteAssessment(id: string) {
   const client = ensureSupabase();
   const {error} = await client.from('assessments').delete().eq('id', id);
   if (error) throw error;
+}
+
+function mapRecordToArticle(record: PublishedArticleRecord, index: number): Article {
+  return {
+    id: index + 1,
+    slug: record.slug,
+    title: record.title,
+    excerpt: record.excerpt,
+    content: record.content,
+    category: record.category,
+    date: record.date,
+    icon: record.icon,
+    image: record.image || undefined,
+  };
+}
+
+export async function listPublishedArticles(lang: Language) {
+  const client = ensureSupabase();
+  const {data, error} = await client
+    .from('articles')
+    .select('*')
+    .eq('lang', lang)
+    .order('date', {ascending: false})
+    .order('created_at', {ascending: false});
+
+  if (error) throw error;
+  return ((data || []) as PublishedArticleRecord[]).map(mapRecordToArticle);
+}
+
+export async function replacePublishedArticles(lang: Language, articles: Article[]) {
+  const client = ensureSupabase();
+  const user = await getCurrentUser();
+
+  if (!isArticleAdminUser(user)) {
+    throw new Error('Only the article admin can publish changes.');
+  }
+
+  const {error: deleteError} = await client.from('articles').delete().eq('lang', lang);
+  if (deleteError) throw deleteError;
+
+  if (!articles.length) return;
+
+  const payload = articles.map((article) => ({
+    lang,
+    slug: article.slug,
+    title: article.title,
+    excerpt: article.excerpt,
+    content: article.content,
+    category: article.category,
+    date: article.date,
+    icon: article.icon,
+    image: article.image || null,
+  }));
+
+  const {error: insertError} = await client.from('articles').insert(payload);
+  if (insertError) throw insertError;
 }
 
 export type {User, Session};
