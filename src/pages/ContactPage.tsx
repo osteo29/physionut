@@ -8,11 +8,11 @@ export default function ContactPage() {
   return (
     <>
       <Seo
-        title={lang === 'en' ? 'Contact PhysioHub' : 'اتصل بنا'}
+        title={lang === 'en' ? 'Contact PhysioNutrition' : 'اتصل بنا'}
         description={
           lang === 'en'
-            ? 'Contact PhysioHub for general questions, privacy requests, or partnership inquiries.'
-            : 'تواصل مع PhysioHub للاستفسارات العامة أو طلبات الخصوصية أو التعاون.'
+            ? 'Contact PhysioNutrition for general questions, privacy requests, or partnership inquiries.'
+            : 'تواصل مع PhysioNutrition للاستفسارات العامة أو طلبات الخصوصية أو التعاون.'
         }
         canonicalPath="/contact"
       />
@@ -21,7 +21,7 @@ export default function ContactPage() {
           <>
             <p>
               For general questions, privacy requests, feedback, or collaboration
-              inquiries, you can contact PhysioHub by email.
+              inquiries, you can contact PhysioNutrition by email.
             </p>
 
             <h2>Email</h2>
@@ -40,7 +40,7 @@ export default function ContactPage() {
           <>
             <p>
               للاستفسارات العامة أو طلبات الخصوصية أو الملاحظات أو التعاون،
-              يمكنك التواصل مع PhysioHub عبر البريد الإلكتروني.
+              يمكنك التواصل مع PhysioNutrition عبر البريد الإلكتروني.
             </p>
 
             <h2>البريد الإلكتروني</h2>
@@ -48,7 +48,7 @@ export default function ContactPage() {
               <a href="mailto:physionutritionofficial@gmail.com">physionutritionofficial@gmail.com</a>
             </p>
 
-            <h2>ما الذي يفضّل إرساله</h2>
+            <h2>ما الذي يفضل إرساله</h2>
             <p>
               إذا كانت رسالتك تتعلق بدقة المحتوى أو الحاسبات أو بطلب قانوني أو
               خصوصية، فمن الأفضل إرفاق رابط الصفحة ووصف مختصر للموضوع.

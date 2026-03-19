@@ -185,7 +185,7 @@ export default function AuthPage({
   return (
     <div className="min-h-screen bg-soft-blue">
       <Seo
-        title={isAr ? 'تسجيل الدخول | PhysioHub' : 'Login | PhysioHub'}
+        title={isAr ? 'تسجيل الدخول | PhysioNutrition' : 'Login | PhysioNutrition'}
         description={
           isAr
             ? 'أنشئ حسابًا أو سجّل الدخول لحفظ النتائج وربطها بسجل متابعة آمن.'

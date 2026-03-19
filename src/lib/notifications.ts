@@ -3,7 +3,7 @@ type AppLanguage = 'en' | 'ar';
 const AUTO_NOTIFICATION_PROMPT_KEY = 'physiohub:auto-notification-prompted';
 
 function getNotificationTitle(lang: AppLanguage) {
-  return lang === 'ar' ? 'إشعارات PhysioHub جاهزة' : 'PhysioHub notifications are ready';
+  return lang === 'ar' ? 'إشعارات PhysioNutrition جاهزة' : 'PhysioNutrition notifications are ready';
 }
 
 function getNotificationBody(lang: AppLanguage) {

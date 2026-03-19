@@ -185,8 +185,8 @@ export default function TrackingDashboardPage() {
         title={isAr ? 'لوحة المتابعة' : 'Tracking Dashboard'}
         description={
           isAr
-            ? 'راجع سجل القياسات والنتائج المحفوظة داخل حسابك في PhysioHub.'
-            : 'Review saved assessments and result history inside your PhysioHub account.'
+            ? 'راجع سجل القياسات والنتائج المحفوظة داخل حسابك في PhysioNutrition.'
+            : 'Review saved assessments and result history inside your PhysioNutrition account.'
         }
         canonicalPath="/dashboard"
       />

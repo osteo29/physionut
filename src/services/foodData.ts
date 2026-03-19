@@ -1,5 +1,5 @@
 /**
- * Comprehensive Food Database for PhysioHub
+ * Comprehensive Food Database for PhysioNutrition
  * Includes 50+ common and Middle Eastern / Egyptian items
  */
 

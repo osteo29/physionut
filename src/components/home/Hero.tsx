@@ -89,8 +89,8 @@ const Hero = memo(({lang}: {lang: Language}) => {
           className="mx-auto mb-6 max-w-3xl text-base leading-8 text-slate-600 sm:text-lg"
         >
           {isAr
-            ? 'احسب سعراتك، ماكروز جسمك، واحتياجاتك من البروتين والماء بناءً على معادلات طبية معروفة. منصة PhysioHub تساعدك تربط بين التغذية، الحركة، والمتابعة بخطوات أوضح وأسهل.'
-            : 'Estimate calories, macros, protein, and hydration using established medical formulas. PhysioHub helps connect nutrition, movement, and follow-up in a clearer way.'}
+            ? 'احسب سعراتك، ماكروز جسمك، واحتياجاتك من البروتين والماء بناءً على معادلات طبية معروفة. منصة PhysioNutrition تساعدك تربط بين التغذية، الحركة، والمتابعة بخطوات أوضح وأسهل.'
+            : 'Estimate calories, macros, protein, and hydration using established medical formulas. PhysioNutrition helps connect nutrition, movement, and follow-up in a clearer way.'}
         </motion.p>
 
         <motion.div

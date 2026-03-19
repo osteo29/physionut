@@ -14,8 +14,8 @@ export default function InsightsPage() {
         title={lang === 'en' ? 'Insights' : 'المقالات'}
         description={
           lang === 'en'
-            ? 'Browse all PhysioHub articles about nutrition, recovery, rehabilitation, and fat loss.'
-            : 'تصفح كل مقالات PhysioHub عن التغذية والتعافي والتأهيل وخسارة الدهون.'
+            ? 'Browse all PhysioNutrition articles about nutrition, recovery, rehabilitation, and fat loss.'
+            : 'تصفح كل مقالات PhysioNutrition عن التغذية والتعافي والتأهيل وخسارة الدهون.'
         }
         canonicalPath="/insights"
       />

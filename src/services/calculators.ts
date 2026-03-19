@@ -1,5 +1,5 @@
 /**
- * Clinical Calculator Logic for PhysioHub
+ * Clinical Calculator Logic for PhysioNutrition
  */
 
 export interface BMRParams {

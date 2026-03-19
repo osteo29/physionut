@@ -23,7 +23,7 @@ export default function PageLayout({
       <header className="border-b border-slate-200/70 bg-white/70 backdrop-blur">
         <div className="mx-auto flex max-w-4xl items-center justify-between gap-6 px-4 py-5 sm:px-6 lg:px-8">
           <Link to="/" onClick={handleBrandClick} className="font-black tracking-tight text-slate-900">
-            PhysioHub
+            PhysioNutrition
           </Link>
           <nav className="flex flex-wrap items-center gap-4 text-sm font-semibold text-slate-700">
             <Link className="hover:text-health-green" to="/privacy">

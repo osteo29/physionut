@@ -244,8 +244,8 @@ export default function ArticleStudioPage() {
         title={uiLang === 'en' ? 'Article Studio' : 'ستوديو المقالات'}
         description={
           uiLang === 'en'
-            ? 'Manage and publish PhysioHub articles from one secure admin page.'
-            : 'أدر وانشر مقالات PhysioHub من صفحة أدمن واحدة وآمنة.'
+            ? 'Manage and publish PhysioNutrition articles from one secure admin page.'
+            : 'أدر وانشر مقالات PhysioNutrition من صفحة أدمن واحدة وآمنة.'
         }
         canonicalPath="/studio/articles"
         noIndex

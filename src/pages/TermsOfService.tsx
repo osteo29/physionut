@@ -10,8 +10,8 @@ export default function TermsOfService() {
         title={lang === 'en' ? 'Terms of Service' : 'الشروط والأحكام'}
         description={
           lang === 'en'
-            ? 'PhysioHub terms for using physical therapy calculators and clinical nutrition tools.'
-            : 'شروط استخدام PhysioHub لحاسبات العلاج الطبيعي وأدوات التغذية العلاجية.'
+            ? 'PhysioNutrition terms for using physical therapy calculators and clinical nutrition tools.'
+            : 'شروط استخدام PhysioNutrition لحاسبات العلاج الطبيعي وأدوات التغذية العلاجية.'
         }
         canonicalPath="/terms"
       />
@@ -19,7 +19,7 @@ export default function TermsOfService() {
       {lang === 'en' ? (
         <>
           <p>
-            PhysioHub provides clinical calculators and educational resources.
+            PhysioNutrition provides clinical calculators and educational resources.
             By using this platform, you agree to these terms.
           </p>
 
@@ -33,7 +33,7 @@ export default function TermsOfService() {
 
           <h2>No medical advice</h2>
           <p>
-            PhysioHub does not provide diagnosis or treatment. Using the
+            PhysioNutrition does not provide diagnosis or treatment. Using the
             platform does not create a clinician–patient relationship. Always
             consult a licensed professional for medical decisions.
           </p>
@@ -53,7 +53,7 @@ export default function TermsOfService() {
       ) : (
         <>
           <p>
-            تقدم PhysioHub حاسبات سريرية ومحتوى تعليمي. باستخدامك للمنصة فأنت
+            تقدم PhysioNutrition حاسبات سريرية ومحتوى تعليمي. باستخدامك للمنصة فأنت
             توافق على هذه الشروط.
           </p>
 
@@ -66,7 +66,7 @@ export default function TermsOfService() {
 
           <h2>ليست نصيحة طبية</h2>
           <p>
-            PhysioHub لا تقدم تشخيصًا أو علاجًا. استخدام المنصة لا ينشئ علاقة
+            PhysioNutrition لا تقدم تشخيصًا أو علاجًا. استخدام المنصة لا ينشئ علاقة
             طبيب/معالج–مريض. يرجى استشارة مختص مرخّص لاتخاذ أي قرار طبي.
           </p>
 
@@ -87,4 +87,3 @@ export default function TermsOfService() {
     </>
   );
 }
-

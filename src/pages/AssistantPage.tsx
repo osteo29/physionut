@@ -95,7 +95,7 @@ export default function AssistantPage({
   return (
     <div className="flex min-h-screen flex-col bg-soft-blue">
       <Seo
-        title={isAr ? 'مساعد PhysioHub الذكي' : 'PhysioHub AI Assistant'}
+        title={isAr ? 'مساعد PhysioNutrition الذكي' : 'PhysioNutrition AI Assistant'}
         description={
           isAr
             ? 'اسأل مساعدًا متخصصًا في العلاج الطبيعي والتغذية العلاجية عن التعافي، التدريب، ونتائج الحاسبات.'
@@ -160,7 +160,7 @@ export default function AssistantPage({
               {isAr ? 'نسخة تجريبية' : 'Beta version'}
             </div>
             <h1 className="text-3xl font-black text-slate-900 sm:text-4xl">
-              {isAr ? 'مساعد PhysioHub' : 'PhysioHub Assistant'}
+              {isAr ? 'مساعد PhysioNutrition' : 'PhysioNutrition Assistant'}
             </h1>
             <p className="mt-2 max-w-2xl text-sm text-slate-600 sm:text-base">
               {isAr

@@ -122,7 +122,7 @@ export default function ArticlePage() {
           title={lang === 'en' ? 'Article Not Found' : 'المقال غير موجود'}
           description={
             lang === 'en'
-              ? 'The requested PhysioHub article could not be found.'
+              ? 'The requested PhysioNutrition article could not be found.'
               : 'تعذر العثور على المقال المطلوب.'
           }
           canonicalPath={`/insights/${slug}`}

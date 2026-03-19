@@ -6,7 +6,7 @@ export type SeoConfig = {
   noIndex?: boolean;
 };
 
-const DEFAULT_SITE_NAME = 'PhysioHub';
+const DEFAULT_SITE_NAME = 'PhysioNutrition';
 
 function upsertMeta(nameOrProp: {name?: string; property?: string}, content: string) {
   const selector = nameOrProp.name
@@ -58,7 +58,7 @@ export function applySeo(config: SeoConfig) {
   upsertMeta({name: 'description'}, config.description);
   upsertMeta(
     {name: 'keywords'},
-    'Physical Therapy Calculators, Clinical Nutrition Tools, BMI, BMR, TDEE, Macro Calculator, PhysioHub',
+    'Physical Therapy Calculators, Clinical Nutrition Tools, BMI, BMR, TDEE, Macro Calculator, PhysioNutrition',
   );
 
   upsertLink('canonical', canonicalUrl);

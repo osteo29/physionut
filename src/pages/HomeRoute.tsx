@@ -22,7 +22,7 @@ export default function HomeRoute({
   return (
     <>
       <Seo
-        title="PhysioHub | Clinical Calculators for Therapy & Nutrition"
+        title="PhysioNutrition | Clinical Calculators for Therapy & Nutrition"
         description="Evidence-based clinical calculators for physical therapists, nutritionists, and fitness enthusiasts. BMI, BMR, TDEE, and more."
         canonicalPath={scrollToId ? `/${scrollToId === 'calculators' ? 'calculators' : scrollToId}` : '/'}
       />

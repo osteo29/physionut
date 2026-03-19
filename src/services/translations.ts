@@ -1,5 +1,5 @@
 /**
- * Professional Medical Translations for PhysioHub
+ * Professional Medical Translations for PhysioNutrition
  * English (EN) & Arabic (AR)
  */
 
@@ -230,7 +230,7 @@ export const translations = {
     footer: {
       tagline: 'Developed by a Physical Therapy Student',
       disclaimerTitle: 'Medical Disclaimer',
-      disclaimerText: 'The information and tools provided on PhysioHub are for educational purposes only. Always seek professional medical advice.',
+      disclaimerText: 'The information and tools provided on PhysioNutrition are for educational purposes only. Always seek professional medical advice.',
       categories: {
         product: 'Product',
         company: 'Company',
@@ -486,7 +486,7 @@ export const translations = {
     footer: {
       tagline: 'تطوير طالب علاج طبيعي',
       disclaimerTitle: 'إخلاء مسؤولية طبي',
-      disclaimerText: 'المعلومات والأدوات المقدمة في PhysioHub هي لأغراض تعليمية فقط. اطلب دائماً المشورة الطبية المهنية.',
+      disclaimerText: 'المعلومات والأدوات المقدمة في PhysioNutrition هي لأغراض تعليمية فقط. اطلب دائماً المشورة الطبية المهنية.',
       categories: {
         product: 'المنتج',
         company: 'الشركة',

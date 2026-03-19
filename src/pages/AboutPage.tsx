@@ -8,19 +8,19 @@ export default function AboutPage() {
   return (
     <>
       <Seo
-        title={lang === 'en' ? 'About PhysioHub' : 'من نحن'}
+        title={lang === 'en' ? 'About PhysioNutrition' : 'من نحن'}
         description={
           lang === 'en'
-            ? 'Learn about PhysioHub, its educational purpose, and how its clinical calculators and nutrition tools are built.'
-            : 'تعرف على PhysioHub ورسالة الموقع التعليمية وكيف تم بناء أدواته في التغذية والعلاج الطبيعي.'
+            ? 'Learn about PhysioNutrition, its educational purpose, and how its clinical calculators and nutrition tools are built.'
+            : 'تعرف على PhysioNutrition ورسالة الموقع التعليمية وكيف تم بناء أدواته في التغذية والعلاج الطبيعي.'
         }
         canonicalPath="/about"
       />
-      <PageLayout title={lang === 'en' ? 'About PhysioHub' : 'من نحن'}>
+      <PageLayout title={lang === 'en' ? 'About PhysioNutrition' : 'من نحن'}>
         {lang === 'en' ? (
           <>
             <p>
-              PhysioHub is an educational platform focused on physical therapy,
+              PhysioNutrition is an educational platform focused on physical therapy,
               recovery, and clinical nutrition. It is designed to make common
               calculations clearer and more useful for students, clinicians, and
               health-conscious users.
@@ -38,14 +38,14 @@ export default function AboutPage() {
             <p>
               Content is written with an educational tone and checked against
               established references such as WHO, NIH, and PubMed-indexed
-              literature when relevant. PhysioHub aims to explain clinical ideas
+              literature when relevant. PhysioNutrition aims to explain clinical ideas
               clearly without presenting itself as a replacement for medical
               evaluation.
             </p>
 
             <h2>Important note</h2>
             <p>
-              PhysioHub does not provide diagnosis, treatment, or a
+              PhysioNutrition does not provide diagnosis, treatment, or a
               clinician-patient relationship. Users should review important
               medical, rehabilitation, or nutrition decisions with a licensed
               professional.
@@ -54,7 +54,7 @@ export default function AboutPage() {
         ) : (
           <>
             <p>
-              PhysioHub منصة تعليمية تركز على العلاج الطبيعي، التعافي، والتغذية
+              PhysioNutrition منصة تعليمية تركز على العلاج الطبيعي، التعافي، والتغذية
               العلاجية. الهدف منها هو تبسيط الحاسبات الشائعة وتقديمها بشكل أوضح
               وأكثر فائدة للطلاب والممارسين والمهتمين بالصحة.
             </p>
@@ -69,13 +69,13 @@ export default function AboutPage() {
             <h2>المنهج التحريري</h2>
             <p>
               يتم إعداد المحتوى بطابع تعليمي مع الرجوع إلى مراجع معروفة مثل WHO و
-              NIH وأبحاث PubMed عند الحاجة. PhysioHub يسعى إلى تقديم المعلومة
+              NIH وأبحاث PubMed عند الحاجة. PhysioNutrition يسعى إلى تقديم المعلومة
               بوضوح دون ادعاء أنه بديل عن التقييم الطبي المباشر.
             </p>
 
             <h2>ملاحظة مهمة</h2>
             <p>
-              PhysioHub لا يقدم تشخيصًا أو علاجًا، ولا ينشئ علاقة طبيب أو معالج
+              PhysioNutrition لا يقدم تشخيصًا أو علاجًا، ولا ينشئ علاقة طبيب أو معالج
               ومريض. القرارات الطبية أو التأهيلية أو التغذوية المهمة يجب
               مراجعتها مع مختص مرخص.
             </p>

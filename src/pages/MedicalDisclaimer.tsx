@@ -11,8 +11,8 @@ export default function MedicalDisclaimer() {
         title={lang === 'en' ? 'Medical Disclaimer' : 'إخلاء المسؤولية الطبي'}
         description={
           lang === 'en'
-            ? 'Medical disclaimer for PhysioHub physical therapy calculators and clinical nutrition tools.'
-            : 'إخلاء المسؤولية الطبي لمنصة PhysioHub وحاسبات العلاج الطبيعي والتغذية العلاجية.'
+            ? 'Medical disclaimer for PhysioNutrition physical therapy calculators and clinical nutrition tools.'
+            : 'إخلاء المسؤولية الطبي لمنصة PhysioNutrition وحاسبات العلاج الطبيعي والتغذية العلاجية.'
         }
         canonicalPath="/disclaimer"
       />
@@ -20,7 +20,7 @@ export default function MedicalDisclaimer() {
       {lang === 'en' ? (
         <>
           <p>
-            PhysioHub provides informational content and clinical calculators for
+            PhysioNutrition provides informational content and clinical calculators for
             educational purposes only. It is not medical advice and does not
             replace consultation with a qualified healthcare professional.
           </p>
@@ -42,7 +42,7 @@ export default function MedicalDisclaimer() {
       ) : (
         <>
           <p>
-            منصة PhysioHub تقدم محتوى تثقيفي وحاسبات سريرية لأغراض تعليمية فقط.
+            منصة PhysioNutrition تقدم محتوى تثقيفي وحاسبات سريرية لأغراض تعليمية فقط.
             لا تُعد بديلاً عن الاستشارة الطبية ولا تُغني عن الرجوع لمختص رعاية
             صحية مؤهل.
           </p>
@@ -64,4 +64,3 @@ export default function MedicalDisclaimer() {
     </>
   );
 }
-

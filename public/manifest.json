@@ -1,6 +1,6 @@
 {
-  "name": "PhysioHub Recovery Tools",
-  "short_name": "PhysioHub",
+  "name": "PhysioNutrition Recovery Tools",
+  "short_name": "PhysioNutrition",
   "description": "Clinical calculators, recovery tracking, and rehab nutrition tools for follow-up and smarter recovery decisions.",
   "start_url": "/",
   "display": "standalone",

@@ -11,8 +11,8 @@ export default function CookiePolicy() {
         title={lang === 'en' ? 'Cookie Policy' : 'سياسة الكوكيز'}
         description={
           lang === 'en'
-            ? 'PhysioHub cookie policy covering essential preferences, consent choices, analytics, and advertising cookies.'
-            : 'سياسة الكوكيز في PhysioHub الخاصة بالتفضيلات والموافقة والتحليلات والإعلانات.'
+            ? 'PhysioNutrition cookie policy covering essential preferences, consent choices, analytics, and advertising cookies.'
+            : 'سياسة الكوكيز في PhysioNutrition الخاصة بالتفضيلات والموافقة والتحليلات والإعلانات.'
         }
         canonicalPath="/cookies"
       />
@@ -20,7 +20,7 @@ export default function CookiePolicy() {
         {lang === 'en' ? (
           <>
             <p>
-              Cookies are small files stored in your browser. PhysioHub uses a
+              Cookies are small files stored in your browser. PhysioNutrition uses a
               limited set of cookies or local storage entries to keep the site
               functional and remember your preferences.
             </p>
@@ -47,7 +47,7 @@ export default function CookiePolicy() {
         ) : (
           <>
             <p>
-              الكوكيز هي ملفات صغيرة تُحفظ داخل المتصفح. يستخدم PhysioHub عددًا
+              الكوكيز هي ملفات صغيرة تُحفظ داخل المتصفح. يستخدم PhysioNutrition عددًا
               محدودًا من الكوكيز أو التخزين المحلي حتى يظل الموقع قابلًا للاستخدام
               ويتذكر تفضيلاتك.
             </p>

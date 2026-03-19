@@ -20,7 +20,7 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-health-green shadow-lg shadow-health-green/20">
                 <HeartPulse className="h-7 w-7 text-white" />
               </div>
-              <span className="text-2xl font-black tracking-tighter text-white">PhysioHub</span>
+              <span className="text-2xl font-black tracking-tighter text-white">PhysioNutrition</span>
             </div>
             <p className="max-w-xs leading-relaxed text-slate-400">
               {lang === 'en'
@@ -149,7 +149,7 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
 
         <div className="flex flex-col items-center justify-between gap-6 border-t border-white/5 pt-12 md:flex-row">
           <p className="text-sm text-slate-500">
-            © {currentYear} PhysioHub. {t.footer.rights}
+            © {currentYear} PhysioNutrition. {t.footer.rights}
           </p>
           <div className="flex items-center gap-8">
             <Link replace to="/privacy" className="text-sm text-slate-500 transition-colors hover:text-white">

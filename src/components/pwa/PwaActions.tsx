@@ -129,8 +129,8 @@ export default function PwaActions({lang}: {lang: Language}) {
 
       <p className="text-center text-xs leading-6 text-slate-500">
         {isAr
-          ? 'ثبّت PhysioHub على جهازك للوصول السريع، وفعّل الإشعارات استعدادًا للتذكيرات والمتابعة لاحقًا.'
-          : 'Install PhysioHub for faster access, and enable notifications so follow-up reminders are ready later.'}
+          ? 'ثبّت PhysioNutrition على جهازك للوصول السريع، وفعّل الإشعارات استعدادًا للتذكيرات والمتابعة لاحقًا.'
+          : 'Install PhysioNutrition for faster access, and enable notifications so follow-up reminders are ready later.'}
       </p>
     </div>
   );
