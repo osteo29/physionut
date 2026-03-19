@@ -1,6 +1,6 @@
 import {memo, type ComponentType} from 'react';
 import {Link} from 'react-router-dom';
-import {Calendar, ChevronRight, Tag} from 'lucide-react';
+import {ArrowUpRight, Calendar, Tag} from 'lucide-react';
 import type {Language} from '../../services/translations';
 import type {Article} from '../../services/articles';
 
@@ -18,17 +18,35 @@ const BlogSection = memo(
     articles: Article[];
     IconComponent: IconComponentType;
   }) => {
+    const isAr = lang === 'ar';
+
     return (
       <section id="blog" className="bg-slate-50 py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-16 text-center">
-            <h2 className="mb-4 text-3xl font-bold text-slate-900">{t.blog.sectionTitle}</h2>
+          <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <h2 className="mb-3 text-3xl font-bold text-slate-900">{t.blog.sectionTitle}</h2>
+              <p className="text-slate-600">
+                {isAr
+                  ? `يوجد حاليًا ${articles.length} مقالات منشورة، وكل مقال يفتح في صفحة مستقلة.`
+                  : `${articles.length} published articles, each with its own page.`}
+              </p>
+            </div>
+            <Link
+              to="/insights"
+              className="inline-flex items-center gap-2 self-start rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-900 transition-all hover:border-health-green"
+            >
+              {isAr ? 'عرض كل المقالات' : 'View all articles'}
+              <ArrowUpRight className="h-4 w-4 text-health-green" />
+            </Link>
           </div>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
             {articles.map((article) => (
-              <article
+              <Link
                 key={article.slug}
-                className="group flex flex-col overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-sm transition-all hover:shadow-xl"
+                to={`/insights/${article.slug}`}
+                className="group flex h-full flex-col overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-sm transition-all hover:shadow-xl hover:border-health-green/20"
               >
                 <div className="relative flex aspect-video items-center justify-center overflow-hidden bg-soft-blue">
                   <div className="rounded-2xl bg-white p-6 shadow-sm transition-transform duration-500 group-hover:scale-110">
@@ -48,16 +66,13 @@ const BlogSection = memo(
                   <h3 className="mb-3 text-xl font-bold text-slate-900 transition-colors group-hover:text-health-green">
                     {article.title}
                   </h3>
-                  <p className="mb-6 flex-1 text-sm text-slate-600 line-clamp-3">{article.excerpt}</p>
-                  <Link
-                    to={`/insights/${article.slug}`}
-                    className="inline-flex items-center gap-2 font-bold text-health-green hover:underline"
-                  >
-                    {t.blog.readMore}
-                    <ChevronRight className={`h-4 w-4 ${lang === 'ar' ? 'rotate-180' : ''}`} />
-                  </Link>
+                  <p className="mb-6 flex-1 text-sm leading-7 text-slate-600">{article.excerpt}</p>
+                  <div className="inline-flex items-center gap-2 font-bold text-health-green">
+                    {isAr ? 'افتح المقال كاملًا' : 'Open full article'}
+                    <ArrowUpRight className="h-4 w-4" />
+                  </div>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         </div>

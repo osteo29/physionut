@@ -27,12 +27,12 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
             <p className="max-w-xs leading-relaxed text-slate-400">
               {lang === 'en'
                 ? 'Educational tools and clinical insights for recovery, nutrition, and safer decision support.'
-                : 'Ø£Ø¯ÙˆØ§Øª ØªØ¹Ù„ÙŠÙ…ÙŠØ© ÙˆØ±Ø¤Ù‰ Ø³Ø±ÙŠØ±ÙŠØ© Ù„Ù„ØªØ¹Ø§ÙÙŠ ÙˆØ§Ù„ØªØºØ°ÙŠØ© ÙˆØ¯Ø¹Ù… Ø§Ù„Ù‚Ø±Ø§Ø± Ø¨ØµÙŠØ§ØºØ© Ø£ÙƒØ«Ø± Ø£Ù…Ø§Ù†Ù‹Ø§.'}
+                : 'أدوات تعليمية ورؤى عملية للتعافي والتغذية ودعم القرار الصحي بشكل أوضح وأكثر أمانًا.'}
             </p>
             <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-400">
               {lang === 'en'
                 ? 'Official Facebook, Instagram, and TikTok links will be added after the profiles are published.'
-                : 'Ø³ÙŠØªÙ… Ø¥Ø¶Ø§ÙØ© Ø±ÙˆØ§Ø¨Ø· ÙÙŠØ³Ø¨ÙˆÙƒ ÙˆØ¥Ù†Ø³ØªØ¬Ø±Ø§Ù… ÙˆØªÙŠÙƒ ØªÙˆÙƒ Ø¨Ø¹Ø¯ Ù†Ø´Ø± Ø§Ù„ØµÙØ­Ø§Øª Ø§Ù„Ø±Ø³Ù…ÙŠØ©.'}
+                : 'سيتم إضافة روابط فيسبوك وإنستجرام وتيك توك بعد نشر الصفحات الرسمية.'}
             </div>
           </div>
 
@@ -66,7 +66,7 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
                 {label: t.footer.links.privacy, href: '/privacy'},
                 {label: t.footer.links.terms, href: '/terms'},
                 {
-                  label: lang === 'en' ? 'Medical Disclaimer' : 'Ø¥Ø®Ù„Ø§Ø¡ Ø§Ù„Ù…Ø³Ø¤ÙˆÙ„ÙŠØ© Ø§Ù„Ø·Ø¨ÙŠ',
+                  label: lang === 'en' ? 'Medical Disclaimer' : 'إخلاء المسؤولية الطبي',
                   href: '/disclaimer',
                 },
               ].map((link) => (
@@ -92,7 +92,7 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
                 </div>
                 <div>
                   <div className="mb-1 text-xs uppercase tracking-widest text-slate-500">
-                    {lang === 'en' ? 'Email' : 'Ø§Ù„Ø¨Ø±ÙŠØ¯ Ø§Ù„Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠ'}
+                    {lang === 'en' ? 'Email' : 'البريد الإلكتروني'}
                   </div>
                   <a
                     href="mailto:contact@physiohub.com"
@@ -108,10 +108,10 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
                 </div>
                 <div>
                   <div className="mb-1 text-xs uppercase tracking-widest text-slate-500">
-                    {lang === 'en' ? 'Availability' : 'Ø§Ù„ØªÙˆØ§Ø¬Ø¯'}
+                    {lang === 'en' ? 'Availability' : 'التواجد'}
                   </div>
                   <span className="text-slate-300">
-                    {lang === 'en' ? 'Remote / Online' : 'Ø¹Ù† Ø¨ÙØ¹Ø¯ / Ø£ÙˆÙ†Ù„Ø§ÙŠÙ†'}
+                    {lang === 'en' ? 'Remote / Online' : 'عن بعد / أونلاين'}
                   </span>
                 </div>
               </li>
@@ -143,10 +143,10 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
               {t.footer.links.terms}
             </Link>
             <Link replace to="/cookies" className="text-sm text-slate-500 transition-colors hover:text-white">
-              {lang === 'en' ? 'Cookie Policy' : 'Ø³ÙŠØ§Ø³Ø© Ù…Ù„ÙØ§Øª Ø§Ù„Ø§Ø±ØªØ¨Ø§Ø·'}
+              {lang === 'en' ? 'Cookie Policy' : 'سياسة الكوكيز'}
             </Link>
             <Link replace to="/disclaimer" className="text-sm text-slate-500 transition-colors hover:text-white">
-              {lang === 'en' ? 'Medical Disclaimer' : 'Ø¥Ø®Ù„Ø§Ø¡ Ø§Ù„Ù…Ø³Ø¤ÙˆÙ„ÙŠØ© Ø§Ù„Ø·Ø¨ÙŠ'}
+              {lang === 'en' ? 'Medical Disclaimer' : 'إخلاء المسؤولية الطبي'}
             </Link>
           </div>
         </div>

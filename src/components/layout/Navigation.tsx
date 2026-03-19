@@ -15,7 +15,7 @@ import {
   UserRound,
   X,
 } from 'lucide-react';
-import {Link} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import {
   getCurrentUser,
   isSupabaseConfigured,
@@ -58,6 +58,7 @@ const Navigation = memo(
     setIsSidebarOpen: (open: boolean) => void;
   }) => {
     const isAr = lang === 'ar';
+    const location = useLocation();
     const [user, setUser] = useState<User | null>(null);
 
     useEffect(() => {
@@ -100,10 +101,17 @@ const Navigation = memo(
 
     const authLabel = user?.email?.split('@')[0] || (isAr ? 'الحساب' : 'Account');
 
+    const handleBrandClick = () => {
+      setIsSidebarOpen(false);
+      if (location.pathname === '/') {
+        window.scrollTo({top: 0, behavior: 'smooth'});
+      }
+    };
+
     const brand = (
       <Link
         to="/"
-        onClick={() => setIsSidebarOpen(false)}
+        onClick={handleBrandClick}
         className="group flex items-center gap-2"
       >
         <div className="rounded-xl bg-health-green p-1.5 shadow-sm transition-transform duration-300 group-hover:rotate-6">

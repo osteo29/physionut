@@ -8,6 +8,7 @@ import MedicalDisclaimer from './pages/MedicalDisclaimer';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import ArticlePage from './pages/ArticlePage';
+import InsightsPage from './pages/InsightsPage';
 import AssistantPage from './pages/AssistantPage';
 import NotFound from './pages/NotFound';
 import TrackingDashboardPage from './pages/TrackingDashboardPage';
@@ -42,6 +43,7 @@ export default function RouterApp() {
       <Route path="/disclaimer" element={<MedicalDisclaimer />} />
       <Route path="/about" element={<AboutPage />} />
       <Route path="/contact" element={<ContactPage />} />
+      <Route path="/insights" element={<InsightsPage />} />
       <Route path="/insights/:slug" element={<ArticlePage />} />
       <Route
         path="/assistant"

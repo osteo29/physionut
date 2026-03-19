@@ -5,6 +5,7 @@ import {
   Activity,
   Calculator,
   GraduationCap,
+  MessageSquareText,
   ShieldCheck,
   UserRoundPlus,
 } from 'lucide-react';
@@ -31,7 +32,7 @@ const Hero = memo(({lang}: {lang: Language}) => {
     },
     {
       icon: ShieldCheck,
-      title: isAr ? 'امش بخطة أوضح' : 'Move with a clearer plan',
+      title: isAr ? 'تحرك بخطة أوضح' : 'Move with a clearer plan',
       desc: isAr
         ? 'استخدم النتائج كخطوة عملية للمتابعة والتعديل بدل الوقوف عند مجرد رقم.'
         : 'Use your results as a practical next step instead of stopping at a single number.',
@@ -88,7 +89,7 @@ const Hero = memo(({lang}: {lang: Language}) => {
           className="mx-auto mb-6 max-w-3xl text-base leading-8 text-slate-600 sm:text-lg"
         >
           {isAr
-            ? 'احسب سعراتك، ماكروز جسمك، واحتياجاتك من البروتين والماء بناءً على معادلات طبية معروفة. PhysioHub يساعدك تربط بين التغذية، الحركة، والمتابعة بخطوات أوضح وأسهل.'
+            ? 'احسب سعراتك، ماكروز جسمك، واحتياجاتك من البروتين والماء بناءً على معادلات طبية معروفة. منصة PhysioHub تساعدك تربط بين التغذية، الحركة، والمتابعة بخطوات أوضح وأسهل.'
             : 'Estimate calories, macros, protein, and hydration using established medical formulas. PhysioHub helps connect nutrition, movement, and follow-up in a clearer way.'}
         </motion.p>
 
@@ -99,8 +100,8 @@ const Hero = memo(({lang}: {lang: Language}) => {
           className="mx-auto mb-7 max-w-3xl rounded-[1.5rem] border border-white/70 bg-white/80 px-4 py-4 text-sm leading-7 text-slate-700 shadow-sm backdrop-blur-sm sm:px-5"
         >
           {isAr
-            ? 'الموقع لم يعد مجرد حاسبات منفصلة. هنا تجد أدوات تغذية، محتوى تأهيلي، ولوحة متابعة تساعدك تفهم ماذا تفعل بعد النتيجة.'
-            : 'This is not just a collection of isolated calculators. The tools, content, and follow-up flow are designed to work together.'}
+            ? 'هنا تجد حاسبات تغذية، محتوى تأهيلي، ومتابعة عملية بدل أدوات منفصلة لا تربط بين النتيجة والخطوة التالية.'
+            : 'Here you get calculators, rehab-focused content, and follow-up tools that work together instead of isolated pages.'}
         </motion.div>
 
         <motion.div
@@ -124,7 +125,7 @@ const Hero = memo(({lang}: {lang: Language}) => {
           initial={{opacity: 0, y: 20}}
           animate={{opacity: 1, y: 0}}
           transition={{delay: 0.3}}
-          className="mx-auto mb-7 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-2"
+          className="mx-auto mb-4 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-2"
         >
           <Link
             to="/auth"
@@ -139,6 +140,28 @@ const Hero = memo(({lang}: {lang: Language}) => {
           >
             <Calculator className="h-5 w-5 text-health-green" />
             {isAr ? 'استكشف الحاسبات' : 'Explore calculators'}
+          </a>
+        </motion.div>
+
+        <motion.div
+          initial={{opacity: 0, y: 20}}
+          animate={{opacity: 1, y: 0}}
+          transition={{delay: 0.32}}
+          className="mb-8 flex flex-wrap items-center justify-center gap-3"
+        >
+          <a
+            href="/assistant"
+            className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-700 transition-all hover:border-health-green"
+          >
+            <MessageSquareText className="h-4 w-4 text-health-green" />
+            {isAr ? 'اسأل المساعد' : 'Ask the assistant'}
+          </a>
+          <a
+            href="#architect"
+            className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-3 text-sm font-bold text-white transition-all hover:bg-slate-800"
+          >
+            <Activity className="h-4 w-4" />
+            {isAr ? 'خطة التعافي' : 'Recovery planner'}
           </a>
         </motion.div>
 
