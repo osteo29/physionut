@@ -52,6 +52,71 @@ ChartJS.register(
 
 type CalculatorType = 'BMI' | 'WHtR' | 'BMR' | 'TDEE' | 'Macros' | 'Protein' | 'IdealWeight' | 'BodyFat' | 'Water' | 'Deficit' | 'Meal' | null;
 
+const ARCHITECT_STORAGE_KEY = 'physiohub_architect_profile';
+
+const EMPTY_ARCHITECT_PROFILE: HealthProfile = {
+  age: 0,
+  weight: 0,
+  height: 0,
+  gender: 'male',
+  activityLevel: 1.2,
+  goal: 'maintain',
+  waist: 0,
+  neck: 0,
+  injuryType: null,
+  recoveryWeek: 1,
+  sleepHours: 8,
+  waterIntake: 0,
+  proteinCompliance: 0,
+};
+
+const LEGACY_DEMO_PROFILE = {
+  age: 25,
+  weight: 70,
+  height: 175,
+  gender: 'male',
+  activityLevel: 1.2,
+  goal: 'maintain',
+  waist: 80,
+  neck: 38,
+  injuryType: null,
+  recoveryWeek: 1,
+  sleepHours: 8,
+  waterIntake: 2500,
+  proteinCompliance: 0.8,
+};
+
+function isLegacyDemoProfile(profile: Partial<HealthProfile>) {
+  return (
+    profile.age === LEGACY_DEMO_PROFILE.age &&
+    profile.weight === LEGACY_DEMO_PROFILE.weight &&
+    profile.height === LEGACY_DEMO_PROFILE.height &&
+    profile.gender === LEGACY_DEMO_PROFILE.gender &&
+    profile.activityLevel === LEGACY_DEMO_PROFILE.activityLevel &&
+    profile.goal === LEGACY_DEMO_PROFILE.goal &&
+    profile.waist === LEGACY_DEMO_PROFILE.waist &&
+    profile.neck === LEGACY_DEMO_PROFILE.neck &&
+    profile.injuryType === LEGACY_DEMO_PROFILE.injuryType &&
+    profile.recoveryWeek === LEGACY_DEMO_PROFILE.recoveryWeek &&
+    profile.sleepHours === LEGACY_DEMO_PROFILE.sleepHours &&
+    profile.waterIntake === LEGACY_DEMO_PROFILE.waterIntake &&
+    profile.proteinCompliance === LEGACY_DEMO_PROFILE.proteinCompliance
+  );
+}
+
+function hasMeaningfulArchitectData(profile: HealthProfile) {
+  return Boolean(
+    profile.age > 0 ||
+      profile.weight > 0 ||
+      profile.height > 0 ||
+      (profile.waist || 0) > 0 ||
+      (profile.neck || 0) > 0 ||
+      (profile.waterIntake || 0) > 0 ||
+      profile.proteinCompliance > 0 ||
+      profile.injuryType,
+  );
+}
+
 interface MealItem {
   id: string;
   name: string;
@@ -104,22 +169,15 @@ export default function App({
   
   // PhysioNutrition Architect State
   const [architectProfile, setArchitectProfile] = useState<HealthProfile>(() => {
-    const saved = localStorage.getItem('physiohub_architect_profile');
-    return saved ? JSON.parse(saved) : {
-      age: 25,
-      weight: 70,
-      height: 175,
-      gender: 'male',
-      activityLevel: 1.2,
-      goal: 'maintain',
-      waist: 80,
-      neck: 38,
-      injuryType: null,
-      recoveryWeek: 1,
-      sleepHours: 8,
-      waterIntake: 2500,
-      proteinCompliance: 0.8
-    };
+    const saved = localStorage.getItem(ARCHITECT_STORAGE_KEY);
+    if (!saved) return EMPTY_ARCHITECT_PROFILE;
+
+    try {
+      const parsed = JSON.parse(saved) as HealthProfile;
+      return isLegacyDemoProfile(parsed) ? EMPTY_ARCHITECT_PROFILE : {...EMPTY_ARCHITECT_PROFILE, ...parsed};
+    } catch {
+      return EMPTY_ARCHITECT_PROFILE;
+    }
   });
 
   const [architectMetrics, setArchitectMetrics] = useState<HealthMetrics | null>(null);
@@ -127,9 +185,18 @@ export default function App({
   const [isGeneratingPlan, setIsGeneratingPlan] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('physiohub_architect_profile', JSON.stringify(architectProfile));
-    const metrics = PhysioNutritionLogic.calculateAllMetrics(architectProfile);
-    setArchitectMetrics(metrics);
+    if (hasMeaningfulArchitectData(architectProfile)) {
+      localStorage.setItem(ARCHITECT_STORAGE_KEY, JSON.stringify(architectProfile));
+    } else {
+      localStorage.removeItem(ARCHITECT_STORAGE_KEY);
+    }
+
+    if (architectProfile.age > 0 && architectProfile.weight > 0 && architectProfile.height > 0) {
+      const metrics = PhysioNutritionLogic.calculateAllMetrics(architectProfile);
+      setArchitectMetrics(metrics);
+    } else {
+      setArchitectMetrics(null);
+    }
   }, [architectProfile]);
 
   const generateAIDietPlan = async () => {
@@ -249,6 +316,75 @@ export default function App({
     document.documentElement.lang = lang;
     localStorage.setItem('physiohub_lang', lang);
   }, [lang]);
+
+  useEffect(() => {
+    const nextWeight = Number(weight);
+    if (weight && Number.isFinite(nextWeight) && nextWeight > 0 && architectProfile.weight !== nextWeight) {
+      setArchitectProfile((prev) => ({...prev, weight: nextWeight}));
+    }
+  }, [weight, architectProfile.weight]);
+
+  useEffect(() => {
+    const nextHeight = Number(height);
+    if (height && Number.isFinite(nextHeight) && nextHeight > 0 && architectProfile.height !== nextHeight) {
+      setArchitectProfile((prev) => ({...prev, height: nextHeight}));
+    }
+  }, [height, architectProfile.height]);
+
+  useEffect(() => {
+    const nextAge = Number(age);
+    if (age && Number.isFinite(nextAge) && nextAge > 0 && architectProfile.age !== nextAge) {
+      setArchitectProfile((prev) => ({...prev, age: nextAge}));
+    }
+  }, [age, architectProfile.age]);
+
+  useEffect(() => {
+    const nextWaist = Number(waist);
+    if (waist && Number.isFinite(nextWaist) && nextWaist > 0 && (architectProfile.waist || 0) !== nextWaist) {
+      setArchitectProfile((prev) => ({...prev, waist: nextWaist}));
+    }
+  }, [waist, architectProfile.waist]);
+
+  useEffect(() => {
+    const nextNeck = Number(neck);
+    if (neck && Number.isFinite(nextNeck) && nextNeck > 0 && (architectProfile.neck || 0) !== nextNeck) {
+      setArchitectProfile((prev) => ({...prev, neck: nextNeck}));
+    }
+  }, [neck, architectProfile.neck]);
+
+  useEffect(() => {
+    const nextActivity = Number(activity);
+    if (activity && Number.isFinite(nextActivity) && nextActivity > 0 && architectProfile.activityLevel !== nextActivity) {
+      setArchitectProfile((prev) => ({...prev, activityLevel: nextActivity}));
+    }
+  }, [activity, architectProfile.activityLevel]);
+
+  useEffect(() => {
+    if (architectProfile.gender !== gender) {
+      setArchitectProfile((prev) => ({...prev, gender}));
+    }
+  }, [gender, architectProfile.gender]);
+
+  useEffect(() => {
+    if (architectProfile.goal !== goal) {
+      setArchitectProfile((prev) => ({...prev, goal}));
+    }
+  }, [goal, architectProfile.goal]);
+
+  useEffect(() => {
+    if (!weight && architectProfile.weight > 0) setWeight(String(architectProfile.weight));
+    if (!height && architectProfile.height > 0) setHeight(String(architectProfile.height));
+    if (!age && architectProfile.age > 0) setAge(String(architectProfile.age));
+    if (!waist && (architectProfile.waist || 0) > 0) setWaist(String(architectProfile.waist));
+    if (!neck && (architectProfile.neck || 0) > 0) setNeck(String(architectProfile.neck));
+    if (gender !== architectProfile.gender) setGender(architectProfile.gender);
+    if (goal !== architectProfile.goal && ['lose', 'maintain', 'gain'].includes(String(architectProfile.goal))) {
+      setGoal(architectProfile.goal as GoalType);
+    }
+    if (activity !== String(architectProfile.activityLevel) && architectProfile.activityLevel > 0) {
+      setActivity(String(architectProfile.activityLevel));
+    }
+  }, [architectProfile]);
 
   useEffect(() => {
     if (!justCalculated) return;
@@ -939,8 +1075,9 @@ export default function App({
                       <label className="text-xs font-bold text-slate-500 uppercase">{t.forms.age}</label>
                       <input 
                         type="number" 
-                        value={architectProfile.age}
+                        value={architectProfile.age || ''}
                         onChange={(e) => setArchitectProfile({...architectProfile, age: Number(e.target.value)})}
+                        placeholder="25"
                         className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
                       />
                     </div>
@@ -948,8 +1085,9 @@ export default function App({
                       <label className="text-xs font-bold text-slate-500 uppercase">{t.forms.weight}</label>
                       <input 
                         type="number" 
-                        value={architectProfile.weight}
+                        value={architectProfile.weight || ''}
                         onChange={(e) => setArchitectProfile({...architectProfile, weight: Number(e.target.value)})}
+                        placeholder="70"
                         className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
                       />
                     </div>
@@ -959,8 +1097,9 @@ export default function App({
                     <label className="text-xs font-bold text-slate-500 uppercase">{t.forms.height}</label>
                     <input 
                       type="number" 
-                      value={architectProfile.height}
+                      value={architectProfile.height || ''}
                       onChange={(e) => setArchitectProfile({...architectProfile, height: Number(e.target.value)})}
+                      placeholder="175"
                       className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
                     />
                   </div>
@@ -1041,6 +1180,7 @@ export default function App({
                       type="number" 
                       value={architectProfile.waist || ''}
                       onChange={(e) => setArchitectProfile({...architectProfile, waist: Number(e.target.value)})}
+                      placeholder="80"
                       className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
                     />
                   </div>
@@ -1051,6 +1191,7 @@ export default function App({
                       type="number" 
                       value={architectProfile.neck || ''}
                       onChange={(e) => setArchitectProfile({...architectProfile, neck: Number(e.target.value)})}
+                      placeholder="38"
                       className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
                     />
                   </div>
@@ -1077,8 +1218,9 @@ export default function App({
                     <label className="text-xs font-bold text-slate-500 uppercase">{t.architect.water}</label>
                     <input 
                       type="number" 
-                      value={architectProfile.waterIntake}
+                      value={architectProfile.waterIntake || ''}
                       onChange={(e) => setArchitectProfile({...architectProfile, waterIntake: Number(e.target.value)})}
+                      placeholder="2500"
                       className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
                     />
                   </div>
@@ -1106,7 +1248,7 @@ export default function App({
 
             {/* Dashboard Column */}
             <div className="lg:col-span-8 space-y-8">
-              {architectMetrics && (
+              {architectMetrics ? (
                 <>
                   {/* Top Row: Score & Metrics */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -1309,6 +1451,20 @@ export default function App({
                     </AnimatePresence>
                   </div>
                 </>
+              ) : (
+                <div className="medical-card p-6 md:p-8">
+                  <div className="mb-2 text-[11px] font-bold uppercase tracking-[0.18em] text-health-green">
+                    {lang === 'en' ? 'Live dashboard preview' : 'معاينة اللوحة المباشرة'}
+                  </div>
+                  <h4 className="text-2xl font-bold text-slate-900 mb-3">
+                    {lang === 'en' ? 'Enter your own values to activate the dashboard' : 'أدخل بياناتك الحقيقية لتفعيل اللوحة'}
+                  </h4>
+                  <p className="text-sm leading-7 text-slate-600 max-w-2xl">
+                    {lang === 'en'
+                      ? 'The fields show examples as placeholders only. Nothing is calculated or saved until you enter your own data.'
+                      : 'الحقول تعرض أمثلة إرشادية فقط داخل الـ placeholders. لن يتم حساب أو حفظ أي شيء حتى تدخل بياناتك أنت.'}
+                  </p>
+                </div>
               )}
             </div>
           </div>
