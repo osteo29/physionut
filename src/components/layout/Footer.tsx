@@ -113,10 +113,10 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
                     {lang === 'en' ? 'Email' : 'البريد الإلكتروني'}
                   </div>
                   <a
-                    href="mailto:contact@physiohub.com"
+                    href="mailto:physionutritionofficial@gmail.com"
                     className="text-slate-300 transition-colors hover:text-health-green"
                   >
-                    contact@physiohub.com
+                    physionutritionofficial@gmail.com
                   </a>
                 </div>
               </li>

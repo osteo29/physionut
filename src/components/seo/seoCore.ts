@@ -92,7 +92,7 @@ export function applySeo(config: SeoConfig) {
     '@type': 'Organization',
     name: DEFAULT_SITE_NAME,
     url: siteUrl,
-    email: 'contact@physiohub.com',
+    email: 'physionutritionofficial@gmail.com',
     sameAs: [],
   });
 }

@@ -60,7 +60,7 @@ export default function PrivacyPolicy() {
             <h2>Contact</h2>
             <p>
               For privacy questions or data-related concerns, contact{' '}
-              <a href="mailto:contact@physiohub.com">contact@physiohub.com</a>.
+              <a href="mailto:physionutritionofficial@gmail.com">physionutritionofficial@gmail.com</a>.
             </p>
           </>
         ) : (
@@ -104,7 +104,7 @@ export default function PrivacyPolicy() {
             <h2>التواصل</h2>
             <p>
               للاستفسارات المتعلقة بالخصوصية أو البيانات، راسلنا على{' '}
-              <a href="mailto:contact@physiohub.com">contact@physiohub.com</a>.
+              <a href="mailto:physionutritionofficial@gmail.com">physionutritionofficial@gmail.com</a>.
             </p>
           </>
         )}

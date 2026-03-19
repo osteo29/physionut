@@ -26,7 +26,7 @@ export default function ContactPage() {
 
             <h2>Email</h2>
             <p>
-              <a href="mailto:contact@physiohub.com">contact@physiohub.com</a>
+              <a href="mailto:physionutritionofficial@gmail.com">physionutritionofficial@gmail.com</a>
             </p>
 
             <h2>What to include</h2>
@@ -45,7 +45,7 @@ export default function ContactPage() {
 
             <h2>البريد الإلكتروني</h2>
             <p>
-              <a href="mailto:contact@physiohub.com">contact@physiohub.com</a>
+              <a href="mailto:physionutritionofficial@gmail.com">physionutritionofficial@gmail.com</a>
             </p>
 
             <h2>ما الذي يفضّل إرساله</h2>

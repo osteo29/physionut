@@ -247,7 +247,7 @@ export const translations = {
         social: 'Social Media'
       },
       contact: {
-        email: 'support@physiohub.com',
+        email: 'physionutritionofficial@gmail.com',
         phone: '+20 123 456 789',
         address: 'Cairo, Egypt'
       },
@@ -503,7 +503,7 @@ export const translations = {
         social: 'وسائل التواصل'
       },
       contact: {
-        email: 'support@physiohub.com',
+        email: 'physionutritionofficial@gmail.com',
         phone: '+20 123 456 789',
         address: 'القاهرة، مصر'
       },
