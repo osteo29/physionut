@@ -1,5 +1,9 @@
 import {useEffect, useMemo, useState} from 'react';
 import {Bell, BellRing, CheckCircle2, Download} from 'lucide-react';
+import {
+  getBrowserNotificationPermission,
+  requestBrowserNotifications,
+} from '../../lib/notifications';
 import type {Language} from '../../services/translations';
 
 type BeforeInstallPromptEvent = Event & {
@@ -20,9 +24,7 @@ export default function PwaActions({lang}: {lang: Language}) {
   const [isInstalled, setIsInstalled] = useState(false);
   const [isInstalling, setIsInstalling] = useState(false);
   const [notificationState, setNotificationState] = useState<NotificationPermission | 'unsupported'>(
-    typeof window !== 'undefined' && 'Notification' in window
-      ? Notification.permission
-      : 'unsupported',
+    getBrowserNotificationPermission(),
   );
 
   useEffect(() => {
@@ -48,33 +50,8 @@ export default function PwaActions({lang}: {lang: Language}) {
   }, []);
 
   const requestNotifications = async () => {
-    if (!('Notification' in window)) {
-      setNotificationState('unsupported');
-      return;
-    }
-
-    const permission = await Notification.requestPermission();
+    const permission = await requestBrowserNotifications(lang);
     setNotificationState(permission);
-
-    if (permission !== 'granted') return;
-
-    try {
-      const registration = await navigator.serviceWorker?.ready;
-      if (registration) {
-        await registration.showNotification(
-          isAr ? 'إشعارات PhysioHub جاهزة' : 'PhysioHub notifications are ready',
-          {
-            body: isAr
-              ? 'سنستخدمها لاحقًا للتذكير بالمتابعة والنتائج المهمة.'
-              : 'We can now use them later for follow-up reminders and important result updates.',
-            icon: '/icon-192.svg',
-            badge: '/icon-192.svg',
-          },
-        );
-      }
-    } catch {
-      // Best effort only.
-    }
   };
 
   const triggerInstall = async () => {

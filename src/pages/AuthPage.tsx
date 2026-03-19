@@ -13,6 +13,7 @@ import {
   signUpWithEmail,
   type User,
 } from '../lib/supabase';
+import {autoRequestBrowserNotifications} from '../lib/notifications';
 
 export default function AuthPage({
   theme,
@@ -116,6 +117,10 @@ export default function AuthPage({
           return;
         }
 
+        if (result.session) {
+          await autoRequestBrowserNotifications(lang);
+        }
+
         if (result.user && !result.session) {
           setStatus('success');
           setMessage(
@@ -133,6 +138,7 @@ export default function AuthPage({
         }
       } else {
         await signInWithEmail(email.trim(), password);
+        await autoRequestBrowserNotifications(lang);
         setStatus('success');
         setMessage(isAr ? 'تم تسجيل الدخول بنجاح.' : 'Signed in successfully.');
       }

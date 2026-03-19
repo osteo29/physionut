@@ -204,14 +204,23 @@ const Navigation = memo(
                         </button>
                       </div>
                     ) : (
-                      <Link
-                        to="/auth"
-                        onClick={() => setIsSidebarOpen(false)}
-                        className="flex items-center justify-center gap-2 rounded-2xl bg-slate-900 px-4 py-3 text-sm font-bold text-white transition-all hover:bg-slate-800"
-                      >
-                        <UserRound className="h-4 w-4" />
-                        <span>{isAr ? 'تسجيل الدخول' : 'Login / Sign up'}</span>
-                      </Link>
+                      <div className="grid grid-cols-1 gap-2">
+                        <Link
+                          to="/auth"
+                          onClick={() => setIsSidebarOpen(false)}
+                          className="flex items-center justify-center rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-700 transition-all hover:border-health-green/30"
+                        >
+                          {isAr ? 'إنشاء حساب' : 'Create account'}
+                        </Link>
+                        <Link
+                          to="/auth"
+                          onClick={() => setIsSidebarOpen(false)}
+                          className="flex items-center justify-center gap-2 rounded-2xl bg-slate-900 px-4 py-3 text-sm font-bold text-white transition-all hover:bg-slate-800"
+                        >
+                          <UserRound className="h-4 w-4" />
+                          <span>{isAr ? 'تسجيل الدخول' : 'Sign in'}</span>
+                        </Link>
+                      </div>
                     )}
                   </div>
 
@@ -359,7 +368,7 @@ const Navigation = memo(
               {brand}
             </div>
 
-            <div className="flex items-center gap-2 sm:gap-3 lg:gap-6">
+            <div className="flex items-center gap-2 sm:gap-3 lg:gap-4">
               <div className="hidden items-center gap-6 lg:flex">
                 <a href="#calculators" className="nav-link">
                   {t.nav.calculators}
@@ -391,15 +400,21 @@ const Navigation = memo(
                   <span className="hidden text-xs font-bold lg:inline">{authLabel}</span>
                 </Link>
               ) : (
-                <Link
-                  to="/auth"
-                  className="hidden items-center gap-2 rounded-xl bg-slate-900 px-3 py-2 text-white transition-all hover:bg-slate-800 sm:flex"
-                >
-                  <UserRound className="h-4 w-4" />
-                  <span className="hidden text-xs font-bold lg:inline">
-                    {isAr ? 'دخول' : 'Login'}
-                  </span>
-                </Link>
+                <div className="hidden items-center gap-2 sm:flex">
+                  <Link
+                    to="/auth"
+                    className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-700 transition-all hover:border-health-green/30"
+                  >
+                    <span className="text-xs font-bold">{isAr ? 'إنشاء حساب' : 'Create account'}</span>
+                  </Link>
+                  <Link
+                    to="/auth"
+                    className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-3 py-2 text-white transition-all hover:bg-slate-800"
+                  >
+                    <UserRound className="h-4 w-4" />
+                    <span className="text-xs font-bold">{isAr ? 'تسجيل الدخول' : 'Sign in'}</span>
+                  </Link>
+                </div>
               )}
 
               <div className="hidden items-center gap-1 rounded-full border border-slate-200 bg-slate-100 p-1 sm:flex">
