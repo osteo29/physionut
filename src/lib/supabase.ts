@@ -20,8 +20,6 @@ export const supabase = isSupabaseConfigured
       auth: {
         persistSession: true,
         autoRefreshToken: true,
-        detectSessionInUrl: true,
-        storageKey: 'physiohub-auth',
       },
     })
   : null;
@@ -148,14 +146,6 @@ function ensureSupabase() {
 
 export async function getCurrentUser() {
   const client = ensureSupabase();
-  const {
-    data: {session},
-    error: sessionError,
-  } = await client.auth.getSession();
-
-  if (sessionError) throw sessionError;
-  if (session?.user) return session.user;
-
   const {data, error} = await client.auth.getUser();
   if (error) throw error;
   return data.user;

@@ -16,36 +16,36 @@ const Hero = memo(({lang}: {lang: Language}) => {
   const journey = [
     {
       icon: Calculator,
-      title: isAr ? 'ابدأ من هدفك الغذائي' : 'Start from your nutrition goal',
+      title: isAr ? 'ابدأ من هدفك الحقيقي' : 'Start from the right goal',
       desc: isAr
-        ? 'اختر السعرات أو البروتين أو التخسيس أو تقييم الجسم بدل التنقل بين أدوات عامة ومشتتة.'
-        : 'Choose calories, protein, weight loss, or body assessment instead of jumping between scattered tools.',
+        ? 'اختر تعافي، تغذية علاجية، أو تقييم جسم بدل التنقل بين أدوات عامة غير مرتبطة بحالتك.'
+        : 'Choose recovery, rehab nutrition, or body assessment instead of jumping between generic tools.',
     },
     {
       icon: Activity,
-      title: isAr ? 'افهم النتيجة بسرعة' : 'Understand the result quickly',
+      title: isAr ? 'افهم ما تعنيه النتيجة' : 'Understand what the result means',
       desc: isAr
-        ? 'لن ترى أرقامًا فقط، بل تفسيرًا أوضح يساعدك تعرف ما إذا كنت على المسار الصحيح وما الذي يحتاج تعديلًا.'
-        : 'Get more than a raw number with context that shows whether you are on track and what needs adjusting.',
+        ? 'لن ترى رقمًا فقط، بل تفسيرًا مختصرًا يساعدك تعرف هل أنت في مسار جيد وما الذي يحتاج متابعة.'
+        : 'Get more than a number with context that shows whether you are on track and what needs attention.',
     },
     {
       icon: MessageSquareText,
-      title: isAr ? 'حوّل الحساب لخطوة عملية' : 'Turn calculations into action',
+      title: isAr ? 'تحرك بخطوة عملية' : 'Move with a practical next step',
       desc: isAr
-        ? 'حوّل النتيجة إلى هدف يومي أو متابعة أو سؤال ذكي للمساعد، مع مزايا إضافية للتعافي والإصابات داخل المنصة.'
-        : 'Turn the result into a daily target, follow-up step, or a smart assistant question, with recovery tools available inside the platform.',
+        ? 'حوّل النتيجة إلى هدف غذائي، متابعة تعافي، أو سؤال ذكي للمساعد بدل أن تتوقف عند الحساب فقط.'
+        : 'Turn the result into a nutrition target, recovery follow-up, or a smart question for the assistant.',
     },
   ];
 
   const trustPoints = isAr
-    ? ['للتغذية والحاسبات اليومية', 'مفيد للتخسيس والمتابعة', 'التعافي والإصابات كميزة إضافية']
-    : ['Built for nutrition tracking', 'Useful for fat loss and follow-up', 'Recovery tools included'];
+    ? ['للتعافي والإصابات', 'مفيد للـ rehab والمتابعة', 'إرشادي وآمن وغير تشخيصي']
+    : ['Built for recovery', 'Useful for rehab', 'Educational, not diagnostic'];
 
   return (
     <section className="relative overflow-hidden bg-soft-blue pb-16 pt-16 sm:pb-20 sm:pt-18 lg:pb-24 lg:pt-20">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(49,95,74,0.14),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(109,122,114,0.12),transparent_28%)]" />
       <div className="identity-watermark whitespace-pre-line">
-        {isAr ? 'تغذية\nتوازن\nمتابعة' : 'Nourish\nBalance\nTrack'}
+        {isAr ? 'حركة\nتعافٍ\nتغذية' : 'Move\nRecover\nNourish'}
       </div>
       <div className="pointer-events-none absolute right-0 top-0 h-[380px] w-[380px] -translate-y-1/3 translate-x-1/4 rounded-full bg-health-green/6 blur-[120px]" />
       <div className="pointer-events-none absolute bottom-0 left-0 h-[380px] w-[380px] translate-y-1/3 -translate-x-1/4 rounded-full bg-medical-blue/8 blur-[120px]" />
@@ -59,8 +59,8 @@ const Hero = memo(({lang}: {lang: Language}) => {
           <GraduationCap className="h-4 w-4" />
           <span>
             {isAr
-              ? 'حاسبات تغذية وصحة مع أدوات متابعة ذكية'
-              : 'Nutrition and health calculators with smart follow-up tools'}
+              ? 'حاسبات علاج طبيعي + تغذية للتعافي'
+              : 'Physio + nutrition calculators for recovery'}
           </span>
         </motion.div>
 
@@ -70,9 +70,9 @@ const Hero = memo(({lang}: {lang: Language}) => {
           transition={{delay: 0.08}}
           className="mx-auto mb-5 max-w-4xl text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl"
         >
-          {isAr ? 'احسب سعراتك واحتياجاتك الغذائية' : 'Calculate your calories and nutrition needs'}{' '}
+          {isAr ? 'احسب احتياجات التعافي' : 'Calculate recovery needs'}{' '}
           <span className="relative text-health-green">
-            {isAr ? 'في ثوانٍ' : 'in seconds'}
+            {isAr ? 'في أقل من 30 ثانية' : 'in under 30 seconds'}
           </span>
         </motion.h1>
 
@@ -83,8 +83,8 @@ const Hero = memo(({lang}: {lang: Language}) => {
           className="mx-auto mb-6 max-w-3xl text-base leading-8 text-slate-600 sm:text-lg"
         >
           {isAr
-            ? 'منصة للحاسبات الغذائية، التخسيس، تحليل النتائج، والمتابعة اليومية بشكل أوضح وأسهل. وإذا كنت مهتمًا بالتعافي أو الإصابات، ستجد لهما أدوات متخصصة داخل الموقع أيضًا.'
-            : 'A platform for nutrition calculators, fat loss planning, clearer result analysis, and easier daily follow-up, with specialized recovery tools available when you need them.'}
+            ? 'منصة مصممة للـ rehab والتعافي بعد الإصابة: احسب السعرات والبروتين والماء وتقييمات الجسم، ثم خذ تفسيرًا أوضح وخطة متابعة أقرب لواقعك.'
+            : 'A focused platform for rehab and recovery after injury: calculate calories, protein, hydration, and body metrics, then move into clearer follow-up steps.'}
         </motion.p>
 
         <motion.div
@@ -94,8 +94,8 @@ const Hero = memo(({lang}: {lang: Language}) => {
           className="mx-auto mb-7 max-w-3xl rounded-[1.5rem] border border-white/70 bg-white/80 px-4 py-4 text-sm leading-7 text-slate-700 shadow-sm backdrop-blur-sm sm:px-5"
         >
           {isAr
-            ? 'ابدأ بالحاسبات الأساسية مثل السعرات والبروتين والماء وتقييم الجسم، ثم انتقل إلى المتابعة أو الأدوات المتقدمة عند الحاجة.'
-            : 'Start with core tools like calories, protein, hydration, and body assessment, then move into tracking or advanced tools when needed.'}
+            ? 'إذا كنت تتابع حالة إصابة أو تعمل على تحسين التغذية العلاجية، ستجد هنا أدوات مترابطة بدل حاسبات منفصلة ومشتتة.'
+            : 'If you are following an injury case or improving rehab nutrition, the tools here work together instead of feeling like isolated calculators.'}
         </motion.div>
 
         <motion.div
@@ -133,14 +133,14 @@ const Hero = memo(({lang}: {lang: Language}) => {
             className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-6 py-4 text-sm font-bold text-slate-900 transition-all hover:border-health-green"
           >
             <MessageSquareText className="h-5 w-5 text-health-green" />
-            {isAr ? 'حلل نتيجتك' : 'Analyze your result'}
+            {isAr ? 'اسأل المساعد' : 'Ask the assistant'}
           </a>
           <a
             href="#architect"
             className="inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-900 px-6 py-4 text-sm font-bold text-white shadow-lg shadow-slate-900/15 transition-all hover:bg-slate-800"
           >
             <Activity className="h-5 w-5" />
-            {isAr ? 'لوحة المتابعة' : 'Tracking planner'}
+            {isAr ? 'خطة التعافي' : 'Recovery planner'}
           </a>
         </motion.div>
 

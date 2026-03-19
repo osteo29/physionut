@@ -5,7 +5,7 @@ import { 
   Zap, ShieldAlert, Facebook, Twitter, Instagram, Linkedin, Github, Mail, Phone, MapPin,
   ArrowUpRight, ExternalLink
 } from 'lucide-react';
-import { useState, useEffect, useMemo, memo, lazy, Suspense } from 'react';
+import { useState, useEffect, useMemo, memo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { checkEnvironment } from './services/calculators';
@@ -16,50 +16,37 @@ import { getArticles, Article } from './services/articles';
 import { foodDatabase, FoodItem } from './services/foodData';
 import {ClinicalCalculators, statusToTextClass, type HealthInterpretation, type GoalType, type BodyType} from './logic/physioNutritionLogic';
 import Hero from './components/home/Hero';
+import WhatsNew from './components/home/WhatsNew';
 import Footer from './components/layout/Footer';
 import Navigation from './components/layout/Navigation';
+import AboutSection from './components/home/AboutSection';
+import BlogSection from './components/home/BlogSection';
 import TrustSection from './components/home/TrustSection';
-const WhatsNew = lazy(() => import('./components/home/WhatsNew'));
-const AboutSection = lazy(() => import('./components/home/AboutSection'));
-const BlogSection = lazy(() => import('./components/home/BlogSection'));
-const AskAboutResultChat = lazy(() => import('./components/ai/AskAboutResultChat'));
-const DrugNutrientChecker = lazy(() => import('./components/ai/DrugNutrientChecker'));
-const ConsentBanner = lazy(() => import('./components/monetization/ConsentBanner'));
-const AdSlot = lazy(() => import('./components/monetization/AdSlot'));
-const ResultLeadCapture = lazy(() => import('./components/forms/ResultLeadCapture'));
-const ResultPieChart = lazy(() => import('./components/charts/ResultPieChart'));
-const ResultBarChart = lazy(() => import('./components/charts/ResultBarChart'));
+import AskAboutResultChat from './components/ai/AskAboutResultChat';
+import DrugNutrientChecker from './components/ai/DrugNutrientChecker';
+import ConsentBanner from './components/monetization/ConsentBanner';
+import AdSlot from './components/monetization/AdSlot';
+import ResultLeadCapture from './components/forms/ResultLeadCapture';
 import {
-  Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
 } from 'chart.js';
+import { Pie, Bar } from 'react-chartjs-2';
 
 ChartJS.register(
-  ArcElement,
-  Tooltip,
-  Legend,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title
-);
-
-const sectionLoader = (
-  <div className="rounded-[1.75rem] border border-slate-200 bg-white/80 p-5 text-sm text-slate-500 shadow-sm">
-    Loading section...
-  </div>
-);
-
-const chartLoader = (
-  <div className="flex h-full min-h-[180px] items-center justify-center rounded-[1.5rem] border border-dashed border-slate-200 bg-slate-50 text-sm text-slate-400">
-    Loading chart...
-  </div>
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title
 );
 
 type CalculatorType = 'BMI' | 'WHtR' | 'BMR' | 'TDEE' | 'Macros' | 'Protein' | 'IdealWeight' | 'BodyFat' | 'Water' | 'Deficit' | 'Meal' | null;
@@ -1046,21 +1033,17 @@ export default function App({
 
       <section className="py-8 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Suspense fallback={null}>
           <AdSlot
             lang={lang}
             label={lang === 'en' ? 'Sponsored area' : 'مساحة إعلانية'}
             slot={import.meta.env.VITE_ADSENSE_SLOT_INLINE}
             format="horizontal"
           />
-          </Suspense>
         </div>
       </section>
 
       {/* What's New Section */}
-      <Suspense fallback={sectionLoader}>
-        <WhatsNew lang={lang} />
-      </Suspense>
+      <WhatsNew lang={lang} />
 
       {/* PhysioNutrition Architect Section */}
       <section id="architect" className="py-24 bg-slate-50">
@@ -2063,12 +2046,21 @@ export default function App({
                               </div>
                               
                               <div className="max-w-[250px] mx-auto">
-                                <Suspense fallback={chartLoader}>
-                                  <ResultPieChart
-                                    labels={[t.charts.protein, t.charts.carbs, t.charts.fats]}
-                                    values={[result.protein * 4, result.carbs * 4, result.fats * 9]}
-                                  />
-                                </Suspense>
+                                <Pie 
+                                  data={{
+                                    labels: [t.charts.protein, t.charts.carbs, t.charts.fats],
+                                    datasets: [{
+                                      data: [result.protein * 4, result.carbs * 4, result.fats * 9],
+                                      backgroundColor: ['#10B981', '#3B82F6', '#F97316'],
+                                      borderWidth: 0,
+                                    }]
+                                  }}
+                                  options={{
+                                    plugins: {
+                                      legend: { position: 'bottom', labels: { font: { family: 'Inter' } } }
+                                    }
+                                  }}
+                                />
                               </div>
                             </div>
                           ) : typeof result === 'object' && activeCalculator === 'Deficit' ? (
@@ -2083,13 +2075,28 @@ export default function App({
                               </div>
 
                               <div className="max-w-[400px] mx-auto h-[200px] mb-8">
-                                <Suspense fallback={chartLoader}>
-                                  <ResultBarChart
-                                    labels={[t.charts.maintenance, t.charts.deficit]}
-                                    values={[result.tdee, result.deficit]}
-                                    datasetLabel={t.forms.calories}
-                                  />
-                                </Suspense>
+                                <Bar 
+                                  data={{
+                                    labels: [t.charts.maintenance, t.charts.deficit],
+                                    datasets: [{
+                                      label: t.forms.calories,
+                                      data: [result.tdee, result.deficit],
+                                      backgroundColor: ['#3B82F6', '#10B981'],
+                                      borderRadius: 8,
+                                    }]
+                                  }}
+                                  options={{
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    plugins: {
+                                      legend: { display: false }
+                                    },
+                                    scales: {
+                                      y: { beginAtZero: true, grid: { display: false } },
+                                      x: { grid: { display: false } }
+                                    }
+                                  }}
+                                />
                               </div>
 
                               <div className="max-w-[400px] mx-auto">
@@ -2204,44 +2211,40 @@ export default function App({
                         </Link>
                       </div>
 
-                      <Suspense fallback={sectionLoader}>
-                        <ResultLeadCapture
-                          lang={lang}
-                          calculatorName={activeCalculator}
-                          valueLabel={assessmentSnapshot.valueLabel}
-                          valueNumeric={assessmentSnapshot.valueNumeric}
-                          valueUnit={assessmentSnapshot.valueUnit}
-                        />
-                      </Suspense>
+                      <ResultLeadCapture
+                        lang={lang}
+                        calculatorName={activeCalculator}
+                        valueLabel={assessmentSnapshot.valueLabel}
+                        valueNumeric={assessmentSnapshot.valueNumeric}
+                        valueUnit={assessmentSnapshot.valueUnit}
+                      />
 
                       <div id="result-ai-panel">
-                        <Suspense fallback={sectionLoader}>
-                          <AskAboutResultChat
-                            calculatorName={activeCalculator}
-                            lang={lang}
-                            autoPrompt={analysisPrompt}
-                            hiddenContext={JSON.stringify(
-                              {
-                                calculator: activeCalculator,
-                                result,
-                                interpretation: healthInterpretation,
-                                inputs: {
-                                  weight,
-                                  height,
-                                  age,
-                                  gender,
-                                  activity,
-                                  goal,
-                                  bodyType,
-                                  unitSystem,
-                                },
-                                language: lang,
+                        <AskAboutResultChat
+                          calculatorName={activeCalculator}
+                          lang={lang}
+                          autoPrompt={analysisPrompt}
+                          hiddenContext={JSON.stringify(
+                            {
+                              calculator: activeCalculator,
+                              result,
+                              interpretation: healthInterpretation,
+                              inputs: {
+                                weight,
+                                height,
+                                age,
+                                gender,
+                                activity,
+                                goal,
+                                bodyType,
+                                unitSystem,
                               },
-                              null,
-                              2,
-                            )}
-                          />
-                        </Suspense>
+                              language: lang,
+                            },
+                            null,
+                            2,
+                          )}
+                        />
                       </div>
                     </div>
                   )}
@@ -2363,20 +2366,16 @@ export default function App({
         </div>
       </section>
 
-      <Suspense fallback={sectionLoader}>
-        <BlogSection
-          t={t}
-          lang={lang}
-          articles={articles}
-          selectedArticle={selectedArticle}
-          setSelectedArticle={setSelectedArticle}
-          IconComponent={IconComponent}
-        />
-      </Suspense>
+      <BlogSection
+        t={t}
+        lang={lang}
+        articles={articles}
+        selectedArticle={selectedArticle}
+        setSelectedArticle={setSelectedArticle}
+        IconComponent={IconComponent}
+      />
 
-      <Suspense fallback={sectionLoader}>
-        <DrugNutrientChecker lang={lang} />
-      </Suspense>
+      <DrugNutrientChecker lang={lang} />
 
       {/* Custom Food Modal */}
       <AnimatePresence>
@@ -2555,16 +2554,12 @@ export default function App({
       </AnimatePresence>
 
       {/* About Us Section */}
-      <Suspense fallback={sectionLoader}>
-        <AboutSection lang={lang} />
-      </Suspense>
+      <AboutSection lang={lang} />
 
       {/* Footer */}
       <Footer t={t} lang={lang} />
 
-      <Suspense fallback={null}>
-        <ConsentBanner lang={lang} />
-      </Suspense>
+      <ConsentBanner lang={lang} />
     </div>
   );
 }
