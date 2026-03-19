@@ -1,11 +1,12 @@
 import {memo} from 'react';
+import {Link} from 'react-router-dom';
 import {motion} from 'motion/react';
 import {
   Activity,
   Calculator,
   GraduationCap,
-  MessageSquareText,
   ShieldCheck,
+  UserRoundPlus,
 } from 'lucide-react';
 import type {Language} from '../../services/translations';
 import PwaActions from '../pwa/PwaActions';
@@ -16,36 +17,36 @@ const Hero = memo(({lang}: {lang: Language}) => {
   const journey = [
     {
       icon: Calculator,
-      title: isAr ? 'ابدأ من هدفك الحقيقي' : 'Start from the right goal',
+      title: isAr ? 'ابدأ من أرقامك الحقيقية' : 'Start from real numbers',
       desc: isAr
-        ? 'اختر تعافي، تغذية علاجية، أو تقييم جسم بدل التنقل بين أدوات عامة غير مرتبطة بحالتك.'
-        : 'Choose recovery, rehab nutrition, or body assessment instead of jumping between generic tools.',
+        ? 'احسب السعرات، الماكروز، البروتين، والماء بدل التخمين أو الاعتماد على نصائح عامة.'
+        : 'Estimate calories, macros, protein, and hydration instead of guessing.',
     },
     {
       icon: Activity,
-      title: isAr ? 'افهم ما تعنيه النتيجة' : 'Understand what the result means',
+      title: isAr ? 'اربط التغذية بالحركة' : 'Connect nutrition with movement',
       desc: isAr
-        ? 'لن ترى رقمًا فقط، بل تفسيرًا مختصرًا يساعدك تعرف هل أنت في مسار جيد وما الذي يحتاج متابعة.'
-        : 'Get more than a number with context that shows whether you are on track and what needs attention.',
+        ? 'افهم كيف تؤثر الحركة والتأهيل على النتيجة بدل النظر للأكل أو التمرين كل واحد لوحده.'
+        : 'See how movement and rehab affect progress instead of separating food from performance.',
     },
     {
-      icon: MessageSquareText,
-      title: isAr ? 'تحرك بخطوة عملية' : 'Move with a practical next step',
+      icon: ShieldCheck,
+      title: isAr ? 'امش بخطة أوضح' : 'Move with a clearer plan',
       desc: isAr
-        ? 'حوّل النتيجة إلى هدف غذائي، متابعة تعافي، أو سؤال ذكي للمساعد بدل أن تتوقف عند الحساب فقط.'
-        : 'Turn the result into a nutrition target, recovery follow-up, or a smart question for the assistant.',
+        ? 'استخدم النتائج كخطوة عملية للمتابعة والتعديل بدل الوقوف عند مجرد رقم.'
+        : 'Use your results as a practical next step instead of stopping at a single number.',
     },
   ];
 
   const trustPoints = isAr
-    ? ['للتعافي والإصابات', 'مفيد للـ rehab والمتابعة', 'إرشادي وآمن وغير تشخيصي']
-    : ['Built for recovery', 'Useful for rehab', 'Educational, not diagnostic'];
+    ? ['تغذية + تأهيل', 'مبني على معادلات معروفة', 'تعليمي وآمن وغير تشخيصي']
+    : ['Nutrition + rehab', 'Built on established formulas', 'Educational, not diagnostic'];
 
   return (
     <section className="relative overflow-hidden bg-soft-blue pb-16 pt-16 sm:pb-20 sm:pt-18 lg:pb-24 lg:pt-20">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(49,95,74,0.14),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(109,122,114,0.12),transparent_28%)]" />
       <div className="identity-watermark whitespace-pre-line">
-        {isAr ? 'حركة\nتعافٍ\nتغذية' : 'Move\nRecover\nNourish'}
+        {isAr ? 'تغذية\nتأهيل\nمتابعة' : 'Nourish\nRecover\nTrack'}
       </div>
       <div className="pointer-events-none absolute right-0 top-0 h-[380px] w-[380px] -translate-y-1/3 translate-x-1/4 rounded-full bg-health-green/6 blur-[120px]" />
       <div className="pointer-events-none absolute bottom-0 left-0 h-[380px] w-[380px] translate-y-1/3 -translate-x-1/4 rounded-full bg-medical-blue/8 blur-[120px]" />
@@ -59,8 +60,8 @@ const Hero = memo(({lang}: {lang: Language}) => {
           <GraduationCap className="h-4 w-4" />
           <span>
             {isAr
-              ? 'حاسبات علاج طبيعي + تغذية للتعافي'
-              : 'Physio + nutrition calculators for recovery'}
+              ? 'منصة تغذية وعلاج طبيعي مبنية على أدوات عملية'
+              : 'A practical platform for nutrition and physical therapy'}
           </span>
         </motion.div>
 
@@ -70,9 +71,13 @@ const Hero = memo(({lang}: {lang: Language}) => {
           transition={{delay: 0.08}}
           className="mx-auto mb-5 max-w-4xl text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl"
         >
-          {isAr ? 'احسب احتياجات التعافي' : 'Calculate recovery needs'}{' '}
+          {isAr ? 'صمم خطتك الصحية' : 'Build your health plan'}{' '}
           <span className="relative text-health-green">
-            {isAr ? 'في أقل من 30 ثانية' : 'in under 30 seconds'}
+            {isAr ? 'بدقة علمية' : 'with clinical precision'}
+          </span>
+          <br />
+          <span className="text-slate-900">
+            {isAr ? 'تغذية وتأهيل في مكان واحد' : 'nutrition and rehab in one place'}
           </span>
         </motion.h1>
 
@@ -83,8 +88,8 @@ const Hero = memo(({lang}: {lang: Language}) => {
           className="mx-auto mb-6 max-w-3xl text-base leading-8 text-slate-600 sm:text-lg"
         >
           {isAr
-            ? 'منصة مصممة للـ rehab والتعافي بعد الإصابة: احسب السعرات والبروتين والماء وتقييمات الجسم، ثم خذ تفسيرًا أوضح وخطة متابعة أقرب لواقعك.'
-            : 'A focused platform for rehab and recovery after injury: calculate calories, protein, hydration, and body metrics, then move into clearer follow-up steps.'}
+            ? 'احسب سعراتك، ماكروز جسمك، واحتياجاتك من البروتين والماء بناءً على معادلات طبية معروفة. PhysioHub يساعدك تربط بين التغذية، الحركة، والمتابعة بخطوات أوضح وأسهل.'
+            : 'Estimate calories, macros, protein, and hydration using established medical formulas. PhysioHub helps connect nutrition, movement, and follow-up in a clearer way.'}
         </motion.p>
 
         <motion.div
@@ -94,8 +99,8 @@ const Hero = memo(({lang}: {lang: Language}) => {
           className="mx-auto mb-7 max-w-3xl rounded-[1.5rem] border border-white/70 bg-white/80 px-4 py-4 text-sm leading-7 text-slate-700 shadow-sm backdrop-blur-sm sm:px-5"
         >
           {isAr
-            ? 'إذا كنت تتابع حالة إصابة أو تعمل على تحسين التغذية العلاجية، ستجد هنا أدوات مترابطة بدل حاسبات منفصلة ومشتتة.'
-            : 'If you are following an injury case or improving rehab nutrition, the tools here work together instead of feeling like isolated calculators.'}
+            ? 'الموقع لم يعد مجرد حاسبات منفصلة. هنا تجد أدوات تغذية، محتوى تأهيلي، ولوحة متابعة تساعدك تفهم ماذا تفعل بعد النتيجة.'
+            : 'This is not just a collection of isolated calculators. The tools, content, and follow-up flow are designed to work together.'}
         </motion.div>
 
         <motion.div
@@ -119,28 +124,21 @@ const Hero = memo(({lang}: {lang: Language}) => {
           initial={{opacity: 0, y: 20}}
           animate={{opacity: 1, y: 0}}
           transition={{delay: 0.3}}
-          className="mx-auto mb-7 grid max-w-3xl grid-cols-1 gap-3 sm:grid-cols-3"
+          className="mx-auto mb-7 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-2"
         >
-          <a
-            href="#calculators"
+          <Link
+            to="/auth"
             className="inline-flex items-center justify-center gap-2 rounded-2xl bg-health-green px-6 py-4 text-sm font-bold text-white shadow-lg shadow-health-green/20 transition-all hover:bg-health-green-dark"
           >
-            <Calculator className="h-5 w-5" />
-            {isAr ? 'ابدأ الحاسبات' : 'Start calculators'}
-          </a>
+            <UserRoundPlus className="h-5 w-5" />
+            {isAr ? 'ابدأ الآن مجانًا' : 'Start free now'}
+          </Link>
           <a
-            href="/assistant"
+            href="#calculators"
             className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-6 py-4 text-sm font-bold text-slate-900 transition-all hover:border-health-green"
           >
-            <MessageSquareText className="h-5 w-5 text-health-green" />
-            {isAr ? 'اسأل المساعد' : 'Ask the assistant'}
-          </a>
-          <a
-            href="#architect"
-            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-900 px-6 py-4 text-sm font-bold text-white shadow-lg shadow-slate-900/15 transition-all hover:bg-slate-800"
-          >
-            <Activity className="h-5 w-5" />
-            {isAr ? 'خطة التعافي' : 'Recovery planner'}
+            <Calculator className="h-5 w-5 text-health-green" />
+            {isAr ? 'استكشف الحاسبات' : 'Explore calculators'}
           </a>
         </motion.div>
 

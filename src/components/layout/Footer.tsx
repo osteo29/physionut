@@ -1,83 +1,55 @@
 import {memo} from 'react';
 import {Link} from 'react-router-dom';
-import {
-  Facebook,
-  Github,
-  HeartPulse,
-  Instagram,
-  Linkedin,
-  Mail,
-  MapPin,
-  Phone,
-  ShieldAlert,
-  Twitter,
-} from 'lucide-react';
+import {HeartPulse, Mail, MapPin, ShieldAlert} from 'lucide-react';
 import type {Language} from '../../services/translations';
 
 const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-slate-900 pt-24 pb-12 relative overflow-hidden border-t border-white/5">
-      {/* Background Accents */}
-      <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-10">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-health-green rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-medical-blue rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2" />
+    <footer className="relative overflow-hidden border-t border-white/5 bg-slate-900 pb-12 pt-24">
+      <div className="absolute left-0 top-0 h-full w-full pointer-events-none opacity-10">
+        <div className="absolute right-0 top-0 h-96 w-96 translate-x-1/2 -translate-y-1/2 rounded-full bg-health-green blur-[120px]" />
+        <div className="absolute bottom-0 left-0 h-96 w-96 -translate-x-1/2 translate-y-1/2 rounded-full bg-medical-blue blur-[120px]" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
-          {/* Brand Column */}
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-20 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-8">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-health-green rounded-2xl flex items-center justify-center shadow-lg shadow-health-green/20">
-                <HeartPulse className="w-7 h-7 text-white" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-health-green shadow-lg shadow-health-green/20">
+                <HeartPulse className="h-7 w-7 text-white" />
               </div>
-              <span className="text-2xl font-black text-white tracking-tighter">
+              <span className="text-2xl font-black tracking-tighter text-white">
                 PhysioHub
               </span>
             </div>
-            <p className="text-slate-400 leading-relaxed max-w-xs">
+            <p className="max-w-xs leading-relaxed text-slate-400">
               {lang === 'en'
-                ? 'Empowering healthcare professionals with precision clinical tools and evidence-based insights.'
-                : 'تمكين ممارسي الرعاية الصحية بأدوات سريرية دقيقة ورؤى قائمة على الأدلة.'}
+                ? 'Educational tools and clinical insights for recovery, nutrition, and safer decision support.'
+                : 'Ø£Ø¯ÙˆØ§Øª ØªØ¹Ù„ÙŠÙ…ÙŠØ© ÙˆØ±Ø¤Ù‰ Ø³Ø±ÙŠØ±ÙŠØ© Ù„Ù„ØªØ¹Ø§ÙÙŠ ÙˆØ§Ù„ØªØºØ°ÙŠØ© ÙˆØ¯Ø¹Ù… Ø§Ù„Ù‚Ø±Ø§Ø± Ø¨ØµÙŠØ§ØºØ© Ø£ÙƒØ«Ø± Ø£Ù…Ø§Ù†Ù‹Ø§.'}
             </p>
-            <div className="flex items-center gap-4">
-              {[
-                {icon: Facebook, href: '#', label: 'Facebook'},
-                {icon: Twitter, href: '#', label: 'Twitter'},
-                {icon: Instagram, href: '#', label: 'Instagram'},
-                {icon: Linkedin, href: '#', label: 'LinkedIn'},
-              ].map((social, idx) => (
-                <a
-                  key={idx}
-                  href={social.href}
-                  className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:bg-health-green hover:text-white hover:border-health-green transition-all duration-300"
-                  aria-label={social.label}
-                >
-                  <social.icon className="w-5 h-5" />
-                </a>
-              ))}
+            <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-400">
+              {lang === 'en'
+                ? 'Official Facebook, Instagram, and TikTok links will be added after the profiles are published.'
+                : 'Ø³ÙŠØªÙ… Ø¥Ø¶Ø§ÙØ© Ø±ÙˆØ§Ø¨Ø· ÙÙŠØ³Ø¨ÙˆÙƒ ÙˆØ¥Ù†Ø³ØªØ¬Ø±Ø§Ù… ÙˆØªÙŠÙƒ ØªÙˆÙƒ Ø¨Ø¹Ø¯ Ù†Ø´Ø± Ø§Ù„ØµÙØ­Ø§Øª Ø§Ù„Ø±Ø³Ù…ÙŠØ©.'}
             </div>
           </div>
 
-          {/* Product Links */}
           <div>
-            <h3 className="text-white font-bold text-lg mb-8">
-              {t.footer.categories.product}
-            </h3>
+            <h3 className="mb-8 text-lg font-bold text-white">{t.footer.categories.product}</h3>
             <ul className="space-y-4">
               {[
                 {label: t.footer.links.calculators, href: '#calculators'},
-                {label: t.footer.links.insights, href: '#insights'},
+                {label: t.footer.links.insights, href: '#blog'},
                 {label: t.footer.links.architect, href: '#architect'},
-              ].map((link, idx) => (
-                <li key={idx}>
+              ].map((link) => (
+                <li key={link.href}>
                   <a
                     href={link.href}
-                    className="text-slate-400 hover:text-health-green transition-colors flex items-center gap-2 group"
+                    className="group flex items-center gap-2 text-slate-400 transition-colors hover:text-health-green"
                   >
-                    <div className="w-1.5 h-1.5 rounded-full bg-health-green scale-0 group-hover:scale-100 transition-transform" />
+                    <div className="h-1.5 w-1.5 scale-0 rounded-full bg-health-green transition-transform group-hover:scale-100" />
                     {link.label}
                   </a>
                 </li>
@@ -85,94 +57,61 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
             </ul>
           </div>
 
-          {/* Company Links */}
           <div>
-            <h3 className="text-white font-bold text-lg mb-8">
-              {t.footer.categories.company}
-            </h3>
+            <h3 className="mb-8 text-lg font-bold text-white">{t.footer.categories.company}</h3>
             <ul className="space-y-4">
               {[
-                {label: t.footer.links.about, href: '#about'},
-                {label: t.footer.links.contact, href: '#contact'},
-                {label: t.footer.links.privacy, href: '/privacy', isRoute: true},
-                {label: t.footer.links.terms, href: '/terms', isRoute: true},
+                {label: t.footer.links.about, href: '/about'},
+                {label: t.footer.links.contact, href: '/contact'},
+                {label: t.footer.links.privacy, href: '/privacy'},
+                {label: t.footer.links.terms, href: '/terms'},
                 {
-                  label: lang === 'en' ? 'Medical Disclaimer' : 'إخلاء المسؤولية الطبي',
+                  label: lang === 'en' ? 'Medical Disclaimer' : 'Ø¥Ø®Ù„Ø§Ø¡ Ø§Ù„Ù…Ø³Ø¤ÙˆÙ„ÙŠØ© Ø§Ù„Ø·Ø¨ÙŠ',
                   href: '/disclaimer',
-                  isRoute: true,
                 },
-              ].map((link, idx) => (
-                <li key={idx}>
-                  {link.isRoute ? (
-                    <Link
-                      to={link.href}
-                      className="text-slate-400 hover:text-health-green transition-colors flex items-center gap-2 group"
-                    >
-                      <div className="w-1.5 h-1.5 rounded-full bg-health-green scale-0 group-hover:scale-100 transition-transform" />
-                      {link.label}
-                    </Link>
-                  ) : (
-                    <a
-                      href={link.href}
-                      className="text-slate-400 hover:text-health-green transition-colors flex items-center gap-2 group"
-                    >
-                      <div className="w-1.5 h-1.5 rounded-full bg-health-green scale-0 group-hover:scale-100 transition-transform" />
-                      {link.label}
-                    </a>
-                  )}
+              ].map((link) => (
+                <li key={link.href}>
+                  <Link
+                    to={link.href}
+                    className="group flex items-center gap-2 text-slate-400 transition-colors hover:text-health-green"
+                  >
+                    <div className="h-1.5 w-1.5 scale-0 rounded-full bg-health-green transition-transform group-hover:scale-100" />
+                    {link.label}
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Contact Info */}
           <div>
-            <h3 className="text-white font-bold text-lg mb-8">
-              {t.footer.categories.contact}
-            </h3>
+            <h3 className="mb-8 text-lg font-bold text-white">{t.footer.categories.contact}</h3>
             <ul className="space-y-6">
-              <li className="flex items-start gap-4 group">
-                <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-health-green group-hover:bg-health-green group-hover:text-white transition-all">
-                  <Mail className="w-5 h-5" />
+              <li className="flex items-start gap-4">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-health-green">
+                  <Mail className="h-5 w-5" />
                 </div>
                 <div>
-                  <div className="text-xs text-slate-500 uppercase tracking-widest mb-1">
-                    {lang === 'en' ? 'Email Us' : 'راسلنا'}
+                  <div className="mb-1 text-xs uppercase tracking-widest text-slate-500">
+                    {lang === 'en' ? 'Email' : 'Ø§Ù„Ø¨Ø±ÙŠØ¯ Ø§Ù„Ø¥Ù„ÙƒØªØ±ÙˆÙ†ÙŠ'}
                   </div>
                   <a
                     href="mailto:contact@physiohub.com"
-                    className="text-slate-300 hover:text-health-green transition-colors"
+                    className="text-slate-300 transition-colors hover:text-health-green"
                   >
                     contact@physiohub.com
                   </a>
                 </div>
               </li>
-              <li className="flex items-start gap-4 group">
-                <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-medical-blue group-hover:bg-medical-blue group-hover:text-white transition-all">
-                  <Phone className="w-5 h-5" />
+              <li className="flex items-start gap-4">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-purple-400">
+                  <MapPin className="h-5 w-5" />
                 </div>
                 <div>
-                  <div className="text-xs text-slate-500 uppercase tracking-widest mb-1">
-                    {lang === 'en' ? 'Call Us' : 'اتصل بنا'}
-                  </div>
-                  <a
-                    href="tel:+1234567890"
-                    className="text-slate-300 hover:text-medical-blue transition-colors"
-                  >
-                    +1 (234) 567-890
-                  </a>
-                </div>
-              </li>
-              <li className="flex items-start gap-4 group">
-                <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-purple-400 group-hover:bg-purple-500 group-hover:text-white transition-all">
-                  <MapPin className="w-5 h-5" />
-                </div>
-                <div>
-                  <div className="text-xs text-slate-500 uppercase tracking-widest mb-1">
-                    {lang === 'en' ? 'Location' : 'الموقع'}
+                  <div className="mb-1 text-xs uppercase tracking-widest text-slate-500">
+                    {lang === 'en' ? 'Availability' : 'Ø§Ù„ØªÙˆØ§Ø¬Ø¯'}
                   </div>
                   <span className="text-slate-300">
-                    {lang === 'en' ? 'Remote / Online' : 'عن بعد / أونلاين'}
+                    {lang === 'en' ? 'Remote / Online' : 'Ø¹Ù† Ø¨ÙØ¹Ø¯ / Ø£ÙˆÙ†Ù„Ø§ÙŠÙ†'}
                   </span>
                 </div>
               </li>
@@ -180,56 +119,34 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
           </div>
         </div>
 
-        {/* Disclaimer Section */}
-        <div className="py-10 border-t border-white/5">
-          <div className="bg-white/5 rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center gap-6 border border-white/10">
-            <div className="w-16 h-16 rounded-2xl bg-amber-500/10 flex items-center justify-center flex-shrink-0">
-              <ShieldAlert className="w-8 h-8 text-amber-500" />
+        <div className="border-t border-white/5 py-10">
+          <div className="flex flex-col items-center gap-6 rounded-3xl border border-white/10 bg-white/5 p-6 md:flex-row md:p-8">
+            <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-2xl bg-amber-500/10">
+              <ShieldAlert className="h-8 w-8 text-amber-500" />
             </div>
             <div className="text-center md:text-left">
-              <h4 className="text-white font-bold mb-2">
-                {t.footer.disclaimerTitle}
-              </h4>
-              <p className="text-slate-400 text-sm leading-relaxed">
-                {t.footer.disclaimerText}
-              </p>
+              <h4 className="mb-2 font-bold text-white">{t.footer.disclaimerTitle}</h4>
+              <p className="text-sm leading-relaxed text-slate-400">{t.footer.disclaimerText}</p>
             </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-slate-500 text-sm">
+        <div className="flex flex-col items-center justify-between gap-6 border-t border-white/5 pt-12 md:flex-row">
+          <p className="text-sm text-slate-500">
             © {currentYear} PhysioHub. {t.footer.rights}
           </p>
           <div className="flex items-center gap-8">
-            <Link
-              replace
-              to="/privacy"
-              className="text-slate-500 hover:text-white text-sm transition-colors"
-            >
+            <Link replace to="/privacy" className="text-sm text-slate-500 transition-colors hover:text-white">
               {t.footer.links.privacy}
             </Link>
-            <Link
-              replace
-              to="/terms"
-              className="text-slate-500 hover:text-white text-sm transition-colors"
-            >
+            <Link replace to="/terms" className="text-sm text-slate-500 transition-colors hover:text-white">
               {t.footer.links.terms}
             </Link>
-            <Link
-              replace
-              to="/cookies"
-              className="text-slate-500 hover:text-white text-sm transition-colors"
-            >
-              {lang === 'en' ? 'Cookie Policy' : 'سياسة ملفات الارتباط'}
+            <Link replace to="/cookies" className="text-sm text-slate-500 transition-colors hover:text-white">
+              {lang === 'en' ? 'Cookie Policy' : 'Ø³ÙŠØ§Ø³Ø© Ù…Ù„ÙØ§Øª Ø§Ù„Ø§Ø±ØªØ¨Ø§Ø·'}
             </Link>
-            <Link
-              replace
-              to="/disclaimer"
-              className="text-slate-500 hover:text-white text-sm transition-colors"
-            >
-              {lang === 'en' ? 'Medical Disclaimer' : 'إخلاء المسؤولية الطبي'}
+            <Link replace to="/disclaimer" className="text-sm text-slate-500 transition-colors hover:text-white">
+              {lang === 'en' ? 'Medical Disclaimer' : 'Ø¥Ø®Ù„Ø§Ø¡ Ø§Ù„Ù…Ø³Ø¤ÙˆÙ„ÙŠØ© Ø§Ù„Ø·Ø¨ÙŠ'}
             </Link>
           </div>
         </div>
@@ -241,4 +158,3 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
 Footer.displayName = 'Footer';
 
 export default Footer;
-

@@ -21,6 +21,12 @@ export default function PageLayout({
             <Link className="hover:text-health-green" to="/privacy">
               {lang === 'en' ? 'Privacy' : 'الخصوصية'}
             </Link>
+            <Link className="hover:text-health-green" to="/about">
+              {lang === 'en' ? 'About' : 'Ù…Ù† Ù†Ø­Ù†'}
+            </Link>
+            <Link className="hover:text-health-green" to="/contact">
+              {lang === 'en' ? 'Contact' : 'Ø§ØªØµÙ„ Ø¨Ù†Ø§'}
+            </Link>
             <Link className="hover:text-health-green" to="/terms">
               {lang === 'en' ? 'Terms' : 'الشروط'}
             </Link>
@@ -47,4 +53,3 @@ export default function PageLayout({
     </div>
   );
 }
-

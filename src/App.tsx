@@ -12,7 +12,7 @@ import { checkEnvironment } from './services/calculators';
 import { PhysioNutritionLogic, HealthProfile, HealthMetrics } from './services/physioNutritionLogic';
 import { injuryDatabase, getInjuryById } from './services/injuryDatabase';
 import { translations, Language } from './services/translations';
-import { getArticles, Article } from './services/articles';
+import { getArticles } from './services/articles';
 import { foodDatabase, FoodItem } from './services/foodData';
 import {ClinicalCalculators, statusToTextClass, type HealthInterpretation, type GoalType, type BodyType} from './logic/physioNutritionLogic';
 import Hero from './components/home/Hero';
@@ -140,7 +140,6 @@ export default function App({
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeCalculator, setActiveCalculator] = useState<CalculatorType>(null);
   const [activeToolGroup, setActiveToolGroup] = useState<'all' | 'assessment' | 'metabolism' | 'nutrition' | 'planning'>('all');
-  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
   const [lang, setLang] = useState<Language>(() => {
     const saved = localStorage.getItem('physiohub_lang');
     return (saved as Language) || 'en';
@@ -2370,8 +2369,6 @@ export default function App({
         t={t}
         lang={lang}
         articles={articles}
-        selectedArticle={selectedArticle}
-        setSelectedArticle={setSelectedArticle}
         IconComponent={IconComponent}
       />
 
