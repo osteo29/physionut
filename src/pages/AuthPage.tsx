@@ -36,6 +36,7 @@ export default function AuthPage({
   const [checkingSession, setCheckingSession] = useState(true);
   const [message, setMessage] = useState('');
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [emailExists, setEmailExists] = useState(false);
 
   useEffect(() => {
     if (!isSupabaseConfigured) {
@@ -77,6 +78,12 @@ export default function AuthPage({
     };
   }, [navigate, redirectTo]);
 
+  useEffect(() => {
+    setEmailExists(false);
+    setMessage('');
+    setStatus('idle');
+  }, [mode, email]);
+
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     if (loading) return;
@@ -90,12 +97,24 @@ export default function AuthPage({
     setLoading(true);
     setStatus('idle');
     setMessage('');
+    setEmailExists(false);
 
     try {
       if (mode === 'signup') {
         const result = await signUpWithEmail(email.trim(), password, {
           fullName: fullName.trim(),
         });
+
+        if (result.user && (result.user.identities?.length ?? 0) === 0) {
+          setStatus('error');
+          setEmailExists(true);
+          setMessage(
+            isAr
+              ? 'هذا البريد الإلكتروني مسجّل بالفعل. سجّل دخولك بدلاً من إنشاء حساب جديد.'
+              : 'This email is already registered. Please sign in instead of creating a new account.',
+          );
+          return;
+        }
 
         if (result.user && !result.session) {
           setStatus('success');
@@ -118,8 +137,27 @@ export default function AuthPage({
         setMessage(isAr ? 'تم تسجيل الدخول بنجاح.' : 'Signed in successfully.');
       }
     } catch (error) {
-      setStatus('error');
-      setMessage(getSupabaseActionErrorMessage(error, lang, 'auth'));
+      const raw = error instanceof Error ? error.message.toLowerCase() : '';
+      const isDuplicate =
+        raw.includes('user already registered') ||
+        raw.includes('already been registered') ||
+        raw.includes('already registered') ||
+        raw.includes('email address is already') ||
+        raw.includes('duplicate') ||
+        (error as {status?: number})?.status === 400;
+
+      if (mode === 'signup' && isDuplicate) {
+        setStatus('error');
+        setEmailExists(true);
+        setMessage(
+          isAr
+            ? 'هذا البريد الإلكتروني مسجّل بالفعل. سجّل دخولك بدلاً من إنشاء حساب جديد.'
+            : 'This email is already registered. Please sign in instead of creating a new account.',
+        );
+      } else {
+        setStatus('error');
+        setMessage(getSupabaseActionErrorMessage(error, lang, 'auth'));
+      }
     } finally {
       setLoading(false);
     }
@@ -296,7 +334,21 @@ export default function AuthPage({
                     : 'border-rose-200 bg-rose-50 text-rose-600'
                 }`}
               >
-                {message}
+                <p>{message}</p>
+
+                {emailExists ? (
+                  <button
+                    onClick={() => {
+                      setMode('signin');
+                      setMessage('');
+                      setStatus('idle');
+                      setEmailExists(false);
+                    }}
+                    className="mt-3 w-full rounded-xl bg-rose-600 px-4 py-2 font-bold text-white transition-all hover:bg-rose-700"
+                  >
+                    {isAr ? 'تسجيل الدخول بدلاً من ذلك' : 'Switch to sign in'}
+                  </button>
+                ) : null}
               </div>
             ) : null}
           </div>
