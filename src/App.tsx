@@ -23,10 +23,10 @@ import AboutSection from './components/home/AboutSection';
 import BlogSection from './components/home/BlogSection';
 import TrustSection from './components/home/TrustSection';
 import AskAboutResultChat from './components/ai/AskAboutResultChat';
-import DrugNutrientChecker from './components/ai/DrugNutrientChecker';
 import ConsentBanner from './components/monetization/ConsentBanner';
 import AdSlot from './components/monetization/AdSlot';
 import ResultLeadCapture from './components/forms/ResultLeadCapture';
+import SupportToolsSection from './components/home/SupportToolsSection';
 import {
   Chart as ChartJS,
   ArcElement,
@@ -2254,116 +2254,19 @@ export default function App({
         </div>
       </section>
 
-      {/* Food Database Section */}
-      <section id="food-db" className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col gap-8 mb-12">
-            <h2 className="text-3xl font-bold text-slate-900">{t.foodDb.title}</h2>
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-              <div className="flex flex-wrap items-center gap-2">
-                {['all', 'protein', 'fruit', 'grain', 'cooked', 'dairy', 'vegetable', 'fat'].map(cat => (
-                  <button
-                    key={cat}
-                    onClick={() => setFoodCategory(cat)}
-                    className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${foodCategory === cat ? 'bg-health-green text-white shadow-lg shadow-health-green/20' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
-                  >
-                    {cat === 'all' ? t.foodDb.categoryAll : 
-                     cat === 'protein' ? t.foodDb.categoryProtein :
-                     cat === 'fruit' ? t.foodDb.categoryFruit :
-                     cat === 'grain' ? t.foodDb.categoryGrain :
-                     cat === 'cooked' ? t.foodDb.categoryCooked :
-                     cat === 'dairy' ? t.foodDb.categoryDairy :
-                     cat === 'vegetable' ? t.foodDb.categoryVegetable :
-                     t.foodDb.categoryFat}
-                  </button>
-                ))}
-              </div>
-              
-              <div className="flex flex-col sm:flex-row items-center gap-4 w-full lg:w-auto">
-                <button 
-                  onClick={() => setShowFoodTable(!showFoodTable)}
-                  className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-bold transition-all border-2 whitespace-nowrap w-full sm:w-auto justify-center ${showFoodTable ? 'bg-medical-blue border-medical-blue text-white shadow-lg shadow-medical-blue/20' : 'border-medical-blue text-medical-blue hover:bg-medical-blue/5'}`}
-                >
-                  <Sparkles className="w-5 h-5" /> {t.foodDb.suggestedFoods}
-                </button>
-
-                <div className="relative w-full sm:w-80">
-                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 rtl:left-auto rtl:right-4" />
-                  <input 
-                    type="text"
-                    placeholder={t.foodDb.searchPlaceholder}
-                    value={foodSearch}
-                    onChange={(e) => {
-                      setFoodSearch(e.target.value);
-                      if (e.target.value.length > 0) setShowFoodTable(true);
-                    }}
-                    className="w-full pl-12 pr-4 py-4 rounded-2xl border border-slate-200 focus:ring-2 focus:ring-health-green outline-none rtl:pr-12 rtl:pl-4"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <AnimatePresence>
-            {showFoodTable && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className="overflow-hidden"
-              >
-                <div className="mb-8 flex justify-center">
-                  <button 
-                    onClick={() => setIsCustomModalOpen(true)}
-                    className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-soft-blue text-health-green font-bold hover:bg-health-green hover:text-white transition-all shadow-sm"
-                  >
-                    <Plus className="w-5 h-5" /> {t.ux.cantFindFood}
-                  </button>
-                </div>
-
-                <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm mb-12">
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-left rtl:text-right">
-                      <thead className="bg-slate-50 border-b border-slate-200">
-                        <tr>
-                          <th className="px-6 py-4 text-sm font-bold text-slate-900">{t.foodDb.colName}</th>
-                          <th className="px-6 py-4 text-sm font-bold text-slate-900">{t.foodDb.colCals}</th>
-                          <th className="px-6 py-4 text-sm font-bold text-slate-900">{t.foodDb.colProtein}</th>
-                          <th className="px-6 py-4 text-sm font-bold text-slate-900">{t.foodDb.colCarbs}</th>
-                          <th className="px-6 py-4 text-sm font-bold text-slate-900">{t.foodDb.colFats}</th>
-                          <th className="px-6 py-4 text-sm font-bold text-slate-900"></th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-slate-100">
-                        {filteredFoods.map(food => (
-                          <tr key={food.id} className="hover:bg-slate-50 transition-colors">
-                            <td className="px-6 py-4">
-                              <div className="font-bold text-slate-900">{food.name[lang]}</div>
-                              <div className="text-xs text-slate-400 capitalize">{food.category}</div>
-                            </td>
-                            <td className="px-6 py-4 text-slate-600 font-medium">{food.calories}</td>
-                            <td className="px-6 py-4 text-health-green font-bold">{food.protein}g</td>
-                            <td className="px-6 py-4 text-medical-blue font-bold">{food.carbs}g</td>
-                            <td className="px-6 py-4 text-orange-500 font-bold">{food.fats}g</td>
-                            <td className="px-6 py-4 text-right rtl:text-left">
-                              <button 
-                                onClick={() => addFoodToMeal(food)}
-                                className="p-2 bg-soft-blue text-health-green rounded-xl hover:bg-health-green hover:text-white transition-all flex items-center gap-2 text-xs font-bold"
-                              >
-                                <Plus className="w-4 h-4" /> {t.foodDb.addAction}
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </section>
+      <SupportToolsSection
+        lang={lang}
+        t={t}
+        foodCategory={foodCategory}
+        setFoodCategory={setFoodCategory}
+        showFoodTable={showFoodTable}
+        setShowFoodTable={setShowFoodTable}
+        foodSearch={foodSearch}
+        setFoodSearch={setFoodSearch}
+        filteredFoods={filteredFoods}
+        addFoodToMeal={addFoodToMeal}
+        setIsCustomModalOpen={setIsCustomModalOpen}
+      />
 
       <BlogSection
         t={t}
@@ -2371,8 +2274,6 @@ export default function App({
         articles={articles}
         IconComponent={IconComponent}
       />
-
-      <DrugNutrientChecker lang={lang} />
 
       {/* Custom Food Modal */}
       <AnimatePresence>
