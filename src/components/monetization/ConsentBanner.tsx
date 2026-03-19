@@ -30,45 +30,43 @@ export default function ConsentBanner({lang}: {lang: 'en' | 'ar'}) {
   };
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 z-[90]">
-      <div className="max-w-5xl mx-auto rounded-[2rem] border border-slate-200 bg-white/95 backdrop-blur-xl shadow-2xl p-5">
-        <div className="flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-between">
+    <div className="fixed bottom-3 left-3 right-3 z-[90] sm:bottom-4 sm:left-4 sm:right-4">
+      <div className="mx-auto max-w-3xl rounded-[1.5rem] border border-slate-200 bg-white/94 p-3 shadow-xl backdrop-blur-xl sm:p-4">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div className="flex items-start gap-3">
-            <div className="w-11 h-11 rounded-2xl bg-soft-blue text-health-green flex items-center justify-center shrink-0">
-              <Cookie className="w-5 h-5" />
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-soft-blue text-health-green">
+              <Cookie className="h-4 w-4" />
             </div>
             <div>
-              <div className="font-bold text-slate-900 mb-1">
-                {lang === 'en' ? 'Cookies and ad consent' : 'الموافقة على الكوكيز والإعلانات'}
+              <div className="mb-1 text-sm font-bold text-slate-900">
+                {lang === 'en' ? 'Cookie preferences' : 'تفضيلات الكوكيز'}
               </div>
-              <p className="text-sm text-slate-600 leading-6">
+              <p className="text-xs leading-5 text-slate-600 sm:text-sm">
                 {lang === 'en'
-                  ? 'We use essential cookies for site preferences and may enable advertising or analytics cookies only with your permission.'
-                  : 'نستخدم ملفات ضرورية لتفضيلات الموقع، وقد نفعّل ملفات الإعلانات أو التحليلات فقط بعد موافقتك.'}
+                  ? 'We keep essential preferences on, and use ad or analytics cookies only if you approve.'
+                  : 'نحفظ التفضيلات الأساسية فقط، ولا نفعّل ملفات الإعلانات أو التحليلات إلا بعد موافقتك.'}
               </p>
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
-            <div className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-50 text-slate-600 text-xs font-semibold">
-              <ShieldCheck className="w-4 h-4 text-health-green" />
+          <div className="flex flex-wrap items-center gap-2 md:justify-end">
+            <div className="inline-flex items-center gap-2 rounded-xl bg-slate-50 px-3 py-2 text-[11px] font-semibold text-slate-600">
+              <ShieldCheck className="h-3.5 w-3.5 text-health-green" />
               <span>
-                {lang === 'en'
-                  ? 'Educational site, privacy-first'
-                  : 'موقع تعليمي مع مراعاة الخصوصية'}
+                {lang === 'en' ? 'Educational site, privacy-first' : 'موقع تعليمي يحترم الخصوصية'}
               </span>
             </div>
             <button
               onClick={reject}
-              className="px-4 py-3 rounded-xl border border-slate-200 text-slate-600 font-bold text-sm hover:border-slate-300 transition-all"
+              className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold text-slate-600 transition-all hover:border-slate-300 sm:px-4 sm:text-sm"
             >
-              {lang === 'en' ? 'Reject non-essential' : 'رفض غير الضروري'}
+              {lang === 'en' ? 'Reject optional' : 'رفض الاختياري'}
             </button>
             <button
               onClick={accept}
-              className="px-4 py-3 rounded-xl bg-health-green text-white font-bold text-sm hover:bg-health-green-dark transition-all"
+              className="rounded-xl bg-health-green px-3 py-2 text-xs font-bold text-white transition-all hover:bg-health-green-dark sm:px-4 sm:text-sm"
             >
-              {lang === 'en' ? 'Accept and continue' : 'موافقة ومتابعة'}
+              {lang === 'en' ? 'Accept' : 'موافقة'}
             </button>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from 'react';
+import {Suspense, lazy, useEffect, useMemo, useState} from 'react';
 import {Link, Navigate} from 'react-router-dom';
 import {
   ArrowLeft,
@@ -12,16 +12,6 @@ import {
 import Seo from '../components/seo/Seo';
 import usePreferredLang from './usePreferredLang';
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-import {Line} from 'react-chartjs-2';
-import {
   deleteAssessment,
   getCurrentUser,
   getSupabaseActionErrorMessage,
@@ -34,7 +24,13 @@ import {
   type User,
 } from '../lib/supabase';
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
+const TrackingLineChart = lazy(() => import('../components/charts/TrackingLineChart'));
+
+const chartLoader = (
+  <div className="flex h-full items-center justify-center rounded-[1.5rem] border border-dashed border-slate-200 bg-slate-50 text-sm text-slate-400">
+    Loading chart...
+  </div>
+);
 
 export default function TrackingDashboardPage() {
   const lang = usePreferredLang();
@@ -143,16 +139,8 @@ export default function TrackingDashboardPage() {
       labels: numericRecords.map((item) =>
         new Date(item.created_at).toLocaleDateString(isAr ? 'ar-EG' : 'en-US'),
       ),
-      datasets: [
-        {
-          label: isAr ? 'تطور القياسات' : 'Measurement trend',
-          data: numericRecords.map((item) => item.value_numeric),
-          borderColor: '#315f4a',
-          backgroundColor: 'rgba(49,95,74,0.18)',
-          tension: 0.35,
-          fill: true,
-        },
-      ],
+      values: numericRecords.map((item) => item.value_numeric as number),
+      datasetLabel: isAr ? 'تطور القياسات' : 'Measurement trend',
     };
   }, [isAr, numericRecords]);
 
@@ -240,19 +228,13 @@ export default function TrackingDashboardPage() {
               </div>
             ) : numericRecords.length > 0 ? (
               <div className="h-[320px]">
-                <Line
-                  data={lineData}
-                  options={{
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                      legend: {display: false},
-                    },
-                    scales: {
-                      y: {beginAtZero: false},
-                    },
-                  }}
-                />
+                <Suspense fallback={chartLoader}>
+                  <TrackingLineChart
+                    labels={lineData.labels}
+                    values={lineData.values}
+                    datasetLabel={lineData.datasetLabel}
+                  />
+                </Suspense>
               </div>
             ) : (
               <div className="flex h-[320px] items-center justify-center rounded-[1.5rem] border border-dashed border-slate-200 bg-slate-50 px-8 text-center text-slate-500">

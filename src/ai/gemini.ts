@@ -1,5 +1,3 @@
-import {GoogleGenAI} from '@google/genai';
-
 export type GeminiAskParams = {
   system: string;
   user: string;
@@ -204,6 +202,7 @@ export async function askGeminiText(params: GeminiAskParams): Promise<string> {
     throw new Error('Missing GEMINI API key (set VITE_GEMINI_API_KEY)');
   }
 
+  const {GoogleGenAI} = await import('@google/genai');
   const ai = new GoogleGenAI({apiKey});
 
   const contents = [
