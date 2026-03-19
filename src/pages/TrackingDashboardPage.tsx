@@ -1,11 +1,12 @@
 import {useEffect, useMemo, useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, Navigate} from 'react-router-dom';
 import {
   ArrowLeft,
   BarChart3,
   Calendar,
   LineChart,
   LoaderCircle,
+  LogOut,
   Trash2,
 } from 'lucide-react';
 import Seo from '../components/seo/Seo';
@@ -22,65 +23,97 @@ import {
 import {Line} from 'react-chartjs-2';
 import {
   deleteAssessment,
+  getCurrentUser,
   getSupabaseActionErrorMessage,
   getSupabaseConfigurationMessage,
   isSupabaseConfigured,
-  listAssessmentsByEmail,
+  listAssessmentsForCurrentUser,
+  onSupabaseAuthChange,
+  signOutCurrentUser,
   type AssessmentRecord,
+  type User,
 } from '../lib/supabase';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
 
-const STORAGE_KEY = 'physiohub_tracking_profile';
-
 export default function TrackingDashboardPage() {
   const lang = usePreferredLang();
   const isAr = lang === 'ar';
-  const [email, setEmail] = useState('');
+  const [user, setUser] = useState<User | null>(null);
   const [records, setRecords] = useState<AssessmentRecord[]>([]);
-  const [status, setStatus] = useState<'idle' | 'loading' | 'ready' | 'error'>('idle');
+  const [status, setStatus] = useState<'checking' | 'loading' | 'ready' | 'error'>('checking');
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (!saved) return;
-      const parsed = JSON.parse(saved) as {email?: string};
-      if (parsed.email) setEmail(parsed.email);
-    } catch {
-      // Ignore malformed local profile.
-    }
-  }, []);
+    let mounted = true;
 
-  const load = async () => {
-    if (!/\S+@\S+\.\S+/.test(email.trim())) return;
-
-    if (!isSupabaseConfigured) {
-      setStatus('error');
-      setMessage(getSupabaseConfigurationMessage(lang));
-      return;
-    }
-
-    setStatus('loading');
-    setMessage('');
-
-    try {
-      const data = await listAssessmentsByEmail(email.trim());
-      setRecords(data);
-      setStatus('ready');
-
-      if (data.length === 0) {
-        setMessage(
-          isAr
-            ? 'لا توجد نتائج محفوظة لهذا البريد حتى الآن.'
-            : 'No saved assessments were found for this email yet.',
-        );
+    const bootstrap = async () => {
+      if (!isSupabaseConfigured) {
+        if (!mounted) return;
+        setStatus('error');
+        setMessage(getSupabaseConfigurationMessage(lang));
+        return;
       }
-    } catch (error) {
-      setStatus('error');
-      setMessage(getSupabaseActionErrorMessage(error, lang, 'load'));
-    }
-  };
+
+      try {
+        const currentUser = await getCurrentUser();
+        if (!mounted) return;
+        setUser(currentUser);
+
+        if (currentUser) {
+          setStatus('loading');
+          const data = await listAssessmentsForCurrentUser();
+          if (!mounted) return;
+          setRecords(data);
+          setStatus('ready');
+          if (data.length === 0) {
+            setMessage(
+              isAr
+                ? 'لا توجد نتائج محفوظة في حسابك حتى الآن.'
+                : 'No saved assessments were found in your account yet.',
+            );
+          }
+        } else {
+          setStatus('ready');
+        }
+      } catch (error) {
+        if (!mounted) return;
+        setStatus('error');
+        setMessage(getSupabaseActionErrorMessage(error, lang, 'load'));
+      }
+    };
+
+    void bootstrap();
+
+    const subscription = isSupabaseConfigured
+      ? onSupabaseAuthChange(async (_, session) => {
+          if (!mounted) return;
+          setUser(session?.user || null);
+
+          if (session?.user) {
+            setStatus('loading');
+            try {
+              const data = await listAssessmentsForCurrentUser();
+              if (!mounted) return;
+              setRecords(data);
+              setStatus('ready');
+            } catch (error) {
+              if (!mounted) return;
+              setStatus('error');
+              setMessage(getSupabaseActionErrorMessage(error, lang, 'load'));
+            }
+          } else {
+            setRecords([]);
+            setStatus('ready');
+          }
+        }).data.subscription
+      : null;
+
+    return () => {
+      mounted = false;
+      subscription?.unsubscribe();
+    };
+  }, [isAr, lang]);
 
   const handleDelete = async (id: string) => {
     try {
@@ -88,6 +121,14 @@ export default function TrackingDashboardPage() {
       setRecords((prev) => prev.filter((item) => item.id !== id));
     } catch (error) {
       setMessage(getSupabaseActionErrorMessage(error, lang, 'delete'));
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOutCurrentUser();
+    } catch (error) {
+      setMessage(getSupabaseActionErrorMessage(error, lang, 'auth'));
     }
   };
 
@@ -115,64 +156,77 @@ export default function TrackingDashboardPage() {
     };
   }, [isAr, numericRecords]);
 
+  if (!isSupabaseConfigured) {
+    return (
+      <div className="min-h-screen bg-slate-50 px-4 py-20 text-center text-slate-600">
+        {message || getSupabaseConfigurationMessage(lang)}
+      </div>
+    );
+  }
+
+  if (status === 'checking') {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-slate-50">
+        <div className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-5 py-4 text-slate-600 shadow-sm">
+          <LoaderCircle className="h-4 w-4 animate-spin" />
+          <span>{isAr ? 'جارٍ التحقق من الجلسة' : 'Checking session'}</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <Navigate to="/auth" replace state={{from: '/dashboard'}} />;
+  }
+
   return (
     <div className="min-h-screen bg-slate-50">
       <Seo
         title={isAr ? 'لوحة المتابعة' : 'Tracking Dashboard'}
         description={
           isAr
-            ? 'راجع سجل القياسات والنتائج المحفوظة في PhysioHub.'
-            : 'Review saved assessments and result history in PhysioHub.'
+            ? 'راجع سجل القياسات والنتائج المحفوظة داخل حسابك في PhysioHub.'
+            : 'Review saved assessments and result history inside your PhysioHub account.'
         }
         canonicalPath="/dashboard"
       />
 
       <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-        <div className="mb-8 flex items-center justify-between gap-4">
+        <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <div className="mb-2 text-[11px] font-bold uppercase tracking-[0.18em] text-health-green">
-              {isAr ? 'لوحة المتابعة' : 'Tracking dashboard'}
+              {isAr ? 'لوحة المتابعة الآمنة' : 'Secure tracking dashboard'}
             </div>
             <h1 className="text-3xl font-bold text-slate-900">
-              {isAr ? 'سجل القياسات والمتابعة' : 'Assessment history and follow-up'}
+              {isAr ? 'سجل القياسات المرتبط بحسابك' : 'Assessment history linked to your account'}
             </h1>
+            <p className="mt-2 text-sm text-slate-500">{user.email}</p>
           </div>
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 font-bold text-slate-700"
-          >
-            <ArrowLeft className={`h-4 w-4 ${isAr ? 'rotate-180' : ''}`} />
-            <span>{isAr ? 'العودة للرئيسية' : 'Back home'}</span>
-          </Link>
-        </div>
 
-        <div className="mb-8 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-[1fr_auto]">
-            <input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder={isAr ? 'أدخل البريد الإلكتروني' : 'Enter the tracking email'}
-              className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:ring-2 focus:ring-health-green/30"
-            />
-            <button
-              onClick={load}
-              disabled={status === 'loading'}
-              className="rounded-2xl bg-health-green px-5 py-3 font-bold text-white transition-all hover:bg-health-green-dark"
+          <div className="flex flex-wrap gap-3">
+            <Link
+              to="/"
+              className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 font-bold text-slate-700"
             >
-              {status === 'loading' ? (
-                <span className="inline-flex items-center gap-2">
-                  <LoaderCircle className="h-4 w-4 animate-spin" />
-                  {isAr ? 'جارٍ التحميل' : 'Loading'}
-                </span>
-              ) : isAr ? (
-                'تحميل السجل'
-              ) : (
-                'Load tracking log'
-              )}
+              <ArrowLeft className={`h-4 w-4 ${isAr ? 'rotate-180' : ''}`} />
+              <span>{isAr ? 'العودة للرئيسية' : 'Back home'}</span>
+            </Link>
+
+            <button
+              onClick={handleLogout}
+              className="inline-flex items-center gap-2 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 font-bold text-rose-600 transition-all hover:bg-rose-100"
+            >
+              <LogOut className="h-4 w-4" />
+              <span>{isAr ? 'تسجيل الخروج' : 'Log out'}</span>
             </button>
           </div>
-          {message ? <div className="mt-3 text-sm text-slate-500">{message}</div> : null}
         </div>
+
+        {message ? (
+          <div className="mb-6 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-600 shadow-sm">
+            {message}
+          </div>
+        ) : null}
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.2fr_0.8fr]">
           <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
@@ -180,7 +234,11 @@ export default function TrackingDashboardPage() {
               <LineChart className="h-3.5 w-3.5" />
               <span>{isAr ? 'الرسم البياني' : 'Trend chart'}</span>
             </div>
-            {numericRecords.length > 0 ? (
+            {status === 'loading' ? (
+              <div className="flex h-[320px] items-center justify-center">
+                <LoaderCircle className="h-5 w-5 animate-spin text-health-green" />
+              </div>
+            ) : numericRecords.length > 0 ? (
               <div className="h-[320px]">
                 <Line
                   data={lineData}

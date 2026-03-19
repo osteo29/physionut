@@ -1,19 +1,28 @@
-import {type ReactNode, memo} from 'react';
+import {type ReactNode, memo, useEffect, useState} from 'react';
 import {AnimatePresence, motion} from 'motion/react';
 import {
   BarChart3,
   BookOpen,
   Brain,
   HeartPulse,
+  LogOut,
   Menu,
   Moon,
   Pill,
   Search,
   Stethoscope,
   Sun,
+  UserRound,
   X,
 } from 'lucide-react';
 import {Link} from 'react-router-dom';
+import {
+  getCurrentUser,
+  isSupabaseConfigured,
+  onSupabaseAuthChange,
+  signOutCurrentUser,
+  type User,
+} from '../../lib/supabase';
 import type {Language} from '../../services/translations';
 
 type CalculatorNavItem = {
@@ -49,6 +58,47 @@ const Navigation = memo(
     setIsSidebarOpen: (open: boolean) => void;
   }) => {
     const isAr = lang === 'ar';
+    const [user, setUser] = useState<User | null>(null);
+
+    useEffect(() => {
+      let mounted = true;
+
+      const loadUser = async () => {
+        if (!isSupabaseConfigured) return;
+        try {
+          const currentUser = await getCurrentUser();
+          if (mounted) setUser(currentUser);
+        } catch {
+          if (mounted) setUser(null);
+        }
+      };
+
+      void loadUser();
+
+      const subscription = isSupabaseConfigured
+        ? onSupabaseAuthChange((_, session) => {
+            if (!mounted) return;
+            setUser(session?.user || null);
+          }).data.subscription
+        : null;
+
+      return () => {
+        mounted = false;
+        subscription?.unsubscribe();
+      };
+    }, []);
+
+    const handleLogout = async () => {
+      try {
+        await signOutCurrentUser();
+      } catch {
+        // Ignore here; dashboard/auth pages handle detailed auth feedback.
+      } finally {
+        setIsSidebarOpen(false);
+      }
+    };
+
+    const authLabel = user?.email?.split('@')[0] || (isAr ? 'الحساب' : 'Account');
 
     const brand = (
       <Link
@@ -125,6 +175,44 @@ const Navigation = memo(
                         <span>{isAr ? 'المساعد السريري' : 'Clinical assistant'}</span>
                       </Link>
                     </div>
+                  </div>
+
+                  <div className="rounded-[1.75rem] border border-slate-200 bg-white p-4">
+                    <div className="mb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400">
+                      {isAr ? 'الحساب' : 'Account'}
+                    </div>
+                    {user ? (
+                      <div className="space-y-3">
+                        <div className="rounded-2xl bg-slate-50 p-3">
+                          <div className="text-sm font-bold text-slate-900">{authLabel}</div>
+                          <div className="mt-1 text-xs text-slate-500">{user.email}</div>
+                        </div>
+                        <Link
+                          to="/dashboard"
+                          onClick={() => setIsSidebarOpen(false)}
+                          className="flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-bold text-slate-700 transition-all hover:bg-soft-blue"
+                        >
+                          <BarChart3 className="h-4 w-4 text-health-green" />
+                          <span>{isAr ? 'لوحة المتابعة' : 'Open dashboard'}</span>
+                        </Link>
+                        <button
+                          onClick={handleLogout}
+                          className="flex w-full items-center justify-center gap-2 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-bold text-rose-600 transition-all hover:bg-rose-100"
+                        >
+                          <LogOut className="h-4 w-4" />
+                          <span>{isAr ? 'تسجيل الخروج' : 'Log out'}</span>
+                        </button>
+                      </div>
+                    ) : (
+                      <Link
+                        to="/auth"
+                        onClick={() => setIsSidebarOpen(false)}
+                        className="flex items-center justify-center gap-2 rounded-2xl bg-slate-900 px-4 py-3 text-sm font-bold text-white transition-all hover:bg-slate-800"
+                      >
+                        <UserRound className="h-4 w-4" />
+                        <span>{isAr ? 'تسجيل الدخول' : 'Login / Sign up'}</span>
+                      </Link>
+                    )}
                   </div>
 
                   <div>
@@ -293,6 +381,26 @@ const Navigation = memo(
                   {isAr ? 'المساعد' : 'Assistant'}
                 </span>
               </Link>
+
+              {user ? (
+                <Link
+                  to="/dashboard"
+                  className="hidden items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-700 transition-all hover:border-health-green/30 sm:flex"
+                >
+                  <UserRound className="h-4 w-4 text-health-green" />
+                  <span className="hidden text-xs font-bold lg:inline">{authLabel}</span>
+                </Link>
+              ) : (
+                <Link
+                  to="/auth"
+                  className="hidden items-center gap-2 rounded-xl bg-slate-900 px-3 py-2 text-white transition-all hover:bg-slate-800 sm:flex"
+                >
+                  <UserRound className="h-4 w-4" />
+                  <span className="hidden text-xs font-bold lg:inline">
+                    {isAr ? 'دخول' : 'Login'}
+                  </span>
+                </Link>
+              )}
 
               <div className="hidden items-center gap-1 rounded-full border border-slate-200 bg-slate-100 p-1 sm:flex">
                 <button

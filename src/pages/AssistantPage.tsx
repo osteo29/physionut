@@ -134,6 +134,15 @@ export default function AssistantPage({
             </button>
 
             <Link
+              to="/auth"
+              className="hidden items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-700 transition-all hover:border-health-green/30 sm:flex"
+            >
+              <span className="text-xs font-bold">
+                {isAr ? 'الحساب' : 'Account'}
+              </span>
+            </Link>
+
+            <Link
               to="/"
               className="flex items-center gap-1 text-sm font-bold text-slate-500 transition-colors hover:text-health-green"
             >

@@ -8,6 +8,7 @@ import MedicalDisclaimer from './pages/MedicalDisclaimer';
 import AssistantPage from './pages/AssistantPage';
 import NotFound from './pages/NotFound';
 import TrackingDashboardPage from './pages/TrackingDashboardPage';
+import AuthPage from './pages/AuthPage';
 
 export default function RouterApp() {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -40,6 +41,7 @@ export default function RouterApp() {
         path="/assistant"
         element={<AssistantPage theme={theme} onToggleTheme={toggleTheme} />}
       />
+      <Route path="/auth" element={<AuthPage theme={theme} onToggleTheme={toggleTheme} />} />
       <Route path="/dashboard" element={<TrackingDashboardPage />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
