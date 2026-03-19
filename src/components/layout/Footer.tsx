@@ -1,6 +1,6 @@
 import {memo} from 'react';
 import {Link} from 'react-router-dom';
-import {HeartPulse, Mail, MapPin, ShieldAlert} from 'lucide-react';
+import {Facebook, HeartPulse, Instagram, Mail, MapPin, ShieldAlert} from 'lucide-react';
 import type {Language} from '../../services/translations';
 
 const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
@@ -8,7 +8,7 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
 
   return (
     <footer className="relative overflow-hidden border-t border-white/5 bg-slate-900 pb-12 pt-24">
-      <div className="absolute left-0 top-0 h-full w-full pointer-events-none opacity-10">
+      <div className="pointer-events-none absolute left-0 top-0 h-full w-full opacity-10">
         <div className="absolute right-0 top-0 h-96 w-96 translate-x-1/2 -translate-y-1/2 rounded-full bg-health-green blur-[120px]" />
         <div className="absolute bottom-0 left-0 h-96 w-96 -translate-x-1/2 translate-y-1/2 rounded-full bg-medical-blue blur-[120px]" />
       </div>
@@ -20,19 +20,37 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-health-green shadow-lg shadow-health-green/20">
                 <HeartPulse className="h-7 w-7 text-white" />
               </div>
-              <span className="text-2xl font-black tracking-tighter text-white">
-                PhysioHub
-              </span>
+              <span className="text-2xl font-black tracking-tighter text-white">PhysioHub</span>
             </div>
             <p className="max-w-xs leading-relaxed text-slate-400">
               {lang === 'en'
                 ? 'Educational tools and clinical insights for recovery, nutrition, and safer decision support.'
                 : 'أدوات تعليمية ورؤى عملية للتعافي والتغذية ودعم القرار الصحي بشكل أوضح وأكثر أمانًا.'}
             </p>
-            <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-400">
-              {lang === 'en'
-                ? 'Official Facebook, Instagram, and TikTok links will be added after the profiles are published.'
-                : 'سيتم إضافة روابط فيسبوك وإنستجرام وتيك توك بعد نشر الصفحات الرسمية.'}
+            <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4">
+              <div className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-slate-500">
+                {lang === 'en' ? 'Follow PhysioNutrition' : 'تابع PhysioNutrition'}
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <a
+                  href="https://www.facebook.com/Physionutrition.official/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-semibold text-slate-300 transition-colors hover:text-health-green"
+                >
+                  <Facebook className="h-4 w-4" />
+                  <span>Facebook</span>
+                </a>
+                <a
+                  href="https://www.instagram.com/physionutrition.official/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-semibold text-slate-300 transition-colors hover:text-health-green"
+                >
+                  <Instagram className="h-4 w-4" />
+                  <span>Instagram</span>
+                </a>
+              </div>
             </div>
           </div>
 
@@ -110,9 +128,7 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
                   <div className="mb-1 text-xs uppercase tracking-widest text-slate-500">
                     {lang === 'en' ? 'Availability' : 'التواجد'}
                   </div>
-                  <span className="text-slate-300">
-                    {lang === 'en' ? 'Remote / Online' : 'عن بعد / أونلاين'}
-                  </span>
+                  <span className="text-slate-300">{lang === 'en' ? 'Remote / Online' : 'عن بعد / أونلاين'}</span>
                 </div>
               </li>
             </ul>
