@@ -40,8 +40,8 @@ export async function requestBrowserNotifications(lang: AppLanguage) {
     if (registration) {
       await registration.showNotification(getNotificationTitle(lang), {
         body: getNotificationBody(lang),
-        icon: '/icon-192.svg',
-        badge: '/icon-192.svg',
+        icon: '/icon-192.png',
+        badge: '/icon-192.png',
       });
     }
   } catch {
@@ -51,7 +51,7 @@ export async function requestBrowserNotifications(lang: AppLanguage) {
   return permission;
 }
 
-export async function autoRequestBrowserNotifications(lang: AppLanguage) {
+export async function autoRequestBrowserNotifications(_lang: AppLanguage) {
   if (typeof window === 'undefined') {
     return 'unsupported' as const;
   }
@@ -66,5 +66,5 @@ export async function autoRequestBrowserNotifications(lang: AppLanguage) {
   }
 
   window.localStorage.setItem(AUTO_NOTIFICATION_PROMPT_KEY, 'true');
-  return requestBrowserNotifications(lang);
+  return currentPermission;
 }

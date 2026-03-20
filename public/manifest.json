@@ -4,20 +4,20 @@
   "description": "Clinical calculators, recovery tracking, and rehab nutrition tools for follow-up and smarter recovery decisions.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f8fafc",
-  "theme_color": "#315f4a",
+  "background_color": "#edf6f1",
+  "theme_color": "#1f4d3b",
   "icons": [
     {
-      "src": "/icon-192.svg",
+      "src": "/icon-192.png",
       "sizes": "192x192",
-      "type": "image/svg+xml",
-      "purpose": "any"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "/icon-512.svg",
+      "src": "/icon-512.png",
       "sizes": "512x512",
-      "type": "image/svg+xml",
-      "purpose": "any"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ],
   "categories": ["health", "medical", "productivity"],

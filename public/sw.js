@@ -1,5 +1,5 @@
-const CACHE_NAME = 'physiohub-v2';
-const APP_SHELL = ['/', '/manifest.json', '/favicon.svg', '/icon-192.svg', '/icon-512.svg'];
+const CACHE_NAME = 'physiohub-v4';
+const APP_SHELL = ['/', '/manifest.json', '/favicon.svg', '/icon-192.png', '/icon-512.png', '/apple-touch-icon.png'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(

@@ -1,4 +1,4 @@
-import {useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {motion} from 'motion/react';
 import {AlertOctagon, AlertTriangle, CheckCircle2, Pill, Search} from 'lucide-react';
 import {askGeminiText, trackAiQuestion} from '../../ai/gemini';
@@ -41,15 +41,24 @@ const EXAMPLES = {
 export default function DrugNutrientChecker({
   lang,
   embedded = false,
+  initialQuery = '',
 }: {
   lang: 'en' | 'ar';
   embedded?: boolean;
+  initialQuery?: string;
 }) {
   const [query, setQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<ResultCard | null>(null);
   const [error, setError] = useState<string | null>(null);
   const isAr = lang === 'ar';
+
+  useEffect(() => {
+    if (!initialQuery.trim()) return;
+    setQuery(initialQuery);
+    setResult(null);
+    setError(null);
+  }, [initialQuery]);
 
   const canSearch = useMemo(() => query.trim().length >= 3 && !isLoading, [query, isLoading]);
 

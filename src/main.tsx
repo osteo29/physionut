@@ -12,6 +12,12 @@ createRoot(document.getElementById('root')!).render(
   </StrictMode>,
 );
 
+window.requestAnimationFrame(() => {
+  const splash = document.getElementById('boot-splash');
+  splash?.classList.add('is-hidden');
+  window.setTimeout(() => splash?.remove(), 450);
+});
+
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js').catch(() => {

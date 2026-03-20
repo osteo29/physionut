@@ -5,11 +5,167 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="manifest" href="/manifest.json" />
-    <link rel="apple-touch-icon" href="/icon-192.svg" />
-    <meta name="theme-color" content="#315f4a" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#1f4d3b" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <style>
+      :root {
+        color-scheme: light;
+        --boot-bg: #edf6f1;
+        --boot-card: #ffffff;
+        --boot-deep: #1f4d3b;
+        --boot-mid: #4c8b6c;
+        --boot-soft: #8fc6a8;
+        --boot-text: #16382c;
+        --boot-muted: #628474;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background:
+          radial-gradient(circle at top, rgba(143, 198, 168, 0.22), transparent 34%),
+          linear-gradient(180deg, #f7fcf8 0%, var(--boot-bg) 100%);
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      #boot-splash {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background:
+          radial-gradient(circle at 50% 18%, rgba(143, 198, 168, 0.24), transparent 28%),
+          linear-gradient(180deg, #f7fcf8 0%, var(--boot-bg) 100%);
+        transition: opacity 0.35s ease, visibility 0.35s ease;
+      }
+
+      #boot-splash.is-hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      .boot-shell {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 18px;
+        text-align: center;
+      }
+
+      .boot-mark {
+        position: relative;
+        display: grid;
+        place-items: center;
+        width: 104px;
+        height: 104px;
+        border-radius: 32px;
+        background: linear-gradient(145deg, var(--boot-deep), var(--boot-mid));
+        box-shadow:
+          0 22px 44px rgba(31, 77, 59, 0.18),
+          inset 0 1px 0 rgba(255, 255, 255, 0.16);
+      }
+
+      .boot-mark::before {
+        content: "";
+        position: absolute;
+        inset: 26px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.97);
+      }
+
+      .boot-mark::after {
+        content: "";
+        position: absolute;
+        top: 17px;
+        right: 15px;
+        width: 28px;
+        height: 28px;
+        border-radius: 28px 4px 28px 4px;
+        transform: rotate(22deg);
+        background: linear-gradient(145deg, #d8f3dc, #95d5b2);
+        box-shadow: 0 6px 16px rgba(216, 243, 220, 0.35);
+      }
+
+      .boot-plus {
+        position: relative;
+        z-index: 1;
+        width: 38px;
+        height: 38px;
+      }
+
+      .boot-plus::before,
+      .boot-plus::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        border-radius: 999px;
+        background: var(--boot-deep);
+        transform: translate(-50%, -50%);
+      }
+
+      .boot-plus::before {
+        width: 8px;
+        height: 38px;
+      }
+
+      .boot-plus::after {
+        width: 38px;
+        height: 8px;
+      }
+
+      .boot-title {
+        font-size: 24px;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        color: var(--boot-text);
+      }
+
+      .boot-title span {
+        color: var(--boot-mid);
+      }
+
+      .boot-subtitle {
+        max-width: 280px;
+        font-size: 13px;
+        line-height: 1.7;
+        color: var(--boot-muted);
+      }
+
+      .boot-loader {
+        width: 92px;
+        height: 4px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(31, 77, 59, 0.12);
+      }
+
+      .boot-loader::after {
+        content: "";
+        display: block;
+        width: 42%;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--boot-soft), var(--boot-mid));
+        animation: boot-slide 1.2s ease-in-out infinite;
+      }
+
+      @keyframes boot-slide {
+        0% { transform: translateX(-110%); }
+        100% { transform: translateX(240%); }
+      }
+    </style>
     <title>PhysioNutrition | Clinical Calculators for Therapy & Nutrition</title>
     <meta name="description" content="Evidence-based clinical calculators for physical therapists, nutritionists, and fitness enthusiasts. BMI, BMR, TDEE, and more." />
     <meta name="keywords" content="Physical Therapy Calculators, Clinical Nutrition Tools, PhysioNutrition, BMI, BMR, TDEE, Macro Calculator, Ideal Body Weight, Body Fat Percentage, Water Intake, Protein Calculator" />
@@ -52,6 +208,16 @@
     <meta name="google-site-verification" content="REPLACE_WITH_YOUR_ACTUAL_CODE_IF_PROVIDED" />
   </head>
   <body>
+    <div id="boot-splash" aria-hidden="true">
+      <div class="boot-shell">
+        <div class="boot-mark">
+          <div class="boot-plus"></div>
+        </div>
+        <div class="boot-title">Physio<span>Nutrition</span></div>
+        <div class="boot-subtitle">Clinical recovery tools loading with a cleaner app-like experience.</div>
+        <div class="boot-loader"></div>
+      </div>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

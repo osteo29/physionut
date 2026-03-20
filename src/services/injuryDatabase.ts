@@ -1,448 +1,606 @@
-// src/services/injuryDatabase.ts
-// قاعدة بيانات الإصابات الشائعة في العلاج الطبيعي
+export type InjuryCategory = 'Ligament' | 'Tendon' | 'Muscle' | 'Bone' | 'Joint' | 'Spine' | 'Post-surgery';
+export type BodyRegion = 'Knee' | 'Ankle' | 'Shoulder' | 'Hip' | 'Back' | 'Foot' | 'Whole body';
+export type ActivityProfile = 'general' | 'athlete' | 'older_adult' | 'post_op';
+export type RecoveryGoal = 'calm' | 'mobility' | 'strength' | 'return';
+export type DietStyle = 'omnivore' | 'vegetarian';
+export type RecoveryWindow = 'under_48h' | 'days_3_14' | 'weeks_2_6' | 'over_6_weeks';
 
-import {decodeMojibake} from './textEncoding';
-
-export interface Nutrient {
+export interface SupplementProtocol {
   name: string;
-  dosage: string;
-  purpose: string;
-  evidence: string;
+  dose: string;
+  reason: string;
+  timing?: string;
+  caution?: string;
 }
 
-export interface RecoveryStage {
-  phase: string;
-  focus: string;
-  nutrients: Nutrient[];
-  foods?: string[];
-  avoid?: string[];
-  proteinRequirement?: string;
-  waterRequirement?: string;
-  exercises?: string[];
-  protocol?: string;
-  position?: string;
+export interface MealExamples {
+  breakfast: string;
+  lunch: string;
+  dinner: string;
+  snack?: string;
+  shoppingList: string[];
 }
 
-export interface Injury {
+export interface InjuryPhase {
+  id: string;
+  label: string;
+  duration: string;
+  window: RecoveryWindow;
+  goals: string[];
+  nutritionFocus: string[];
+  recommendedFoods: string[];
+  avoidFoods: string[];
+  supplements: SupplementProtocol[];
+  exercises: string[];
+  prohibitedMovements: string[];
+  meals: MealExamples;
+  timing?: Partial<Record<'collagen' | 'protein' | 'hydration' | 'carbs', string>>;
+  proteinPerKg?: {min: number; max: number};
+  hydrationMlPerKg?: number;
+  omega3Grams?: number;
+  creatineGrams?: number;
+  collagenPerKg?: {min: number; max: number};
+  vitaminCMg?: number;
+  calciumMg?: number;
+}
+
+export interface InjuryProtocol {
   id: string;
   name: string;
-  category: string;
-  recoveryWeeks: number;
-  stages: {
-    [key: string]: RecoveryStage;
-  };
-  contraindications?: {
-    medications: string[];
-    supplements: string[];
-  };
+  category: InjuryCategory;
+  bodyRegion: BodyRegion;
+  commonIn: string[];
+  overview: string;
+  rehabSummary: string;
+  redFlags: string[];
+  relatedCalculators: string[];
+  safetyNotes: {medications: string[]; supplements: string[]};
+  phases: InjuryPhase[];
+  contraindications?: {medications: string[]; supplements: string[]};
+  stages?: Record<
+    string,
+    {
+      phase: string;
+      focus: string;
+      nutrients: {name: string; dosage: string; purpose: string; evidence: string}[];
+      foods: string[];
+    }
+  >;
 }
 
-const rawInjuryDatabase: { [key: string]: Injury } = {
-  "ACL tear": {
-    id: "acl_tear",
-    name: "ACL tear",
-    category: "Knee Injuries",
-    recoveryWeeks: 24,
-    stages: {
-      "week1-2": {
-        phase: "Acute / Inflammatory",
-        focus: "تقليل الالتهاب وحماية الرباط",
-        nutrients: [
-          { name: "Omega-3", dosage: "2-3g/day", purpose: "مضاد للالتهابات", evidence: "Level A" },
-          { name: "Vitamin C", dosage: "500mg/day", purpose: "يدعم تكوين الكولاجين", evidence: "Level B" },
-          { name: "Bromelain", dosage: "500mg/day", purpose: "إنزيم مضاد للالتهاب", evidence: "Level B" }
-        ],
-        foods: ["السلمون", "التوت", "البروكلي", "الأناناس"],
-        avoid: ["الأطعمة المصنعة", "السكريات المكررة"]
-      },
-      "week3-6": {
-        phase: "Proliferative / Repair",
-        focus: "إعادة بناء الأنسجة",
-        nutrients: [
-          { name: "Collagen Peptides", dosage: "10-15g/day", purpose: "لبناء الرباط", evidence: "Level A" },
-          { name: "Zinc", dosage: "15mg/day", purpose: "تخليق البروتين", evidence: "Level B" },
-          { name: "Vitamin D3", dosage: "2000IU/day", purpose: "دعم المناعة", evidence: "Level A" }
-        ],
-        foods: ["البيض", "الدجاج", "البقوليات", "المكسرات"],
-        proteinRequirement: "1.6-2.0 g/kg"
-      },
-      "week7+": {
-        phase: "Remodeling / Strengthening",
-        focus: "تقوية العضلات المحيطة",
-        nutrients: [
-          { name: "Creatine", dosage: "5g/day", purpose: "زيادة القوة العضلية", evidence: "Level A" },
-          { name: "Magnesium", dosage: "400mg/day", purpose: "انقباض العضلات", evidence: "Level B" },
-          { name: "BCAAs", dosage: "10g/day", purpose: "تقليل وجع العضلات", evidence: "Level B" }
-        ],
-        foods: ["اللحوم الخالية من الدهون", "الموز", "البطاطا", "السبانخ"],
-        exercises: ["تمارين تقوية", "تحمل تدريجي"]
-      }
+export interface RecoveryPlanInput {
+  weightKg: number;
+  phase: InjuryPhase;
+  profile: ActivityProfile;
+  goal: RecoveryGoal;
+  dietStyle: DietStyle;
+}
+
+export interface RecoveryPlanOutput {
+  proteinTotalGrams: number;
+  proteinRange: {min: number; max: number};
+  proteinDistribution: {breakfast: number; lunch: number; dinner: number; snack: number};
+  hydrationTargetMl: number;
+  collagenDoseGrams?: number;
+  creatineGrams?: number;
+  omega3Grams?: number;
+  vitaminCMg?: number;
+  calciumMg?: number;
+  timingTips: string[];
+  meals: {breakfast: string; lunch: string; dinner: string; snack?: string};
+}
+
+const injuryProtocols: InjuryProtocol[] = [
+  {
+    id: 'ankle_sprain',
+    name: 'Ankle Sprain',
+    category: 'Ligament',
+    bodyRegion: 'Ankle',
+    commonIn: ['Field sports', 'Running', 'Daily activity'],
+    overview: 'Ankle sprains need swelling control first, then progressive loading, balance work, and ligament-friendly fueling.',
+    rehabSummary: 'Protect early, restore motion next, then rebuild confidence for cutting and hopping.',
+    redFlags: ['Unable to bear weight', 'Major deformity', 'Rapid swelling with intense pain'],
+    relatedCalculators: ['Protein intake', 'Water intake'],
+    safetyNotes: {
+      medications: ['Review fish oil or curcumin with blood thinners or before procedures.'],
+      supplements: ['Very high antioxidant dosing is not always better in the first days.'],
     },
-    contraindications: {
-      medications: ["NSAIDs لفترات طويلة قد تؤخر الشفاء في المراحل المتأخرة"],
-      supplements: ["تجنب فيتامين E بجرعات عالية (مضاد تخثر)"]
-    }
+    phases: [
+      {
+        id: 'acute',
+        label: 'Acute',
+        duration: '0-5 days',
+        window: 'under_48h',
+        goals: ['Reduce swelling', 'Protect ligament', 'Maintain protein intake'],
+        nutritionFocus: ['Protein adequacy', 'Omega-3', 'Vitamin C'],
+        recommendedFoods: ['Greek yogurt', 'Salmon', 'Kiwi', 'Berries'],
+        avoidFoods: ['Alcohol', 'Very salty fast food', 'Skipping meals'],
+        supplements: [
+          {name: 'Omega-3', dose: '2 g/day', reason: 'Supports inflammation control'},
+          {name: 'Vitamin C', dose: '500 mg/day', reason: 'Supports collagen building'},
+        ],
+        exercises: ['Protected range of motion', 'Pain-limited calf pumping'],
+        prohibitedMovements: ['Aggressive hopping', 'Fast pivots'],
+        meals: {
+          breakfast: 'Greek yogurt bowl with berries and oats',
+          lunch: 'Salmon, rice, and peppers',
+          dinner: 'Chicken soup with potatoes and spinach',
+          snack: 'Orange with kefir',
+          shoppingList: ['Greek yogurt', 'Salmon', 'Oranges', 'Oats', 'Spinach', 'Rice'],
+        },
+        timing: {
+          protein: 'Split protein across 3-4 meals instead of one heavy dinner.',
+          hydration: 'Sip fluids steadily during the day.',
+        },
+        proteinPerKg: {min: 1.6, max: 2},
+        hydrationMlPerKg: 35,
+        omega3Grams: 2,
+        vitaminCMg: 500,
+      },
+      {
+        id: 'repair',
+        label: 'Repair',
+        duration: '5-21 days',
+        window: 'days_3_14',
+        goals: ['Support ligament repair', 'Restore range of motion', 'Start loading on purpose'],
+        nutritionFocus: ['Collagen plus vitamin C before rehab', 'Consistent protein'],
+        recommendedFoods: ['Eggs', 'Citrus fruit', 'Lean beef', 'Lentils'],
+        avoidFoods: ['Skipping rehab fuel', 'Long gaps without protein'],
+        supplements: [
+          {name: 'Collagen peptides', dose: '10-15 g', reason: 'May support connective tissue loading', timing: '30-60 min before rehab'},
+          {name: 'Vitamin C', dose: '250-500 mg', reason: 'Pairs with collagen support', timing: 'With collagen before rehab'},
+        ],
+        exercises: ['Progressive calf raises', 'Balance work'],
+        prohibitedMovements: ['Painful high-speed change of direction'],
+        meals: {
+          breakfast: 'Eggs, sourdough, and fruit',
+          lunch: 'Lean beef, potatoes, and salad',
+          dinner: 'Lentil bowl with vegetables',
+          snack: 'Collagen shake and orange before rehab',
+          shoppingList: ['Eggs', 'Lean beef', 'Lentils', 'Oranges', 'Potatoes', 'Bell peppers'],
+        },
+        timing: {
+          collagen: 'Take collagen 30-60 minutes before loading or rehab.',
+        },
+        proteinPerKg: {min: 1.8, max: 2.1},
+        hydrationMlPerKg: 35,
+        collagenPerKg: {min: 0.12, max: 0.18},
+        vitaminCMg: 500,
+      },
+      {
+        id: 'return',
+        label: 'Return to sport',
+        duration: '3-6 weeks',
+        window: 'weeks_2_6',
+        goals: ['Regain stiffness tolerance', 'Improve confidence', 'Support repeat effort'],
+        nutritionFocus: ['High-quality protein', 'Creatine', 'Smart carb timing'],
+        recommendedFoods: ['Milk or soy milk', 'Chicken wraps', 'Rice', 'Bananas'],
+        avoidFoods: ['Under-eating on training days'],
+        supplements: [{name: 'Creatine monohydrate', dose: '5 g/day', reason: 'Supports strength and lean mass'}],
+        exercises: ['Hops and landings', 'Single-leg strength', 'Return-to-run progression'],
+        prohibitedMovements: ['Full sport before passing strength and hop tests'],
+        meals: {
+          breakfast: 'Oats, milk, banana, and protein',
+          lunch: 'Chicken wrap with rice salad',
+          dinner: 'Rice bowl with tofu or turkey',
+          snack: 'Banana and yogurt before field work',
+          shoppingList: ['Milk or soy milk', 'Bananas', 'Chicken or tofu', 'Rice', 'Yogurt'],
+        },
+        timing: {carbs: 'Add more carbs around training and return-to-run sessions.'},
+        proteinPerKg: {min: 1.8, max: 2.2},
+        hydrationMlPerKg: 40,
+        creatineGrams: 5,
+      },
+    ],
   },
-  "Rotator cuff tear": {
-    id: "rotator_cuff_tear",
-    name: "Rotator cuff tear",
-    category: "Shoulder Injuries",
-    recoveryWeeks: 16,
-    stages: {
-      "week1-2": {
-        phase: "Protection Phase",
-        focus: "حماية الكتف وتقليل الألم",
-        nutrients: [
-          { name: "Turmeric/Curcumin", dosage: "500mg twice/day", purpose: "مضاد التهاب طبيعي", evidence: "Level B" },
-          { name: "Vitamin C", dosage: "1000mg/day", purpose: "الكولاجين", evidence: "Level B" }
+  {
+    id: 'acl_injury',
+    name: 'ACL Injury',
+    category: 'Ligament',
+    bodyRegion: 'Knee',
+    commonIn: ['Football', 'Basketball', 'Pivoting sports'],
+    overview: 'ACL rehab needs muscle retention, enough energy, collagen support around loading, and patience across a long return timeline.',
+    rehabSummary: 'The knee needs swelling control early, quadriceps retention always, and structured food support through prehab, surgery, and rehab.',
+    redFlags: ['Locked knee', 'Major instability', 'Post-op calf swelling or chest symptoms'],
+    relatedCalculators: ['Protein intake', 'Water intake', 'Macro calculator'],
+    safetyNotes: {
+      medications: ['Review fish oil, curcumin, and high-dose vitamin E around surgery or with anticoagulants.'],
+      supplements: ['Supplements cannot replace surgical or physiotherapy planning.'],
+    },
+    phases: [
+      {
+        id: 'prehab',
+        label: 'Prehab / pre-surgery',
+        duration: 'Before surgery or early structured rehab',
+        window: 'days_3_14',
+        goals: ['Reduce atrophy', 'Calm swelling', 'Prepare for surgery or rehab'],
+        nutritionFocus: ['Higher protein', 'Creatine', 'Micronutrient sufficiency'],
+        recommendedFoods: ['Whey or soy protein', 'Eggs', 'Rice', 'Yogurt'],
+        avoidFoods: ['Crash dieting', 'Under-eating because activity dropped'],
+        supplements: [
+          {name: 'Creatine monohydrate', dose: '5 g/day', reason: 'Helps preserve lean mass'},
+          {name: 'Protein powder if needed', dose: '20-30 g', reason: 'Convenient protein coverage'},
         ],
-        foods: ["الكركم", "الزنجبيل", "الأسماك الدهنية"],
-        position: "تجنب رفع الذراع فوق الرأس"
+        exercises: ['Quad setting', 'Range of motion work', 'Prehab strength if cleared'],
+        prohibitedMovements: ['Pivoting or cutting on an unstable knee'],
+        meals: {
+          breakfast: 'Eggs, toast, and fruit',
+          lunch: 'Chicken rice bowl with yogurt',
+          dinner: 'Beans or turkey with potatoes and vegetables',
+          snack: 'Protein shake after rehab',
+          shoppingList: ['Eggs', 'Chicken', 'Rice', 'Yogurt', 'Potatoes', 'Protein powder'],
+        },
+        timing: {protein: 'Get a protein feeding within 1-2 hours after rehab.'},
+        proteinPerKg: {min: 1.8, max: 2.2},
+        hydrationMlPerKg: 35,
+        creatineGrams: 5,
       },
-      "week3-6": {
-        phase: "Repair Phase",
-        focus: "إصلاح الأوتار",
-        nutrients: [
-          { name: "Collagen Type I & III", dosage: "15g/day", purpose: "لبناء الوتر", evidence: "Level A" },
-          { name: "Manganese", dosage: "5mg/day", purpose: "تخليق البروتيوغليكان", evidence: "Level C" }
+      {
+        id: 'postop_acute',
+        label: 'Post-op acute',
+        duration: '0-14 days after surgery',
+        window: 'under_48h',
+        goals: ['Support wound healing', 'Control appetite drop', 'Protect lean mass'],
+        nutritionFocus: ['Protein at every meal', 'Vitamin C', 'Hydration'],
+        recommendedFoods: ['Soup with chicken', 'Greek yogurt', 'Cottage cheese', 'Citrus fruit'],
+        avoidFoods: ['Alcohol', 'Smoking', 'Low-protein snack-only eating'],
+        supplements: [
+          {name: 'Collagen peptides', dose: '15 g/day', reason: 'May support connective tissue recovery'},
+          {name: 'Vitamin C', dose: '500 mg/day', reason: 'Supports tissue healing'},
         ],
-        foods: ["مرق العظام", "الحمضيات", "الخضروات الورقية"]
+        exercises: ['Ankle pumps', 'Quad activation', 'Early extension work as directed'],
+        prohibitedMovements: ['Unsanctioned loaded knee flexion'],
+        meals: {
+          breakfast: 'Overnight oats with yogurt and berries',
+          lunch: 'Chicken soup with rice and carrots',
+          dinner: 'White fish, mashed potatoes, and zucchini',
+          snack: 'Cottage cheese and kiwi',
+          shoppingList: ['Greek yogurt', 'Chicken', 'Rice', 'Kiwi', 'Fish', 'Oats'],
+        },
+        timing: {hydration: 'Keep fluids up if pain meds lower appetite.'},
+        proteinPerKg: {min: 2, max: 2.3},
+        hydrationMlPerKg: 35,
+        collagenPerKg: {min: 0.12, max: 0.18},
+        vitaminCMg: 500,
       },
-      "week7+": {
-        phase: "Functional Phase",
-        focus: "العودة للوظيفة الطبيعية",
-        nutrients: [
-          { name: "Glucosamine", dosage: "1500mg/day", purpose: "صحة الأوتار", evidence: "Level B" },
-          { name: "Vitamin B12", dosage: "500mcg/day", purpose: "تجديد الأعصاب", evidence: "Level B" }
+      {
+        id: 'rehab',
+        label: 'Strength and return phase',
+        duration: '2 weeks to 9+ months',
+        window: 'over_6_weeks',
+        goals: ['Regain quadriceps size', 'Support training output', 'Return to sport safely'],
+        nutritionFocus: ['High protein', 'Creatine', 'Carbs around rehab', 'Collagen before tendon-heavy sessions'],
+        recommendedFoods: ['Milk', 'Rice', 'Lean meat', 'Beans', 'Fruit'],
+        avoidFoods: ['Long energy deficits during hard rehab blocks'],
+        supplements: [
+          {name: 'Creatine monohydrate', dose: '5 g/day', reason: 'Supports rehab performance and strength'},
+          {name: 'Collagen peptides', dose: '10-15 g', reason: 'Useful before tendon or hopping sessions', timing: '30-60 min pre-rehab'},
         ],
-        exercises: ["تمارين المقاومة التدريجية"]
-      }
-    }
+        exercises: ['Squat progression', 'Split squats', 'Running and hop progressions'],
+        prohibitedMovements: ['Rushing back before strength benchmarks'],
+        meals: {
+          breakfast: 'Protein oats with banana',
+          lunch: 'Turkey or tofu rice bowl',
+          dinner: 'Salmon with potatoes and greens',
+          snack: 'Collagen drink plus orange before rehab',
+          shoppingList: ['Oats', 'Bananas', 'Turkey or tofu', 'Rice', 'Salmon', 'Oranges'],
+        },
+        timing: {
+          collagen: 'Use before plyometric or tendon-loading sessions if part of plan.',
+          carbs: 'Place more carbs around long rehab or field sessions.',
+        },
+        proteinPerKg: {min: 1.8, max: 2.2},
+        hydrationMlPerKg: 40,
+        collagenPerKg: {min: 0.12, max: 0.18},
+        creatineGrams: 5,
+      },
+    ],
   },
-  "Herniated disc": {
-    id: "herniated_disc_lumbar",
-    name: "Herniated disc",
-    category: "Spine Injuries",
-    recoveryWeeks: 12,
-    stages: {
-      "week1-2": {
-        phase: "Acute Pain Management",
-        focus: "تقليل الضغط على العصب",
-        nutrients: [
-          { name: "Magnesium Glycinate", dosage: "400mg at night", purpose: "ارتخاء العضلات", evidence: "Level A" },
-          { name: "Boswellia", dosage: "300mg/day", purpose: "مضاد التهاب للأعصاب", evidence: "Level B" },
-          { name: "Vitamin B Complex", dosage: "High potency", purpose: "صحة الأعصاب", evidence: "Level B" }
-        ],
-        foods: ["المكسرات", "البذور", "الخضروات الورقية الداكنة"],
-        avoid: ["الجلوس الطويل", "رفع الأوزان"]
+  {
+    id: 'rotator_cuff',
+    name: 'Rotator Cuff Injury',
+    category: 'Tendon',
+    bodyRegion: 'Shoulder',
+    commonIn: ['Overhead sports', 'Gym training', 'Manual work'],
+    overview: 'Shoulder tendon problems usually improve with graded loading, protein adequacy, and collagen timed around rehab.',
+    rehabSummary: 'The cuff dislikes long rest and reckless overhead loading. Nutrition should support repeated rehab exposure and pain-limited progression.',
+    redFlags: ['Sudden inability to lift the arm', 'Night pain with major weakness', 'Neurological symptoms'],
+    relatedCalculators: ['Protein intake', 'Macro calculator'],
+    safetyNotes: {
+      medications: ['Bleeding risk matters if combining curcumin or fish oil with certain drugs.'],
+      supplements: ['Collagen does not replace progressive shoulder loading.'],
+    },
+    phases: [
+      {
+        id: 'acute',
+        label: 'Pain-dominant phase',
+        duration: '0-2 weeks',
+        window: 'under_48h',
+        goals: ['Reduce irritability', 'Keep protein intake stable', 'Protect sleep quality'],
+        nutritionFocus: ['Omega-3', 'Vitamin C', 'Balanced meals during reduced activity'],
+        recommendedFoods: ['Fatty fish', 'Citrus fruit', 'Eggs', 'Olive oil'],
+        avoidFoods: ['Heavy alcohol use', 'Meal skipping'],
+        supplements: [{name: 'Omega-3', dose: '2 g/day', reason: 'Supports overall anti-inflammatory intake'}],
+        exercises: ['Pain-limited isometrics', 'Scapular work', 'Gentle range of motion'],
+        prohibitedMovements: ['Repeated painful overhead pressing'],
+        meals: {
+          breakfast: 'Eggs with avocado and toast',
+          lunch: 'Tuna pasta salad',
+          dinner: 'Salmon with couscous and greens',
+          snack: 'Cottage cheese and fruit',
+          shoppingList: ['Eggs', 'Avocado', 'Tuna', 'Salmon', 'Cottage cheese', 'Oranges'],
+        },
+        proteinPerKg: {min: 1.6, max: 2},
+        hydrationMlPerKg: 35,
+        omega3Grams: 2,
+        vitaminCMg: 500,
       },
-      "week3-6": {
-        phase: "Disc Hydration",
-        focus: "ترطيب وتغذية القرص",
-        nutrients: [
-          { name: "Hyaluronic Acid", dosage: "200mg/day", purpose: "ترطيب الأقراص", evidence: "Level C" },
-          { name: "Chondroitin", dosage: "800mg/day", purpose: "مرونة النسيج", evidence: "Level B" },
-          { name: "Water", dosage: "3L/day", purpose: "محوري للغاية", evidence: "Level A" }
+      {
+        id: 'rebuild',
+        label: 'Tendon rebuilding',
+        duration: '2-10 weeks',
+        window: 'weeks_2_6',
+        goals: ['Support tendon loading', 'Improve cuff strength', 'Restore overhead confidence'],
+        nutritionFocus: ['Collagen before rehab', 'High-quality protein', 'Carbs around harder sessions'],
+        recommendedFoods: ['Greek yogurt', 'Chicken', 'Citrus fruit', 'Rice', 'Kiwi'],
+        avoidFoods: ['Low-energy dieting during hard rehab'],
+        supplements: [
+          {name: 'Collagen peptides', dose: '10-15 g', reason: 'May support tendon rehab', timing: '30-60 min before loading'},
+          {name: 'Creatine monohydrate', dose: '5 g/day', reason: 'May support strength progression'},
         ],
-        waterRequirement: "زيادة 30% عن المعدل الطبيعي"
+        exercises: ['Rotator cuff loading', 'Landmine press progression', 'Scapular strength work'],
+        prohibitedMovements: ['Fast high-volume overhead work before tolerance is built'],
+        meals: {
+          breakfast: 'Greek yogurt with oats and kiwi',
+          lunch: 'Chicken rice bowl',
+          dinner: 'Bean chili with potatoes',
+          snack: 'Collagen plus orange before rehab',
+          shoppingList: ['Greek yogurt', 'Oats', 'Kiwi', 'Chicken', 'Rice', 'Beans'],
+        },
+        timing: {
+          collagen: 'Use before structured cuff loading sessions.',
+          protein: 'Aim for a meaningful protein dose after rehab too.',
+        },
+        proteinPerKg: {min: 1.8, max: 2.2},
+        hydrationMlPerKg: 35,
+        creatineGrams: 5,
+        collagenPerKg: {min: 0.12, max: 0.18},
+        vitaminCMg: 500,
       },
-      "week7+": {
-        phase: "Core Strengthening",
-        focus: "دعم العمود الفقري",
-        nutrients: [
-          { name: "Protein", dosage: "1.5-1.8 g/kg", purpose: "بناء العضلات الداعمة", evidence: "Level A" },
-          { name: "Calcium", dosage: "1000mg/day", purpose: "صحة الفقرات", evidence: "Level B" }
-        ],
-        exercises: ["تمارين البلانك", "السباحة"]
-      }
-    }
+    ],
   },
-  "Ankle sprain (Grade 2)": {
-    id: "ankle_sprain_grade2",
-    name: "Ankle sprain (Grade 2)",
-    category: "Ankle Injuries",
-    recoveryWeeks: 6,
-    stages: {
-      "week1": {
-        phase: "Acute / RICE",
-        focus: "Protection & Swelling Control",
-        nutrients: [
-          { name: "Arnica", dosage: "Topical/homeopathic", purpose: "تقليل الكدمات", evidence: "Level B" },
-          { name: "Quercetin", dosage: "500mg/day", purpose: "تثبيت الخلايا البدينة", evidence: "Level B" },
-          { name: "Vitamin C", dosage: "1000mg/day", purpose: "إصلاح الأربطة", evidence: "Level B" }
+  {
+    id: 'hamstring_strain',
+    name: 'Hamstring Strain',
+    category: 'Muscle',
+    bodyRegion: 'Hip',
+    commonIn: ['Sprinting', 'Football', 'Track'],
+    overview: 'Hamstring strains demand high-quality protein, enough energy, and progressive loading rather than panic rest.',
+    rehabSummary: 'Muscle injuries need tissue support early, then increasingly specific loading and sprint prep later.',
+    redFlags: ['Large bruising with severe weakness', 'Suspected tendon avulsion', 'Major power loss'],
+    relatedCalculators: ['Protein intake', 'Macro calculator'],
+    safetyNotes: {
+      medications: ['Curcumin and omega-3 need medication review in sensitive cases.'],
+      supplements: ['High-dose antioxidants are not a substitute for proper rehab progression.'],
+    },
+    phases: [
+      {
+        id: 'acute',
+        label: 'Acute',
+        duration: '0-5 days',
+        window: 'under_48h',
+        goals: ['Limit secondary muscle damage', 'Protect appetite', 'Start gentle pain-limited movement'],
+        nutritionFocus: ['Higher protein', 'Vitamin C', 'Omega-3', 'No alcohol'],
+        recommendedFoods: ['Protein powder', 'Eggs', 'Berries', 'Fish', 'Potatoes'],
+        avoidFoods: ['Alcohol', 'Long fasting windows'],
+        supplements: [
+          {name: 'Protein shake if needed', dose: '25-30 g', reason: 'Makes protein coverage easier'},
+          {name: 'Omega-3', dose: '2 g/day', reason: 'Supports anti-inflammatory intake'},
         ],
-        protocol: "RICE (Rest, Ice, Compression, Elevation)"
+        exercises: ['Pain-limited isometrics', 'Walking if tolerated', 'Gentle range work'],
+        prohibitedMovements: ['Max sprinting', 'Aggressive stretching into pain'],
+        meals: {
+          breakfast: 'Protein oats with berries',
+          lunch: 'Chicken, potatoes, and salad',
+          dinner: 'Fish with rice and vegetables',
+          snack: 'Protein shake and fruit',
+          shoppingList: ['Protein powder', 'Eggs', 'Berries', 'Chicken', 'Fish', 'Potatoes'],
+        },
+        proteinPerKg: {min: 1.8, max: 2.2},
+        hydrationMlPerKg: 35,
+        omega3Grams: 2,
+        vitaminCMg: 500,
       },
-      "week2-4": {
-        phase: "Sub-acute / Mobility",
-        focus: "استعادة الحركة",
-        nutrients: [
-          { name: "Collagen", dosage: "10g with Vitamin C", purpose: "إصلاح الرباط", evidence: "Level A" },
-          { name: "Copper", dosage: "2mg/day", purpose: "تكوين الإيلاستين", evidence: "Level C" }
+      {
+        id: 'reload',
+        label: 'Repair and reload',
+        duration: '5-21 days',
+        window: 'days_3_14',
+        goals: ['Support muscle repair', 'Restore length under load', 'Prepare for speed work'],
+        nutritionFocus: ['Protein at each meal', 'Collagen before rehab', 'Creatine'],
+        recommendedFoods: ['Lean beef', 'Citrus fruit', 'Greek yogurt', 'Rice', 'Beans'],
+        avoidFoods: ['Starting hard running while under-eating'],
+        supplements: [
+          {name: 'Collagen peptides', dose: '10-15 g', reason: 'Useful before rehab sessions', timing: '30-60 min pre-rehab'},
+          {name: 'Creatine monohydrate', dose: '5 g/day', reason: 'Supports power and lean mass'},
         ],
-        foods: ["المحار", "الكبد", "المكسرات البرازيلية"]
+        exercises: ['Eccentric hamstring work', 'Bridge progression', 'Tempo running later'],
+        prohibitedMovements: ['Returning to full sprinting before eccentric tolerance'],
+        meals: {
+          breakfast: 'Greek yogurt, granola, and kiwi',
+          lunch: 'Lean beef and rice bowl',
+          dinner: 'Bean pasta with turkey or tofu',
+          snack: 'Collagen drink and orange before rehab',
+          shoppingList: ['Greek yogurt', 'Kiwi', 'Lean beef', 'Rice', 'Turkey or tofu', 'Oranges'],
+        },
+        timing: {collagen: 'Best used before hamstring loading or sprint prep sessions.'},
+        proteinPerKg: {min: 2, max: 2.3},
+        hydrationMlPerKg: 40,
+        collagenPerKg: {min: 0.12, max: 0.2},
+        creatineGrams: 5,
+        vitaminCMg: 500,
       },
-      "week5-6": {
-        phase: "Rehabilitation",
-        focus: "استقرار الكاحل",
-        nutrients: [
-          { name: "Vitamin D3/K2", dosage: "5000IU/100mcg", purpose: "صحة العظام", evidence: "Level A" },
-          { name: "MSM", dosage: "3000mg/day", purpose: "مرونة النسيج", evidence: "Level B" }
-        ],
-        exercises: ["تمارين التوازن", "تقوية الكاحل"]
-      }
-    }
+    ],
   },
-  "Hamstring strain (Grade 2)": {
-    id: "hamstring_strain_grade2",
-    name: "Hamstring strain (Grade 2)",
-    category: "Muscle Injuries",
-    recoveryWeeks: 4,
-    stages: {
-      "week1": {
-        phase: "Immediate Care",
-        focus: "منع النزيف الداخلي",
-        nutrients: [
-          { name: "Vitamin K", dosage: "90mcg/day", purpose: "تجلط الدم", evidence: "Level B" },
-          { name: "Curcumin", dosage: "1000mg/day", purpose: "تقليل الالتهاب", evidence: "Level A" }
+  {
+    id: 'stress_fracture',
+    name: 'Stress Fracture',
+    category: 'Bone',
+    bodyRegion: 'Foot',
+    commonIn: ['Running', 'Dance', 'Rapid load spikes'],
+    overview: 'Bone stress injuries need enough energy, enough calcium and vitamin D, and a serious review of training load.',
+    rehabSummary: 'This is a bone-healing problem first, not just a pain problem. Low energy availability is often part of the story.',
+    redFlags: ['Night pain', 'Pain worsening with normal walking', 'Repeated stress injuries'],
+    relatedCalculators: ['Protein intake', 'Water intake', 'Macro calculator'],
+    safetyNotes: {
+      medications: ['Calcium can affect absorption timing of some medications.'],
+      supplements: ['Check vitamin D dosing against labs when possible.'],
+    },
+    phases: [
+      {
+        id: 'healing',
+        label: 'Bone healing',
+        duration: '0-6 weeks',
+        window: 'days_3_14',
+        goals: ['Support bone remodeling', 'Avoid low energy availability', 'Protect tissue'],
+        nutritionFocus: ['Protein', 'Calcium', 'Vitamin D', 'Overall energy intake'],
+        recommendedFoods: ['Milk or fortified soy milk', 'Yogurt', 'Eggs', 'Beans', 'Leafy greens'],
+        avoidFoods: ['Chronic under-eating', 'Very low-calorie cuts'],
+        supplements: [
+          {name: 'Calcium', dose: '1000-1200 mg/day', reason: 'Supports bone health'},
+          {name: 'Vitamin D', dose: '1000-2000 IU/day', reason: 'Supports calcium use and bone health'},
         ],
-        foods: ["الخضروات الورقية", "الكركم"]
+        exercises: ['Protected cross-training if cleared', 'Upper-body or non-impact work'],
+        prohibitedMovements: ['Running through pain', 'Impact work too soon'],
+        meals: {
+          breakfast: 'Fortified oats with milk and fruit',
+          lunch: 'Beans and rice with yogurt',
+          dinner: 'Salmon or tofu with potatoes and kale',
+          snack: 'Cheese and fruit',
+          shoppingList: ['Milk or soy milk', 'Yogurt', 'Beans', 'Potatoes', 'Kale', 'Salmon or tofu'],
+        },
+        proteinPerKg: {min: 1.8, max: 2.2},
+        hydrationMlPerKg: 35,
+        calciumMg: 1200,
+        vitaminCMg: 500,
       },
-      "week2-3": {
-        phase: "Repair Phase",
-        focus: "إعادة بناء الألياف",
-        nutrients: [
-          { name: "Leucine", dosage: "3g/meal", purpose: "تحفيز تخليق البروتين", evidence: "Level A" },
-          { name: "Glutamine", dosage: "10g/day", purpose: "إصلاح العضلات", evidence: "Level B" },
-          { name: "Vitamin E", dosage: "15mg/day", purpose: "حماية الغشاء الخلوي", evidence: "Level B" }
-        ],
-        proteinRequirement: "2.0g/kg"
+      {
+        id: 'reload',
+        label: 'Reload',
+        duration: '6+ weeks',
+        window: 'over_6_weeks',
+        goals: ['Support graded return to impact', 'Protect muscle mass', 'Fuel rising training volume'],
+        nutritionFocus: ['Protein', 'Calcium continuity', 'Carbs around loading'],
+        recommendedFoods: ['Rice', 'Dairy or fortified alternatives', 'Eggs', 'Fruit'],
+        avoidFoods: ['Returning to impact while still low-energy'],
+        supplements: [{name: 'Creatine monohydrate', dose: '3-5 g/day', reason: 'May support training quality once strength work increases'}],
+        exercises: ['Strength work', 'Plyometric reintroduction', 'Return-to-run progression'],
+        prohibitedMovements: ['Impact progression without symptom monitoring'],
+        meals: {
+          breakfast: 'Eggs, toast, and yogurt',
+          lunch: 'Chicken and rice bowl',
+          dinner: 'Tofu curry with potatoes',
+          snack: 'Milk and banana',
+          shoppingList: ['Eggs', 'Yogurt', 'Chicken', 'Rice', 'Tofu', 'Bananas'],
+        },
+        proteinPerKg: {min: 1.8, max: 2.2},
+        hydrationMlPerKg: 40,
+        calciumMg: 1200,
+        creatineGrams: 5,
       },
-      "week4": {
-        phase: "Return to Sport",
-        focus: "منع إعادة الإصابة",
-        nutrients: [
-          { name: "Beta-alanine", dosage: "3.2g/day", purpose: "تحمل العضلة", evidence: "Level A" },
-          { name: "CoQ10", dosage: "200mg/day", purpose: "طاقة الميتوكوندريا", evidence: "Level B" }
-        ],
-        exercises: ["تمارين الـ eccentric"]
-      }
-    }
+    ],
   },
-  "Post-surgical (General)": {
-    id: "post_surgical_general",
-    name: "Post-surgical (General)",
-    category: "Surgical Recovery",
-    recoveryWeeks: 8,
-    stages: {
-      "week1": {
-        phase: "Immediate Post-op",
-        focus: "التئام الجرح ومنع العدوى",
-        nutrients: [
-          { name: "Zinc", dosage: "30mg/day (limited time)", purpose: "التئام الجروح", evidence: "Level A" },
-          { name: "Vitamin A", dosage: "5000IU/day", purpose: "تكوين الظهارة", evidence: "Level B" },
-          { name: "Vitamin C", dosage: "2000mg/day", purpose: "تخليق الكولاجين", evidence: "Level A" }
-        ],
-        foods: ["البروتين سهل الهضم", "السوائل الدافئة"],
-        avoid: ["التدخين", "الكحول"]
-      },
-      "week2-4": {
-        phase: "Tissue Proliferation",
-        focus: "بناء الأنسجة الجديدة",
-        nutrients: [
-          { name: "Arginine", dosage: "15g/day", purpose: "توسيع الأوعية وتغذية الأنسجة", evidence: "Level A" },
-          { name: "Glutamine", dosage: "10g/day", purpose: "وظيفة المناعة", evidence: "Level A" },
-          { name: "HMB", dosage: "3g/day", purpose: "منع هدم العضلات", evidence: "Level A" }
-        ],
-        proteinRequirement: "1.8-2.2g/kg"
-      },
-      "week5+": {
-        phase: "Maturation",
-        focus: "استعادة القوة",
-        nutrients: [
-          { name: "Creatine", dosage: "5g/day", purpose: "استعادة القوة", evidence: "Level A" },
-          { name: "Vitamin D3", dosage: "2000IU/day", purpose: "المناعة وصحة العظام", evidence: "Level A" }
-        ],
-        exercises: ["إعادة التأهيل التدريجي"]
-      }
-    }
-  },
-  "Tennis Elbow": {
-    id: "tennis_elbow",
-    name: "Tennis Elbow (Lateral Epicondylitis)",
-    category: "Elbow Injuries",
-    recoveryWeeks: 12,
-    stages: {
-      "week1-2": {
-        phase: "Reactive Phase",
-        focus: "تقليل الحمل والألم",
-        nutrients: [
-          { name: "Nitric Oxide Boosters", dosage: "Beetroot juice", purpose: "تحسين تدفق الدم للوتر", evidence: "Level B" },
-          { name: "Vitamin C", dosage: "1000mg/day", purpose: "إصلاح الأنسجة", evidence: "Level B" }
-        ],
-        foods: ["البنجر", "الفلفل الألوان", "البرتقال"],
-        avoid: ["الحركات المتكررة المجهدة"]
-      },
-      "week3-8": {
-        phase: "Dysrepair Phase",
-        focus: "تحفيز إعادة بناء الوتر",
-        nutrients: [
-          { name: "Collagen Peptides", dosage: "15g/day", purpose: "بناء ألياف الوتر", evidence: "Level A" },
-          { name: "Leucine", dosage: "3g/meal", purpose: "تخليق البروتين", evidence: "Level B" }
-        ],
-        foods: ["اللحوم", "الأسماك", "البيض"]
-      },
-      "week9+": {
-        phase: "Degenerative Phase",
-        focus: "التحميل التدريجي",
-        nutrients: [
-          { name: "Glucosamine/Chondroitin", dosage: "1500mg/800mg", purpose: "صحة المفاصل والأوتار", evidence: "Level B" }
-        ],
-        exercises: ["تمارين الـ eccentric للساعد"]
-      }
-    }
-  },
-  "Achilles Tendonitis": {
-    id: "achilles_tendonitis",
-    name: "Achilles Tendonitis",
-    category: "Ankle Injuries",
-    recoveryWeeks: 12,
-    stages: {
-      "week1-2": {
-        phase: "Inflammatory Phase",
-        focus: "تقليل التورم والألم",
-        nutrients: [
-          { name: "Omega-3", dosage: "3g/day", purpose: "مضاد التهاب", evidence: "Level A" },
-          { name: "Vitamin C", dosage: "500mg/day", purpose: "دعم الكولاجين", evidence: "Level B" }
-        ],
-        foods: ["السردين", "بذور الكتان", "الجوز"]
-      },
-      "week3-8": {
-        phase: "Remodeling Phase",
-        focus: "تحسين مرونة الوتر",
-        nutrients: [
-          { name: "Collagen", dosage: "15g with Vit C", purpose: "قوة الوتر", evidence: "Level A" },
-          { name: "Silicon", dosage: "10mg/day", purpose: "مرونة الأنسجة", evidence: "Level C" }
-        ],
-        foods: ["الشوفان", "الخيار", "الفاصوليا"]
-      },
-      "week9+": {
-        phase: "Return to Activity",
-        focus: "القفز والجري التدريجي",
-        nutrients: [
-          { name: "Creatine", dosage: "5g/day", purpose: "قوة الدفع", evidence: "Level B" }
-        ]
-      }
-    }
-  },
-  "Plantar Fasciitis": {
-    id: "plantar_fasciitis",
-    name: "Plantar Fasciitis",
-    category: "Foot Injuries",
-    recoveryWeeks: 12,
-    stages: {
-      "week1-4": {
-        phase: "Acute Phase",
-        focus: "تقليل التهاب اللفافة الأخمصية",
-        nutrients: [
-          { name: "Bromelain", dosage: "500mg/day", purpose: "تقليل التورم", evidence: "Level B" },
-          { name: "Magnesium", dosage: "400mg/day", purpose: "ارتخاء العضلات", evidence: "Level A" }
-        ],
-        foods: ["الأناناس", "السبانخ", "الموز"]
-      },
-      "week5+": {
-        phase: "Strengthening Phase",
-        focus: "دعم قوس القدم",
-        nutrients: [
-          { name: "Vitamin D", dosage: "2000IU/day", purpose: "صحة العظام والأربطة", evidence: "Level A" },
-          { name: "Calcium", dosage: "1000mg/day", purpose: "قوة العظام", evidence: "Level B" }
-        ],
-        exercises: ["تمارين تقوية عضلات القدم الداخلية"]
-      }
-    }
-  },
-  "Meniscus Tear": {
-    id: "meniscus_tear",
-    name: "Meniscus Tear",
-    category: "Knee Injuries",
-    recoveryWeeks: 12,
-    stages: {
-      "week1-4": {
-        phase: "Protection Phase",
-        focus: "حماية الغضروف وتقليل التورم",
-        nutrients: [
-          { name: "Glucosamine Sulfate", dosage: "1500mg/day", purpose: "صحة الغضاريف", evidence: "Level A" },
-          { name: "Chondroitin Sulfate", dosage: "1200mg/day", purpose: "مرونة الغضروف", evidence: "Level A" }
-        ],
-        foods: ["مرق العظام", "الأسماك", "الخضروات الصليبية"]
-      },
-      "week5-8": {
-        phase: "Loading Phase",
-        focus: "تحمل الوزن التدريجي",
-        nutrients: [
-          { name: "Hyaluronic Acid", dosage: "100mg/day", purpose: "تزييت المفصل", evidence: "Level B" },
-          { name: "Vitamin C", dosage: "500mg/day", purpose: "دعم الأنسجة الضامة", evidence: "Level B" }
-        ]
-      },
-      "week9+": {
-        phase: "Functional Phase",
-        focus: "العودة للنشاط الكامل",
-        nutrients: [
-          { name: "Omega-3", dosage: "2g/day", purpose: "صحة المفاصل طويلة الأمد", evidence: "Level A" }
-        ]
-      }
-    }
-  }
-};
+];
 
-function normalizeStage(stage: RecoveryStage): RecoveryStage {
-  return {
-    ...stage,
-    phase: decodeMojibake(stage.phase),
-    focus: decodeMojibake(stage.focus),
-    nutrients: stage.nutrients.map((nutrient) => ({
-      ...nutrient,
-      purpose: decodeMojibake(nutrient.purpose),
-    })),
-    foods: stage.foods?.map((item) => decodeMojibake(item)),
-    avoid: stage.avoid?.map((item) => decodeMojibake(item)),
-    proteinRequirement: decodeMojibake(stage.proteinRequirement),
-    waterRequirement: decodeMojibake(stage.waterRequirement),
-    exercises: stage.exercises?.map((item) => decodeMojibake(item)),
-    protocol: decodeMojibake(stage.protocol),
-    position: decodeMojibake(stage.position),
-  };
+function buildLegacyStages(phases: InjuryPhase[]) {
+  const keys = ['week1-2', 'week3-6', 'week7+'];
+  return Object.fromEntries(
+    phases.slice(0, 3).map((phase, index) => [
+      keys[index] || `phase-${index + 1}`,
+      {
+        phase: phase.label,
+        focus: phase.goals.join(' • '),
+        nutrients: phase.supplements.map((item) => ({
+          name: item.name,
+          dosage: item.dose,
+          purpose: item.reason,
+          evidence: 'Practice-based',
+        })),
+        foods: phase.recommendedFoods,
+      },
+    ]),
+  );
 }
 
-function normalizeInjury(injury: Injury): Injury {
-  return {
-    ...injury,
-    name: decodeMojibake(injury.name),
-    category: decodeMojibake(injury.category),
-    stages: Object.fromEntries(
-      Object.entries(injury.stages).map(([key, stage]) => [key, normalizeStage(stage)]),
-    ),
-    contraindications: injury.contraindications
-      ? {
-          medications: injury.contraindications.medications.map((item) => decodeMojibake(item)),
-          supplements: injury.contraindications.supplements.map((item) => decodeMojibake(item)),
-        }
-      : undefined,
-  };
-}
-
-export const injuryDatabase: { [key: string]: Injury } = Object.fromEntries(
-  Object.entries(rawInjuryDatabase).map(([key, injury]) => [key, normalizeInjury(injury)]),
+export const injuryDatabase: Record<string, InjuryProtocol> = Object.fromEntries(
+  injuryProtocols.map((injury) => [
+    injury.id,
+    {
+      ...injury,
+      contraindications: injury.safetyNotes,
+      stages: buildLegacyStages(injury.phases),
+    },
+  ]),
 );
 
-export const getInjuryById = (id: string): Injury | undefined => {
-  return Object.values(injuryDatabase).find(injury => injury.id === id);
-};
+export const getAllInjuries = () => injuryProtocols;
+export const getAllCategories = (): InjuryCategory[] => [...new Set(injuryProtocols.map((injury) => injury.category))] as InjuryCategory[];
+export const getAllBodyRegions = (): BodyRegion[] => [...new Set(injuryProtocols.map((injury) => injury.bodyRegion))] as BodyRegion[];
+export const getInjuryById = (id: string) => injuryDatabase[id];
+export const getSuggestedPhaseForWindow = (injury: InjuryProtocol, window: RecoveryWindow) =>
+  injury.phases.find((phase) => phase.window === window) || injury.phases[0];
 
-export const getInjuriesByCategory = (category: string): Injury[] => {
-  return Object.values(injuryDatabase).filter(injury => injury.category === category);
-};
+export function generateRecoveryPlan({
+  weightKg,
+  phase,
+  profile,
+  goal,
+  dietStyle,
+}: RecoveryPlanInput): RecoveryPlanOutput | null {
+  if (!Number.isFinite(weightKg) || weightKg <= 0) return null;
 
-export const getAllCategories = (): string[] => {
-  return [...new Set(Object.values(injuryDatabase).map(injury => injury.category))];
-};
+  const baseMin = phase.proteinPerKg?.min ?? 1.6;
+  const baseMax = phase.proteinPerKg?.max ?? 2;
+  const profileBoost = profile === 'athlete' ? 0.15 : profile === 'older_adult' ? 0.1 : 0;
+  const goalBoost = goal === 'strength' || goal === 'return' ? 0.1 : goal === 'calm' ? -0.05 : 0;
+  const proteinMin = Math.round(weightKg * Math.max(1.4, baseMin + profileBoost + goalBoost));
+  const proteinMax = Math.round(weightKg * Math.max(proteinMin / weightKg, baseMax + profileBoost + goalBoost));
+  const chosenProtein = goal === 'calm' ? proteinMin : goal === 'mobility' ? Math.round((proteinMin + proteinMax) / 2) : proteinMax;
+  const hydrationTargetMl = Math.round(weightKg * (phase.hydrationMlPerKg ?? 35) + (profile === 'athlete' ? 350 : 0));
+  const collagenDoseGrams = phase.collagenPerKg
+    ? Math.max(10, Math.min(20, Math.round(weightKg * ((phase.collagenPerKg.min + phase.collagenPerKg.max) / 2))))
+    : undefined;
+  const breakfast = Math.round(chosenProtein * 0.28);
+  const lunch = Math.round(chosenProtein * 0.32);
+  const snack = Math.max(15, Math.round(chosenProtein * 0.15));
+  const dinner = chosenProtein - breakfast - lunch - snack;
+
+  const vegetarianSwap = (text: string) =>
+    dietStyle === 'vegetarian'
+      ? text
+          .replace(/chicken/gi, 'tofu')
+          .replace(/turkey/gi, 'tempeh')
+          .replace(/salmon/gi, 'tofu')
+          .replace(/fish/gi, 'soy protein')
+          .replace(/lean beef/gi, 'lentils')
+      : text;
+
+  return {
+    proteinTotalGrams: chosenProtein,
+    proteinRange: {min: proteinMin, max: proteinMax},
+    proteinDistribution: {breakfast, lunch, dinner, snack},
+    hydrationTargetMl,
+    collagenDoseGrams,
+    creatineGrams: phase.creatineGrams,
+    omega3Grams: phase.omega3Grams,
+    vitaminCMg: phase.vitaminCMg,
+    calciumMg: phase.calciumMg,
+    timingTips: [phase.timing?.collagen, phase.timing?.protein, phase.timing?.carbs, phase.timing?.hydration].filter(Boolean) as string[],
+    meals: {
+      breakfast: vegetarianSwap(phase.meals.breakfast),
+      lunch: vegetarianSwap(phase.meals.lunch),
+      dinner: vegetarianSwap(phase.meals.dinner),
+      snack: phase.meals.snack ? vegetarianSwap(phase.meals.snack) : undefined,
+    },
+  };
+}

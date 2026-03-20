@@ -1,9 +1,10 @@
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useMemo, useRef, useState} from 'react';
 import {Link, Navigate} from 'react-router-dom';
 import {
   ArrowLeft,
   BarChart3,
   Calendar,
+  Download,
   LineChart,
   LoaderCircle,
   LogOut,
@@ -21,6 +22,8 @@ import {
   Legend,
 } from 'chart.js';
 import {Line} from 'react-chartjs-2';
+import PdfReportSheet from '../components/pdf/PdfReportSheet';
+import {buildDashboardPdfData, generatePdfReport} from '../services/pdfReports';
 import {
   deleteAssessment,
   getCurrentUser,
@@ -43,6 +46,10 @@ export default function TrackingDashboardPage() {
   const [records, setRecords] = useState<AssessmentRecord[]>([]);
   const [status, setStatus] = useState<'checking' | 'loading' | 'ready' | 'error'>('checking');
   const [message, setMessage] = useState('');
+  const [pdfReport, setPdfReport] = useState<Awaited<ReturnType<typeof buildDashboardPdfData>> | null>(null);
+  const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
+  const chartRef = useRef<any>(null);
+  const pdfRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     let mounted = true;
@@ -156,6 +163,49 @@ export default function TrackingDashboardPage() {
     };
   }, [isAr, numericRecords]);
 
+  const handleDownloadPdf = async () => {
+    if (!user || isGeneratingPdf) return;
+
+    setIsGeneratingPdf(true);
+    setMessage('');
+
+    try {
+      const chartImageDataUrl =
+        numericRecords.length > 0 && chartRef.current?.toBase64Image
+          ? chartRef.current.toBase64Image()
+          : undefined;
+
+      const report = await buildDashboardPdfData({
+        lang,
+        user,
+        records,
+        chartImageDataUrl,
+      });
+
+      setPdfReport(report);
+
+      await new Promise((resolve) => window.setTimeout(resolve, 80));
+
+      if (!pdfRef.current) {
+        throw new Error('PDF report view is not ready.');
+      }
+
+      const safeName = (user.email?.split('@')[0] || 'dashboard').replace(/[^a-z0-9-_]/gi, '-');
+      await generatePdfReport({
+        element: pdfRef.current,
+        fileName: `${safeName}-physionutrition-dashboard-report.pdf`,
+      });
+    } catch (error) {
+      setMessage(
+        isAr
+          ? 'تعذر إنشاء التقرير الآن. حاول مرة أخرى بعد ثوانٍ.'
+          : 'Could not generate the PDF report right now. Please try again in a moment.',
+      );
+    } finally {
+      setIsGeneratingPdf(false);
+    }
+  };
+
   if (!isSupabaseConfigured) {
     return (
       <div className="min-h-screen bg-slate-50 px-4 py-20 text-center text-slate-600">
@@ -204,6 +254,15 @@ export default function TrackingDashboardPage() {
           </div>
 
           <div className="flex flex-wrap gap-3">
+            <button
+              type="button"
+              onClick={handleDownloadPdf}
+              disabled={isGeneratingPdf}
+              className="inline-flex items-center gap-2 rounded-2xl bg-health-green px-4 py-3 font-bold text-white transition-all hover:bg-health-green-dark disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {isGeneratingPdf ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
+              <span>{isAr ? 'تحميل تقرير PDF' : 'Download PDF report'}</span>
+            </button>
             <Link
               to="/"
               className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 font-bold text-slate-700"
@@ -241,6 +300,7 @@ export default function TrackingDashboardPage() {
             ) : numericRecords.length > 0 ? (
               <div className="h-[320px]">
                 <Line
+                  ref={chartRef}
                   data={lineData}
                   options={{
                     responsive: true,
@@ -326,6 +386,13 @@ export default function TrackingDashboardPage() {
             )}
           </div>
         </div>
+      </div>
+      <div className="fixed -left-[200vw] top-0 opacity-0 pointer-events-none">
+        {pdfReport ? (
+          <div ref={pdfRef}>
+            <PdfReportSheet report={pdfReport} />
+          </div>
+        ) : null}
       </div>
     </div>
   );
