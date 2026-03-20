@@ -35,6 +35,9 @@ export default function PageLayout({
             <Link className="hover:text-health-green" to="/contact">
               {lang === 'en' ? 'Contact' : 'اتصل بنا'}
             </Link>
+            <Link className="hover:text-health-green" to="/injury-protocols">
+              {lang === 'en' ? 'Injury Protocols' : 'بروتوكولات الإصابات'}
+            </Link>
             <Link className="hover:text-health-green" to="/terms">
               {lang === 'en' ? 'Terms' : 'الشروط'}
             </Link>

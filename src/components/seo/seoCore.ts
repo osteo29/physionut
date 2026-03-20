@@ -93,6 +93,9 @@ export function applySeo(config: SeoConfig) {
     name: DEFAULT_SITE_NAME,
     url: siteUrl,
     email: 'physionutritionofficial@gmail.com',
-    sameAs: [],
+    sameAs: [
+      'https://www.facebook.com/Physionutrition.official/',
+      'https://www.instagram.com/physionutrition.official/',
+    ],
   });
 }

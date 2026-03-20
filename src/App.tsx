@@ -27,6 +27,7 @@ import ConsentBanner from './components/monetization/ConsentBanner';
 import AdSlot from './components/monetization/AdSlot';
 import ResultLeadCapture from './components/forms/ResultLeadCapture';
 import SupportToolsSection from './components/home/SupportToolsSection';
+import InjuryProtocolsHighlight from './components/home/InjuryProtocolsHighlight';
 import {
   Chart as ChartJS,
   ArcElement,
@@ -1043,6 +1044,8 @@ export default function App({
 
       {/* What's New Section */}
       <WhatsNew lang={lang} />
+
+      <InjuryProtocolsHighlight lang={lang} />
 
       {/* PhysioNutrition Architect Section */}
       <section id="architect" className="py-24 bg-slate-50">

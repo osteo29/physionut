@@ -9,6 +9,7 @@ import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import ArticlePage from './pages/ArticlePage';
 import InsightsPage from './pages/InsightsPage';
+import InjuryProtocolsPage from './pages/InjuryProtocolsPage';
 import ArticleStudioPage from './pages/ArticleStudioPage';
 import AssistantPage from './pages/AssistantPage';
 import NotFound from './pages/NotFound';
@@ -45,6 +46,7 @@ export default function RouterApp() {
       <Route path="/about" element={<AboutPage />} />
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/insights" element={<InsightsPage />} />
+      <Route path="/injury-protocols" element={<InjuryProtocolsPage />} />
       <Route path="/insights/:slug" element={<ArticlePage />} />
       <Route path="/studio/articles" element={<ArticleStudioPage />} />
       <Route

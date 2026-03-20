@@ -1,4 +1,5 @@
 import {Pill, Plus, Search, Sparkles} from 'lucide-react';
+import {Link} from 'react-router-dom';
 import type {FoodItem} from '../../services/foodData';
 import DrugNutrientChecker from '../ai/DrugNutrientChecker';
 
@@ -48,8 +49,8 @@ export default function SupportToolsSection({
               </h2>
               <p className="max-w-3xl text-slate-600">
                 {isAr
-                  ? 'بدل ما المستخدم يدوّر عليهم في آخر الصفحة، القسم ده يجمع مكتبة الأغذية مع فحص أمان الدواء والغذاء والمكملات بشكل أوضح، بحيث يعرف فورًا كل أداة بتعمل إيه ومتى يستخدمها.'
-                  : 'Instead of leaving them buried at the bottom, this area combines the food library with medication, food, and supplement safety checks so users understand what each tool does and when to use it.'}
+                  ? 'القسم ده يجمع مكتبة الأغذية، فحص أمان الدواء والمكملات، وبروتوكولات الإصابات في مكان واحد، بحيث المستخدم يعرف بسرعة كل أداة بتعمل إيه ومتى يحتاجها.'
+                  : 'This area brings together the food library, medication and supplement safety checks, and injury protocols so users can quickly understand what each tool does and when to use it.'}
               </p>
             </div>
           </div>
@@ -85,13 +86,13 @@ export default function SupportToolsSection({
             </h3>
             <p className="mb-5 text-sm leading-7 text-slate-600">
               {isAr
-                ? 'أداة مهمة قبل اقتراح مكمل أو تعديل روتين غذائي، خصوصًا لو المستخدم يتناول دواء مزمن أو لديه تداخلات محتملة.'
-                : 'A high-value check before suggesting supplements or changing a routine, especially when the user uses chronic medication or may have interaction risks.'}
+                ? 'أداة مهمة قبل اقتراح مكمل أو تعديل الروتين الغذائي، خصوصًا لو المستخدم عنده دواء ثابت أو حالة مزمنة.'
+                : 'A high-value check before suggesting supplements or changing a routine, especially when a user takes regular medication or has chronic disease.'}
             </p>
             <div className="mb-5 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-7 text-slate-700">
               {isAr
                 ? 'لو عندك مرض مزمن أو بتاخد دواء بشكل يومي، استخدم الأداة دي قبل ما تغيّر أكلك أو تبدأ أي مكمل.'
-                : 'If you live with a chronic condition or take a daily medication, use this tool before changing your diet or starting any supplement.'}
+                : 'If you live with a chronic condition or take daily medication, use this tool before changing your diet or starting any supplement.'}
             </div>
             <a
               href="#drug-nutrient-checker"
@@ -99,6 +100,27 @@ export default function SupportToolsSection({
             >
               {isAr ? 'افتح فحص الأمان' : 'Open safety check'}
             </a>
+          </div>
+        </div>
+
+        <div className="mb-10 rounded-[2rem] border border-slate-200 bg-slate-50 p-6">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <h3 className="text-xl font-bold text-slate-900">
+                {isAr ? 'بروتوكولات الإصابات والتغذية العلاجية' : 'Injury recovery nutrition protocols'}
+              </h3>
+              <p className="mt-2 max-w-3xl text-sm leading-7 text-slate-600">
+                {isAr
+                  ? 'لو عندك إصابة شائعة أو بتجهز محتوى علاجي، افتح صفحة البروتوكولات لترى مراحل التعافي، العناصر الغذائية المهمة، الأطعمة المقترحة، والتنبيهات المرتبطة بكل إصابة.'
+                  : 'Open the protocol library for recovery stages, key nutrients, suggested foods, and cautions linked to common injuries.'}
+              </p>
+            </div>
+            <Link
+              to="/injury-protocols"
+              className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-bold text-health-green shadow-sm"
+            >
+              {isAr ? 'افتح بروتوكولات الإصابات' : 'Open injury protocols'}
+            </Link>
           </div>
         </div>
 
@@ -112,7 +134,7 @@ export default function SupportToolsSection({
                 <h3 className="text-2xl font-bold text-slate-900">{t.foodDb.title}</h3>
                 <p className="mt-2 max-w-3xl text-sm leading-7 text-slate-600">
                   {isAr
-                    ? 'استخدمها لبناء وجبة بشكل أسرع، أو لفهم محتوى الطعام قبل إضافته إلى حاسبة الوجبة.'
+                    ? 'استخدمها لبناء وجبة بشكل أسرع أو لفهم محتوى الطعام قبل إضافته إلى حاسبة الوجبة.'
                     : 'Use it to build meals faster or to understand food composition before adding it to the meal calculator.'}
                 </p>
               </div>

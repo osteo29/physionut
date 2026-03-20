@@ -1,6 +1,8 @@
 // src/services/injuryDatabase.ts
 // قاعدة بيانات الإصابات الشائعة في العلاج الطبيعي
 
+import {decodeMojibake} from './textEncoding';
+
 export interface Nutrient {
   name: string;
   dosage: string;
@@ -35,7 +37,7 @@ export interface Injury {
   };
 }
 
-export const injuryDatabase: { [key: string]: Injury } = {
+const rawInjuryDatabase: { [key: string]: Injury } = {
   "ACL tear": {
     id: "acl_tear",
     name: "ACL tear",
@@ -392,6 +394,46 @@ export const injuryDatabase: { [key: string]: Injury } = {
     }
   }
 };
+
+function normalizeStage(stage: RecoveryStage): RecoveryStage {
+  return {
+    ...stage,
+    phase: decodeMojibake(stage.phase),
+    focus: decodeMojibake(stage.focus),
+    nutrients: stage.nutrients.map((nutrient) => ({
+      ...nutrient,
+      purpose: decodeMojibake(nutrient.purpose),
+    })),
+    foods: stage.foods?.map((item) => decodeMojibake(item)),
+    avoid: stage.avoid?.map((item) => decodeMojibake(item)),
+    proteinRequirement: decodeMojibake(stage.proteinRequirement),
+    waterRequirement: decodeMojibake(stage.waterRequirement),
+    exercises: stage.exercises?.map((item) => decodeMojibake(item)),
+    protocol: decodeMojibake(stage.protocol),
+    position: decodeMojibake(stage.position),
+  };
+}
+
+function normalizeInjury(injury: Injury): Injury {
+  return {
+    ...injury,
+    name: decodeMojibake(injury.name),
+    category: decodeMojibake(injury.category),
+    stages: Object.fromEntries(
+      Object.entries(injury.stages).map(([key, stage]) => [key, normalizeStage(stage)]),
+    ),
+    contraindications: injury.contraindications
+      ? {
+          medications: injury.contraindications.medications.map((item) => decodeMojibake(item)),
+          supplements: injury.contraindications.supplements.map((item) => decodeMojibake(item)),
+        }
+      : undefined,
+  };
+}
+
+export const injuryDatabase: { [key: string]: Injury } = Object.fromEntries(
+  Object.entries(rawInjuryDatabase).map(([key, injury]) => [key, normalizeInjury(injury)]),
+);
 
 export const getInjuryById = (id: string): Injury | undefined => {
   return Object.values(injuryDatabase).find(injury => injury.id === id);

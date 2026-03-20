@@ -2,12 +2,15 @@ import {useMemo, useState} from 'react';
 import {motion} from 'motion/react';
 import {AlertOctagon, AlertTriangle, CheckCircle2, Pill, Search} from 'lucide-react';
 import {askGeminiText, trackAiQuestion} from '../../ai/gemini';
+import {findCommonDrugInteraction} from '../../services/commonDrugInteractions';
 
 type ResultCard = {
   status: 'Danger' | 'Caution' | 'Safe' | 'Unclear';
   summary: string;
   interactions: string[];
   practicalAdvice: string[];
+  source?: 'database' | 'ai';
+  title?: string;
 };
 
 function safeParseJson(text: string): ResultCard | null {
@@ -23,6 +26,7 @@ function safeParseJson(text: string): ResultCard | null {
       summary: parsed.summary || '',
       interactions: Array.isArray(parsed.interactions) ? parsed.interactions : [],
       practicalAdvice: Array.isArray(parsed.practicalAdvice) ? parsed.practicalAdvice : [],
+      source: 'ai',
     };
   } catch {
     return null;
@@ -30,8 +34,8 @@ function safeParseJson(text: string): ResultCard | null {
 }
 
 const EXAMPLES = {
-  en: ['Warfarin', 'Metformin and vitamin B12', 'Grapefruit and statins'],
-  ar: ['وارفارين', 'الميتفورمين وفيتامين B12', 'الجريب فروت مع الستاتينات'],
+  en: ['Warfarin and vitamin K', 'Metformin and vitamin B12', 'Grapefruit with statins'],
+  ar: ['وارفارين وفيتامين K', 'الميتفورمين وفيتامين B12', 'الجريب فروت مع الستاتين'],
 } as const;
 
 export default function DrugNutrientChecker({
@@ -57,9 +61,22 @@ export default function DrugNutrientChecker({
     setError(null);
     setResult(null);
 
-    trackAiQuestion(q, {source: 'drug_nutrient_checker'});
-
     try {
+      const matched = findCommonDrugInteraction(q);
+      if (matched) {
+        setResult({
+          status: matched.status,
+          title: matched.title[isAr ? 'ar' : 'en'],
+          summary: matched.summary[isAr ? 'ar' : 'en'],
+          interactions: matched.interactions[isAr ? 'ar' : 'en'],
+          practicalAdvice: matched.practicalAdvice[isAr ? 'ar' : 'en'],
+          source: 'database',
+        });
+        return;
+      }
+
+      trackAiQuestion(q, {source: 'drug_nutrient_checker'});
+
       const text = await askGeminiText({
         system:
           'You are a clinical pharmacist and clinical nutritionist. Identify clinically relevant drug-food, drug-supplement, and drug-nutrient interactions. Be cautious, do not diagnose, and recommend consulting a pharmacist or doctor before acting.',
@@ -76,6 +93,7 @@ export default function DrugNutrientChecker({
             : 'Could not parse a structured answer. Try writing the medication or supplement name more clearly.',
           interactions: [],
           practicalAdvice: [],
+          source: 'ai',
         });
       } else {
         setResult(parsed);
@@ -113,8 +131,8 @@ export default function DrugNutrientChecker({
             </h2>
             <p className="mt-2 max-w-2xl text-slate-600">
               {isAr
-                ? 'استخدمها عندما يكون المستخدم على دواء ثابت أو قبل اقتراح مكمل غذائي، حتى تلتقط التداخلات الشائعة بشكل سريع وواضح.'
-                : 'Use this when a user takes regular medication or before suggesting a supplement, so common interaction risks are surfaced quickly and clearly.'}
+                ? 'الأداة تبحث أولًا في قاعدة بيانات ثابتة للتداخلات الشائعة، ولو مفيش تطابق واضح تستخدم الذكاء الاصطناعي كمساعد إضافي بحذر.'
+                : 'The tool checks a fixed database of common interactions first, then uses AI carefully when there is no clear direct match.'}
             </p>
           </div>
         </div>
@@ -126,7 +144,7 @@ export default function DrugNutrientChecker({
             </strong>
             <span>
               {isAr
-                ? 'لو عندك مرض مزمن، أو بتاخد دواء ثابت، أو ناوي تبدأ مكمل غذائي جديد، افحص هنا الأول هل فيه أكل أو مكملات قد لا تكون مناسبة مع حالتك أو مع الدواء.'
+                ? 'لو عندك مرض مزمن، أو بتاخد دواء ثابت، أو ناوي تبدأ مكمل جديد، افحص هنا الأول هل فيه غذاء أو مكمل قد لا يكون مناسبًا مع حالتك أو مع الدواء.'
                 : 'If you have a chronic condition, take regular medication, or plan to start a new supplement, check here first to see whether any food or supplement may not fit your condition or medication.'}
             </span>
           </div>
@@ -152,8 +170,8 @@ export default function DrugNutrientChecker({
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder={
                   isAr
-                    ? 'مثال: وارفارين أو ميتفورمين مع B12 أو الجريب فروت مع الستاتينات'
-                    : 'Example: Warfarin, metformin and B12, or grapefruit with statins'
+                    ? 'مثال: وارفارين وفيتامين K أو الميتفورمين وفيتامين B12'
+                    : 'Example: Warfarin and vitamin K, or metformin and B12'
                 }
                 className="w-full rounded-2xl border border-slate-200 py-4 pl-12 pr-4 outline-none focus:ring-2 focus:ring-medical-blue/30 rtl:pl-4 rtl:pr-12"
               />
@@ -196,6 +214,7 @@ export default function DrugNutrientChecker({
               <div className={`flex items-start gap-3 ${cardTone.text}`}>
                 <Icon className="mt-0.5 h-6 w-6 shrink-0" />
                 <div className="flex-1">
+                  {result.title ? <div className="mb-1 text-base font-black text-slate-900">{result.title}</div> : null}
                   <div className="text-sm font-black uppercase tracking-widest">
                     {result.status === 'Danger'
                       ? isAr
@@ -212,6 +231,15 @@ export default function DrugNutrientChecker({
                           : isAr
                             ? 'غير واضح'
                             : 'Unclear'}
+                  </div>
+                  <div className="mt-2 inline-flex rounded-full bg-white/70 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-slate-500">
+                    {result.source === 'database'
+                      ? isAr
+                        ? 'قاعدة بيانات ثابتة'
+                        : 'Verified database'
+                      : isAr
+                        ? 'مساعدة بالذكاء الاصطناعي'
+                        : 'AI-assisted'}
                   </div>
                   <div className="mt-2 text-sm text-slate-800">{result.summary}</div>
                 </div>

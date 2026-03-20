@@ -12,7 +12,7 @@ export default function AboutPage() {
         description={
           lang === 'en'
             ? 'Learn about PhysioNutrition, its educational purpose, and how its clinical calculators and nutrition tools are built.'
-            : 'تعرف على PhysioNutrition ورسالة الموقع التعليمية وكيف تم بناء أدواته في التغذية والعلاج الطبيعي.'
+            : 'تعرّف على PhysioNutrition ورسالة الموقع التعليمية وكيف تم بناء أدواته في التغذية والعلاج الطبيعي.'
         }
         canonicalPath="/about"
       />
