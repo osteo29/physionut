@@ -4,6 +4,7 @@ import {
   BarChart3,
   BookOpen,
   Brain,
+  ClipboardList,
   HeartPulse,
   LogOut,
   Menu,
@@ -283,6 +284,11 @@ const Navigation = memo(
                           label: isAr ? 'لوحة المتابعة' : 'Tracking dashboard',
                         },
                         {
+                          href: '/injury-protocols',
+                          icon: <ClipboardList className="h-5 w-5" />,
+                          label: isAr ? 'بروتوكولات الإصابات' : 'Injury protocols',
+                        },
+                        {
                           href: '#blog',
                           icon: <BookOpen className="h-5 w-5" />,
                           label: t.nav.insights,
@@ -381,6 +387,9 @@ const Navigation = memo(
                 <a href="#calculators" className="nav-link">
                   {t.nav.calculators}
                 </a>
+                <Link to="/injury-protocols" className="nav-link">
+                  {isAr ? 'الإصابات' : 'Injuries'}
+                </Link>
                 <a href="#blog" className="nav-link">
                   {t.nav.insights}
                 </a>

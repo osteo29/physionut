@@ -26,7 +26,7 @@ import usePreferredLang from './usePreferredLang';
 
 const profiles: ActivityProfile[] = ['general', 'athlete', 'older_adult', 'post_op'];
 const goals: RecoveryGoal[] = ['calm', 'mobility', 'strength', 'return'];
-const windows: RecoveryWindow[] = ['under_48h', 'days_3_14', 'weeks_2_6', 'over_6_weeks'];
+const recoveryWindows: RecoveryWindow[] = ['under_48h', 'days_3_14', 'weeks_2_6', 'over_6_weeks'];
 const diets: DietStyle[] = ['omnivore', 'vegetarian'];
 
 export default function InjuryProtocolsPage() {
@@ -40,7 +40,7 @@ export default function InjuryProtocolsPage() {
   const [query, setQuery] = useState('');
   const [profile, setProfile] = useState<ActivityProfile>('general');
   const [goal, setGoal] = useState<RecoveryGoal>('calm');
-  const [window, setWindow] = useState<RecoveryWindow>('under_48h');
+  const [recoveryWindow, setRecoveryWindow] = useState<RecoveryWindow>('under_48h');
   const [diet, setDiet] = useState<DietStyle>('omnivore');
   const [weightKg, setWeightKg] = useState(70);
   const [selectedInjuryId, setSelectedInjuryId] = useState(injuries[0]?.id ?? '');
@@ -65,8 +65,8 @@ export default function InjuryProtocolsPage() {
   }, [bodyRegion, category, injuries, query]);
 
   useEffect(() => {
-    const architectRaw = window.localStorage.getItem('physiohub_architect_profile');
-    const trackingRaw = window.localStorage.getItem('physio_health_profile');
+    const architectRaw = globalThis.window.localStorage.getItem('physiohub_architect_profile');
+    const trackingRaw = globalThis.window.localStorage.getItem('physio_health_profile');
 
     try {
       const source = architectRaw || trackingRaw;
@@ -115,11 +115,11 @@ export default function InjuryProtocolsPage() {
 
   useEffect(() => {
     if (!selectedInjury) return;
-    const suggested = getSuggestedPhaseForWindow(selectedInjury, window);
+    const suggested = getSuggestedPhaseForWindow(selectedInjury, recoveryWindow);
     setSelectedPhaseId((current) =>
       selectedInjury.phases.some((phase) => phase.id === current) ? current : suggested.id,
     );
-  }, [selectedInjury, window]);
+  }, [recoveryWindow, selectedInjury]);
 
   const phase =
     selectedInjury?.phases.find((item) => item.id === selectedPhaseId) || selectedInjury?.phases[0];
@@ -247,8 +247,8 @@ export default function InjuryProtocolsPage() {
                 onChange={(e) => setWeightKg(Math.max(0, Math.min(250, Number(e.target.value) || 0)))}
                 className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-health-green focus:ring-2 focus:ring-health-green/20"
               />
-              <select value={window} onChange={(e) => setWindow(e.target.value as RecoveryWindow)} className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-health-green focus:ring-2 focus:ring-health-green/20">
-                {windows.map((item) => (
+              <select value={recoveryWindow} onChange={(e) => setRecoveryWindow(e.target.value as RecoveryWindow)} className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-health-green focus:ring-2 focus:ring-health-green/20">
+                {recoveryWindows.map((item) => (
                   <option key={item} value={item}>
                     {labels.window[item]}
                   </option>

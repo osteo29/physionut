@@ -4,6 +4,7 @@ import {
   ArrowLeft,
   BarChart3,
   Calendar,
+  ClipboardList,
   Download,
   LineChart,
   LoaderCircle,
@@ -344,6 +345,23 @@ export default function TrackingDashboardPage() {
                 </div>
               </div>
             </div>
+            <Link
+              to="/injury-protocols"
+              className="mt-4 flex items-center justify-between gap-4 rounded-[1.5rem] border border-health-green/20 bg-health-green/5 px-4 py-4 transition-all hover:border-health-green/40 hover:bg-health-green/10"
+            >
+              <div>
+                <div className="flex items-center gap-2 text-sm font-bold text-health-green-dark">
+                  <ClipboardList className="h-4 w-4" />
+                  <span>{isAr ? 'بروتوكولات الإصابات' : 'Injury protocols'}</span>
+                </div>
+                <p className="mt-2 text-sm text-slate-600">
+                  {isAr
+                    ? 'افتح مكتبة التعافي وخطط التغذية العلاجية مباشرة من لوحة المتابعة.'
+                    : 'Open the rehab library and recovery nutrition plans directly from your dashboard.'}
+                </p>
+              </div>
+              <ArrowLeft className={`h-4 w-4 shrink-0 text-health-green ${isAr ? '' : 'rotate-180'}`} />
+            </Link>
           </div>
         </div>
 
