@@ -123,15 +123,23 @@ export default function ResultLeadCapture({
           </div>
           <p className="text-sm leading-6 text-amber-700">
             {lang === 'en'
-              ? 'Create an account or sign in to save results securely and review them later from your dashboard.'
-              : 'أنشئ حسابًا أو سجّل الدخول لحفظ النتائج بشكل آمن والرجوع إليها لاحقًا من لوحة المتابعة.'}
+              ? 'Your result is ready. Create an account to save it, build a personal history, and come back to it anytime from your dashboard.'
+              : 'نتيجتك جاهزة. أنشئ حسابًا لحفظها، وبناء سجل متابعة خاص بك، والرجوع إليها في أي وقت من لوحة المتابعة.'}
           </p>
-          <Link
-            to="/auth"
-            className="mt-3 inline-flex items-center justify-center rounded-2xl bg-slate-900 px-4 py-2 text-sm font-bold text-white transition-all hover:bg-slate-800"
-          >
-            {lang === 'en' ? 'Open login' : 'افتح تسجيل الدخول'}
-          </Link>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <Link
+              to="/auth?mode=signup"
+              className="inline-flex items-center justify-center rounded-2xl bg-slate-900 px-4 py-2 text-sm font-bold text-white transition-all hover:bg-slate-800"
+            >
+              {lang === 'en' ? 'Create account' : 'إنشئ حساب'}
+            </Link>
+            <Link
+              to="/auth?mode=signin"
+              className="inline-flex items-center justify-center rounded-2xl border border-amber-300 bg-white px-4 py-2 text-sm font-bold text-amber-800 transition-all hover:border-amber-400"
+            >
+              {lang === 'en' ? 'Sign in' : 'سجّل الدخول'}
+            </Link>
+          </div>
         </div>
       )}
 

@@ -1,5 +1,5 @@
 import {type FormEvent, useEffect, useState} from 'react';
-import {Link, useLocation, useNavigate} from 'react-router-dom';
+import {Link, useLocation, useNavigate, useSearchParams} from 'react-router-dom';
 import {HeartPulse, LoaderCircle, LockKeyhole, Moon, Sun} from 'lucide-react';
 import Seo from '../components/seo/Seo';
 import usePreferredLang from './usePreferredLang';
@@ -26,10 +26,12 @@ export default function AuthPage({
   const isAr = lang === 'ar';
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams] = useSearchParams();
   const redirectTo = (location.state as {from?: string} | null)?.from || '/dashboard';
+  const requestedMode = searchParams.get('mode') === 'signup' ? 'signup' : 'signin';
 
   const [user, setUser] = useState<User | null>(null);
-  const [mode, setMode] = useState<'signin' | 'signup'>('signin');
+  const [mode, setMode] = useState<'signin' | 'signup'>(requestedMode);
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -84,6 +86,10 @@ export default function AuthPage({
     setMessage('');
     setStatus('idle');
   }, [mode, email]);
+
+  useEffect(() => {
+    setMode(requestedMode);
+  }, [requestedMode]);
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
