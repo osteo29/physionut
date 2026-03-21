@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { AlertCircle, Edit2, Plus, Trash2, ChevronDown, ChevronUp, Download } from 'lucide-react';
+import { AlertCircle, Edit2, Plus, Trash2, ChevronDown, ChevronUp, Download, X } from 'lucide-react';
 import {
   fetchInjuriesFromSupabase,
   fetchPhasesByInjuryId,
@@ -14,15 +14,18 @@ import {
   createMeal,
   deleteSupplement,
   deleteMeal,
+  createInjury,
   type InjuryRow,
   type PhaseRow,
 } from '../services/injurySupabaseService';
 import { migrateAllInjuriesToSupabase } from '../utils/dataMigration';
+import { AddInjuryWizard } from '../components/admin/AddInjuryWizard';
 
 export default function AdminInjuryManager() {
   const [injuries, setInjuries] = useState<InjuryRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [isMigrating, setIsMigrating] = useState(false);
+  const [showWizard, setShowWizard] = useState(false);
   const [expandedInjury, setExpandedInjury] = useState<string | null>(null);
   const [selectedPhase, setSelectedPhase] = useState<string | null>(null);
   const [editingData, setEditingData] = useState<Record<string, string>>({});
@@ -109,7 +112,20 @@ export default function AdminInjuryManager() {
             <Download className="w-4 h-4" />
             {isMigrating ? 'Importing...' : 'Import Legacy Data'}
           </button>
+
+          <button
+            onClick={() => setShowWizard(true)}
+            className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition font-semibold"
+          >
+            <Plus className="w-4 h-4" />
+            إضافة إصابة جديدة
+          </button>
         </div>
+
+        {/* Wizard Modal */}
+        {showWizard && (
+          <AddInjuryWizard onClose={() => setShowWizard(false)} onSuccess={loadInjuries} />
+        )}
 
         {/* Alert Banner */}
         <div className="bg-blue-900/30 border border-blue-500 rounded-lg p-4 mb-6">
