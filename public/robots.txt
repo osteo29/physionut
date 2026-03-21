@@ -27,14 +27,8 @@ Crawl-delay: 2
 User-agent: Slurp
 Crawl-delay: 1
 
-# Block bad bots
+# Block low-value bots (keep SEO tools enabled)
 User-agent: MJ12bot
-Disallow: /
-
-User-agent: AhrefsBot
-Disallow: /
-
-User-agent: SemrushBot
 Disallow: /
 
 User-agent: DotBot
