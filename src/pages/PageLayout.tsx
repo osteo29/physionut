@@ -16,7 +16,7 @@ export default function PageLayout({
 
   const handleBrandClick = () => {
     const rootPath = `/${lang}/`;
-    if (location.pathname === rootPath) {
+    if (location.pathname === rootPath && typeof window !== 'undefined') {
       window.scrollTo({top: 0, behavior: 'smooth'});
     }
   };

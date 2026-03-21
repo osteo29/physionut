@@ -31,12 +31,11 @@ type CalculatorNavItem = {
   title: string;
   icon: ReactNode;
 };
-  title: string;
-  icon: ReactNode;
-};
 
 function scrollToId(id: string) {
-  document.getElementById(id)?.scrollIntoView({behavior: 'smooth'});
+  if (typeof document !== 'undefined') {
+    document.getElementById(id)?.scrollIntoView({behavior: 'smooth'});
+  }
 }
 
 const Navigation = memo(
