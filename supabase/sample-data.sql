@@ -140,8 +140,137 @@ INSERT INTO public.injury_phases (
 FROM public.injuries WHERE injury_id_slug = 'knee-acl-tear'
 LIMIT 1;
 
--- Phases 3-5 would continue similarly...
--- (omitted for brevity, follow same pattern)
+-- Phase 3: Strengthening Phase (Weeks 7-12)
+INSERT INTO public.injury_phases (
+  injury_id,
+  phase_number,
+  label_en,
+  label_ar,
+  duration_en,
+  duration_ar,
+  recovery_window,
+  goals_en,
+  goals_ar,
+  nutrition_focus_en,
+  nutrition_focus_ar,
+  protein_min_per_kg,
+  protein_max_per_kg,
+  hydration_ml_per_kg,
+  creatine_grams,
+  collagen_min_per_kg,
+  collagen_max_per_kg,
+  vitamin_c_mg,
+  calcium_mg
+) SELECT 
+  id,
+  3,
+  'Strengthening Phase',
+  'مرحلة التقوية',
+  'Weeks 7-12',
+  'الأسابيع 7-12',
+  'weeks_2_6',
+  ARRAY['Build muscle strength', 'Restore proprioception', 'Improve running mechanics'],
+  ARRAY['بناء قوة العضلات', 'استعادة الإحساس', 'تحسين آلية الركض'],
+  ARRAY['Protein synthesis', 'Muscle recovery', 'Collagen formation'],
+  ARRAY['تخليق البروتين', 'استعادة العضلات', 'تكوين الكولاجين'],
+  1.8,
+  2.2,
+  50,
+  5,
+  10,
+  15,
+  500,
+  1200
+FROM public.injuries WHERE injury_id_slug = 'knee-acl-tear'
+LIMIT 1;
+
+-- Phase 4: Advanced Strengthening (Weeks 13-20)
+INSERT INTO public.injury_phases (
+  injury_id,
+  phase_number,
+  label_en,
+  label_ar,
+  duration_en,
+  duration_ar,
+  recovery_window,
+  goals_en,
+  goals_ar,
+  nutrition_focus_en,
+  nutrition_focus_ar,
+  protein_min_per_kg,
+  protein_max_per_kg,
+  hydration_ml_per_kg,
+  creatine_grams,
+  collagen_min_per_kg,
+  collagen_max_per_kg,
+  vitamin_c_mg,
+  calcium_mg
+) SELECT 
+  id,
+  4,
+  'Advanced Strengthening',
+  'التقوية المتقدمة',
+  'Weeks 13-20',
+  'الأسابيع 13-20',
+  'over_6_weeks',
+  ARRAY['Sport-specific training', 'Power development', 'Agility work'],
+  ARRAY['تدريب خاص بالرياضة', 'تطوير القوة', 'تحسين الرشاقة'],
+  ARRAY['Explosive power', 'Joint stability', 'Endurance'],
+  ARRAY['القوة المتفجرة', 'استقرار المفاصل', 'التحمل'],
+  2.0,
+  2.2,
+  40,
+  8,
+  8,
+  12,
+  400,
+  1000
+FROM public.injuries WHERE injury_id_slug = 'knee-acl-tear'
+LIMIT 1;
+
+-- Phase 5: Return to Sport (Weeks 21+)
+INSERT INTO public.injury_phases (
+  injury_id,
+  phase_number,
+  label_en,
+  label_ar,
+  duration_en,
+  duration_ar,
+  recovery_window,
+  goals_en,
+  goals_ar,
+  nutrition_focus_en,
+  nutrition_focus_ar,
+  protein_min_per_kg,
+  protein_max_per_kg,
+  hydration_ml_per_kg,
+  creatine_grams,
+  collagen_min_per_kg,
+  collagen_max_per_kg,
+  vitamin_c_mg,
+  calcium_mg
+) SELECT 
+  id,
+  5,
+  'Return to Sport',
+  'العودة للرياضة',
+  'Weeks 21+',
+  'الأسابيع 21 فما فوق',
+  'over_6_weeks',
+  ARRAY['Full sport participation', 'Prevent re-injury', 'Maintain performance'],
+  ARRAY['المشاركة الكاملة في الرياضة', 'منع إعادة الإصابة', 'الحفاظ على الأداء'],
+  ARRAY['Maintenance nutrition', 'Performance optimization'],
+  ARRAY['تغذية الصيانة', 'تحسين الأداء'],
+  1.6,
+  2.0,
+  35,
+  5,
+  5,
+  10,
+  300,
+  800
+FROM public.injuries WHERE injury_id_slug = 'knee-acl-tear'
+LIMIT 1;
 
 -- ============================================================
 -- 3. INSERT into supplements table
@@ -235,6 +364,24 @@ INSERT INTO public.meal_examples (
   'زبادي يوناني مع اللوز والعسل',
   ARRAY['Eggs', 'Salmon', 'Chicken', 'Beef', 'Sweet potato', 'Broccoli', 'Spinach', 'Blueberries', 'Almonds', 'Honey', 'Greek yogurt'],
   ARRAY['البيض', 'السمك', 'الدجاج', 'اللحم', 'البطاطس الحلوة', 'البروكلي', 'السبانخ', 'التوت', 'اللوز', 'العسل', 'الزبادي']
+FROM public.injury_phases WHERE phase_number = 1 AND injury_id IN (
+  SELECT id FROM public.injuries WHERE injury_id_slug = 'knee-acl-tear'
+)
+LIMIT 1;
+
+INSERT INTO public.meal_examples (
+  phase_id,
+  diet_style,
+  breakfast_en,
+  breakfast_ar,
+  lunch_en,
+  lunch_ar,
+  dinner_en,
+  dinner_ar,
+  snack_en,
+  snack_ar,
+  shopping_list_en,
+  shopping_list_ar
 ) SELECT 
   id,
   'vegetarian',
@@ -254,26 +401,142 @@ FROM public.injury_phases WHERE phase_number = 1 AND injury_id IN (
 LIMIT 1;
 
 -- ============================================================
--- 5. Verify Data
+-- 5. INSERT into safety_notes table
 -- ============================================================
 
--- Check injuries
-SELECT 'INJURIES' as table_name, COUNT(*) as count FROM public.injuries;
-SELECT 'PHASES' as table_name, COUNT(*) as count FROM public.injury_phases;
-SELECT 'SUPPLEMENTS' as table_name, COUNT(*) as count FROM public.supplements;
-SELECT 'MEALS' as table_name, COUNT(*) as count FROM public.meal_examples;
+INSERT INTO public.safety_notes (
+  injury_id,
+  medications_en,
+  medications_ar,
+  supplements_en,
+  supplements_ar,
+  contraindication_medications,
+  contraindication_supplements
+) SELECT 
+  id,
+  ARRAY['NSAIDs (ibuprofen, naproxen) - use cautiously, may affect healing after first 2 weeks', 'Acetaminophen - safer alternative for pain management'],
+  ARRAY['مضادات الالتهاب (إيبوبروفين) - استخدم بحذر، قد تؤثر على الشفاء', 'الأسيتامينوفين - بديل أكثر أماناً'],
+  ARRAY['Omega-3 supplements - aids anti-inflammatory response', 'Vitamin C - supports collagen synthesis', 'Collagen peptides - structural support for ligament repair'],
+  ARRAY['مكملات أوميغا 3 - تدعم الاستجابة المضادة للالتهاب', 'فيتامين C - يدعم بناء الكولاجين', 'ببتيدات الكولاجين - دعم بنيوي لإصلاح الرباط'],
+  ARRAY['High-dose NSAIDs (prolonged use)', 'Anticoagulants (blood thinners)'],
+  ARRAY['فيتامين E عالي الجرعات (قد يزيد النزيف)', 'الجنكة بيلوبا (قد تزيد النزيف)']
+FROM public.injuries 
+WHERE injury_id_slug = 'knee-acl-tear'
+LIMIT 1;
 
--- Show sample injury with all related data
+-- ============================================================
+-- 6. INSERT into admin_users table (Sample admin user)
+-- ============================================================
+
+-- Note: This is a sample admin user setup
+-- IMPORTANT: Create the user account FIRST in Supabase Auth Dashboard at:
+-- https://app.supabase.com/project/[YOUR_PROJECT_ID]/auth/users
+-- Then replace the UUID below with the actual user_id from Supabase Auth
+-- Email: ahmed.reda.a.r.1234@gmail.com (Full admin access)
+
+INSERT INTO public.admin_users (
+  user_id,
+  email,
+  full_name,
+  role,
+  can_edit_injuries,
+  can_edit_phases,
+  can_edit_supplements,
+  can_delete
+) VALUES (
+  '8a047956-43c2-48aa-afd3-d43601bd43c9'::uuid,
+  'ahmed.reda.a.r.1234@gmail.com',
+  'Ahmed Reda - System Administrator',
+  'admin',
+  true,
+  true,
+  true,
+  true
+);
+
+-- Additional moderator example (commented for reference)
+-- INSERT INTO public.admin_users VALUES (
+--   gen_random_uuid(),
+--   '00000000-0000-0000-0000-000000000001'::uuid,
+--   'moderator@example.com',
+--   'Content Moderator',
+--   'moderator',
+--   true,
+--   true,
+--   true,
+--   false
+-- );
+
+-- ============================================================
+-- 7. Verification Queries
+-- ============================================================
+
+-- Check all tables
+SELECT 'INJURIES' as table_name, COUNT(*) as count FROM public.injuries
+UNION ALL
+SELECT 'PHASES' as table_name, COUNT(*) as count FROM public.injury_phases
+UNION ALL
+SELECT 'SUPPLEMENTS' as table_name, COUNT(*) as count FROM public.supplements
+UNION ALL
+SELECT 'MEAL EXAMPLES' as table_name, COUNT(*) as count FROM public.meal_examples
+UNION ALL
+SELECT 'SAFETY NOTES' as table_name, COUNT(*) as count FROM public.safety_notes
+UNION ALL
+SELECT 'ADMIN USERS' as table_name, COUNT(*) as count FROM public.admin_users;
+
+-- Show complete ACL rehabilitation program
 SELECT 
   i.name_en,
   i.name_ar,
   i.category,
   COUNT(DISTINCT ip.id) as phase_count,
-  COUNT(DISTINCT s.id) as supplement_count
+  COUNT(DISTINCT s.id) as supplement_count,
+  COUNT(DISTINCT me.id) as meal_plan_count
 FROM public.injuries i
 LEFT JOIN public.injury_phases ip ON i.id = ip.injury_id
 LEFT JOIN public.supplements s ON ip.id = s.phase_id
+LEFT JOIN public.meal_examples me ON ip.id = me.phase_id
 WHERE i.injury_id_slug = 'knee-acl-tear'
 GROUP BY i.id, i.name_en, i.name_ar, i.category;
 
-echo "✅ Sample data inserted successfully!"
+-- Show phases breakdown
+SELECT 
+  i.name_en as injury,
+  ip.phase_number,
+  ip.label_en,
+  ip.duration_en,
+  ip.protein_min_per_kg,
+  ip.protein_max_per_kg
+FROM public.injuries i
+JOIN public.injury_phases ip ON i.id = ip.injury_id
+WHERE i.injury_id_slug = 'knee-acl-tear'
+ORDER BY ip.phase_number;
+
+-- Show supplements for each phase
+SELECT 
+  ip.phase_number,
+  ip.label_en,
+  s.name,
+  s.dose_en,
+  s.reason_en
+FROM public.injury_phases ip
+LEFT JOIN public.supplements s ON ip.id = s.phase_id
+WHERE ip.injury_id IN (
+  SELECT id FROM public.injuries WHERE injury_id_slug = 'knee-acl-tear'
+)
+ORDER BY ip.phase_number, s.order_index;
+
+-- Verify RLS is working (should require authentication)
+SELECT COUNT(*) as admin_user_count FROM public.admin_users;
+
+-- ============================================================
+-- 8. Additional Test Data (Optional)
+-- ============================================================
+
+-- You can add more injuries here following the same pattern
+-- Example: Hamstring Strain, Shoulder Impingement, Tennis Elbow, etc.
+
+-- ✅ Setup complete! You can now:
+-- 1. Replace '00000000-0000-0000-0000-000000000000' with your actual admin user ID from Supabase Auth
+-- 2. Test the admin dashboard with these policies
+-- 3. Add more injury types as needed

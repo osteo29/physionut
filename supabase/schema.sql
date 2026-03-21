@@ -133,12 +133,28 @@ create table if not exists public.safety_notes (
   unique(injury_id)
 );
 
+-- Admin users table (جدول مديري النظام)
+create table if not exists public.admin_users (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  email text not null unique,
+  full_name text,
+  role text not null default 'admin', -- 'admin', 'moderator', 'viewer'
+  can_edit_injuries boolean default true,
+  can_edit_phases boolean default true,
+  can_edit_supplements boolean default true,
+  can_delete boolean default false,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
 -- Enable Row Level Security
 alter table public.injuries enable row level security;
 alter table public.injury_phases enable row level security;
 alter table public.supplements enable row level security;
 alter table public.meal_examples enable row level security;
 alter table public.safety_notes enable row level security;
+alter table public.admin_users enable row level security;
 
 -- RLS Policies (السماح بالقراءة للجميع)
 drop policy if exists "injuries_read" on public.injuries;
@@ -153,6 +169,196 @@ create policy "supplements_read" on public.supplements for select using (true);
 create policy "meal_examples_read" on public.meal_examples for select using (true);
 create policy "safety_notes_read" on public.safety_notes for select using (true);
 
+-- ========================================
+-- ADMIN RLS POLICIES (سياسات الإدمن)
+-- ========================================
+
+-- Injuries - Admin policies
+drop policy if exists "injuries_admin_insert" on public.injuries;
+drop policy if exists "injuries_admin_update" on public.injuries;
+drop policy if exists "injuries_admin_delete" on public.injuries;
+
+create policy "injuries_admin_insert" on public.injuries
+for insert to authenticated
+with check (
+  (select count(1) from public.admin_users 
+   where user_id = auth.uid()) > 0
+);
+
+create policy "injuries_admin_update" on public.injuries
+for update to authenticated
+using (
+  (select count(1) from public.admin_users 
+   where user_id = auth.uid()) > 0
+)
+with check (
+  (select count(1) from public.admin_users 
+   where user_id = auth.uid()) > 0
+);
+
+create policy "injuries_admin_delete" on public.injuries
+for delete to authenticated
+using (
+  (select count(1) from public.admin_users 
+   where user_id = auth.uid()) > 0 
+  and (select can_delete from public.admin_users 
+       where user_id = auth.uid()) = true
+);
+
+-- Injury Phases - Admin policies
+drop policy if exists "injury_phases_admin_insert" on public.injury_phases;
+drop policy if exists "injury_phases_admin_update" on public.injury_phases;
+drop policy if exists "injury_phases_admin_delete" on public.injury_phases;
+
+create policy "injury_phases_admin_insert" on public.injury_phases
+for insert to authenticated
+with check (
+  (select count(1) from public.admin_users 
+   where user_id = auth.uid() and can_edit_phases = true) > 0
+);
+
+create policy "injury_phases_admin_update" on public.injury_phases
+for update to authenticated
+using (
+  (select count(1) from public.admin_users 
+   where user_id = auth.uid() and can_edit_phases = true) > 0
+)
+with check (
+  (select count(1) from public.admin_users 
+   where user_id = auth.uid() and can_edit_phases = true) > 0
+);
+
+create policy "injury_phases_admin_delete" on public.injury_phases
+for delete to authenticated
+using (
+  (select count(1) from public.admin_users 
+   where user_id = auth.uid() and can_delete = true) > 0
+);
+
+-- Supplements - Admin policies
+drop policy if exists "supplements_admin_insert" on public.supplements;
+drop policy if exists "supplements_admin_update" on public.supplements;
+drop policy if exists "supplements_admin_delete" on public.supplements;
+
+create policy "supplements_admin_insert" on public.supplements
+for insert to authenticated
+with check (
+  (select count(1) from public.admin_users 
+   where user_id = auth.uid() and can_edit_supplements = true) > 0
+);
+
+create policy "supplements_admin_update" on public.supplements
+for update to authenticated
+using (
+  (select count(1) from public.admin_users 
+   where user_id = auth.uid() and can_edit_supplements = true) > 0
+)
+with check (
+  (select count(1) from public.admin_users 
+   where user_id = auth.uid() and can_edit_supplements = true) > 0
+);
+
+create policy "supplements_admin_delete" on public.supplements
+for delete to authenticated
+using (
+  (select count(1) from public.admin_users 
+   where user_id = auth.uid() and can_delete = true) > 0
+);
+
+-- Meal Examples - Admin policies
+drop policy if exists "meal_examples_admin_insert" on public.meal_examples;
+drop policy if exists "meal_examples_admin_update" on public.meal_examples;
+drop policy if exists "meal_examples_admin_delete" on public.meal_examples;
+
+create policy "meal_examples_admin_insert" on public.meal_examples
+for insert to authenticated
+with check (
+  (select count(1) from public.admin_users 
+   where user_id = auth.uid()) > 0
+);
+
+create policy "meal_examples_admin_update" on public.meal_examples
+for update to authenticated
+using (
+  (select count(1) from public.admin_users 
+   where user_id = auth.uid()) > 0
+)
+with check (
+  (select count(1) from public.admin_users 
+   where user_id = auth.uid()) > 0
+);
+
+create policy "meal_examples_admin_delete" on public.meal_examples
+for delete to authenticated
+using (
+  (select count(1) from public.admin_users 
+   where user_id = auth.uid() and can_delete = true) > 0
+);
+
+-- Safety Notes - Admin policies
+drop policy if exists "safety_notes_admin_insert" on public.safety_notes;
+drop policy if exists "safety_notes_admin_update" on public.safety_notes;
+drop policy if exists "safety_notes_admin_delete" on public.safety_notes;
+
+create policy "safety_notes_admin_insert" on public.safety_notes
+for insert to authenticated
+with check (
+  (select count(1) from public.admin_users 
+   where user_id = auth.uid()) > 0
+);
+
+create policy "safety_notes_admin_update" on public.safety_notes
+for update to authenticated
+using (
+  (select count(1) from public.admin_users 
+   where user_id = auth.uid()) > 0
+)
+with check (
+  (select count(1) from public.admin_users 
+   where user_id = auth.uid()) > 0
+);
+
+create policy "safety_notes_admin_delete" on public.safety_notes
+for delete to authenticated
+using (
+  (select count(1) from public.admin_users 
+   where user_id = auth.uid() and can_delete = true) > 0
+);
+
+-- Admin Users - Self-management
+drop policy if exists "admin_users_read" on public.admin_users;
+drop policy if exists "admin_users_insert" on public.admin_users;
+drop policy if exists "admin_users_update" on public.admin_users;
+drop policy if exists "admin_users_delete" on public.admin_users;
+
+create policy "admin_users_read" on public.admin_users for select to authenticated
+using (
+  (select count(1) from public.admin_users 
+   where user_id = auth.uid() and role = 'admin') > 0
+);
+
+create policy "admin_users_insert" on public.admin_users for insert to authenticated
+with check (
+  (select count(1) from public.admin_users 
+   where user_id = auth.uid() and role = 'admin') > 0
+);
+
+create policy "admin_users_update" on public.admin_users for update to authenticated
+using (
+  (select count(1) from public.admin_users 
+   where user_id = auth.uid() and role = 'admin') > 0
+)
+with check (
+  (select count(1) from public.admin_users 
+   where user_id = auth.uid() and role = 'admin') > 0
+);
+
+create policy "admin_users_delete" on public.admin_users for delete to authenticated
+using (
+  (select count(1) from public.admin_users 
+   where user_id = auth.uid() and role = 'admin') > 0
+);
+
 -- Create indexes for better performance
 create index if not exists idx_injuries_slug on public.injuries(injury_id_slug);
 create index if not exists idx_injuries_category on public.injuries(category);
@@ -161,3 +367,5 @@ create index if not exists idx_injury_phases_injury_id on public.injury_phases(i
 create index if not exists idx_supplements_phase_id on public.supplements(phase_id);
 create index if not exists idx_meal_examples_phase_id on public.meal_examples(phase_id);
 create index if not exists idx_safety_notes_injury_id on public.safety_notes(injury_id);
+create index if not exists idx_admin_users_user_id on public.admin_users(user_id);
+create index if not exists idx_admin_users_email on public.admin_users(email);
