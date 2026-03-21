@@ -15,6 +15,7 @@ const InjuryProtocolsPage = lazy(() => import('./pages/InjuryProtocolsPage'));
 const InjuryDetailPage = lazy(() => import('./pages/InjuryDetailPage'));
 const ArticleStudioPage = lazy(() => import('./pages/ArticleStudioPage'));
 const AssistantPage = lazy(() => import('./pages/AssistantPage'));
+const AdminInjuryManager = lazy(() => import('./pages/AdminInjuryManager'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const TrackingDashboardPage = lazy(() => import('./pages/TrackingDashboardPage'));
 const AuthPage = lazy(() => import('./pages/AuthPage'));
@@ -74,6 +75,8 @@ export default function RouterApp() {
         <Route path="/:lang/injury-protocols" element={<Navigate to="/:lang/injuries" replace />} />
         <Route path="/:lang/injuries" element={<InjuryProtocolsPage />} />
         <Route path="/:lang/injuries/:slug" element={<InjuryDetailPage />} />
+        <Route path="/:lang/admin/injuries" element={<AdminInjuryManager />} />
+        <Route path="/admin/injuries" element={<AdminInjuryManager />} />
         <Route path="/:lang/insights/:slug" element={<ArticlePage />} />
         <Route path="/:lang/studio/articles" element={<ArticleStudioPage />} />
         <Route path="/:lang/assistant" element={<AssistantPage theme={theme} onToggleTheme={toggleTheme} />} />

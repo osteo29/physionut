@@ -12,6 +12,8 @@ create table if not exists public.assessment_leads (
 
 alter table public.assessment_leads enable row level security;
 
+drop policy if exists "Allow anonymous lead inserts" on public.assessment_leads;
+
 create policy "Allow anonymous lead inserts"
 on public.assessment_leads
 for insert
@@ -139,6 +141,12 @@ alter table public.meal_examples enable row level security;
 alter table public.safety_notes enable row level security;
 
 -- RLS Policies (السماح بالقراءة للجميع)
+drop policy if exists "injuries_read" on public.injuries;
+drop policy if exists "injury_phases_read" on public.injury_phases;
+drop policy if exists "supplements_read" on public.supplements;
+drop policy if exists "meal_examples_read" on public.meal_examples;
+drop policy if exists "safety_notes_read" on public.safety_notes;
+
 create policy "injuries_read" on public.injuries for select using (true);
 create policy "injury_phases_read" on public.injury_phases for select using (true);
 create policy "supplements_read" on public.supplements for select using (true);
@@ -146,10 +154,10 @@ create policy "meal_examples_read" on public.meal_examples for select using (tru
 create policy "safety_notes_read" on public.safety_notes for select using (true);
 
 -- Create indexes for better performance
-create index idx_injuries_slug on public.injuries(injury_id_slug);
-create index idx_injuries_category on public.injuries(category);
-create index idx_injuries_body_region on public.injuries(body_region_en);
-create index idx_injury_phases_injury_id on public.injury_phases(injury_id);
-create index idx_supplements_phase_id on public.supplements(phase_id);
-create index idx_meal_examples_phase_id on public.meal_examples(phase_id);
-create index idx_safety_notes_injury_id on public.safety_notes(injury_id);
+create index if not exists idx_injuries_slug on public.injuries(injury_id_slug);
+create index if not exists idx_injuries_category on public.injuries(category);
+create index if not exists idx_injuries_body_region on public.injuries(body_region_en);
+create index if not exists idx_injury_phases_injury_id on public.injury_phases(injury_id);
+create index if not exists idx_supplements_phase_id on public.supplements(phase_id);
+create index if not exists idx_meal_examples_phase_id on public.meal_examples(phase_id);
+create index if not exists idx_safety_notes_injury_id on public.safety_notes(injury_id);

@@ -3,7 +3,7 @@
  * Centralized API for managing injury protocols, phases, supplements, and meals
  */
 
-import { supabase } from './supabase';
+import { supabase } from '../lib/supabase';
 import type {
   InjuryProtocol,
   InjuryPhase,

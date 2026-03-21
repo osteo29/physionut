@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { AlertCircle, Edit2, Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
+import { AlertCircle, Edit2, Plus, Trash2, ChevronDown, ChevronUp, Download } from 'lucide-react';
 import {
   fetchInjuriesFromSupabase,
   fetchPhasesByInjuryId,
@@ -17,10 +17,12 @@ import {
   type InjuryRow,
   type PhaseRow,
 } from '../services/injurySupabaseService';
+import { migrateAllInjuriesToSupabase } from '../utils/dataMigration';
 
 export default function AdminInjuryManager() {
   const [injuries, setInjuries] = useState<InjuryRow[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isMigrating, setIsMigrating] = useState(false);
   const [expandedInjury, setExpandedInjury] = useState<string | null>(null);
   const [selectedPhase, setSelectedPhase] = useState<string | null>(null);
   const [editingData, setEditingData] = useState<Record<string, string>>({});
@@ -34,6 +36,24 @@ export default function AdminInjuryManager() {
     const data = await fetchInjuriesFromSupabase();
     setInjuries(data);
     setLoading(false);
+  };
+
+  const handleMigrationClick = async () => {
+    if (!confirm('Import all 95 injuries from legacy data? This will take a few moments.')) {
+      return;
+    }
+    setIsMigrating(true);
+    try {
+      await migrateAllInjuriesToSupabase();
+      console.log('✅ Migration completed!');
+      alert('Migration completed! Refreshing data...');
+      await loadInjuries();
+    } catch (error) {
+      console.error('❌ Migration failed:', error);
+      alert(`Migration failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    } finally {
+      setIsMigrating(false);
+    }
   };
 
   const handleInjuryEdit = async (injuryId: string, field: string, value: string) => {
@@ -79,6 +99,18 @@ export default function AdminInjuryManager() {
           </p>
         </div>
 
+        {/* Action Bar */}
+        <div className="flex gap-4 mb-6">
+          <button
+            onClick={handleMigrationClick}
+            disabled={isMigrating || injuries.length > 0}
+            className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white rounded-lg transition font-semibold"
+          >
+            <Download className="w-4 h-4" />
+            {isMigrating ? 'Importing...' : 'Import Legacy Data'}
+          </button>
+        </div>
+
         {/* Alert Banner */}
         <div className="bg-blue-900/30 border border-blue-500 rounded-lg p-4 mb-6">
           <div className="flex items-start gap-3">
@@ -86,7 +118,9 @@ export default function AdminInjuryManager() {
             <div>
               <h3 className="text-blue-200 font-semibold">نظام إدارة البروتوكولات</h3>
               <p className="text-blue-300 text-sm mt-1">
-                جميع التغييرات تُحفظ مباشرة في Supabase وتنعكس على الموقع فوراً
+                {injuries.length === 0
+                  ? 'No injuries found. Click "Import Legacy Data" to get started.'
+                  : `${injuries.length} injuries loaded. Edit them below.`}
               </p>
             </div>
           </div>

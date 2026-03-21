@@ -12,8 +12,8 @@ import {
   fetchSupplementsByPhaseId,
   fetchMealsByPhaseId,
   fetchCompleteInjuryProtocol,
-} from './services/injurySupabaseService';
-import { supabase } from './lib/supabase';
+} from './injurySupabaseService';
+import { supabase } from '../lib/supabase';
 
 // ============================================================
 // Health Check Functions
@@ -110,7 +110,8 @@ export async function runHealthChecks() {
         const meals = await fetchMealsByPhaseId(phases[0].id);
         const mealsTime = performance.now() - startMeals;
         results.performance.fetchMeals = mealsTime;
-        console.log(`  ✅ fetchMealsByPhaseId() - ${mealsTime.toFixed(2)}ms (${meals.length} meals)`);
+        const mealsCount = Array.isArray(meals) ? meals.length : 0;
+        console.log(`  ✅ fetchMealsByPhaseId() - ${mealsTime.toFixed(2)}ms (${mealsCount} meals)`);
       }
 
       console.log();
@@ -132,7 +133,11 @@ export async function runHealthChecks() {
         console.log(`     └─ Injury: ${complete.name}`);
         console.log(`     └─ Phases: ${complete.phases.length}`);
         const totalPhaseItems = complete.phases.reduce(
-          (sum, p) => sum + (p.supplements?.length || 0) + (p.meals?.length || 0),
+          (sum, p) => {
+            const supplements = Array.isArray(p.supplements) ? p.supplements.length : 0;
+            const meals = p.meals ? 1 : 0; // meals هي object واحد وليس array
+            return sum + supplements + meals;
+          },
           0
         );
         console.log(`     └─ Total supplements & meals: ${totalPhaseItems}`);

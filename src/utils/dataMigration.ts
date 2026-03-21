@@ -8,14 +8,13 @@
  * أو قم بتشغيل هذا الـ script في console
  */
 
-import { generatedInjuryProtocols } from './services/injuryProtocolCatalog';
-import { getArabicInjuryName } from './services/injuryLocalization';
+import { generatedInjuryProtocols } from '../services/injuryProtocolCatalog';
 import {
   createInjury,
   createPhase,
   createSupplement,
   createMeal,
-} from './services/injurySupabaseService';
+} from '../services/injurySupabaseService';
 
 export async function migrateAllInjuriesToSupabase() {
   console.log('🔄 Starting data migration...');
@@ -30,7 +29,7 @@ export async function migrateAllInjuriesToSupabase() {
       const injuryData = await createInjury({
         injury_id_slug: protocol.id,
         name_en: protocol.name,
-        name_ar: getArabicInjuryName(protocol.id, protocol.name, 'ar') || protocol.name,
+        name_ar: protocol.name, // استخدام الاسم الإنجليزي مؤقتاً - يمكن تحديثه لاحقاً
         category: protocol.category,
         body_region_en: protocol.bodyRegion,
         body_region_ar: getLocalizedBodyRegion(protocol.bodyRegion, 'ar'),
