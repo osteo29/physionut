@@ -3,14 +3,14 @@
  * Generates SEO metadata and structured data for injury protocol pages
  */
 
-import type { InjuryProtocol, InjuryPhase } from '../services/injuryDatabase';
-import type { Language } from '../services/translations';
+import type { InjuryProtocol, InjuryPhase } from '../../services/injuryDatabase';
+import type { Language } from '../../services/translations';
 import {
   generateMedicalWebPageSchema,
   generateMedicalConditionSchema,
   generateFAQSchema,
   generateBreadcrumbSchema,
-} from './seo/medicalSchemaGenerator';
+} from '../seo/medicalSchemaGenerator';
 
 export interface InjuryPageSeoConfig {
   injury: InjuryProtocol;
@@ -91,7 +91,7 @@ export function generateInjuryPageSeo({
     symptoms: extractSymptoms(injury, lang),
     signs: extractSigns(injury, lang),
     causes: injury.commonIn || [],
-    treatments: injury.phases.map(p => p.label),
+    treatments: injury.phases.map((p: InjuryPhase) => p.label),
     associatedAnatomy: injury.bodyRegion,
     riskFactors: injury.commonIn || [],
   });

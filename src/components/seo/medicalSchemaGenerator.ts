@@ -5,7 +5,7 @@
 
 export interface MedicalConditionSchema {
   '@context': string;
-  '@type': 'MedicalWebPage' | 'MedicalCondition' | 'FAQPage';
+  '@type': 'MedicalWebPage' | 'MedicalCondition' | 'FAQPage' | 'BreadcrumbList';
   [key: string]: any;
 }
 

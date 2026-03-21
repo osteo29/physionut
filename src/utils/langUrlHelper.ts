@@ -88,8 +88,8 @@ export const navigationPaths = {
  */
 export type NavigationPage = keyof typeof navigationPaths;
 
-export function getNavigationPath(page: NavigationPage, lang: Language, ...args: any[]): string {
-  const pathFn = navigationPaths[page];
+export function getNavigationPath(page: NavigationPage, lang: Language, ...args: string[]): string {
+  const pathFn = navigationPaths[page] as (lang: Language, ...args: string[]) => string;
   if (!pathFn) {
     console.warn(`Unknown navigation page: ${page}`);
     return `/${lang}/`;
