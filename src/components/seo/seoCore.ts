@@ -4,6 +4,7 @@ export type SeoConfig = {
   canonicalPath: string; // "/privacy"
   ogImage?: string; // absolute URL
   noIndex?: boolean;
+  structuredData?: Array<{id: string; json: unknown}>;
 };
 
 const DEFAULT_SITE_NAME = 'PhysioNutrition';
@@ -97,5 +98,9 @@ export function applySeo(config: SeoConfig) {
       'https://www.facebook.com/Physionutrition.official/',
       'https://www.instagram.com/physionutrition.official/',
     ],
+  });
+
+  config.structuredData?.forEach((item) => {
+    upsertJsonLd(item.id, item.json);
   });
 }

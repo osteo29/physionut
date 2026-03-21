@@ -20,6 +20,27 @@ export default defineConfig(({mode}) => {
         '@': path.resolve(__dirname, '.'),
       },
     },
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules/html2canvas') || id.includes('node_modules/jspdf')) {
+              return 'pdf-renderer';
+            }
+
+            if (id.includes('node_modules/qrcode')) {
+              return 'pdf-branding';
+            }
+
+            if (id.includes('node_modules/@google/genai')) {
+              return 'ai-vendor';
+            }
+
+            return undefined;
+          },
+        },
+      },
+    },
     server: {
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
       // Do not modifyâfile watching is disabled to prevent flickering during agent edits.

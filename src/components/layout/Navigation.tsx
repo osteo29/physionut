@@ -284,7 +284,7 @@ const Navigation = memo(
                           label: isAr ? 'لوحة المتابعة' : 'Tracking dashboard',
                         },
                         {
-                          href: '/injury-protocols',
+                          href: '/injuries',
                           icon: <ClipboardList className="h-5 w-5" />,
                           label: isAr ? 'بروتوكولات الإصابات' : 'Injury protocols',
                         },
@@ -387,7 +387,7 @@ const Navigation = memo(
                 <a href="#calculators" className="nav-link">
                   {t.nav.calculators}
                 </a>
-                <Link to="/injury-protocols" className="nav-link">
+                <Link to="/injuries" className="nav-link">
                   {isAr ? 'الإصابات' : 'Injuries'}
                 </Link>
                 <a href="#blog" className="nav-link">

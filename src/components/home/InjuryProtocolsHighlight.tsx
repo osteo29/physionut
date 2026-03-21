@@ -27,7 +27,7 @@ export default function InjuryProtocolsHighlight({lang}: {lang: Language}) {
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <Link
-                to="/injury-protocols"
+                to="/injuries"
                 className="inline-flex items-center justify-center gap-2 rounded-2xl bg-health-green px-5 py-3 text-sm font-bold text-white"
               >
                 <span>{isAr ? 'استكشف البروتوكولات' : 'Explore protocols'}</span>

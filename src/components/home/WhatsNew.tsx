@@ -22,7 +22,7 @@ const WhatsNew = memo(({lang}: {lang: Language}) => {
             icon: ClipboardList,
             color: 'text-health-green',
             bg: 'bg-health-green/10',
-            href: '/injury-protocols',
+            href: '/injuries',
           },
           {
             title: 'AI Diet Plans',
@@ -48,7 +48,7 @@ const WhatsNew = memo(({lang}: {lang: Language}) => {
             icon: ClipboardList,
             color: 'text-health-green',
             bg: 'bg-health-green/10',
-            href: '/injury-protocols',
+            href: '/injuries',
           },
           {
             title: 'خطط غذائية ذكية',

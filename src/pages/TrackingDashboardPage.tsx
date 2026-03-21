@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useRef, useState} from 'react';
+import {lazy, Suspense, useEffect, useMemo, useRef, useState} from 'react';
 import {Link, Navigate} from 'react-router-dom';
 import {
   ArrowLeft,
@@ -9,22 +9,10 @@ import {
   LineChart,
   LoaderCircle,
   LogOut,
-  Trash2,
 } from 'lucide-react';
 import Seo from '../components/seo/Seo';
+import type {DashboardPdfData} from '../services/pdfReports';
 import usePreferredLang from './usePreferredLang';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-import {Line} from 'react-chartjs-2';
-import PdfReportSheet from '../components/pdf/PdfReportSheet';
-import {buildDashboardPdfData, generatePdfReport} from '../services/pdfReports';
 import {
   deleteAssessment,
   getCurrentUser,
@@ -38,7 +26,31 @@ import {
   type User,
 } from '../lib/supabase';
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
+const TrendChart = lazy(() => import('../components/dashboard/TrendChart'));
+const TimelineLog = lazy(() => import('../components/dashboard/TimelineLog'));
+const LazyPdfReportSheet = lazy(() => import('../components/dashboard/LazyPdfReportSheet'));
+
+function waitForCondition(check: () => boolean, timeoutMs = 4000) {
+  return new Promise<void>((resolve, reject) => {
+    const startedAt = Date.now();
+
+    const tick = () => {
+      if (check()) {
+        resolve();
+        return;
+      }
+
+      if (Date.now() - startedAt >= timeoutMs) {
+        reject(new Error('Timed out while waiting for deferred dashboard content.'));
+        return;
+      }
+
+      window.setTimeout(tick, 40);
+    };
+
+    tick();
+  });
+}
 
 export default function TrackingDashboardPage() {
   const lang = usePreferredLang();
@@ -47,10 +59,12 @@ export default function TrackingDashboardPage() {
   const [records, setRecords] = useState<AssessmentRecord[]>([]);
   const [status, setStatus] = useState<'checking' | 'loading' | 'ready' | 'error'>('checking');
   const [message, setMessage] = useState('');
-  const [pdfReport, setPdfReport] = useState<Awaited<ReturnType<typeof buildDashboardPdfData>> | null>(null);
+  const [pdfReport, setPdfReport] = useState<DashboardPdfData | null>(null);
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
+  const [shouldRenderPdfSheet, setShouldRenderPdfSheet] = useState(false);
   const chartRef = useRef<any>(null);
   const pdfRef = useRef<HTMLDivElement | null>(null);
+  const isPdfSheetReadyRef = useRef(false);
 
   useEffect(() => {
     let mounted = true;
@@ -141,9 +155,7 @@ export default function TrackingDashboardPage() {
   };
 
   const numericRecords = useMemo(() => {
-    return [...records]
-      .filter((item) => typeof item.value_numeric === 'number')
-      .reverse();
+    return [...records].filter((item) => typeof item.value_numeric === 'number').reverse();
   }, [records]);
 
   const lineData = useMemo(() => {
@@ -169,8 +181,10 @@ export default function TrackingDashboardPage() {
 
     setIsGeneratingPdf(true);
     setMessage('');
+    isPdfSheetReadyRef.current = false;
 
     try {
+      const {buildDashboardPdfData, generatePdfReport} = await import('../services/pdfReports');
       const chartImageDataUrl =
         numericRecords.length > 0 && chartRef.current?.toBase64Image
           ? chartRef.current.toBase64Image()
@@ -184,8 +198,13 @@ export default function TrackingDashboardPage() {
       });
 
       setPdfReport(report);
+      setShouldRenderPdfSheet(true);
 
-      await new Promise((resolve) => window.setTimeout(resolve, 80));
+      await waitForCondition(
+        () =>
+          isPdfSheetReadyRef.current &&
+          Boolean(pdfRef.current?.querySelector('[data-pdf-report-sheet="true"]')),
+      );
 
       if (!pdfRef.current) {
         throw new Error('PDF report view is not ready.');
@@ -261,7 +280,11 @@ export default function TrackingDashboardPage() {
               disabled={isGeneratingPdf}
               className="inline-flex items-center gap-2 rounded-2xl bg-health-green px-4 py-3 font-bold text-white transition-all hover:bg-health-green-dark disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {isGeneratingPdf ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
+              {isGeneratingPdf ? (
+                <LoaderCircle className="h-4 w-4 animate-spin" />
+              ) : (
+                <Download className="h-4 w-4" />
+              )}
               <span>{isAr ? 'تحميل تقرير PDF' : 'Download PDF report'}</span>
             </button>
             <Link
@@ -299,22 +322,15 @@ export default function TrackingDashboardPage() {
                 <LoaderCircle className="h-5 w-5 animate-spin text-health-green" />
               </div>
             ) : numericRecords.length > 0 ? (
-              <div className="h-[320px]">
-                <Line
-                  ref={chartRef}
-                  data={lineData}
-                  options={{
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                      legend: {display: false},
-                    },
-                    scales: {
-                      y: {beginAtZero: false},
-                    },
-                  }}
-                />
-              </div>
+              <Suspense
+                fallback={
+                  <div className="flex h-[320px] items-center justify-center rounded-[1.5rem] border border-slate-200 bg-slate-50">
+                    <LoaderCircle className="h-5 w-5 animate-spin text-health-green" />
+                  </div>
+                }
+              >
+                <TrendChart chartRef={chartRef} lineData={lineData} />
+              </Suspense>
             ) : (
               <div className="flex h-[320px] items-center justify-center rounded-[1.5rem] border border-dashed border-slate-200 bg-slate-50 px-8 text-center text-slate-500">
                 {isAr
@@ -346,7 +362,7 @@ export default function TrackingDashboardPage() {
               </div>
             </div>
             <Link
-              to="/injury-protocols"
+              to="/injuries"
               className="mt-4 flex items-center justify-between gap-4 rounded-[1.5rem] border border-health-green/20 bg-health-green/5 px-4 py-4 transition-all hover:border-health-green/40 hover:bg-health-green/10"
             >
               <div>
@@ -371,44 +387,29 @@ export default function TrackingDashboardPage() {
             <span>{isAr ? 'السجل الزمني' : 'Timeline log'}</span>
           </div>
 
-          <div className="space-y-3">
-            {records.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-8 text-center text-slate-500">
-                {isAr ? 'لا توجد سجلات محفوظة حتى الآن.' : 'No saved assessment records yet.'}
+          <Suspense
+            fallback={
+              <div className="flex min-h-[180px] items-center justify-center rounded-2xl border border-slate-200 bg-slate-50">
+                <LoaderCircle className="h-5 w-5 animate-spin text-health-green" />
               </div>
-            ) : (
-              records.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex flex-col gap-4 rounded-2xl border border-slate-200 p-4 md:flex-row md:items-center md:justify-between"
-                >
-                  <div>
-                    <div className="font-bold text-slate-900">{item.calculator_type}</div>
-                    <div className="mt-1 text-sm text-slate-600">
-                      {item.value_label}
-                      {item.value_unit ? ` ${item.value_unit}` : ''}
-                    </div>
-                    <div className="mt-2 text-xs text-slate-400">
-                      {new Date(item.created_at).toLocaleString(isAr ? 'ar-EG' : 'en-US')}
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => handleDelete(item.id)}
-                    className="inline-flex items-center gap-2 rounded-xl border border-rose-200 px-4 py-2 font-semibold text-rose-600 transition-all hover:bg-rose-50"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                    <span>{isAr ? 'حذف' : 'Delete'}</span>
-                  </button>
-                </div>
-              ))
-            )}
-          </div>
+            }
+          >
+            <TimelineLog isAr={isAr} records={records} onDelete={handleDelete} />
+          </Suspense>
         </div>
       </div>
-      <div className="fixed -left-[200vw] top-0 opacity-0 pointer-events-none">
-        {pdfReport ? (
+
+      <div className="pointer-events-none fixed -left-[200vw] top-0 opacity-0">
+        {shouldRenderPdfSheet && pdfReport ? (
           <div ref={pdfRef}>
-            <PdfReportSheet report={pdfReport} />
+            <Suspense fallback={null}>
+              <LazyPdfReportSheet
+                report={pdfReport}
+                onReady={() => {
+                  isPdfSheetReadyRef.current = true;
+                }}
+              />
+            </Suspense>
           </div>
         ) : null}
       </div>

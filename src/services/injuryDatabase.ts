@@ -1,5 +1,35 @@
-export type InjuryCategory = 'Ligament' | 'Tendon' | 'Muscle' | 'Bone' | 'Joint' | 'Spine' | 'Post-surgery';
-export type BodyRegion = 'Knee' | 'Ankle' | 'Shoulder' | 'Hip' | 'Back' | 'Foot' | 'Whole body';
+import {generatedInjuryProtocols} from './injuryProtocolCatalog';
+
+export type InjuryCategory =
+  | 'Ligament'
+  | 'Tendon'
+  | 'Muscle'
+  | 'Bone'
+  | 'Joint'
+  | 'Spine'
+  | 'Post-surgery'
+  | 'Overuse'
+  | 'Sports'
+  | 'Pediatric'
+  | 'Geriatric';
+export type BodyRegion =
+  | 'Knee'
+  | 'Ankle'
+  | 'Shoulder'
+  | 'Hip'
+  | 'Back'
+  | 'Foot'
+  | 'Whole body'
+  | 'Elbow'
+  | 'Wrist'
+  | 'Neck'
+  | 'Chest'
+  | 'Thigh'
+  | 'Arm'
+  | 'Pelvis'
+  | 'Spine'
+  | 'Hand'
+  | 'Jaw';
 export type ActivityProfile = 'general' | 'athlete' | 'older_adult' | 'post_op';
 export type RecoveryGoal = 'calm' | 'mobility' | 'strength' | 'return';
 export type DietStyle = 'omnivore' | 'vegetarian';
@@ -510,6 +540,7 @@ const injuryProtocols: InjuryProtocol[] = [
       },
     ],
   },
+  ...generatedInjuryProtocols,
 ];
 
 function buildLegacyStages(phases: InjuryPhase[]) {
@@ -546,7 +577,11 @@ export const injuryDatabase: Record<string, InjuryProtocol> = Object.fromEntries
 export const getAllInjuries = () => injuryProtocols;
 export const getAllCategories = (): InjuryCategory[] => [...new Set(injuryProtocols.map((injury) => injury.category))] as InjuryCategory[];
 export const getAllBodyRegions = (): BodyRegion[] => [...new Set(injuryProtocols.map((injury) => injury.bodyRegion))] as BodyRegion[];
+export const getInjurySlug = (injury: InjuryProtocol) => injury.id.replace(/_/g, '-');
+export const getInjuryPath = (injury: InjuryProtocol) => `/injuries/${getInjurySlug(injury)}`;
 export const getInjuryById = (id: string) => injuryDatabase[id];
+export const getInjuryBySlug = (slug: string) =>
+  injuryProtocols.find((injury) => getInjurySlug(injury) === slug);
 export const getSuggestedPhaseForWindow = (injury: InjuryProtocol, window: RecoveryWindow) =>
   injury.phases.find((phase) => phase.window === window) || injury.phases[0];
 

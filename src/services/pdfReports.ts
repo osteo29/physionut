@@ -1,23 +1,8 @@
-import html2canvas from 'html2canvas';
-import {jsPDF} from 'jspdf';
-import QRCode from 'qrcode';
 import type {AssessmentRecord, User} from '../lib/supabase';
 import type {Language} from './translations';
+import {getPdfBranding, type PdfBranding} from './pdfBranding';
 
 export type PdfReportVariant = 'dashboard' | 'recovery';
-
-type BrandingLink = {
-  label: string;
-  url: string;
-};
-
-export type PdfBranding = {
-  siteName: string;
-  siteUrl: string;
-  email: string;
-  socialLinks: BrandingLink[];
-  qrDataUrl: string;
-};
 
 export type DashboardPdfData = {
   variant: 'dashboard';
@@ -69,37 +54,6 @@ export type RecoveryPdfData = {
 
 export type PdfReportData = DashboardPdfData | RecoveryPdfData;
 
-const SITE_URL = 'https://physionutrition.vercel.app';
-const SITE_NAME = 'PhysioNutrition';
-const EMAIL = 'physionutritionofficial@gmail.com';
-const SOCIAL_LINKS: BrandingLink[] = [
-  {label: 'Facebook', url: 'https://www.facebook.com/Physionutrition.official/'},
-  {label: 'Instagram', url: 'https://www.instagram.com/physionutrition.official/'},
-];
-
-let brandingPromise: Promise<PdfBranding> | null = null;
-
-async function getBranding() {
-  if (!brandingPromise) {
-    brandingPromise = QRCode.toDataURL(SITE_URL, {
-      margin: 1,
-      width: 140,
-      color: {
-        dark: '#1f4d3b',
-        light: '#ffffff',
-      },
-    }).then((qrDataUrl) => ({
-      siteName: SITE_NAME,
-      siteUrl: SITE_URL,
-      email: EMAIL,
-      socialLinks: SOCIAL_LINKS,
-      qrDataUrl,
-    }));
-  }
-
-  return brandingPromise;
-}
-
 function getUserLabel(user: User | null) {
   if (!user) {
     return {
@@ -130,7 +84,7 @@ export async function buildDashboardPdfData({
   records: AssessmentRecord[];
   chartImageDataUrl?: string;
 }): Promise<DashboardPdfData> {
-  const branding = await getBranding();
+  const branding = await getPdfBranding();
   const {userName, userEmail} = getUserLabel(user);
   const latestValue = records[0]
     ? `${records[0].value_label}${records[0].value_unit ? ` ${records[0].value_unit}` : ''}`
@@ -191,7 +145,7 @@ export async function buildRecoveryPdfData({
   lang: Language;
   user: User | null;
 }): Promise<RecoveryPdfData> {
-  const branding = await getBranding();
+  const branding = await getPdfBranding();
   const {userName, userEmail} = getUserLabel(user);
 
   return {
@@ -229,58 +183,6 @@ export async function generatePdfReport({
   element: HTMLElement;
   fileName: string;
 }) {
-  const canvas = await html2canvas(element, {
-    scale: 2,
-    useCORS: true,
-    backgroundColor: '#edf6f1',
-  });
-
-  const pdf = new jsPDF('p', 'mm', 'a4');
-  const pageWidth = 210;
-  const pageHeight = 297;
-  const margin = 10;
-  const contentWidth = pageWidth - margin * 2;
-  const contentHeight = pageHeight - margin * 2;
-  const pagePixelHeight = Math.floor((canvas.width * contentHeight) / contentWidth);
-
-  let renderedHeight = 0;
-  let pageIndex = 0;
-
-  while (renderedHeight < canvas.height) {
-    const sliceHeight = Math.min(pagePixelHeight, canvas.height - renderedHeight);
-    const pageCanvas = document.createElement('canvas');
-    pageCanvas.width = canvas.width;
-    pageCanvas.height = sliceHeight;
-    const context = pageCanvas.getContext('2d');
-
-    if (!context) {
-      throw new Error('Could not create PDF page context.');
-    }
-
-    context.drawImage(
-      canvas,
-      0,
-      renderedHeight,
-      canvas.width,
-      sliceHeight,
-      0,
-      0,
-      canvas.width,
-      sliceHeight,
-    );
-
-    const imageData = pageCanvas.toDataURL('image/png');
-    const renderedHeightMm = (sliceHeight * contentWidth) / canvas.width;
-
-    if (pageIndex > 0) {
-      pdf.addPage();
-    }
-
-    pdf.addImage(imageData, 'PNG', margin, margin, contentWidth, renderedHeightMm, undefined, 'FAST');
-
-    renderedHeight += sliceHeight;
-    pageIndex += 1;
-  }
-
-  pdf.save(fileName);
+  const {generatePdfFromElement} = await import('./pdfGenerator');
+  await generatePdfFromElement({element, fileName});
 }

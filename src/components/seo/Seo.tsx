@@ -4,8 +4,7 @@ import {applySeo, type SeoConfig} from './seoCore';
 export default function Seo(props: SeoConfig) {
   useEffect(() => {
     applySeo(props);
-  }, [props.title, props.description, props.canonicalPath, props.ogImage, props.noIndex]);
+  }, [props.title, props.description, props.canonicalPath, props.ogImage, props.noIndex, props.structuredData]);
 
   return null;
 }
-

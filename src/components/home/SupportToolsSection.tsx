@@ -116,7 +116,7 @@ export default function SupportToolsSection({
               </p>
             </div>
             <Link
-              to="/injury-protocols"
+              to="/injuries"
               className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-bold text-health-green shadow-sm"
             >
               {isAr ? 'افتح بروتوكولات الإصابات' : 'Open injury protocols'}

@@ -231,6 +231,7 @@ export default function PdfReportSheet({report}: {report: PdfReportData}) {
 
   return (
     <div
+      data-pdf-report-sheet="true"
       dir={isAr ? 'rtl' : 'ltr'}
       style={{
         width: 794,

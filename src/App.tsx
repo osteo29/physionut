@@ -5,7 +5,7 @@ import { 
   Zap, ShieldAlert, Facebook, Twitter, Instagram, Linkedin, Github, Mail, Phone, MapPin,
   ArrowUpRight, ExternalLink
 } from 'lucide-react';
-import { useState, useEffect, useMemo, memo } from 'react';
+import { lazy, Suspense, useState, useEffect, useMemo, memo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { checkEnvironment } from './services/calculators';
@@ -14,41 +14,14 @@ import { injuryDatabase, getInjuryById } from './services/injuryDatabase';
 import { translations, Language } from './services/translations';
 import { usePublishedArticles } from './services/articleStudio';
 import { foodDatabase, FoodItem } from './services/foodData';
+import {setPreferredLanguage} from './services/languagePreference';
 import {ClinicalCalculators, statusToTextClass, type HealthInterpretation, type GoalType, type BodyType} from './logic/physioNutritionLogic';
 import Hero from './components/home/Hero';
-import WhatsNew from './components/home/WhatsNew';
 import Footer from './components/layout/Footer';
 import Navigation from './components/layout/Navigation';
-import AboutSection from './components/home/AboutSection';
-import BlogSection from './components/home/BlogSection';
-import TrustSection from './components/home/TrustSection';
-import AskAboutResultChat from './components/ai/AskAboutResultChat';
 import ConsentBanner from './components/monetization/ConsentBanner';
 import AdSlot from './components/monetization/AdSlot';
-import ResultLeadCapture from './components/forms/ResultLeadCapture';
-import SupportToolsSection from './components/home/SupportToolsSection';
 import InjuryProtocolsHighlight from './components/home/InjuryProtocolsHighlight';
-import {
-  Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-} from 'chart.js';
-import { Pie, Bar } from 'react-chartjs-2';
-
-ChartJS.register(
-  ArcElement,
-  Tooltip,
-  Legend,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title
-);
 
 type CalculatorType = 'BMI' | 'WHtR' | 'BMR' | 'TDEE' | 'Macros' | 'Protein' | 'IdealWeight' | 'BodyFat' | 'Water' | 'Deficit' | 'Meal' | null;
 
@@ -130,6 +103,43 @@ const IconComponent = ({ name, className }: { name: string; className?: string }
   const Icon = icons[name] || HelpCircle;
   return <Icon className={className} />;
 };
+
+const WhatsNew = lazy(() => import('./components/home/WhatsNew'));
+const AboutSection = lazy(() => import('./components/home/AboutSection'));
+const BlogSection = lazy(() => import('./components/home/BlogSection'));
+const TrustSection = lazy(() => import('./components/home/TrustSection'));
+const SupportToolsSection = lazy(() => import('./components/home/SupportToolsSection'));
+const ResultCharts = lazy(() => import('./components/results/ResultCharts'));
+const ResultAssistantPanel = lazy(() => import('./components/results/ResultAssistantPanel'));
+
+function HomeSectionFallback({
+  className = 'bg-white py-16',
+  lines = 3,
+}: {
+  className?: string;
+  lines?: number;
+}) {
+  return (
+    <section className={className} aria-hidden="true">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="animate-pulse rounded-[2rem] border border-slate-200 bg-slate-50 p-6 sm:p-8">
+          <div className="mb-4 h-4 w-32 rounded-full bg-slate-200" />
+          <div className="mb-8 h-8 w-56 rounded-full bg-slate-200" />
+          <div className="grid gap-4 md:grid-cols-3">
+            {Array.from({length: lines}).map((_, index) => (
+              <div key={index} className="rounded-3xl border border-slate-200 bg-white p-5">
+                <div className="mb-4 h-10 w-10 rounded-2xl bg-slate-200" />
+                <div className="mb-3 h-4 w-2/3 rounded-full bg-slate-200" />
+                <div className="h-3 w-full rounded-full bg-slate-200" />
+                <div className="mt-2 h-3 w-5/6 rounded-full bg-slate-200" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export default function App({
   theme,
@@ -314,7 +324,7 @@ export default function App({
   useEffect(() => {
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.lang = lang;
-    localStorage.setItem('physiohub_lang', lang);
+    setPreferredLanguage(lang);
   }, [lang]);
 
   useEffect(() => {
@@ -1029,7 +1039,9 @@ export default function App({
         </div>
       </section>
 
-      <TrustSection lang={lang} />
+      <Suspense fallback={<HomeSectionFallback className="bg-white py-12" />}>
+        <TrustSection lang={lang} />
+      </Suspense>
 
       <section className="py-8 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1043,7 +1055,9 @@ export default function App({
       </section>
 
       {/* What's New Section */}
-      <WhatsNew lang={lang} />
+      <Suspense fallback={<HomeSectionFallback className="bg-white py-16" />}>
+        <WhatsNew lang={lang} />
+      </Suspense>
 
       <InjuryProtocolsHighlight lang={lang} />
 
@@ -2047,23 +2061,9 @@ export default function App({
                                 <div className="text-3xl font-bold text-health-green">{result.totalCalories} <span className="text-sm">kcal</span></div>
                               </div>
                               
-                              <div className="max-w-[250px] mx-auto">
-                                <Pie 
-                                  data={{
-                                    labels: [t.charts.protein, t.charts.carbs, t.charts.fats],
-                                    datasets: [{
-                                      data: [result.protein * 4, result.carbs * 4, result.fats * 9],
-                                      backgroundColor: ['#10B981', '#3B82F6', '#F97316'],
-                                      borderWidth: 0,
-                                    }]
-                                  }}
-                                  options={{
-                                    plugins: {
-                                      legend: { position: 'bottom', labels: { font: { family: 'Inter' } } }
-                                    }
-                                  }}
-                                />
-                              </div>
+                              <Suspense fallback={<div className="rounded-2xl border border-slate-200 bg-slate-50 p-6 text-sm text-slate-500">{lang === 'en' ? 'Loading chart...' : 'جارٍ تحميل الرسم...'}</div>}>
+                                <ResultCharts activeCalculator="Macros" lang={lang} result={result} t={t} />
+                              </Suspense>
                             </div>
                           ) : typeof result === 'object' && activeCalculator === 'Deficit' ? (
                             <div className="space-y-8">
@@ -2076,44 +2076,9 @@ export default function App({
                                 )}
                               </div>
 
-                              <div className="max-w-[400px] mx-auto h-[200px] mb-8">
-                                <Bar 
-                                  data={{
-                                    labels: [t.charts.maintenance, t.charts.deficit],
-                                    datasets: [{
-                                      label: t.forms.calories,
-                                      data: [result.tdee, result.deficit],
-                                      backgroundColor: ['#3B82F6', '#10B981'],
-                                      borderRadius: 8,
-                                    }]
-                                  }}
-                                  options={{
-                                    responsive: true,
-                                    maintainAspectRatio: false,
-                                    plugins: {
-                                      legend: { display: false }
-                                    },
-                                    scales: {
-                                      y: { beginAtZero: true, grid: { display: false } },
-                                      x: { grid: { display: false } }
-                                    }
-                                  }}
-                                />
-                              </div>
-
-                              <div className="max-w-[400px] mx-auto">
-                                <div className="flex justify-between text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider">
-                                  <span>{t.charts.deficit}</span>
-                                  <span>{Math.round((result.deficit / result.tdee) * 100)}%</span>
-                                </div>
-                                <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden border border-slate-200">
-                                  <motion.div 
-                                    initial={{ width: 0 }}
-                                    animate={{ width: `${(result.deficit / result.tdee) * 100}%` }}
-                                    className="h-full bg-health-green"
-                                  />
-                                </div>
-                              </div>
+                              <Suspense fallback={<div className="rounded-2xl border border-slate-200 bg-slate-50 p-6 text-sm text-slate-500">{lang === 'en' ? 'Loading chart...' : 'جارٍ تحميل الرسم...'}</div>}>
+                                <ResultCharts activeCalculator="Deficit" lang={lang} pace={pace} result={result} t={t} />
+                              </Suspense>
                             </div>
                           ) : activeCalculator === 'BodyFat' ? (
                             <div className="space-y-2">
@@ -2213,41 +2178,27 @@ export default function App({
                         </Link>
                       </div>
 
-                      <ResultLeadCapture
-                        lang={lang}
-                        calculatorName={activeCalculator}
-                        valueLabel={assessmentSnapshot.valueLabel}
-                        valueNumeric={assessmentSnapshot.valueNumeric}
-                        valueUnit={assessmentSnapshot.valueUnit}
-                      />
-
-                      <div id="result-ai-panel">
-                        <AskAboutResultChat
-                          calculatorName={activeCalculator}
+                      <Suspense fallback={<div className="rounded-2xl border border-slate-200 bg-slate-50 p-6 text-sm text-slate-500">{lang === 'en' ? 'Loading save and AI tools...' : 'جارٍ تحميل أدوات الحفظ والذكاء الاصطناعي...'}</div>}>
+                        <ResultAssistantPanel
+                          analysisPrompt={analysisPrompt}
+                          assessmentSnapshot={assessmentSnapshot}
+                          activeCalculator={activeCalculator}
+                          healthInterpretation={healthInterpretation}
+                          inputs={{
+                            weight,
+                            height,
+                            age,
+                            gender,
+                            activity,
+                            goal,
+                            bodyType,
+                            unitSystem,
+                          }}
                           lang={lang}
-                          autoPrompt={analysisPrompt}
-                          hiddenContext={JSON.stringify(
-                            {
-                              calculator: activeCalculator,
-                              result,
-                              interpretation: healthInterpretation,
-                              inputs: {
-                                weight,
-                                height,
-                                age,
-                                gender,
-                                activity,
-                                goal,
-                                bodyType,
-                                unitSystem,
-                              },
-                              language: lang,
-                            },
-                            null,
-                            2,
-                          )}
+                          result={result}
+                          setAnalysisPrompt={setAnalysisPrompt}
                         />
-                      </div>
+                      </Suspense>
                     </div>
                   )}
                 </div>
@@ -2257,26 +2208,30 @@ export default function App({
         </div>
       </section>
 
-      <SupportToolsSection
-        lang={lang}
-        t={t}
-        foodCategory={foodCategory}
-        setFoodCategory={setFoodCategory}
-        showFoodTable={showFoodTable}
-        setShowFoodTable={setShowFoodTable}
-        foodSearch={foodSearch}
-        setFoodSearch={setFoodSearch}
-        filteredFoods={filteredFoods}
-        addFoodToMeal={addFoodToMeal}
-        setIsCustomModalOpen={setIsCustomModalOpen}
-      />
+      <Suspense fallback={<HomeSectionFallback className="bg-white py-20" />}>
+        <SupportToolsSection
+          lang={lang}
+          t={t}
+          foodCategory={foodCategory}
+          setFoodCategory={setFoodCategory}
+          showFoodTable={showFoodTable}
+          setShowFoodTable={setShowFoodTable}
+          foodSearch={foodSearch}
+          setFoodSearch={setFoodSearch}
+          filteredFoods={filteredFoods}
+          addFoodToMeal={addFoodToMeal}
+          setIsCustomModalOpen={setIsCustomModalOpen}
+        />
+      </Suspense>
 
-      <BlogSection
-        t={t}
-        lang={lang}
-        articles={articles}
-        IconComponent={IconComponent}
-      />
+      <Suspense fallback={<HomeSectionFallback className="bg-slate-50 py-20" />}>
+        <BlogSection
+          t={t}
+          lang={lang}
+          articles={articles}
+          IconComponent={IconComponent}
+        />
+      </Suspense>
 
       {/* Custom Food Modal */}
       <AnimatePresence>
@@ -2455,7 +2410,9 @@ export default function App({
       </AnimatePresence>
 
       {/* About Us Section */}
-      <AboutSection lang={lang} />
+      <Suspense fallback={<HomeSectionFallback className="bg-white py-16" />}>
+        <AboutSection lang={lang} />
+      </Suspense>
 
       {/* Footer */}
       <Footer t={t} lang={lang} />
