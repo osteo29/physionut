@@ -1,5 +1,5 @@
 import {type ReactNode} from 'react';
-import {Link, useLocation} from 'react-router-dom';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
 import {setPreferredLanguage} from '../services/languagePreference';
 import usePreferredLang from './usePreferredLang';
 
@@ -12,36 +12,58 @@ export default function PageLayout({
 }) {
   const lang = usePreferredLang();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const handleBrandClick = () => {
-    if (location.pathname === '/') {
+    const rootPath = `/${lang}/`;
+    if (location.pathname === rootPath) {
       window.scrollTo({top: 0, behavior: 'smooth'});
     }
+  };
+
+  /**
+   * Generate URL for language switch
+   */
+  const generateLanguageSwitchUrl = (targetLang: 'en' | 'ar'): string => {
+    const pathname = location.pathname;
+    const match = pathname.match(/^\/(en|ar)\//);
+    
+    if (match) {
+      return pathname.replace(/^\/(en|ar)\//, `/${targetLang}/`);
+    }
+    
+    return `/${targetLang}${pathname}`;
+  };
+
+  const handleLanguageSwitch = (targetLang: 'en' | 'ar') => {
+    if (targetLang === lang) return;
+    setPreferredLanguage(targetLang);
+    navigate(generateLanguageSwitchUrl(targetLang));
   };
 
   return (
     <div className="min-h-screen bg-soft-blue" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
       <header className="border-b border-slate-200/70 bg-white/70 backdrop-blur">
         <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-4 px-4 py-5 sm:px-6 lg:px-8">
-          <Link to="/" onClick={handleBrandClick} className="font-black tracking-tight text-slate-900">
+          <Link to={`/${lang}/`} onClick={handleBrandClick} className="font-black tracking-tight text-slate-900">
             PhysioNutrition
           </Link>
 
           <div className="flex flex-wrap items-center gap-4">
             <nav className="flex flex-wrap items-center gap-4 text-sm font-semibold text-slate-700">
-              <Link className="hover:text-health-green" to="/privacy">
+              <Link className="hover:text-health-green" to={`/${lang}/privacy`}>
                 {lang === 'en' ? 'Privacy' : 'الخصوصية'}
               </Link>
-              <Link className="hover:text-health-green" to="/about">
+              <Link className="hover:text-health-green" to={`/${lang}/about`}>
                 {lang === 'en' ? 'About' : 'من نحن'}
               </Link>
-              <Link className="hover:text-health-green" to="/contact">
+              <Link className="hover:text-health-green" to={`/${lang}/contact`}>
                 {lang === 'en' ? 'Contact' : 'اتصل بنا'}
               </Link>
-              <Link className="hover:text-health-green" to="/injuries">
+              <Link className="hover:text-health-green" to={`/${lang}/injuries`}>
                 {lang === 'en' ? 'Injury Protocols' : 'بروتوكولات الإصابات'}
               </Link>
-              <Link className="hover:text-health-green" to="/terms">
+              <Link className="hover:text-health-green" to={`/${lang}/terms`}>
                 {lang === 'en' ? 'Terms' : 'الشروط'}
               </Link>
             </nav>
@@ -49,7 +71,7 @@ export default function PageLayout({
             <div className="flex items-center gap-1 rounded-full border border-slate-200 bg-slate-100 p-1">
               <button
                 type="button"
-                onClick={() => setPreferredLanguage('en')}
+                onClick={() => handleLanguageSwitch('en')}
                 className={`rounded-full px-3 py-1 text-xs font-bold ${
                   lang === 'en' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'
                 }`}
@@ -58,7 +80,7 @@ export default function PageLayout({
               </button>
               <button
                 type="button"
-                onClick={() => setPreferredLanguage('ar')}
+                onClick={() => handleLanguageSwitch('ar')}
                 className={`rounded-full px-3 py-1 text-xs font-bold ${
                   lang === 'ar' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'
                 }`}

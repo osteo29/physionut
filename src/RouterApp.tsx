@@ -1,6 +1,8 @@
 import {lazy, Suspense, useEffect, useState} from 'react';
-import {Navigate, Route, Routes} from 'react-router-dom';
+import {Navigate, Route, Routes, useLocation} from 'react-router-dom';
+import {getPreferredLanguage} from './services/languagePreference';
 import HomeRoute from './pages/HomeRoute';
+
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('./pages/TermsOfService'));
 const CookiePolicy = lazy(() => import('./pages/CookiePolicy'));
@@ -27,6 +29,14 @@ function RouteFallback() {
   );
 }
 
+/**
+ * Redirect root to preferred language
+ */
+function RootRedirect() {
+  const preferredLang = getPreferredLanguage();
+  return <Navigate to={`/${preferredLang}/`} replace />;
+}
+
 export default function RouterApp() {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     const saved = localStorage.getItem('physiohub_theme');
@@ -46,29 +56,48 @@ export default function RouterApp() {
   return (
     <Suspense fallback={<RouteFallback />}>
       <Routes>
-        <Route path="/" element={<HomeRoute theme={theme} onToggleTheme={toggleTheme} />} />
-        <Route
-          path="/calculators"
-          element={<HomeRoute scrollToId="calculators" theme={theme} onToggleTheme={toggleTheme} />}
-        />
-        <Route path="/privacy" element={<PrivacyPolicy />} />
-        <Route path="/terms" element={<TermsOfService />} />
-        <Route path="/cookies" element={<CookiePolicy />} />
-        <Route path="/disclaimer" element={<MedicalDisclaimer />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/insights" element={<InsightsPage />} />
-        <Route path="/injury-protocols" element={<Navigate to="/injuries" replace />} />
-        <Route path="/injuries" element={<InjuryProtocolsPage />} />
-        <Route path="/injuries/:slug" element={<InjuryDetailPage />} />
-        <Route path="/insights/:slug" element={<ArticlePage />} />
-        <Route path="/studio/articles" element={<ArticleStudioPage />} />
-        <Route
-          path="/assistant"
-          element={<AssistantPage theme={theme} onToggleTheme={toggleTheme} />}
-        />
-        <Route path="/auth" element={<AuthPage theme={theme} onToggleTheme={toggleTheme} />} />
-        <Route path="/dashboard" element={<TrackingDashboardPage />} />
+        {/* Root redirect to preferred language */}
+        <Route path="/" element={<RootRedirect />} />
+
+        {/* Language-prefixed routes: /en/* and /ar/* */}
+        <Route path="/:lang" element={<HomeRoute theme={theme} onToggleTheme={toggleTheme} />} />
+        <Route path="/:lang/calculators" element={<HomeRoute scrollToId="calculators" theme={theme} onToggleTheme={toggleTheme} />} />
+        
+        {/* Public pages with language prefix */}
+        <Route path="/:lang/privacy" element={<PrivacyPolicy />} />
+        <Route path="/:lang/terms" element={<TermsOfService />} />
+        <Route path="/:lang/cookies" element={<CookiePolicy />} />
+        <Route path="/:lang/disclaimer" element={<MedicalDisclaimer />} />
+        <Route path="/:lang/about" element={<AboutPage />} />
+        <Route path="/:lang/contact" element={<ContactPage />} />
+        <Route path="/:lang/insights" element={<InsightsPage />} />
+        <Route path="/:lang/injury-protocols" element={<Navigate to="/:lang/injuries" replace />} />
+        <Route path="/:lang/injuries" element={<InjuryProtocolsPage />} />
+        <Route path="/:lang/injuries/:slug" element={<InjuryDetailPage />} />
+        <Route path="/:lang/insights/:slug" element={<ArticlePage />} />
+        <Route path="/:lang/studio/articles" element={<ArticleStudioPage />} />
+        <Route path="/:lang/assistant" element={<AssistantPage theme={theme} onToggleTheme={toggleTheme} />} />
+        <Route path="/:lang/auth" element={<AuthPage theme={theme} onToggleTheme={toggleTheme} />} />
+        <Route path="/:lang/dashboard" element={<TrackingDashboardPage />} />
+
+        {/* Legacy routes without language prefix - redirect to language-prefixed versions */}
+        <Route path="/calculators" element={<Navigate to={`/${getPreferredLanguage()}/calculators`} replace />} />
+        <Route path="/privacy" element={<Navigate to={`/${getPreferredLanguage()}/privacy`} replace />} />
+        <Route path="/terms" element={<Navigate to={`/${getPreferredLanguage()}/terms`} replace />} />
+        <Route path="/cookies" element={<Navigate to={`/${getPreferredLanguage()}/cookies`} replace />} />
+        <Route path="/disclaimer" element={<Navigate to={`/${getPreferredLanguage()}/disclaimer`} replace />} />
+        <Route path="/about" element={<Navigate to={`/${getPreferredLanguage()}/about`} replace />} />
+        <Route path="/contact" element={<Navigate to={`/${getPreferredLanguage()}/contact`} replace />} />
+        <Route path="/insights" element={<Navigate to={`/${getPreferredLanguage()}/insights`} replace />} />
+        <Route path="/injuries" element={<Navigate to={`/${getPreferredLanguage()}/injuries`} replace />} />
+        <Route path="/injuries/:slug" element={<Navigate to={`/${getPreferredLanguage()}/injuries/:slug`} replace />} />
+        <Route path="/insights/:slug" element={<Navigate to={`/${getPreferredLanguage()}/insights/:slug`} replace />} />
+        <Route path="/studio/articles" element={<Navigate to={`/${getPreferredLanguage()}/studio/articles`} replace />} />
+        <Route path="/assistant" element={<Navigate to={`/${getPreferredLanguage()}/assistant`} replace />} />
+        <Route path="/auth" element={<Navigate to={`/${getPreferredLanguage()}/auth`} replace />} />
+        <Route path="/dashboard" element={<Navigate to={`/${getPreferredLanguage()}/dashboard`} replace />} />
+
+        {/* 404 - Not Found */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>

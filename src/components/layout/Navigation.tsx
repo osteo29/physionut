@@ -16,7 +16,7 @@ import {
   UserRound,
   X,
 } from 'lucide-react';
-import {Link, useLocation} from 'react-router-dom';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
 import {
   getCurrentUser,
   isSupabaseConfigured,
@@ -28,6 +28,9 @@ import type {Language} from '../../services/translations';
 
 type CalculatorNavItem = {
   id: string;
+  title: string;
+  icon: ReactNode;
+};
   title: string;
   icon: ReactNode;
 };
@@ -60,7 +63,31 @@ const Navigation = memo(
   }) => {
     const isAr = lang === 'ar';
     const location = useLocation();
+    const navigate = useNavigate();
     const [user, setUser] = useState<User | null>(null);
+
+    /**
+     * Generate URL for language switch (e.g., /en/page -> /ar/page)
+     */
+    const generateLanguageSwitchUrl = (targetLang: Language): string => {
+      const pathname = location.pathname;
+      const match = pathname.match(/^\/(en|ar)\//);
+      
+      if (match) {
+        // Replace language prefix
+        return pathname.replace(/^\/(en|ar)\//, `/${targetLang}/`);
+      }
+      
+      // No language prefix (shouldn't happen with new routing), add one
+      return `/${targetLang}${pathname}`;
+    };
+
+    const handleLanguageSwitch = (targetLang: Language) => {
+      if (targetLang === lang) return;
+      setLang(targetLang);
+      setIsSidebarOpen(false);
+      navigate(generateLanguageSwitchUrl(targetLang));
+    };
 
     useEffect(() => {
       let mounted = true;
@@ -331,7 +358,7 @@ const Navigation = memo(
                     </span>
                     <div className="flex items-center gap-1 rounded-full border border-slate-200 bg-white p-1">
                       <button
-                        onClick={() => setLang('en')}
+                        onClick={() => handleLanguageSwitch('en')}
                         className={`rounded-full px-3 py-1 text-[10px] font-black ${
                           lang === 'en' ? 'bg-health-green text-white' : 'text-slate-400'
                         }`}
@@ -339,7 +366,7 @@ const Navigation = memo(
                         EN
                       </button>
                       <button
-                        onClick={() => setLang('ar')}
+                        onClick={() => handleLanguageSwitch('ar')}
                         className={`rounded-full px-3 py-1 text-[10px] font-black ${
                           lang === 'ar' ? 'bg-health-green text-white' : 'text-slate-400'
                         }`}
@@ -436,7 +463,7 @@ const Navigation = memo(
 
               <div className="hidden items-center gap-1 rounded-full border border-slate-200 bg-slate-100 p-1 sm:flex">
                 <button
-                  onClick={() => setLang('en')}
+                  onClick={() => handleLanguageSwitch('en')}
                   className={`rounded-full px-3 py-1 text-xs font-bold ${
                     lang === 'en' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'
                   }`}
@@ -444,7 +471,7 @@ const Navigation = memo(
                   EN
                 </button>
                 <button
-                  onClick={() => setLang('ar')}
+                  onClick={() => handleLanguageSwitch('ar')}
                   className={`rounded-full px-3 py-1 text-xs font-bold ${
                     lang === 'ar' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'
                   }`}

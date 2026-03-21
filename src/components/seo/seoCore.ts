@@ -1,10 +1,11 @@
 export type SeoConfig = {
   title: string;
   description: string;
-  canonicalPath: string; // "/privacy"
+  canonicalPath: string; // "/:lang/privacy" or "/privacy"
   ogImage?: string; // absolute URL
   noIndex?: boolean;
   structuredData?: Array<{id: string; json: unknown}>;
+  hreflangs?: Array<{lang: string; href: string}>; // [{ lang: 'en', href: '/en/...' }, { lang: 'ar', href: '/ar/...' }]
 };
 
 const DEFAULT_SITE_NAME = 'PhysioNutrition';
@@ -23,7 +24,26 @@ function upsertMeta(nameOrProp: {name?: string; property?: string}, content: str
   el.setAttribute('content', content);
 }
 
-function upsertLink(rel: string, href: string) {
+function upsertLink(rel: string, href: string, hreflangs?: Array<{lang: string; href: string}>) {
+  if (rel === 'alternate' && hreflangs?.length) {
+    // For hreflang links, remove all existing ones and add new ones
+    document.head.querySelectorAll(`link[rel="alternate"][hreflang]`).forEach((el) => el.remove());
+    hreflangs.forEach((item) => {
+      const el = document.createElement('link');
+      el.setAttribute('rel', 'alternate');
+      el.setAttribute('hreflang', item.lang);
+      el.setAttribute('href', item.href);
+      document.head.appendChild(el);
+    });
+    // Also add x-default
+    const xDefault = document.createElement('link');
+    xDefault.setAttribute('rel', 'alternate');
+    xDefault.setAttribute('hreflang', 'x-default');
+    xDefault.setAttribute('href', href); // href param should be the default English URL
+    document.head.appendChild(xDefault);
+    return;
+  }
+
   let el = document.head.querySelector(`link[rel="${rel}"]`) as HTMLLinkElement | null;
   if (!el) {
     el = document.createElement('link');
@@ -49,7 +69,14 @@ function upsertJsonLd(id: string, json: unknown) {
 export function applySeo(config: SeoConfig) {
   const siteUrl =
     (import.meta as any).env?.VITE_SITE_URL || 'https://physionutrition.vercel.app';
-  const canonicalUrl = `${siteUrl.replace(/\/$/, '')}${config.canonicalPath}`;
+  
+  // For canonical path, support both /en/... and /... formats
+  // Always normalize to language-prefixed format
+  const normalizedPath = config.canonicalPath.startsWith('/en/') || config.canonicalPath.startsWith('/ar/')
+    ? config.canonicalPath
+    : `${config.canonicalPath}`;
+  
+  const canonicalUrl = `${siteUrl.replace(/\/$/, '')}${normalizedPath}`;
   const ogImage = config.ogImage || `${siteUrl.replace(/\/$/, '')}/og-image.png`;
 
   document.title = config.title.includes(DEFAULT_SITE_NAME)
@@ -59,7 +86,7 @@ export function applySeo(config: SeoConfig) {
   upsertMeta({name: 'description'}, config.description);
   upsertMeta(
     {name: 'keywords'},
-    'Physical Therapy Calculators, Clinical Nutrition Tools, BMI, BMR, TDEE, Macro Calculator, PhysioNutrition',
+    'Physical Therapy Calculators, Clinical Nutrition Tools, BMI, BMR, TDEE, Macro Calculator, Injury Recovery, Medical SEO, PhysioNutrition',
   );
 
   upsertLink('canonical', canonicalUrl);
@@ -77,6 +104,11 @@ export function applySeo(config: SeoConfig) {
   upsertMeta({name: 'twitter:title'}, config.title);
   upsertMeta({name: 'twitter:description'}, config.description);
   upsertMeta({name: 'twitter:image'}, ogImage);
+
+  // Add hreflang tags
+  if (config.hreflangs?.length) {
+    upsertLink('alternate', canonicalUrl, config.hreflangs);
+  }
 
   upsertJsonLd('webapp', {
     '@context': 'https://schema.org',
