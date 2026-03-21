@@ -173,7 +173,7 @@ export default function InjuryDetailPage() {
         '@type': 'MedicalWebPage',
         name: labels.title,
         description: labels.description,
-        url: `https://physionutrition.vercel.app${getInjuryPath(injury)}`,
+        url: `https://physionutrition.vercel.app${getInjuryPath(injury, lang)}`,
         about: {
           '@type': 'MedicalCondition',
           name: injuryDisplayName,
@@ -207,7 +207,7 @@ export default function InjuryDetailPage() {
       <Seo
         title={labels.title}
         description={labels.description}
-        canonicalPath={getInjuryPath(injury)}
+        canonicalPath={getInjuryPath(injury, lang)}
         structuredData={structuredData}
       />
       <PageLayout title={labels.title}>
@@ -587,7 +587,7 @@ export default function InjuryDetailPage() {
                 {relatedInjuries.map((item) => (
                   <Link
                     key={item.id}
-                    to={getInjuryPath(item)}
+                    to={getInjuryPath(item, lang)}
                     className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4 transition hover:border-health-green/30 hover:bg-health-green/5"
                   >
                     <div className="font-bold text-slate-900">

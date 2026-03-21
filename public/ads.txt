@@ -1,0 +1,12 @@
+# PhysioNutrition - Ads.txt Configuration
+# This file contains the authorized digital sellers for your site
+
+# Google AdSense
+google.com, pub-xxxxxxxxxxxxxxxx, DIRECT, f08c47fec0942fa0
+
+# Important: Replace "pub-xxxxxxxxxxxxxxxx" with your actual Google AdSense Publisher ID
+# Get your ID from: https://support.google.com/adsense/answer/9032453
+
+# Placeholder - Update with actual networks as you add them
+# facebook.com, [Account ID], DIRECT
+# amazon-adsystem.com, [Seller ID], DIRECT

@@ -1,507 +1,1012 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://physionutrition.vercel.app/</loc>
+    <loc>https://physionutrition.vercel.app/en/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/calculators</loc>
+    <loc>https://physionutrition.vercel.app/ar/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/calculators</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries</loc>
+    <loc>https://physionutrition.vercel.app/ar/calculators</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/insights</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/insights</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/assistant</loc>
+    <loc>https://physionutrition.vercel.app/ar/insights</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/privacy</loc>
+    <loc>https://physionutrition.vercel.app/en/assistant</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/assistant</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/privacy</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/about</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://physionutrition.vercel.app/contact</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://physionutrition.vercel.app/terms</loc>
+    <loc>https://physionutrition.vercel.app/ar/privacy</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/cookies</loc>
+    <loc>https://physionutrition.vercel.app/en/about</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/about</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/contact</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/contact</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/terms</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/terms</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/cookies</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/disclaimer</loc>
+    <loc>https://physionutrition.vercel.app/ar/cookies</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/insights/protein-after-acl-reconstruction</loc>
+    <loc>https://physionutrition.vercel.app/en/disclaimer</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/disclaimer</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/insights/protein-after-acl-reconstruction</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/insights/why-tracking-measurements-matters</loc>
+    <loc>https://physionutrition.vercel.app/ar/insights/protein-after-acl-reconstruction</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/insights/nutrition-after-injury-basics</loc>
+    <loc>https://physionutrition.vercel.app/en/insights/why-tracking-measurements-matters</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/insights/supplements-that-may-support-recovery-after-injury</loc>
+    <loc>https://physionutrition.vercel.app/ar/insights/why-tracking-measurements-matters</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/insights/is-physical-therapy-just-exercise</loc>
+    <loc>https://physionutrition.vercel.app/en/insights/nutrition-after-injury-basics</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/insights/calorie-deficit-without-extremes</loc>
+    <loc>https://physionutrition.vercel.app/ar/insights/nutrition-after-injury-basics</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/insights/low-back-pain-rest-or-move</loc>
+    <loc>https://physionutrition.vercel.app/en/insights/supplements-that-may-support-recovery-after-injury</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/insights/diet-myths-that-waste-your-progress</loc>
+    <loc>https://physionutrition.vercel.app/ar/insights/supplements-that-may-support-recovery-after-injury</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/ankle-sprain</loc>
+    <loc>https://physionutrition.vercel.app/en/insights/is-physical-therapy-just-exercise</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/insights/is-physical-therapy-just-exercise</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/insights/calorie-deficit-without-extremes</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/insights/calorie-deficit-without-extremes</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/insights/low-back-pain-rest-or-move</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/insights/low-back-pain-rest-or-move</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/insights/diet-myths-that-waste-your-progress</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/insights/diet-myths-that-waste-your-progress</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/ankle-sprain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/ankle-sprain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/acl-injury</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/acl-injury</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/rotator-cuff</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/rotator-cuff</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/hamstring-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/hamstring-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/stress-fracture</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/stress-fracture</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/quadriceps-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/quadriceps-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/calf-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/calf-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/biceps-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/biceps-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/triceps-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/triceps-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/pectoral-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/pectoral-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/deltoid-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/deltoid-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/forearm-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/forearm-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/glute-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/glute-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/oblique-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/oblique-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/erector-spinae-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/erector-spinae-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/neck-muscle-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/neck-muscle-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/adductor-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/adductor-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/tibialis-anterior-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/tibialis-anterior-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/pcl-injury</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/pcl-injury</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/mcl-sprain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/mcl-sprain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/lcl-sprain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/lcl-sprain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/ucl-injury</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/ucl-injury</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/thumb-collateral-ligament</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/thumb-collateral-ligament</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/ac-joint-sprain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/ac-joint-sprain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/knee-multiligament-injury</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/knee-multiligament-injury</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/spine-ligament-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/spine-ligament-strain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/achilles-tendinopathy</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/achilles-tendinopathy</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/patellar-tendinopathy</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/patellar-tendinopathy</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/biceps-tendinopathy</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/biceps-tendinopathy</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/lateral-epicondylitis</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/lateral-epicondylitis</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/medial-epicondylitis</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/medial-epicondylitis</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/glute-tendinopathy</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/glute-tendinopathy</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/hip-flexor-tendinopathy</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/hip-flexor-tendinopathy</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/hamstring-tendon-injury</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/hamstring-tendon-injury</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/plantar-achilles-insertion-tendinopathy</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/plantar-achilles-insertion-tendinopathy</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/bone-fracture-long-bone</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/bone-fracture-long-bone</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/vertebral-fracture</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/vertebral-fracture</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/rib-fracture</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/rib-fracture</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/scaphoid-fracture</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/scaphoid-fracture</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/calcaneus-fracture</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/calcaneus-fracture</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/patella-fracture</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/injuries/patella-fracture</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/injuries/talus-fracture</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/acl-injury</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/talus-fracture</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/rotator-cuff</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/humeral-head-fracture</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/hamstring-strain</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/humeral-head-fracture</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/stress-fracture</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/pelvic-avulsion-fracture</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/quadriceps-strain</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/pelvic-avulsion-fracture</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/calf-strain</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/meniscus-tear</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/biceps-strain</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/meniscus-tear</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/triceps-strain</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/labrum-tear</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/pectoral-strain</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/labrum-tear</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/deltoid-strain</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/ac-joint-injury</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/forearm-strain</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/ac-joint-injury</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/glute-strain</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/patellofemoral-pain</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/oblique-strain</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/patellofemoral-pain</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/erector-spinae-strain</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/ankle-instability</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/neck-muscle-strain</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/ankle-instability</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/adductor-strain</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/osteoarthritis-flare</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/tibialis-anterior-strain</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/osteoarthritis-flare</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/pcl-injury</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/tmj-disorder</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/mcl-sprain</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/tmj-disorder</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/lcl-sprain</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/elbow-instability</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/ucl-injury</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/elbow-instability</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/thumb-collateral-ligament</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/shoulder-impingement</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/ac-joint-sprain</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/shoulder-impingement</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/knee-multiligament-injury</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/glenohumeral-dislocation</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/spine-ligament-strain</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/glenohumeral-dislocation</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/achilles-tendinopathy</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/hip-dysplasia-labral-tear</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/patellar-tendinopathy</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/hip-dysplasia-labral-tear</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/biceps-tendinopathy</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/wrist-instability-tfcc</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/lateral-epicondylitis</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/wrist-instability-tfcc</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/medial-epicondylitis</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/low-back-pain</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/glute-tendinopathy</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/low-back-pain</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/hip-flexor-tendinopathy</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/neck-pain</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/hamstring-tendon-injury</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/neck-pain</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/plantar-achilles-insertion-tendinopathy</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/plantar-fasciitis</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/bone-fracture-long-bone</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/plantar-fasciitis</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/vertebral-fracture</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/it-band-syndrome</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/rib-fracture</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/it-band-syndrome</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/scaphoid-fracture</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/shin-splints</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/calcaneus-fracture</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/shin-splints</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/patella-fracture</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/carpal-tunnel-syndrome</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/talus-fracture</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/carpal-tunnel-syndrome</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/humeral-head-fracture</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/tendinosis</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/pelvic-avulsion-fracture</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/tendinosis</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/meniscus-tear</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/bursitis</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/labrum-tear</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/bursitis</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/ac-joint-injury</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/myofascial-pain</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/patellofemoral-pain</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/myofascial-pain</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/ankle-instability</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/chronic-ankle-instability</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/osteoarthritis-flare</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/chronic-ankle-instability</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/tmj-disorder</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/acl-meniscus-combined</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/elbow-instability</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/acl-meniscus-combined</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/shoulder-impingement</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/rotator-cuff-labrum-complex</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/glenohumeral-dislocation</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/rotator-cuff-labrum-complex</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/hip-dysplasia-labral-tear</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/overhead-throwers-shoulder</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/wrist-instability-tfcc</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/overhead-throwers-shoulder</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/low-back-pain</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/runners-knee-patellar-tendon</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/neck-pain</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/runners-knee-patellar-tendon</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/plantar-fasciitis</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/jumpers-knee</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/it-band-syndrome</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/jumpers-knee</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/shin-splints</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/gymnast-wrist-injury</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/carpal-tunnel-syndrome</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/gymnast-wrist-injury</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/tendinosis</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/swimmer-shoulder-impingement</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/bursitis</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/swimmer-shoulder-impingement</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/myofascial-pain</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/growth-plate-fracture</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/chronic-ankle-instability</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/growth-plate-fracture</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/acl-meniscus-combined</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/osgood-schlatter</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/rotator-cuff-labrum-complex</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/osgood-schlatter</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/overhead-throwers-shoulder</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/severs-disease</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/runners-knee-patellar-tendon</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/severs-disease</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/jumpers-knee</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/geriatric-vertebral-compression-fracture</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/gymnast-wrist-injury</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/geriatric-vertebral-compression-fracture</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/swimmer-shoulder-impingement</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/geriatric-hip-fracture</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/growth-plate-fracture</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/geriatric-hip-fracture</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/osgood-schlatter</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/geriatric-osteoarthritis-flare</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/severs-disease</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/geriatric-osteoarthritis-flare</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/geriatric-vertebral-compression-fracture</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/acl-reconstruction</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/geriatric-hip-fracture</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/acl-reconstruction</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/geriatric-osteoarthritis-flare</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/rotator-cuff-repair</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/acl-reconstruction</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/rotator-cuff-repair</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/rotator-cuff-repair</loc>
+    <loc>https://physionutrition.vercel.app/en/injuries/meniscus-repair</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/injuries/meniscus-repair</loc>
+    <loc>https://physionutrition.vercel.app/ar/injuries/meniscus-repair</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

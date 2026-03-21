@@ -578,7 +578,10 @@ export const getAllInjuries = () => injuryProtocols;
 export const getAllCategories = (): InjuryCategory[] => [...new Set(injuryProtocols.map((injury) => injury.category))] as InjuryCategory[];
 export const getAllBodyRegions = (): BodyRegion[] => [...new Set(injuryProtocols.map((injury) => injury.bodyRegion))] as BodyRegion[];
 export const getInjurySlug = (injury: InjuryProtocol) => injury.id.replace(/_/g, '-');
-export const getInjuryPath = (injury: InjuryProtocol) => `/injuries/${getInjurySlug(injury)}`;
+export const getInjuryPath = (injury: InjuryProtocol, lang?: string) => {
+  const slug = getInjurySlug(injury);
+  return lang ? `/${lang}/injuries/${slug}` : `/injuries/${slug}`;
+};
 export const getInjuryById = (id: string) => injuryDatabase[id];
 export const getInjuryBySlug = (slug: string) =>
   injuryProtocols.find((injury) => getInjurySlug(injury) === slug);

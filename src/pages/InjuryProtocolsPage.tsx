@@ -74,14 +74,14 @@ export default function InjuryProtocolsPage() {
             <p className="max-w-3xl text-sm leading-7 text-slate-600 sm:text-base">{description}</p>
             <div className="mt-5 flex flex-wrap gap-3">
               <Link
-                to={featured[0] ? getInjuryPath(featured[0]) : '/injuries'}
+                to={featured[0] ? getInjuryPath(featured[0], lang) : `/${lang}/injuries`}
                 className="inline-flex items-center gap-2 rounded-2xl bg-health-green px-4 py-3 text-sm font-bold text-white"
               >
                 {isAr ? 'افتح أول بروتوكول الآن' : 'Open a protocol now'}
                 <ArrowRight className={`h-4 w-4 ${isAr ? 'rotate-180' : ''}`} />
               </Link>
               <Link
-                to="/assistant"
+                to={`/${lang}/assistant`}
                 className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-700"
               >
                 {isAr ? 'اسأل المساعد عن إصابة معينة' : 'Ask the assistant about an injury'}
@@ -192,7 +192,7 @@ export default function InjuryProtocolsPage() {
                 {filtered.map((injury) => (
                   <Link
                     key={injury.id}
-                    to={getInjuryPath(injury)}
+                    to={getInjuryPath(injury, lang)}
                     className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5 transition hover:border-health-green/30 hover:bg-health-green/5"
                   >
                     <div className="text-xs font-bold uppercase tracking-[0.16em] text-health-green">

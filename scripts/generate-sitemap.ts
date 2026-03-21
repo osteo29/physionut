@@ -4,6 +4,7 @@ import {getArticles} from '../src/services/articles';
 import {getAllInjuries, getInjuryPath} from '../src/services/injuryDatabase';
 
 const SITE_URL = 'https://physionutrition.vercel.app';
+const LANGUAGES = ['en', 'ar'];
 
 const staticRoutes: Array<{path: string; changefreq: string; priority: string}> = [
   {path: '/', changefreq: 'weekly', priority: '1.0'},
@@ -19,19 +20,32 @@ const staticRoutes: Array<{path: string; changefreq: string; priority: string}> 
   {path: '/disclaimer', changefreq: 'monthly', priority: '0.5'},
 ];
 
-const articleRoutes = getArticles('en').map((article) => ({
-  path: `/insights/${article.slug}`,
-  changefreq: 'monthly',
-  priority: '0.8',
-}));
+// Expand static routes with language prefixes
+const langStaticRoutes = staticRoutes.flatMap((route) =>
+  LANGUAGES.map((lang) => ({
+    path: `/${lang}${route.path}`,
+    changefreq: route.changefreq,
+    priority: route.priority,
+  })),
+);
 
-const injuryRoutes = getAllInjuries().map((injury) => ({
-  path: getInjuryPath(injury),
-  changefreq: 'weekly',
-  priority: '0.8',
-}));
+const articleRoutes = getArticles('en').flatMap((article) =>
+  LANGUAGES.map((lang) => ({
+    path: `/${lang}/insights/${article.slug}`,
+    changefreq: 'monthly',
+    priority: '0.8',
+  })),
+);
 
-const allRoutes = [...staticRoutes, ...articleRoutes, ...injuryRoutes];
+const injuryRoutes = getAllInjuries().flatMap((injury) =>
+  LANGUAGES.map((lang) => ({
+    path: getInjuryPath(injury, lang),
+    changefreq: 'weekly',
+    priority: '0.8',
+  })),
+);
+
+const allRoutes = [...langStaticRoutes, ...articleRoutes, ...injuryRoutes];
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

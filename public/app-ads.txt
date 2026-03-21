@@ -1,0 +1,11 @@
+# PhysioNutrition - App Ads Configuration
+# Mobile and app advertising networks
+
+# Google AdMob
+google.com, pub-xxxxxxxxxxxxxxxx, APP, ca-app-pub-xxxxxxxxxxxxxxxx~xxxxxxxxxx
+
+# Important: Replace IDs with your actual Google AdMob information
+# Get your info from: https://admob.google.com
+
+# Facebook/Meta Audience Network
+facebook.com, [Business ID], DIRECT, ca-app-pub-fb~~v1~~
