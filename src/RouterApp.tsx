@@ -38,6 +38,12 @@ function RootRedirect() {
   return <Navigate to={`/${preferredLang}/`} replace />;
 }
 
+function LegacyRouteRedirect() {
+  const preferredLang = getPreferredLanguage();
+  const location = useLocation();
+  return <Navigate to={`/${preferredLang}${location.pathname}${location.search}${location.hash}`} replace />;
+}
+
 export default function RouterApp() {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     const saved = localStorage.getItem('physiohub_theme');
@@ -84,21 +90,21 @@ export default function RouterApp() {
         <Route path="/:lang/dashboard" element={<TrackingDashboardPage />} />
 
         {/* Legacy routes without language prefix - redirect to language-prefixed versions */}
-        <Route path="/calculators" element={<Navigate to={`/${getPreferredLanguage()}/calculators`} replace />} />
-        <Route path="/privacy" element={<Navigate to={`/${getPreferredLanguage()}/privacy`} replace />} />
-        <Route path="/terms" element={<Navigate to={`/${getPreferredLanguage()}/terms`} replace />} />
-        <Route path="/cookies" element={<Navigate to={`/${getPreferredLanguage()}/cookies`} replace />} />
-        <Route path="/disclaimer" element={<Navigate to={`/${getPreferredLanguage()}/disclaimer`} replace />} />
-        <Route path="/about" element={<Navigate to={`/${getPreferredLanguage()}/about`} replace />} />
-        <Route path="/contact" element={<Navigate to={`/${getPreferredLanguage()}/contact`} replace />} />
-        <Route path="/insights" element={<Navigate to={`/${getPreferredLanguage()}/insights`} replace />} />
-        <Route path="/injuries" element={<Navigate to={`/${getPreferredLanguage()}/injuries`} replace />} />
-        <Route path="/injuries/:slug" element={<Navigate to={`/${getPreferredLanguage()}/injuries/:slug`} replace />} />
-        <Route path="/insights/:slug" element={<Navigate to={`/${getPreferredLanguage()}/insights/:slug`} replace />} />
-        <Route path="/studio/articles" element={<Navigate to={`/${getPreferredLanguage()}/studio/articles`} replace />} />
-        <Route path="/assistant" element={<Navigate to={`/${getPreferredLanguage()}/assistant`} replace />} />
-        <Route path="/auth" element={<Navigate to={`/${getPreferredLanguage()}/auth`} replace />} />
-        <Route path="/dashboard" element={<Navigate to={`/${getPreferredLanguage()}/dashboard`} replace />} />
+        <Route path="/calculators" element={<LegacyRouteRedirect />} />
+        <Route path="/privacy" element={<LegacyRouteRedirect />} />
+        <Route path="/terms" element={<LegacyRouteRedirect />} />
+        <Route path="/cookies" element={<LegacyRouteRedirect />} />
+        <Route path="/disclaimer" element={<LegacyRouteRedirect />} />
+        <Route path="/about" element={<LegacyRouteRedirect />} />
+        <Route path="/contact" element={<LegacyRouteRedirect />} />
+        <Route path="/insights" element={<LegacyRouteRedirect />} />
+        <Route path="/injuries" element={<LegacyRouteRedirect />} />
+        <Route path="/injuries/:slug" element={<LegacyRouteRedirect />} />
+        <Route path="/insights/:slug" element={<LegacyRouteRedirect />} />
+        <Route path="/studio/articles" element={<LegacyRouteRedirect />} />
+        <Route path="/assistant" element={<LegacyRouteRedirect />} />
+        <Route path="/auth" element={<LegacyRouteRedirect />} />
+        <Route path="/dashboard" element={<LegacyRouteRedirect />} />
 
         {/* 404 - Not Found */}
         <Route path="*" element={<NotFound />} />

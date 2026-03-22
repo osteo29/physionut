@@ -131,7 +131,7 @@ export default function ArticlePage() {
         <PageLayout title={lang === 'en' ? 'Article not found' : 'المقال غير موجود'}>
           <p>{lang === 'en' ? 'This article is not available.' : 'هذا المقال غير متاح.'}</p>
           <p>
-            <Link to="/#blog" className="font-semibold text-health-green hover:underline">
+            <Link to={`/${lang}/insights`} className="font-semibold text-health-green hover:underline">
               {lang === 'en' ? 'Back to insights' : 'العودة إلى المقالات'}
             </Link>
           </p>

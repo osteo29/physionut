@@ -30,7 +30,7 @@ export default function InsightsPage() {
           {articles.map((article) => (
             <Link
               key={article.slug}
-              to={`/insights/${article.slug}`}
+              to={`/${lang}/insights/${article.slug}`}
               className="rounded-3xl border border-slate-200 bg-white p-6 transition-all hover:border-health-green/30 hover:shadow-md"
             >
               <div className="mb-2 text-sm text-slate-400">

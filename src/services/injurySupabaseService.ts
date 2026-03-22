@@ -10,6 +10,7 @@ import type {
   SupplementProtocol,
   MealExamples,
 } from './injuryDatabase';
+import type { Language } from './translations';
 
 export interface InjuryRow {
   id: string;
@@ -99,6 +100,19 @@ export interface MealRow {
   updated_at: string;
 }
 
+export interface SafetyNotesRow {
+  id: string;
+  injury_id: string;
+  medications_en: string[];
+  medications_ar: string[];
+  supplements_en: string[];
+  supplements_ar: string[];
+  contraindication_medications: string[];
+  contraindication_supplements: string[];
+  created_at: string;
+  updated_at: string;
+}
+
 /**
  * Fetch all injuries from Supabase
  */
@@ -122,11 +136,10 @@ export async function fetchInjuriesFromSupabase(): Promise<InjuryRow[]> {
  */
 export async function fetchInjuryBySlug(slug: string): Promise<InjuryRow | null> {
   try {
-    const injuryId = slug.replace(/-/g, '_');
     const { data, error } = await supabase
       .from('injuries')
       .select('*')
-      .eq('injury_id_slug', injuryId)
+      .in('injury_id_slug', [slug, slug.replace(/-/g, '_'), slug.replace(/_/g, '-')])
       .single();
 
     if (error) throw error;
@@ -193,15 +206,36 @@ export async function fetchMealsByPhaseId(phaseId: string): Promise<MealRow[]> {
   }
 }
 
+export async function fetchSafetyNotesByInjuryId(injuryId: string): Promise<SafetyNotesRow | null> {
+  try {
+    const { data, error } = await supabase
+      .from('safety_notes')
+      .select('*')
+      .eq('injury_id', injuryId)
+      .maybeSingle();
+
+    if (error) throw error;
+    return data;
+  } catch (err) {
+    console.error(`Error fetching safety notes for injury ${injuryId}:`, err);
+    return null;
+  }
+}
+
 /**
  * Fetch complete injury protocol with all related data
  */
-export async function fetchCompleteInjuryProtocol(slug: string): Promise<InjuryProtocol | null> {
+export async function fetchCompleteInjuryProtocol(
+  slug: string,
+  lang: Language = 'en'
+): Promise<InjuryProtocol | null> {
   try {
     const injury = await fetchInjuryBySlug(slug);
     if (!injury) return null;
 
     const phases = await fetchPhasesByInjuryId(injury.id);
+    const safetyNotes = await fetchSafetyNotesByInjuryId(injury.id);
+    const useArabic = lang === 'ar';
 
     // Fetch supplements and meals for each phase
     const phasesWithData = await Promise.all(
@@ -212,21 +246,27 @@ export async function fetchCompleteInjuryProtocol(slug: string): Promise<InjuryP
         // Convert supplements
         const supplementsConverted: SupplementProtocol[] = supplements.map((s) => ({
           name: s.name,
-          dose: s.dose_en,
-          reason: s.reason_en,
-          timing: s.timing_en || undefined,
-          caution: s.caution_en || undefined,
+          dose: useArabic ? s.dose_ar || s.dose_en : s.dose_en,
+          reason: useArabic ? s.reason_ar || s.reason_en : s.reason_en,
+          timing: useArabic ? s.timing_ar || s.timing_en || undefined : s.timing_en || undefined,
+          caution: useArabic ? s.caution_ar || s.caution_en || undefined : s.caution_en || undefined,
         }));
 
         // Convert meals (taking first or default diet type)
         const mealData = mealRows[0];
         const mealsConverted: MealExamples = mealData
           ? {
-              breakfast: mealData.breakfast_en,
-              lunch: mealData.lunch_en,
-              dinner: mealData.dinner_en,
-              snack: mealData.snack_en || undefined,
-              shoppingList: mealData.shopping_list_en,
+              breakfast: useArabic ? mealData.breakfast_ar || mealData.breakfast_en : mealData.breakfast_en,
+              lunch: useArabic ? mealData.lunch_ar || mealData.lunch_en : mealData.lunch_en,
+              dinner: useArabic ? mealData.dinner_ar || mealData.dinner_en : mealData.dinner_en,
+              snack: useArabic
+                ? mealData.snack_ar || mealData.snack_en || undefined
+                : mealData.snack_en || undefined,
+              shoppingList: useArabic
+                ? mealData.shopping_list_ar?.length
+                  ? mealData.shopping_list_ar
+                  : mealData.shopping_list_en
+                : mealData.shopping_list_en,
             }
           : {
               breakfast: '',
@@ -237,16 +277,24 @@ export async function fetchCompleteInjuryProtocol(slug: string): Promise<InjuryP
 
         return {
           id: phase.id,
-          label: phase.label_en,
-          duration: phase.duration_en,
+          label: useArabic ? phase.label_ar || phase.label_en : phase.label_en,
+          duration: useArabic ? phase.duration_ar || phase.duration_en : phase.duration_en,
           window: phase.recovery_window as any,
-          goals: phase.goals_en,
-          nutritionFocus: phase.nutrition_focus_en,
-          recommendedFoods: phase.recommended_foods_en,
-          avoidFoods: phase.avoid_foods_en,
+          goals: useArabic && phase.goals_ar?.length ? phase.goals_ar : phase.goals_en,
+          nutritionFocus:
+            useArabic && phase.nutrition_focus_ar?.length ? phase.nutrition_focus_ar : phase.nutrition_focus_en,
+          recommendedFoods:
+            useArabic && phase.recommended_foods_ar?.length
+              ? phase.recommended_foods_ar
+              : phase.recommended_foods_en,
+          avoidFoods:
+            useArabic && phase.avoid_foods_ar?.length ? phase.avoid_foods_ar : phase.avoid_foods_en,
           supplements: supplementsConverted,
-          exercises: phase.exercises_en,
-          prohibitedMovements: phase.prohibited_movements_en,
+          exercises: useArabic && phase.exercises_ar?.length ? phase.exercises_ar : phase.exercises_en,
+          prohibitedMovements:
+            useArabic && phase.prohibited_movements_ar?.length
+              ? phase.prohibited_movements_ar
+              : phase.prohibited_movements_en,
           meals: mealsConverted,
           proteinPerKg:
             phase.protein_min_per_kg && phase.protein_max_per_kg
@@ -273,17 +321,23 @@ export async function fetchCompleteInjuryProtocol(slug: string): Promise<InjuryP
 
     const protocol: InjuryProtocol = {
       id: injury.injury_id_slug,
-      name: injury.name_en,
+      name: useArabic ? injury.name_ar || injury.name_en : injury.name_en,
       category: injury.category as any,
-      bodyRegion: injury.body_region_en as any,
+      bodyRegion: (useArabic ? injury.body_region_ar || injury.body_region_en : injury.body_region_en) as any,
       commonIn: injury.common_in,
-      overview: injury.overview_en,
-      rehabSummary: injury.rehab_summary_en,
+      overview: useArabic ? injury.overview_ar || injury.overview_en : injury.overview_en,
+      rehabSummary: useArabic ? injury.rehab_summary_ar || injury.rehab_summary_en : injury.rehab_summary_en,
       redFlags: injury.red_flags,
       relatedCalculators: injury.related_calculators,
       safetyNotes: {
-        medications: [],
-        supplements: [],
+        medications:
+          useArabic && safetyNotes?.medications_ar?.length
+            ? safetyNotes.medications_ar
+            : safetyNotes?.medications_en || [],
+        supplements:
+          useArabic && safetyNotes?.supplements_ar?.length
+            ? safetyNotes.supplements_ar
+            : safetyNotes?.supplements_en || [],
       },
       phases: phasesWithData,
     };

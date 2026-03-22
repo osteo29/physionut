@@ -1,4 +1,4 @@
-import {useMemo, useState} from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {ArrowRight, ClipboardList, Search, Timer} from 'lucide-react';
 import {Link} from 'react-router-dom';
 import Seo from '../components/seo/Seo';
@@ -7,45 +7,108 @@ import {
   getAllCategories,
   getAllInjuries,
   getInjuryPath,
+  type InjuryProtocol,
 } from '../services/injuryDatabase';
 import {
   getLocalizedBodyRegion,
   getLocalizedCategory,
   getLocalizedInjuryName,
 } from '../services/injuryLocalization';
+import { fetchInjuriesFromSupabase, type InjuryRow } from '../services/injurySupabaseService';
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
+
+type CatalogInjury = {
+  id: string;
+  slug: string;
+  name: string;
+  category: string;
+  bodyRegion: string;
+  overview: string;
+  commonIn: string[];
+  source: 'supabase' | 'local';
+  localRef?: InjuryProtocol;
+};
+
+function mapSupabaseInjury(row: InjuryRow, lang: 'en' | 'ar'): CatalogInjury {
+  return {
+    id: row.injury_id_slug,
+    slug: row.injury_id_slug.replace(/_/g, '-'),
+    name: lang === 'ar' ? row.name_ar || row.name_en : row.name_en,
+    category: row.category,
+    bodyRegion: lang === 'ar' ? row.body_region_ar || row.body_region_en : row.body_region_en,
+    overview: lang === 'ar' ? row.overview_ar || row.overview_en : row.overview_en,
+    commonIn: row.common_in || [],
+    source: 'supabase',
+  };
+}
+
+function mapLocalInjury(injury: InjuryProtocol, lang: 'en' | 'ar'): CatalogInjury {
+  return {
+    id: injury.id,
+    slug: injury.id.replace(/_/g, '-'),
+    name: getLocalizedInjuryName(injury.id, injury.name, lang),
+    category: injury.category,
+    bodyRegion: getLocalizedBodyRegion(injury.bodyRegion, lang),
+    overview: injury.overview,
+    commonIn: injury.commonIn,
+    source: 'local',
+    localRef: injury,
+  };
+}
 
 export default function InjuryProtocolsPage() {
   const lang = usePreferredLang();
   const isAr = lang === 'ar';
-  const injuries = useMemo(() => getAllInjuries(), []);
-  const categories = useMemo(() => getAllCategories(), []);
-  const bodyRegions = useMemo(() => getAllBodyRegions(), []);
+  const [remoteInjuries, setRemoteInjuries] = useState<CatalogInjury[]>([]);
+  const [loading, setLoading] = useState(true);
   const [category, setCategory] = useState('all');
   const [bodyRegion, setBodyRegion] = useState('all');
   const [query, setQuery] = useState('');
+
+  const fallbackInjuries = useMemo(
+    () => getAllInjuries().map((injury) => mapLocalInjury(injury, lang)),
+    [lang]
+  );
+
+  useEffect(() => {
+    let active = true;
+
+    const load = async () => {
+      setLoading(true);
+      const rows = await fetchInjuriesFromSupabase();
+      if (!active) return;
+      setRemoteInjuries(rows.map((row) => mapSupabaseInjury(row, lang)));
+      setLoading(false);
+    };
+
+    void load();
+
+    return () => {
+      active = false;
+    };
+  }, [lang]);
+
+  const injuries = remoteInjuries.length ? remoteInjuries : fallbackInjuries;
+  const categories = useMemo(() => [...new Set(injuries.map((injury) => injury.category))], [injuries]);
+  const bodyRegions = useMemo(() => [...new Set(injuries.map((injury) => injury.bodyRegion))], [injuries]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return injuries.filter((injury) => {
       const byCategory = category === 'all' || injury.category === category;
       const byRegion = bodyRegion === 'all' || injury.bodyRegion === bodyRegion;
-      const localizedName = getLocalizedInjuryName(injury.id, injury.name, lang).toLowerCase();
-      const localizedCategory = getLocalizedCategory(injury.category, lang).toLowerCase();
-      const localizedRegion = getLocalizedBodyRegion(injury.bodyRegion, lang).toLowerCase();
       const byQuery =
         !q ||
         injury.name.toLowerCase().includes(q) ||
-        localizedName.includes(q) ||
-        localizedCategory.includes(q) ||
-        localizedRegion.includes(q) ||
+        injury.category.toLowerCase().includes(q) ||
+        injury.bodyRegion.toLowerCase().includes(q) ||
         injury.overview.toLowerCase().includes(q) ||
         injury.commonIn.some((item) => item.toLowerCase().includes(q));
 
       return byCategory && byRegion && byQuery;
     });
-  }, [bodyRegion, category, injuries, lang, query]);
+  }, [bodyRegion, category, injuries, query]);
 
   const featured = filtered.slice(0, 12);
   const groupedCategories = categories.map((item) => ({
@@ -74,7 +137,7 @@ export default function InjuryProtocolsPage() {
             <p className="max-w-3xl text-sm leading-7 text-slate-600 sm:text-base">{description}</p>
             <div className="mt-5 flex flex-wrap gap-3">
               <Link
-                to={featured[0] ? getInjuryPath(featured[0], lang) : `/${lang}/injuries`}
+                to={featured[0] ? `/${lang}/injuries/${featured[0].slug}` : `/${lang}/injuries`}
                 className="inline-flex items-center gap-2 rounded-2xl bg-health-green px-4 py-3 text-sm font-bold text-white"
               >
                 {isAr ? 'افتح أول بروتوكول الآن' : 'Open a protocol now'}
@@ -130,7 +193,7 @@ export default function InjuryProtocolsPage() {
                 <option value="all">{isAr ? 'كل الفئات' : 'All categories'}</option>
                 {categories.map((item) => (
                   <option key={item} value={item}>
-                    {getLocalizedCategory(item, lang)}
+                    {item}
                   </option>
                 ))}
               </select>
@@ -142,7 +205,7 @@ export default function InjuryProtocolsPage() {
                 <option value="all">{isAr ? 'كل المناطق' : 'All body regions'}</option>
                 {bodyRegions.map((item) => (
                   <option key={item} value={item}>
-                    {getLocalizedBodyRegion(item, lang)}
+                    {item}
                   </option>
                 ))}
               </select>
@@ -162,7 +225,7 @@ export default function InjuryProtocolsPage() {
                   onClick={() => setCategory(item.name)}
                   className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4 text-left transition hover:border-health-green/30 hover:bg-health-green/5"
                 >
-                  <div className="font-bold text-slate-900">{getLocalizedCategory(item.name, lang)}</div>
+                  <div className="font-bold text-slate-900">{item.name}</div>
                   <div className="mt-2 text-sm text-slate-500">
                     {item.count} {isAr ? 'بروتوكول' : 'protocols'}
                   </div>
@@ -181,6 +244,7 @@ export default function InjuryProtocolsPage() {
                   {isAr ? `عدد النتائج الحالية: ${filtered.length}` : `Current matching results: ${filtered.length}`}
                 </p>
               </div>
+              {loading ? <div className="text-sm text-slate-400">{isAr ? 'جارٍ التحميل...' : 'Loading...'}</div> : null}
             </div>
 
             {filtered.length === 0 ? (
@@ -192,15 +256,13 @@ export default function InjuryProtocolsPage() {
                 {filtered.map((injury) => (
                   <Link
                     key={injury.id}
-                    to={getInjuryPath(injury, lang)}
+                    to={`/${lang}/injuries/${injury.slug}`}
                     className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5 transition hover:border-health-green/30 hover:bg-health-green/5"
                   >
                     <div className="text-xs font-bold uppercase tracking-[0.16em] text-health-green">
-                      {getLocalizedCategory(injury.category, lang)} • {getLocalizedBodyRegion(injury.bodyRegion, lang)}
+                      {injury.category} • {injury.bodyRegion}
                     </div>
-                    <div className="mt-2 text-lg font-black text-slate-900">
-                      {getLocalizedInjuryName(injury.id, injury.name, lang)}
-                    </div>
+                    <div className="mt-2 text-lg font-black text-slate-900">{injury.name}</div>
                     <p className="mt-3 line-clamp-3 text-sm leading-7 text-slate-600">{injury.overview}</p>
                     <div className="mt-4 flex flex-wrap gap-2">
                       {injury.commonIn.slice(0, 3).map((item) => (

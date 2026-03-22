@@ -1,4 +1,4 @@
-import {lazy, Suspense, useState} from 'react';
+import {lazy, Suspense, useEffect, useMemo, useState} from 'react';
 import {
   AlertTriangle,
   ArrowRight,
@@ -12,21 +12,17 @@ import {Link, Navigate, useParams} from 'react-router-dom';
 import Seo from '../components/seo/Seo';
 import {injuryPageContent} from '../services/injuryPageContent';
 import {
-  getLocalizedBodyRegion,
-  getLocalizedCategory,
-  getLocalizedInjuryName,
-} from '../services/injuryLocalization';
-import {
   generateRecoveryPlan,
   getAllInjuries,
   getInjuryBySlug,
-  getInjuryPath,
   getSuggestedPhaseForWindow,
   type ActivityProfile,
   type DietStyle,
+  type InjuryProtocol,
   type RecoveryGoal,
   type RecoveryWindow,
 } from '../services/injuryDatabase';
+import {fetchCompleteInjuryProtocol, fetchInjuriesFromSupabase} from '../services/injurySupabaseService';
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
 
@@ -78,11 +74,18 @@ function inferCommonSymptoms(name: string, bodyRegion: string, category: string)
   ];
 }
 
+function buildPath(id: string, lang: string) {
+  return `/${lang}/injuries/${id.replace(/_/g, '-')}`;
+}
+
 export default function InjuryDetailPage() {
   const {slug = ''} = useParams();
   const lang = usePreferredLang();
   const isAr = lang === 'ar';
-  const injury = getInjuryBySlug(slug);
+  const fallbackInjury = useMemo(() => getInjuryBySlug(slug), [slug]);
+  const [injury, setInjury] = useState<InjuryProtocol | null>(fallbackInjury ?? null);
+  const [loading, setLoading] = useState(true);
+  const [remoteIds, setRemoteIds] = useState<string[]>([]);
 
   const [profile, setProfile] = useState<ActivityProfile>('general');
   const [goal, setGoal] = useState<RecoveryGoal>('calm');
@@ -90,14 +93,45 @@ export default function InjuryDetailPage() {
   const [diet, setDiet] = useState<DietStyle>('omnivore');
   const [weightKg, setWeightKg] = useState(70);
 
-  if (!injury) {
-    return <Navigate to="/injuries" replace />;
+  useEffect(() => {
+    let active = true;
+
+    const load = async () => {
+      setLoading(true);
+      const [protocol, rows] = await Promise.all([
+        fetchCompleteInjuryProtocol(slug, lang),
+        fetchInjuriesFromSupabase(),
+      ]);
+      if (!active) return;
+      setInjury(protocol ?? fallbackInjury ?? null);
+      setRemoteIds(rows.map((row) => row.injury_id_slug));
+      setLoading(false);
+    };
+
+    void load();
+
+    return () => {
+      active = false;
+    };
+  }, [fallbackInjury, lang, slug]);
+
+  if (!injury && !loading) {
+    return <Navigate to={`/${lang}/injuries`} replace />;
   }
 
-  const injuryDisplayName = getLocalizedInjuryName(injury.id, injury.name, lang);
-  const categoryDisplay = getLocalizedCategory(injury.category, lang);
-  const bodyRegionDisplay = getLocalizedBodyRegion(injury.bodyRegion, lang);
+  if (!injury) {
+    return (
+      <PageLayout title={isAr ? 'جارٍ تحميل البروتوكول' : 'Loading protocol'}>
+        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6 text-sm text-slate-500">
+          {isAr ? 'جارٍ تحميل تفاصيل الإصابة...' : 'Loading injury details...'}
+        </div>
+      </PageLayout>
+    );
+  }
 
+  const injuryDisplayName = injury.name;
+  const categoryDisplay = injury.category;
+  const bodyRegionDisplay = injury.bodyRegion;
   const suggestedPhase = getSuggestedPhaseForWindow(injury, recoveryWindow);
   const plan = generateRecoveryPlan({
     weightKg,
@@ -110,6 +144,7 @@ export default function InjuryDetailPage() {
   const relatedInjuries = getAllInjuries()
     .filter((item) => item.id !== injury.id)
     .filter((item) => item.category === injury.category || item.bodyRegion === injury.bodyRegion)
+    .filter((item) => !remoteIds.length || !remoteIds.includes(item.id))
     .slice(0, 6);
 
   const customContent = injuryPageContent[injury.id];
@@ -136,6 +171,7 @@ export default function InjuryDetailPage() {
     },
   ];
 
+  const path = buildPath(injury.id, lang);
   const labels = {
     title: isAr ? `بروتوكول ${injuryDisplayName}` : `${injuryDisplayName} Recovery Protocol`,
     description: isAr
@@ -173,7 +209,7 @@ export default function InjuryDetailPage() {
         '@type': 'MedicalWebPage',
         name: labels.title,
         description: labels.description,
-        url: `https://physionutrition.vercel.app${getInjuryPath(injury, lang)}`,
+        url: `https://physionutrition.vercel.app${path}`,
         about: {
           '@type': 'MedicalCondition',
           name: injuryDisplayName,
@@ -185,31 +221,11 @@ export default function InjuryDetailPage() {
         },
       },
     },
-    {
-      id: `faq-${injury.id}`,
-      json: {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: faqItems.map((item) => ({
-          '@type': 'Question',
-          name: item.q,
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: item.a,
-          },
-        })),
-      },
-    },
   ];
 
   return (
     <>
-      <Seo
-        title={labels.title}
-        description={labels.description}
-        canonicalPath={getInjuryPath(injury, lang)}
-        structuredData={structuredData}
-      />
+      <Seo title={labels.title} description={labels.description} canonicalPath={path} structuredData={structuredData} />
       <PageLayout title={labels.title}>
         <div className="space-y-8 not-prose">
           <section className="rounded-[2rem] border border-slate-200 bg-slate-50 p-6 sm:p-8">
@@ -224,13 +240,13 @@ export default function InjuryDetailPage() {
             <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-700">{injury.rehabSummary}</p>
             <div className="mt-5 flex flex-wrap gap-3">
               <Link
-                to="/injuries"
+                to={`/${lang}/injuries`}
                 className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-700"
               >
                 {isAr ? 'العودة لمكتبة الإصابات' : 'Back to injury directory'}
               </Link>
               <Link
-                to="/assistant"
+                to={`/${lang}/assistant`}
                 className="inline-flex items-center gap-2 rounded-2xl bg-health-green px-4 py-3 text-sm font-bold text-white"
               >
                 {isAr ? 'اسأل المساعد عن هذه الحالة' : 'Ask the assistant about this injury'}
@@ -240,14 +256,10 @@ export default function InjuryDetailPage() {
 
           <section className="grid gap-6 md:grid-cols-2">
             <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
-              <div className="mb-3 font-black text-slate-900">
-                {isAr ? 'الأعراض الشائعة' : 'Common symptoms'}
-              </div>
+              <div className="mb-3 font-black text-slate-900">{isAr ? 'الأعراض الشائعة' : 'Common symptoms'}</div>
               <ul className="space-y-2 text-sm text-slate-700">
                 {commonSymptoms.map((item) => (
-                  <li key={item} className="rounded-xl bg-slate-50 px-3 py-3">
-                    {item}
-                  </li>
+                  <li key={item} className="rounded-xl bg-slate-50 px-3 py-3">{item}</li>
                 ))}
               </ul>
             </div>
@@ -258,9 +270,7 @@ export default function InjuryDetailPage() {
               </div>
               <ul className="space-y-2 text-sm text-slate-700">
                 {injury.redFlags.map((item) => (
-                  <li key={item} className="rounded-xl bg-white px-3 py-3">
-                    {item}
-                  </li>
+                  <li key={item} className="rounded-xl bg-white px-3 py-3">{item}</li>
                 ))}
               </ul>
             </div>
@@ -272,57 +282,18 @@ export default function InjuryDetailPage() {
               <span>{isAr ? 'مخصص خطة التعافي' : 'Recovery plan customizer'}</span>
             </div>
             <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
-              <input
-                type="number"
-                min="0"
-                max="250"
-                value={weightKg}
-                onChange={(e) => setWeightKg(Math.max(0, Math.min(250, Number(e.target.value) || 0)))}
-                className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-health-green focus:ring-2 focus:ring-health-green/20"
-              />
-              <select
-                value={recoveryWindow}
-                onChange={(e) => setRecoveryWindow(e.target.value as RecoveryWindow)}
-                className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-health-green focus:ring-2 focus:ring-health-green/20"
-              >
-                {recoveryWindows.map((item) => (
-                  <option key={item} value={item}>
-                    {labels.window[item]}
-                  </option>
-                ))}
+              <input type="number" min="0" max="250" value={weightKg} onChange={(e) => setWeightKg(Math.max(0, Math.min(250, Number(e.target.value) || 0)))} className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-health-green focus:ring-2 focus:ring-health-green/20" />
+              <select value={recoveryWindow} onChange={(e) => setRecoveryWindow(e.target.value as RecoveryWindow)} className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-health-green focus:ring-2 focus:ring-health-green/20">
+                {recoveryWindows.map((item) => <option key={item} value={item}>{labels.window[item]}</option>)}
               </select>
-              <select
-                value={profile}
-                onChange={(e) => setProfile(e.target.value as ActivityProfile)}
-                className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-health-green focus:ring-2 focus:ring-health-green/20"
-              >
-                {profiles.map((item) => (
-                  <option key={item} value={item}>
-                    {labels.profile[item]}
-                  </option>
-                ))}
+              <select value={profile} onChange={(e) => setProfile(e.target.value as ActivityProfile)} className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-health-green focus:ring-2 focus:ring-health-green/20">
+                {profiles.map((item) => <option key={item} value={item}>{labels.profile[item]}</option>)}
               </select>
-              <select
-                value={goal}
-                onChange={(e) => setGoal(e.target.value as RecoveryGoal)}
-                className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-health-green focus:ring-2 focus:ring-health-green/20"
-              >
-                {goals.map((item) => (
-                  <option key={item} value={item}>
-                    {labels.goal[item]}
-                  </option>
-                ))}
+              <select value={goal} onChange={(e) => setGoal(e.target.value as RecoveryGoal)} className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-health-green focus:ring-2 focus:ring-health-green/20">
+                {goals.map((item) => <option key={item} value={item}>{labels.goal[item]}</option>)}
               </select>
-              <select
-                value={diet}
-                onChange={(e) => setDiet(e.target.value as DietStyle)}
-                className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-health-green focus:ring-2 focus:ring-health-green/20"
-              >
-                {diets.map((item) => (
-                  <option key={item} value={item}>
-                    {labels.diet[item]}
-                  </option>
-                ))}
+              <select value={diet} onChange={(e) => setDiet(e.target.value as DietStyle)} className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-health-green focus:ring-2 focus:ring-health-green/20">
+                {diets.map((item) => <option key={item} value={item}>{labels.diet[item]}</option>)}
               </select>
             </div>
           </section>
@@ -334,76 +305,10 @@ export default function InjuryDetailPage() {
                 <span>{isAr ? 'الخطة اليومية حسب الوزن' : 'Weight-based daily plan'}</span>
               </div>
               <div className="grid gap-3 md:grid-cols-4">
-                <div className="rounded-2xl bg-white p-4 shadow-sm">
-                  <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
-                    {isAr ? 'البروتين' : 'Protein'}
-                  </div>
-                  <div className="mt-2 text-2xl font-black text-slate-900">{plan.proteinTotalGrams} g</div>
-                </div>
-                <div className="rounded-2xl bg-white p-4 shadow-sm">
-                  <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
-                    {isAr ? 'السوائل' : 'Hydration'}
-                  </div>
-                  <div className="mt-2 text-2xl font-black text-slate-900">{plan.hydrationTargetMl} ml</div>
-                </div>
-                <div className="rounded-2xl bg-white p-4 shadow-sm">
-                  <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
-                    {isAr ? 'الكولاجين' : 'Collagen'}
-                  </div>
-                  <div className="mt-2 text-2xl font-black text-slate-900">
-                    {plan.collagenDoseGrams ? `${plan.collagenDoseGrams} g` : '—'}
-                  </div>
-                </div>
-                <div className="rounded-2xl bg-white p-4 shadow-sm">
-                  <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
-                    {isAr ? 'الكرياتين' : 'Creatine'}
-                  </div>
-                  <div className="mt-2 text-2xl font-black text-slate-900">
-                    {plan.creatineGrams ? `${plan.creatineGrams} g` : '—'}
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-4 grid gap-4 xl:grid-cols-2">
-                <div className="rounded-2xl bg-white p-4 shadow-sm">
-                  <div className="mb-2 font-bold text-slate-900">
-                    {isAr ? 'توزيع البروتين' : 'Protein distribution'}
-                  </div>
-                  <div className="grid gap-2 text-sm text-slate-700 sm:grid-cols-2">
-                    <div className="rounded-xl bg-slate-50 px-3 py-2">
-                      {isAr ? 'فطور' : 'Breakfast'}: {plan.proteinDistribution.breakfast} g
-                    </div>
-                    <div className="rounded-xl bg-slate-50 px-3 py-2">
-                      {isAr ? 'غداء' : 'Lunch'}: {plan.proteinDistribution.lunch} g
-                    </div>
-                    <div className="rounded-xl bg-slate-50 px-3 py-2">
-                      {isAr ? 'عشاء' : 'Dinner'}: {plan.proteinDistribution.dinner} g
-                    </div>
-                    <div className="rounded-xl bg-slate-50 px-3 py-2">
-                      {isAr ? 'سناك' : 'Snack'}: {plan.proteinDistribution.snack} g
-                    </div>
-                  </div>
-                </div>
-
-                <div className="rounded-2xl bg-white p-4 shadow-sm">
-                  <div className="mb-2 font-bold text-slate-900">{isAr ? 'أمثلة الوجبات' : 'Meal examples'}</div>
-                  <div className="space-y-2 text-sm text-slate-700">
-                    <div className="rounded-xl bg-slate-50 px-3 py-2">
-                      {isAr ? 'فطور' : 'Breakfast'}: {plan.meals.breakfast}
-                    </div>
-                    <div className="rounded-xl bg-slate-50 px-3 py-2">
-                      {isAr ? 'غداء' : 'Lunch'}: {plan.meals.lunch}
-                    </div>
-                    <div className="rounded-xl bg-slate-50 px-3 py-2">
-                      {isAr ? 'عشاء' : 'Dinner'}: {plan.meals.dinner}
-                    </div>
-                    {plan.meals.snack ? (
-                      <div className="rounded-xl bg-slate-50 px-3 py-2">
-                        {isAr ? 'سناك' : 'Snack'}: {plan.meals.snack}
-                      </div>
-                    ) : null}
-                  </div>
-                </div>
+                <div className="rounded-2xl bg-white p-4 shadow-sm"><div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">{isAr ? 'البروتين' : 'Protein'}</div><div className="mt-2 text-2xl font-black text-slate-900">{plan.proteinTotalGrams} g</div></div>
+                <div className="rounded-2xl bg-white p-4 shadow-sm"><div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">{isAr ? 'السوائل' : 'Hydration'}</div><div className="mt-2 text-2xl font-black text-slate-900">{plan.hydrationTargetMl} ml</div></div>
+                <div className="rounded-2xl bg-white p-4 shadow-sm"><div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">{isAr ? 'الكولاجين' : 'Collagen'}</div><div className="mt-2 text-2xl font-black text-slate-900">{plan.collagenDoseGrams ? `${plan.collagenDoseGrams} g` : '-'}</div></div>
+                <div className="rounded-2xl bg-white p-4 shadow-sm"><div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">{isAr ? 'الكرياتين' : 'Creatine'}</div><div className="mt-2 text-2xl font-black text-slate-900">{plan.creatineGrams ? `${plan.creatineGrams} g` : '-'}</div></div>
               </div>
             </section>
           ) : null}
@@ -420,11 +325,7 @@ export default function InjuryDetailPage() {
                     <div className="font-bold text-slate-900">{phase.label}</div>
                     <div className="mt-1 text-xs text-slate-500">{phase.duration}</div>
                     <ul className="mt-3 space-y-2 text-sm text-slate-700">
-                      {phase.goals.map((item) => (
-                        <li key={item} className="rounded-xl bg-white px-3 py-2">
-                          {item}
-                        </li>
-                      ))}
+                      {phase.goals.map((item) => <li key={item} className="rounded-xl bg-white px-3 py-2">{item}</li>)}
                     </ul>
                   </div>
                 ))}
@@ -432,80 +333,18 @@ export default function InjuryDetailPage() {
             </div>
 
             <div className="space-y-6">
-              {customContent?.rehabNotes?.length ? (
-                <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
-                  <div className="mb-3 font-black text-slate-900">
-                    {isAr ? 'ملاحظات عملية للتأهيل' : 'Practical rehab notes'}
-                  </div>
-                  <ul className="space-y-2 text-sm text-slate-700">
-                    {customContent.rehabNotes.map((item) => (
-                      <li key={item} className="rounded-xl bg-slate-50 px-3 py-3">
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
-
               <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
-                <div className="mb-3 font-black text-slate-900">
-                  {isAr ? 'التمارين المناسبة' : 'Rehab exercise focus'}
-                </div>
+                <div className="mb-3 font-black text-slate-900">{isAr ? 'التمارين المناسبة' : 'Rehab exercise focus'}</div>
                 <ul className="space-y-2 text-sm text-slate-700">
-                  {suggestedPhase.exercises.map((item) => (
-                    <li key={item} className="rounded-xl bg-slate-50 px-3 py-3">
-                      {item}
-                    </li>
-                  ))}
+                  {suggestedPhase.exercises.map((item) => <li key={item} className="rounded-xl bg-slate-50 px-3 py-3">{item}</li>)}
                 </ul>
               </div>
 
               <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
                 <div className="mb-3 font-black text-slate-900">{isAr ? 'التركيز الغذائي' : 'Nutrition focus now'}</div>
                 <ul className="space-y-2 text-sm text-slate-700">
-                  {suggestedPhase.nutritionFocus.map((item) => (
-                    <li key={item} className="rounded-xl bg-slate-50 px-3 py-3">
-                      {item}
-                    </li>
-                  ))}
+                  {suggestedPhase.nutritionFocus.map((item) => <li key={item} className="rounded-xl bg-slate-50 px-3 py-3">{item}</li>)}
                 </ul>
-
-                {customContent?.nutritionNotes?.length ? (
-                  <div className="mt-4 space-y-2 text-sm text-slate-700">
-                    {customContent.nutritionNotes.map((item) => (
-                      <div key={item} className="rounded-xl bg-soft-blue px-3 py-3">
-                        {item}
-                      </div>
-                    ))}
-                  </div>
-                ) : null}
-
-                <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                  <div>
-                    <div className="mb-2 text-sm font-bold text-slate-900">
-                      {isAr ? 'أطعمة مفيدة' : 'Helpful foods'}
-                    </div>
-                    <ul className="space-y-2 text-sm text-slate-700">
-                      {suggestedPhase.recommendedFoods.map((item) => (
-                        <li key={item} className="rounded-xl bg-health-green/5 px-3 py-2">
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div>
-                    <div className="mb-2 text-sm font-bold text-slate-900">
-                      {isAr ? 'أشياء أقل فائدة' : 'Less helpful right now'}
-                    </div>
-                    <ul className="space-y-2 text-sm text-slate-700">
-                      {suggestedPhase.avoidFoods.map((item) => (
-                        <li key={item} className="rounded-xl bg-amber-50 px-3 py-2">
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
               </div>
             </div>
           </section>
@@ -518,31 +357,18 @@ export default function InjuryDetailPage() {
               </div>
               <div className="space-y-2">
                 {suggestedPhase.supplements.map((item) => (
-                  <div
-                    key={`${item.name}-${item.dose}`}
-                    className="rounded-xl bg-slate-50 px-4 py-3 text-sm text-slate-700"
-                  >
-                    <div className="font-bold text-slate-900">
-                      {item.name} • {item.dose}
-                    </div>
+                  <div key={`${item.name}-${item.dose}`} className="rounded-xl bg-slate-50 px-4 py-3 text-sm text-slate-700">
+                    <div className="font-bold text-slate-900">{item.name} • {item.dose}</div>
                     <div className="mt-1">{item.reason}</div>
-                    {item.timing ? (
-                      <div className="mt-1 text-xs font-semibold text-health-green-dark">{item.timing}</div>
-                    ) : null}
+                    {item.timing ? <div className="mt-1 text-xs font-semibold text-health-green-dark">{item.timing}</div> : null}
                   </div>
                 ))}
               </div>
 
               <div className="mt-4 rounded-2xl bg-amber-50 p-4">
-                <div className="mb-2 text-sm font-bold text-slate-900">
-                  {isAr ? 'ملاحظات مهمة' : 'Medication and supplement notes'}
-                </div>
+                <div className="mb-2 text-sm font-bold text-slate-900">{isAr ? 'ملاحظات مهمة' : 'Medication and supplement notes'}</div>
                 <ul className="space-y-2 text-sm text-slate-700">
-                  {[...injury.safetyNotes.medications, ...injury.safetyNotes.supplements].map((item) => (
-                    <li key={item} className="rounded-xl bg-white px-3 py-2">
-                      {item}
-                    </li>
-                  ))}
+                  {[...injury.safetyNotes.medications, ...injury.safetyNotes.supplements].map((item) => <li key={item} className="rounded-xl bg-white px-3 py-2">{item}</li>)}
                 </ul>
               </div>
             </div>
@@ -552,18 +378,8 @@ export default function InjuryDetailPage() {
                 <ShieldAlert className="h-4 w-4 text-health-green" />
                 <span>{isAr ? 'افحص أمان المكملات' : 'Check supplement safety'}</span>
               </div>
-              <Suspense
-                fallback={
-                  <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-6 text-sm text-slate-500">
-                    {isAr ? 'جارٍ تحميل فاحص الأمان...' : 'Loading supplement safety checker...'}
-                  </div>
-                }
-              >
-                <DrugNutrientChecker
-                  lang={lang}
-                  embedded
-                  initialQuery={suggestedPhase.supplements.map((item) => item.name).join(' and ')}
-                />
+              <Suspense fallback={<div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-6 text-sm text-slate-500">{isAr ? 'جارٍ تحميل فاحص الأمان...' : 'Loading supplement safety checker...'}</div>}>
+                <DrugNutrientChecker lang={lang} embedded initialQuery={suggestedPhase.supplements.map((item) => item.name).join(' and ')} />
               </Suspense>
             </div>
           </section>
@@ -585,17 +401,9 @@ export default function InjuryDetailPage() {
               <div className="mb-4 font-black text-slate-900">{isAr ? 'إصابات مرتبطة' : 'Related injury pages'}</div>
               <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
                 {relatedInjuries.map((item) => (
-                  <Link
-                    key={item.id}
-                    to={getInjuryPath(item, lang)}
-                    className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4 transition hover:border-health-green/30 hover:bg-health-green/5"
-                  >
-                    <div className="font-bold text-slate-900">
-                      {getLocalizedInjuryName(item.id, item.name, lang)}
-                    </div>
-                    <div className="mt-2 text-xs text-slate-500">
-                      {getLocalizedCategory(item.category, lang)} • {getLocalizedBodyRegion(item.bodyRegion, lang)}
-                    </div>
+                  <Link key={item.id} to={buildPath(item.id, lang)} className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4 transition hover:border-health-green/30 hover:bg-health-green/5">
+                    <div className="font-bold text-slate-900">{item.name}</div>
+                    <div className="mt-2 text-xs text-slate-500">{item.category} • {item.bodyRegion}</div>
                   </Link>
                 ))}
               </div>
@@ -613,21 +421,11 @@ export default function InjuryDetailPage() {
                 : 'This page is practical education, not a personal prescription. If you have recent surgery, chronic disease, daily medications, or persistent pain, review supplement and nutrition changes with a qualified clinician.'}
             </p>
             <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-              <Link
-                to="/calculators"
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-health-green px-5 py-3 text-sm font-bold text-white"
-              >
-                <span>
-                  {isAr
-                    ? `استخدم هدف البروتين (${plan?.proteinTotalGrams ?? 0} جم)`
-                    : `Use the ${plan?.proteinTotalGrams ?? 0} g protein target`}
-                </span>
+              <Link to={`/${lang}/calculators`} className="inline-flex items-center justify-center gap-2 rounded-2xl bg-health-green px-5 py-3 text-sm font-bold text-white">
+                <span>{isAr ? `استخدم هدف البروتين (${plan?.proteinTotalGrams ?? 0} جم)` : `Use the ${plan?.proteinTotalGrams ?? 0} g protein target`}</span>
                 <ArrowRight className={`h-4 w-4 ${isAr ? 'rotate-180' : ''}`} />
               </Link>
-              <Link
-                to="/injuries"
-                className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-700"
-              >
+              <Link to={`/${lang}/injuries`} className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-700">
                 {isAr ? 'تصفح كل البروتوكولات' : 'Browse all protocols'}
               </Link>
             </div>

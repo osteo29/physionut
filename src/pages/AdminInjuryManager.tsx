@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { AlertCircle, Edit2, Plus, Trash2, ChevronDown, ChevronUp, Download } from 'lucide-react';
 import {
   fetchInjuriesFromSupabase,
@@ -18,17 +19,50 @@ import {
   type PhaseRow,
 } from '../services/injurySupabaseService';
 import { migrateAllInjuriesToSupabase } from '../utils/dataMigration';
+import { getCurrentUser, onSupabaseAuthChange, supabase, type User } from '../lib/supabase';
 
 export default function AdminInjuryManager() {
   const [injuries, setInjuries] = useState<InjuryRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [isMigrating, setIsMigrating] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
   const [expandedInjury, setExpandedInjury] = useState<string | null>(null);
   const [selectedPhase, setSelectedPhase] = useState<string | null>(null);
   const [editingData, setEditingData] = useState<Record<string, string>>({});
 
+  const refreshAdminState = async (nextUser?: User | null) => {
+    const activeUser = nextUser === undefined ? await getCurrentUser().catch(() => null) : nextUser;
+    setUser(activeUser);
+
+    if (!activeUser || !supabase) {
+      setIsAdmin(false);
+      return;
+    }
+
+    const { data } = await supabase
+      .from('admin_users')
+      .select('email')
+      .maybeSingle();
+
+    setIsAdmin(Boolean(data));
+  };
+
   useEffect(() => {
+    void refreshAdminState().finally(() => setAuthLoading(false));
+    const authSub = supabase
+      ? onSupabaseAuthChange(async (_, session) => {
+          await refreshAdminState(session?.user || null);
+          setAuthLoading(false);
+        })
+      : null;
+
     loadInjuries();
+
+    return () => {
+      authSub?.data.subscription.unsubscribe();
+    };
   }, []);
 
   const loadInjuries = async () => {
@@ -39,6 +73,16 @@ export default function AdminInjuryManager() {
   };
 
   const handleMigrationClick = async () => {
+    if (!user) {
+      alert('You must sign in first.');
+      return;
+    }
+
+    if (!isAdmin) {
+      alert('This signed-in account is not recognized as an admin.');
+      return;
+    }
+
     if (!confirm('Import all 95 injuries from legacy data? This will take a few moments.')) return;
     setIsMigrating(true);
     try {
@@ -94,10 +138,37 @@ export default function AdminInjuryManager() {
           </p>
         </div>
 
+        <div className="mb-6 rounded-lg border border-slate-700 bg-slate-900/70 p-4 text-sm">
+          {authLoading ? (
+            <p className="text-slate-300">Checking admin session...</p>
+          ) : user ? (
+            <div className="space-y-2">
+              <p className="text-slate-200">
+                Signed in as: <span className="font-semibold">{user.email}</span>
+              </p>
+              <p className={isAdmin ? 'text-emerald-400' : 'text-amber-400'}>
+                {isAdmin ? 'Admin access confirmed.' : 'This account is signed in but is not recognized as an admin.'}
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              <p className="text-amber-400">
+                You are not signed in. Import and edit actions will fail with 403 until you log in.
+              </p>
+              <Link
+                to="/en/auth"
+                className="inline-flex items-center rounded-lg bg-health-green px-4 py-2 font-semibold text-white"
+              >
+                Open Login Page
+              </Link>
+            </div>
+          )}
+        </div>
+
         <div className="flex gap-4 mb-6">
           <button
             onClick={handleMigrationClick}
-            disabled={isMigrating || injuries.length > 0}
+            disabled={isMigrating || injuries.length > 0 || !user || !isAdmin}
             className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white rounded-lg transition font-semibold"
           >
             <Download className="w-4 h-4" />
