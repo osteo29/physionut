@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { AlertCircle, Edit2, Plus, Trash2, ChevronDown, ChevronUp, Download, X } from 'lucide-react';
+import { AlertCircle, Edit2, Plus, Trash2, ChevronDown, ChevronUp, Download } from 'lucide-react';
 import {
   fetchInjuriesFromSupabase,
   fetchPhasesByInjuryId,
@@ -14,18 +14,15 @@ import {
   createMeal,
   deleteSupplement,
   deleteMeal,
-  createInjury,
   type InjuryRow,
   type PhaseRow,
 } from '../services/injurySupabaseService';
 import { migrateAllInjuriesToSupabase } from '../utils/dataMigration';
-import { AddInjuryWizard } from '../components/admin/AddInjuryWizard';
 
 export default function AdminInjuryManager() {
   const [injuries, setInjuries] = useState<InjuryRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [isMigrating, setIsMigrating] = useState(false);
-  const [showWizard, setShowWizard] = useState(false);
   const [expandedInjury, setExpandedInjury] = useState<string | null>(null);
   const [selectedPhase, setSelectedPhase] = useState<string | null>(null);
   const [editingData, setEditingData] = useState<Record<string, string>>({});
@@ -42,9 +39,7 @@ export default function AdminInjuryManager() {
   };
 
   const handleMigrationClick = async () => {
-    if (!confirm('Import all 95 injuries from legacy data? This will take a few moments.')) {
-      return;
-    }
+    if (!confirm('Import all 95 injuries from legacy data? This will take a few moments.')) return;
     setIsMigrating(true);
     try {
       await migrateAllInjuriesToSupabase();
@@ -81,20 +76,17 @@ export default function AdminInjuryManager() {
         await updateInjury(injuryId, updates as any);
         alert('✅ تم الحفظ بنجاح');
         await loadInjuries();
-      } catch (err) {
+      } catch {
         alert('❌ خطأ في الحفظ');
       }
     }
   };
 
-  if (loading) {
-    return <div className="p-6 text-center">Loading injuries...</div>;
-  }
+  if (loading) return <div className="p-6 text-center">Loading injuries...</div>;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-6">
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-white mb-2">🏥 Injury Management Dashboard</h1>
           <p className="text-gray-300">
@@ -102,7 +94,6 @@ export default function AdminInjuryManager() {
           </p>
         </div>
 
-        {/* Action Bar */}
         <div className="flex gap-4 mb-6">
           <button
             onClick={handleMigrationClick}
@@ -112,22 +103,8 @@ export default function AdminInjuryManager() {
             <Download className="w-4 h-4" />
             {isMigrating ? 'Importing...' : 'Import Legacy Data'}
           </button>
-
-          <button
-            onClick={() => setShowWizard(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition font-semibold"
-          >
-            <Plus className="w-4 h-4" />
-            إضافة إصابة جديدة
-          </button>
         </div>
 
-        {/* Wizard Modal */}
-        {showWizard && (
-          <AddInjuryWizard onClose={() => setShowWizard(false)} onSuccess={loadInjuries} />
-        )}
-
-        {/* Alert Banner */}
         <div className="bg-blue-900/30 border border-blue-500 rounded-lg p-4 mb-6">
           <div className="flex items-start gap-3">
             <AlertCircle className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
@@ -142,11 +119,9 @@ export default function AdminInjuryManager() {
           </div>
         </div>
 
-        {/* Injuries List */}
         <div className="space-y-4">
           {injuries.map((injury) => (
             <div key={injury.id} className="border border-gray-700 rounded-lg overflow-hidden bg-gray-900">
-              {/* Injury Header */}
               <button
                 onClick={() => setExpandedInjury(expandedInjury === injury.id ? null : injury.id)}
                 className="w-full p-4 flex items-center justify-between hover:bg-gray-800 transition"
@@ -155,12 +130,8 @@ export default function AdminInjuryManager() {
                   <h2 className="text-xl font-bold text-white">{injury.name_en}</h2>
                   <p className="text-gray-400 text-sm">{injury.name_ar}</p>
                   <div className="flex gap-2 mt-2">
-                    <span className="px-3 py-1 bg-purple-900 text-purple-200 rounded-full text-xs">
-                      {injury.category}
-                    </span>
-                    <span className="px-3 py-1 bg-cyan-900 text-cyan-200 rounded-full text-xs">
-                      {injury.body_region_en}
-                    </span>
+                    <span className="px-3 py-1 bg-purple-900 text-purple-200 rounded-full text-xs">{injury.category}</span>
+                    <span className="px-3 py-1 bg-cyan-900 text-cyan-200 rounded-full text-xs">{injury.body_region_en}</span>
                   </div>
                 </div>
                 {expandedInjury === injury.id ? (
@@ -170,59 +141,39 @@ export default function AdminInjuryManager() {
                 )}
               </button>
 
-              {/* Injury Content */}
               {expandedInjury === injury.id && (
                 <div className="border-t border-gray-700 p-4 bg-gray-800/50 space-y-4">
-                  {/* English Fields */}
                   <div>
-                    <label className="block text-sm font-semibold text-gray-300 mb-2">
-                      Overview (English)
-                    </label>
+                    <label className="block text-sm font-semibold text-gray-300 mb-2">Overview (English)</label>
                     <textarea
                       value={editingData[`injury_${injury.id}_overview_en`] ?? injury.overview_en}
-                      onChange={(e) =>
-                        handleInjuryEdit(injury.id, 'overview_en', e.target.value)
-                      }
+                      onChange={(e) => handleInjuryEdit(injury.id, 'overview_en', e.target.value)}
                       className="w-full px-3 py-2 bg-gray-700 text-white rounded border border-gray-600 focus:border-blue-500 focus:outline-none text-sm"
                       rows={3}
                     />
                   </div>
 
-                  {/* Arabic Fields */}
                   <div>
-                    <label className="block text-sm font-semibold text-gray-300 mb-2">
-                      Overview (Arabic)
-                    </label>
+                    <label className="block text-sm font-semibold text-gray-300 mb-2">Overview (Arabic)</label>
                     <textarea
                       value={editingData[`injury_${injury.id}_overview_ar`] ?? injury.overview_ar}
-                      onChange={(e) =>
-                        handleInjuryEdit(injury.id, 'overview_ar', e.target.value)
-                      }
+                      onChange={(e) => handleInjuryEdit(injury.id, 'overview_ar', e.target.value)}
                       className="w-full px-3 py-2 bg-gray-700 text-white rounded border border-gray-600 focus:border-blue-500 focus:outline-none text-sm"
                       rows={3}
                       dir="rtl"
                     />
                   </div>
 
-                  {/* Rehab Summary */}
                   <div>
-                    <label className="block text-sm font-semibold text-gray-300 mb-2">
-                      Rehabilitation Summary (English)
-                    </label>
+                    <label className="block text-sm font-semibold text-gray-300 mb-2">Rehabilitation Summary (English)</label>
                     <textarea
-                      value={
-                        editingData[`injury_${injury.id}_rehab_summary_en`] ??
-                        injury.rehab_summary_en
-                      }
-                      onChange={(e) =>
-                        handleInjuryEdit(injury.id, 'rehab_summary_en', e.target.value)
-                      }
+                      value={editingData[`injury_${injury.id}_rehab_summary_en`] ?? injury.rehab_summary_en}
+                      onChange={(e) => handleInjuryEdit(injury.id, 'rehab_summary_en', e.target.value)}
                       className="w-full px-3 py-2 bg-gray-700 text-white rounded border border-gray-600 focus:border-blue-500 focus:outline-none text-sm"
                       rows={3}
                     />
                   </div>
 
-                  {/* Save Button */}
                   <button
                     onClick={() => saveInjuryChanges(injury.id)}
                     className="w-full px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded font-semibold transition"
@@ -230,7 +181,6 @@ export default function AdminInjuryManager() {
                     💾 Save Changes
                   </button>
 
-                  {/* View Phases */}
                   <PhasesList injuryId={injury.id} />
                 </div>
               )}
@@ -243,9 +193,6 @@ export default function AdminInjuryManager() {
 }
 
 // ============================================================================
-// PHASES COMPONENT
-// ============================================================================
-
 function PhasesList({ injuryId }: { injuryId: string }) {
   const [phases, setPhases] = useState<PhaseRow[]>([]);
   const [expandedPhase, setExpandedPhase] = useState<string | null>(null);
@@ -269,25 +216,16 @@ function PhasesList({ injuryId }: { injuryId: string }) {
       <h3 className="text-lg font-bold text-cyan-400">📊 Phases (مراحل التعافي)</h3>
 
       {phases.map((phase) => (
-        <div
-          key={phase.id}
-          className="border border-gray-600 rounded bg-gray-700/30 overflow-hidden"
-        >
+        <div key={phase.id} className="border border-gray-600 rounded bg-gray-700/30 overflow-hidden">
           <button
             onClick={() => setExpandedPhase(expandedPhase === phase.id ? null : phase.id)}
             className="w-full p-3 flex items-center justify-between hover:bg-gray-700/50 transition text-left"
           >
             <div>
-              <h4 className="font-semibold text-white">
-                Phase {phase.phase_number}: {phase.label_en}
-              </h4>
+              <h4 className="font-semibold text-white">Phase {phase.phase_number}: {phase.label_en}</h4>
               <p className="text-sm text-gray-400">{phase.label_ar}</p>
             </div>
-            {expandedPhase === phase.id ? (
-              <ChevronUp className="w-5 h-5 text-gray-400" />
-            ) : (
-              <ChevronDown className="w-5 h-5 text-gray-400" />
-            )}
+            {expandedPhase === phase.id ? <ChevronUp className="w-5 h-5 text-gray-400" /> : <ChevronDown className="w-5 h-5 text-gray-400" />}
           </button>
 
           {expandedPhase === phase.id && (
@@ -304,9 +242,6 @@ function PhasesList({ injuryId }: { injuryId: string }) {
 }
 
 // ============================================================================
-// PHASE EDITOR
-// ============================================================================
-
 function PhaseEditor({ phase, onSave }: { phase: PhaseRow; onSave: () => void }) {
   const [editing, setEditing] = useState(false);
   const [formData, setFormData] = useState({
@@ -333,61 +268,30 @@ function PhaseEditor({ phase, onSave }: { phase: PhaseRow; onSave: () => void })
 
   if (!editing) {
     return (
-      <button
-        onClick={() => setEditing(true)}
-        className="flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300"
-      >
-        <Edit2 className="w-4 h-4" />
-        Edit Phase
+      <button onClick={() => setEditing(true)} className="flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300">
+        <Edit2 className="w-4 h-4" /> Edit Phase
       </button>
     );
   }
 
   return (
     <div className="space-y-2 bg-gray-900 p-3 rounded">
-      <input
-        type="text"
-        value={formData.label_en}
-        onChange={(e) => setFormData({ ...formData, label_en: e.target.value })}
-        placeholder="Phase label (EN)"
-        className="w-full px-2 py-1 bg-gray-700 text-white rounded text-sm"
-      />
-      <textarea
-        value={formData.goals_en}
-        onChange={(e) => setFormData({ ...formData, goals_en: e.target.value })}
-        placeholder="Goals (EN) - one per line"
-        className="w-full px-2 py-1 bg-gray-700 text-white rounded text-sm"
-        rows={3}
-      />
+      <input type="text" value={formData.label_en} onChange={(e) => setFormData({ ...formData, label_en: e.target.value })} placeholder="Phase label (EN)" className="w-full px-2 py-1 bg-gray-700 text-white rounded text-sm" />
+      <textarea value={formData.goals_en} onChange={(e) => setFormData({ ...formData, goals_en: e.target.value })} placeholder="Goals (EN) - one per line" className="w-full px-2 py-1 bg-gray-700 text-white rounded text-sm" rows={3} />
       <div className="flex gap-2">
-        <button
-          onClick={handleSave}
-          className="flex-1 px-2 py-1 bg-green-600 hover:bg-green-700 text-white rounded text-sm"
-        >
-          Save
-        </button>
-        <button
-          onClick={() => setEditing(false)}
-          className="flex-1 px-2 py-1 bg-gray-600 hover:bg-gray-700 text-white rounded text-sm"
-        >
-          Cancel
-        </button>
+        <button onClick={handleSave} className="flex-1 px-2 py-1 bg-green-600 hover:bg-green-700 text-white rounded text-sm">Save</button>
+        <button onClick={() => setEditing(false)} className="flex-1 px-2 py-1 bg-gray-600 hover:bg-gray-700 text-white rounded text-sm">Cancel</button>
       </div>
     </div>
   );
 }
 
 // ============================================================================
-// SUPPLEMENTS LIST
-// ============================================================================
-
 function SupplementsList({ phaseId }: { phaseId: string }) {
   const [supplements, setSupplements] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    loadSupplements();
-  }, []);
+  useEffect(() => { loadSupplements(); }, []);
 
   const loadSupplements = async () => {
     setLoading(true);
@@ -412,43 +316,30 @@ function SupplementsList({ phaseId }: { phaseId: string }) {
   return (
     <div className="space-y-2 border-t border-gray-600 pt-3">
       <h5 className="font-semibold text-amber-400 text-sm">💊 Supplements</h5>
-      {supplements.length === 0 ? (
-        <p className="text-xs text-gray-500">No supplements added</p>
-      ) : (
+      {supplements.length === 0 ? <p className="text-xs text-gray-500">No supplements added</p> :
         supplements.map((sup) => (
           <div key={sup.id} className="flex items-center justify-between bg-gray-900 p-2 rounded text-sm">
             <div>
               <p className="text-white font-medium">{sup.name}</p>
               <p className="text-xs text-gray-400">{sup.dose_en}</p>
             </div>
-            <button
-              onClick={() => handleDelete(sup.id)}
-              className="p-1 text-red-400 hover:text-red-300"
-            >
-              <Trash2 className="w-4 h-4" />
-            </button>
+            <button onClick={() => handleDelete(sup.id)} className="p-1 text-red-400 hover:text-red-300"><Trash2 className="w-4 h-4" /></button>
           </div>
         ))
-      )}
+      }
       <button className="w-full text-xs py-1 border border-amber-600 text-amber-400 rounded hover:bg-amber-600/20">
-        <Plus className="w-3 h-3 inline mr-1" />
-        Add Supplement
+        <Plus className="w-3 h-3 inline mr-1" /> Add Supplement
       </button>
     </div>
   );
 }
 
 // ============================================================================
-// MEALS LIST
-// ============================================================================
-
 function MealsList({ phaseId }: { phaseId: string }) {
   const [meals, setMeals] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    loadMeals();
-  }, []);
+  useEffect(() => { loadMeals(); }, []);
 
   const loadMeals = async () => {
     setLoading(true);
@@ -462,19 +353,16 @@ function MealsList({ phaseId }: { phaseId: string }) {
   return (
     <div className="space-y-2 border-t border-gray-600 pt-3">
       <h5 className="font-semibold text-emerald-400 text-sm">🍽️ Meal Plans</h5>
-      {meals.length === 0 ? (
-        <p className="text-xs text-gray-500">No meals added</p>
-      ) : (
+      {meals.length === 0 ? <p className="text-xs text-gray-500">No meals added</p> :
         meals.map((meal) => (
           <div key={meal.id} className="bg-gray-900 p-2 rounded text-sm">
             <p className="text-white font-medium capitalize">{meal.diet_style}</p>
             <p className="text-xs text-gray-400">🥗 {meal.breakfast_en}</p>
           </div>
         ))
-      )}
+      }
       <button className="w-full text-xs py-1 border border-emerald-600 text-emerald-400 rounded hover:bg-emerald-600/20">
-        <Plus className="w-3 h-3 inline mr-1" />
-        Add Meal
+        <Plus className="w-3 h-3 inline mr-1" /> Add Meal
       </button>
     </div>
   );
