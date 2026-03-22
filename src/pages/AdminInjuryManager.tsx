@@ -44,6 +44,7 @@ export default function AdminInjuryManager() {
     const { data } = await supabase
       .from('admin_users')
       .select('email')
+      .eq('email', activeUser.email ?? '')
       .maybeSingle();
 
     setIsAdmin(Boolean(data));
