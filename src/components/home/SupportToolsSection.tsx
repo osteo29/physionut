@@ -229,8 +229,8 @@ export default function SupportToolsSection({
                   </div>
                 </div>
               </div>
-              <div className="overflow-x-auto">
-                <table className="w-full text-left rtl:text-right">
+              <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
+                <table className="w-full min-w-[720px] text-left rtl:text-right">
                   <thead className="border-b border-slate-200 bg-slate-50">
                     <tr>
                       <th className="px-6 py-4 text-sm font-bold text-slate-900">{t.foodDb.colName}</th>

@@ -345,7 +345,7 @@ export default function TrackingDashboardPage() {
               <BarChart3 className="h-3.5 w-3.5" />
               <span>{isAr ? 'ملخص سريع' : 'Quick summary'}</span>
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
                 <div className="mb-2 text-xs text-slate-500">
                   {isAr ? 'إجمالي السجلات' : 'Total records'}

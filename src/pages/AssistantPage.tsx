@@ -104,7 +104,7 @@ export default function AssistantPage({
         canonicalPath="/assistant"
       />
 
-      <nav className="sticky top-0 z-50 border-b border-slate-100 bg-white/85 px-4 backdrop-blur-md sm:px-6 lg:px-8">
+      <nav className="sticky top-0 z-50 border-b border-slate-100 bg-white/85 px-3 backdrop-blur-md sm:px-6 lg:px-8">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3">
           <Link to="/" className="flex items-center gap-2 group">
             <div className="rounded-lg bg-health-green p-1.5 transition-transform group-hover:scale-110">
@@ -115,7 +115,7 @@ export default function AssistantPage({
             </span>
           </Link>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <button
               onClick={onToggleTheme}
               className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-slate-700 transition-all hover:border-health-green/30"
@@ -144,7 +144,7 @@ export default function AssistantPage({
 
             <Link
               to="/"
-              className="flex items-center gap-1 text-sm font-bold text-slate-500 transition-colors hover:text-health-green"
+              className="flex items-center gap-1 text-xs font-bold text-slate-500 transition-colors hover:text-health-green sm:text-sm"
             >
               {isAr ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
               {isAr ? 'العودة للرئيسية' : 'Back to Home'}

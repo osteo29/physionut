@@ -235,8 +235,8 @@ export default function PwaActions({lang}: {lang: Language}) {
       </div>
 
       {showNotificationPrompt || showInstallPrompt ? (
-        <div className="pointer-events-none fixed inset-x-0 bottom-4 z-[70] px-4 sm:bottom-6">
-          <div className="pointer-events-auto mx-auto flex w-full max-w-xl flex-col gap-3">
+        <div className="pointer-events-none fixed inset-x-0 bottom-4 z-[70] px-4 pb-[max(env(safe-area-inset-bottom),0.25rem)] sm:bottom-6">
+          <div className="pointer-events-auto mx-auto flex max-h-[calc(100vh-2rem)] w-full max-w-xl flex-col gap-3 overflow-y-auto">
             {showNotificationPrompt ? (
               <PromptCard
                 icon={notificationState === 'granted' ? <BellRing className="h-5 w-5" /> : <Bell className="h-5 w-5" />}

@@ -38,8 +38,12 @@ export default function ArticleStudioPage() {
   const [notice, setNotice] = useState('');
   const [loadingArticles, setLoadingArticles] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [search, setSearch] = useState('');
+  const [pendingSlug, setPendingSlug] = useState<string | null>(null);
+  const [otherLangArticles, setOtherLangArticles] = useState<Article[]>([]);
 
   const isAr = uiLang === 'ar';
+  const otherLang: Language = editorLang === 'ar' ? 'en' : 'ar';
   const adminEmail = getArticleAdminIdentity();
   const isAdmin = canManageArticles(user);
 
@@ -85,10 +89,18 @@ export default function ArticleStudioPage() {
 
     const refresh = async () => {
       setLoadingArticles(true);
-      const nextArticles = await loadPublishedArticles(editorLang);
+      const [nextArticles, nextOtherLangArticles] = await Promise.all([
+        loadPublishedArticles(editorLang),
+        loadPublishedArticles(otherLang),
+      ]);
       if (!active) return;
       setArticles(nextArticles);
-      setSelectedId(nextArticles[0]?.id ?? null);
+      setOtherLangArticles(nextOtherLangArticles);
+      const matchedArticle = pendingSlug
+        ? nextArticles.find((article) => article.slug === pendingSlug)
+        : null;
+      setSelectedId(matchedArticle?.id ?? nextArticles[0]?.id ?? null);
+      setPendingSlug(null);
       setLoadingArticles(false);
     };
 
@@ -96,12 +108,26 @@ export default function ArticleStudioPage() {
     return () => {
       active = false;
     };
-  }, [editorLang]);
+  }, [editorLang, otherLang, pendingSlug]);
 
   const selectedArticle = useMemo(
     () => articles.find((article) => article.id === selectedId) ?? articles[0] ?? null,
     [articles, selectedId],
   );
+  const matchingOtherLanguageArticle = useMemo(
+    () =>
+      selectedArticle
+        ? otherLangArticles.find((article) => article.slug === selectedArticle.slug) ?? null
+        : null,
+    [otherLangArticles, selectedArticle],
+  );
+  const filteredArticles = useMemo(() => {
+    const query = search.trim().toLowerCase();
+    if (!query) return articles;
+    return articles.filter((article) =>
+      [article.title, article.slug, article.category].some((value) => value.toLowerCase().includes(query)),
+    );
+  }, [articles, search]);
 
   const updateArticles = (nextArticles: Article[], nextSelectedId?: number | null, message?: string) => {
     setArticles(nextArticles);
@@ -152,6 +178,12 @@ export default function ArticleStudioPage() {
       title: `${selectedArticle.title}${editorLang === 'en' ? ' Copy' : ' نسخة'}`,
     };
     updateArticles([duplicate, ...articles], duplicate.id, isAr ? 'تم إنشاء نسخة من المقال.' : 'Article duplicated.');
+  };
+
+  const switchToOtherLanguageVersion = () => {
+    if (!selectedArticle) return;
+    setPendingSlug(selectedArticle.slug);
+    setEditorLang(otherLang);
   };
 
   const handleResetLanguage = () => {
@@ -268,14 +300,20 @@ export default function ArticleStudioPage() {
           <div className="flex flex-wrap items-center gap-3">
             <button
               type="button"
-              onClick={() => setEditorLang('ar')}
+              onClick={() => {
+                setPendingSlug(selectedArticle?.slug ?? null);
+                setEditorLang('ar');
+              }}
               className={`rounded-full px-4 py-2 text-sm font-bold ${editorLang === 'ar' ? 'bg-health-green text-white' : 'bg-slate-100 text-slate-700'}`}
             >
               العربية
             </button>
             <button
               type="button"
-              onClick={() => setEditorLang('en')}
+              onClick={() => {
+                setPendingSlug(selectedArticle?.slug ?? null);
+                setEditorLang('en');
+              }}
               className={`rounded-full px-4 py-2 text-sm font-bold ${editorLang === 'en' ? 'bg-health-green text-white' : 'bg-slate-100 text-slate-700'}`}
             >
               English
@@ -298,13 +336,20 @@ export default function ArticleStudioPage() {
                 </button>
               </div>
 
+              <input
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+                placeholder={uiLang === 'en' ? 'Search articles...' : 'ابحث عن مقال...'}
+                className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none focus:border-health-green"
+              />
+
               <div className="space-y-2">
                 {loadingArticles ? (
                   <div className="rounded-2xl border border-slate-200 bg-white p-4 text-sm text-slate-500">
                     {uiLang === 'en' ? 'Loading articles...' : 'جار تحميل المقالات...'}
                   </div>
                 ) : (
-                  articles.map((article) => (
+                  filteredArticles.map((article) => (
                     <button
                       key={article.id}
                       type="button"
@@ -323,6 +368,37 @@ export default function ArticleStudioPage() {
             <section className="space-y-5 rounded-3xl border border-slate-200 bg-white p-6">
               {selectedArticle ? (
                 <>
+                  <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">
+                    <div>
+                      {matchingOtherLanguageArticle
+                        ? uiLang === 'en'
+                          ? `Matching ${otherLang.toUpperCase()} version found.`
+                          : `نسخة ${otherLang === 'ar' ? 'عربية' : 'إنجليزية'} مرتبطة موجودة.`
+                        : uiLang === 'en'
+                          ? `No matching ${otherLang.toUpperCase()} version yet.`
+                          : `لا توجد نسخة ${otherLang === 'ar' ? 'عربية' : 'إنجليزية'} مرتبطة حتى الآن.`}
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      <a
+                        href={`/${editorLang}/insights/${selectedArticle.slug}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="rounded-2xl border border-slate-300 px-4 py-2 font-bold text-slate-700"
+                      >
+                        {uiLang === 'en' ? 'Preview page' : 'معاينة الصفحة'}
+                      </a>
+                      <button
+                        type="button"
+                        onClick={switchToOtherLanguageVersion}
+                        className="rounded-2xl border border-slate-300 px-4 py-2 font-bold text-slate-700"
+                      >
+                        {uiLang === 'en'
+                          ? `Open ${otherLang.toUpperCase()} editor`
+                          : `افتح محرر ${otherLang === 'ar' ? 'العربية' : 'الإنجليزية'}`}
+                      </button>
+                    </div>
+                  </div>
+
                   <div className="grid gap-4 md:grid-cols-2">
                     <label className="space-y-2">
                       <span className="text-sm font-bold text-slate-700">{uiLang === 'en' ? 'Title' : 'العنوان'}</span>
@@ -353,6 +429,11 @@ export default function ArticleStudioPage() {
                       <input value={selectedArticle.icon} onChange={(event) => handleFieldChange('icon', event.target.value)} className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-health-green" />
                     </label>
                   </div>
+
+                  <label className="block space-y-2">
+                    <span className="text-sm font-bold text-slate-700">{uiLang === 'en' ? 'Image URL' : 'رابط الصورة'}</span>
+                    <input value={selectedArticle.image || ''} onChange={(event) => handleFieldChange('image', event.target.value)} className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-health-green" />
+                  </label>
 
                   <label className="block space-y-2">
                     <span className="text-sm font-bold text-slate-700">{uiLang === 'en' ? 'Excerpt' : 'الملخص'}</span>

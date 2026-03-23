@@ -183,6 +183,54 @@ export function formatConditionName(
   return terminology?.professional || name;
 }
 
+export function formatMedicalCategory(
+  category: string,
+  lang: 'en' | 'ar' = 'en',
+): string {
+  const categoryMap: Record<string, {en: string; ar: string}> = {
+    Muscle: {en: 'Muscle Injury', ar: 'إصابة عضلية'},
+    Ligament: {en: 'Ligament Injury', ar: 'إصابة أربطة'},
+    Tendon: {en: 'Tendon Disorder', ar: 'اضطراب الأوتار'},
+    Bone: {en: 'Bone Injury', ar: 'إصابة عظمية'},
+    Joint: {en: 'Joint Disorder', ar: 'اضطراب مفصلي'},
+    Overuse: {en: 'Overuse Condition', ar: 'إصابة إجهاد تكراري'},
+    Sports: {en: 'Sports Injury', ar: 'إصابة رياضية'},
+    Pediatric: {en: 'Pediatric Condition', ar: 'حالة للأطفال'},
+    Geriatric: {en: 'Geriatric Condition', ar: 'حالة لكبار السن'},
+    'Post-surgery': {en: 'Post-surgical Rehabilitation', ar: 'تأهيل ما بعد الجراحة'},
+  };
+
+  const entry = categoryMap[category];
+  return entry ? entry[lang] : category;
+}
+
+export function formatBodyRegion(
+  bodyRegion: string,
+  lang: 'en' | 'ar' = 'en',
+): string {
+  const regionMap: Record<string, {en: string; ar: string}> = {
+    Knee: {en: 'Knee', ar: 'الركبة'},
+    Shoulder: {en: 'Shoulder', ar: 'الكتف'},
+    Hip: {en: 'Hip', ar: 'الورك'},
+    Wrist: {en: 'Wrist', ar: 'الرسغ'},
+    Jaw: {en: 'Jaw', ar: 'الفك'},
+    Elbow: {en: 'Elbow', ar: 'الكوع'},
+    Hand: {en: 'Hand', ar: 'اليد'},
+    Ankle: {en: 'Ankle', ar: 'الكاحل'},
+    Foot: {en: 'Foot', ar: 'القدم'},
+    Neck: {en: 'Neck', ar: 'الرقبة'},
+    Spine: {en: 'Spine', ar: 'العمود الفقري'},
+    Back: {en: 'Back', ar: 'الظهر'},
+    Chest: {en: 'Chest', ar: 'الصدر'},
+    Pelvis: {en: 'Pelvis', ar: 'الحوض'},
+    Thigh: {en: 'Thigh', ar: 'الفخذ'},
+    'Whole body': {en: 'Whole Body', ar: 'الجسم بالكامل'},
+  };
+
+  const entry = regionMap[bodyRegion];
+  return entry ? entry[lang] : bodyRegion;
+}
+
 /**
  * Get SEO-friendly description for a condition
  */

@@ -1,4 +1,5 @@
 import type {Language} from './translations';
+import {formatBodyRegion, formatConditionName, formatMedicalCategory} from './medicalTerminology';
 
 const injuryNameMap: Record<string, {ar: string; en?: string}> = {
   // Muscle injuries
@@ -115,14 +116,20 @@ const bodyRegionMap: Record<string, {ar: string}> = {
 
 export function getLocalizedInjuryName(id: string, fallback: string, lang: Language) {
   const translated = injuryNameMap[id];
-  if (!translated) return fallback;
-  return lang === 'ar' ? translated.ar : translated.en || fallback;
+  if (translated) {
+    return lang === 'ar' ? translated.ar : translated.en || formatConditionName(fallback, 'en');
+  }
+  return formatConditionName(fallback, lang);
 }
 
 export function getLocalizedCategory(category: string, lang: Language) {
-  return lang === 'ar' ? categoryMap[category]?.ar || category : category;
+  const direct = {...categoryMapWithAdditional, ...categoryMap}[category]?.ar;
+  if (lang === 'ar') return direct || formatMedicalCategory(category, 'ar');
+  return formatMedicalCategory(category, 'en');
 }
 
 export function getLocalizedBodyRegion(bodyRegion: string, lang: Language) {
-  return lang === 'ar' ? bodyRegionMap[bodyRegion]?.ar || bodyRegion : bodyRegion;
+  const direct = bodyRegionMap[bodyRegion]?.ar;
+  if (lang === 'ar') return direct || formatBodyRegion(bodyRegion, 'ar');
+  return formatBodyRegion(bodyRegion, 'en');
 }

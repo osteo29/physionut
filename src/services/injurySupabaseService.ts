@@ -446,6 +446,21 @@ export async function updatePhase(id: string, data: Partial<PhaseRow>) {
   }
 }
 
+/**
+ * ADMIN: Delete phase
+ */
+export async function deletePhase(id: string) {
+  try {
+    const { error } = await supabase.from('injury_phases').delete().eq('id', id);
+
+    if (error) throw error;
+    return true;
+  } catch (err) {
+    console.error('Error deleting phase:', err);
+    throw err;
+  }
+}
+
 // ==========================================================================
 // SUPPLEMENTS
 // ==========================================================================

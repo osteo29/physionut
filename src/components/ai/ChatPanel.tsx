@@ -219,7 +219,7 @@ export default function ChatPanel({
                 <button
                   key={`${action.label}-${index}`}
                   onClick={() => setInput(action.prompt)}
-                  className="min-w-[180px] snap-start rounded-2xl border border-slate-200 bg-white px-3 py-3 text-left text-xs font-black text-slate-700 transition-all hover:bg-soft-blue sm:min-w-0"
+                  className="min-w-[150px] snap-start rounded-2xl border border-slate-200 bg-white px-3 py-3 text-left text-xs font-black text-slate-700 transition-all hover:bg-soft-blue sm:min-w-0"
                 >
                   {action.label}
                 </button>

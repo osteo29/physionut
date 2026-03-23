@@ -22,6 +22,11 @@ import {
   type RecoveryGoal,
   type RecoveryWindow,
 } from '../services/injuryDatabase';
+import {
+  getLocalizedBodyRegion,
+  getLocalizedCategory,
+  getLocalizedInjuryName,
+} from '../services/injuryLocalization';
 import {fetchCompleteInjuryProtocol, fetchInjuriesFromSupabase} from '../services/injurySupabaseService';
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
@@ -129,9 +134,9 @@ export default function InjuryDetailPage() {
     );
   }
 
-  const injuryDisplayName = injury.name;
-  const categoryDisplay = injury.category;
-  const bodyRegionDisplay = injury.bodyRegion;
+  const injuryDisplayName = getLocalizedInjuryName(injury.id, injury.name, lang);
+  const categoryDisplay = getLocalizedCategory(injury.category, lang);
+  const bodyRegionDisplay = getLocalizedBodyRegion(injury.bodyRegion, lang);
   const suggestedPhase = getSuggestedPhaseForWindow(injury, recoveryWindow);
   const plan = generateRecoveryPlan({
     weightKg,
@@ -403,7 +408,9 @@ export default function InjuryDetailPage() {
                 {relatedInjuries.map((item) => (
                   <Link key={item.id} to={buildPath(item.id, lang)} className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4 transition hover:border-health-green/30 hover:bg-health-green/5">
                     <div className="font-bold text-slate-900">{item.name}</div>
-                    <div className="mt-2 text-xs text-slate-500">{item.category} • {item.bodyRegion}</div>
+                    <div className="mt-2 text-xs text-slate-500">
+                      {getLocalizedCategory(item.category, lang)} • {getLocalizedBodyRegion(item.bodyRegion, lang)}
+                    </div>
                   </Link>
                 ))}
               </div>

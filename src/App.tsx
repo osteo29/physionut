@@ -1073,7 +1073,7 @@ export default function App({
               <Brain className="w-4 h-4" />
               <span>{t.architect.title}</span>
             </motion.div>
-            <h2 className="text-4xl font-bold text-slate-900 mb-4">{t.architect.subtitle}</h2>
+            <h2 className="mb-4 text-3xl font-bold text-slate-900 sm:text-4xl">{t.architect.subtitle}</h2>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -1086,7 +1086,7 @@ export default function App({
                 </h3>
                 
                 <div className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div className="space-y-1">
                       <label className="text-xs font-bold text-slate-500 uppercase">{t.forms.age}</label>
                       <input 
@@ -1120,7 +1120,7 @@ export default function App({
                     />
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div className="space-y-1">
                       <label className="text-xs font-bold text-slate-500 uppercase">{t.architect.gender}</label>
                       <select 
@@ -1299,7 +1299,7 @@ export default function App({
 
                     <div className="md:col-span-2 medical-card p-6">
                       <h4 className="text-sm font-bold text-slate-500 uppercase mb-6">{t.architect.metricsTitle}</h4>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
                         <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
                           <span className="block text-[10px] font-bold text-slate-400 uppercase mb-1">BMI</span>
                           <div className="flex flex-col">
@@ -1523,7 +1523,7 @@ export default function App({
                 <button
                   key={group.id}
                   onClick={() => setActiveToolGroup(group.id)}
-                  className={`min-w-[180px] rounded-2xl border px-4 py-3 text-left transition-all sm:min-w-0 ${
+                  className={`min-w-[150px] rounded-2xl border px-4 py-3 text-left transition-all sm:min-w-0 ${
                     activeToolGroup === group.id
                       ? 'border-health-green bg-soft-blue text-health-green shadow-sm'
                       : 'border-slate-200 bg-white text-slate-600 hover:border-health-green/30'
@@ -2248,7 +2248,7 @@ export default function App({
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl p-8"
+              className="relative max-h-[calc(100vh-2rem)] w-full max-w-md overflow-y-auto rounded-3xl bg-white p-5 shadow-2xl sm:p-8"
             >
               <h3 className="text-2xl font-bold text-slate-900 mb-6">{t.customFood.title}</h3>
               
@@ -2263,7 +2263,7 @@ export default function App({
                     className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-health-green outline-none"
                   />
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div>
                     <label className="text-sm font-semibold text-slate-700 block mb-1">{t.customFood.calsLabel}</label>
                     <input 
@@ -2303,7 +2303,7 @@ export default function App({
                 </div>
               </div>
 
-              <div className="flex gap-4">
+              <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
                 <button 
                   onClick={() => setIsCustomModalOpen(false)}
                   className="flex-1 py-3 rounded-xl font-bold text-slate-500 hover:bg-slate-100 transition-all"
@@ -2337,7 +2337,7 @@ export default function App({
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl p-8"
+              className="relative max-h-[calc(100vh-2rem)] w-full max-w-md overflow-y-auto rounded-3xl bg-white p-5 shadow-2xl sm:p-8"
             >
               <div className="flex justify-between items-center mb-6">
                 <h3 className="text-2xl font-bold text-slate-900">{t.somatotype.wristTest}</h3>
@@ -2387,7 +2387,7 @@ export default function App({
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              className="relative w-full max-w-sm bg-white rounded-2xl shadow-2xl p-6 border border-slate-100"
+              className="relative max-h-[calc(100vh-2rem)] w-full max-w-sm overflow-y-auto rounded-2xl border border-slate-100 bg-white p-5 shadow-2xl sm:p-6"
             >
               <div className="flex items-center gap-3 mb-4">
                 <div className="p-2 bg-soft-blue rounded-lg text-health-green">

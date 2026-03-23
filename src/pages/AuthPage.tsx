@@ -200,7 +200,7 @@ export default function AuthPage({
         canonicalPath="/auth"
       />
 
-      <nav className="sticky top-0 z-50 border-b border-slate-100 bg-white/85 px-4 backdrop-blur-md sm:px-6 lg:px-8">
+      <nav className="sticky top-0 z-50 border-b border-slate-100 bg-white/85 px-3 backdrop-blur-md sm:px-6 lg:px-8">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3">
           <Link to="/" className="group flex items-center gap-2">
             <div className="rounded-lg bg-health-green p-1.5 transition-transform group-hover:scale-110">

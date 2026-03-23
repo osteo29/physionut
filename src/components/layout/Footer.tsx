@@ -151,7 +151,7 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
           <p className="text-sm text-slate-500">
             © {currentYear} PhysioNutrition. {t.footer.rights}
           </p>
-          <div className="flex items-center gap-8">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 md:justify-end">
             <Link replace to="/privacy" className="text-sm text-slate-500 transition-colors hover:text-white">
               {t.footer.links.privacy}
             </Link>
