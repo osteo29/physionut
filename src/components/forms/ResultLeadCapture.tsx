@@ -10,6 +10,7 @@ import {
   saveAssessment,
   type User,
 } from '../../lib/supabase';
+import {navigationPaths} from '../../utils/langUrlHelper';
 
 export default function ResultLeadCapture({
   lang,
@@ -128,13 +129,13 @@ export default function ResultLeadCapture({
           </p>
           <div className="mt-4 flex flex-wrap gap-3">
             <Link
-              to="/auth?mode=signup"
+              to={`${navigationPaths.auth(lang)}?mode=signup`}
               className="inline-flex items-center justify-center rounded-2xl bg-slate-900 px-4 py-2 text-sm font-bold text-white transition-all hover:bg-slate-800"
             >
               {lang === 'en' ? 'Create account' : 'إنشئ حساب'}
             </Link>
             <Link
-              to="/auth?mode=signin"
+              to={`${navigationPaths.auth(lang)}?mode=signin`}
               className="inline-flex items-center justify-center rounded-2xl border border-amber-300 bg-white px-4 py-2 text-sm font-bold text-amber-800 transition-all hover:border-amber-400"
             >
               {lang === 'en' ? 'Sign in' : 'سجّل الدخول'}

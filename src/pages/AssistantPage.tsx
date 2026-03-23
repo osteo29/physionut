@@ -2,6 +2,7 @@ import Seo from '../components/seo/Seo';
 import ChatPanel from '../components/ai/ChatPanel';
 import usePreferredLang from './usePreferredLang';
 import {Link} from 'react-router-dom';
+import {navigationPaths} from '../utils/langUrlHelper';
 import {
   ChevronLeft,
   ChevronRight,
@@ -106,7 +107,7 @@ export default function AssistantPage({
 
       <nav className="sticky top-0 z-50 border-b border-slate-100 bg-white/85 px-3 backdrop-blur-md sm:px-6 lg:px-8">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3">
-          <Link to="/" className="flex items-center gap-2 group">
+          <Link to={navigationPaths.home(lang)} className="flex items-center gap-2 group">
             <div className="rounded-lg bg-health-green p-1.5 transition-transform group-hover:scale-110">
               <HeartPulse className="h-5 w-5 text-white" />
             </div>
@@ -134,7 +135,7 @@ export default function AssistantPage({
             </button>
 
             <Link
-              to="/auth"
+              to={navigationPaths.auth(lang)}
               className="hidden items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-700 transition-all hover:border-health-green/30 sm:flex"
             >
               <span className="text-xs font-bold">
@@ -143,7 +144,7 @@ export default function AssistantPage({
             </Link>
 
             <Link
-              to="/"
+              to={navigationPaths.home(lang)}
               className="flex items-center gap-1 text-xs font-bold text-slate-500 transition-colors hover:text-health-green sm:text-sm"
             >
               {isAr ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}

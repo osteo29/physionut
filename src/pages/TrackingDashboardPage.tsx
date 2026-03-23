@@ -13,6 +13,7 @@ import {
 import Seo from '../components/seo/Seo';
 import type {DashboardPdfData} from '../services/pdfReports';
 import usePreferredLang from './usePreferredLang';
+import {navigationPaths} from '../utils/langUrlHelper';
 import {
   deleteAssessment,
   getCurrentUser,
@@ -246,7 +247,7 @@ export default function TrackingDashboardPage() {
   }
 
   if (!user) {
-    return <Navigate to="/auth" replace state={{from: '/dashboard'}} />;
+    return <Navigate to={navigationPaths.auth(lang)} replace state={{from: navigationPaths.dashboard(lang)}} />;
   }
 
   return (
@@ -288,7 +289,7 @@ export default function TrackingDashboardPage() {
               <span>{isAr ? 'تحميل تقرير PDF' : 'Download PDF report'}</span>
             </button>
             <Link
-              to="/"
+              to={navigationPaths.home(lang)}
               className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 font-bold text-slate-700"
             >
               <ArrowLeft className={`h-4 w-4 ${isAr ? 'rotate-180' : ''}`} />
@@ -362,7 +363,7 @@ export default function TrackingDashboardPage() {
               </div>
             </div>
             <Link
-              to="/injuries"
+              to={navigationPaths.injuries(lang)}
               className="mt-4 flex items-center justify-between gap-4 rounded-[1.5rem] border border-health-green/20 bg-health-green/5 px-4 py-4 transition-all hover:border-health-green/40 hover:bg-health-green/10"
             >
               <div>

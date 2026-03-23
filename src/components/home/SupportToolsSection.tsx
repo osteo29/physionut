@@ -1,6 +1,7 @@
 import {Pill, Plus, Search, Sparkles} from 'lucide-react';
 import {Link} from 'react-router-dom';
 import type {FoodItem} from '../../services/foodData';
+import {navigationPaths} from '../../utils/langUrlHelper';
 import DrugNutrientChecker from '../ai/DrugNutrientChecker';
 
 type Props = {
@@ -35,7 +36,7 @@ export default function SupportToolsSection({
   const isAr = lang === 'ar';
 
   return (
-    <section id="nutrition-tools" className="bg-white py-24">
+    <section id="nutrition-tools" className="section-surface bg-white py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-12 flex flex-col gap-6">
           <div className="inline-flex w-fit items-center gap-2 rounded-full bg-health-green/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-health-green">
@@ -57,7 +58,7 @@ export default function SupportToolsSection({
         </div>
 
         <div className="mb-10 grid gap-5 lg:grid-cols-2">
-          <div className="rounded-[2rem] border border-slate-200 bg-slate-50 p-6">
+          <div className="rounded-[2rem] border border-slate-200 bg-slate-50 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
             <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-health-green shadow-sm">
               <Search className="h-5 w-5" />
             </div>
@@ -77,7 +78,7 @@ export default function SupportToolsSection({
             </a>
           </div>
 
-          <div className="rounded-[2rem] border border-slate-200 bg-slate-50 p-6">
+          <div className="rounded-[2rem] border border-slate-200 bg-slate-50 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
             <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-medical-blue shadow-sm">
               <Pill className="h-5 w-5" />
             </div>
@@ -116,7 +117,7 @@ export default function SupportToolsSection({
               </p>
             </div>
             <Link
-              to="/injuries"
+              to={navigationPaths.injuries(lang)}
               className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-bold text-health-green shadow-sm"
             >
               {isAr ? 'افتح بروتوكولات الإصابات' : 'Open injury protocols'}

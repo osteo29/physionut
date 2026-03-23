@@ -3,6 +3,7 @@ import {Link, Navigate} from 'react-router-dom';
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
 import Seo from '../components/seo/Seo';
+import {navigationPaths} from '../utils/langUrlHelper';
 import {
   canManageArticles,
   createBlankArticle,
@@ -240,7 +241,7 @@ export default function ArticleStudioPage() {
   }
 
   if (!user) {
-    return <Navigate to="/auth" replace state={{from: '/studio/articles'}} />;
+    return <Navigate to={navigationPaths.auth(uiLang)} replace state={{from: navigationPaths.studio(uiLang)}} />;
   }
 
   if (!isAdmin) {
@@ -261,7 +262,7 @@ export default function ArticleStudioPage() {
             <strong>{adminEmail || (uiLang === 'en' ? 'not set' : 'غير مضبوط')}</strong>
           </p>
           <p>
-            <Link to="/" className="font-semibold text-health-green hover:underline">
+            <Link to={navigationPaths.home(uiLang)} className="font-semibold text-health-green hover:underline">
               {uiLang === 'en' ? 'Back home' : 'العودة للرئيسية'}
             </Link>
           </p>

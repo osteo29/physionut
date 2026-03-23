@@ -1,6 +1,7 @@
 import {Link} from 'react-router-dom';
 import AskAboutResultChat from '../ai/AskAboutResultChat';
 import ResultLeadCapture from '../forms/ResultLeadCapture';
+import {navigationPaths} from '../../utils/langUrlHelper';
 
 type ResultAssistantPanelProps = {
   analysisPrompt: string | null;
@@ -48,7 +49,7 @@ export default function ResultAssistantPanel({
         </button>
 
         <Link
-          to="/dashboard"
+          to={navigationPaths.dashboard(lang)}
           className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-700 transition-all hover:border-health-green/30"
         >
           {lang === 'en' ? 'Open tracking dashboard' : 'افتح لوحة المتابعة'}

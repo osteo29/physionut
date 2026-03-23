@@ -3,6 +3,7 @@ import {motion} from 'motion/react';
 import {Brain, ChevronRight, ClipboardList, Sparkles, Zap} from 'lucide-react';
 import {Link} from 'react-router-dom';
 import type {Language} from '../../services/translations';
+import {navigationPaths} from '../../utils/langUrlHelper';
 
 const WhatsNew = memo(({lang}: {lang: Language}) => {
   const updates =
@@ -12,8 +13,8 @@ const WhatsNew = memo(({lang}: {lang: Language}) => {
             title: 'PhysioNutrition Architect',
             desc: 'An integrated health and recovery dashboard powered by AI.',
             icon: Brain,
-            color: 'text-purple-500',
-            bg: 'bg-purple-500/10',
+            color: 'text-medical-blue',
+            bg: 'bg-medical-blue/10',
             href: '#architect',
           },
           {
@@ -22,7 +23,7 @@ const WhatsNew = memo(({lang}: {lang: Language}) => {
             icon: ClipboardList,
             color: 'text-health-green',
             bg: 'bg-health-green/10',
-            href: '/injuries',
+            href: navigationPaths.injuries(lang),
           },
           {
             title: 'AI Diet Plans',
@@ -38,8 +39,8 @@ const WhatsNew = memo(({lang}: {lang: Language}) => {
             title: 'مهندس التغذية العلاجية',
             desc: 'لوحة تجمع الصحة والتعافي والمتابعة في مكان واحد بدعم من الذكاء الاصطناعي.',
             icon: Brain,
-            color: 'text-purple-500',
-            bg: 'bg-purple-500/10',
+            color: 'text-medical-blue',
+            bg: 'bg-medical-blue/10',
             href: '#architect',
           },
           {
@@ -48,7 +49,7 @@ const WhatsNew = memo(({lang}: {lang: Language}) => {
             icon: ClipboardList,
             color: 'text-health-green',
             bg: 'bg-health-green/10',
-            href: '/injuries',
+            href: navigationPaths.injuries(lang),
           },
           {
             title: 'خطط غذائية ذكية',
@@ -61,7 +62,7 @@ const WhatsNew = memo(({lang}: {lang: Language}) => {
         ];
 
   return (
-    <section className="relative overflow-hidden bg-white py-20">
+      <section className="section-surface relative overflow-hidden bg-white py-20">
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>

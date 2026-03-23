@@ -2,6 +2,7 @@ import {ArrowRight, ClipboardList, ShieldAlert, Timer} from 'lucide-react';
 import {Link} from 'react-router-dom';
 import {injuryDatabase} from '../../services/injuryDatabase';
 import type {Language} from '../../services/translations';
+import {navigationPaths} from '../../utils/langUrlHelper';
 
 export default function InjuryProtocolsHighlight({lang}: {lang: Language}) {
   const isAr = lang === 'ar';
@@ -27,14 +28,14 @@ export default function InjuryProtocolsHighlight({lang}: {lang: Language}) {
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <Link
-                to="/injuries"
+                to={navigationPaths.injuries(lang)}
                 className="inline-flex items-center justify-center gap-2 rounded-2xl bg-health-green px-5 py-3 text-sm font-bold text-white"
               >
                 <span>{isAr ? 'استكشف البروتوكولات' : 'Explore protocols'}</span>
                 <ArrowRight className={`h-4 w-4 ${isAr ? 'rotate-180' : ''}`} />
               </Link>
               <Link
-                to="/assistant"
+                to={navigationPaths.assistant(lang)}
                 className="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-700"
               >
                 {isAr ? 'اسأل عن إصابتك' : 'Ask about your injury'}

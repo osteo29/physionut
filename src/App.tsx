@@ -2171,7 +2171,7 @@ export default function App({
                         </button>
 
                         <Link
-                          to="/dashboard"
+                          to={`/${lang}/dashboard`}
                           className="px-4 py-3 rounded-2xl border border-slate-200 bg-white text-slate-700 font-bold text-sm hover:border-health-green/30 transition-all"
                         >
                           {lang === 'en' ? 'Open tracking dashboard' : 'افتح لوحة المتابعة'}

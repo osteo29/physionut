@@ -1,7 +1,8 @@
 import {lazy, Suspense, useEffect, useState} from 'react';
-import {Navigate, Route, Routes, useLocation} from 'react-router-dom';
+import {Navigate, Route, Routes, useLocation, useParams} from 'react-router-dom';
 import {getPreferredLanguage} from './services/languagePreference';
 import HomeRoute from './pages/HomeRoute';
+import {navigationPaths} from './utils/langUrlHelper';
 
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('./pages/TermsOfService'));
@@ -44,6 +45,11 @@ function LegacyRouteRedirect() {
   return <Navigate to={`/${preferredLang}${location.pathname}${location.search}${location.hash}`} replace />;
 }
 
+function InjuryProtocolsRedirect() {
+  const {lang = 'en'} = useParams<{lang: 'en' | 'ar'}>();
+  return <Navigate to={navigationPaths.injuries(lang)} replace />;
+}
+
 export default function RouterApp() {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     const saved = localStorage.getItem('physiohub_theme');
@@ -78,7 +84,7 @@ export default function RouterApp() {
         <Route path="/:lang/about" element={<AboutPage />} />
         <Route path="/:lang/contact" element={<ContactPage />} />
         <Route path="/:lang/insights" element={<InsightsPage />} />
-        <Route path="/:lang/injury-protocols" element={<Navigate to="/:lang/injuries" replace />} />
+        <Route path="/:lang/injury-protocols" element={<InjuryProtocolsRedirect />} />
         <Route path="/:lang/injuries" element={<InjuryProtocolsPage />} />
         <Route path="/:lang/injuries/:slug" element={<InjuryDetailPage />} />
         <Route path="/:lang/admin/injuries" element={<AdminInjuryManager />} />
@@ -98,6 +104,7 @@ export default function RouterApp() {
         <Route path="/about" element={<LegacyRouteRedirect />} />
         <Route path="/contact" element={<LegacyRouteRedirect />} />
         <Route path="/insights" element={<LegacyRouteRedirect />} />
+        <Route path="/injury-protocols" element={<LegacyRouteRedirect />} />
         <Route path="/injuries" element={<LegacyRouteRedirect />} />
         <Route path="/injuries/:slug" element={<LegacyRouteRedirect />} />
         <Route path="/insights/:slug" element={<LegacyRouteRedirect />} />

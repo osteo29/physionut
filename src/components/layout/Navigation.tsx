@@ -25,6 +25,7 @@ import {
   type User,
 } from '../../lib/supabase';
 import type {Language} from '../../services/translations';
+import {navigationPaths, removeLangPrefix} from '../../utils/langUrlHelper';
 
 type CalculatorNavItem = {
   id: string;
@@ -69,16 +70,9 @@ const Navigation = memo(
      * Generate URL for language switch (e.g., /en/page -> /ar/page)
      */
     const generateLanguageSwitchUrl = (targetLang: Language): string => {
-      const pathname = location.pathname;
-      const match = pathname.match(/^\/(en|ar)\//);
-      
-      if (match) {
-        // Replace language prefix
-        return pathname.replace(/^\/(en|ar)\//, `/${targetLang}/`);
-      }
-      
-      // No language prefix (shouldn't happen with new routing), add one
-      return `/${targetLang}${pathname}`;
+      const cleanPath = removeLangPrefix(location.pathname);
+      const nextPath = cleanPath === '/' ? navigationPaths.home(targetLang) : `/${targetLang}${cleanPath}`;
+      return `${nextPath}${location.search}${location.hash}`;
     };
 
     const handleLanguageSwitch = (targetLang: Language) => {
@@ -137,7 +131,7 @@ const Navigation = memo(
 
     const brand = (
       <Link
-        to="/"
+        to={navigationPaths.home(lang)}
         onClick={handleBrandClick}
         className="group flex items-center gap-2"
       >
@@ -202,7 +196,7 @@ const Navigation = memo(
                         {isAr ? 'افتح الحاسبات' : 'Open calculators'}
                       </button>
                       <Link
-                        to="/assistant"
+                        to={navigationPaths.assistant(lang)}
                         onClick={() => setIsSidebarOpen(false)}
                         className="flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-700 transition-all hover:border-health-green/30"
                       >
@@ -223,7 +217,7 @@ const Navigation = memo(
                           <div className="mt-1 text-xs text-slate-500">{user.email}</div>
                         </div>
                         <Link
-                          to="/dashboard"
+                          to={navigationPaths.dashboard(lang)}
                           onClick={() => setIsSidebarOpen(false)}
                           className="flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-bold text-slate-700 transition-all hover:bg-soft-blue"
                         >
@@ -241,14 +235,14 @@ const Navigation = memo(
                     ) : (
                       <div className="grid grid-cols-1 gap-2">
                         <Link
-                          to="/auth"
+                          to={navigationPaths.auth(lang)}
                           onClick={() => setIsSidebarOpen(false)}
                           className="flex items-center justify-center rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-700 transition-all hover:border-health-green/30"
                         >
                           {isAr ? 'إنشاء حساب' : 'Create account'}
                         </Link>
                         <Link
-                          to="/auth"
+                          to={navigationPaths.auth(lang)}
                           onClick={() => setIsSidebarOpen(false)}
                           className="flex items-center justify-center gap-2 rounded-2xl bg-slate-900 px-4 py-3 text-sm font-bold text-white transition-all hover:bg-slate-800"
                         >
@@ -305,12 +299,12 @@ const Navigation = memo(
                           label: isAr ? 'فحص الدواء والغذاء' : 'Drug-nutrient checker',
                         },
                         {
-                          href: '/dashboard',
+                          href: navigationPaths.dashboard(lang),
                           icon: <BarChart3 className="h-5 w-5" />,
                           label: isAr ? 'لوحة المتابعة' : 'Tracking dashboard',
                         },
                         {
-                          href: '/injuries',
+                          href: navigationPaths.injuries(lang),
                           icon: <ClipboardList className="h-5 w-5" />,
                           label: isAr ? 'بروتوكولات الإصابات' : 'Injury protocols',
                         },
@@ -413,19 +407,19 @@ const Navigation = memo(
                 <a href="#calculators" className="nav-link">
                   {t.nav.calculators}
                 </a>
-                <Link to="/injuries" className="nav-link">
+                <Link to={navigationPaths.injuries(lang)} className="nav-link">
                   {isAr ? 'الإصابات' : 'Injuries'}
                 </Link>
                 <a href="#blog" className="nav-link">
                   {t.nav.insights}
                 </a>
-                <a href="/dashboard" className="nav-link">
+                <Link to={navigationPaths.dashboard(lang)} className="nav-link">
                   {isAr ? 'المتابعة' : 'Tracking'}
-                </a>
+                </Link>
               </div>
 
               <Link
-                to="/assistant"
+                to={navigationPaths.assistant(lang)}
                 className="hidden items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-slate-700 transition-all hover:border-health-green/30 sm:flex"
               >
                 <Stethoscope className="h-4 w-4 text-health-green" />
@@ -436,7 +430,7 @@ const Navigation = memo(
 
               {user ? (
                 <Link
-                  to="/dashboard"
+                  to={navigationPaths.dashboard(lang)}
                   className="hidden items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-700 transition-all hover:border-health-green/30 sm:flex"
                 >
                   <UserRound className="h-4 w-4 text-health-green" />
@@ -445,13 +439,13 @@ const Navigation = memo(
               ) : (
                 <div className="hidden items-center gap-2 sm:flex">
                   <Link
-                    to="/auth"
+                    to={navigationPaths.auth(lang)}
                     className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-700 transition-all hover:border-health-green/30"
                   >
                     <span className="text-xs font-bold">{isAr ? 'إنشاء حساب' : 'Create account'}</span>
                   </Link>
                   <Link
-                    to="/auth"
+                    to={navigationPaths.auth(lang)}
                     className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-3 py-2 text-white transition-all hover:bg-slate-800"
                   >
                     <UserRound className="h-4 w-4" />

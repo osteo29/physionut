@@ -1,6 +1,7 @@
 import {Download, FileLock2} from 'lucide-react';
 import {useMemo, useState} from 'react';
 import {Link, useLocation} from 'react-router-dom';
+import {navigationPaths} from '../../utils/langUrlHelper';
 
 export default function AuthLockedPdfAction({
   isAuthenticated,
@@ -69,7 +70,7 @@ export default function AuthLockedPdfAction({
             </div>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <Link
-                to="/auth"
+                to={navigationPaths.auth(lang)}
                 state={redirectState}
                 className="inline-flex flex-1 items-center justify-center rounded-2xl bg-health-green px-5 py-3 text-sm font-bold text-white transition-all hover:bg-health-green-dark"
               >

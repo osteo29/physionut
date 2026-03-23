@@ -1,5 +1,5 @@
 import {type ReactNode, useEffect, useMemo, useState} from 'react';
-import {Bell, BellRing, CheckCircle2, Download} from 'lucide-react';
+import {Bell, BellRing, CheckCircle2, Download, X} from 'lucide-react';
 import {
   getBrowserNotificationPermission,
   requestBrowserNotifications,
@@ -10,6 +10,30 @@ type BeforeInstallPromptEvent = Event & {
   prompt: () => Promise<void>;
   userChoice: Promise<{outcome: 'accepted' | 'dismissed'; platform: string}>;
 };
+
+const INSTALL_PROMPT_DISMISSED_KEY = 'physiohub:pwa-install-dismissed';
+const NOTIFICATION_PROMPT_DISMISSED_KEY = 'physiohub:pwa-notification-dismissed';
+
+function readDismissedState(storageKey: string) {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
+  return window.localStorage.getItem(storageKey) === 'true';
+}
+
+function writeDismissedState(storageKey: string, value: boolean) {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  if (value) {
+    window.localStorage.setItem(storageKey, 'true');
+    return;
+  }
+
+  window.localStorage.removeItem(storageKey);
+}
 
 function isStandalone() {
   return (
@@ -49,6 +73,8 @@ function PromptCard({
   body,
   actionLabel,
   onAction,
+  onDismiss,
+  dismissLabel,
   disabled = false,
   hint,
 }: {
@@ -57,28 +83,39 @@ function PromptCard({
   body: string;
   actionLabel: string;
   onAction: () => void;
+  onDismiss: () => void;
+  dismissLabel: string;
   disabled?: boolean;
   hint?: string;
 }) {
   return (
     <div className="w-full rounded-[1.5rem] border border-slate-200 bg-white/95 p-4 shadow-xl shadow-slate-300/20 backdrop-blur">
-      <div className="flex items-start gap-3">
-        <div className="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-health-green/10 text-health-green">
+      <div className="mb-3 flex items-start justify-between gap-3">
+        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-health-green/10 text-health-green">
           {icon}
         </div>
-        <div className="min-w-0 flex-1">
-          <div className="text-sm font-extrabold text-slate-900">{title}</div>
-          <p className="mt-1 text-xs leading-6 text-slate-600">{body}</p>
-          <button
-            type="button"
-            onClick={onAction}
-            disabled={disabled}
-            className="mt-3 inline-flex items-center justify-center rounded-xl bg-health-green px-4 py-2 text-sm font-bold text-white transition-all hover:bg-health-green-dark disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {actionLabel}
-          </button>
-          {hint ? <p className="mt-2 text-xs leading-6 text-health-green-dark">{hint}</p> : null}
-        </div>
+        <button
+          type="button"
+          onClick={onDismiss}
+          aria-label={dismissLabel}
+          className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-400 transition-all hover:border-slate-300 hover:text-slate-700"
+        >
+          <X className="h-4 w-4" />
+        </button>
+      </div>
+
+      <div className="min-w-0">
+        <div className="text-sm font-extrabold text-slate-900">{title}</div>
+        <p className="mt-1 text-xs leading-6 text-slate-600">{body}</p>
+        <button
+          type="button"
+          onClick={onAction}
+          disabled={disabled}
+          className="mt-3 inline-flex items-center justify-center rounded-xl bg-health-green px-4 py-2 text-sm font-bold text-white transition-all hover:bg-health-green-dark disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {actionLabel}
+        </button>
+        {hint ? <p className="mt-2 text-xs leading-6 text-health-green-dark">{hint}</p> : null}
       </div>
     </div>
   );
@@ -92,6 +129,12 @@ export default function PwaActions({lang}: {lang: Language}) {
   const [installHint, setInstallHint] = useState('');
   const [notificationState, setNotificationState] = useState<NotificationPermission | 'unsupported'>(
     getBrowserNotificationPermission(),
+  );
+  const [installPromptDismissed, setInstallPromptDismissed] = useState(() =>
+    readDismissedState(INSTALL_PROMPT_DISMISSED_KEY),
+  );
+  const [notificationPromptDismissed, setNotificationPromptDismissed] = useState(() =>
+    readDismissedState(NOTIFICATION_PROMPT_DISMISSED_KEY),
   );
 
   useEffect(() => {
@@ -118,9 +161,27 @@ export default function PwaActions({lang}: {lang: Language}) {
     };
   }, []);
 
+  useEffect(() => {
+    if (isInstalled) {
+      setInstallPromptDismissed(false);
+      writeDismissedState(INSTALL_PROMPT_DISMISSED_KEY, false);
+    }
+  }, [isInstalled]);
+
+  useEffect(() => {
+    if (notificationState === 'granted' || notificationState === 'unsupported') {
+      setNotificationPromptDismissed(false);
+      writeDismissedState(NOTIFICATION_PROMPT_DISMISSED_KEY, false);
+    }
+  }, [notificationState]);
+
   const requestNotifications = async () => {
     const permission = await requestBrowserNotifications(lang);
     setNotificationState(permission);
+    if (permission === 'granted') {
+      setNotificationPromptDismissed(false);
+      writeDismissedState(NOTIFICATION_PROMPT_DISMISSED_KEY, false);
+    }
   };
 
   const triggerInstall = async () => {
@@ -137,6 +198,8 @@ export default function PwaActions({lang}: {lang: Language}) {
       const choice = await deferredPrompt.userChoice;
       if (choice.outcome === 'accepted') {
         setIsInstalled(true);
+        setInstallPromptDismissed(false);
+        writeDismissedState(INSTALL_PROMPT_DISMISSED_KEY, false);
       } else {
         setInstallHint(getInstallInstructions(lang));
       }
@@ -144,6 +207,16 @@ export default function PwaActions({lang}: {lang: Language}) {
       setIsInstalling(false);
       setDeferredPrompt(null);
     }
+  };
+
+  const dismissInstallPrompt = () => {
+    setInstallPromptDismissed(true);
+    writeDismissedState(INSTALL_PROMPT_DISMISSED_KEY, true);
+  };
+
+  const dismissNotificationPrompt = () => {
+    setNotificationPromptDismissed(true);
+    writeDismissedState(NOTIFICATION_PROMPT_DISMISSED_KEY, true);
   };
 
   const notificationLabel = useMemo(() => {
@@ -162,7 +235,7 @@ export default function PwaActions({lang}: {lang: Language}) {
   const notificationPromptBody =
     notificationState === 'denied'
       ? isAr
-        ? 'المتصفح حظر الإشعارات. جرّب الضغط مرة أخرى، وإذا لم تظهر النافذة فعّل الإشعارات من إعدادات الموقع في المتصفح.'
+        ? 'المتصفح حظر الإشعارات. جرّب مرة أخرى، وإذا لم تظهر النافذة فعّل الإشعارات من إعدادات الموقع في المتصفح.'
         : 'The browser has blocked notifications. Try again, and if no prompt appears, enable notifications from the site settings in your browser.'
       : isAr
         ? 'فعّل إشعارات المتصفح لتصلك التنبيهات والمتابعات المهمة لاحقًا.'
@@ -177,8 +250,10 @@ export default function PwaActions({lang}: {lang: Language}) {
       : 'You can install the site as an app for faster access from your device home screen.';
 
   const showNotificationPrompt =
-    notificationState !== 'granted' && notificationState !== 'unsupported';
-  const showInstallPrompt = !isInstalled;
+    notificationState !== 'granted' &&
+    notificationState !== 'unsupported' &&
+    !notificationPromptDismissed;
+  const showInstallPrompt = !isInstalled && !installPromptDismissed;
 
   return (
     <>
@@ -239,7 +314,7 @@ export default function PwaActions({lang}: {lang: Language}) {
           <div className="pointer-events-auto mx-auto flex max-h-[calc(100vh-2rem)] w-full max-w-xl flex-col gap-3 overflow-y-auto">
             {showNotificationPrompt ? (
               <PromptCard
-                icon={notificationState === 'granted' ? <BellRing className="h-5 w-5" /> : <Bell className="h-5 w-5" />}
+                icon={<Bell className="h-5 w-5" />}
                 title={isAr ? 'تفعيل الإشعارات' : 'Enable notifications'}
                 body={notificationPromptBody}
                 actionLabel={
@@ -254,6 +329,8 @@ export default function PwaActions({lang}: {lang: Language}) {
                 onAction={() => {
                   void requestNotifications();
                 }}
+                onDismiss={dismissNotificationPrompt}
+                dismissLabel={isAr ? 'إغلاق تنبيه الإشعارات' : 'Dismiss notifications prompt'}
               />
             ) : null}
 
@@ -266,6 +343,8 @@ export default function PwaActions({lang}: {lang: Language}) {
                 onAction={() => {
                   void triggerInstall();
                 }}
+                onDismiss={dismissInstallPrompt}
+                dismissLabel={isAr ? 'إغلاق تنبيه التثبيت' : 'Dismiss install prompt'}
                 disabled={isInstalled || isInstalling}
                 hint={installHint}
               />

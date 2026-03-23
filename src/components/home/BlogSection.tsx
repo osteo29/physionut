@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {ArrowUpRight, Calendar, Tag} from 'lucide-react';
 import type {Language} from '../../services/translations';
 import type {Article} from '../../services/articles';
+import {navigationPaths} from '../../utils/langUrlHelper';
 
 type IconComponentType = ComponentType<{name: string; className?: string}>;
 
@@ -21,7 +22,7 @@ const BlogSection = memo(
     const isAr = lang === 'ar';
 
     return (
-      <section id="blog" className="bg-slate-50 py-24">
+      <section id="blog" className="section-surface bg-slate-50 py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
@@ -33,7 +34,7 @@ const BlogSection = memo(
               </p>
             </div>
             <Link
-              to="/insights"
+              to={navigationPaths.insights(lang)}
               className="inline-flex items-center gap-2 self-start rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-900 transition-all hover:border-health-green"
             >
               {isAr ? 'عرض كل المقالات' : 'View all articles'}
@@ -45,8 +46,8 @@ const BlogSection = memo(
             {articles.map((article) => (
               <Link
                 key={article.slug}
-                to={`/insights/${article.slug}`}
-                className="group flex h-full flex-col overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-sm transition-all hover:shadow-xl hover:border-health-green/20"
+                to={navigationPaths.insightsDetail(lang, article.slug)}
+                className="group flex h-full flex-col overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-health-green/20 hover:shadow-xl"
               >
                 <div className="relative flex aspect-video items-center justify-center overflow-hidden bg-soft-blue">
                   <div className="rounded-2xl bg-white p-6 shadow-sm transition-transform duration-500 group-hover:scale-110">

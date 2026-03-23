@@ -10,6 +10,7 @@ import {
   UserRoundPlus,
 } from 'lucide-react';
 import type {Language} from '../../services/translations';
+import {navigationPaths} from '../../utils/langUrlHelper';
 import PwaActions from '../pwa/PwaActions';
 
 const Hero = memo(({lang}: {lang: Language}) => {
@@ -44,19 +45,21 @@ const Hero = memo(({lang}: {lang: Language}) => {
     : ['Nutrition + rehab', 'Built on established formulas', 'Educational, not diagnostic'];
 
   return (
-    <section className="relative overflow-hidden bg-soft-blue pb-16 pt-16 sm:pb-20 sm:pt-18 lg:pb-24 lg:pt-20">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(49,95,74,0.14),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(109,122,114,0.12),transparent_28%)]" />
+    <section className="hero-surface relative overflow-hidden pb-16 pt-16 sm:pb-20 sm:pt-18 lg:pb-24 lg:pt-20">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(49,95,74,0.18),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(109,122,114,0.12),transparent_24%)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-[linear-gradient(180deg,rgba(255,255,255,0.6),transparent)]" />
       <div className="identity-watermark whitespace-pre-line">
         {isAr ? 'تغذية\nتأهيل\nمتابعة' : 'Nourish\nRecover\nTrack'}
       </div>
       <div className="pointer-events-none absolute right-0 top-0 h-[380px] w-[380px] -translate-y-1/3 translate-x-1/4 rounded-full bg-health-green/6 blur-[120px]" />
       <div className="pointer-events-none absolute bottom-0 left-0 h-[380px] w-[380px] translate-y-1/3 -translate-x-1/4 rounded-full bg-medical-blue/8 blur-[120px]" />
+      <div className="pointer-events-none absolute left-1/2 top-20 h-40 w-40 -translate-x-1/2 rounded-full border border-white/50 bg-white/20 blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
         <motion.div
           initial={{opacity: 0, y: 20}}
           animate={{opacity: 1, y: 0}}
-          className="mb-6 inline-flex items-center gap-2 rounded-full border border-health-green/20 bg-white/85 px-4 py-2 text-xs font-bold text-health-green shadow-sm sm:text-sm"
+          className="glass-panel mb-6 inline-flex items-center gap-2 rounded-full border border-health-green/20 px-4 py-2 text-xs font-bold text-health-green sm:text-sm"
         >
           <GraduationCap className="h-4 w-4" />
           <span>
@@ -97,7 +100,7 @@ const Hero = memo(({lang}: {lang: Language}) => {
           initial={{opacity: 0, y: 20}}
           animate={{opacity: 1, y: 0}}
           transition={{delay: 0.19}}
-          className="mx-auto mb-7 max-w-3xl rounded-[1.5rem] border border-white/70 bg-white/80 px-4 py-4 text-sm leading-7 text-slate-700 shadow-sm backdrop-blur-sm sm:px-5"
+          className="glass-panel mx-auto mb-7 max-w-3xl rounded-[1.75rem] border border-white/70 px-4 py-4 text-sm leading-7 text-slate-700 sm:px-5"
         >
           {isAr
             ? 'هنا تجد حاسبات تغذية، محتوى تأهيلي، ومتابعة عملية بدل أدوات منفصلة لا تربط بين النتيجة والخطوة التالية.'
@@ -113,7 +116,7 @@ const Hero = memo(({lang}: {lang: Language}) => {
           {trustPoints.map((point) => (
             <div
               key={point}
-              className="inline-flex min-w-max snap-start items-center gap-2 rounded-full border border-slate-200 bg-white/85 px-4 py-2 text-sm font-semibold text-slate-700"
+              className="glass-panel inline-flex min-w-max snap-start items-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700"
             >
               <ShieldCheck className="h-4 w-4 text-health-green" />
               <span>{point}</span>
@@ -128,15 +131,15 @@ const Hero = memo(({lang}: {lang: Language}) => {
           className="mx-auto mb-4 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-2"
         >
           <Link
-            to="/auth"
-            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-health-green px-6 py-4 text-sm font-bold text-white shadow-lg shadow-health-green/20 transition-all hover:bg-health-green-dark"
+            to={navigationPaths.auth(lang)}
+            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-health-green px-6 py-4 text-sm font-bold text-white shadow-lg shadow-health-green/20 transition-all hover:-translate-y-0.5 hover:bg-health-green-dark"
           >
             <UserRoundPlus className="h-5 w-5" />
             {isAr ? 'ابدأ الآن مجانًا' : 'Start free now'}
           </Link>
           <a
             href="#calculators"
-            className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-6 py-4 text-sm font-bold text-slate-900 transition-all hover:border-health-green"
+            className="glass-panel inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 px-6 py-4 text-sm font-bold text-slate-900 transition-all hover:-translate-y-0.5 hover:border-health-green"
           >
             <Calculator className="h-5 w-5 text-health-green" />
             {isAr ? 'استكشف الحاسبات' : 'Explore calculators'}
@@ -150,15 +153,15 @@ const Hero = memo(({lang}: {lang: Language}) => {
           className="mb-8 flex flex-wrap items-center justify-center gap-3"
         >
           <a
-            href="/assistant"
-            className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-700 transition-all hover:border-health-green"
+            href={navigationPaths.assistant(lang)}
+            className="glass-panel inline-flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-3 text-sm font-bold text-slate-700 transition-all hover:-translate-y-0.5 hover:border-health-green"
           >
             <MessageSquareText className="h-4 w-4 text-health-green" />
             {isAr ? 'اسأل المساعد' : 'Ask the assistant'}
           </a>
           <a
             href="#architect"
-            className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-3 text-sm font-bold text-white transition-all hover:bg-slate-800"
+            className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-3 text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-slate-800"
           >
             <Activity className="h-4 w-4" />
             {isAr ? 'خطة التعافي' : 'Recovery planner'}
@@ -183,7 +186,7 @@ const Hero = memo(({lang}: {lang: Language}) => {
           {journey.map((item) => (
             <div
               key={item.title}
-              className="rounded-[1.75rem] border border-white/70 bg-white/85 p-5 shadow-sm backdrop-blur-sm"
+              className="glass-panel rounded-[1.9rem] border border-white/70 p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
             >
               <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-soft-blue text-health-green">
                 <item.icon className="h-5 w-5" />
