@@ -790,6 +790,21 @@ export default function AdminInjuryManager() {
             <p>{isAr ? 'الصفحة دي بقت بنفس أسلوب ستوديو المقالات: صلاحيات واضحة، ولوحة تحرير أسهل للإضافة والتعديل.' : 'This page now follows the article studio style with clearer access control and easier editing.'}</p>
           </div>
 
+          {isArticleAdminUser(user) ? (
+            <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-7 text-amber-900">
+              <p>
+                {isAr
+                  ? 'فتح صفحة الأدمن عبر VITE_ARTICLE_ADMIN_EMAIL لا يكفي وحده للكتابة داخل Supabase. يجب أن يكون نفس المستخدم موجودًا أيضًا في جدول public.admin_users، وإلا ستفشل عمليات الاستيراد والحفظ بسبب RLS.'
+                  : 'Opening the admin page via VITE_ARTICLE_ADMIN_EMAIL is not enough to write to Supabase. The same user must also exist in public.admin_users, otherwise imports and saves will fail because of RLS.'}
+              </p>
+              <p>
+                {isAr
+                  ? 'نفّذ جزء سياسات admin_users الموجود في ملف supabase/schema.sql داخل SQL Editor في Supabase بعد التأكد أن هذا البريد أنشأ حسابًا وسجّل الدخول.'
+                  : 'Run the admin_users policy section from supabase/schema.sql in the Supabase SQL Editor after making sure this email has created an account and signed in.'}
+              </p>
+            </div>
+          ) : null}
+
           <div className="flex flex-wrap items-center gap-3">
             <button
               type="button"
@@ -854,9 +869,28 @@ export default function AdminInjuryManager() {
                 if (!window.confirm(isAr ? 'استيراد الإصابات القديمة الآن؟' : 'Import legacy injuries now?')) return;
                 try {
                   setMigrating(true);
-                  await migrateAllInjuriesToSupabase();
+                  const result = await migrateAllInjuriesToSupabase();
                   await loadInjuries(selectedId);
-                  setNotice(isAr ? 'تم استيراد البيانات القديمة.' : 'Legacy data imported.');
+                  if (result.successCount === 0) {
+                    const firstError = result.errors[0]?.message;
+                    setNotice(
+                      isAr
+                        ? `لم يتم استيراد أي بيانات${firstError ? `: ${firstError}` : '.'}`
+                        : `No legacy data was imported${firstError ? `: ${firstError}` : '.'}`,
+                    );
+                  } else if (result.errorCount > 0) {
+                    setNotice(
+                      isAr
+                        ? `تم استيراد ${result.successCount} من ${result.totalCount}، وتعذر استيراد ${result.errorCount}.`
+                        : `Imported ${result.successCount} of ${result.totalCount}, and ${result.errorCount} failed.`,
+                    );
+                  } else {
+                    setNotice(
+                      isAr
+                        ? `تم استيراد ${result.successCount} من البيانات القديمة.`
+                        : `Imported ${result.successCount} legacy records.`,
+                    );
+                  }
                 } catch (error) {
                   setNotice(error instanceof Error ? error.message : isAr ? 'فشل الاستيراد.' : 'Import failed.');
                 } finally {

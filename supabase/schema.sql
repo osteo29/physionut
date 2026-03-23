@@ -327,7 +327,9 @@ using (
 
 -- Admin Users - Self-management
 drop policy if exists "admin_users_read" on public.admin_users;
+drop policy if exists "admin_users_self_read" on public.admin_users;
 drop policy if exists "admin_users_insert" on public.admin_users;
+drop policy if exists "admin_users_bootstrap_insert" on public.admin_users;
 drop policy if exists "admin_users_update" on public.admin_users;
 drop policy if exists "admin_users_delete" on public.admin_users;
 
@@ -337,10 +339,21 @@ using (
    where user_id = auth.uid() and role = 'admin') > 0
 );
 
+create policy "admin_users_self_read" on public.admin_users for select to authenticated
+using (user_id = auth.uid());
+
 create policy "admin_users_insert" on public.admin_users for insert to authenticated
 with check (
   (select count(1) from public.admin_users 
    where user_id = auth.uid() and role = 'admin') > 0
+);
+
+create policy "admin_users_bootstrap_insert" on public.admin_users for insert to authenticated
+with check (
+  lower(email) = lower(auth.jwt() ->> 'email')
+  and lower(email) = lower('ahmed.reda.a.r.1234@gmail.com')
+  and user_id = auth.uid()
+  and role = 'admin'
 );
 
 create policy "admin_users_update" on public.admin_users for update to authenticated
