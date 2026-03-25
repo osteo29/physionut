@@ -1,8 +1,1 @@
-# PhysioNutrition - Ads.txt Configuration
-# 
-# ⚠️ IMPORTANT: Add your Google AdSense Publisher ID before deploying
-# Format: google.com, pub-YOUR_PUBLISHER_ID, DIRECT, f08c47fec0942fa0
-#
-# Get your Publisher ID from: https://support.google.com/adsense/answer/9032453
-# Once you have it, add the line above with your actual ID
-
+google.com, pub-8114404242792415, DIRECT, f08c47fec0942fa0
