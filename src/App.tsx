@@ -148,6 +148,10 @@ function parseArchitectNumber(value: string) {
   return Number.isFinite(parsed) ? parsed : 0;
 }
 
+function architectNumberToInput(value: number | undefined | null) {
+  return value && value > 0 ? String(value) : '';
+}
+
 export default function App({
   theme,
   onToggleTheme,
@@ -283,6 +287,15 @@ export default function App({
       return [];
     }
   });
+  const [architectDraft, setArchitectDraft] = useState(() => ({
+    age: architectNumberToInput(EMPTY_ARCHITECT_PROFILE.age),
+    weight: architectNumberToInput(EMPTY_ARCHITECT_PROFILE.weight),
+    height: architectNumberToInput(EMPTY_ARCHITECT_PROFILE.height),
+    recoveryWeek: String(EMPTY_ARCHITECT_PROFILE.recoveryWeek || 1),
+    waist: architectNumberToInput(EMPTY_ARCHITECT_PROFILE.waist),
+    neck: architectNumberToInput(EMPTY_ARCHITECT_PROFILE.neck),
+    waterIntake: architectNumberToInput(EMPTY_ARCHITECT_PROFILE.waterIntake),
+  }));
   const [isCustomModalOpen, setIsCustomModalOpen] = useState(false);
   const [showFoodTable, setShowFoodTable] = useState(false);
   const [isWristModalOpen, setIsWristModalOpen] = useState(false);
@@ -406,6 +419,54 @@ export default function App({
       setActivity(String(architectProfile.activityLevel));
     }
   }, [architectProfile]);
+
+  useEffect(() => {
+    setArchitectDraft({
+      age: architectNumberToInput(architectProfile.age),
+      weight: architectNumberToInput(architectProfile.weight),
+      height: architectNumberToInput(architectProfile.height),
+      recoveryWeek: String(architectProfile.recoveryWeek || 1),
+      waist: architectNumberToInput(architectProfile.waist),
+      neck: architectNumberToInput(architectProfile.neck),
+      waterIntake: architectNumberToInput(architectProfile.waterIntake),
+    });
+  }, [
+    architectProfile.age,
+    architectProfile.weight,
+    architectProfile.height,
+    architectProfile.recoveryWeek,
+    architectProfile.waist,
+    architectProfile.neck,
+    architectProfile.waterIntake,
+  ]);
+
+  const updateArchitectDraft = (
+    field: keyof typeof architectDraft,
+    value: string,
+  ) => {
+    setArchitectDraft((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const commitArchitectDraft = (
+    field: keyof typeof architectDraft,
+    profileKey: keyof HealthProfile,
+    options?: { min?: number },
+  ) => {
+    const rawValue = architectDraft[field];
+    const parsedValue = parseArchitectNumber(rawValue);
+    const minValue = options?.min ?? 0;
+    const nextValue = parsedValue > 0 ? Math.max(parsedValue, minValue) : 0;
+
+    setArchitectProfile((prev) => {
+      if (prev[profileKey] === nextValue) return prev;
+      return { ...prev, [profileKey]: nextValue };
+    });
+
+    setArchitectDraft((prev) => ({
+      ...prev,
+      [field]: nextValue > 0 ? String(nextValue) : '',
+    }));
+  };
 
   useEffect(() => {
     if (!justCalculated) return;
@@ -1107,8 +1168,10 @@ export default function App({
                       <label className="text-xs font-bold text-slate-500 uppercase">{t.forms.age}</label>
                       <input 
                         type="number" 
-                        value={architectProfile.age || ''}
-                        onChange={(e) => setArchitectProfile({...architectProfile, age: parseArchitectNumber(e.target.value)})}
+                        inputMode="numeric"
+                        value={architectDraft.age}
+                        onChange={(e) => updateArchitectDraft('age', e.target.value)}
+                        onBlur={() => commitArchitectDraft('age', 'age', { min: 1 })}
                         placeholder="25"
                         className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
                       />
@@ -1117,8 +1180,10 @@ export default function App({
                       <label className="text-xs font-bold text-slate-500 uppercase">{t.forms.weight}</label>
                       <input 
                         type="number" 
-                        value={architectProfile.weight || ''}
-                        onChange={(e) => setArchitectProfile({...architectProfile, weight: parseArchitectNumber(e.target.value)})}
+                        inputMode="decimal"
+                        value={architectDraft.weight}
+                        onChange={(e) => updateArchitectDraft('weight', e.target.value)}
+                        onBlur={() => commitArchitectDraft('weight', 'weight', { min: 1 })}
                         placeholder="70"
                         className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
                       />
@@ -1129,8 +1194,10 @@ export default function App({
                     <label className="text-xs font-bold text-slate-500 uppercase">{t.forms.height}</label>
                     <input 
                       type="number" 
-                      value={architectProfile.height || ''}
-                      onChange={(e) => setArchitectProfile({...architectProfile, height: parseArchitectNumber(e.target.value)})}
+                      inputMode="numeric"
+                      value={architectDraft.height}
+                      onChange={(e) => updateArchitectDraft('height', e.target.value)}
+                      onBlur={() => commitArchitectDraft('height', 'height', { min: 1 })}
                       placeholder="175"
                       className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
                     />
@@ -1199,8 +1266,10 @@ export default function App({
                         type="number" 
                         min="1"
                         max="52"
-                        value={architectProfile.recoveryWeek}
-                        onChange={(e) => setArchitectProfile({...architectProfile, recoveryWeek: parseArchitectNumber(e.target.value)})}
+                        inputMode="numeric"
+                        value={architectDraft.recoveryWeek}
+                        onChange={(e) => updateArchitectDraft('recoveryWeek', e.target.value)}
+                        onBlur={() => commitArchitectDraft('recoveryWeek', 'recoveryWeek', { min: 1 })}
                         className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
                       />
                     </div>
@@ -1210,8 +1279,10 @@ export default function App({
                     <label className="text-xs font-bold text-slate-500 uppercase">{t.forms.waist} (cm)</label>
                     <input 
                       type="number" 
-                      value={architectProfile.waist || ''}
-                      onChange={(e) => setArchitectProfile({...architectProfile, waist: parseArchitectNumber(e.target.value)})}
+                      inputMode="numeric"
+                      value={architectDraft.waist}
+                      onChange={(e) => updateArchitectDraft('waist', e.target.value)}
+                      onBlur={() => commitArchitectDraft('waist', 'waist', { min: 1 })}
                       placeholder="80"
                       className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
                     />
@@ -1221,8 +1292,10 @@ export default function App({
                     <label className="text-xs font-bold text-slate-500 uppercase">{t.forms.neck} (cm)</label>
                     <input 
                       type="number" 
-                      value={architectProfile.neck || ''}
-                      onChange={(e) => setArchitectProfile({...architectProfile, neck: parseArchitectNumber(e.target.value)})}
+                      inputMode="numeric"
+                      value={architectDraft.neck}
+                      onChange={(e) => updateArchitectDraft('neck', e.target.value)}
+                      onBlur={() => commitArchitectDraft('neck', 'neck', { min: 1 })}
                       placeholder="38"
                       className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
                     />
@@ -1250,8 +1323,10 @@ export default function App({
                     <label className="text-xs font-bold text-slate-500 uppercase">{t.architect.water}</label>
                     <input 
                       type="number" 
-                      value={architectProfile.waterIntake || ''}
-                      onChange={(e) => setArchitectProfile({...architectProfile, waterIntake: parseArchitectNumber(e.target.value)})}
+                      inputMode="numeric"
+                      value={architectDraft.waterIntake}
+                      onChange={(e) => updateArchitectDraft('waterIntake', e.target.value)}
+                      onBlur={() => commitArchitectDraft('waterIntake', 'waterIntake', { min: 1 })}
                       placeholder="2500"
                       className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
                     />
