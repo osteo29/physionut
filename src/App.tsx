@@ -468,6 +468,37 @@ export default function App({
     }));
   };
 
+  const calculateArchitectProfile = () => {
+    const nextProfile = {
+      ...architectProfile,
+      age: Math.max(parseArchitectNumber(architectDraft.age), 0),
+      weight: Math.max(parseArchitectNumber(architectDraft.weight), 0),
+      height: Math.max(parseArchitectNumber(architectDraft.height), 0),
+      recoveryWeek: Math.max(parseArchitectNumber(architectDraft.recoveryWeek), 1),
+      waist: Math.max(parseArchitectNumber(architectDraft.waist), 0),
+      neck: Math.max(parseArchitectNumber(architectDraft.neck), 0),
+      waterIntake: Math.max(parseArchitectNumber(architectDraft.waterIntake), 0),
+    };
+
+    setArchitectProfile(nextProfile);
+    setArchitectDraft({
+      age: architectNumberToInput(nextProfile.age),
+      weight: architectNumberToInput(nextProfile.weight),
+      height: architectNumberToInput(nextProfile.height),
+      recoveryWeek: String(nextProfile.recoveryWeek || 1),
+      waist: architectNumberToInput(nextProfile.waist),
+      neck: architectNumberToInput(nextProfile.neck),
+      waterIntake: architectNumberToInput(nextProfile.waterIntake),
+    });
+
+    requestAnimationFrame(() => {
+      document.getElementById('architect-results')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    });
+  };
+
   useEffect(() => {
     if (!justCalculated) return;
 
@@ -1349,12 +1380,28 @@ export default function App({
                       <span>100%</span>
                     </div>
                   </div>
+
+                  <div className="pt-3">
+                    <button
+                      type="button"
+                      onClick={calculateArchitectProfile}
+                      className="flex w-full items-center justify-center gap-2 rounded-2xl bg-medical-blue px-4 py-3 text-sm font-bold text-white transition-all hover:bg-blue-700"
+                    >
+                      <Calculator className="h-4 w-4" />
+                      <span>{lang === 'en' ? 'Calculate now' : 'احسب الآن'}</span>
+                    </button>
+                    <p className="mt-2 text-center text-xs text-slate-500">
+                      {lang === 'en'
+                        ? 'Your inputs are saved automatically, and this button updates the dashboard immediately.'
+                        : 'بياناتك تُحفظ تلقائيًا، وهذا الزر يحدّث اللوحة فورًا بعد إدخال الأرقام.'}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Dashboard Column */}
-            <div className="lg:col-span-8 space-y-8">
+            <div id="architect-results" className="lg:col-span-8 space-y-8">
               {architectMetrics ? (
                 <>
                   {/* Top Row: Score & Metrics */}
