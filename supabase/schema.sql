@@ -71,9 +71,6 @@ create table if not exists public.injury_phases (
   cautions_ar text[] default '{}',
   nutrition_notes_en text[] default '{}',
   nutrition_notes_ar text[] default '{}',
-  -- Structured exercise plans (per phase) stored as JSON.
-  -- Includes EN/AR labels + sets/reps/rest/equipment + alternatives/cues.
-  exercise_plans jsonb default '[]'::jsonb,
   exercises_en text[] default '{}',
   exercises_ar text[] default '{}',
   prohibited_movements_en text[] default '{}',
@@ -101,7 +98,6 @@ alter table public.injury_phases add column if not exists cautions_en text[] def
 alter table public.injury_phases add column if not exists cautions_ar text[] default '{}';
 alter table public.injury_phases add column if not exists nutrition_notes_en text[] default '{}';
 alter table public.injury_phases add column if not exists nutrition_notes_ar text[] default '{}';
-alter table public.injury_phases add column if not exists exercise_plans jsonb default '[]'::jsonb;
 
 -- Supplements table (المكملات الغذائية)
 create table if not exists public.supplements (
