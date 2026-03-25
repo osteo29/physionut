@@ -142,6 +142,12 @@ function HomeSectionFallback({
   );
 }
 
+function parseArchitectNumber(value: string) {
+  if (!value.trim()) return 0;
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
 export default function App({
   theme,
   onToggleTheme,
@@ -1102,7 +1108,7 @@ export default function App({
                       <input 
                         type="number" 
                         value={architectProfile.age || ''}
-                        onChange={(e) => setArchitectProfile({...architectProfile, age: Number(e.target.value)})}
+                        onChange={(e) => setArchitectProfile({...architectProfile, age: parseArchitectNumber(e.target.value)})}
                         placeholder="25"
                         className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
                       />
@@ -1112,7 +1118,7 @@ export default function App({
                       <input 
                         type="number" 
                         value={architectProfile.weight || ''}
-                        onChange={(e) => setArchitectProfile({...architectProfile, weight: Number(e.target.value)})}
+                        onChange={(e) => setArchitectProfile({...architectProfile, weight: parseArchitectNumber(e.target.value)})}
                         placeholder="70"
                         className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
                       />
@@ -1124,7 +1130,7 @@ export default function App({
                     <input 
                       type="number" 
                       value={architectProfile.height || ''}
-                      onChange={(e) => setArchitectProfile({...architectProfile, height: Number(e.target.value)})}
+                      onChange={(e) => setArchitectProfile({...architectProfile, height: parseArchitectNumber(e.target.value)})}
                       placeholder="175"
                       className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
                     />
@@ -1194,7 +1200,7 @@ export default function App({
                         min="1"
                         max="52"
                         value={architectProfile.recoveryWeek}
-                        onChange={(e) => setArchitectProfile({...architectProfile, recoveryWeek: Number(e.target.value)})}
+                        onChange={(e) => setArchitectProfile({...architectProfile, recoveryWeek: parseArchitectNumber(e.target.value)})}
                         className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
                       />
                     </div>
@@ -1205,7 +1211,7 @@ export default function App({
                     <input 
                       type="number" 
                       value={architectProfile.waist || ''}
-                      onChange={(e) => setArchitectProfile({...architectProfile, waist: Number(e.target.value)})}
+                      onChange={(e) => setArchitectProfile({...architectProfile, waist: parseArchitectNumber(e.target.value)})}
                       placeholder="80"
                       className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
                     />
@@ -1216,7 +1222,7 @@ export default function App({
                     <input 
                       type="number" 
                       value={architectProfile.neck || ''}
-                      onChange={(e) => setArchitectProfile({...architectProfile, neck: Number(e.target.value)})}
+                      onChange={(e) => setArchitectProfile({...architectProfile, neck: parseArchitectNumber(e.target.value)})}
                       placeholder="38"
                       className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
                     />
@@ -1245,7 +1251,7 @@ export default function App({
                     <input 
                       type="number" 
                       value={architectProfile.waterIntake || ''}
-                      onChange={(e) => setArchitectProfile({...architectProfile, waterIntake: Number(e.target.value)})}
+                      onChange={(e) => setArchitectProfile({...architectProfile, waterIntake: parseArchitectNumber(e.target.value)})}
                       placeholder="2500"
                       className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
                     />

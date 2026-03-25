@@ -4,11 +4,6 @@ import {Brain, ChevronRight, ClipboardList, Sparkles, Zap} from 'lucide-react';
 import {Link} from 'react-router-dom';
 import type {Language} from '../../services/translations';
 import {navigationPaths} from '../../utils/langUrlHelper';
-import {decodeMojibake} from '../../services/textEncoding';
-
-function ar(text: string) {
-  return decodeMojibake(text);
-}
 
 const WhatsNew = memo(({lang}: {lang: Language}) => {
   const updates =
@@ -41,24 +36,24 @@ const WhatsNew = memo(({lang}: {lang: Language}) => {
         ]
       : [
           {
-            title: ar('Ù…Ù‡Ù†Ø¯Ø³ Ø§Ù„ØªØºØ°ÙŠØ© Ø§Ù„Ø¹Ù„Ø§Ø¬ÙŠØ©'),
-            desc: ar('Ù„ÙˆØ­Ø© ØªØ¬Ù…Ø¹ Ø§Ù„ØµØ­Ø© ÙˆØ§Ù„ØªØ¹Ø§ÙÙŠ ÙˆØ§Ù„Ù…ØªØ§Ø¨Ø¹Ø© ÙÙŠ Ù…ÙƒØ§Ù† ÙˆØ§Ø­Ø¯ Ø¨Ø¯Ø¹Ù… Ù…Ù† Ø§Ù„Ø°ÙƒØ§Ø¡ Ø§Ù„Ø§ØµØ·Ù†Ø§Ø¹ÙŠ.'),
+            title: 'مهندس التغذية العلاجية',
+            desc: 'لوحة تجمع الصحة والتعافي والمتابعة في مكان واحد بدعم من الذكاء الاصطناعي.',
             icon: Brain,
             color: 'text-medical-blue',
             bg: 'bg-medical-blue/10',
             href: '#architect',
           },
           {
-            title: ar('Ø¨Ø±ÙˆØªÙˆÙƒÙˆÙ„Ø§Øª Ø§Ù„Ø¥ØµØ§Ø¨Ø§Øª ÙˆØ§Ù„ØªØ¹Ø§ÙÙŠ'),
-            desc: ar('Ø¥Ø±Ø´Ø§Ø¯ Ù…Ù†Ø¸Ù… Ù„Ù„ØªØºØ°ÙŠØ© Ø§Ù„Ø¹Ù„Ø§Ø¬ÙŠØ© ÙÙŠ Ø¥ØµØ§Ø¨Ø§Øª Ø§Ù„Ø¹Ù„Ø§Ø¬ Ø§Ù„Ø·Ø¨ÙŠØ¹ÙŠ Ø§Ù„Ø´Ø§Ø¦Ø¹Ø© ÙˆÙ…Ø±Ø§Ø­Ù„ Ø§Ù„ØªØ¹Ø§ÙÙŠ.'),
+            title: 'بروتوكولات الإصابات والتعافي',
+            desc: 'إرشاد منظم للتغذية العلاجية في إصابات العلاج الطبيعي الشائعة ومراحل التعافي.',
             icon: ClipboardList,
             color: 'text-health-green',
             bg: 'bg-health-green/10',
             href: navigationPaths.injuries(lang),
           },
           {
-            title: ar('Ø®Ø·Ø· ØºØ°Ø§Ø¦ÙŠØ© Ø°ÙƒÙŠØ©'),
-            desc: ar('Ø£Ù†Ø´Ø¦ Ø®Ø·Ø© ØªØ¹Ø§ÙÙ Ø£Ùˆ ØªØºØ°ÙŠØ© Ø£ÙƒØ«Ø± ØªØ®ØµÙŠØµÙ‹Ø§ Ø¨Ø§Ø³ØªØ®Ø¯Ø§Ù… Ø§Ù„Ø°ÙƒØ§Ø¡ Ø§Ù„Ø§ØµØ·Ù†Ø§Ø¹ÙŠ.'),
+            title: 'خطط غذائية ذكية',
+            desc: 'أنشئ خطة تعافٍ أو تغذية أكثر تخصيصًا باستخدام الذكاء الاصطناعي.',
             icon: Sparkles,
             color: 'text-amber-500',
             bg: 'bg-amber-500/10',
@@ -73,16 +68,16 @@ const WhatsNew = memo(({lang}: {lang: Language}) => {
           <div>
             <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-medical-blue/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-medical-blue">
               <Zap className="h-3 w-3" />
-              <span>{lang === 'en' ? "What's New" : ar('Ù…Ø§ Ø§Ù„Ø¬Ø¯ÙŠØ¯')}</span>
+              <span>{lang === 'en' ? "What's New" : 'ما الجديد'}</span>
             </div>
             <h2 className="text-3xl font-bold text-slate-900 md:text-4xl">
-              {lang === 'en' ? 'Latest Platform Updates' : ar('Ø¢Ø®Ø± ØªØ­Ø¯ÙŠØ«Ø§Øª Ø§Ù„Ù…Ù†ØµØ©')}
+              {lang === 'en' ? 'Latest Platform Updates' : 'آخر تحديثات المنصة'}
             </h2>
           </div>
           <p className="max-w-md text-slate-500">
             {lang === 'en'
               ? 'We keep refining the platform to make nutrition, rehab, and follow-up tools easier to use.'
-              : ar('Ù†Ø·ÙˆÙ‘Ø± Ø§Ù„Ù…Ù†ØµØ© Ø¨Ø§Ø³ØªÙ…Ø±Ø§Ø± Ù„ØªÙƒÙˆÙ† Ø£Ø¯ÙˆØ§Øª Ø§Ù„ØªØºØ°ÙŠØ© ÙˆØ§Ù„ØªØ£Ù‡ÙŠÙ„ ÙˆØ§Ù„Ù…ØªØ§Ø¨Ø¹Ø© Ø£ÙˆØ¶Ø­ ÙˆØ£Ø³Ù‡Ù„ ÙÙŠ Ø§Ù„Ø§Ø³ØªØ®Ø¯Ø§Ù….')}
+              : 'نطوّر المنصة باستمرار لتكون أدوات التغذية والتأهيل والمتابعة أوضح وأسهل في الاستخدام.'}
           </p>
         </div>
 
@@ -111,7 +106,7 @@ const WhatsNew = memo(({lang}: {lang: Language}) => {
                   href={update.href}
                   className="inline-flex items-center gap-2 text-sm font-bold text-health-green opacity-0 transition-opacity group-hover:opacity-100"
                 >
-                  <span>{lang === 'en' ? 'Explore Feature' : ar('Ø§Ø³ØªÙƒØ´Ù Ø§Ù„Ù…ÙŠØ²Ø©')}</span>
+                  <span>{lang === 'en' ? 'Explore Feature' : 'استكشف الميزة'}</span>
                   <ChevronRight className={`h-4 w-4 ${lang === 'ar' ? 'rotate-180' : ''}`} />
                 </a>
               ) : (
@@ -119,7 +114,7 @@ const WhatsNew = memo(({lang}: {lang: Language}) => {
                   to={update.href}
                   className="inline-flex items-center gap-2 text-sm font-bold text-health-green opacity-0 transition-opacity group-hover:opacity-100"
                 >
-                  <span>{lang === 'en' ? 'Explore Feature' : ar('Ø§Ø³ØªÙƒØ´Ù Ø§Ù„Ù…ÙŠØ²Ø©')}</span>
+                  <span>{lang === 'en' ? 'Explore Feature' : 'استكشف الميزة'}</span>
                   <ChevronRight className={`h-4 w-4 ${lang === 'ar' ? 'rotate-180' : ''}`} />
                 </Link>
               )}
