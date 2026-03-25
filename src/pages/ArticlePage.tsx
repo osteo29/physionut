@@ -5,6 +5,27 @@ import usePreferredLang from './usePreferredLang';
 import Seo from '../components/seo/Seo';
 import {usePublishedArticles} from '../services/articleStudio';
 
+type ArticleBlock =
+  | {type: 'paragraph'; text: string}
+  | {type: 'list'; items: string[]}
+  | {type: 'heading'; level: 2; text: string; anchor: string};
+
+type ArticleFaqItem = {
+  question: string;
+  answer: string;
+};
+
+function slugifyHeading(text: string, fallbackIndex: number) {
+  const normalized = text
+    .toLowerCase()
+    .trim()
+    .replace(/[؟?]/g, '')
+    .replace(/[^a-z0-9\u0600-\u06ff]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
+  return normalized || `section-${fallbackIndex + 1}`;
+}
+
 function renderInline(text: string): ReactNode[] {
   const parts = text.split(/(\[[^\]]+\]\([^)]+\))/g).filter(Boolean);
 
@@ -33,28 +54,24 @@ function renderInline(text: string): ReactNode[] {
   });
 }
 
-function renderContent(content: string): ReactNode[] {
+function parseArticleContent(content: string) {
   const lines = content.split('\n');
-  const nodes: ReactNode[] = [];
+  const blocks: ArticleBlock[] = [];
+  const headings: Array<{text: string; anchor: string}> = [];
   let paragraphBuffer: string[] = [];
   let listBuffer: string[] = [];
+  let headingIndex = 0;
 
   const flushParagraph = () => {
     if (!paragraphBuffer.length) return;
     const text = paragraphBuffer.join(' ').trim();
-    if (text) nodes.push(<p key={`p-${nodes.length}`}>{renderInline(text)}</p>);
+    if (text) blocks.push({type: 'paragraph', text});
     paragraphBuffer = [];
   };
 
   const flushList = () => {
     if (!listBuffer.length) return;
-    nodes.push(
-      <ul key={`ul-${nodes.length}`} className="list-disc space-y-2 pl-6">
-        {listBuffer.map((item, index) => (
-          <li key={`li-${nodes.length}-${index}`}>{renderInline(item)}</li>
-        ))}
-      </ul>,
-    );
+    blocks.push({type: 'list', items: listBuffer});
     listBuffer = [];
   };
 
@@ -70,11 +87,11 @@ function renderContent(content: string): ReactNode[] {
     if (line.startsWith('## ')) {
       flushParagraph();
       flushList();
-      nodes.push(
-        <h2 key={`h2-${nodes.length}`} className="pt-2 text-2xl font-bold text-slate-900">
-          {line.slice(3)}
-        </h2>,
-      );
+      const text = line.slice(3).trim();
+      const anchor = slugifyHeading(text, headingIndex);
+      headingIndex += 1;
+      headings.push({text, anchor});
+      blocks.push({type: 'heading', level: 2, text, anchor});
       continue;
     }
 
@@ -90,7 +107,55 @@ function renderContent(content: string): ReactNode[] {
 
   flushParagraph();
   flushList();
-  return nodes;
+
+  const faqItems: ArticleFaqItem[] = [];
+
+  blocks.forEach((block, index) => {
+    if (block.type !== 'heading') return;
+    if (!/[؟?]$/.test(block.text)) return;
+
+    const answerParts: string[] = [];
+
+    for (let i = index + 1; i < blocks.length; i += 1) {
+      const nextBlock = blocks[i];
+      if (nextBlock.type === 'heading') break;
+      if (nextBlock.type === 'paragraph') answerParts.push(nextBlock.text);
+      if (nextBlock.type === 'list') answerParts.push(nextBlock.items.join(' '));
+    }
+
+    const answer = answerParts.join(' ').trim();
+    if (answer) {
+      faqItems.push({question: block.text, answer});
+    }
+  });
+
+  return {blocks, headings, faqItems};
+}
+
+function renderBlocks(blocks: ArticleBlock[]): ReactNode[] {
+  return blocks.map((block, index) => {
+    if (block.type === 'paragraph') {
+      return <p key={`p-${index}`}>{renderInline(block.text)}</p>;
+    }
+
+    if (block.type === 'list') {
+      return (
+        <ul key={`ul-${index}`} className="list-disc space-y-2 pl-6">
+          {block.items.map((item, itemIndex) => (
+            <li key={`li-${index}-${itemIndex}`}>{renderInline(item)}</li>
+          ))}
+        </ul>
+      );
+    }
+
+    return (
+      <h2 id={block.anchor} key={`h2-${index}`} className="scroll-mt-24 pt-2 text-2xl font-bold text-slate-900">
+        <a href={`#${block.anchor}`} className="transition hover:text-health-green-dark">
+          {block.text}
+        </a>
+      </h2>
+    );
+  });
 }
 
 export default function ArticlePage() {
@@ -140,19 +205,109 @@ export default function ArticlePage() {
     );
   }
 
+  const {blocks, headings, faqItems} = parseArticleContent(article.content);
+  const canonicalPath = `/${lang}/insights/${article.slug}`;
+  const canonicalUrl = `https://physionutrition.vercel.app${canonicalPath}`;
+  const hreflangs = [
+    {lang: 'en', href: `https://physionutrition.vercel.app/en/insights/${article.slug}`},
+    {lang: 'ar', href: `https://physionutrition.vercel.app/ar/insights/${article.slug}`},
+  ];
+
+  const structuredData: Array<{id: string; json: unknown}> = [
+    {
+      id: `article-${article.slug}`,
+      json: {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: article.title,
+        description: article.excerpt,
+        articleSection: article.category,
+        datePublished: article.date,
+        dateModified: article.date,
+        inLanguage: lang,
+        mainEntityOfPage: canonicalUrl,
+        url: canonicalUrl,
+        author: {
+          '@type': 'Organization',
+          name: 'PhysioNutrition',
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: 'PhysioNutrition',
+        },
+        hasPart: headings.map((heading) => ({
+          '@type': 'WebPageElement',
+          '@id': `${canonicalUrl}#${heading.anchor}`,
+          name: heading.text,
+        })),
+      },
+    },
+  ];
+
+  if (faqItems.length) {
+    structuredData.push({
+      id: `article-faq-${article.slug}`,
+      json: {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqItems.map((item) => ({
+          '@type': 'Question',
+          name: item.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: item.answer,
+          },
+        })),
+      },
+    });
+  }
+
   return (
     <>
-      <Seo title={article.title} description={article.excerpt} canonicalPath={`/insights/${article.slug}`} />
+      <Seo
+        title={article.title}
+        description={article.excerpt}
+        canonicalPath={canonicalPath}
+        structuredData={structuredData}
+        hreflangs={hreflangs}
+      />
       <PageLayout title={article.title}>
-        <div className="mb-6 flex flex-wrap gap-3 text-sm text-slate-500">
-          <span>{article.category}</span>
-          <span>•</span>
-          <span>{article.date}</span>
-        </div>
+        <article className="not-prose">
+          <header className="rounded-[2rem] border border-slate-200 bg-slate-50 p-6 sm:p-8">
+            <div className="mb-4 flex flex-wrap gap-3 text-sm text-slate-500">
+              <span>{article.category}</span>
+              <span>•</span>
+              <span>{article.date}</span>
+            </div>
 
-        <p className="text-lg leading-8 text-slate-700">{article.excerpt}</p>
+            <h1 className="text-3xl font-black leading-tight text-slate-900 sm:text-4xl">{article.title}</h1>
+            <p className="mt-4 text-lg leading-8 text-slate-700">{article.excerpt}</p>
+          </header>
 
-        <div className="mt-8 space-y-5 leading-8 text-slate-700">{renderContent(article.content)}</div>
+          {headings.length >= 3 ? (
+            <nav
+              aria-label={lang === 'en' ? 'Article sections' : 'أقسام المقال'}
+              className="mt-6 rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm"
+            >
+              <div className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-slate-400">
+                {lang === 'en' ? 'Jump To Section' : 'انتقل إلى القسم'}
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {headings.map((heading) => (
+                  <a
+                    key={heading.anchor}
+                    href={`#${heading.anchor}`}
+                    className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-sm font-semibold text-slate-600 transition hover:border-health-green/40 hover:bg-health-green/5 hover:text-health-green-dark"
+                  >
+                    {heading.text}
+                  </a>
+                ))}
+              </div>
+            </nav>
+          ) : null}
+
+          <div className="mt-8 space-y-5 leading-8 text-slate-700">{renderBlocks(blocks)}</div>
+        </article>
       </PageLayout>
     </>
   );

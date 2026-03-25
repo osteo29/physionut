@@ -22,6 +22,7 @@ import {
   type RecoveryGoal,
   type RecoveryWindow,
 } from '../services/injuryDatabase';
+import {getRehabStagePlans} from '../services/injuryRehabProtocols';
 import {
   getLocalizedBodyRegion,
   getLocalizedCategory,
@@ -134,6 +135,11 @@ function inferCommonSymptoms(name: string, bodyRegion: string, category: string,
 
 function buildPath(id: string, lang: string) {
   return `/${lang}/injuries/${id.replace(/_/g, '-')}`;
+}
+
+function buildStageAnchor(phaseId: string, index: number) {
+  const normalized = phaseId?.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  return normalized || `phase-${index + 1}`;
 }
 
 function getArabicFallbackRedFlags(bodyRegion: string) {
@@ -265,6 +271,11 @@ export default function InjuryDetailPage() {
   const categoryDisplay = getLocalizedCategory(injury.category, lang);
   const bodyRegionDisplay = getLocalizedBodyRegion(injury.bodyRegion, lang);
   const suggestedPhase = getSuggestedPhaseForWindow(injury, recoveryWindow);
+  const rehabStagePlans = getRehabStagePlans(injury, lang);
+  const selectedStagePlan =
+    rehabStagePlans.find((item) => item.phaseId === suggestedPhase.id) ??
+    rehabStagePlans.find((item, index) => injury.phases[index]?.window === suggestedPhase.window) ??
+    rehabStagePlans[0];
   const plan = generateRecoveryPlan({
     weightKg,
     phase: suggestedPhase,
@@ -303,10 +314,13 @@ export default function InjuryDetailPage() {
       ? getArabicFallbackGoals(bodyRegionDisplay)
       : suggestedPhase.goals.map(normalizeCopy);
 
-  const exerciseFocus =
-    isAr && !listHasArabic(suggestedPhase.exercises)
+  const exerciseFocus = selectedStagePlan?.exercises?.length
+    ? selectedStagePlan.exercises.map(normalizeCopy)
+    : isAr && !listHasArabic(suggestedPhase.exercises)
       ? getArabicFallbackExercises(injury.category, bodyRegionDisplay)
       : suggestedPhase.exercises.map(normalizeCopy);
+
+  const stageFocusText = selectedStagePlan ? normalizeCopy(selectedStagePlan.focus) : '';
 
   const nutritionFocus =
     isAr && !listHasArabic(suggestedPhase.nutritionFocus)
@@ -357,6 +371,11 @@ export default function InjuryDetailPage() {
     },
   } as const;
 
+  const hreflangs = [
+    {lang: 'en', href: `https://physionutrition.vercel.app${buildPath(injury.id, 'en')}`},
+    {lang: 'ar', href: `https://physionutrition.vercel.app${buildPath(injury.id, 'ar')}`},
+  ];
+
   const structuredData = [
     {
       id: `injury-page-${injury.id}`,
@@ -375,13 +394,57 @@ export default function InjuryDetailPage() {
             name: item,
           })),
         },
+        hasPart: rehabStagePlans.map((stage, index) => ({
+          '@type': 'WebPageElement',
+          '@id': `https://physionutrition.vercel.app${path}#${buildStageAnchor(stage.phaseId, index)}`,
+          name: normalizeCopy(stage.phaseLabel),
+          description: normalizeCopy(stage.focus),
+        })),
+      },
+    },
+    {
+      id: `injury-condition-${injury.id}`,
+      json: {
+        '@context': 'https://schema.org',
+        '@type': 'MedicalCondition',
+        name: injuryDisplayName,
+        description: introText,
+        associatedAnatomy: bodyRegionDisplay,
+        signOrSymptom: commonSymptoms,
+        possibleTreatment: rehabStagePlans.map((stage, index) => ({
+          '@type': 'TherapeuticProcedure',
+          name: normalizeCopy(stage.phaseLabel),
+          description: `${normalizeCopy(stage.focus)} ${stage.exercises.map(normalizeCopy).join(', ')}`,
+          url: `https://physionutrition.vercel.app${path}#${buildStageAnchor(stage.phaseId, index)}`,
+        })),
+      },
+    },
+    {
+      id: `injury-faq-${injury.id}`,
+      json: {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqItems.map((item) => ({
+          '@type': 'Question',
+          name: item.q,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: item.a,
+          },
+        })),
       },
     },
   ];
 
   return (
     <>
-      <Seo title={labels.title} description={labels.description} canonicalPath={path} structuredData={structuredData} />
+      <Seo
+        title={labels.title}
+        description={labels.description}
+        canonicalPath={path}
+        structuredData={structuredData}
+        hreflangs={hreflangs}
+      />
       <PageLayout title={labels.title}>
         <div className="space-y-8 not-prose">
           <section className="rounded-[2rem] border border-slate-200 bg-slate-50 p-6 sm:p-8">
@@ -389,7 +452,7 @@ export default function InjuryDetailPage() {
               <ClipboardList className="h-3.5 w-3.5" />
               <span>{categoryDisplay} • {bodyRegionDisplay}</span>
             </div>
-            <h2 className="text-2xl font-black text-slate-900 sm:text-3xl">{injuryDisplayName}</h2>
+            <h1 className="text-2xl font-black text-slate-900 sm:text-3xl">{injuryDisplayName}</h1>
             <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-600 sm:text-base">{introText}</p>
             <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-700">
               {isAr && !textLooksArabic(normalizeCopy(injury.rehabSummary))
@@ -431,6 +494,103 @@ export default function InjuryDetailPage() {
                   <li key={item} className="rounded-xl bg-white px-3 py-3">{item}</li>
                 ))}
               </ul>
+            </div>
+          </section>
+
+          <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="mb-4 flex items-center gap-2 font-black text-slate-900">
+              <ClipboardList className="h-4 w-4 text-health-green" />
+              <h2>{isAr ? 'بروتوكول التأهيل حسب المرحلة' : 'Phase-by-phase rehab protocol'}</h2>
+            </div>
+            <div className="mb-4 flex flex-wrap gap-2">
+              {rehabStagePlans.map((stage, index) => {
+                const anchorId = buildStageAnchor(stage.phaseId, index);
+                const linkLabel =
+                  isAr && !textLooksArabic(normalizeCopy(stage.phaseLabel))
+                    ? `المرحلة ${index + 1}`
+                    : normalizeCopy(stage.phaseLabel);
+
+                return (
+                  <a
+                    key={`nav-${stage.phaseId}-${index}`}
+                    href={`#${anchorId}`}
+                    className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:border-health-green/40 hover:bg-health-green/5 hover:text-health-green-dark"
+                  >
+                    {linkLabel}
+                  </a>
+                );
+              })}
+            </div>
+            <div className="grid gap-4 xl:grid-cols-3">
+              {rehabStagePlans.map((stage, index) => {
+                const isActive = stage.phaseId === selectedStagePlan?.phaseId;
+                const anchorId = buildStageAnchor(stage.phaseId, index);
+                const labelText =
+                  isAr && !textLooksArabic(normalizeCopy(stage.phaseLabel))
+                    ? `المرحلة ${index + 1}`
+                    : normalizeCopy(stage.phaseLabel);
+
+                return (
+                  <article
+                    id={anchorId}
+                    key={`${stage.phaseId}-${stage.duration}`}
+                    className={`rounded-[1.5rem] border p-5 ${
+                      isActive ? 'border-health-green bg-health-green/5' : 'border-slate-200 bg-slate-50'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-3">
+                      <div>
+                        <div className="text-xs font-bold uppercase tracking-[0.18em] text-slate-400">
+                          {isAr ? `المرحلة ${index + 1}` : `Phase ${index + 1}`}
+                        </div>
+                        <h3 className="mt-1 font-black text-slate-900">
+                          <a href={`#${anchorId}`} className="transition hover:text-health-green-dark">
+                            {labelText}
+                          </a>
+                        </h3>
+                      </div>
+                      <div className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-slate-500">
+                        {normalizeCopy(stage.duration)}
+                      </div>
+                    </div>
+
+                    <p className="mt-4 text-sm leading-7 text-slate-700">{normalizeCopy(stage.focus)}</p>
+
+                    <div className="mt-4">
+                      <h4 className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
+                        {isAr ? 'التمارين المناسبة' : 'Exercises'}
+                      </h4>
+                      <ul className="space-y-2 text-sm text-slate-700">
+                        {stage.exercises.map((item) => (
+                          <li key={item} className="rounded-xl bg-white px-3 py-2">{normalizeCopy(item)}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="mt-4">
+                      <h4 className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
+                        {isAr ? 'علامات الانتقال للمرحلة التالية' : 'Ready to progress when'}
+                      </h4>
+                      <ul className="space-y-2 text-sm text-slate-700">
+                        {stage.progressionMarkers.map((item) => (
+                          <li key={item} className="rounded-xl bg-white px-3 py-2">{normalizeCopy(item)}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="mt-4">
+                      <h4 className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
+                        {isAr ? 'تجنب' : 'Avoid'}
+                      </h4>
+                      <ul className="space-y-2 text-sm text-slate-700">
+                        {stage.cautions.map((item) => (
+                          <li key={item} className="rounded-xl bg-amber-50 px-3 py-2">{normalizeCopy(item)}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           </section>
 
@@ -484,6 +644,7 @@ export default function InjuryDetailPage() {
                     : normalizeCopy(suggestedPhase.label)}
                 </div>
                 <div className="mt-1 text-xs text-slate-500">{normalizeCopy(suggestedPhase.duration)}</div>
+                {stageFocusText ? <p className="mt-3 text-sm leading-7 text-slate-700">{stageFocusText}</p> : null}
                 <ul className="mt-3 space-y-2 text-sm text-slate-700">
                   {phaseGoals.map((item) => <li key={item} className="rounded-xl bg-white px-3 py-2">{item}</li>)}
                 </ul>

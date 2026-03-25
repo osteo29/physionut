@@ -1,5 +1,11 @@
 User-agent: *
 Allow: /
+Allow: /en/
+Allow: /ar/
+Allow: /en/injuries
+Allow: /ar/injuries
+Allow: /en/insights
+Allow: /ar/insights
 
 # منع ملفات حساسة أو غير مهمة
 Disallow: /.env
