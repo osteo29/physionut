@@ -31,6 +31,12 @@ const TrendChart = lazy(() => import('../components/dashboard/TrendChart'));
 const TimelineLog = lazy(() => import('../components/dashboard/TimelineLog'));
 const LazyPdfReportSheet = lazy(() => import('../components/dashboard/LazyPdfReportSheet'));
 
+type NormalizedNumericRecord = AssessmentRecord & {
+  metricKey: string;
+  metricLabel: string;
+  numericValue: number;
+};
+
 function waitForCondition(check: () => boolean, timeoutMs = 4000) {
   return new Promise<void>((resolve, reject) => {
     const startedAt = Date.now();
@@ -53,6 +59,17 @@ function waitForCondition(check: () => boolean, timeoutMs = 4000) {
   });
 }
 
+function normalizeNumericValue(value: AssessmentRecord['value_numeric']) {
+  const parsed =
+    typeof value === 'number'
+      ? value
+      : typeof value === 'string'
+        ? Number.parseFloat(value)
+        : Number.NaN;
+
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
 export default function TrackingDashboardPage() {
   const lang = usePreferredLang();
   const isAr = lang === 'ar';
@@ -63,6 +80,7 @@ export default function TrackingDashboardPage() {
   const [pdfReport, setPdfReport] = useState<DashboardPdfData | null>(null);
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
   const [shouldRenderPdfSheet, setShouldRenderPdfSheet] = useState(false);
+  const [selectedMetricKey, setSelectedMetricKey] = useState('');
   const chartRef = useRef<any>(null);
   const pdfRef = useRef<HTMLDivElement | null>(null);
   const isPdfSheetReadyRef = useRef(false);
@@ -156,26 +174,107 @@ export default function TrackingDashboardPage() {
   };
 
   const numericRecords = useMemo(() => {
-    return [...records].filter((item) => typeof item.value_numeric === 'number').reverse();
+    return [...records]
+      .map((item) => {
+        const numericValue = normalizeNumericValue(item.value_numeric);
+        if (numericValue === null) return null;
+
+        const unit = item.value_unit?.trim() || '';
+        return {
+          ...item,
+          numericValue,
+          metricKey: `${item.calculator_type}::${unit || 'no-unit'}`,
+          metricLabel: unit ? `${item.calculator_type} (${unit})` : item.calculator_type,
+        } satisfies NormalizedNumericRecord;
+      })
+      .filter((item): item is NormalizedNumericRecord => Boolean(item))
+      .reverse();
   }, [records]);
 
-  const lineData = useMemo(() => {
+  const metricGroups = useMemo(() => {
+    const groups = new Map<
+      string,
+      {
+        key: string;
+        label: string;
+        records: NormalizedNumericRecord[];
+      }
+    >();
+
+    for (const item of numericRecords) {
+      const existing = groups.get(item.metricKey);
+      if (existing) {
+        existing.records.push(item);
+      } else {
+        groups.set(item.metricKey, {
+          key: item.metricKey,
+          label: item.metricLabel,
+          records: [item],
+        });
+      }
+    }
+
+    return Array.from(groups.values()).sort((a, b) => {
+      const byCount = b.records.length - a.records.length;
+      if (byCount !== 0) return byCount;
+      return (
+        new Date(b.records[b.records.length - 1].created_at).getTime() -
+        new Date(a.records[a.records.length - 1].created_at).getTime()
+      );
+    });
+  }, [numericRecords]);
+
+  useEffect(() => {
+    if (!metricGroups.length) {
+      if (selectedMetricKey) setSelectedMetricKey('');
+      return;
+    }
+
+    if (!selectedMetricKey || !metricGroups.some((item) => item.key === selectedMetricKey)) {
+      setSelectedMetricKey(metricGroups[0].key);
+    }
+  }, [metricGroups, selectedMetricKey]);
+
+  const selectedMetric = useMemo(
+    () => metricGroups.find((item) => item.key === selectedMetricKey) || metricGroups[0] || null,
+    [metricGroups, selectedMetricKey],
+  );
+
+  const selectedMetricSummary = useMemo(() => {
+    if (!selectedMetric) return null;
+
+    const values = selectedMetric.records.map((item) => item.numericValue);
+    const latest = values[values.length - 1];
+    const previous = values.length > 1 ? values[values.length - 2] : null;
+    const delta = previous === null ? null : latest - previous;
+
     return {
-      labels: numericRecords.map((item) =>
+      latest,
+      delta,
+      min: Math.min(...values),
+      max: Math.max(...values),
+    };
+  }, [selectedMetric]);
+
+  const lineData = useMemo(() => {
+    const activeRecords = selectedMetric?.records || [];
+
+    return {
+      labels: activeRecords.map((item) =>
         new Date(item.created_at).toLocaleDateString(isAr ? 'ar-EG' : 'en-US'),
       ),
       datasets: [
         {
-          label: isAr ? 'تطور القياسات' : 'Measurement trend',
-          data: numericRecords.map((item) => item.value_numeric),
+          label: selectedMetric?.label || (isAr ? 'تطور القياسات' : 'Measurement trend'),
+          data: activeRecords.map((item) => item.numericValue),
           borderColor: '#315f4a',
           backgroundColor: 'rgba(49,95,74,0.18)',
-          tension: 0.35,
+          tension: 0.28,
           fill: true,
         },
       ],
     };
-  }, [isAr, numericRecords]);
+  }, [isAr, selectedMetric]);
 
   const handleDownloadPdf = async () => {
     if (!user || isGeneratingPdf) return;
@@ -187,9 +286,7 @@ export default function TrackingDashboardPage() {
     try {
       const {buildDashboardPdfData, generatePdfReport} = await import('../services/pdfReports');
       const chartImageDataUrl =
-        numericRecords.length > 0 && chartRef.current?.toBase64Image
-          ? chartRef.current.toBase64Image()
-          : undefined;
+        selectedMetric && chartRef.current?.toBase64Image ? chartRef.current.toBase64Image() : undefined;
 
       const report = await buildDashboardPdfData({
         lang,
@@ -318,11 +415,54 @@ export default function TrackingDashboardPage() {
               <LineChart className="h-3.5 w-3.5" />
               <span>{isAr ? 'الرسم البياني' : 'Trend chart'}</span>
             </div>
+
+            {metricGroups.length > 1 ? (
+              <div className="mb-4">
+                <label className="mb-2 block text-xs font-semibold text-slate-500">
+                  {isAr ? 'اختر المؤشر الذي تريد متابعته' : 'Choose the metric to analyze'}
+                </label>
+                <select
+                  value={selectedMetricKey}
+                  onChange={(event) => setSelectedMetricKey(event.target.value)}
+                  className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-health-green focus:ring-2 focus:ring-health-green/20"
+                >
+                  {metricGroups.map((item) => (
+                    <option key={item.key} value={item.key}>
+                      {item.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            ) : null}
+
+            {selectedMetricSummary ? (
+              <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                  <div className="text-xs text-slate-500">{isAr ? 'أحدث قيمة' : 'Latest value'}</div>
+                  <div className="mt-2 text-2xl font-black text-slate-900">{selectedMetricSummary.latest}</div>
+                </div>
+                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                  <div className="text-xs text-slate-500">{isAr ? 'التغيّر الأخير' : 'Latest change'}</div>
+                  <div className="mt-2 text-2xl font-black text-slate-900">
+                    {selectedMetricSummary.delta === null
+                      ? '...'
+                      : `${selectedMetricSummary.delta > 0 ? '+' : ''}${selectedMetricSummary.delta.toFixed(2)}`}
+                  </div>
+                </div>
+                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                  <div className="text-xs text-slate-500">{isAr ? 'المدى المسجل' : 'Recorded range'}</div>
+                  <div className="mt-2 text-lg font-black text-slate-900">
+                    {selectedMetricSummary.min} - {selectedMetricSummary.max}
+                  </div>
+                </div>
+              </div>
+            ) : null}
+
             {status === 'loading' ? (
               <div className="flex h-[320px] items-center justify-center">
                 <LoaderCircle className="h-5 w-5 animate-spin text-health-green" />
               </div>
-            ) : numericRecords.length > 0 ? (
+            ) : selectedMetric ? (
               <Suspense
                 fallback={
                   <div className="flex h-[320px] items-center justify-center rounded-[1.5rem] border border-slate-200 bg-slate-50">
@@ -330,7 +470,12 @@ export default function TrackingDashboardPage() {
                   </div>
                 }
               >
-                <TrendChart chartRef={chartRef} lineData={lineData} />
+                <TrendChart
+                  chartRef={chartRef}
+                  lineData={lineData}
+                  isAr={isAr}
+                  metricLabel={selectedMetric.label}
+                />
               </Suspense>
             ) : (
               <div className="flex h-[320px] items-center justify-center rounded-[1.5rem] border border-dashed border-slate-200 bg-slate-50 px-8 text-center text-slate-500">
@@ -348,20 +493,31 @@ export default function TrackingDashboardPage() {
             </div>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                <div className="mb-2 text-xs text-slate-500">
-                  {isAr ? 'إجمالي السجلات' : 'Total records'}
-                </div>
+                <div className="mb-2 text-xs text-slate-500">{isAr ? 'إجمالي السجلات' : 'Total records'}</div>
                 <div className="text-2xl font-bold text-slate-900">{records.length}</div>
               </div>
               <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
                 <div className="mb-2 text-xs text-slate-500">
-                  {isAr ? 'أنواع الحاسبات' : 'Calculator types'}
+                  {isAr ? 'أنواع المؤشرات الرقمية' : 'Tracked numeric metrics'}
                 </div>
-                <div className="text-2xl font-bold text-slate-900">
-                  {new Set(records.map((item) => item.calculator_type)).size}
-                </div>
+                <div className="text-2xl font-bold text-slate-900">{metricGroups.length}</div>
               </div>
             </div>
+
+            {selectedMetric ? (
+              <div className="mt-4 rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4">
+                <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
+                  {isAr ? 'المؤشر النشط' : 'Active metric'}
+                </div>
+                <div className="mt-2 text-lg font-black text-slate-900">{selectedMetric.label}</div>
+                <p className="mt-2 text-sm text-slate-600">
+                  {isAr
+                    ? `يظهر الرسم لهذا المؤشر فقط من بين ${selectedMetric.records.length} قراءة محفوظة، حتى لا تختلط المقاييس المختلفة في منحنى واحد.`
+                    : `The chart now focuses on this metric only across ${selectedMetric.records.length} saved readings, instead of mixing different measurements together.`}
+                </p>
+              </div>
+            ) : null}
+
             <Link
               to={navigationPaths.injuries(lang)}
               className="mt-4 flex items-center justify-between gap-4 rounded-[1.5rem] border border-health-green/20 bg-health-green/5 px-4 py-4 transition-all hover:border-health-green/40 hover:bg-health-green/10"

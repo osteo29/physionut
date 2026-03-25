@@ -12,7 +12,9 @@ import {
 import {
   getLocalizedBodyRegion,
   getLocalizedCategory,
+  getLocalizedCommonInjuryContext,
   getLocalizedInjuryName,
+  getLocalizedInjuryOverview,
 } from '../services/injuryLocalization';
 import { fetchInjuriesFromSupabase, type InjuryRow } from '../services/injurySupabaseService';
 import PageLayout from './PageLayout';
@@ -31,27 +33,45 @@ type CatalogInjury = {
 };
 
 function mapSupabaseInjury(row: InjuryRow, lang: 'en' | 'ar'): CatalogInjury {
+  const localizedName =
+    getLocalizedInjuryName(row.injury_id_slug, row.name_en, lang) ||
+    (lang === 'ar' ? row.name_ar || row.name_en : row.name_en);
+
   return {
     id: row.injury_id_slug,
     slug: row.injury_id_slug.replace(/_/g, '-'),
-    name: getLocalizedInjuryName(row.injury_id_slug, row.name_en, lang) || (lang === 'ar' ? row.name_ar || row.name_en : row.name_en),
+    name: localizedName,
     category: getLocalizedCategory(row.category, lang),
     bodyRegion: getLocalizedBodyRegion(row.body_region_en, lang),
-    overview: lang === 'ar' ? row.overview_ar || row.overview_en : row.overview_en,
-    commonIn: row.common_in || [],
+    overview: getLocalizedInjuryOverview(
+      localizedName,
+      row.category,
+      row.body_region_en,
+      lang === 'ar' ? row.overview_ar || row.overview_en : row.overview_en,
+      lang,
+    ),
+    commonIn: (row.common_in || []).map((item) => getLocalizedCommonInjuryContext(item, lang)),
     source: 'supabase',
   };
 }
 
 function mapLocalInjury(injury: InjuryProtocol, lang: 'en' | 'ar'): CatalogInjury {
+  const localizedName = getLocalizedInjuryName(injury.id, injury.name, lang);
+
   return {
     id: injury.id,
     slug: injury.id.replace(/_/g, '-'),
-    name: getLocalizedInjuryName(injury.id, injury.name, lang),
+    name: localizedName,
     category: getLocalizedCategory(injury.category, lang),
     bodyRegion: getLocalizedBodyRegion(injury.bodyRegion, lang),
-    overview: injury.overview,
-    commonIn: injury.commonIn,
+    overview: getLocalizedInjuryOverview(
+      localizedName,
+      injury.category,
+      injury.bodyRegion,
+      injury.overview,
+      lang,
+    ),
+    commonIn: injury.commonIn.map((item) => getLocalizedCommonInjuryContext(item, lang)),
     source: 'local',
     localRef: injury,
   };

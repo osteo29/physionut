@@ -5,15 +5,14 @@ import {
   type User,
 } from '@supabase/supabase-js';
 import type {Article} from '../services/articles';
+import {decodeMojibake} from '../services/textEncoding';
 import type {Language} from '../services/translations';
 
 const rawSupabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const rawSupabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-const supabaseUrl =
-  typeof rawSupabaseUrl === 'string' ? rawSupabaseUrl.trim() : '';
-const supabaseAnonKey =
-  typeof rawSupabaseAnonKey === 'string' ? rawSupabaseAnonKey.trim() : '';
+const supabaseUrl = typeof rawSupabaseUrl === 'string' ? rawSupabaseUrl.trim() : '';
+const supabaseAnonKey = typeof rawSupabaseAnonKey === 'string' ? rawSupabaseAnonKey.trim() : '';
 
 export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey);
 
@@ -64,6 +63,27 @@ const articleAdminEmailRaw = import.meta.env.VITE_ARTICLE_ADMIN_EMAIL;
 const articleAdminEmail =
   typeof articleAdminEmailRaw === 'string' ? articleAdminEmailRaw.trim().toLowerCase() : '';
 
+const arMessages = {
+  config:
+    'إعداد Supabase غير ظاهر داخل التطبيق الآن. تأكد من وجود VITE_SUPABASE_URL و VITE_SUPABASE_ANON_KEY ثم أعد تشغيل npm run dev أو أعد بناء الموقع.',
+  tableMissing:
+    'جدول assessments غير موجود في Supabase حتى الآن. نفذ ملف SQL الخاص بالنظام الآمن أولًا.',
+  rls:
+    'تم رفض العملية من Supabase بسبب الصلاحيات أو سياسات RLS. راجع سياسات جدول assessments.',
+  invalidCredentials: 'بيانات تسجيل الدخول غير صحيحة.',
+  emailNotConfirmed: 'يجب تأكيد البريد الإلكتروني قبل تسجيل الدخول.',
+  alreadyRegistered: 'هذا البريد مسجل بالفعل.',
+  network: 'تعذر الاتصال بـ Supabase حاليًا. تحقق من الإنترنت أو من عنوان المشروع.',
+  auth: 'تعذر إتمام تسجيل الدخول أو إنشاء الحساب الآن.',
+  save: 'تعذر حفظ النتيجة الآن. تحقق من تسجيل الدخول وسياسات الجدول ثم حاول مرة أخرى.',
+  delete: 'تعذر حذف هذا السجل الآن.',
+  load: 'تعذر تحميل السجل الآن. تحقق من تسجيل الدخول وإعداد Supabase.',
+} as const;
+
+function ar(text: string) {
+  return decodeMojibake(text);
+}
+
 export function getSupabaseConfigStatus() {
   return {
     hasUrl: Boolean(supabaseUrl),
@@ -78,7 +98,7 @@ export function getSupabaseConfigurationMessage(lang: 'en' | 'ar') {
   if (status.configured) return '';
 
   if (lang === 'ar') {
-    return 'إعداد Supabase غير ظاهر داخل التطبيق الآن. تأكد من وجود VITE_SUPABASE_URL و VITE_SUPABASE_ANON_KEY ثم أعد تشغيل npm run dev أو أعد بناء الموقع.';
+    return ar(arMessages.config);
   }
 
   return 'Supabase settings are not visible inside the app right now. Make sure VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are set, then restart npm run dev or rebuild the site.';
@@ -109,60 +129,50 @@ export function getSupabaseActionErrorMessage(
 
   if (code === '42P01' || /relation .*assessments.* does not exist/i.test(message)) {
     return lang === 'ar'
-      ? 'جدول assessments غير موجود في Supabase حتى الآن. نفذ ملف SQL الخاص بالنظام الآمن أولًا.'
+      ? ar(arMessages.tableMissing)
       : 'The assessments table does not exist in Supabase yet. Run the secure SQL setup first.';
   }
 
   if (code === '42501' || /row-level security/i.test(message)) {
     return lang === 'ar'
-      ? 'تم رفض العملية من Supabase بسبب الصلاحيات أو سياسات RLS. راجع سياسات جدول assessments.'
+      ? ar(arMessages.rls)
       : 'Supabase blocked this action because of permissions or RLS policies. Review the assessments table policies.';
   }
 
   if (/invalid login credentials/i.test(message)) {
-    return lang === 'ar'
-      ? 'بيانات تسجيل الدخول غير صحيحة.'
-      : 'Invalid login credentials.';
+    return lang === 'ar' ? ar(arMessages.invalidCredentials) : 'Invalid login credentials.';
   }
 
   if (/email not confirmed/i.test(message)) {
-    return lang === 'ar'
-      ? 'يجب تأكيد البريد الإلكتروني قبل تسجيل الدخول.'
-      : 'Your email must be confirmed before signing in.';
+    return lang === 'ar' ? ar(arMessages.emailNotConfirmed) : 'Your email must be confirmed before signing in.';
   }
 
   if (/user already registered/i.test(message)) {
-    return lang === 'ar'
-      ? 'هذا البريد مسجل بالفعل.'
-      : 'This email is already registered.';
+    return lang === 'ar' ? ar(arMessages.alreadyRegistered) : 'This email is already registered.';
   }
 
   if (/failed to fetch/i.test(message) || /network/i.test(message)) {
     return lang === 'ar'
-      ? 'تعذر الاتصال بـ Supabase حاليًا. تحقق من الإنترنت أو من عنوان المشروع.'
+      ? ar(arMessages.network)
       : 'Could not reach Supabase right now. Check your internet connection or project URL.';
   }
 
   if (action === 'auth') {
-    return lang === 'ar'
-      ? 'تعذر إتمام تسجيل الدخول أو إنشاء الحساب الآن.'
-      : 'Could not complete authentication right now.';
+    return lang === 'ar' ? ar(arMessages.auth) : 'Could not complete authentication right now.';
   }
 
   if (action === 'save') {
     return lang === 'ar'
-      ? 'تعذر حفظ النتيجة الآن. تحقق من تسجيل الدخول وسياسات الجدول ثم حاول مرة أخرى.'
+      ? ar(arMessages.save)
       : 'Could not save this result right now. Check authentication and table policies, then try again.';
   }
 
   if (action === 'delete') {
-    return lang === 'ar'
-      ? 'تعذر حذف هذا السجل الآن.'
-      : 'Could not delete this record right now.';
+    return lang === 'ar' ? ar(arMessages.delete) : 'Could not delete this record right now.';
   }
 
   return lang === 'ar'
-    ? 'تعذر تحميل السجل الآن. تحقق من تسجيل الدخول وإعداد Supabase.'
+    ? ar(arMessages.load)
     : 'Could not load the tracking log right now. Check authentication and Supabase setup.';
 }
 
@@ -250,11 +260,7 @@ export async function saveAssessment(input: AssessmentInsert) {
     email: user.email || null,
   };
 
-  const {data, error} = await client
-    .from('assessments')
-    .insert(payload)
-    .select('*')
-    .single();
+  const {data, error} = await client.from('assessments').insert(payload).select('*').single();
 
   if (error) throw error;
   return data as AssessmentRecord;
@@ -280,12 +286,7 @@ export async function listAssessmentsForCurrentUser() {
 
 export async function updateAssessmentNote(id: string, note: string) {
   const client = ensureSupabase();
-  const {data, error} = await client
-    .from('assessments')
-    .update({note})
-    .eq('id', id)
-    .select('*')
-    .single();
+  const {data, error} = await client.from('assessments').update({note}).eq('id', id).select('*').single();
 
   if (error) throw error;
   return data as AssessmentRecord;

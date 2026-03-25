@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from 'react';
+import {Children, cloneElement, isValidElement, type ReactNode, useEffect, useMemo, useState} from 'react';
 import {Link, Navigate} from 'react-router-dom';
 import {CopyPlus, FileDown, Plus, Save, Trash2} from 'lucide-react';
 import Seo from '../components/seo/Seo';
@@ -38,7 +38,57 @@ import {
   type SupplementRow,
 } from '../services/injurySupabaseService';
 import {slugifyArticleTitle} from '../services/articleStudio';
+import {decodeMojibake} from '../services/textEncoding';
 import {migrateAllInjuriesToSupabase} from '../utils/dataMigration';
+
+function ar(text: string) {
+  return decodeMojibake(text);
+}
+
+function decodeStringsDeep<T>(value: T): T {
+  if (typeof value === 'string') return ar(value) as T;
+
+  if (Array.isArray(value)) {
+    return value.map((item) => decodeStringsDeep(item)) as T;
+  }
+
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value as Record<string, unknown>).map(([key, item]) => [key, decodeStringsDeep(item)]),
+    ) as T;
+  }
+
+  return value;
+}
+
+function decodeNodeTree(node: ReactNode): ReactNode {
+  if (typeof node === 'string') return ar(node);
+
+  if (Array.isArray(node)) {
+    return node.map((child) => decodeNodeTree(child));
+  }
+
+  if (!isValidElement(node)) {
+    return node;
+  }
+
+  const props = (node.props || {}) as Record<string, unknown>;
+  const nextProps = Object.fromEntries(
+    Object.entries(props).map(([key, value]) => {
+      if (key === 'children') {
+        return [key, Children.map(value as ReactNode, (child) => decodeNodeTree(child))];
+      }
+
+      return [key, decodeStringsDeep(value)];
+    }),
+  );
+
+  return cloneElement(node, nextProps);
+}
+
+function confirmText(message: string) {
+  return window.confirm(ar(message));
+}
 
 function listToText(value?: string[]) {
   return (value || []).join('\n');
@@ -76,7 +126,7 @@ async function canManageInjuries(user: User | null) {
 }
 
 function newInjuryDraft(index: number) {
-  return {
+  return decodeStringsDeep({
     injury_id_slug: `new-injury-${index}`,
     name_en: 'New injury',
     name_ar: 'إصابة جديدة',
@@ -90,7 +140,7 @@ function newInjuryDraft(index: number) {
     common_in: [],
     red_flags: [],
     related_calculators: [],
-  };
+  });
 }
 
 type InjuryDraft = {
@@ -215,7 +265,7 @@ function mapPhaseDraft(phase: PhaseRow): PhaseDraft {
 }
 
 function newPhase(injuryId: string, phaseNumber: number): Omit<PhaseRow, 'id' | 'created_at' | 'updated_at'> {
-  return {
+  return decodeStringsDeep({
     injury_id: injuryId,
     phase_number: phaseNumber,
     label_en: `Phase ${phaseNumber}`,
@@ -244,7 +294,7 @@ function newPhase(injuryId: string, phaseNumber: number): Omit<PhaseRow, 'id' | 
     collagen_max_per_kg: null,
     vitamin_c_mg: null,
     calcium_mg: null,
-  };
+  });
 }
 
 function newSupplement(phaseId: string, orderIndex: number): Omit<SupplementRow, 'id' | 'created_at' | 'updated_at'> {
@@ -380,7 +430,7 @@ function PhaseStudio({
 
   const removePhase = async () => {
     if (!selectedPhase) return;
-    if (!window.confirm(isAr ? 'حذف هذه المرحلة؟' : 'Delete this phase?')) return;
+    if (!confirmText(isAr ? 'حذف هذه المرحلة؟' : 'Delete this phase?')) return;
     try {
       await deletePhase(selectedPhase.id);
       await loadPhases();
@@ -401,10 +451,14 @@ function PhaseStudio({
   };
 
   if (loading) {
-    return <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-500">{isAr ? 'جار تحميل المراحل...' : 'Loading phases...'}</div>;
+    return decodeNodeTree(
+      <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-500">
+        {isAr ? 'جار تحميل المراحل...' : 'Loading phases...'}
+      </div>,
+    );
   }
 
-  return (
+  return decodeNodeTree(
     <div className="space-y-5 rounded-3xl border border-slate-200 bg-slate-50 p-4 sm:p-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="text-lg font-black text-slate-900">{isAr ? 'مراحل التعافي' : 'Recovery phases'}</div>
@@ -522,7 +576,7 @@ function PhaseStudio({
                         <button
                           type="button"
                           onClick={async () => {
-                            if (!window.confirm(isAr ? 'حذف هذا المكمل؟' : 'Delete this supplement?')) return;
+                            if (!confirmText(isAr ? 'حذف هذا المكمل؟' : 'Delete this supplement?')) return;
                             try {
                               await deleteSupplement(supplement.id);
                               if (selectedPhase) await loadRelated(selectedPhase.id);
@@ -596,7 +650,7 @@ function PhaseStudio({
                         <button
                           type="button"
                           onClick={async () => {
-                            if (!window.confirm(isAr ? 'حذف هذه الوجبة؟' : 'Delete this meal?')) return;
+                            if (!confirmText(isAr ? 'حذف هذه الوجبة؟' : 'Delete this meal?')) return;
                             try {
                               await deleteMeal(meal.id);
                               if (selectedPhase) await loadRelated(selectedPhase.id);
@@ -718,7 +772,7 @@ export default function AdminInjuryManager() {
   }, [selectedInjury]);
 
   if (!isSupabaseConfigured) {
-    return (
+    return decodeNodeTree(
       <>
         <Seo
           title={isAr ? 'إدارة الإصابات' : 'Injury Studio'}
@@ -734,7 +788,7 @@ export default function AdminInjuryManager() {
   }
 
   if (!authChecked) {
-    return (
+    return decodeNodeTree(
       <>
         <Seo
           title={isAr ? 'إدارة الإصابات' : 'Injury Studio'}
@@ -754,7 +808,7 @@ export default function AdminInjuryManager() {
   }
 
   if (!isAdmin) {
-    return (
+    return decodeNodeTree(
       <>
         <Seo
           title={isAr ? 'صفحة مقفولة' : 'Restricted'}
@@ -776,7 +830,7 @@ export default function AdminInjuryManager() {
     );
   }
 
-  return (
+  return decodeNodeTree(
     <>
       <Seo
         title={isAr ? 'إدارة الإصابات' : 'Injury Studio'}
@@ -833,7 +887,7 @@ export default function AdminInjuryManager() {
                 if (!selectedInjury) return;
                 try {
                   setSaving(true);
-                  const created = await createInjury({
+                  const created = await createInjury(decodeStringsDeep({
                     ...newInjuryDraft(injuries.length + 1),
                     injury_id_slug: `${selectedInjury.injury_id_slug}-copy`,
                     name_en: `${selectedInjury.name_en} Copy`,
@@ -848,7 +902,7 @@ export default function AdminInjuryManager() {
                     common_in: selectedInjury.common_in,
                     red_flags: selectedInjury.red_flags,
                     related_calculators: selectedInjury.related_calculators,
-                  });
+                  }));
                   await loadInjuries(created.id);
                   setNotice(isAr ? 'تم إنشاء نسخة من الإصابة.' : 'Injury duplicated.');
                 } catch (error) {
@@ -866,7 +920,7 @@ export default function AdminInjuryManager() {
             <button
               type="button"
               onClick={async () => {
-                if (!window.confirm(isAr ? 'استيراد الإصابات القديمة الآن؟' : 'Import legacy injuries now?')) return;
+                if (!confirmText(isAr ? 'استيراد الإصابات القديمة الآن؟' : 'Import legacy injuries now?')) return;
                 try {
                   setMigrating(true);
                   const result = await migrateAllInjuriesToSupabase();
@@ -990,7 +1044,7 @@ export default function AdminInjuryManager() {
                       <button
                         type="button"
                         onClick={async () => {
-                          if (!window.confirm(isAr ? 'حذف هذه الإصابة؟' : 'Delete this injury?')) return;
+                          if (!confirmText(isAr ? 'حذف هذه الإصابة؟' : 'Delete this injury?')) return;
                           try {
                             await deleteInjury(selectedInjury.id);
                             await loadInjuries();

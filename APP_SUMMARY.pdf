@@ -1,0 +1,726 @@
+%PDF-1.3
+%ºß¬à
+3 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 4 0 R
+>>
+endobj
+4 0 obj
+<<
+/Length 7855
+>>
+stream
+0.5670000000000001 w
+0 G
+BT
+/F2 20 Tf
+23. TL
+0 g
+51.0236220472441033 785.1970866141732586 Td
+(PhysioNutrition App Summary) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 756.8506299212598378 Td
+(Generated on 3/25/2026, 9:06:52 AM) Tj
+ET
+BT
+/F2 13 Tf
+14.9499999999999993 TL
+0 g
+51.0236220472441033 737.0081102362204319 Td
+(Overview) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 720.0002362204724022 Td
+(PhysioNutrition is a bilingual web application focused on rehabilitation, injury recovery, and nutrition) Tj
+T* (support. It combines medical-style injury protocols, recovery nutrition guidance, health calculators, AI) Tj
+T* (assistance, user authentication, progress tracking, and downloadable PDF reports in a single React) Tj
+T* (and TypeScript app.) Tj
+ET
+BT
+/F2 13 Tf
+14.9499999999999993 TL
+0 g
+51.0236220472441033 657.6380314960629221 Td
+(Primary User Value) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 640.6301574803148924 Td
+(-) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+65.1968503937007995 640.6301574803148924 Td
+(Helps patients and healthy users understand recovery and nutrition needs through practical) Tj
+T* (guidance.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 609.4490551181102092 Td
+(-) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+65.1968503937007995 609.4490551181102092 Td
+(Provides injury-specific protocol pages with phases, symptoms, exercises, safety notes, and) Tj
+T* (recovery planning.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 578.2679527559055259 Td
+(-) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+65.1968503937007995 578.2679527559055259 Td
+(Lets signed-in users save results and review progress over time from a tracking dashboard.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 561.2600787401574962 Td
+(-) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+65.1968503937007995 561.2600787401574962 Td
+(Supports both English and Arabic routes and content presentation.) Tj
+ET
+BT
+/F2 13 Tf
+14.9499999999999993 TL
+0 g
+51.0236220472441033 544.2522047244094665 Td
+(Core Product Areas) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 527.2443307086614368 Td
+(-) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+65.1968503937007995 527.2443307086614368 Td
+(Injury protocol library: dedicated injury pages, filtering, localized naming, and structured recovery) Tj
+T* (content.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 496.0632283464566399 Td
+(-) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+65.1968503937007995 496.0632283464566399 Td
+(Clinical and nutrition calculators: body composition, calories, protein, hydration, and related result) Tj
+T* (interpretation.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 464.8821259842518998 Td
+(-) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+65.1968503937007995 464.8821259842518998 Td
+(AI assistant: contextual question-and-answer support for results and injury topics.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 447.8742519685038701 Td
+(-) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+65.1968503937007995 447.8742519685038701 Td
+(Tracking dashboard: secure saved assessments, trend visualization, timeline log, and PDF export.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 430.8663779527558404 Td
+(-) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+65.1968503937007995 430.8663779527558404 Td
+(Content and SEO: article pages, sitemap generation, structured data, and language-aware routing.) Tj
+ET
+BT
+/F2 13 Tf
+14.9499999999999993 TL
+0 g
+51.0236220472441033 413.8585039370078107 Td
+(Main Routes) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 396.850629921259781 Td
+(-) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+65.1968503937007995 396.850629921259781 Td
+(Home and calculator experience under language-prefixed routes such as /en and /ar.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 379.8427559055117513 Td
+(-) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+65.1968503937007995 379.8427559055117513 Td
+(Injuries index and injury detail pages under /:lang/injuries and /:lang/injuries/:slug.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 362.8348818897637216 Td
+(-) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+65.1968503937007995 362.8348818897637216 Td
+(Insights and article pages under /:lang/insights.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 345.8270078740156919 Td
+(-) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+65.1968503937007995 345.8270078740156919 Td
+(Assistant, authentication, and dashboard pages under /:lang/assistant, /:lang/auth, and) Tj
+T* (/:lang/dashboard.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 314.6459055118109518 Td
+(-) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+65.1968503937007995 314.6459055118109518 Td
+(Admin injury manager for editing injury content under /admin/injuries and /:lang/admin/injuries.) Tj
+ET
+BT
+/F2 13 Tf
+14.9499999999999993 TL
+0 g
+51.0236220472441033 297.6380314960629221 Td
+(Technology Stack) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 280.6301574803148924 Td
+(-) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+65.1968503937007995 280.6301574803148924 Td
+(Frontend: React 19, TypeScript, Vite, React Router, Tailwind CSS.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 263.6222834645668627 Td
+(-) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+65.1968503937007995 263.6222834645668627 Td
+(Data and auth: Supabase for authentication and persisted user assessments.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 246.614409448818833 Td
+(-) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+65.1968503937007995 246.614409448818833 Td
+(AI: Google Gemini integration for assistant-style experiences.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 229.6065354330708033 Td
+(-) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+65.1968503937007995 229.6065354330708033 Td
+(Visualization and reports: Chart.js, html2canvas, and jsPDF.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 212.5986614173227736 Td
+(-) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+65.1968503937007995 212.5986614173227736 Td
+(Progressive Web App support via manifest and service worker files in public assets.) Tj
+ET
+BT
+/F2 13 Tf
+14.9499999999999993 TL
+0 g
+51.0236220472441033 195.5907874015747439 Td
+(Architecture Notes) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 178.5829133858267141 Td
+(-) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+65.1968503937007995 178.5829133858267141 Td
+(Routing is centralized in RouterApp.tsx with language-prefixed navigation and legacy redirects.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 161.5750393700786844 Td
+(-) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+65.1968503937007995 161.5750393700786844 Td
+(Domain logic is separated into services for injury data, localization, PDF generation, translations,) Tj
+T* (and Supabase access.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 130.3939370078738875 Td
+(-) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+65.1968503937007995 130.3939370078738875 Td
+(Pages are lazy-loaded to reduce initial bundle cost and keep route-level responsibilities clear.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 113.3860629921258578 Td
+(-) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+65.1968503937007995 113.3860629921258578 Td
+(The app includes SEO helpers and schema generation to improve discoverability of medical-style) Tj
+T* (content.) Tj
+ET
+BT
+/F2 13 Tf
+14.9499999999999993 TL
+0 g
+51.0236220472441033 82.2049606299211746 Td
+(Current Strengths) Tj
+ET
+endstream
+endobj
+5 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 6 0 R
+>>
+endobj
+6 0 obj
+<<
+/Length 1592
+>>
+stream
+0.5670000000000001 w
+0 G
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 785.1970866141732586 Td
+(-) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+65.1968503937007995 785.1970866141732586 Td
+(Broad feature coverage across education, personalization, tracking, and downloadable reports.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 768.1892125984252289 Td
+(-) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+65.1968503937007995 768.1892125984252289 Td
+(Clear multilingual structure with Arabic and English support.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 751.1813385826771992 Td
+(-) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+65.1968503937007995 751.1813385826771992 Td
+(Useful mix of static medical content and user-specific interactive flows.) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 734.1734645669291695 Td
+(-) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+65.1968503937007995 734.1734645669291695 Td
+(Production-ready build pipeline with sitemap generation and deploy-friendly structure.) Tj
+ET
+BT
+/F2 13 Tf
+14.9499999999999993 TL
+0 g
+51.0236220472441033 717.1655905511811397 Td
+(Summary) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0 g
+51.0236220472441033 700.15771653543311 Td
+(In short, PhysioNutrition is a recovery-focused health platform that blends injury education, nutrition) Tj
+T* (planning, AI guidance, and user progress tracking. It is positioned as a practical digital companion for) Tj
+T* (rehabilitation and healthy performance support rather than a single-purpose calculator app.) Tj
+ET
+endstream
+endobj
+1 0 obj
+<</Type /Pages
+/Kids [3 0 R 5 0 R ]
+/Count 2
+>>
+endobj
+7 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+8 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+9 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-Oblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+10 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-BoldOblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+11 0 obj
+<<
+/Type /Font
+/BaseFont /Courier
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+12 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+13 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-Oblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+14 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-BoldOblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+15 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Roman
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+16 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+17 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Italic
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+18 0 obj
+<<
+/Type /Font
+/BaseFont /Times-BoldItalic
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+19 0 obj
+<<
+/Type /Font
+/BaseFont /ZapfDingbats
+/Subtype /Type1
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+20 0 obj
+<<
+/Type /Font
+/BaseFont /Symbol
+/Subtype /Type1
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+2 0 obj
+<<
+/ProcSet [/PDF /Text /ImageB /ImageC /ImageI]
+/Font <<
+/F1 7 0 R
+/F2 8 0 R
+/F3 9 0 R
+/F4 10 0 R
+/F5 11 0 R
+/F6 12 0 R
+/F7 13 0 R
+/F8 14 0 R
+/F9 15 0 R
+/F10 16 0 R
+/F11 17 0 R
+/F12 18 0 R
+/F13 19 0 R
+/F14 20 0 R
+>>
+/XObject <<
+>>
+>>
+endobj
+21 0 obj
+<<
+/Producer (jsPDF 4.2.0)
+/CreationDate (D:20260325090652+02'00')
+>>
+endobj
+22 0 obj
+<<
+/Type /Catalog
+/Pages 1 0 R
+/OpenAction [3 0 R /FitH null]
+/PageLayout /OneColumn
+>>
+endobj
+xref
+0 23
+0000000000 65535 f 
+0000009840 00000 n 
+0000011665 00000 n 
+0000000015 00000 n 
+0000000152 00000 n 
+0000008059 00000 n 
+0000008196 00000 n 
+0000009903 00000 n 
+0000010028 00000 n 
+0000010158 00000 n 
+0000010291 00000 n 
+0000010429 00000 n 
+0000010553 00000 n 
+0000010682 00000 n 
+0000010814 00000 n 
+0000010950 00000 n 
+0000011078 00000 n 
+0000011205 00000 n 
+0000011334 00000 n 
+0000011467 00000 n 
+0000011569 00000 n 
+0000011915 00000 n 
+0000012001 00000 n 
+trailer
+<<
+/Size 23
+/Root 22 0 R
+/Info 21 0 R
+/ID [ <B85E41A14A8D631577DB5E77E3DC3DD7> <B85E41A14A8D631577DB5E77E3DC3DD7> ]
+>>
+startxref
+12105
+%%EOF

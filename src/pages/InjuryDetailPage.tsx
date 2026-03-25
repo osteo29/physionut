@@ -26,8 +26,11 @@ import {
   getLocalizedBodyRegion,
   getLocalizedCategory,
   getLocalizedInjuryName,
+  getLocalizedInjuryOverview,
+  textLooksArabic,
 } from '../services/injuryLocalization';
 import {fetchCompleteInjuryProtocol, fetchInjuriesFromSupabase} from '../services/injurySupabaseService';
+import {decodeMojibake} from '../services/textEncoding';
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
 
@@ -37,8 +40,58 @@ const recoveryWindows: RecoveryWindow[] = ['under_48h', 'days_3_14', 'weeks_2_6'
 const diets: DietStyle[] = ['omnivore', 'vegetarian'];
 const DrugNutrientChecker = lazy(() => import('../components/ai/DrugNutrientChecker'));
 
-function inferCommonSymptoms(name: string, bodyRegion: string, category: string) {
+function normalizeCopy(value: string) {
+  return decodeMojibake(value);
+}
+
+function listHasArabic(items: string[]) {
+  return items.some((item) => textLooksArabic(normalizeCopy(item)));
+}
+
+function inferCommonSymptoms(name: string, bodyRegion: string, category: string, lang: 'en' | 'ar') {
   const lower = name.toLowerCase();
+  const localizedBodyRegion =
+    lang === 'ar' ? getLocalizedBodyRegion(bodyRegion, 'ar') : bodyRegion.toLowerCase();
+
+  if (lang === 'ar') {
+    if (lower.includes('fracture')) {
+      return [
+        `ألم موضعي حول ${localizedBodyRegion}`,
+        'تورم أو كدمات بعد التحميل أو الصدمة',
+        'صعوبة في التحميل أو الاستخدام الطبيعي',
+      ];
+    }
+
+    if (category === 'Tendon' || lower.includes('tendin')) {
+      return [
+        `ألم يزيد مع التكرار أو التحميل حول ${localizedBodyRegion}`,
+        'تيبس صباحي أو ألم مع بداية الحركة',
+        'ضعف في تحمل الجري أو القفز أو الرفع',
+      ];
+    }
+
+    if (category === 'Ligament') {
+      return [
+        `إحساس بعدم الثبات في ${localizedBodyRegion}`,
+        'تورم بعد اللف أو الهبوط أو الحركة المفاجئة',
+        'ألم مع تغيير الاتجاه أو التحميل',
+      ];
+    }
+
+    if (category === 'Joint') {
+      return [
+        `ألم أو انحشار حول ${localizedBodyRegion}`,
+        'تيبس أو طقطقة أو صعوبة أثناء الحركة',
+        'انخفاض الثقة في المدى الحركي أو التحميل',
+      ];
+    }
+
+    return [
+      `ألم أو شد أو ضعف حول ${localizedBodyRegion}`,
+      'تراجع في تحمل الحركة أو النشاط',
+      'زيادة الأعراض بعد النشاط وتحسنها مع التدرج والراحة المناسبة',
+    ];
+  }
 
   if (lower.includes('fracture')) {
     return [
@@ -83,6 +136,79 @@ function buildPath(id: string, lang: string) {
   return `/${lang}/injuries/${id.replace(/_/g, '-')}`;
 }
 
+function getArabicFallbackRedFlags(bodyRegion: string) {
+  return [
+    `ألم شديد أو تورم سريع في ${bodyRegion}`,
+    'عدم القدرة على التحميل أو استخدام الطرف بشكل طبيعي',
+    'خدر أو ضعف متزايد أو تدهور واضح بعد الإصابة',
+  ];
+}
+
+function getArabicFallbackGoals(bodyRegion: string) {
+  return [
+    `تقليل الألم وحماية ${bodyRegion}`,
+    'استعادة الحركة والتحميل بشكل تدريجي',
+    'تحسين الثبات والقوة والعودة الآمنة للنشاط',
+  ];
+}
+
+function getArabicFallbackExercises(category: string, bodyRegion: string) {
+  if (category === 'Ligament') {
+    return [
+      `تمارين مدى حركة خفيفة لـ ${bodyRegion}`,
+      'تمارين ثبات وتحكم تدريجية',
+      'تحميل وظيفي تدريجي حسب تحمل الأعراض',
+    ];
+  }
+
+  if (category === 'Tendon') {
+    return [
+      `تمارين تحميل تدريجي للأوتار حول ${bodyRegion}`,
+      'تمارين إيزومترية لتقليل التهيج في البداية',
+      'الانتقال إلى تمارين مقاومة أبطأ ثم أقوى مع التحسن',
+    ];
+  }
+
+  if (category === 'Bone') {
+    return [
+      `حماية ${bodyRegion} من التحميل الزائد في البداية`,
+      'تمارين مسموحة منخفضة التأثير حسب الإرشاد الطبي',
+      'العودة التدريجية للقوة ثم التحمل الوظيفي',
+    ];
+  }
+
+  return [
+    `حركات علاجية مناسبة لـ ${bodyRegion}`,
+    'تقوية تدريجية مع مراقبة الأعراض',
+    'تمارين وظيفية للعودة للنشاط اليومي أو الرياضي',
+  ];
+}
+
+function getArabicFallbackNutritionFocus() {
+  return [
+    'توزيع البروتين جيدًا على الوجبات اليومية',
+    'الحفاظ على الترطيب والطاقة الكافية لدعم التعافي',
+    'تجنب النقص الشديد في السعرات أثناء فترة العلاج',
+  ];
+}
+
+function getArabicFallbackFaq(injuryDisplayName: string, redFlags: string[]) {
+  return [
+    {
+      q: `ما أهم هدف في بداية ${injuryDisplayName}؟`,
+      a: 'الهدف الأول هو تهدئة الأعراض، حماية التحميل الزائد، والحفاظ على البروتين والطاقة حتى لا يتباطأ التعافي.',
+    },
+    {
+      q: 'متى أراجع مختص بسرعة؟',
+      a: `إذا ظهر واحد من العلامات التحذيرية التالية: ${redFlags.slice(0, 3).join('، ')}.`,
+    },
+    {
+      q: 'هل التغذية وحدها تكفي؟',
+      a: 'لا. التغذية تدعم التعافي، لكنها تعمل أفضل مع تشخيص مناسب، تحميل تدريجي، ونوم جيد.',
+    },
+  ];
+}
+
 export default function InjuryDetailPage() {
   const {slug = ''} = useParams();
   const lang = usePreferredLang();
@@ -107,6 +233,7 @@ export default function InjuryDetailPage() {
         fetchCompleteInjuryProtocol(slug, lang),
         fetchInjuriesFromSupabase(),
       ]);
+
       if (!active) return;
       setInjury(protocol ?? fallbackInjury ?? null);
       setRemoteIds(rows.map((row) => row.injury_id_slug));
@@ -153,28 +280,52 @@ export default function InjuryDetailPage() {
     .slice(0, 6);
 
   const customContent = injuryPageContent[injury.id];
+  const introText = getLocalizedInjuryOverview(
+    injuryDisplayName,
+    injury.category,
+    injury.bodyRegion,
+    normalizeCopy(customContent?.intro || injury.overview),
+    lang,
+  );
+
   const commonSymptoms =
-    customContent?.symptoms || inferCommonSymptoms(injury.name, injury.bodyRegion, injury.category);
-  const faqItems = customContent?.faq || [
-    {
-      q: isAr ? `ما أهم هدف في بداية ${injuryDisplayName}؟` : `What matters most early in ${injuryDisplayName}?`,
-      a: isAr
-        ? 'الهدف الأول هو تهدئة الأعراض، حماية التحميل الزائد، والحفاظ على البروتين والطاقة حتى لا يتباطأ التعافي.'
-        : 'Early priorities are calming symptoms, avoiding overload, and keeping protein and energy intake steady so recovery does not stall.',
-    },
-    {
-      q: isAr ? 'متى أراجع مختص بسرعة؟' : 'When should I get medical review quickly?',
-      a: isAr
-        ? `إذا ظهر واحد من العلامات التحذيرية التالية: ${injury.redFlags.slice(0, 3).join('، ')}.`
-        : `Seek prompt review if you notice any of these red flags: ${injury.redFlags.slice(0, 3).join(', ')}.`,
-    },
-    {
-      q: isAr ? 'هل التغذية وحدها تكفي؟' : 'Is nutrition enough on its own?',
-      a: isAr
-        ? 'لا. التغذية تدعم التعافي، لكنها تعمل أفضل مع تشخيص مناسب، تحميل تدريجي، ونوم جيد.'
-        : 'No. Nutrition supports the process, but it works best alongside good diagnosis, graded loading, and enough sleep.',
-    },
-  ];
+    isAr && (!customContent?.symptoms?.length || !customContent.symptoms.some((item) => textLooksArabic(normalizeCopy(item))))
+      ? inferCommonSymptoms(injury.name, injury.bodyRegion, injury.category, 'ar')
+      : (customContent?.symptoms || inferCommonSymptoms(injury.name, injury.bodyRegion, injury.category, 'en')).map(normalizeCopy);
+
+  const redFlags =
+    isAr && !listHasArabic(injury.redFlags)
+      ? getArabicFallbackRedFlags(bodyRegionDisplay)
+      : injury.redFlags.map(normalizeCopy);
+
+  const phaseGoals =
+    isAr && !listHasArabic(suggestedPhase.goals)
+      ? getArabicFallbackGoals(bodyRegionDisplay)
+      : suggestedPhase.goals.map(normalizeCopy);
+
+  const exerciseFocus =
+    isAr && !listHasArabic(suggestedPhase.exercises)
+      ? getArabicFallbackExercises(injury.category, bodyRegionDisplay)
+      : suggestedPhase.exercises.map(normalizeCopy);
+
+  const nutritionFocus =
+    isAr && !listHasArabic(suggestedPhase.nutritionFocus)
+      ? getArabicFallbackNutritionFocus()
+      : suggestedPhase.nutritionFocus.map(normalizeCopy);
+
+  const medicationNotes = [...injury.safetyNotes.medications, ...injury.safetyNotes.supplements].map(normalizeCopy);
+
+  const faqItems =
+    isAr &&
+    (!customContent?.faq?.length ||
+      !customContent.faq.some(
+        (item) => textLooksArabic(normalizeCopy(item.q)) || textLooksArabic(normalizeCopy(item.a)),
+      ))
+      ? getArabicFallbackFaq(injuryDisplayName, redFlags)
+      : (customContent?.faq || getArabicFallbackFaq(injuryDisplayName, redFlags)).map((item) => ({
+          q: normalizeCopy(item.q),
+          a: normalizeCopy(item.a),
+        }));
 
   const path = buildPath(injury.id, lang);
   const labels = {
@@ -239,10 +390,12 @@ export default function InjuryDetailPage() {
               <span>{categoryDisplay} • {bodyRegionDisplay}</span>
             </div>
             <h2 className="text-2xl font-black text-slate-900 sm:text-3xl">{injuryDisplayName}</h2>
-            <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-600 sm:text-base">
-              {customContent?.intro || injury.overview}
+            <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-600 sm:text-base">{introText}</p>
+            <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-700">
+              {isAr && !textLooksArabic(normalizeCopy(injury.rehabSummary))
+                ? `يعتمد التعافي هنا على ضبط الحمل التدريبي، والمتابعة الجيدة للأعراض، ودعم الأنسجة بالتغذية المناسبة حتى تستعيد ${bodyRegionDisplay} كفاءته تدريجيًا.`
+                : normalizeCopy(injury.rehabSummary)}
             </p>
-            <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-700">{injury.rehabSummary}</p>
             <div className="mt-5 flex flex-wrap gap-3">
               <Link
                 to={`/${lang}/injuries`}
@@ -274,7 +427,7 @@ export default function InjuryDetailPage() {
                 <span>{isAr ? 'علامات تستدعي مراجعة سريعة' : 'Red flags that need faster review'}</span>
               </div>
               <ul className="space-y-2 text-sm text-slate-700">
-                {injury.redFlags.map((item) => (
+                {redFlags.map((item) => (
                   <li key={item} className="rounded-xl bg-white px-3 py-3">{item}</li>
                 ))}
               </ul>
@@ -322,18 +475,18 @@ export default function InjuryDetailPage() {
             <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
               <div className="mb-4 flex items-center gap-2 font-black text-slate-900">
                 <Timer className="h-4 w-4 text-health-green" />
-                <span>{isAr ? 'مراحل التأهيل' : 'Rehab stages'}</span>
+                <span>{isAr ? 'مرحلة التركيز الحالية' : 'Current focus stage'}</span>
               </div>
-              <div className="space-y-4">
-                {injury.phases.map((phase) => (
-                  <div key={phase.id} className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                    <div className="font-bold text-slate-900">{phase.label}</div>
-                    <div className="mt-1 text-xs text-slate-500">{phase.duration}</div>
-                    <ul className="mt-3 space-y-2 text-sm text-slate-700">
-                      {phase.goals.map((item) => <li key={item} className="rounded-xl bg-white px-3 py-2">{item}</li>)}
-                    </ul>
-                  </div>
-                ))}
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                <div className="font-bold text-slate-900">
+                  {isAr && !textLooksArabic(normalizeCopy(suggestedPhase.label))
+                    ? labels.window[recoveryWindow]
+                    : normalizeCopy(suggestedPhase.label)}
+                </div>
+                <div className="mt-1 text-xs text-slate-500">{normalizeCopy(suggestedPhase.duration)}</div>
+                <ul className="mt-3 space-y-2 text-sm text-slate-700">
+                  {phaseGoals.map((item) => <li key={item} className="rounded-xl bg-white px-3 py-2">{item}</li>)}
+                </ul>
               </div>
             </div>
 
@@ -341,14 +494,14 @@ export default function InjuryDetailPage() {
               <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
                 <div className="mb-3 font-black text-slate-900">{isAr ? 'التمارين المناسبة' : 'Rehab exercise focus'}</div>
                 <ul className="space-y-2 text-sm text-slate-700">
-                  {suggestedPhase.exercises.map((item) => <li key={item} className="rounded-xl bg-slate-50 px-3 py-3">{item}</li>)}
+                  {exerciseFocus.map((item) => <li key={item} className="rounded-xl bg-slate-50 px-3 py-3">{item}</li>)}
                 </ul>
               </div>
 
               <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
                 <div className="mb-3 font-black text-slate-900">{isAr ? 'التركيز الغذائي' : 'Nutrition focus now'}</div>
                 <ul className="space-y-2 text-sm text-slate-700">
-                  {suggestedPhase.nutritionFocus.map((item) => <li key={item} className="rounded-xl bg-slate-50 px-3 py-3">{item}</li>)}
+                  {nutritionFocus.map((item) => <li key={item} className="rounded-xl bg-slate-50 px-3 py-3">{item}</li>)}
                 </ul>
               </div>
             </div>
@@ -363,9 +516,9 @@ export default function InjuryDetailPage() {
               <div className="space-y-2">
                 {suggestedPhase.supplements.map((item) => (
                   <div key={`${item.name}-${item.dose}`} className="rounded-xl bg-slate-50 px-4 py-3 text-sm text-slate-700">
-                    <div className="font-bold text-slate-900">{item.name} • {item.dose}</div>
-                    <div className="mt-1">{item.reason}</div>
-                    {item.timing ? <div className="mt-1 text-xs font-semibold text-health-green-dark">{item.timing}</div> : null}
+                    <div className="font-bold text-slate-900">{normalizeCopy(item.name)} • {normalizeCopy(item.dose)}</div>
+                    <div className="mt-1">{normalizeCopy(item.reason)}</div>
+                    {item.timing ? <div className="mt-1 text-xs font-semibold text-health-green-dark">{normalizeCopy(item.timing)}</div> : null}
                   </div>
                 ))}
               </div>
@@ -373,7 +526,7 @@ export default function InjuryDetailPage() {
               <div className="mt-4 rounded-2xl bg-amber-50 p-4">
                 <div className="mb-2 text-sm font-bold text-slate-900">{isAr ? 'ملاحظات مهمة' : 'Medication and supplement notes'}</div>
                 <ul className="space-y-2 text-sm text-slate-700">
-                  {[...injury.safetyNotes.medications, ...injury.safetyNotes.supplements].map((item) => <li key={item} className="rounded-xl bg-white px-3 py-2">{item}</li>)}
+                  {medicationNotes.map((item) => <li key={item} className="rounded-xl bg-white px-3 py-2">{item}</li>)}
                 </ul>
               </div>
             </div>
@@ -407,7 +560,7 @@ export default function InjuryDetailPage() {
               <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
                 {relatedInjuries.map((item) => (
                   <Link key={item.id} to={buildPath(item.id, lang)} className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4 transition hover:border-health-green/30 hover:bg-health-green/5">
-                    <div className="font-bold text-slate-900">{item.name}</div>
+                    <div className="font-bold text-slate-900">{getLocalizedInjuryName(item.id, item.name, lang)}</div>
                     <div className="mt-2 text-xs text-slate-500">
                       {getLocalizedCategory(item.category, lang)} • {getLocalizedBodyRegion(item.bodyRegion, lang)}
                     </div>

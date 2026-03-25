@@ -13,6 +13,7 @@ import { PhysioNutritionLogic, HealthProfile, HealthMetrics } from './services/p
 import { injuryDatabase, getInjuryById } from './services/injuryDatabase';
 import { translations, Language } from './services/translations';
 import { usePublishedArticles } from './services/articleStudio';
+import { askGeminiText } from './ai/gemini';
 import { foodDatabase, FoodItem } from './services/foodData';
 import {setPreferredLanguage} from './services/languagePreference';
 import {ClinicalCalculators, statusToTextClass, type HealthInterpretation, type GoalType, type BodyType} from './logic/physioNutritionLogic';
@@ -212,11 +213,9 @@ export default function App({
     if (!architectMetrics) return;
     setIsGeneratingPlan(true);
     try {
-      const { GoogleGenAI } = await import("@google/genai");
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
-      const model = ai.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: `You are a Senior Clinical Nutritionist and Physiotherapist. Generate a highly professional and evidence-based Physio-Nutrition Diet Plan for the following user:
+      const response = await askGeminiText({
+        system: 'You are a senior clinical nutritionist and physiotherapist. Give practical, safe, evidence-aligned guidance. Use clean markdown only, with no HTML.',
+        user: `Generate a highly professional and evidence-based Physio-Nutrition Diet Plan for the following user:
           
           USER PROFILE:
           - Age: ${architectProfile.age}
@@ -252,11 +251,10 @@ export default function App({
           - Use bullet points for lists.
           - Language: ${lang === 'en' ? 'English' : 'Arabic'}.`,
       });
-      const response = await model;
-      setAiDietPlan(response.text || "Failed to generate plan.");
+      setAiDietPlan(response || 'Failed to generate plan.');
     } catch (err) {
       console.error(err);
-      setAiDietPlan("Error connecting to AI service. Please check your API key.");
+      setAiDietPlan('Error connecting to AI service. Please check your API key.');
     } finally {
       setIsGeneratingPlan(false);
     }
@@ -270,7 +268,14 @@ export default function App({
   const [foodCategory, setFoodCategory] = useState('all');
   const [customFoods, setCustomFoods] = useState<FoodItem[]>(() => {
     const saved = localStorage.getItem('physiohub_custom_foods');
-    return saved ? JSON.parse(saved) : [];
+    if (!saved) return [];
+
+    try {
+      const parsed = JSON.parse(saved);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
   });
   const [isCustomModalOpen, setIsCustomModalOpen] = useState(false);
   const [showFoodTable, setShowFoodTable] = useState(false);
@@ -911,6 +916,11 @@ export default function App({
         ? JSON.stringify(result)
         : String(result);
 
+  const toFiniteNumberOrNull = (value: unknown) => {
+    const parsed = typeof value === 'number' ? value : Number(value);
+    return Number.isFinite(parsed) ? parsed : null;
+  };
+
   const assessmentSnapshot = useMemo(() => {
     if (result === null || !activeCalculator) {
       return {
@@ -923,7 +933,7 @@ export default function App({
     if (activeCalculator === 'Macros' && typeof result === 'object') {
       return {
         valueLabel: `${result.totalCalories} kcal | P ${result.protein}g | C ${result.carbs}g | F ${result.fats}g`,
-        valueNumeric: Number(result.totalCalories) || null,
+        valueNumeric: toFiniteNumberOrNull(result.totalCalories),
         valueUnit: 'kcal',
       };
     }
@@ -931,7 +941,7 @@ export default function App({
     if (activeCalculator === 'Deficit' && typeof result === 'object') {
       return {
         valueLabel: `${result.deficit} kcal`,
-        valueNumeric: Number(result.deficit) || null,
+        valueNumeric: toFiniteNumberOrNull(result.deficit),
         valueUnit: 'kcal',
       };
     }
@@ -939,7 +949,7 @@ export default function App({
     if (activeCalculator === 'WHtR' && typeof result === 'object') {
       return {
         valueLabel: `${result.ratio} (${result.category})`,
-        valueNumeric: Number(result.ratio) || null,
+        valueNumeric: toFiniteNumberOrNull(result.ratio),
         valueUnit: 'ratio',
       };
     }
@@ -1456,7 +1466,7 @@ export default function App({
                           animate={{ opacity: 1, y: 0 }}
                           className="prose prose-sm max-w-none text-slate-600 bg-slate-50 p-6 rounded-2xl border border-slate-100 max-h-96 overflow-y-auto"
                         >
-                          <div dangerouslySetInnerHTML={{ __html: aiDietPlan.replace(/\n/g, '<br/>') }} />
+                          <div className="whitespace-pre-line break-words">{aiDietPlan}</div>
                         </motion.div>
                       ) : (
                         <div className="h-48 flex flex-col items-center justify-center text-center p-8 bg-slate-50 rounded-2xl border border-dashed border-slate-200">

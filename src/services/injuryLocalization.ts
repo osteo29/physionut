@@ -133,3 +133,47 @@ export function getLocalizedBodyRegion(bodyRegion: string, lang: Language) {
   if (lang === 'ar') return direct || formatBodyRegion(bodyRegion, 'ar');
   return formatBodyRegion(bodyRegion, 'en');
 }
+
+const activityContextMap: Record<string, string> = {
+  Football: 'كرة القدم',
+  Basketball: 'كرة السلة',
+  'Pivoting sports': 'الرياضات التي تعتمد على اللف وتغيير الاتجاه',
+  Running: 'الجري',
+  'Daily activity': 'الأنشطة اليومية',
+  'Field sports': 'الرياضات الميدانية',
+  'Overhead sports': 'الرياضات فوق الرأس',
+  'Gym training': 'تدريبات الجيم',
+  'Manual work': 'الأعمال اليدوية',
+  Sprinting: 'العدو السريع',
+  Track: 'ألعاب المضمار',
+  Dance: 'الرقص',
+  'Rapid load spikes': 'الزيادة المفاجئة في الحمل',
+};
+
+function hasArabicText(value: string) {
+  return /[\u0600-\u06FF]/.test(value);
+}
+
+export function getLocalizedCommonInjuryContext(item: string, lang: Language) {
+  if (lang !== 'ar') return item;
+  return activityContextMap[item] || item;
+}
+
+export function getLocalizedInjuryOverview(
+  injuryName: string,
+  category: string,
+  bodyRegion: string,
+  fallback: string,
+  lang: Language,
+) {
+  if (lang !== 'ar') return fallback;
+  if (hasArabicText(fallback)) return fallback;
+
+  const localizedCategory = getLocalizedCategory(category, 'ar');
+  const localizedBodyRegion = getLocalizedBodyRegion(bodyRegion, 'ar');
+  return `${injuryName} من إصابات ${localizedCategory} التي تؤثر على ${localizedBodyRegion}، وتحتاج إلى تدرج جيد في العلاج والتغذية والعودة للنشاط.`;
+}
+
+export function textLooksArabic(value: string) {
+  return hasArabicText(value);
+}

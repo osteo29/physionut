@@ -24,6 +24,8 @@ export function AdSenseContainer({
   width?: string;
   height?: string;
 }) {
+  const adClient = import.meta.env.VITE_ADSENSE_CLIENT_ID || 'ca-pub-0000000000000000';
+
   useEffect(() => {
     // Push AdSense ads once component mounts
     try {
@@ -59,7 +61,7 @@ export function AdSenseContainer({
           width: width,
           minHeight: reservedHeights[format],
         }}
-        data-ad-client={`ca-${process.env.VITE_GOOGLE_ADSENSE_ID || 'pub-0000000000000000'}`}
+        data-ad-client={adClient}
         data-ad-slot={adSlot}
         data-ad-format={format}
         data-full-width-responsive={responsive}

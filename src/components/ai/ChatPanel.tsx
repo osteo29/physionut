@@ -8,12 +8,17 @@ import {
   getStoredAiIdentity,
   trackAiQuestion,
 } from '../../ai/gemini';
+import {decodeMojibake} from '../../services/textEncoding';
 
 type ChatMessage = {
   role: 'user' | 'assistant';
   text: string;
   cached?: boolean;
 };
+
+function ar(text: string) {
+  return decodeMojibake(text);
+}
 
 function LoadingDots() {
   return (
@@ -65,10 +70,7 @@ export default function ChatPanel({
     return [storedContext, hiddenContext].filter(Boolean).join('\n\n');
   }, [hiddenContext, storedContext]);
 
-  const canSend = useMemo(
-    () => input.trim().length > 0 && !isLoading,
-    [input, isLoading],
-  );
+  const canSend = useMemo(() => input.trim().length > 0 && !isLoading, [input, isLoading]);
 
   const scrollToBottom = () => {
     bottomRef.current?.scrollIntoView({behavior: 'smooth'});
@@ -84,6 +86,8 @@ export default function ChatPanel({
       hiddenContext: mergedContext,
       identity: personalizedIdentity,
     });
+    const hadCachedResponse =
+      typeof window !== 'undefined' ? Boolean(localStorage.getItem(cacheKey)) : false;
 
     setError(null);
     setInput('');
@@ -103,20 +107,17 @@ export default function ChatPanel({
         cacheKey,
       });
 
-      const wasCached =
-        typeof window !== 'undefined' ? Boolean(localStorage.getItem(cacheKey)) : false;
-
       setMessages((prev) => [
         ...prev,
         {
           role: 'assistant',
           text: answer || '-',
-          cached: wasCached,
+          cached: hadCachedResponse,
         },
       ]);
       setTimeout(scrollToBottom, 0);
     } catch (e: any) {
-      setError(e?.message || (isAr ? 'تعذر الوصول إلى المساعد الآن.' : 'AI error'));
+      setError(e?.message || (isAr ? ar('ØªØ¹Ø°Ø± Ø§Ù„ÙˆØµÙˆÙ„ Ø¥Ù„Ù‰ Ø§Ù„Ù…Ø³Ø§Ø¹Ø¯ Ø§Ù„Ø¢Ù†.') : 'AI error'));
     } finally {
       setIsLoading(false);
       setTimeout(scrollToBottom, 0);
@@ -147,12 +148,12 @@ export default function ChatPanel({
             <div className="font-black text-slate-900">{title}</div>
             <div className="mt-1 text-xs text-slate-500">
               {isAr
-                ? 'إجابات مخصصة حسب بياناتك الحالية وسياق حالتك'
+                ? ar('Ø¥Ø¬Ø§Ø¨Ø§Øª Ù…Ø®ØµØµØ© Ø­Ø³Ø¨ Ø¨ÙŠØ§Ù†Ø§ØªÙƒ Ø§Ù„Ø­Ø§Ù„ÙŠØ© ÙˆØ³ÙŠØ§Ù‚ Ø­Ø§Ù„ØªÙƒ')
                 : 'Answers are personalized using your current profile and context'}
             </div>
           </div>
           <div className="rounded-full border border-white/70 bg-white/70 px-3 py-1 text-xs font-bold text-slate-500">
-            {isLoading ? (isAr ? 'جارٍ التفكير...' : 'Thinking...') : isAr ? 'جاهز' : 'Ready'}
+            {isLoading ? (isAr ? ar('Ø¬Ø§Ø±Ù Ø§Ù„ØªÙÙƒÙŠØ±...') : 'Thinking...') : isAr ? ar('Ø¬Ø§Ù‡Ø²') : 'Ready'}
           </div>
         </div>
 
@@ -162,12 +163,12 @@ export default function ChatPanel({
               <div className="mb-2 flex items-center gap-2 font-bold text-slate-900">
                 <Sparkles className="h-4 w-4 text-health-green" />
                 {isAr
-                  ? 'ابدأ بسؤال واضح لتحصل على توصية عملية'
+                  ? ar('Ø§Ø¨Ø¯Ø£ Ø¨Ø³Ø¤Ø§Ù„ ÙˆØ§Ø¶Ø­ Ù„ØªØ­ØµÙ„ Ø¹Ù„Ù‰ ØªÙˆØµÙŠØ© Ø¹Ù…Ù„ÙŠØ©')
                   : 'Start with a clear question for a practical answer'}
               </div>
               <p className="text-sm leading-6 text-slate-500">
                 {isAr
-                  ? 'كلما كان السؤال أدق، كانت الإجابة أوضح وأكثر ارتباطًا ببياناتك.'
+                  ? ar('ÙƒÙ„Ù…Ø§ ÙƒØ§Ù† Ø§Ù„Ø³Ø¤Ø§Ù„ Ø£Ø¯Ù‚ØŒ ÙƒØ§Ù†Øª Ø§Ù„Ø¥Ø¬Ø§Ø¨Ø© Ø£ÙˆØ¶Ø­ ÙˆØ£ÙƒØ«Ø± Ø§Ø±ØªØ¨Ø§Ø·Ù‹Ø§ Ø¨Ø¨ÙŠØ§Ù†Ø§ØªÙƒ.')
                   : 'The more specific the question, the more useful and tailored the answer will be.'}
               </p>
             </div>
@@ -190,7 +191,7 @@ export default function ChatPanel({
                   {message.role === 'assistant' && message.cached ? (
                     <div className="mt-2 inline-flex items-center gap-1 text-[11px] font-semibold text-slate-400">
                       <Clock3 className="h-3 w-3" />
-                      {isAr ? 'من الردود المحفوظة لحالتك' : 'Loaded from your personalized cache'}
+                      {isAr ? ar('Ù…Ù† Ø§Ù„Ø±Ø¯ÙˆØ¯ Ø§Ù„Ù…Ø­ÙÙˆØ¸Ø© Ù„Ø­Ø§Ù„ØªÙƒ') : 'Loaded from your personalized cache'}
                     </div>
                   ) : null}
                 </div>
@@ -212,7 +213,7 @@ export default function ChatPanel({
         {quickActions && quickActions.length > 0 ? (
           <div className="border-t border-slate-100 px-4 py-3 sm:px-5">
             <div className="mb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400">
-              {isAr ? 'اقتراحات سريعة' : 'Quick prompts'}
+              {isAr ? ar('Ø§Ù‚ØªØ±Ø§Ø­Ø§Øª Ø³Ø±ÙŠØ¹Ø©') : 'Quick prompts'}
             </div>
             <div className="flex snap-x gap-2 overflow-x-auto pb-1">
               {quickActions.slice(0, 4).map((action, index) => (
@@ -237,7 +238,7 @@ export default function ChatPanel({
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
               rows={2}
-              placeholder={isAr ? 'اكتب سؤالك هنا...' : 'Type your question here...'}
+              placeholder={isAr ? ar('Ø§ÙƒØªØ¨ Ø³Ø¤Ø§Ù„Ùƒ Ù‡Ù†Ø§...') : 'Type your question here...'}
               className="min-h-[96px] flex-1 resize-none rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-health-green/30 sm:min-h-[88px]"
             />
             <button
@@ -248,10 +249,10 @@ export default function ChatPanel({
                   ? 'border-health-green bg-health-green text-white hover:bg-health-green-dark'
                   : 'border-slate-200 bg-slate-100 text-slate-400'
               }`}
-              aria-label={isAr ? 'إرسال' : 'Send'}
+              aria-label={isAr ? ar('Ø¥Ø±Ø³Ø§Ù„') : 'Send'}
             >
               <SendHorizonal className="h-5 w-5" />
-              <span className="text-sm font-bold sm:hidden">{isAr ? 'إرسال' : 'Send'}</span>
+              <span className="text-sm font-bold sm:hidden">{isAr ? ar('Ø¥Ø±Ø³Ø§Ù„') : 'Send'}</span>
             </button>
           </div>
 
@@ -259,7 +260,7 @@ export default function ChatPanel({
             <span className="inline-flex items-center gap-1">
               <CornerDownLeft className="h-3 w-3" />
               {isAr
-                ? 'اضغط Enter للإرسال و Shift+Enter لسطر جديد'
+                ? ar('Ø§Ø¶ØºØ· Enter Ù„Ù„Ø¥Ø±Ø³Ø§Ù„ Ùˆ Shift+Enter Ù„Ø³Ø·Ø± Ø¬Ø¯ÙŠØ¯')
                 : 'Press Enter to send and Shift+Enter for a new line'}
             </span>
             <span>{disclaimer}</span>

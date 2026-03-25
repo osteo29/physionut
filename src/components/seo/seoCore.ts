@@ -67,8 +67,7 @@ function upsertJsonLd(id: string, json: unknown) {
 }
 
 export function applySeo(config: SeoConfig) {
-  const siteUrl =
-    (import.meta as any).env?.VITE_SITE_URL || 'https://physionutrition.vercel.app';
+  const siteUrl = import.meta.env.VITE_SITE_URL || 'https://physionutrition.vercel.app';
   
   // For canonical path, support both /en/... and /... formats
   // Always normalize to language-prefixed format

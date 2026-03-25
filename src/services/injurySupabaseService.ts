@@ -12,6 +12,14 @@ import type {
 } from './injuryDatabase';
 import type { Language } from './translations';
 
+function getSupabaseClient() {
+  if (!supabase) {
+    throw new Error('Supabase is not configured.');
+  }
+
+  return supabase;
+}
+
 export interface InjuryRow {
   id: string;
   injury_id_slug: string;
@@ -118,7 +126,8 @@ export interface SafetyNotesRow {
  */
 export async function fetchInjuriesFromSupabase(): Promise<InjuryRow[]> {
   try {
-    const { data, error } = await supabase
+    const db = getSupabaseClient();
+    const { data, error } = await db
       .from('injuries')
       .select('*')
       .order('name_en');
@@ -136,11 +145,12 @@ export async function fetchInjuriesFromSupabase(): Promise<InjuryRow[]> {
  */
 export async function fetchInjuryBySlug(slug: string): Promise<InjuryRow | null> {
   try {
-    const { data, error } = await supabase
+    const db = getSupabaseClient();
+    const { data, error } = await db
       .from('injuries')
       .select('*')
       .in('injury_id_slug', [slug, slug.replace(/-/g, '_'), slug.replace(/_/g, '-')])
-      .single();
+      .maybeSingle();
 
     if (error) throw error;
     return data;
@@ -155,7 +165,8 @@ export async function fetchInjuryBySlug(slug: string): Promise<InjuryRow | null>
  */
 export async function fetchPhasesByInjuryId(injuryId: string): Promise<PhaseRow[]> {
   try {
-    const { data, error } = await supabase
+    const db = getSupabaseClient();
+    const { data, error } = await db
       .from('injury_phases')
       .select('*')
       .eq('injury_id', injuryId)
@@ -174,7 +185,8 @@ export async function fetchPhasesByInjuryId(injuryId: string): Promise<PhaseRow[
  */
 export async function fetchSupplementsByPhaseId(phaseId: string): Promise<SupplementRow[]> {
   try {
-    const { data, error } = await supabase
+    const db = getSupabaseClient();
+    const { data, error } = await db
       .from('supplements')
       .select('*')
       .eq('phase_id', phaseId)
@@ -193,7 +205,8 @@ export async function fetchSupplementsByPhaseId(phaseId: string): Promise<Supple
  */
 export async function fetchMealsByPhaseId(phaseId: string): Promise<MealRow[]> {
   try {
-    const { data, error } = await supabase
+    const db = getSupabaseClient();
+    const { data, error } = await db
       .from('meal_examples')
       .select('*')
       .eq('phase_id', phaseId);
@@ -208,7 +221,8 @@ export async function fetchMealsByPhaseId(phaseId: string): Promise<MealRow[]> {
 
 export async function fetchSafetyNotesByInjuryId(injuryId: string): Promise<SafetyNotesRow | null> {
   try {
-    const { data, error } = await supabase
+    const db = getSupabaseClient();
+    const { data, error } = await db
       .from('safety_notes')
       .select('*')
       .eq('injury_id', injuryId)
@@ -354,7 +368,8 @@ export async function fetchCompleteInjuryProtocol(
  */
 export async function createInjury(data: Omit<InjuryRow, 'id' | 'created_at' | 'updated_at'>) {
   try {
-    const { data: result, error } = await supabase
+    const db = getSupabaseClient();
+    const { data: result, error } = await db
       .from('injuries')
       .insert([data])
       .select()
@@ -373,7 +388,8 @@ export async function createInjury(data: Omit<InjuryRow, 'id' | 'created_at' | '
  */
 export async function updateInjury(id: string, data: Partial<InjuryRow>) {
   try {
-    const { data: result, error } = await supabase
+    const db = getSupabaseClient();
+    const { data: result, error } = await db
       .from('injuries')
       .update(data)
       .eq('id', id)
@@ -393,7 +409,8 @@ export async function updateInjury(id: string, data: Partial<InjuryRow>) {
  */
 export async function deleteInjury(id: string) {
   try {
-    const { error } = await supabase.from('injuries').delete().eq('id', id);
+    const db = getSupabaseClient();
+    const { error } = await db.from('injuries').delete().eq('id', id);
 
     if (error) throw error;
     return true;
@@ -412,7 +429,8 @@ export async function deleteInjury(id: string) {
  */
 export async function createPhase(data: Omit<PhaseRow, 'id' | 'created_at' | 'updated_at'>) {
   try {
-    const { data: result, error } = await supabase
+    const db = getSupabaseClient();
+    const { data: result, error } = await db
       .from('injury_phases')
       .insert([data])
       .select()
@@ -431,7 +449,8 @@ export async function createPhase(data: Omit<PhaseRow, 'id' | 'created_at' | 'up
  */
 export async function updatePhase(id: string, data: Partial<PhaseRow>) {
   try {
-    const { data: result, error } = await supabase
+    const db = getSupabaseClient();
+    const { data: result, error } = await db
       .from('injury_phases')
       .update(data)
       .eq('id', id)
@@ -451,7 +470,8 @@ export async function updatePhase(id: string, data: Partial<PhaseRow>) {
  */
 export async function deletePhase(id: string) {
   try {
-    const { error } = await supabase.from('injury_phases').delete().eq('id', id);
+    const db = getSupabaseClient();
+    const { error } = await db.from('injury_phases').delete().eq('id', id);
 
     if (error) throw error;
     return true;
@@ -472,7 +492,8 @@ export async function createSupplement(
   data: Omit<SupplementRow, 'id' | 'created_at' | 'updated_at'>
 ) {
   try {
-    const { data: result, error } = await supabase
+    const db = getSupabaseClient();
+    const { data: result, error } = await db
       .from('supplements')
       .insert([data])
       .select()
@@ -491,7 +512,8 @@ export async function createSupplement(
  */
 export async function updateSupplement(id: string, data: Partial<SupplementRow>) {
   try {
-    const { data: result, error } = await supabase
+    const db = getSupabaseClient();
+    const { data: result, error } = await db
       .from('supplements')
       .update(data)
       .eq('id', id)
@@ -511,7 +533,8 @@ export async function updateSupplement(id: string, data: Partial<SupplementRow>)
  */
 export async function deleteSupplement(id: string) {
   try {
-    const { error } = await supabase.from('supplements').delete().eq('id', id);
+    const db = getSupabaseClient();
+    const { error } = await db.from('supplements').delete().eq('id', id);
 
     if (error) throw error;
     return true;
@@ -530,7 +553,8 @@ export async function deleteSupplement(id: string) {
  */
 export async function createMeal(data: Omit<MealRow, 'id' | 'created_at' | 'updated_at'>) {
   try {
-    const { data: result, error } = await supabase
+    const db = getSupabaseClient();
+    const { data: result, error } = await db
       .from('meal_examples')
       .insert([data])
       .select()
@@ -549,7 +573,8 @@ export async function createMeal(data: Omit<MealRow, 'id' | 'created_at' | 'upda
  */
 export async function updateMeal(id: string, data: Partial<MealRow>) {
   try {
-    const { data: result, error } = await supabase
+    const db = getSupabaseClient();
+    const { data: result, error } = await db
       .from('meal_examples')
       .update(data)
       .eq('id', id)
@@ -569,7 +594,8 @@ export async function updateMeal(id: string, data: Partial<MealRow>) {
  */
 export async function deleteMeal(id: string) {
   try {
-    const { error } = await supabase.from('meal_examples').delete().eq('id', id);
+    const db = getSupabaseClient();
+    const { error } = await db.from('meal_examples').delete().eq('id', id);
 
     if (error) throw error;
     return true;

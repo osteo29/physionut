@@ -1,4 +1,5 @@
 import {GoogleGenAI} from '@google/genai';
+import {decodeMojibake} from '../services/textEncoding';
 
 export type GeminiAskParams = {
   system: string;
@@ -8,6 +9,10 @@ export type GeminiAskParams = {
 };
 
 const AI_CACHE_PREFIX = 'physiohub_ai_cache_v1';
+
+function ar(text: string) {
+  return decodeMojibake(text);
+}
 
 function getApiKey(): string | null {
   const viteKey = import.meta.env.VITE_GEMINI_API_KEY;
@@ -86,7 +91,7 @@ export function getStoredAiContext(lang: 'en' | 'ar' = 'en') {
     if (tracking?.name) {
       lines.push(
         lang === 'ar'
-          ? `اسم المستخدم: ${tracking.name}`
+          ? `${ar('Ø§Ø³Ù… Ø§Ù„Ù…Ø³ØªØ®Ø¯Ù…')}: ${tracking.name}`
           : `User name: ${tracking.name}`,
       );
     }
@@ -94,41 +99,45 @@ export function getStoredAiContext(lang: 'en' | 'ar' = 'en') {
     if (tracking?.email) {
       lines.push(
         lang === 'ar'
-          ? `معرف المتابعة: ${tracking.email}`
+          ? `${ar('Ù…Ø¹Ø±Ù Ø§Ù„Ù…ØªØ§Ø¨Ø¹Ø©')}: ${tracking.email}`
           : `Tracking identity: ${tracking.email}`,
       );
     }
 
     if (architect?.age) {
-      lines.push(lang === 'ar' ? `العمر: ${architect.age}` : `Age: ${architect.age}`);
+      lines.push(lang === 'ar' ? `${ar('Ø§Ù„Ø¹Ù…Ø±')}: ${architect.age}` : `Age: ${architect.age}`);
     }
 
     if (architect?.weight) {
       lines.push(
-        lang === 'ar' ? `الوزن: ${architect.weight} كجم` : `Weight: ${architect.weight} kg`,
+        lang === 'ar'
+          ? `${ar('Ø§Ù„ÙˆØ²Ù†')}: ${architect.weight} ${ar('ÙƒØ¬Ù…')}`
+          : `Weight: ${architect.weight} kg`,
       );
     }
 
     if (architect?.height) {
       lines.push(
-        lang === 'ar' ? `الطول: ${architect.height} سم` : `Height: ${architect.height} cm`,
+        lang === 'ar'
+          ? `${ar('Ø§Ù„Ø·ÙˆÙ„')}: ${architect.height} ${ar('Ø³Ù…')}`
+          : `Height: ${architect.height} cm`,
       );
     }
 
     if (architect?.gender) {
       lines.push(
-        lang === 'ar' ? `النوع: ${architect.gender}` : `Gender: ${architect.gender}`,
+        lang === 'ar' ? `${ar('Ø§Ù„Ù†ÙˆØ¹')}: ${architect.gender}` : `Gender: ${architect.gender}`,
       );
     }
 
     if (architect?.goal) {
-      lines.push(lang === 'ar' ? `الهدف: ${architect.goal}` : `Goal: ${architect.goal}`);
+      lines.push(lang === 'ar' ? `${ar('Ø§Ù„Ù‡Ø¯Ù')}: ${architect.goal}` : `Goal: ${architect.goal}`);
     }
 
     if (architect?.injuryType) {
       lines.push(
         lang === 'ar'
-          ? `الإصابة الحالية: ${architect.injuryType}`
+          ? `${ar('Ø§Ù„Ø¥ØµØ§Ø¨Ø© Ø§Ù„Ø­Ø§Ù„ÙŠØ©')}: ${architect.injuryType}`
           : `Current injury: ${architect.injuryType}`,
       );
     }
@@ -136,7 +145,7 @@ export function getStoredAiContext(lang: 'en' | 'ar' = 'en') {
     if (architect?.recoveryWeek) {
       lines.push(
         lang === 'ar'
-          ? `أسبوع التعافي: ${architect.recoveryWeek}`
+          ? `${ar('Ø£Ø³Ø¨ÙˆØ¹ Ø§Ù„ØªØ¹Ø§ÙÙŠ')}: ${architect.recoveryWeek}`
           : `Recovery week: ${architect.recoveryWeek}`,
       );
     }

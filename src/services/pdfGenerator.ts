@@ -1,5 +1,27 @@
-import html2canvas from 'html2canvas';
-import {jsPDF} from 'jspdf';
+function isMobileBrowser() {
+  return /Android|iPhone|iPad|iPod|IEMobile|Opera Mini/i.test(window.navigator.userAgent);
+}
+
+function downloadBlob(blob: Blob, fileName: string) {
+  const objectUrl = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+
+  link.href = objectUrl;
+  link.download = fileName;
+  link.rel = 'noopener';
+
+  if (isMobileBrowser()) {
+    link.target = '_blank';
+  }
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  window.setTimeout(() => {
+    URL.revokeObjectURL(objectUrl);
+  }, 60_000);
+}
 
 export async function generatePdfFromElement({
   element,
@@ -8,10 +30,20 @@ export async function generatePdfFromElement({
   element: HTMLElement;
   fileName: string;
 }) {
+  const [{default: html2canvas}, {jsPDF}] = await Promise.all([
+    import('html2canvas'),
+    import('jspdf'),
+  ]);
+
   const canvas = await html2canvas(element, {
-    scale: 2,
+    scale: Math.min(window.devicePixelRatio || 1, 2),
     useCORS: true,
+    allowTaint: true,
     backgroundColor: '#edf6f1',
+    scrollX: 0,
+    scrollY: -window.scrollY,
+    windowWidth: Math.max(document.documentElement.clientWidth, element.scrollWidth),
+    windowHeight: Math.max(document.documentElement.clientHeight, element.scrollHeight),
   });
 
   const pdf = new jsPDF('p', 'mm', 'a4');
@@ -61,5 +93,6 @@ export async function generatePdfFromElement({
     pageIndex += 1;
   }
 
-  pdf.save(fileName);
+  const blob = pdf.output('blob');
+  downloadBlob(blob, fileName);
 }

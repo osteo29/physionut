@@ -1,14 +1,18 @@
+import {decodeMojibake} from '../services/textEncoding';
+
 type AppLanguage = 'en' | 'ar';
 
 const AUTO_NOTIFICATION_PROMPT_KEY = 'physiohub:auto-notification-prompted';
 
 function getNotificationTitle(lang: AppLanguage) {
-  return lang === 'ar' ? 'إشعارات PhysioNutrition جاهزة' : 'PhysioNutrition notifications are ready';
+  return lang === 'ar'
+    ? decodeMojibake('إشعارات PhysioNutrition جاهزة')
+    : 'PhysioNutrition notifications are ready';
 }
 
 function getNotificationBody(lang: AppLanguage) {
   return lang === 'ar'
-    ? 'سنستخدمها لاحقًا للتذكير بالمتابعة والنتائج المهمة.'
+    ? decodeMojibake('سنستخدمها لاحقًا للتذكير بالمتابعة والنتائج المهمة.')
     : 'We can now use them later for follow-up reminders and important result updates.';
 }
 
