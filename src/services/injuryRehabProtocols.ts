@@ -19,7 +19,12 @@ type StageTemplate = {
   cautions: string[];
 };
 
-type TemplateMap = Partial<Record<RecoveryWindow, StageTemplate>>;
+// Notes:
+// - We start from `defaultEn/defaultAr` which always provide a full `StageTemplate`.
+// - Then we "override" with category / specific / regional templates.
+// - Those overrides are intentionally partial (some windows may only define `exercises`, etc.),
+//   so the type here must allow missing fields.
+type TemplateMap = Partial<Record<RecoveryWindow, Partial<StageTemplate>>>;
 
 function uniqueItems(items: string[]) {
   return Array.from(new Set(items.map((item) => item.trim()).filter(Boolean)));
@@ -582,15 +587,20 @@ export function getRehabStagePlans(injury: InjuryProtocol, lang: Language): Reha
     const regional = getRegionalTemplate(injury, lang, phase.window);
     const override = specific?.[phase.window];
     const merged = mergeTemplate(mergeTemplate(base, regional), override);
+    const exerciseLabelsFromPlans = phase.exercisePlans?.map((p) => p.label).filter(Boolean) ?? [];
 
     return {
       phaseId: phase.id,
       phaseLabel: phase.label,
       duration: phase.duration,
-      focus: merged.focus,
-      exercises: merged.exercises,
-      progressionMarkers: merged.progressionMarkers,
-      cautions: merged.cautions.length ? merged.cautions : phase.prohibitedMovements,
+      focus: phase.focus && phase.focus.trim() ? phase.focus : merged.focus,
+      exercises: phase.exercises?.length ? phase.exercises : exerciseLabelsFromPlans.length ? exerciseLabelsFromPlans : merged.exercises,
+      progressionMarkers: phase.progressionMarkers?.length ? phase.progressionMarkers : merged.progressionMarkers,
+      cautions: phase.cautions?.length
+        ? phase.cautions
+        : merged.cautions.length
+          ? merged.cautions
+          : phase.prohibitedMovements,
     };
   });
 }

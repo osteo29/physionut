@@ -51,6 +51,16 @@ export interface MealExamples {
   shoppingList: string[];
 }
 
+export interface ExercisePlan {
+  label: string;
+  sets?: string;
+  reps?: string;
+  rest?: string;
+  equipment?: string;
+  alternatives?: string[];
+  cues?: string[];
+}
+
 export interface InjuryPhase {
   id: string;
   label: string;
@@ -63,6 +73,12 @@ export interface InjuryPhase {
   supplements: SupplementProtocol[];
   exercises: string[];
   prohibitedMovements: string[];
+  exercisePlans?: ExercisePlan[];
+  // Phase focus/progression (editable from /admin/injuries)
+  focus?: string;
+  progressionMarkers?: string[];
+  cautions?: string[];
+  nutritionNotes?: string[];
   meals: MealExamples;
   timing?: Partial<Record<'collagen' | 'protein' | 'hydration' | 'carbs', string>>;
   proteinPerKg?: {min: number; max: number};

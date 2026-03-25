@@ -17,6 +17,7 @@ const InjuryDetailPage = lazy(() => import('./pages/InjuryDetailPage'));
 const ArticleStudioPage = lazy(() => import('./pages/ArticleStudioPage'));
 const AssistantPage = lazy(() => import('./pages/AssistantPage'));
 const AdminInjuryManager = lazy(() => import('./pages/AdminInjuryManager'));
+const DietsRegimensPage = lazy(() => import('./pages/DietsRegimensPage'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const TrackingDashboardPage = lazy(() => import('./pages/TrackingDashboardPage'));
 const AuthPage = lazy(() => import('./pages/AuthPage'));
@@ -89,6 +90,7 @@ export default function RouterApp() {
         <Route path="/:lang/injuries/:slug" element={<InjuryDetailPage />} />
         <Route path="/:lang/admin/injuries" element={<AdminInjuryManager />} />
         <Route path="/admin/injuries" element={<AdminInjuryManager />} />
+        <Route path="/:lang/diets" element={<DietsRegimensPage />} />
         <Route path="/:lang/insights/:slug" element={<ArticlePage />} />
         <Route path="/:lang/studio/articles" element={<ArticleStudioPage />} />
         <Route path="/:lang/assistant" element={<AssistantPage theme={theme} onToggleTheme={toggleTheme} />} />
@@ -112,6 +114,7 @@ export default function RouterApp() {
         <Route path="/assistant" element={<LegacyRouteRedirect />} />
         <Route path="/auth" element={<LegacyRouteRedirect />} />
         <Route path="/dashboard" element={<LegacyRouteRedirect />} />
+        <Route path="/diets" element={<LegacyRouteRedirect />} />
 
         {/* 404 - Not Found */}
         <Route path="*" element={<NotFound />} />

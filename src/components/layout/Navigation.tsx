@@ -13,6 +13,7 @@ import {
   Search,
   Stethoscope,
   Sun,
+  Utensils,
   UserRound,
   X,
 } from 'lucide-react';
@@ -308,6 +309,11 @@ const Navigation = memo(
                           icon: <ClipboardList className="h-5 w-5" />,
                           label: isAr ? 'بروتوكولات الإصابات' : 'Injury protocols',
                         },
+                {
+                  href: navigationPaths.diets(lang),
+                  icon: <Utensils className="h-5 w-5" />,
+                  label: isAr ? 'الدايت والريجيم' : 'Diet & regimens',
+                },
                         {
                           href: '#blog',
                           icon: <BookOpen className="h-5 w-5" />,
@@ -409,6 +415,9 @@ const Navigation = memo(
                 </a>
                 <Link to={navigationPaths.injuries(lang)} className="nav-link">
                   {isAr ? 'الإصابات' : 'Injuries'}
+                </Link>
+                <Link to={navigationPaths.diets(lang)} className="nav-link">
+                  {isAr ? 'الدايت والريجيم' : 'Diet & regimens'}
                 </Link>
                 <a href="#blog" className="nav-link">
                   {t.nav.insights}

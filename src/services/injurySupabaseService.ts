@@ -56,6 +56,15 @@ export interface PhaseRow {
   recommended_foods_ar: string[];
   avoid_foods_en: string[];
   avoid_foods_ar: string[];
+  focus_en?: string | null;
+  focus_ar?: string | null;
+  progression_markers_en?: string[] | null;
+  progression_markers_ar?: string[] | null;
+  cautions_en?: string[] | null;
+  cautions_ar?: string[] | null;
+  nutrition_notes_en?: string[] | null;
+  nutrition_notes_ar?: string[] | null;
+  exercise_plans?: any[] | null;
   exercises_en: string[];
   exercises_ar: string[];
   prohibited_movements_en: string[];
@@ -254,6 +263,19 @@ export async function fetchCompleteInjuryProtocol(
     // Fetch supplements and meals for each phase
     const phasesWithData = await Promise.all(
       phases.map(async (phase) => {
+        const normalizeList = (value: unknown): string[] => {
+          if (Array.isArray(value)) {
+            return value.map((v) => (typeof v === 'string' ? v.trim() : '')).filter(Boolean);
+          }
+          if (typeof value === 'string') {
+            return value
+              .split('\n')
+              .map((item) => item.trim())
+              .filter(Boolean);
+          }
+          return [];
+        };
+
         const supplements = await fetchSupplementsByPhaseId(phase.id);
         const mealRows = await fetchMealsByPhaseId(phase.id);
 
@@ -309,6 +331,21 @@ export async function fetchCompleteInjuryProtocol(
             useArabic && phase.prohibited_movements_ar?.length
               ? phase.prohibited_movements_ar
               : phase.prohibited_movements_en,
+          exercisePlans: (phase.exercise_plans || []).map((p: any) => ({
+            label: useArabic
+              ? (p?.label_ar ?? p?.exercise_ar ?? p?.label_en ?? p?.exercise_en ?? '')
+              : (p?.label_en ?? p?.exercise_en ?? p?.label_ar ?? p?.exercise_ar ?? ''),
+            sets: p?.sets ?? undefined,
+            reps: p?.reps ?? undefined,
+            rest: p?.rest ?? undefined,
+            equipment: useArabic ? p?.equipment_ar ?? p?.equipment_en ?? p?.equipment ?? undefined : p?.equipment_en ?? p?.equipment_ar ?? p?.equipment ?? undefined,
+            alternatives: useArabic ? normalizeList(p?.alternatives_ar ?? p?.alternatives) : normalizeList(p?.alternatives_en ?? p?.alternatives),
+            cues: useArabic ? normalizeList(p?.cues_ar ?? p?.cues) : normalizeList(p?.cues_en ?? p?.cues),
+          })),
+          focus: (useArabic ? phase.focus_ar : phase.focus_en) || undefined,
+          progressionMarkers: (useArabic ? phase.progression_markers_ar : phase.progression_markers_en) || [],
+          cautions: (useArabic ? phase.cautions_ar : phase.cautions_en) || [],
+          nutritionNotes: (useArabic ? phase.nutrition_notes_ar : phase.nutrition_notes_en) || [],
           meals: mealsConverted,
           proteinPerKg:
             phase.protein_min_per_kg && phase.protein_max_per_kg

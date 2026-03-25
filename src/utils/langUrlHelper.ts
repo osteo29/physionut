@@ -66,6 +66,7 @@ export const navigationPaths = {
   disclaimer: (lang: Language) => `/${lang}/disclaimer`,
   about: (lang: Language) => `/${lang}/about`,
   contact: (lang: Language) => `/${lang}/contact`,
+  diets: (lang: Language) => `/${lang}/diets`,
   
   // Content pages
   insights: (lang: Language) => `/${lang}/insights`,

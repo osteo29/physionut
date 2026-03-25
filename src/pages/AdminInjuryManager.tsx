@@ -101,6 +101,15 @@ function textToList(value: string) {
     .filter(Boolean);
 }
 
+function safeParseJsonArray(value: string) {
+  try {
+    const parsed = JSON.parse(value);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
 function numOrNull(value: string) {
   const trimmed = value.trim();
   if (!trimmed) return null;
@@ -218,6 +227,14 @@ type PhaseDraft = {
   recommended_foods_ar: string;
   avoid_foods_en: string;
   avoid_foods_ar: string;
+  focus_en: string;
+  focus_ar: string;
+  progression_markers_en: string;
+  progression_markers_ar: string;
+  cautions_en: string;
+  cautions_ar: string;
+  nutrition_notes_en: string;
+  nutrition_notes_ar: string;
   exercises_en: string;
   exercises_ar: string;
   prohibited_movements_en: string;
@@ -231,6 +248,7 @@ type PhaseDraft = {
   collagen_max_per_kg: string;
   vitamin_c_mg: string;
   calcium_mg: string;
+  exercise_plans_json: string;
 };
 
 function mapPhaseDraft(phase: PhaseRow): PhaseDraft {
@@ -248,6 +266,14 @@ function mapPhaseDraft(phase: PhaseRow): PhaseDraft {
     recommended_foods_ar: listToText(phase.recommended_foods_ar),
     avoid_foods_en: listToText(phase.avoid_foods_en),
     avoid_foods_ar: listToText(phase.avoid_foods_ar),
+    focus_en: phase.focus_en || '',
+    focus_ar: phase.focus_ar || '',
+    progression_markers_en: listToText(phase.progression_markers_en || []),
+    progression_markers_ar: listToText(phase.progression_markers_ar || []),
+    cautions_en: listToText(phase.cautions_en || []),
+    cautions_ar: listToText(phase.cautions_ar || []),
+    nutrition_notes_en: listToText(phase.nutrition_notes_en || []),
+    nutrition_notes_ar: listToText(phase.nutrition_notes_ar || []),
     exercises_en: listToText(phase.exercises_en),
     exercises_ar: listToText(phase.exercises_ar),
     prohibited_movements_en: listToText(phase.prohibited_movements_en),
@@ -261,6 +287,7 @@ function mapPhaseDraft(phase: PhaseRow): PhaseDraft {
     collagen_max_per_kg: phase.collagen_max_per_kg?.toString() || '',
     vitamin_c_mg: phase.vitamin_c_mg?.toString() || '',
     calcium_mg: phase.calcium_mg?.toString() || '',
+    exercise_plans_json: JSON.stringify(phase.exercise_plans || [], null, 2),
   };
 }
 
@@ -281,6 +308,14 @@ function newPhase(injuryId: string, phaseNumber: number): Omit<PhaseRow, 'id' | 
     recommended_foods_ar: [],
     avoid_foods_en: [],
     avoid_foods_ar: [],
+    focus_en: '',
+    focus_ar: '',
+    progression_markers_en: [],
+    progression_markers_ar: [],
+    cautions_en: [],
+    cautions_ar: [],
+    nutrition_notes_en: [],
+    nutrition_notes_ar: [],
     exercises_en: [],
     exercises_ar: [],
     prohibited_movements_en: [],
@@ -294,6 +329,7 @@ function newPhase(injuryId: string, phaseNumber: number): Omit<PhaseRow, 'id' | 
     collagen_max_per_kg: null,
     vitamin_c_mg: null,
     calcium_mg: null,
+    exercise_plans: [],
   });
 }
 
@@ -405,6 +441,14 @@ function PhaseStudio({
         recommended_foods_ar: textToList(phaseDraft.recommended_foods_ar),
         avoid_foods_en: textToList(phaseDraft.avoid_foods_en),
         avoid_foods_ar: textToList(phaseDraft.avoid_foods_ar),
+        focus_en: phaseDraft.focus_en,
+        focus_ar: phaseDraft.focus_ar,
+        progression_markers_en: textToList(phaseDraft.progression_markers_en),
+        progression_markers_ar: textToList(phaseDraft.progression_markers_ar),
+        cautions_en: textToList(phaseDraft.cautions_en),
+        cautions_ar: textToList(phaseDraft.cautions_ar),
+        nutrition_notes_en: textToList(phaseDraft.nutrition_notes_en),
+        nutrition_notes_ar: textToList(phaseDraft.nutrition_notes_ar),
         exercises_en: textToList(phaseDraft.exercises_en),
         exercises_ar: textToList(phaseDraft.exercises_ar),
         prohibited_movements_en: textToList(phaseDraft.prohibited_movements_en),
@@ -418,6 +462,7 @@ function PhaseStudio({
         collagen_max_per_kg: numOrNull(phaseDraft.collagen_max_per_kg),
         vitamin_c_mg: numOrNull(phaseDraft.vitamin_c_mg),
         calcium_mg: numOrNull(phaseDraft.calcium_mg),
+        exercise_plans: safeParseJsonArray(phaseDraft.exercise_plans_json),
       });
       await loadPhases(selectedPhase.id);
       onNotice(isAr ? 'تم حفظ المرحلة.' : 'Phase saved.');
@@ -505,6 +550,29 @@ function PhaseStudio({
               <SectionField label="Prohibited Movements (EN)" value={phaseDraft.prohibited_movements_en} onChange={(value) => setPhaseDraft({...phaseDraft, prohibited_movements_en: value})} />
               <SectionField label="Prohibited Movements (AR)" value={phaseDraft.prohibited_movements_ar} onChange={(value) => setPhaseDraft({...phaseDraft, prohibited_movements_ar: value})} dir="rtl" />
 
+              <SectionField label="Phase Focus (EN)" value={phaseDraft.focus_en} onChange={(value) => setPhaseDraft({...phaseDraft, focus_en: value})} rows={4} />
+              <SectionField label="Phase Focus (AR)" value={phaseDraft.focus_ar} onChange={(value) => setPhaseDraft({...phaseDraft, focus_ar: value})} dir="rtl" rows={4} />
+
+              <SectionField
+                label="Progression Markers (EN)"
+                value={phaseDraft.progression_markers_en}
+                onChange={(value) => setPhaseDraft({...phaseDraft, progression_markers_en: value})}
+                rows={6}
+              />
+              <SectionField
+                label="Progression Markers (AR)"
+                value={phaseDraft.progression_markers_ar}
+                onChange={(value) => setPhaseDraft({...phaseDraft, progression_markers_ar: value})}
+                dir="rtl"
+                rows={6}
+              />
+
+              <SectionField label="Cautions (EN)" value={phaseDraft.cautions_en} onChange={(value) => setPhaseDraft({...phaseDraft, cautions_en: value})} rows={6} />
+              <SectionField label="Cautions (AR)" value={phaseDraft.cautions_ar} onChange={(value) => setPhaseDraft({...phaseDraft, cautions_ar: value})} dir="rtl" rows={6} />
+
+              <SectionField label="Nutrition Notes (EN)" value={phaseDraft.nutrition_notes_en} onChange={(value) => setPhaseDraft({...phaseDraft, nutrition_notes_en: value})} rows={4} />
+              <SectionField label="Nutrition Notes (AR)" value={phaseDraft.nutrition_notes_ar} onChange={(value) => setPhaseDraft({...phaseDraft, nutrition_notes_ar: value})} dir="rtl" rows={4} />
+
               <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
                 {[
                   ['protein_min_per_kg', 'Protein min/kg'],
@@ -522,6 +590,22 @@ function PhaseStudio({
                     <input value={phaseDraft[field as keyof PhaseDraft]} onChange={(e) => setPhaseDraft({...phaseDraft, [field]: e.target.value})} className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none focus:border-health-green" />
                   </label>
                 ))}
+              </div>
+
+              <div className="space-y-3 rounded-3xl border border-slate-200 bg-white p-4">
+                <div className="font-black text-slate-900">{isAr ? 'تمارين مهيكلة (Structured Exercises)' : 'Structured exercises'}</div>
+                <p className="text-sm text-slate-500">
+                  {isAr
+                    ? 'أدخل مصفوفة JSON لتمارين هذه المرحلة. الحقول المقترحة: label_en, label_ar, sets, reps, rest, equipment, alternatives_en/alternatives_ar, cues_en/cues_ar.'
+                    : 'Paste a JSON array for this phase exercises. Suggested fields: label_en, label_ar, sets, reps, rest, equipment, alternatives_en/alternatives_ar, cues_en/cues_ar.'}
+                </p>
+                <textarea
+                  rows={10}
+                  value={phaseDraft.exercise_plans_json}
+                  onChange={(e) => setPhaseDraft({...phaseDraft, exercise_plans_json: e.target.value})}
+                  className="w-full rounded-2xl border border-slate-300 px-4 py-3 text-sm leading-6 outline-none focus:border-health-green"
+                  spellCheck={false}
+                />
               </div>
 
               <div className="flex flex-wrap gap-3">
@@ -887,24 +971,116 @@ export default function AdminInjuryManager() {
                 if (!selectedInjury) return;
                 try {
                   setSaving(true);
-                  const created = await createInjury(decodeStringsDeep({
-                    ...newInjuryDraft(injuries.length + 1),
-                    injury_id_slug: `${selectedInjury.injury_id_slug}-copy`,
-                    name_en: `${selectedInjury.name_en} Copy`,
-                    name_ar: `${selectedInjury.name_ar} نسخة`,
-                    category: selectedInjury.category,
-                    body_region_en: selectedInjury.body_region_en,
-                    body_region_ar: selectedInjury.body_region_ar,
-                    overview_en: selectedInjury.overview_en,
-                    overview_ar: selectedInjury.overview_ar,
-                    rehab_summary_en: selectedInjury.rehab_summary_en,
-                    rehab_summary_ar: selectedInjury.rehab_summary_ar,
-                    common_in: selectedInjury.common_in,
-                    red_flags: selectedInjury.red_flags,
-                    related_calculators: selectedInjury.related_calculators,
-                  }));
-                  await loadInjuries(created.id);
-                  setNotice(isAr ? 'تم إنشاء نسخة من الإصابة.' : 'Injury duplicated.');
+                  const baseCopySlug = `${selectedInjury.injury_id_slug}-copy`;
+                  const copySlug = injuries.some((i) => i.injury_id_slug === baseCopySlug) ? `${baseCopySlug}-${injuries.length + 1}` : baseCopySlug;
+
+                  const createdInjury = await createInjury(
+                    decodeStringsDeep({
+                      ...newInjuryDraft(injuries.length + 1),
+                      injury_id_slug: copySlug,
+                      name_en: `${selectedInjury.name_en} Copy`,
+                      name_ar: `${selectedInjury.name_ar} نسخة`,
+                      category: selectedInjury.category,
+                      body_region_en: selectedInjury.body_region_en,
+                      body_region_ar: selectedInjury.body_region_ar,
+                      overview_en: selectedInjury.overview_en,
+                      overview_ar: selectedInjury.overview_ar,
+                      rehab_summary_en: selectedInjury.rehab_summary_en,
+                      rehab_summary_ar: selectedInjury.rehab_summary_ar,
+                      common_in: selectedInjury.common_in,
+                      red_flags: selectedInjury.red_flags,
+                      related_calculators: selectedInjury.related_calculators,
+                    }),
+                  );
+
+                  const oldPhases = await fetchPhasesByInjuryId(selectedInjury.id);
+
+                  // Copy phases + supplements + meal examples
+                  for (const oldPhase of oldPhases) {
+                    const createdPhase = await createPhase(
+                      decodeStringsDeep({
+                        injury_id: createdInjury.id,
+                        phase_number: oldPhase.phase_number,
+                        label_en: oldPhase.label_en,
+                        label_ar: oldPhase.label_ar,
+                        duration_en: oldPhase.duration_en,
+                        duration_ar: oldPhase.duration_ar,
+                        recovery_window: oldPhase.recovery_window,
+                        goals_en: oldPhase.goals_en,
+                        goals_ar: oldPhase.goals_ar,
+                        nutrition_focus_en: oldPhase.nutrition_focus_en,
+                        nutrition_focus_ar: oldPhase.nutrition_focus_ar,
+                        recommended_foods_en: oldPhase.recommended_foods_en,
+                        recommended_foods_ar: oldPhase.recommended_foods_ar,
+                        avoid_foods_en: oldPhase.avoid_foods_en,
+                        avoid_foods_ar: oldPhase.avoid_foods_ar,
+                        focus_en: oldPhase.focus_en,
+                        focus_ar: oldPhase.focus_ar,
+                        progression_markers_en: oldPhase.progression_markers_en ?? [],
+                        progression_markers_ar: oldPhase.progression_markers_ar ?? [],
+                        cautions_en: oldPhase.cautions_en ?? [],
+                        cautions_ar: oldPhase.cautions_ar ?? [],
+                        nutrition_notes_en: oldPhase.nutrition_notes_en ?? [],
+                        nutrition_notes_ar: oldPhase.nutrition_notes_ar ?? [],
+                        exercise_plans: oldPhase.exercise_plans ?? [],
+                        exercises_en: oldPhase.exercises_en,
+                        exercises_ar: oldPhase.exercises_ar,
+                        prohibited_movements_en: oldPhase.prohibited_movements_en,
+                        prohibited_movements_ar: oldPhase.prohibited_movements_ar,
+                        protein_min_per_kg: oldPhase.protein_min_per_kg,
+                        protein_max_per_kg: oldPhase.protein_max_per_kg,
+                        hydration_ml_per_kg: oldPhase.hydration_ml_per_kg,
+                        omega3_grams: oldPhase.omega3_grams,
+                        creatine_grams: oldPhase.creatine_grams,
+                        collagen_min_per_kg: oldPhase.collagen_min_per_kg,
+                        collagen_max_per_kg: oldPhase.collagen_max_per_kg,
+                        vitamin_c_mg: oldPhase.vitamin_c_mg,
+                        calcium_mg: oldPhase.calcium_mg,
+                      }),
+                    );
+
+                    const oldSupplements = await fetchSupplementsByPhaseId(oldPhase.id);
+                    for (const oldSupplement of oldSupplements) {
+                      await createSupplement(
+                        decodeStringsDeep({
+                          phase_id: createdPhase.id,
+                          name: oldSupplement.name,
+                          dose_en: oldSupplement.dose_en,
+                          dose_ar: oldSupplement.dose_ar,
+                          reason_en: oldSupplement.reason_en,
+                          reason_ar: oldSupplement.reason_ar,
+                          timing_en: oldSupplement.timing_en,
+                          timing_ar: oldSupplement.timing_ar,
+                          caution_en: oldSupplement.caution_en,
+                          caution_ar: oldSupplement.caution_ar,
+                          order_index: oldSupplement.order_index,
+                        }),
+                      );
+                    }
+
+                    const oldMeals = await fetchMealsByPhaseId(oldPhase.id);
+                    for (const oldMeal of oldMeals) {
+                      await createMeal(
+                        decodeStringsDeep({
+                          phase_id: createdPhase.id,
+                          diet_style: oldMeal.diet_style,
+                          breakfast_en: oldMeal.breakfast_en,
+                          breakfast_ar: oldMeal.breakfast_ar,
+                          lunch_en: oldMeal.lunch_en,
+                          lunch_ar: oldMeal.lunch_ar,
+                          dinner_en: oldMeal.dinner_en,
+                          dinner_ar: oldMeal.dinner_ar,
+                          snack_en: oldMeal.snack_en,
+                          snack_ar: oldMeal.snack_ar,
+                          shopping_list_en: oldMeal.shopping_list_en,
+                          shopping_list_ar: oldMeal.shopping_list_ar,
+                        }),
+                      );
+                    }
+                  }
+
+                  await loadInjuries(createdInjury.id);
+                  setNotice(isAr ? 'تم إنشاء نسخة كاملة من الإصابة.' : 'Full injury protocol duplicated.');
                 } catch (error) {
                   setNotice(getSupabaseActionErrorMessage(error, uiLang, 'save'));
                 } finally {

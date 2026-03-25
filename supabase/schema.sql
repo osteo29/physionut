@@ -62,6 +62,18 @@ create table if not exists public.injury_phases (
   recommended_foods_ar text[] default '{}',
   avoid_foods_en text[] default '{}',
   avoid_foods_ar text[] default '{}',
+  -- Phase focus/progression (editable per injury + phase)
+  focus_en text default '',
+  focus_ar text default '',
+  progression_markers_en text[] default '{}',
+  progression_markers_ar text[] default '{}',
+  cautions_en text[] default '{}',
+  cautions_ar text[] default '{}',
+  nutrition_notes_en text[] default '{}',
+  nutrition_notes_ar text[] default '{}',
+  -- Structured exercise plans (per phase) stored as JSON.
+  -- Includes EN/AR labels + sets/reps/rest/equipment + alternatives/cues.
+  exercise_plans jsonb default '[]'::jsonb,
   exercises_en text[] default '{}',
   exercises_ar text[] default '{}',
   prohibited_movements_en text[] default '{}',
@@ -79,6 +91,17 @@ create table if not exists public.injury_phases (
   updated_at timestamptz default now(),
   unique(injury_id, phase_number)
 );
+
+-- Ensure columns exist for already-created deployments
+alter table public.injury_phases add column if not exists focus_en text default '';
+alter table public.injury_phases add column if not exists focus_ar text default '';
+alter table public.injury_phases add column if not exists progression_markers_en text[] default '{}';
+alter table public.injury_phases add column if not exists progression_markers_ar text[] default '{}';
+alter table public.injury_phases add column if not exists cautions_en text[] default '{}';
+alter table public.injury_phases add column if not exists cautions_ar text[] default '{}';
+alter table public.injury_phases add column if not exists nutrition_notes_en text[] default '{}';
+alter table public.injury_phases add column if not exists nutrition_notes_ar text[] default '{}';
+alter table public.injury_phases add column if not exists exercise_plans jsonb default '[]'::jsonb;
 
 -- Supplements table (المكملات الغذائية)
 create table if not exists public.supplements (
