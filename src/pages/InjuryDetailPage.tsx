@@ -328,6 +328,10 @@ export default function InjuryDetailPage() {
       : suggestedPhase.nutritionFocus.map(normalizeCopy);
 
   const medicationNotes = [...injury.safetyNotes.medications, ...injury.safetyNotes.supplements].map(normalizeCopy);
+  const askPhasePrompt = isAr
+    ? `أنا في ${normalizeCopy(suggestedPhase.label)} من ${injuryDisplayName}. اشرح لي ماذا أركز عليه الآن، ما التمارين المناسبة، ما الذي أتجنبه، ومتى أستطيع الانتقال للمرحلة التالية؟`
+    : `I am in the ${normalizeCopy(suggestedPhase.label)} phase of ${injuryDisplayName}. Explain what I should focus on now, which exercises fit this phase, what I should avoid, and when I can move to the next phase.`;
+  const askPhaseLink = `/${lang}/assistant?prompt=${encodeURIComponent(askPhasePrompt)}`;
 
   const faqItems =
     isAr &&
@@ -652,6 +656,26 @@ export default function InjuryDetailPage() {
             </div>
 
             <div className="space-y-6">
+              <div className="rounded-[2rem] border border-health-green/20 bg-health-green/5 p-6 shadow-sm">
+                <div className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-health-green-dark">
+                  Ask AI About Your Phase
+                </div>
+                <div className="text-lg font-black text-slate-900">
+                  {isAr ? 'اسأل الذكاء الاصطناعي عن مرحلتك الحالية' : 'Ask AI about your current stage'}
+                </div>
+                <p className="mt-2 text-sm leading-7 text-slate-700">
+                  {isAr
+                    ? `سيفتح لك المساعد بسؤال جاهز عن ${normalizeCopy(suggestedPhase.label)} في ${injuryDisplayName}.`
+                    : `This opens the assistant with a ready-made question about the ${normalizeCopy(suggestedPhase.label)} phase for ${injuryDisplayName}.`}
+                </p>
+                <Link
+                  to={askPhaseLink}
+                  className="mt-4 inline-flex items-center gap-2 rounded-2xl bg-health-green px-4 py-3 text-sm font-bold text-white"
+                >
+                  {isAr ? 'افتح المساعد لهذه المرحلة' : 'Open AI for this phase'}
+                </Link>
+              </div>
+
               <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
                 <div className="mb-3 font-black text-slate-900">{isAr ? 'التمارين المناسبة' : 'Rehab exercise focus'}</div>
                 <ul className="space-y-2 text-sm text-slate-700">

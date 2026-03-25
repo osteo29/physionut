@@ -21,6 +21,10 @@ type StageTemplate = {
 
 type TemplateMap = Partial<Record<RecoveryWindow, StageTemplate>>;
 
+function uniqueItems(items: string[]) {
+  return Array.from(new Set(items.map((item) => item.trim()).filter(Boolean)));
+}
+
 const defaultEn: Record<RecoveryWindow, StageTemplate> = {
   under_48h: {
     focus: 'Calm symptoms, protect the injured tissue, and keep gentle movement without provoking a flare.',
@@ -131,6 +135,117 @@ function mergeTemplate(base: StageTemplate, override?: Partial<StageTemplate>): 
 
 function templateFor(lang: Language, window: RecoveryWindow) {
   return lang === 'ar' ? defaultAr[window] : defaultEn[window];
+}
+
+function getCategoryTemplate(injury: InjuryProtocol, lang: Language, window: RecoveryWindow): Partial<StageTemplate> | undefined {
+  const isAr = lang === 'ar';
+
+  const categoryMap: Partial<Record<InjuryProtocol['category'], TemplateMap>> = {
+    Muscle: {
+      under_48h: {
+        focus: isAr
+          ? 'تهدئة الألم وحماية الألياف المصابة مع الحفاظ على انقباض عضلي خفيف بدون شد زائد.'
+          : 'Calm pain, protect the strained fibers, and keep low-load muscle activity without overstretching.',
+        exercises: isAr
+          ? ['انقباضات ثابتة خفيفة للعضلة المصابة', 'مدى حركي مريح بدون مط قوي', 'مشية أو حركة يومية خفيفة حسب التحمل']
+          : ['Gentle isometric holds for the injured muscle', 'Comfortable range of motion without hard stretching', 'Light walking or daily movement as tolerated'],
+      },
+      days_3_14: {
+        exercises: isAr
+          ? ['تمارين تحميل تدريجي للعضلة', 'تمارين إطالة خفيفة فقط إذا كانت مريحة', 'تقوية متحكم فيها بسرعة بطيئة']
+          : ['Progressive loading for the injured muscle', 'Gentle mobility only if it stays comfortable', 'Controlled strengthening with slower tempo'],
+      },
+      weeks_2_6: {
+        exercises: isAr
+          ? ['تقوية خلال مدى كامل تدريجيًا', 'تمارين رجل أو ذراع واحدة عند الحاجة', 'إعادة إدخال السرعة أو التسارع بالتدرج']
+          : ['Fuller-range strengthening as tolerated', 'Single-limb work when relevant', 'Gradual reintroduction of speed or acceleration'],
+      },
+    },
+    Tendon: {
+      under_48h: {
+        focus: isAr
+          ? 'تقليل تهيج الوتر مع إبقاء تحميل بسيط ومنتظم بدل الراحة الكاملة.'
+          : 'Reduce tendon irritability while keeping some simple, regular loading instead of full rest.',
+        exercises: isAr
+          ? ['ثباتات متوسطة للوتر حسب التحمل', 'حركة خفيفة للمنطقة المحيطة', 'تقليل الحركات الارتدادية السريعة']
+          : ['Mid-range isometric loading as tolerated', 'Gentle motion for the surrounding region', 'Reduce springy or reactive loading early'],
+      },
+      days_3_14: {
+        exercises: isAr
+          ? ['مقاومة بطيئة ثقيلة تدريجيًا', 'تمارين تحكم في الوضعية والمحور', 'إكمال جلسات التحميل مع مراقبة ألم اليوم التالي']
+          : ['Progressive heavy-slow resistance', 'Position and alignment control drills', 'Monitor next-day tendon response after loading'],
+      },
+      weeks_2_6: {
+        exercises: isAr
+          ? ['زيادة الحمل والمقاومة تدريجيًا', 'إعادة إدخال المرونة الارتدادية عند الحاجة', 'تدرج العودة للجري أو القفز أو الرمي']
+          : ['Increase load and resistance gradually', 'Reintroduce elastic loading when appropriate', 'Build back to running, jumping, or throwing progressively'],
+      },
+    },
+    Bone: {
+      under_48h: {
+        focus: isAr
+          ? 'احترام الحماية الطبية للعظم المصاب مع الحفاظ على حركة وتمارين آمنة للمناطق غير المتأثرة.'
+          : 'Respect bone protection rules while keeping safe movement and training for unaffected areas.',
+        exercises: isAr
+          ? ['حركة مسموحة حسب التوجيه الطبي', 'تقوية للمناطق غير المصابة', 'تنفس ومشي أو نشاط آمن إذا كان مسموحًا']
+          : ['Allowed motion per medical restrictions', 'Strength work for unaffected regions', 'Breathing, walking, or safe activity if cleared'],
+        cautions: isAr
+          ? ['لا تتدرج في التحميل قبل السماح الطبي', 'تجنب الصدمات أو الضغط المباشر على العظم المصاب']
+          : ['Do not progress loading before medical clearance', 'Avoid impact or direct stress through the healing bone'],
+      },
+      days_3_14: {
+        exercises: isAr
+          ? ['تمارين حركة محمية', 'تحميل جزئي أو وظيفي إذا تم السماح', 'تمارين اتزان وتحكم تدريجية']
+          : ['Protected mobility drills', 'Partial or functional loading if cleared', 'Gradual balance and control drills'],
+      },
+      weeks_2_6: {
+        exercises: isAr
+          ? ['تقوية تدريجية حول المنطقة المصابة', 'زيادة التحمل الوظيفي', 'العودة التدريجية للنشاط بعد التأكد من الالتئام']
+          : ['Progressive strengthening around the region', 'Build functional tolerance', 'Gradual return to activity after healing milestones'],
+      },
+    },
+    Joint: {
+      under_48h: {
+        exercises: isAr
+          ? ['حركة مريحة للمفصل بدون ضغط زائد', 'تنشيط العضلات الداعمة', 'تحميل يومي بسيط حسب التحمل']
+          : ['Comfortable joint motion without excess compression', 'Activation of supporting muscles', 'Simple daily loading as tolerated'],
+      },
+      days_3_14: {
+        exercises: isAr
+          ? ['تقوية حول المفصل', 'تمارين تحكم واتزان', 'استعادة النمط الحركي بدون لف مزعج']
+          : ['Strength work around the joint', 'Control and balance drills', 'Restore movement pattern without provocative twisting'],
+      },
+    },
+    'Post-surgery': {
+      under_48h: {
+        focus: isAr
+          ? 'اتباع قيود الجراحة بدقة مع تقليل التورم والحفاظ على التنشيط الأساسي.'
+          : 'Follow surgical restrictions closely while controlling swelling and keeping basic activation.',
+        cautions: isAr
+          ? ['اتبع تعليمات الجرّاح والعلاج الطبيعي أولًا', 'لا تتجاوز حدود التحميل أو المدى المحددة']
+          : ['Prioritize surgeon and physio restrictions first', 'Do not exceed prescribed loading or range limits'],
+      },
+      days_3_14: {
+        exercises: isAr
+          ? ['استعادة المدى المسموح تدريجيًا', 'تنشيط العضلات حسب البروتوكول', 'تدريب المشي أو الوظيفة إذا كان مسموحًا']
+          : ['Restore allowed range gradually', 'Muscle activation within the protocol', 'Gait or function practice if cleared'],
+      },
+    },
+    Overuse: {
+      under_48h: {
+        focus: isAr
+          ? 'تقليل الحمل المسبب للتهيج مع إبقاء الحركة المفيدة بدلاً من الإيقاف الكامل.'
+          : 'Reduce the aggravating load while keeping useful movement instead of stopping completely.',
+      },
+      days_3_14: {
+        exercises: isAr
+          ? ['تعديل الحمل أو الحجم', 'تقوية تدريجية', 'تمارين تحكم في الميكانيكا أو الوضعية']
+          : ['Load or volume modification', 'Progressive strengthening', 'Mechanics or posture-focused drills'],
+      },
+    },
+  };
+
+  return categoryMap[injury.category]?.[window];
 }
 
 function getSpecificTemplates(id: string, lang: Language): TemplateMap | undefined {

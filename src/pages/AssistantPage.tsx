@@ -1,7 +1,7 @@
 import Seo from '../components/seo/Seo';
 import ChatPanel from '../components/ai/ChatPanel';
 import usePreferredLang from './usePreferredLang';
-import {Link} from 'react-router-dom';
+import {Link, useSearchParams} from 'react-router-dom';
 import {navigationPaths} from '../utils/langUrlHelper';
 import {
   ChevronLeft,
@@ -23,6 +23,8 @@ export default function AssistantPage({
 }) {
   const lang = usePreferredLang();
   const isAr = lang === 'ar';
+  const [searchParams] = useSearchParams();
+  const autoPrompt = searchParams.get('prompt');
 
   const quickActions = isAr
     ? [
@@ -209,6 +211,7 @@ Rules:
             analyticsMeta={{source: 'assistant_page'}}
             lang={lang}
             quickActions={quickActions}
+            autoPrompt={autoPrompt}
             cacheScope="assistant-page"
           />
         </div>
