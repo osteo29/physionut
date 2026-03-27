@@ -4,6 +4,7 @@ import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
 import Seo from '../components/seo/Seo';
 import {usePublishedArticles} from '../services/articleStudio';
+import type {Language} from '../services/translations';
 
 type ArticleBlock =
   | {type: 'paragraph'; text: string}
@@ -26,7 +27,13 @@ function slugifyHeading(text: string, fallbackIndex: number) {
   return normalized || `section-${fallbackIndex + 1}`;
 }
 
-function renderInline(text: string): ReactNode[] {
+function localizeInternalHref(href: string, lang: Language) {
+  if (!href.startsWith('/')) return href;
+  if (/^\/(en|ar)(\/|$)/.test(href)) return href;
+  return `/${lang}${href}`;
+}
+
+function renderInline(text: string, lang: Language): ReactNode[] {
   const parts = text.split(/(\[[^\]]+\]\([^)]+\))/g).filter(Boolean);
 
   return parts.map((part, index) => {
@@ -35,15 +42,16 @@ function renderInline(text: string): ReactNode[] {
 
     const [, label, href] = match;
     const isInternal = href.startsWith('/');
+    const resolvedHref = isInternal ? localizeInternalHref(href, lang) : href;
 
     return isInternal ? (
-      <Link key={`${href}-${index}`} to={href} className="font-semibold text-health-green hover:underline">
+      <Link key={`${resolvedHref}-${index}`} to={resolvedHref} className="font-semibold text-health-green hover:underline">
         {label}
       </Link>
     ) : (
       <a
-        key={`${href}-${index}`}
-        href={href}
+        key={`${resolvedHref}-${index}`}
+        href={resolvedHref}
         target="_blank"
         rel="noreferrer"
         className="font-semibold text-health-green hover:underline"
@@ -132,17 +140,17 @@ function parseArticleContent(content: string) {
   return {blocks, headings, faqItems};
 }
 
-function renderBlocks(blocks: ArticleBlock[]): ReactNode[] {
+function renderBlocks(blocks: ArticleBlock[], lang: Language): ReactNode[] {
   return blocks.map((block, index) => {
     if (block.type === 'paragraph') {
-      return <p key={`p-${index}`}>{renderInline(block.text)}</p>;
+      return <p key={`p-${index}`}>{renderInline(block.text, lang)}</p>;
     }
 
     if (block.type === 'list') {
       return (
         <ul key={`ul-${index}`} className="list-disc space-y-2 pl-6">
           {block.items.map((item, itemIndex) => (
-            <li key={`li-${index}-${itemIndex}`}>{renderInline(item)}</li>
+            <li key={`li-${index}-${itemIndex}`}>{renderInline(item, lang)}</li>
           ))}
         </ul>
       );
@@ -156,6 +164,21 @@ function renderBlocks(blocks: ArticleBlock[]): ReactNode[] {
       </h2>
     );
   });
+}
+
+function getRelatedArticles(
+  articles: Array<{slug: string; category: string; date: string}>,
+  currentArticle: {slug: string; category: string},
+) {
+  const sameCategory = articles.filter(
+    (entry) => entry.slug !== currentArticle.slug && entry.category === currentArticle.category,
+  );
+
+  const recentOthers = articles
+    .filter((entry) => entry.slug !== currentArticle.slug && entry.category !== currentArticle.category)
+    .sort((a, b) => b.date.localeCompare(a.date));
+
+  return [...sameCategory, ...recentOthers].slice(0, 3);
 }
 
 export default function ArticlePage() {
@@ -206,6 +229,7 @@ export default function ArticlePage() {
   }
 
   const {blocks, headings, faqItems} = parseArticleContent(article.content);
+  const relatedArticles = getRelatedArticles(articles, article);
   const canonicalPath = `/${lang}/insights/${article.slug}`;
   const canonicalUrl = `https://physionutrition.vercel.app${canonicalPath}`;
   const hreflangs = [
@@ -306,7 +330,38 @@ export default function ArticlePage() {
             </nav>
           ) : null}
 
-          <div className="mt-8 space-y-5 leading-8 text-slate-700">{renderBlocks(blocks)}</div>
+          <div className="mt-8 space-y-5 leading-8 text-slate-700">{renderBlocks(blocks, lang)}</div>
+
+          {relatedArticles.length ? (
+            <section className="mt-10 rounded-[2rem] border border-slate-200 bg-slate-50 p-6 sm:p-8">
+              <div className="mb-5">
+                <h2 className="text-2xl font-black text-slate-900">
+                  {lang === 'en' ? 'Related articles' : 'مقالات ذات صلة'}
+                </h2>
+                <p className="mt-2 text-sm leading-7 text-slate-600">
+                  {lang === 'en'
+                    ? 'Continue with nearby topics to connect the article with practical tools and performance context.'
+                    : 'كمّل القراءة في موضوعات قريبة حتى تربط الفكرة بالأدوات العملية والسياق التدريبي.'}
+                </p>
+              </div>
+
+              <div className="grid gap-4">
+                {relatedArticles.map((entry) => (
+                  <Link
+                    key={entry.slug}
+                    to={`/${lang}/insights/${entry.slug}`}
+                    className="rounded-3xl border border-slate-200 bg-white p-5 transition-all hover:border-health-green/30 hover:shadow-sm"
+                  >
+                    <div className="mb-2 text-sm text-slate-400">
+                      {entry.category} • {entry.date}
+                    </div>
+                    <h3 className="mb-2 text-xl font-bold text-slate-900">{entry.title}</h3>
+                    <p className="text-slate-600">{entry.excerpt}</p>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          ) : null}
         </article>
       </PageLayout>
     </>

@@ -191,6 +191,46 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://physionutrition.vercel.app/en/insights/bmr-vs-tdee-calorie-calculation-myth</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/insights/bmr-vs-tdee-calorie-calculation-myth</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/insights/gym-breathing-prevent-dizziness-and-boost-performance</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/insights/gym-breathing-prevent-dizziness-and-boost-performance</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/insights/heart-health-gym-performance-guide</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/insights/heart-health-gym-performance-guide</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/insights/how-exercise-changes-your-body-complete-guide</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/insights/how-exercise-changes-your-body-complete-guide</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://physionutrition.vercel.app/en/injuries/ankle-sprain</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

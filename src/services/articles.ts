@@ -419,6 +419,226 @@ export const getArticles = (lang: Language): Article[] => {
         date: '2026-03-19',
         icon: 'Brain',
       },
+      {
+        id: 9,
+        slug: 'bmr-vs-tdee-calorie-calculation-myth',
+        title: 'خرافة حساب السعرات: الفرق بين BMR وTDEE وكيف تستخدمهما بشكل عملي',
+        excerpt:
+          'حساب السعرات ليس رقمًا سحريًا ثابتًا. تعرّف على الفرق بين BMR وTDEE ولماذا تعطيك الحاسبة تقديرًا عمليًا أفضل من التخمين أو الجداول القديمة.',
+        content: `كثير من الناس ما زالوا يظنون أنهم يستطيعون حساب السعرات اليومية بدقة كاملة من معادلة واحدة أو جدول قديم. هذه الفكرة مضللة. جسم الإنسان ليس آلة ثابتة، ومعدل حرق الطاقة يتغير حسب العمر، الكتلة العضلية، مستوى النشاط، النوم، التوتر، وحتى تفاصيل يومك العادي. لذلك من المهم فهم الفرق بين BMR وTDEE بدل التعامل مع أي رقم على أنه حقيقة نهائية.
+
+## ما هو BMR؟
+BMR أو معدل الأيض الأساسي هو الطاقة التي يستهلكها جسمك في الراحة التامة للحفاظ على الوظائف الحيوية مثل التنفس، ضخ الدم، وتنظيم الحرارة. إذا لم تتحرك تقريبًا طوال اليوم، فسيبقى جسمك يحرق جزءًا قريبًا من هذا الرقم فقط.
+
+مثال بسيط: شخص وزنه 70 كجم، عمره 25 سنة، وطوله 175 سم قد يكون BMR لديه في حدود 1700 إلى 1800 سعر حراري يوميًا، لكن هذا يظل تقديرًا وليس رقمًا قطعيًا.
+
+## ما هو TDEE؟
+TDEE أو إجمالي الطاقة اليومية هو مجموع ما يحرقه الجسم خلال اليوم كله. يشمل ذلك BMR بالإضافة إلى الحركة اليومية، التمرين، الهضم، وأي مجهود بدني عام. هذا هو الرقم العملي الذي يفيدك أكثر عند التخطيط لخسارة الدهون أو زيادة الكتلة العضلية.
+
+لو كان BMR لشخص ما حوالي 1750 سعرًا وكان نشاطه متوسطًا، فقد يصل TDEE إلى نحو 2400 أو 2500 سعر حراري يوميًا.
+
+## لماذا تخطئ الحسابات التقليدية أحيانًا؟
+* لأن معظم المعادلات مبنية على متوسطات سكانية وليست على جسمك أنت تحديدًا.
+* لأن النشاط اليومي يتغير من يوم لآخر، وبالتالي يتغير الصرف الفعلي للطاقة.
+* لأن النوم، التوتر، الهرمونات، وبعض الظروف الصحية قد تؤثر على الحرق بدرجات مختلفة.
+
+لهذا قد تكون النتيجة بعيدة عن الواقع بنسبة ليست صغيرة، خصوصًا لو تعاملت مع الرقم كأنه نهائي بدل كونه نقطة بداية.
+
+## ما الاستخدام العملي الصحيح؟
+بدل أن تسأل: ما الرقم المثالي الذي لا يخطئ؟ الأفضل أن تسأل: ما أفضل تقدير أبدأ منه ثم أراجعه مع النتائج؟
+
+ابدأ بحساب BMR وTDEE من خلال [حاسبات السعرات وBMR وTDEE](/calculators)، ثم راقب وزنك، مقاساتك، وأدائك لعدة أسابيع. إذا كان الهدف نزول الدهون، فغالبًا ستحتاج العمل حول TDEE مع عجز مناسب. وإذا كان الهدف بناء العضلات، فغالبًا ستحتاج سعرات قريبة من الصيانة أو أعلى قليلًا حسب الاستجابة.
+
+## لماذا الحاسبة أفضل من التخمين؟
+الحاسبة لا تدّعي أنها تعرف جسمك بدقة مطلقة، لكنها تجمع بين الوزن والطول والعمر ومستوى النشاط لتعطيك نقطة بداية أقرب للواقع من التخمين العشوائي. بعد ذلك يمكنك تحسين الخطة باستخدام [لوحة المتابعة](/dashboard) ومراجعة المقالات الأخرى في [مكتبة المقالات](/insights) حتى تربط الأرقام بالسلوك والنتيجة الفعلية.
+
+## الخلاصة
+* BMR هو ما يحرقه الجسم في الراحة التامة.
+* TDEE هو إجمالي ما يحرقه الجسم خلال اليوم كله.
+* المعادلات مفيدة كبداية، لكنها ليست حكمًا نهائيًا.
+* الاستخدام الذكي يبدأ بالحساب ثم المتابعة والتعديل حسب الاستجابة.
+
+إذا أردت تقديرًا أقرب لواقعك بدل الاعتماد على الجداول القديمة، ابدأ من [حاسبات الموقع](/calculators) ثم تابع التغير بمرور الوقت بدل مطاردة رقم واحد فقط. ولو كنت تتمرن بانتظام، فمفيد أيضًا أن تقرأ مقال [التنفس في الجيم: الطريقة الصح اللي تمنع الدوخة وتحسّن الأداء](/insights/gym-breathing-prevent-dizziness-and-boost-performance) حتى تربط بين حساب الطاقة وجودة الأداء داخل التمرين، ثم راجع مقال [القلب في الجيم: ليه بيتعبك؟ وإزاي تحسّن أداءك؟](/insights/heart-health-gym-performance-guide) لفهم كيف ترتبط كفاءة القلب بالتحمل والمجهود.`,
+        category: 'Calorie Calculation',
+        date: '2026-03-27',
+        icon: 'Calculator',
+      },
+      {
+        id: 10,
+        slug: 'gym-breathing-prevent-dizziness-and-boost-performance',
+        title: 'التنفس في الجيم: الطريقة الصح اللي تمنع الدوخة وتحسّن الأداء',
+        excerpt:
+          'تعلم الطريقة الصحيحة للتنفس أثناء التمرين وتجنب الأخطاء الشائعة مثل كتم النفس، حتى تقلل الدوخة وتحسن القوة والتحمل أثناء الجيم.',
+        content: `ناس كتير بتركز على التمرين نفسه، لكن بينسوا حاجة أساسية: التنفس. الحقيقة إن طريقة تنفسك ممكن تكون الفرق بين تمرين مضبوط وتمرين مرهق بدون جودة حقيقية. العضلات محتاجة أكسجين عشان تشتغل بشكل جيد، ولو التنفس مش منتظم أو فيه كتم للنفس لفترات طويلة، التعب هيظهر أسرع والأداء هيقل.
+
+## الجسم أثناء التمرين يحتاج أكسجين أكثر
+أثناء التمرين، خصوصًا في الجلسات الثقيلة أو المجهود العالي، احتياج الجسم للأكسجين يزيد. لو النفس غير منتظم، العضلات لن تحصل على الكمية المناسبة، وقد يظهر ذلك في صورة تعب أسرع، إحساس بالإرهاق، أو حتى دوخة أثناء الأداء.
+
+## ما الغلطة الشائعة؟
+من أشهر الأخطاء أن الشخص يكتم نفسه أثناء رفع الوزن من غير ما ينتبه. هذا قد يرفع الضغط داخل الصدر ويؤثر على رجوع الدم، وبالتالي قد يؤدي إلى دوخة، فقدان توازن، أو ضعف في جودة التكرار نفسه.
+
+## ما الطريقة الصحيحة للتنفس؟
+القاعدة العملية البسيطة هي: خذ شهيقًا قبل بداية الحركة، ثم أخرج الزفير أثناء الجزء الذي يحتاج مجهودًا أكبر.
+
+في تمرين Bench Press مثلًا:
+* نزول البار: شهيق.
+* رفع البار: زفير.
+
+وفي تمرين Squat:
+* النزول: شهيق.
+* الصعود: زفير.
+
+## كيف يؤثر التنفس على الأداء؟
+عندما يكون التنفس أفضل:
+* قد تتحسن القوة لأنك تحافظ على إيقاع الحركة.
+* قد يزيد التحمل لأن الجسم يستفيد من الأكسجين بشكل أفضل.
+* قد يقل التعب المبكر.
+* وقد يتحسن التركيز على التقنية بدل الارتباك أثناء التكرار.
+
+## نصائح عملية إضافية
+* تجنب كتم النفس لفترة طويلة أثناء المجهود.
+* في تمارين الثبات أو الـ hold، خذ شهيقًا مناسبًا قبل البدء مع الحفاظ على تحكمك في النفس.
+* ركز على الزفير أثناء الدفع أو رفع الوزن.
+* إذا كنت تشعر بدوخة متكررة، خفف الشدة وراجع طريقة الأداء والتنفس بدل تجاهل المشكلة.
+
+## الخلاصة
+التنفس ليس شيئًا ثانويًا في الجيم، بل جزء أساسي من جودة الأداء نفسه. كلما كان النفس منظمًا ومناسبًا للحركة، كانت فرصتك أفضل في الحفاظ على القوة، التحمل، والتركيز أثناء التمرين.
+
+إذا أردت صورة أشمل عن مجهودك اليومي، يمكنك البدء من [حاسبات الموقع](/calculators) لمراجعة النشاط والسعرات، ثم متابعة تقدمك في [لوحة المتابعة](/dashboard). وبعد ما عرفت إزاي تتنفس صح، اتعلم إزاي تحسب سعراتك بدقة في مقالنا عن [خرافة حساب السعرات: الفرق بين BMR وTDEE](/insights/bmr-vs-tdee-calorie-calculation-myth). ولو أردت فهمًا أعمق لسبب التعب والنهجان أثناء الجيم، اقرأ أيضًا [القلب في الجيم: ليه بيتعبك؟ وإزاي تحسّن أداءك؟](/insights/heart-health-gym-performance-guide).`,
+        category: 'Training Basics',
+        date: '2026-03-27',
+        icon: 'HeartPulse',
+      },
+      {
+        id: 11,
+        slug: 'heart-health-gym-performance-guide',
+        title: 'القلب في الجيم: ليه بيتعبك؟ وإزاي تحسّن أداءك؟',
+        excerpt:
+          'افهم ماذا يحدث لقلبك أثناء الحديد والكارديو، ولماذا يظهر النهجان والتعب، وكيف ترتبط كفاءة القلب بالتحمل وحرق الدهون والأداء الرياضي.',
+        content: `بينما تركز على شكل العضلات أو أرقام الأوزان، هناك عضو يعمل طوال التمرين تقريبًا بلا توقف: القلب. في الجيم، القلب ليس مجرد مضخة صامتة، بل جزء أساسي من الأداء والتحمل والقدرة على الاستمرار. كلما فهمت كيف يستجيب قلبك للمجهود، أصبح من الأسهل أن تتدرج بذكاء، وتقرأ إشارات التعب بشكل أفضل، وتربط الأداء الرياضي بالصحة العامة.
+
+## ماذا يحدث لقلبك أثناء رفع الأثقال والكارديو؟
+بمجرد أن تبدأ الجري أو ترفع وزنًا، يتدخل الجهاز العصبي سريعًا ليرفع جاهزية الجسم. هنا يحدث أكثر من تغير مهم:
+* يزيد معدل ضربات القلب حتى يصل الأكسجين والدم إلى العضلات العاملة بشكل أسرع.
+* يزيد حجم الضخ في بعض درجات المجهود، فيرسل القلب كمية أكبر من الدم مع كل نبضة.
+* يعيد الجسم توزيع الدم لصالح العضلات النشطة بدل توجيه النسبة نفسها إلى الأجهزة الأقل أولوية أثناء التمرين.
+
+لهذا تشعر أن الجسم كله دخل في "وضع تشغيل" كامل بمجرد بدء الجلسة.
+
+## لماذا نشعر بالتعب والنهجان؟
+التعب لا يعني دائمًا أن العضلة ضعيفة وحدها. كثيرًا ما يرتبط الأمر بقدرة الجسم على توصيل الأكسجين والتعامل مع شدة المجهود. عندما ترتفع الشدة بسرعة، قد تحتاج العضلات طاقة أسرع من قدرة النظام الهوائي على تغطيتها، وهنا يزيد الإحساس بالنهجان والتعب والحرقان العضلي.
+
+بمعنى عملي: كلما كانت كفاءة القلب والجهاز الدوري أفضل، كان تحملك للشدة أفضل أيضًا.
+
+## لماذا المحترفون يتعبون أقل غالبًا؟
+الفرق بين المبتدئ والمتدرب المتقدم لا يتعلق فقط بالشكل الخارجي أو الكتلة العضلية. التدريب المنتظم يطوّر كفاءة القلب والدورة الدموية مع الوقت:
+* قد يصبح نبض الراحة أقل لأن الجسم صار أكثر كفاءة.
+* يتحسن تحمل المجهود قبل الوصول السريع للإرهاق.
+* يصبح الانتقال بين الجهد العالي والاستشفاء أكثر سلاسة.
+
+لهذا قد ترى شخصين يؤديان نفس التمرين، لكن أحدهما ينهج بسرعة والآخر يبدو أكثر هدوءًا وسيطرة.
+
+## ما علاقة القلب بحرق الدهون؟
+حرق الدهون يعتمد بدرجة كبيرة على كفاءة النظام الهوائي. حين تتحسن كفاءة القلب في إيصال الأكسجين، يصبح الجسم أقدر على الاستفادة من الطاقة بشكل أفضل أثناء الجهد المناسب. هذا لا يعني أن القلب وحده يحرق الدهون، لكنه جزء مهم من الصورة التي تشمل النشاط، شدة التمرين، التغذية، والاستمرارية.
+
+هنا يفيدك أن تربط التدريب بالأرقام. استخدم [حاسبات الموقع](/calculators) لمراجعة السعرات والنشاط وTDEE، ثم راقب استجابتك عبر [لوحة المتابعة](/dashboard) بدل الاعتماد على الانطباع فقط.
+
+## متى يجب أن تتوقف وتنتبه؟
+هناك علامات لا يجب تجاهلها أثناء التمرين:
+* ألم أو ضغط واضح في الصدر.
+* دوخة مفاجئة أو فقدان توازن متكرر.
+* نهجان شديد لا يتحسن بشكل معقول بعد التوقف.
+
+في هذه الحالات، لا تتعامل مع الأمر كأنه تعب عادي فقط، واطلب تقييمًا طبيًا مناسبًا خاصة إذا كانت الأعراض جديدة أو غير معتادة.
+
+## كيف تحسن أداء قلبك في الجيم؟
+* تدرج في الشدة ولا تبدأ بأقصى مجهود من أول يوم.
+* اجمع بين تمارين المقاومة والكارديو بشكل منظم.
+* استخدم الكارديو الثابت أو الفواصل بحسب مستواك الحالي وقدرتك على التعافي.
+* راقب تأثير النوم، التغذية، والترطيب على أدائك.
+
+إذا كنت تريد ربط هذا الفهم بحساب الطاقة الفعلية، ابدأ من مقال [خرافة حساب السعرات: الفرق بين BMR وTDEE](/insights/bmr-vs-tdee-calorie-calculation-myth). وإذا كنت تريد تحسين التحكم أثناء التمرين نفسه، فاقرأ أيضًا [التنفس في الجيم: الطريقة الصح اللي تمنع الدوخة وتحسّن الأداء](/insights/gym-breathing-prevent-dizziness-and-boost-performance).
+
+## الخلاصة
+القلب هو أحد أهم العوامل الخفية التي تحدد جودة تمرينك، قدرتك على الاستمرار، وسرعة شعورك بالتعب. كلما طورت كفاءته بالتدرج والتدريب الذكي، تحسن التحمل وصارت قراءتك للمجهود أكثر وعيًا. النتيجة ليست فقط أداءً أفضل في الجيم، بل أساسًا صحيًا أقوى على المدى الطويل.`,
+        category: 'Cardio & Performance',
+        date: '2026-03-27',
+        icon: 'HeartPulse',
+      },
+      {
+        id: 12,
+        slug: 'how-exercise-changes-your-body-complete-guide',
+        title: 'إزاي التمرين بيغيّر جسمك؟ الدليل الكامل لفهم جسمك في الجيم',
+        excerpt:
+          'دليل شامل لفهم ما يحدث داخل جسمك مع التمرين، من العضلات والقلب إلى التحمل وحرق الدهون، مع ربط التمرين بالتغذية والتعافي.',
+        content: `لو بتمرن بقالك فترة ولسه حاسس إنك مش فاهم جسمك، فده طبيعي. ناس كتير بتدخل الجيم وتركز فقط على الوزن، التكرار، وعدد الأيام، لكن الجزء الأهم فعلًا هو ما يحدث داخل الجسم نفسه. التمرين ليس مجرد حركة أو إحساس بالتعب، بل هو ضغط محسوب يدفع الجسم إلى التكيف والتحسن مع الوقت.
+
+كل جلسة تمرين تبعث رسالة واضحة: الجسم يحتاج أن يكون أقوى، أو أسرع، أو أكثر تحملًا. الجسم لا يرفض هذه الرسالة، لكنه لا يستجيب لها إلا لو كان هناك انتظام واستمرارية. لذلك ففهم الاستجابة الداخلية للتمرين يساعدك على رؤية النتائج بشكل أوضح بدل التعامل مع التدريب بعشوائية.
+
+## ماذا يحدث داخل جسمك أول ما تبدأ تتمرن؟
+في بداية التمرين، يدخل الجسم في حالة استعداد أعلى:
+* يزيد معدل ضربات القلب حتى يصل الدم والأكسجين للعضلات العاملة.
+* يزيد النفس لأن الجسم يحتاج تبادلًا أكبر للأكسجين والطاقة.
+* تبدأ العضلات في استهلاك الوقود المتاح بسرعة أكبر حسب نوع المجهود.
+
+هذه ليست علامة ضعف، بل استجابة طبيعية لأن الجسم يحاول تغطية احتياجات الحركة الجديدة. ومع الوقت، تصبح هذه الاستجابة أكثر كفاءة، فيقل الإحساس بالفوضى ويزيد التحكم في الأداء.
+
+## كيف يتغير جسمك مع الاستمرار؟
+بعد أسابيع من الالتزام، تبدأ التغيرات الحقيقية في الظهور:
+* القوة تزيد لأن العضلات والجهاز العصبي يتأقلمان مع الحمل.
+* التحمل يتحسن لأن القلب والجهاز الدوري يصبحان أكثر كفاءة.
+* يبدأ الشكل العضلي في التحسن إذا كان التدريب مناسبًا والتغذية داعمة.
+
+هذا ليس سحرًا. إنه ببساطة تكيف بيولوجي مع حمل متكرر ومنظم.
+
+## أنواع التمرين وتأثيرها على جسمك
+ليس كل تمرين يؤدي نفس النتيجة، لأن كل نوع يضغط على الجسم بطريقة مختلفة.
+
+## التمارين الهوائية
+مثل المشي، الجري، أو الدراجة. هذا النوع يعتمد بدرجة أكبر على الأكسجين، ويساعد على تحسين كفاءة القلب والرئتين، ويدعم التحمل وحرق الدهون بشكل عملي. إذا أردت فهم هذا الجانب أكثر، راجع أيضًا مقال [القلب في الجيم: ليه بيتعبك؟ وإزاي تحسّن أداءك؟](/insights/heart-health-gym-performance-guide).
+
+## تمارين المقاومة
+مثل رفع الأوزان وتمارين القوة. هذا النوع يعتمد على طاقة سريعة نسبيًا، ويحفز زيادة القوة والحفاظ على الكتلة العضلية أو بنائها. وهو جزء أساسي لأي شخص يريد جسمًا أقوى أو شكلًا عضليًا أوضح.
+
+الأفضل عادة ليس أن تختار نوعًا واحدًا وتترك الآخر، بل أن تستخدم مزيجًا متوازنًا يناسب هدفك الحالي.
+
+## لماذا قد تتمرن ولا ترى نتيجة؟
+أحد أشهر الأسباب هو تكرار نفس التمرين بنفس الشدة كل مرة. الجسم ذكي جدًا، وإذا اعتاد على نفس الحمل فلن يجد سببًا كافيًا للتطور. هنا يظهر مبدأ مهم:
+
+## ما هو التحميل التدريجي؟
+التحميل التدريجي يعني أن هناك تحديًا يتزايد مع الوقت، مثل:
+* زيادة الوزن،
+* أو زيادة التكرارات،
+* أو رفع الشدة،
+* أو تحسين جودة الأداء نفسه.
+
+من دون هذا التطور، تقل فرصة حدوث تغير واضح في القوة أو الشكل أو التحمل.
+
+## لماذا التمرين وحده لا يكفي؟
+كثير من الناس يفصلون بين ثلاثة عناصر رغم أنها تعمل كنظام واحد:
+* التمرين،
+* التغذية،
+* والتعافي.
+
+لو التمرين جيد لكن الأكل لا يغطي الاحتياج، فالنتيجة تكون أضعف من المتوقع. ولو كان هناك تمرين مع غياب الراحة، قد يظهر الإجهاد أو تزيد احتمالات الإصابة. ولو الأكل جيد بلا تدريب مناسب، فلن تظهر استجابة حقيقية. لهذا من المهم أن تربط مجهودك باحتياجاتك اليومية من الطاقة عبر [حاسبات السعرات وTDEE على الموقع](/calculators)، ثم تتابع التغيرات في [لوحة المتابعة](/dashboard).
+
+## مثال عملي بسيط
+شخص يتمرن 3 مرات أسبوعيًا:
+* في أول أسبوع يشعر بتعب واضح وسرعة إجهاد.
+* بعد 3 أسابيع يبدأ الجسم في التكيف.
+* بعد شهرين يظهر فرق أوضح في القوة، التحكم، أو الشكل.
+
+الفرق هنا لا يكون فقط في نوع التمرين، بل في الاستمرارية والتدرج.
+
+## كيف تربط هذا الفهم بباقي المقالات؟
+إذا أردت فهمًا أدق للطاقة والسعرات، اقرأ [خرافة حساب السعرات: الفرق بين BMR وTDEE](/insights/bmr-vs-tdee-calorie-calculation-myth). وإذا أردت تحسين التحكم أثناء الأداء وتقليل الدوخة، راجع [التنفس في الجيم: الطريقة الصح اللي تمنع الدوخة وتحسّن الأداء](/insights/gym-breathing-prevent-dizziness-and-boost-performance). ولفهم دور القلب في التحمل والمجهود، راجع [القلب في الجيم: ليه بيتعبك؟ وإزاي تحسّن أداءك؟](/insights/heart-health-gym-performance-guide).
+
+## الخلاصة
+إذا أردت نتيجة حقيقية، فالمفتاح ليس أن تتمرن أكثر بشكل عشوائي، بل أن تفهم كيف يستجيب جسمك، وأن ترفع الحمل تدريجيًا، وأن تتعامل مع التمرين والتغذية والتعافي كنظام واحد. التمرين ليس سحرًا، لكنه يصبح فعالًا جدًا عندما تفهمه وتطبقه بذكاء.`,
+        category: 'Training Fundamentals',
+        date: '2026-03-27',
+        icon: 'Brain',
+      },
     ];
   }
 
@@ -808,6 +1028,226 @@ Even with a better nutrition plan, training may be less effective if movement qu
 There are no magic shortcuts. Fat loss works better when you stop chasing myths and focus on the basics: calorie balance, consistency, suitable training, and enough patience to let the process work.`,
       category: 'Diet Myths',
       date: '2026-03-19',
+      icon: 'Brain',
+    },
+    {
+      id: 9,
+      slug: 'bmr-vs-tdee-calorie-calculation-myth',
+      title: 'The calorie myth: BMR vs TDEE and how to use them in real life',
+      excerpt:
+        'Daily calorie needs are not a magic fixed number. Learn the difference between BMR and TDEE, why simple formulas can mislead, and how to use a calculator more intelligently.',
+      content: `Many people still think they can calculate daily calories with perfect accuracy from one formula or an old chart. That idea is misleading. The human body is not a fixed machine, and energy expenditure changes with age, lean mass, movement, sleep, stress, and the realities of day-to-day life. That is why understanding the difference between BMR and TDEE matters more than memorizing one number.
+
+## What is BMR?
+BMR, or Basal Metabolic Rate, is the energy your body uses at complete rest to maintain essential functions such as breathing, circulation, and temperature regulation. If you barely moved all day, your body would still burn roughly this amount of energy.
+
+A simple example: someone who weighs 70 kg, is 25 years old, and is 175 cm tall might have a BMR somewhere around 1700 to 1800 kcal per day. That is still an estimate, not an exact personal truth.
+
+## What is TDEE?
+TDEE, or Total Daily Energy Expenditure, is the total energy your body burns across the full day. It includes BMR plus daily movement, exercise, digestion, and general activity. This is the more practical number when you are planning fat loss, maintenance, or muscle gain.
+
+If that same person has a BMR around 1750 kcal and a moderate activity level, their TDEE might land around 2400 to 2500 kcal per day.
+
+## Why can traditional formulas mislead?
+* Most equations are built on population averages, not on your exact physiology.
+* Real activity levels change from one day to the next.
+* Sleep, stress, hormones, and some health conditions can shift energy expenditure.
+
+That means a formula can be useful as a starting estimate while still being noticeably off from real life if you treat it like a final answer.
+
+## What is the practical way to use these numbers?
+Instead of asking for a perfect calorie number, it is usually better to ask for the best starting estimate and then adjust based on actual response.
+
+Start with the site [BMR and calorie calculators](/calculators), then track changes in body weight, measurements, and performance over a few weeks. If your goal is fat loss, you will usually work around TDEE with a sensible deficit. If your goal is muscle gain, you will often stay near maintenance or slightly above it depending on response.
+
+## Why does the calculator help more than guessing?
+A calculator is not magic, but it combines body weight, height, age, and activity level to produce a starting point that is far more useful than random guessing. From there, you can use the [tracking dashboard](/dashboard) and explore related guidance in the [insights library](/insights) to connect numbers with real outcomes.
+
+## Key takeaways
+* BMR is what your body burns at complete rest.
+* TDEE is your total daily energy burn.
+* Equations are useful guides, not perfect final answers.
+* The smartest approach is to calculate, monitor, then adjust.
+
+If you want a more realistic calorie target than an old table can give you, start with the site [calculators](/calculators) and review progress over time instead of chasing one fixed number. If you train regularly, it also helps to read [Gym breathing: the right way to prevent dizziness and boost performance](/insights/gym-breathing-prevent-dizziness-and-boost-performance) so calorie planning connects with better training execution, then continue with [The heart in the gym: why it gets tired and how to boost performance](/insights/heart-health-gym-performance-guide) to connect energy planning with cardiovascular efficiency.`,
+      category: 'Calorie Calculation',
+      date: '2026-03-27',
+      icon: 'Calculator',
+    },
+    {
+      id: 10,
+      slug: 'gym-breathing-prevent-dizziness-and-boost-performance',
+      title: 'Gym breathing: the right way to prevent dizziness and boost performance',
+      excerpt:
+        'Learn how to breathe correctly during workouts, avoid the common mistake of holding your breath too long, and improve strength, endurance, and exercise control.',
+      content: `Many people focus on the workout itself but forget something basic: breathing. The way you breathe can be the difference between a solid training session and one that feels exhausting without real quality. Muscles need oxygen to work well, and poor breathing patterns can make fatigue show up earlier and performance drop faster.
+
+## Your body needs more oxygen during exercise
+During training, especially during heavy or demanding sets, your body needs more oxygen. If breathing becomes irregular, muscles may not get what they need efficiently, and that may lead to early fatigue, exhaustion, or dizziness.
+
+## What is the common mistake?
+One of the most common mistakes is holding your breath without noticing, especially during heavy lifting. That can increase pressure inside the chest and affect blood return, which may contribute to dizziness, loss of balance, or weaker performance.
+
+## What is the correct way to breathe?
+A simple practical rule works well in many exercises: inhale before the movement starts, then exhale during the part that needs more effort.
+
+For example in the Bench Press:
+* Lowering the bar: inhale.
+* Pressing the bar up: exhale.
+
+And in the Squat:
+* Going down: inhale.
+* Standing up: exhale.
+
+## How does breathing affect performance?
+Better breathing may:
+* improve strength by supporting a more stable movement rhythm,
+* improve endurance by helping oxygen use stay more efficient,
+* reduce early fatigue,
+* and improve focus on technique during each repetition.
+
+## Extra practical tips
+* Avoid holding your breath too long during effort.
+* In isometric or hold exercises, take a controlled breath before the hold and stay aware of your breathing pattern.
+* Focus on exhaling during pushing or lifting.
+* If dizziness happens repeatedly, reduce intensity and review both technique and breathing instead of ignoring it.
+
+## Conclusion
+Breathing is not a secondary detail in the gym. It is a core part of movement quality and performance. The better your breathing matches the exercise, the better your chances of maintaining strength, endurance, and control during training.
+
+If you want a broader view of your training load and daily energy use, start with the site [calculators](/calculators) and review progress through the [tracking dashboard](/dashboard). After learning how to breathe better, you can also read [The calorie myth: BMR vs TDEE and how to use them in real life](/insights/bmr-vs-tdee-calorie-calculation-myth) to connect training effort with smarter calorie planning. For a clearer look at fatigue, breathlessness, and endurance, continue with [The heart in the gym: why it gets tired and how to boost performance](/insights/heart-health-gym-performance-guide).`,
+      category: 'Training Basics',
+      date: '2026-03-27',
+      icon: 'HeartPulse',
+    },
+    {
+      id: 11,
+      slug: 'heart-health-gym-performance-guide',
+      title: 'The heart in the gym: why it gets tired and how to boost performance',
+      excerpt:
+        'Learn what happens to your heart during lifting and cardio, why breathlessness and fatigue show up, and how cardiac efficiency supports endurance, fat loss, and overall gym performance.',
+      content: `While many people focus on muscle size or the numbers on the bar, one organ works constantly in the background during training: the heart. In the gym, the heart is not just a quiet pump. It is a major part of endurance, recovery, and your ability to keep performing. The better you understand how your heart responds to exercise, the easier it becomes to progress intelligently and interpret fatigue more accurately.
+
+## What happens to your heart during lifting and cardio?
+The moment you start running, cycling, or lifting, your nervous system quickly increases the body's readiness for work. Several things happen:
+* Heart rate rises so oxygen and blood can reach working muscles faster.
+* Cardiac output increases through changes in rate and pumping efficiency.
+* The body redistributes blood flow toward active muscles rather than keeping the same priority on less urgent systems during exercise.
+
+That is why the whole body seems to switch rapidly into a higher-demand mode once training starts.
+
+## Why do we feel tired and out of breath?
+Fatigue is not always only about muscle weakness. It is often linked to how well the body can deliver oxygen and manage the training load. When intensity rises quickly, muscles may demand energy faster than the aerobic system can comfortably support, which increases breathlessness, fatigue, and the familiar burning sensation.
+
+In practical terms, better cardiac and circulatory efficiency usually supports better tolerance to hard work.
+
+## Why do trained athletes often get less tired?
+The difference between a beginner and a more advanced trainee is not only muscle size or appearance. Consistent training improves cardiovascular efficiency over time:
+* resting heart rate may become lower,
+* tolerance to effort improves before fatigue appears,
+* and recovery between hard efforts often becomes smoother.
+
+That is why two people can perform the same workout while one of them looks much more controlled and less distressed.
+
+## What is the link between the heart and fat loss?
+Fat oxidation relies heavily on aerobic metabolism. When the heart becomes more efficient at delivering oxygen, the body is generally better prepared to support steady energy use during appropriate exercise intensity. That does not mean the heart alone causes fat loss, but it is a major piece of the bigger picture that also includes training load, nutrition, and consistency.
+
+This is where numbers help. Use the site [calculators](/calculators) to review calories, activity, and TDEE, then follow your actual response with the [tracking dashboard](/dashboard) instead of relying only on guesswork.
+
+## When should you stop and pay attention?
+Some signs during exercise deserve real attention:
+* clear chest pain or chest pressure,
+* sudden dizziness or repeated loss of balance,
+* severe breathlessness that does not settle reasonably after stopping.
+
+These should not be treated as ordinary fatigue, especially if they are new or unusual. Medical review may be appropriate.
+
+## How can you improve heart performance in the gym?
+* Progress gradually instead of jumping to maximal intensity immediately.
+* Combine resistance training with structured cardio work.
+* Use steady-state cardio or intervals according to your current level and recovery ability.
+* Pay attention to how sleep, nutrition, and hydration affect performance.
+
+If you want to connect this topic to energy planning, start with [The calorie myth: BMR vs TDEE and how to use them in real life](/insights/bmr-vs-tdee-calorie-calculation-myth). If you also want better movement control during training, read [Gym breathing: the right way to prevent dizziness and boost performance](/insights/gym-breathing-prevent-dizziness-and-boost-performance).
+
+## Conclusion
+The heart is one of the most important hidden drivers of exercise quality, endurance, and recovery from effort. As its efficiency improves through gradual and consistent training, your tolerance to work improves too. The result is not only better gym performance, but a stronger health foundation over time.`,
+      category: 'Cardio & Performance',
+      date: '2026-03-27',
+      icon: 'HeartPulse',
+    },
+    {
+      id: 12,
+      slug: 'how-exercise-changes-your-body-complete-guide',
+      title: 'How exercise changes your body: a complete guide to understanding your body in the gym',
+      excerpt:
+        'A complete guide to what happens inside your body with exercise, from muscles and heart function to endurance, fat loss, nutrition, and recovery.',
+      content: `If you have been training for a while and still feel like you do not fully understand your body, that is normal. Many people enter the gym and focus only on weights, reps, and training days, but the more important part is what happens inside the body itself. Exercise is not just movement or fatigue. It is controlled stress that pushes the body to adapt and improve over time.
+
+Every session sends a clear message: the body needs to become stronger, more efficient, or more resilient. The body does not ignore that signal, but it responds best when training is consistent. That is why understanding the internal response to exercise helps you read progress more clearly instead of training at random.
+
+## What happens inside your body when you start training?
+At the beginning of exercise, the body shifts into a higher-demand state:
+* heart rate rises so blood and oxygen can reach working muscles,
+* breathing increases because the body needs more oxygen exchange and energy support,
+* and muscles start using available fuel faster depending on the type of effort.
+
+This is not weakness. It is a normal physiological response that helps the body meet the demands of movement. With time, the response becomes more efficient and more controlled.
+
+## How does your body change with consistency?
+After several weeks of regular training, meaningful changes start to appear:
+* strength improves because muscles and the nervous system adapt to repeated load,
+* endurance improves because the cardiovascular system becomes more efficient,
+* and body composition may improve when training is supported by suitable nutrition.
+
+This is not magic. It is biological adaptation to repeated and organized stress.
+
+## Types of exercise and how they affect the body
+Not all training affects the body in the same way, because each type creates a different demand.
+
+## Aerobic exercise
+Walking, running, and cycling rely more heavily on oxygen. They help improve heart and lung efficiency and strongly support endurance and fat burning. If you want a deeper look at this side, read [The heart in the gym: why it gets tired and how to boost performance](/insights/heart-health-gym-performance-guide).
+
+## Resistance training
+Weight training and strength work rely more on rapid energy supply and are central for improving strength and maintaining or building muscle mass. This is a major foundation for anyone who wants a stronger body or clearer muscular development.
+
+In practice, the best approach is often not choosing one and ignoring the other, but using a balanced mix that matches your goal.
+
+## Why might you train and still not see results?
+One of the most common reasons is repeating the same workout at the same intensity every time. The body adapts quickly, and once it gets used to the same load, it has less reason to keep changing. That is where a core principle matters.
+
+## What is progressive overload?
+Progressive overload means the challenge increases over time, such as:
+* increasing weight,
+* increasing repetitions,
+* increasing intensity,
+* or improving execution quality itself.
+
+Without progression, visible change in strength, physique, or endurance becomes harder to achieve.
+
+## Why is exercise alone not enough?
+Many people separate three elements even though they operate as one system:
+* training,
+* nutrition,
+* and recovery.
+
+If training is good but food intake does not support the body's needs, progress becomes weaker. If training is present but recovery is poor, fatigue or injury risk becomes more likely. If nutrition is fine but training is absent, meaningful adaptation does not happen. That is why it helps to connect effort with actual needs through the site [calorie and TDEE calculators](/calculators), then follow changes in the [tracking dashboard](/dashboard).
+
+## A simple practical example
+Someone training 3 times per week may experience:
+* clear fatigue in week 1,
+* visible adaptation by week 3,
+* and more obvious progress in strength, control, or physique by month 2.
+
+The difference is not only the workout type. It is consistency and gradual progression.
+
+## How does this connect to the rest of the content?
+If you want a more accurate understanding of energy needs and calorie planning, read [The calorie myth: BMR vs TDEE and how to use them in real life](/insights/bmr-vs-tdee-calorie-calculation-myth). If you want to improve control during effort and reduce dizziness, read [Gym breathing: the right way to prevent dizziness and boost performance](/insights/gym-breathing-prevent-dizziness-and-boost-performance). For endurance and cardiovascular effort, continue with [The heart in the gym: why it gets tired and how to boost performance](/insights/heart-health-gym-performance-guide).
+
+## Conclusion
+If you want real results, the key is not random effort. It is understanding how your body responds, progressing load gradually, and treating training, nutrition, and recovery as one system. Exercise is not magic, but it becomes far more effective when you understand it and apply it with structure.`,
+      category: 'Training Fundamentals',
+      date: '2026-03-27',
       icon: 'Brain',
     },
   ];
