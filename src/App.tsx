@@ -320,47 +320,6 @@ export default function App({
   }, []);
 
   useEffect(() => {
-    const clientId = import.meta.env.VITE_ADSENSE_CLIENT_ID;
-    if (!clientId) return;
-
-    let idleHandle = 0;
-
-    const ensureAdSenseScript = () => {
-      if (localStorage.getItem('physiohub_cookie_consent') !== 'accepted') return;
-      if (document.querySelector('script[data-adsense-loader="true"]')) return;
-
-      const injectScript = () => {
-        if (document.querySelector('script[data-adsense-loader="true"]')) return;
-
-        const script = document.createElement('script');
-        script.async = true;
-        script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${clientId}`;
-        script.crossOrigin = 'anonymous';
-        script.setAttribute('data-adsense-loader', 'true');
-        document.head.appendChild(script);
-      };
-
-      if (typeof window.requestIdleCallback === 'function') {
-        idleHandle = window.requestIdleCallback(() => injectScript(), {timeout: 2500});
-        return;
-      }
-
-      idleHandle = window.setTimeout(injectScript, 1800);
-    };
-
-    ensureAdSenseScript();
-    window.addEventListener('physiohub-consent-change', ensureAdSenseScript);
-    return () => {
-      if (typeof window.cancelIdleCallback === 'function') {
-        window.cancelIdleCallback(idleHandle);
-      } else if (idleHandle) {
-        window.clearTimeout(idleHandle);
-      }
-      window.removeEventListener('physiohub-consent-change', ensureAdSenseScript);
-    };
-  }, []);
-
-  useEffect(() => {
     localStorage.setItem('physiohub_custom_foods', JSON.stringify(customFoods));
   }, [customFoods]);
 
