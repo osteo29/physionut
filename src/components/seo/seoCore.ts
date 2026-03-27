@@ -68,12 +68,22 @@ function upsertJsonLd(id: string, json: unknown) {
 
 export function applySeo(config: SeoConfig) {
   const siteUrl = import.meta.env.VITE_SITE_URL || 'https://physionutrition.vercel.app';
-  
-  // For canonical path, support both /en/... and /... formats
-  // Always normalize to language-prefixed format
-  const normalizedPath = config.canonicalPath.startsWith('/en/') || config.canonicalPath.startsWith('/ar/')
-    ? config.canonicalPath
-    : `${config.canonicalPath}`;
+
+  const currentLangMatch =
+    typeof window !== 'undefined' ? window.location.pathname.match(/^\/(en|ar)(?:\/|$)/) : null;
+  const currentLang = currentLangMatch?.[1];
+  const rawPath = config.canonicalPath.startsWith('/') ? config.canonicalPath : `/${config.canonicalPath}`;
+  const normalizedPath =
+    rawPath.startsWith('/en/') ||
+    rawPath.startsWith('/ar/') ||
+    rawPath === '/en' ||
+    rawPath === '/ar'
+      ? rawPath
+      : currentLang
+        ? rawPath === '/'
+          ? `/${currentLang}/`
+          : `/${currentLang}${rawPath}`
+        : rawPath;
   
   const canonicalUrl = `${siteUrl.replace(/\/$/, '')}${normalizedPath}`;
   const ogImage = config.ogImage || `${siteUrl.replace(/\/$/, '')}/og-image.png`;
