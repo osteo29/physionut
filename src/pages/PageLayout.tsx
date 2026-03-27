@@ -76,7 +76,7 @@ export default function PageLayout({
                 type="button"
                 onClick={() => handleLanguageSwitch('en')}
                 className={`rounded-full px-3 py-1 text-xs font-bold ${
-                  lang === 'en' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'
+                  lang === 'en' ? 'bg-white text-health-green shadow-sm' : 'text-slate-700'
                 }`}
               >
                 EN
@@ -85,7 +85,7 @@ export default function PageLayout({
                 type="button"
                 onClick={() => handleLanguageSwitch('ar')}
                 className={`rounded-full px-3 py-1 text-xs font-bold ${
-                  lang === 'ar' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'
+                  lang === 'ar' ? 'bg-white text-health-green shadow-sm' : 'text-slate-700'
                 }`}
               >
                 AR

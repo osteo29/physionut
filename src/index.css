@@ -1,9 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Readex+Pro:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
-  --font-arabic: "Readex Pro", sans-serif;
+  --font-sans: "Segoe UI", "Helvetica Neue", Arial, ui-sans-serif, system-ui, sans-serif;
+  --font-arabic: Tahoma, Arial, "Segoe UI", sans-serif;
 
   --color-health-green: #315f4a;
   --color-health-green-dark: #234536;

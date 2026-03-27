@@ -22,13 +22,13 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
               </div>
               <span className="text-2xl font-black tracking-tighter text-white">PhysioNutrition</span>
             </div>
-            <p className="max-w-xs leading-relaxed text-slate-400">
+            <p className="max-w-xs leading-relaxed text-slate-300">
               {lang === 'en'
                 ? 'Educational tools and clinical insights for recovery, nutrition, and safer decision support.'
                 : 'أدوات تعليمية ورؤى عملية للتعافي والتغذية ودعم القرار الصحي بشكل أوضح وأكثر أمانًا.'}
             </p>
             <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-4">
-              <div className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-slate-500">
+              <div className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-slate-300">
                 {lang === 'en' ? 'Follow PhysioNutrition' : 'تابع PhysioNutrition'}
               </div>
               <div className="flex flex-wrap gap-3">
@@ -36,7 +36,7 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
                   href="https://www.facebook.com/Physionutrition.official/"
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-semibold text-slate-300 transition-colors hover:text-health-green"
+                    className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-semibold text-slate-200 transition-colors hover:text-health-green"
                 >
                   <Facebook className="h-4 w-4" />
                   <span>Facebook</span>
@@ -45,7 +45,7 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
                   href="https://www.instagram.com/physionutrition.official/"
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-semibold text-slate-300 transition-colors hover:text-health-green"
+                    className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-semibold text-slate-200 transition-colors hover:text-health-green"
                 >
                   <Instagram className="h-4 w-4" />
                   <span>Instagram</span>
@@ -65,7 +65,7 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="group flex items-center gap-2 text-slate-400 transition-colors hover:text-health-green"
+                    className="group flex items-center gap-2 text-slate-200 transition-colors hover:text-health-green"
                   >
                     <div className="h-1.5 w-1.5 scale-0 rounded-full bg-health-green transition-transform group-hover:scale-100" />
                     {link.label}
@@ -91,7 +91,7 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
                 <li key={link.href}>
                   <Link
                     to={link.href}
-                    className="group flex items-center gap-2 text-slate-400 transition-colors hover:text-health-green"
+                    className="group flex items-center gap-2 text-slate-200 transition-colors hover:text-health-green"
                   >
                     <div className="h-1.5 w-1.5 scale-0 rounded-full bg-health-green transition-transform group-hover:scale-100" />
                     {link.label}
@@ -109,7 +109,7 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
                   <Mail className="h-5 w-5" />
                 </div>
                 <div>
-                  <div className="mb-1 text-xs uppercase tracking-widest text-slate-500">
+                  <div className="mb-1 text-xs uppercase tracking-widest text-slate-300">
                     {lang === 'en' ? 'Email' : 'البريد الإلكتروني'}
                   </div>
                   <a
@@ -125,7 +125,7 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
                   <MapPin className="h-5 w-5" />
                 </div>
                 <div>
-                  <div className="mb-1 text-xs uppercase tracking-widest text-slate-500">
+                  <div className="mb-1 text-xs uppercase tracking-widest text-slate-300">
                     {lang === 'en' ? 'Availability' : 'التواجد'}
                   </div>
                   <span className="text-slate-300">{lang === 'en' ? 'Remote / Online' : 'عن بعد / أونلاين'}</span>
@@ -142,26 +142,26 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
             </div>
             <div className="text-center md:text-left">
               <h4 className="mb-2 font-bold text-white">{t.footer.disclaimerTitle}</h4>
-              <p className="text-sm leading-relaxed text-slate-400">{t.footer.disclaimerText}</p>
+              <p className="text-sm leading-relaxed text-slate-300">{t.footer.disclaimerText}</p>
             </div>
           </div>
         </div>
 
         <div className="flex flex-col items-center justify-between gap-6 border-t border-white/5 pt-12 md:flex-row">
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-slate-300">
             © {currentYear} PhysioNutrition. {t.footer.rights}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 md:justify-end">
-            <Link replace to="/privacy" className="text-sm text-slate-500 transition-colors hover:text-white">
+            <Link replace to="/privacy" className="text-sm text-slate-300 transition-colors hover:text-white">
               {t.footer.links.privacy}
             </Link>
-            <Link replace to="/terms" className="text-sm text-slate-500 transition-colors hover:text-white">
+            <Link replace to="/terms" className="text-sm text-slate-300 transition-colors hover:text-white">
               {t.footer.links.terms}
             </Link>
-            <Link replace to="/cookies" className="text-sm text-slate-500 transition-colors hover:text-white">
+            <Link replace to="/cookies" className="text-sm text-slate-300 transition-colors hover:text-white">
               {lang === 'en' ? 'Cookie Policy' : 'سياسة الكوكيز'}
             </Link>
-            <Link replace to="/disclaimer" className="text-sm text-slate-500 transition-colors hover:text-white">
+            <Link replace to="/disclaimer" className="text-sm text-slate-300 transition-colors hover:text-white">
               {lang === 'en' ? 'Medical Disclaimer' : 'إخلاء المسؤولية الطبي'}
             </Link>
           </div>

@@ -106,7 +106,7 @@ const WhatsNew = memo(({lang}: {lang: Language}) => {
                   href={update.href}
                   className="inline-flex items-center gap-2 text-sm font-bold text-health-green opacity-0 transition-opacity group-hover:opacity-100"
                 >
-                  <span>{lang === 'en' ? 'Explore Feature' : 'استكشف الميزة'}</span>
+                  <span>{lang === 'en' ? `Explore ${update.title}` : `استكشف ${update.title}`}</span>
                   <ChevronRight className={`h-4 w-4 ${lang === 'ar' ? 'rotate-180' : ''}`} />
                 </a>
               ) : (
@@ -114,7 +114,7 @@ const WhatsNew = memo(({lang}: {lang: Language}) => {
                   to={update.href}
                   className="inline-flex items-center gap-2 text-sm font-bold text-health-green opacity-0 transition-opacity group-hover:opacity-100"
                 >
-                  <span>{lang === 'en' ? 'Explore Feature' : 'استكشف الميزة'}</span>
+                  <span>{lang === 'en' ? `Explore ${update.title}` : `استكشف ${update.title}`}</span>
                   <ChevronRight className={`h-4 w-4 ${lang === 'ar' ? 'rotate-180' : ''}`} />
                 </Link>
               )}

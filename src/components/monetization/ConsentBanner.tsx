@@ -10,9 +10,13 @@ export function getStoredConsent(): ConsentState {
 
 export default function ConsentBanner({lang}: {lang: 'en' | 'ar'}) {
   const [consent, setConsent] = useState<ConsentState>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     setConsent(getStoredConsent());
+
+    const timer = window.setTimeout(() => setIsVisible(true), 1200);
+    return () => window.clearTimeout(timer);
   }, []);
 
   if (consent) return null;
@@ -30,7 +34,11 @@ export default function ConsentBanner({lang}: {lang: 'en' | 'ar'}) {
   };
 
   return (
-    <div className="fixed bottom-3 left-3 right-3 z-[90] sm:bottom-4 sm:left-4 sm:right-4">
+    <div
+      className={`fixed bottom-3 left-3 right-3 z-[90] transition-all duration-300 sm:bottom-4 sm:left-4 sm:right-4 ${
+        isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0 pointer-events-none'
+      }`}
+    >
       <div className="mx-auto max-w-3xl rounded-[1.5rem] border border-slate-200 bg-white/94 p-3 shadow-xl backdrop-blur-xl sm:p-4">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div className="flex items-start gap-3">

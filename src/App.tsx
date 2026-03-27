@@ -6,14 +6,12 @@ import { 
   ArrowUpRight, ExternalLink
 } from 'lucide-react';
 import { lazy, Suspense, useState, useEffect, useMemo, memo } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { checkEnvironment } from './services/calculators';
 import { PhysioNutritionLogic, HealthProfile, HealthMetrics } from './services/physioNutritionLogic';
 import { injuryDatabase, getInjuryById } from './services/injuryDatabase';
 import { translations, Language } from './services/translations';
 import { usePublishedArticles } from './services/articleStudio';
-import { askGeminiText } from './ai/gemini';
 import { foodDatabase, FoodItem } from './services/foodData';
 import {setPreferredLanguage} from './services/languagePreference';
 import {ClinicalCalculators, statusToTextClass, type HealthInterpretation, type GoalType, type BodyType} from './logic/physioNutritionLogic';
@@ -223,6 +221,7 @@ export default function App({
     if (!architectMetrics) return;
     setIsGeneratingPlan(true);
     try {
+      const {askGeminiText} = await import('./ai/gemini');
       const response = await askGeminiText({
         system: 'You are a senior clinical nutritionist and physiotherapist. Give practical, safe, evidence-aligned guidance. Use clean markdown only, with no HTML.',
         user: `Generate a highly professional and evidence-based Physio-Nutrition Diet Plan for the following user:
@@ -324,21 +323,41 @@ export default function App({
     const clientId = import.meta.env.VITE_ADSENSE_CLIENT_ID;
     if (!clientId) return;
 
+    let idleHandle = 0;
+
     const ensureAdSenseScript = () => {
       if (localStorage.getItem('physiohub_cookie_consent') !== 'accepted') return;
       if (document.querySelector('script[data-adsense-loader="true"]')) return;
 
-      const script = document.createElement('script');
-      script.async = true;
-      script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${clientId}`;
-      script.crossOrigin = 'anonymous';
-      script.setAttribute('data-adsense-loader', 'true');
-      document.head.appendChild(script);
+      const injectScript = () => {
+        if (document.querySelector('script[data-adsense-loader="true"]')) return;
+
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${clientId}`;
+        script.crossOrigin = 'anonymous';
+        script.setAttribute('data-adsense-loader', 'true');
+        document.head.appendChild(script);
+      };
+
+      if (typeof window.requestIdleCallback === 'function') {
+        idleHandle = window.requestIdleCallback(() => injectScript(), {timeout: 2500});
+        return;
+      }
+
+      idleHandle = window.setTimeout(injectScript, 1800);
     };
 
     ensureAdSenseScript();
     window.addEventListener('physiohub-consent-change', ensureAdSenseScript);
-    return () => window.removeEventListener('physiohub-consent-change', ensureAdSenseScript);
+    return () => {
+      if (typeof window.cancelIdleCallback === 'function') {
+        window.cancelIdleCallback(idleHandle);
+      } else if (idleHandle) {
+        window.clearTimeout(idleHandle);
+      }
+      window.removeEventListener('physiohub-consent-change', ensureAdSenseScript);
+    };
   }, []);
 
   useEffect(() => {
@@ -1092,6 +1111,7 @@ export default function App({
         setIsSidebarOpen={setIsSidebarOpen}
       />
 
+      <main id="main-content" className="flex-1">
       {/* Hero Section */}
       <Hero lang={lang} />
 
@@ -1173,14 +1193,10 @@ export default function App({
       <section id="architect" className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-medical-blue/10 text-medical-blue text-sm font-bold mb-4"
-            >
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-medical-blue/10 px-4 py-1.5 text-sm font-bold text-medical-blue">
               <Brain className="w-4 h-4" />
               <span>{t.architect.title}</span>
-            </motion.div>
+            </div>
             <h2 className="mb-4 text-3xl font-bold text-slate-900 sm:text-4xl">{t.architect.subtitle}</h2>
           </div>
 
@@ -1196,8 +1212,9 @@ export default function App({
                 <div className="space-y-4">
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div className="space-y-1">
-                      <label className="text-xs font-bold text-slate-500 uppercase">{t.forms.age}</label>
+                      <label htmlFor="architect-age" className="text-xs font-bold text-slate-700 uppercase">{t.forms.age}</label>
                       <input 
+                        id="architect-age"
                         type="number" 
                         inputMode="numeric"
                         value={architectDraft.age}
@@ -1208,8 +1225,9 @@ export default function App({
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="text-xs font-bold text-slate-500 uppercase">{t.forms.weight}</label>
+                      <label htmlFor="architect-weight" className="text-xs font-bold text-slate-700 uppercase">{t.forms.weight}</label>
                       <input 
+                        id="architect-weight"
                         type="number" 
                         inputMode="decimal"
                         value={architectDraft.weight}
@@ -1222,8 +1240,9 @@ export default function App({
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-xs font-bold text-slate-500 uppercase">{t.forms.height}</label>
+                    <label htmlFor="architect-height" className="text-xs font-bold text-slate-700 uppercase">{t.forms.height}</label>
                     <input 
+                      id="architect-height"
                       type="number" 
                       inputMode="numeric"
                       value={architectDraft.height}
@@ -1236,8 +1255,9 @@ export default function App({
 
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div className="space-y-1">
-                      <label className="text-xs font-bold text-slate-500 uppercase">{t.architect.gender}</label>
+                      <label htmlFor="architect-gender" className="text-xs font-bold text-slate-700 uppercase">{t.architect.gender}</label>
                       <select 
+                        id="architect-gender"
                         value={architectProfile.gender}
                         onChange={(e) => setArchitectProfile({...architectProfile, gender: e.target.value as 'male' | 'female'})}
                         className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm bg-white"
@@ -1247,8 +1267,9 @@ export default function App({
                       </select>
                     </div>
                     <div className="space-y-1">
-                      <label className="text-xs font-bold text-slate-500 uppercase">{t.architect.goal}</label>
+                      <label htmlFor="architect-goal" className="text-xs font-bold text-slate-700 uppercase">{t.architect.goal}</label>
                       <select 
+                        id="architect-goal"
                         value={architectProfile.goal}
                         onChange={(e) => setArchitectProfile({...architectProfile, goal: e.target.value as any})}
                         className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm bg-white"
@@ -1262,8 +1283,9 @@ export default function App({
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-xs font-bold text-slate-500 uppercase">{t.architect.activityLevel}</label>
+                    <label htmlFor="architect-activity-level" className="text-xs font-bold text-slate-700 uppercase">{t.architect.activityLevel}</label>
                     <select 
+                      id="architect-activity-level"
                       value={architectProfile.activityLevel}
                       onChange={(e) => setArchitectProfile({...architectProfile, activityLevel: Number(e.target.value)})}
                       className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm bg-white"
@@ -1277,8 +1299,9 @@ export default function App({
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-xs font-bold text-slate-500 uppercase">{t.architect.injuryType}</label>
+                    <label htmlFor="architect-injury-type" className="text-xs font-bold text-slate-700 uppercase">{t.architect.injuryType}</label>
                     <select 
+                      id="architect-injury-type"
                       value={architectProfile.injuryType || ''}
                       onChange={(e) => setArchitectProfile({...architectProfile, injuryType: e.target.value || null})}
                       className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm bg-white"
@@ -1292,8 +1315,9 @@ export default function App({
 
                   {architectProfile.injuryType && (
                     <div className="space-y-1">
-                      <label className="text-xs font-bold text-slate-500 uppercase">{t.architect.recoveryWeek}</label>
+                      <label htmlFor="architect-recovery-week" className="text-xs font-bold text-slate-700 uppercase">{t.architect.recoveryWeek}</label>
                       <input 
+                        id="architect-recovery-week"
                         type="number" 
                         min="1"
                         max="52"
@@ -1307,8 +1331,9 @@ export default function App({
                   )}
 
                   <div className="space-y-1">
-                    <label className="text-xs font-bold text-slate-500 uppercase">{t.forms.waist} (cm)</label>
+                    <label htmlFor="architect-waist" className="text-xs font-bold text-slate-700 uppercase">{t.forms.waist} (cm)</label>
                     <input 
+                      id="architect-waist"
                       type="number" 
                       inputMode="numeric"
                       value={architectDraft.waist}
@@ -1320,8 +1345,9 @@ export default function App({
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-xs font-bold text-slate-500 uppercase">{t.forms.neck} (cm)</label>
+                    <label htmlFor="architect-neck" className="text-xs font-bold text-slate-700 uppercase">{t.forms.neck} (cm)</label>
                     <input 
+                      id="architect-neck"
                       type="number" 
                       inputMode="numeric"
                       value={architectDraft.neck}
@@ -1333,8 +1359,9 @@ export default function App({
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-xs font-bold text-slate-500 uppercase">{t.architect.sleep}</label>
+                    <label htmlFor="architect-sleep-hours" className="text-xs font-bold text-slate-700 uppercase">{t.architect.sleep}</label>
                     <input 
+                      id="architect-sleep-hours"
                       type="range" 
                       min="4"
                       max="12"
@@ -1342,17 +1369,19 @@ export default function App({
                       value={architectProfile.sleepHours}
                       onChange={(e) => setArchitectProfile({...architectProfile, sleepHours: Number(e.target.value)})}
                       className="w-full accent-medical-blue"
+                      aria-valuetext={`${architectProfile.sleepHours} hours`}
                     />
-                    <div className="flex justify-between text-[10px] font-bold text-slate-400">
+                    <div className="flex justify-between text-[10px] font-bold text-slate-600">
                       <span>4h</span>
-                      <span className="text-medical-blue">{architectProfile.sleepHours}h</span>
+                      <span className="text-blue-700">{architectProfile.sleepHours}h</span>
                       <span>12h</span>
                     </div>
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-xs font-bold text-slate-500 uppercase">{t.architect.water}</label>
+                    <label htmlFor="architect-water-intake" className="text-xs font-bold text-slate-700 uppercase">{t.architect.water}</label>
                     <input 
+                      id="architect-water-intake"
                       type="number" 
                       inputMode="numeric"
                       value={architectDraft.waterIntake}
@@ -1364,8 +1393,9 @@ export default function App({
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-xs font-bold text-slate-500 uppercase">{t.architect.proteinComp}</label>
+                    <label htmlFor="architect-protein-compliance" className="text-xs font-bold text-slate-700 uppercase">{t.architect.proteinComp}</label>
                     <input 
+                      id="architect-protein-compliance"
                       type="range" 
                       min="0"
                       max="1"
@@ -1373,10 +1403,11 @@ export default function App({
                       value={architectProfile.proteinCompliance}
                       onChange={(e) => setArchitectProfile({...architectProfile, proteinCompliance: Number(e.target.value)})}
                       className="w-full accent-medical-blue"
+                      aria-valuetext={`${Math.round(architectProfile.proteinCompliance * 100)} percent`}
                     />
-                    <div className="flex justify-between text-[10px] font-bold text-slate-400">
+                    <div className="flex justify-between text-[10px] font-bold text-slate-600">
                       <span>0%</span>
-                      <span className="text-medical-blue">{Math.round(architectProfile.proteinCompliance * 100)}%</span>
+                      <span className="text-blue-700">{Math.round(architectProfile.proteinCompliance * 100)}%</span>
                       <span>100%</span>
                     </div>
                   </div>
@@ -1390,7 +1421,7 @@ export default function App({
                       <Calculator className="h-4 w-4" />
                       <span>{lang === 'en' ? 'Calculate now' : 'احسب الآن'}</span>
                     </button>
-                    <p className="mt-2 text-center text-xs text-slate-500">
+                    <p className="mt-2 text-center text-xs text-slate-600">
                       {lang === 'en'
                         ? 'Your inputs are saved automatically, and this button updates the dashboard immediately.'
                         : 'بياناتك تُحفظ تلقائيًا، وهذا الزر يحدّث اللوحة فورًا بعد إدخال الأرقام.'}
@@ -1407,7 +1438,7 @@ export default function App({
                   {/* Top Row: Score & Metrics */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="medical-card p-6 flex flex-col items-center justify-center text-center">
-                      <h4 className="text-sm font-bold text-slate-500 uppercase mb-4">{t.architect.scoreTitle}</h4>
+                      <h4 className="text-sm font-bold text-slate-700 uppercase mb-4">{t.architect.scoreTitle}</h4>
                       <div className="relative w-32 h-32 flex items-center justify-center">
                         <svg className="w-full h-full transform -rotate-90">
                           <circle
@@ -1436,17 +1467,17 @@ export default function App({
                     </div>
 
                     <div className="md:col-span-2 medical-card p-6">
-                      <h4 className="text-sm font-bold text-slate-500 uppercase mb-6">{t.architect.metricsTitle}</h4>
+                      <h4 className="text-sm font-bold text-slate-700 uppercase mb-6">{t.architect.metricsTitle}</h4>
                       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
                         <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
-                          <span className="block text-[10px] font-bold text-slate-400 uppercase mb-1">BMI</span>
+                          <span className="mb-1 block text-[10px] font-bold uppercase text-slate-600">BMI</span>
                           <div className="flex flex-col">
                             <span className="text-lg font-black text-slate-900">{architectMetrics.bmi}</span>
-                            <span className="text-[9px] font-bold text-medical-blue leading-tight">{architectMetrics.bmiCategory}</span>
+                            <span className="text-[9px] font-bold text-blue-700 leading-tight">{architectMetrics.bmiCategory}</span>
                           </div>
                         </div>
                         <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
-                          <span className="block text-[10px] font-bold text-slate-400 uppercase mb-1">WHtR</span>
+                          <span className="mb-1 block text-[10px] font-bold uppercase text-slate-600">WHtR</span>
                           <div className="flex flex-col">
                             <span className="text-lg font-black text-slate-900">{architectMetrics.whtr}</span>
                             <span className={`text-[9px] font-bold leading-tight ${
@@ -1458,15 +1489,15 @@ export default function App({
                           </div>
                         </div>
                         <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
-                          <span className="block text-[10px] font-bold text-slate-400 uppercase mb-1">Calories</span>
+                          <span className="mb-1 block text-[10px] font-bold uppercase text-slate-600">Calories</span>
                           <span className="text-lg font-black text-slate-900">{architectMetrics.macros.totalCalories}</span>
                         </div>
                         <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
-                          <span className="block text-[10px] font-bold text-slate-400 uppercase mb-1">Protein</span>
+                          <span className="mb-1 block text-[10px] font-bold uppercase text-slate-600">Protein</span>
                           <span className="text-lg font-black text-slate-900">{architectMetrics.macros.protein}g</span>
                         </div>
                         <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
-                          <span className="block text-[10px] font-bold text-slate-400 uppercase mb-1">{lang === 'en' ? 'Water' : 'الماء'}</span>
+                          <span className="mb-1 block text-[10px] font-bold uppercase text-slate-600">{lang === 'en' ? 'Water' : 'الماء'}</span>
                           <span className="text-lg font-black text-slate-900">{architectMetrics.hydrationTarget}ml</span>
                         </div>
                       </div>
@@ -1475,7 +1506,7 @@ export default function App({
 
                   {/* Recovery Timeline */}
                   <div className="medical-card p-6">
-                    <h4 className="text-sm font-bold text-slate-500 uppercase mb-6 flex items-center gap-2">
+                    <h4 className="text-sm font-bold text-slate-700 uppercase mb-6 flex items-center gap-2">
                       <Calendar className="w-4 h-4 text-medical-blue" />
                       {t.architect.recoveryTimeline}
                     </h4>
@@ -1492,7 +1523,7 @@ export default function App({
                               return (
                                 <div key={stage} className="flex flex-col items-center relative z-10">
                                   <div className={`w-4 h-4 rounded-full border-4 border-white shadow-sm ${isCurrent ? 'bg-medical-blue scale-125' : 'bg-slate-300'}`} />
-                                  <span className={`mt-2 text-[10px] font-bold uppercase ${isCurrent ? 'text-medical-blue' : 'text-slate-400'}`}>
+                                  <span className={`mt-2 text-[10px] font-bold uppercase ${isCurrent ? 'text-blue-700' : 'text-slate-600'}`}>
                                     {stage.replace('week', 'W')}
                                   </span>
                                 </div>
@@ -1587,22 +1618,18 @@ export default function App({
                       </button>
                     </div>
 
-                    <AnimatePresence mode="wait">
+                    
                       {aiDietPlan ? (
-                        <motion.div 
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          className="prose prose-sm max-w-none text-slate-600 bg-slate-50 p-6 rounded-2xl border border-slate-100 max-h-96 overflow-y-auto"
-                        >
+                        <div className="prose prose-sm max-w-none text-slate-600 bg-slate-50 p-6 rounded-2xl border border-slate-100 max-h-96 overflow-y-auto">
                           <div className="whitespace-pre-line break-words">{aiDietPlan}</div>
-                        </motion.div>
+                        </div>
                       ) : (
                         <div className="h-48 flex flex-col items-center justify-center text-center p-8 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
                           <Sparkles className="w-8 h-8 text-slate-200 mb-4" />
                           <p className="text-sm text-slate-400">{lang === 'en' ? 'Click the button to generate your personalized AI diet plan based on your recovery stage.' : 'انقر على الزر لإنشاء خطتك الغذائية المخصصة بالذكاء الاصطناعي بناءً على مرحلة تعافيك.'}</p>
                         </div>
                       )}
-                    </AnimatePresence>
+                    
                   </div>
                 </>
               ) : (
@@ -1644,7 +1671,7 @@ export default function App({
               </div>
 
               <div className="rounded-[1.75rem] border border-slate-200 bg-slate-50 p-4 lg:max-w-sm">
-                <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400 mb-2">
+                <div className="mb-2 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-600">
                   {lang === 'en' ? 'Selected tool' : 'الأداة المختارة'}
                 </div>
                 <div className="font-bold text-slate-900 mb-1">
@@ -1664,7 +1691,7 @@ export default function App({
                   className={`min-w-[150px] rounded-2xl border px-4 py-3 text-left transition-all sm:min-w-0 ${
                     activeToolGroup === group.id
                       ? 'border-health-green bg-soft-blue text-health-green shadow-sm'
-                      : 'border-slate-200 bg-white text-slate-600 hover:border-health-green/30'
+                      : 'border-slate-200 bg-white text-slate-800 hover:border-health-green/30'
                   }`}
                 >
                   <div className="font-bold text-sm">{group.label}</div>
@@ -1689,18 +1716,18 @@ export default function App({
                   <div className={`p-3 rounded-2xl ${activeCalculator === calc.id ? 'bg-health-green text-white' : 'bg-soft-blue text-health-green'}`}>
                     {calc.icon}
                   </div>
-                  <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600">
                     {toolGroups.find((group) => group.id === calc.group)?.label}
                   </span>
                 </div>
                 <h3 className="font-bold text-slate-900 mb-2 text-base flex items-center gap-2">
                   {calc.title}
                   <div className="opacity-0 group-hover:opacity-100 transition-opacity">
-                    <HelpCircle className="w-3 h-3 text-slate-400" />
+                    <HelpCircle className="w-3 h-3 text-slate-600" />
                   </div>
                 </h3>
                 <p className="text-sm text-slate-600 leading-6 mb-3">{calc.desc}</p>
-                <div className="text-xs font-medium text-slate-400">
+                <div className="text-xs font-medium text-slate-600">
                   {calc.hint}
                 </div>
                 <div className="absolute inset-0 rounded-2xl ring-0 ring-health-green/10 group-hover:ring-4 pointer-events-none transition-all" />
@@ -1721,12 +1748,8 @@ export default function App({
             </div>
           )}
 
-          <AnimatePresence mode="wait">
-            {activeCalculator && (
-              <motion.div 
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
+          {activeCalculator && (
+              <div
                 id="calculator-workspace"
                 className="rounded-[2rem] border border-slate-200 bg-slate-50 p-4 sm:p-6 md:p-8"
               >
@@ -1745,7 +1768,7 @@ export default function App({
                     </div>
                     <button
                       onClick={resetForm}
-                      className="px-4 py-2 rounded-xl border border-slate-200 text-slate-600 hover:border-health-green hover:text-health-green transition-all text-sm font-bold"
+                      className="px-4 py-2 rounded-xl border border-slate-200 text-slate-800 hover:border-health-green hover:text-health-green transition-all text-sm font-bold"
                     >
                       {lang === 'en' ? 'Clear inputs' : 'مسح الحقول'}
                     </button>
@@ -1755,7 +1778,7 @@ export default function App({
                     <div className="space-y-2 sm:col-span-2">
                       <div className="flex justify-between items-center">
                         <label className="text-sm font-semibold text-slate-700">{t.forms.weight}</label>
-                        <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Required</div>
+                        <div className="text-[10px] text-slate-600 font-bold uppercase tracking-widest">Required</div>
                       </div>
                       <input 
                         type="number" 
@@ -1812,13 +1835,13 @@ export default function App({
                         <div className="flex p-1 bg-slate-200 rounded-xl">
                           <button
                             onClick={() => setGender('male')}
-                            className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${gender === 'male' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'}`}
+                            className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${gender === 'male' ? 'bg-white text-health-green shadow-sm' : 'text-slate-700'}`}
                           >
                             {t.forms.male}
                           </button>
                           <button
                             onClick={() => setGender('female')}
-                            className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${gender === 'female' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'}`}
+                            className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${gender === 'female' ? 'bg-white text-health-green shadow-sm' : 'text-slate-700'}`}
                           >
                             {t.forms.female}
                           </button>
@@ -1838,13 +1861,13 @@ export default function App({
                           <div className="flex p-1 bg-slate-200 rounded-xl">
                             <button
                               onClick={() => setUnitSystem('metric')}
-                              className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${unitSystem === 'metric' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'}`}
+                              className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${unitSystem === 'metric' ? 'bg-white text-health-green shadow-sm' : 'text-slate-700'}`}
                             >
                               {t.forms.metric}
                             </button>
                             <button
                               onClick={() => setUnitSystem('imperial')}
-                              className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${unitSystem === 'imperial' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'}`}
+                              className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${unitSystem === 'imperial' ? 'bg-white text-health-green shadow-sm' : 'text-slate-700'}`}
                             >
                               {t.forms.imperial}
                             </button>
@@ -1960,7 +1983,7 @@ export default function App({
                               <button
                                 key={g.id}
                                 onClick={() => setGoal(g.id as GoalType)}
-                                className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${goal === g.id ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'}`}
+                                className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${goal === g.id ? 'bg-white text-health-green shadow-sm' : 'text-slate-700'}`}
                               >
                                 {g.label}
                               </button>
@@ -1983,7 +2006,7 @@ export default function App({
                               <button
                                 key={b.id}
                                 onClick={() => setBodyType(b.id as BodyType)}
-                                className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${bodyType === b.id ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'}`}
+                                className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${bodyType === b.id ? 'bg-white text-health-green shadow-sm' : 'text-slate-700'}`}
                               >
                                 {b.label}
                               </button>
@@ -2008,7 +2031,7 @@ export default function App({
                             <button
                               key={p.id}
                               onClick={() => setPace(p.id)}
-                              className={`flex-1 py-2 rounded-lg text-[10px] font-bold transition-all ${pace === p.id ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'}`}
+                                className={`flex-1 py-2 rounded-lg text-[10px] font-bold transition-all ${pace === p.id ? 'bg-white text-health-green shadow-sm' : 'text-slate-700'}`}
                             >
                               {p.label}
                             </button>
@@ -2023,13 +2046,13 @@ export default function App({
                         <div className="flex p-1 bg-slate-200 rounded-xl">
                           <button
                             onClick={() => setUnitSystem('metric')}
-                            className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${unitSystem === 'metric' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'}`}
+                            className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${unitSystem === 'metric' ? 'bg-white text-health-green shadow-sm' : 'text-slate-700'}`}
                           >
                             {t.forms.metric}
                           </button>
                           <button
                             onClick={() => setUnitSystem('imperial')}
-                            className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${unitSystem === 'imperial' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'}`}
+                            className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${unitSystem === 'imperial' ? 'bg-white text-health-green shadow-sm' : 'text-slate-700'}`}
                           >
                             {t.forms.imperial}
                           </button>
@@ -2157,12 +2180,7 @@ export default function App({
                   </button>
 
                   {result !== null && (
-                    <motion.div 
-                      initial={{ opacity: 0, y: 10, scale: 0.98 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      transition={{ type: 'spring', stiffness: 220, damping: 22 }}
-                      className="mt-10 p-8 bg-white/40 backdrop-blur-xl rounded-3xl border border-white/20 shadow-2xl relative overflow-hidden"
-                    >
+                    <div className="mt-10 p-8 bg-white/40 backdrop-blur-xl rounded-3xl border border-white/20 shadow-2xl relative overflow-hidden">
                       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-health-green to-medical-blue" />
                       <div className="text-center relative z-10">
                         <span className="text-sm font-bold text-health-green uppercase tracking-widest mb-2 block">{t.results.yourResult}</span>
@@ -2285,7 +2303,7 @@ export default function App({
                           </div>
                         )}
                       </div>
-                    </motion.div>
+                    </div>
                   )}
 
                   {result !== null && activeCalculator && (
@@ -2340,9 +2358,8 @@ export default function App({
                     </div>
                   )}
                 </div>
-              </motion.div>
+              </div>
             )}
-          </AnimatePresence>
         </div>
       </section>
 
@@ -2372,22 +2389,13 @@ export default function App({
       </Suspense>
 
       {/* Custom Food Modal */}
-      <AnimatePresence>
-        {isCustomModalOpen && (
+      {isCustomModalOpen && (
           <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+            <div
               onClick={() => setIsCustomModalOpen(false)}
               className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
             />
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative max-h-[calc(100vh-2rem)] w-full max-w-md overflow-y-auto rounded-3xl bg-white p-5 shadow-2xl sm:p-8"
-            >
+            <div className="relative max-h-[calc(100vh-2rem)] w-full max-w-md overflow-y-auto rounded-3xl bg-white p-5 shadow-2xl sm:p-8">
               <h3 className="text-2xl font-bold text-slate-900 mb-6">{t.customFood.title}</h3>
               
               <div className="space-y-4 mb-8">
@@ -2455,28 +2463,18 @@ export default function App({
                   {t.ux.saveFood}
                 </button>
               </div>
-            </motion.div>
+            </div>
           </div>
         )}
-      </AnimatePresence>
 
       {/* Wrist Test Modal */}
-      <AnimatePresence>
-        {isWristModalOpen && (
+      {isWristModalOpen && (
           <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+            <div
               onClick={() => setIsWristModalOpen(false)}
               className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
             />
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative max-h-[calc(100vh-2rem)] w-full max-w-md overflow-y-auto rounded-3xl bg-white p-5 shadow-2xl sm:p-8"
-            >
+            <div className="relative max-h-[calc(100vh-2rem)] w-full max-w-md overflow-y-auto rounded-3xl bg-white p-5 shadow-2xl sm:p-8">
               <div className="flex justify-between items-center mb-6">
                 <h3 className="text-2xl font-bold text-slate-900">{t.somatotype.wristTest}</h3>
                 <button onClick={() => setIsWristModalOpen(false)} className="p-2 hover:bg-slate-100 rounded-full">
@@ -2505,28 +2503,18 @@ export default function App({
               >
                 {t.ux.cancel}
               </button>
-            </motion.div>
+            </div>
           </div>
         )}
-      </AnimatePresence>
 
       {/* Tooltip Modal */}
-      <AnimatePresence>
-        {isTooltipModalOpen && (
+      {isTooltipModalOpen && (
           <div className="fixed inset-0 z-[80] flex items-center justify-center p-4">
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+            <div
               onClick={() => setIsTooltipModalOpen(false)}
               className="absolute inset-0 bg-slate-900/40 backdrop-blur-[2px]"
             />
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              className="relative max-h-[calc(100vh-2rem)] w-full max-w-sm overflow-y-auto rounded-2xl border border-slate-100 bg-white p-5 shadow-2xl sm:p-6"
-            >
+            <div className="relative max-h-[calc(100vh-2rem)] w-full max-w-sm overflow-y-auto rounded-2xl border border-slate-100 bg-white p-5 shadow-2xl sm:p-6">
               <div className="flex items-center gap-3 mb-4">
                 <div className="p-2 bg-soft-blue rounded-lg text-health-green">
                   <Info className="w-5 h-5" />
@@ -2542,15 +2530,16 @@ export default function App({
               >
                 {lang === 'en' ? 'Got it' : 'فهمت'}
               </button>
-            </motion.div>
+            </div>
           </div>
         )}
-      </AnimatePresence>
 
       {/* About Us Section */}
       <Suspense fallback={<HomeSectionFallback className="bg-white py-16" />}>
         <AboutSection lang={lang} />
       </Suspense>
+
+      </main>
 
       {/* Footer */}
       <Footer t={t} lang={lang} />

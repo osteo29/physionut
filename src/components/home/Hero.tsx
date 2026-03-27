@@ -1,6 +1,5 @@
 import {memo} from 'react';
 import {Link} from 'react-router-dom';
-import {motion} from 'motion/react';
 import {
   Activity,
   Calculator,
@@ -19,29 +18,29 @@ const Hero = memo(({lang}: {lang: Language}) => {
   const journey = [
     {
       icon: Calculator,
-      title: isAr ? 'ابدأ من أرقامك الحقيقية' : 'Start from real numbers',
+      title: isAr ? 'Ø§Ø¨Ø¯Ø£ Ù…Ù† Ø£Ø±Ù‚Ø§Ù…Ùƒ Ø§Ù„Ø­Ù‚ÙŠÙ‚ÙŠØ©' : 'Start from real numbers',
       desc: isAr
-        ? 'احسب السعرات، الماكروز، البروتين، والماء بدل التخمين أو الاعتماد على نصائح عامة.'
+        ? 'Ø§Ø­Ø³Ø¨ Ø§Ù„Ø³Ø¹Ø±Ø§ØªØŒ Ø§Ù„Ù…Ø§ÙƒØ±ÙˆØ²ØŒ Ø§Ù„Ø¨Ø±ÙˆØªÙŠÙ†ØŒ ÙˆØ§Ù„Ù…Ø§Ø¡ Ø¨Ø¯Ù„ Ø§Ù„ØªØ®Ù…ÙŠÙ† Ø£Ùˆ Ø§Ù„Ø§Ø¹ØªÙ…Ø§Ø¯ Ø¹Ù„Ù‰ Ù†ØµØ§Ø¦Ø­ Ø¹Ø§Ù…Ø©.'
         : 'Estimate calories, macros, protein, and hydration instead of guessing.',
     },
     {
       icon: Activity,
-      title: isAr ? 'اربط التغذية بالحركة' : 'Connect nutrition with movement',
+      title: isAr ? 'Ø§Ø±Ø¨Ø· Ø§Ù„ØªØºØ°ÙŠØ© Ø¨Ø§Ù„Ø­Ø±ÙƒØ©' : 'Connect nutrition with movement',
       desc: isAr
-        ? 'افهم كيف تؤثر الحركة والتأهيل على النتيجة بدل النظر للأكل أو التمرين كل واحد لوحده.'
+        ? 'Ø§ÙÙ‡Ù… ÙƒÙŠÙ ØªØ¤Ø«Ø± Ø§Ù„Ø­Ø±ÙƒØ© ÙˆØ§Ù„ØªØ£Ù‡ÙŠÙ„ Ø¹Ù„Ù‰ Ø§Ù„Ù†ØªÙŠØ¬Ø© Ø¨Ø¯Ù„ Ø§Ù„Ù†Ø¸Ø± Ù„Ù„Ø£ÙƒÙ„ Ø£Ùˆ Ø§Ù„ØªÙ…Ø±ÙŠÙ† ÙƒÙ„ ÙˆØ§Ø­Ø¯ Ù„ÙˆØ­Ø¯Ù‡.'
         : 'See how movement and rehab affect progress instead of separating food from performance.',
     },
     {
       icon: ShieldCheck,
-      title: isAr ? 'تحرك بخطة أوضح' : 'Move with a clearer plan',
+      title: isAr ? 'ØªØ­Ø±Ùƒ Ø¨Ø®Ø·Ø© Ø£ÙˆØ¶Ø­' : 'Move with a clearer plan',
       desc: isAr
-        ? 'استخدم النتائج كخطوة عملية للمتابعة والتعديل بدل الوقوف عند مجرد رقم.'
+        ? 'Ø§Ø³ØªØ®Ø¯Ù… Ø§Ù„Ù†ØªØ§Ø¦Ø¬ ÙƒØ®Ø·ÙˆØ© Ø¹Ù…Ù„ÙŠØ© Ù„Ù„Ù…ØªØ§Ø¨Ø¹Ø© ÙˆØ§Ù„ØªØ¹Ø¯ÙŠÙ„ Ø¨Ø¯Ù„ Ø§Ù„ÙˆÙ‚ÙˆÙ Ø¹Ù†Ø¯ Ù…Ø¬Ø±Ø¯ Ø±Ù‚Ù….'
         : 'Use your results as a practical next step instead of stopping at a single number.',
     },
   ];
 
   const trustPoints = isAr
-    ? ['تغذية + تأهيل', 'مبني على معادلات معروفة', 'تعليمي وآمن وغير تشخيصي']
+    ? ['ØªØºØ°ÙŠØ© + ØªØ£Ù‡ÙŠÙ„', 'Ù…Ø¨Ù†ÙŠ Ø¹Ù„Ù‰ Ù…Ø¹Ø§Ø¯Ù„Ø§Øª Ù…Ø¹Ø±ÙˆÙØ©', 'ØªØ¹Ù„ÙŠÙ…ÙŠ ÙˆØ¢Ù…Ù† ÙˆØºÙŠØ± ØªØ´Ø®ÙŠØµÙŠ']
     : ['Nutrition + rehab', 'Built on established formulas', 'Educational, not diagnostic'];
 
   return (
@@ -49,70 +48,46 @@ const Hero = memo(({lang}: {lang: Language}) => {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(49,95,74,0.18),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(109,122,114,0.12),transparent_24%)]" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-[linear-gradient(180deg,rgba(255,255,255,0.6),transparent)]" />
       <div className="identity-watermark whitespace-pre-line">
-        {isAr ? 'تغذية\nتأهيل\nمتابعة' : 'Nourish\nRecover\nTrack'}
+        {isAr ? 'ØªØºØ°ÙŠØ©\nØªØ£Ù‡ÙŠÙ„\nÙ…ØªØ§Ø¨Ø¹Ø©' : 'Nourish\nRecover\nTrack'}
       </div>
       <div className="pointer-events-none absolute right-0 top-0 h-[380px] w-[380px] -translate-y-1/3 translate-x-1/4 rounded-full bg-health-green/6 blur-[120px]" />
       <div className="pointer-events-none absolute bottom-0 left-0 h-[380px] w-[380px] translate-y-1/3 -translate-x-1/4 rounded-full bg-medical-blue/8 blur-[120px]" />
       <div className="pointer-events-none absolute left-1/2 top-20 h-40 w-40 -translate-x-1/2 rounded-full border border-white/50 bg-white/20 blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-        <motion.div
-          initial={{opacity: 0, y: 20}}
-          animate={{opacity: 1, y: 0}}
-          className="glass-panel mb-6 inline-flex items-center gap-2 rounded-full border border-health-green/20 px-4 py-2 text-xs font-bold text-health-green sm:text-sm"
-        >
+        <div className="glass-panel mb-6 inline-flex items-center gap-2 rounded-full border border-health-green/20 px-4 py-2 text-xs font-bold text-health-green sm:text-sm">
           <GraduationCap className="h-4 w-4" />
           <span>
             {isAr
-              ? 'منصة تغذية وعلاج طبيعي مبنية على أدوات عملية'
+              ? 'Ù…Ù†ØµØ© ØªØºØ°ÙŠØ© ÙˆØ¹Ù„Ø§Ø¬ Ø·Ø¨ÙŠØ¹ÙŠ Ù…Ø¨Ù†ÙŠØ© Ø¹Ù„Ù‰ Ø£Ø¯ÙˆØ§Øª Ø¹Ù…Ù„ÙŠØ©'
               : 'A practical platform for nutrition and physical therapy'}
           </span>
-        </motion.div>
+        </div>
 
-        <motion.h1
-          initial={{opacity: 0, y: 20}}
-          animate={{opacity: 1, y: 0}}
-          transition={{delay: 0.08}}
-          className="mx-auto mb-5 max-w-4xl text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl"
-        >
-          {isAr ? 'صمم خطتك الصحية' : 'Build your health plan'}{' '}
+        <h1 className="mx-auto mb-5 max-w-4xl text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+          {isAr ? 'ØµÙ…Ù… Ø®Ø·ØªÙƒ Ø§Ù„ØµØ­ÙŠØ©' : 'Build your health plan'}{' '}
           <span className="relative text-health-green">
-            {isAr ? 'بدقة علمية' : 'with clinical precision'}
+            {isAr ? 'Ø¨Ø¯Ù‚Ø© Ø¹Ù„Ù…ÙŠØ©' : 'with clinical precision'}
           </span>
           <br />
           <span className="text-slate-900">
-            {isAr ? 'تغذية وتأهيل في مكان واحد' : 'nutrition and rehab in one place'}
+            {isAr ? 'ØªØºØ°ÙŠØ© ÙˆØªØ£Ù‡ÙŠÙ„ ÙÙŠ Ù…ÙƒØ§Ù† ÙˆØ§Ø­Ø¯' : 'nutrition and rehab in one place'}
           </span>
-        </motion.h1>
+        </h1>
 
-        <motion.p
-          initial={{opacity: 0, y: 20}}
-          animate={{opacity: 1, y: 0}}
-          transition={{delay: 0.16}}
-          className="mx-auto mb-6 max-w-3xl text-base leading-8 text-slate-600 sm:text-lg"
-        >
+        <p className="mx-auto mb-6 max-w-3xl text-base leading-8 text-slate-600 sm:text-lg">
           {isAr
-            ? 'احسب سعراتك، ماكروز جسمك، واحتياجاتك من البروتين والماء بناءً على معادلات طبية معروفة. منصة PhysioNutrition تساعدك تربط بين التغذية، الحركة، والمتابعة بخطوات أوضح وأسهل.'
+            ? 'Ø§Ø­Ø³Ø¨ Ø³Ø¹Ø±Ø§ØªÙƒØŒ Ù…Ø§ÙƒØ±ÙˆØ² Ø¬Ø³Ù…ÙƒØŒ ÙˆØ§Ø­ØªÙŠØ§Ø¬Ø§ØªÙƒ Ù…Ù† Ø§Ù„Ø¨Ø±ÙˆØªÙŠÙ† ÙˆØ§Ù„Ù…Ø§Ø¡ Ø¨Ù†Ø§Ø¡Ù‹ Ø¹Ù„Ù‰ Ù…Ø¹Ø§Ø¯Ù„Ø§Øª Ø·Ø¨ÙŠØ© Ù…Ø¹Ø±ÙˆÙØ©. Ù…Ù†ØµØ© PhysioNutrition ØªØ³Ø§Ø¹Ø¯Ùƒ ØªØ±Ø¨Ø· Ø¨ÙŠÙ† Ø§Ù„ØªØºØ°ÙŠØ©ØŒ Ø§Ù„Ø­Ø±ÙƒØ©ØŒ ÙˆØ§Ù„Ù…ØªØ§Ø¨Ø¹Ø© Ø¨Ø®Ø·ÙˆØ§Øª Ø£ÙˆØ¶Ø­ ÙˆØ£Ø³Ù‡Ù„.'
             : 'Estimate calories, macros, protein, and hydration using established medical formulas. PhysioNutrition helps connect nutrition, movement, and follow-up in a clearer way.'}
-        </motion.p>
+        </p>
 
-        <motion.div
-          initial={{opacity: 0, y: 20}}
-          animate={{opacity: 1, y: 0}}
-          transition={{delay: 0.19}}
-          className="glass-panel mx-auto mb-7 max-w-3xl rounded-[1.75rem] border border-white/70 px-4 py-4 text-sm leading-7 text-slate-700 sm:px-5"
-        >
+        <div className="glass-panel mx-auto mb-7 max-w-3xl rounded-[1.75rem] border border-white/70 px-4 py-4 text-sm leading-7 text-slate-700 sm:px-5">
           {isAr
-            ? 'هنا تجد حاسبات تغذية، محتوى تأهيلي، ومتابعة عملية بدل أدوات منفصلة لا تربط بين النتيجة والخطوة التالية.'
+            ? 'Ù‡Ù†Ø§ ØªØ¬Ø¯ Ø­Ø§Ø³Ø¨Ø§Øª ØªØºØ°ÙŠØ©ØŒ Ù…Ø­ØªÙˆÙ‰ ØªØ£Ù‡ÙŠÙ„ÙŠØŒ ÙˆÙ…ØªØ§Ø¨Ø¹Ø© Ø¹Ù…Ù„ÙŠØ© Ø¨Ø¯Ù„ Ø£Ø¯ÙˆØ§Øª Ù…Ù†ÙØµÙ„Ø© Ù„Ø§ ØªØ±Ø¨Ø· Ø¨ÙŠÙ† Ø§Ù„Ù†ØªÙŠØ¬Ø© ÙˆØ§Ù„Ø®Ø·ÙˆØ© Ø§Ù„ØªØ§Ù„ÙŠØ©.'
             : 'Here you get calculators, rehab-focused content, and follow-up tools that work together instead of isolated pages.'}
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{opacity: 0, y: 20}}
-          animate={{opacity: 1, y: 0}}
-          transition={{delay: 0.22}}
-          className="mb-8 flex snap-x gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:justify-center sm:overflow-visible"
-        >
+        <div className="mb-8 flex snap-x gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:justify-center sm:overflow-visible">
           {trustPoints.map((point) => (
             <div
               key={point}
@@ -122,67 +97,47 @@ const Hero = memo(({lang}: {lang: Language}) => {
               <span>{point}</span>
             </div>
           ))}
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{opacity: 0, y: 20}}
-          animate={{opacity: 1, y: 0}}
-          transition={{delay: 0.3}}
-          className="mx-auto mb-4 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-2"
-        >
+        <div className="mx-auto mb-4 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-2">
           <Link
             to={navigationPaths.auth(lang)}
             className="inline-flex items-center justify-center gap-2 rounded-2xl bg-health-green px-6 py-4 text-sm font-bold text-white shadow-lg shadow-health-green/20 transition-all hover:-translate-y-0.5 hover:bg-health-green-dark"
           >
             <UserRoundPlus className="h-5 w-5" />
-            {isAr ? 'ابدأ الآن مجانًا' : 'Start free now'}
+            {isAr ? 'Ø§Ø¨Ø¯Ø£ Ø§Ù„Ø¢Ù† Ù…Ø¬Ø§Ù†Ù‹Ø§' : 'Start free now'}
           </Link>
           <a
             href="#calculators"
             className="glass-panel inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 px-6 py-4 text-sm font-bold text-slate-900 transition-all hover:-translate-y-0.5 hover:border-health-green"
           >
             <Calculator className="h-5 w-5 text-health-green" />
-            {isAr ? 'استكشف الحاسبات' : 'Explore calculators'}
+            {isAr ? 'Ø§Ø³ØªÙƒØ´Ù Ø§Ù„Ø­Ø§Ø³Ø¨Ø§Øª' : 'Explore calculators'}
           </a>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{opacity: 0, y: 20}}
-          animate={{opacity: 1, y: 0}}
-          transition={{delay: 0.32}}
-          className="mb-8 flex flex-wrap items-center justify-center gap-3"
-        >
+        <div className="mb-8 flex flex-wrap items-center justify-center gap-3">
           <a
             href={navigationPaths.assistant(lang)}
             className="glass-panel inline-flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-3 text-sm font-bold text-slate-700 transition-all hover:-translate-y-0.5 hover:border-health-green"
           >
             <MessageSquareText className="h-4 w-4 text-health-green" />
-            {isAr ? 'اسأل المساعد' : 'Ask the assistant'}
+            {isAr ? 'Ø§Ø³Ø£Ù„ Ø§Ù„Ù…Ø³Ø§Ø¹Ø¯' : 'Ask the assistant'}
           </a>
           <a
             href="#architect"
             className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-3 text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-slate-800"
           >
             <Activity className="h-4 w-4" />
-            {isAr ? 'خطة التعافي' : 'Recovery planner'}
+            {isAr ? 'Ø®Ø·Ø© Ø§Ù„ØªØ¹Ø§ÙÙŠ' : 'Recovery planner'}
           </a>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{opacity: 0, y: 20}}
-          animate={{opacity: 1, y: 0}}
-          transition={{delay: 0.34}}
-          className="mx-auto mb-10 flex max-w-3xl justify-center"
-        >
+        <div className="mx-auto mb-10 flex max-w-3xl justify-center">
           <PwaActions lang={lang} />
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{opacity: 0, y: 20}}
-          animate={{opacity: 1, y: 0}}
-          transition={{delay: 0.38}}
-          className="grid grid-cols-1 gap-4 text-left md:grid-cols-3"
-        >
+        <div className="grid grid-cols-1 gap-4 text-left md:grid-cols-3">
           {journey.map((item) => (
             <div
               key={item.title}
@@ -195,7 +150,7 @@ const Hero = memo(({lang}: {lang: Language}) => {
               <p className="text-sm leading-6 text-slate-600">{item.desc}</p>
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

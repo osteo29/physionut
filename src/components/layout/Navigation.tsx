@@ -1,5 +1,4 @@
 import {type ReactNode, memo, useEffect, useState} from 'react';
-import {AnimatePresence, motion} from 'motion/react';
 import {
   BarChart3,
   BookOpen,
@@ -152,21 +151,13 @@ const Navigation = memo(
 
     return (
       <>
-        <AnimatePresence>
-          {isSidebarOpen ? (
+        {isSidebarOpen ? (
             <>
-              <motion.div
-                initial={{opacity: 0}}
-                animate={{opacity: 1}}
-                exit={{opacity: 0}}
+              <div
                 onClick={() => setIsSidebarOpen(false)}
                 className="fixed inset-0 z-[60] bg-slate-900/60 backdrop-blur-sm"
               />
-              <motion.aside
-                initial={{x: isAr ? '100%' : '-100%'}}
-                animate={{x: 0}}
-                exit={{x: isAr ? '100%' : '-100%'}}
-                transition={{type: 'spring', damping: 24, stiffness: 220}}
+              <aside
                 className={`fixed top-0 z-[70] flex h-full w-[88vw] max-w-sm flex-col bg-white shadow-2xl ${
                   isAr ? 'right-0' : 'left-0'
                 }`}
@@ -176,6 +167,7 @@ const Navigation = memo(
                   <button
                     onClick={() => setIsSidebarOpen(false)}
                     className="rounded-full p-2 text-slate-500 transition-colors hover:bg-slate-100"
+                    aria-label={isAr ? 'إغلاق القائمة' : 'Close menu'}
                   >
                     <X className="h-5 w-5" />
                   </button>
@@ -359,7 +351,7 @@ const Navigation = memo(
                       <button
                         onClick={() => handleLanguageSwitch('en')}
                         className={`rounded-full px-3 py-1 text-[10px] font-black ${
-                          lang === 'en' ? 'bg-health-green text-white' : 'text-slate-400'
+                          lang === 'en' ? 'bg-health-green text-white' : 'text-slate-700'
                         }`}
                       >
                         EN
@@ -367,7 +359,7 @@ const Navigation = memo(
                       <button
                         onClick={() => handleLanguageSwitch('ar')}
                         className={`rounded-full px-3 py-1 text-[10px] font-black ${
-                          lang === 'ar' ? 'bg-health-green text-white' : 'text-slate-400'
+                          lang === 'ar' ? 'bg-health-green text-white' : 'text-slate-700'
                         }`}
                       >
                         AR
@@ -391,10 +383,9 @@ const Navigation = memo(
                     </span>
                   </button>
                 </div>
-              </motion.aside>
+              </aside>
             </>
           ) : null}
-        </AnimatePresence>
 
         <nav className="sticky top-0 z-50 border-b border-slate-100 bg-white/85 px-3 backdrop-blur-md sm:px-6 lg:px-8">
           <div className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-2 py-2 sm:gap-3">
@@ -402,6 +393,7 @@ const Navigation = memo(
               <button
                 onClick={() => setIsSidebarOpen(true)}
                 className="rounded-xl p-2 text-slate-600 transition-colors hover:bg-slate-100"
+                aria-label={isAr ? 'فتح القائمة الرئيسية' : 'Open main menu'}
               >
                 <Menu className="h-6 w-6" />
               </button>
@@ -467,7 +459,7 @@ const Navigation = memo(
                 <button
                   onClick={() => handleLanguageSwitch('en')}
                   className={`rounded-full px-3 py-1 text-xs font-bold ${
-                    lang === 'en' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'
+                    lang === 'en' ? 'bg-white text-health-green shadow-sm' : 'text-slate-700'
                   }`}
                 >
                   EN
@@ -475,7 +467,7 @@ const Navigation = memo(
                 <button
                   onClick={() => handleLanguageSwitch('ar')}
                   className={`rounded-full px-3 py-1 text-xs font-bold ${
-                    lang === 'ar' ? 'bg-white text-health-green shadow-sm' : 'text-slate-500'
+                    lang === 'ar' ? 'bg-white text-health-green shadow-sm' : 'text-slate-700'
                   }`}
                 >
                   AR
