@@ -18,29 +18,29 @@ const Hero = memo(({lang}: {lang: Language}) => {
   const journey = [
     {
       icon: Calculator,
-      title: isAr ? 'Ø§Ø¨Ø¯Ø£ Ù…Ù† Ø£Ø±Ù‚Ø§Ù…Ùƒ Ø§Ù„Ø­Ù‚ÙŠÙ‚ÙŠØ©' : 'Start from real numbers',
+      title: isAr ? 'ابدأ من أرقامك الحقيقية' : 'Start from real numbers',
       desc: isAr
-        ? 'Ø§Ø­Ø³Ø¨ Ø§Ù„Ø³Ø¹Ø±Ø§ØªØŒ Ø§Ù„Ù…Ø§ÙƒØ±ÙˆØ²ØŒ Ø§Ù„Ø¨Ø±ÙˆØªÙŠÙ†ØŒ ÙˆØ§Ù„Ù…Ø§Ø¡ Ø¨Ø¯Ù„ Ø§Ù„ØªØ®Ù…ÙŠÙ† Ø£Ùˆ Ø§Ù„Ø§Ø¹ØªÙ…Ø§Ø¯ Ø¹Ù„Ù‰ Ù†ØµØ§Ø¦Ø­ Ø¹Ø§Ù…Ø©.'
+        ? 'احسب السعرات، الماكروز، البروتين، والماء بدل التخمين أو الاعتماد على نصائح عامة.'
         : 'Estimate calories, macros, protein, and hydration instead of guessing.',
     },
     {
       icon: Activity,
-      title: isAr ? 'Ø§Ø±Ø¨Ø· Ø§Ù„ØªØºØ°ÙŠØ© Ø¨Ø§Ù„Ø­Ø±ÙƒØ©' : 'Connect nutrition with movement',
+      title: isAr ? 'اربط التغذية بالحركة' : 'Connect nutrition with movement',
       desc: isAr
-        ? 'Ø§ÙÙ‡Ù… ÙƒÙŠÙ ØªØ¤Ø«Ø± Ø§Ù„Ø­Ø±ÙƒØ© ÙˆØ§Ù„ØªØ£Ù‡ÙŠÙ„ Ø¹Ù„Ù‰ Ø§Ù„Ù†ØªÙŠØ¬Ø© Ø¨Ø¯Ù„ Ø§Ù„Ù†Ø¸Ø± Ù„Ù„Ø£ÙƒÙ„ Ø£Ùˆ Ø§Ù„ØªÙ…Ø±ÙŠÙ† ÙƒÙ„ ÙˆØ§Ø­Ø¯ Ù„ÙˆØ­Ø¯Ù‡.'
+        ? 'افهم كيف تؤثر الحركة والتأهيل على النتيجة بدل النظر للأكل أو التمرين كل واحد لوحده.'
         : 'See how movement and rehab affect progress instead of separating food from performance.',
     },
     {
       icon: ShieldCheck,
-      title: isAr ? 'ØªØ­Ø±Ùƒ Ø¨Ø®Ø·Ø© Ø£ÙˆØ¶Ø­' : 'Move with a clearer plan',
+      title: isAr ? 'تحرك بخطة أوضح' : 'Move with a clearer plan',
       desc: isAr
-        ? 'Ø§Ø³ØªØ®Ø¯Ù… Ø§Ù„Ù†ØªØ§Ø¦Ø¬ ÙƒØ®Ø·ÙˆØ© Ø¹Ù…Ù„ÙŠØ© Ù„Ù„Ù…ØªØ§Ø¨Ø¹Ø© ÙˆØ§Ù„ØªØ¹Ø¯ÙŠÙ„ Ø¨Ø¯Ù„ Ø§Ù„ÙˆÙ‚ÙˆÙ Ø¹Ù†Ø¯ Ù…Ø¬Ø±Ø¯ Ø±Ù‚Ù….'
+        ? 'استخدم النتائج كخطوة عملية للمتابعة والتعديل بدل الوقوف عند مجرد رقم.'
         : 'Use your results as a practical next step instead of stopping at a single number.',
     },
   ];
 
   const trustPoints = isAr
-    ? ['ØªØºØ°ÙŠØ© + ØªØ£Ù‡ÙŠÙ„', 'Ù…Ø¨Ù†ÙŠ Ø¹Ù„Ù‰ Ù…Ø¹Ø§Ø¯Ù„Ø§Øª Ù…Ø¹Ø±ÙˆÙØ©', 'ØªØ¹Ù„ÙŠÙ…ÙŠ ÙˆØ¢Ù…Ù† ÙˆØºÙŠØ± ØªØ´Ø®ÙŠØµÙŠ']
+    ? ['تغذية + تأهيل', 'مبني على معادلات معروفة', 'تعليمي وآمن وغير تشخيصي']
     : ['Nutrition + rehab', 'Built on established formulas', 'Educational, not diagnostic'];
 
   return (
@@ -48,7 +48,7 @@ const Hero = memo(({lang}: {lang: Language}) => {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(49,95,74,0.18),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(109,122,114,0.12),transparent_24%)]" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-[linear-gradient(180deg,rgba(255,255,255,0.6),transparent)]" />
       <div className="identity-watermark whitespace-pre-line">
-        {isAr ? 'ØªØºØ°ÙŠØ©\nØªØ£Ù‡ÙŠÙ„\nÙ…ØªØ§Ø¨Ø¹Ø©' : 'Nourish\nRecover\nTrack'}
+        {isAr ? 'تغذية\nتأهيل\nمتابعة' : 'Nourish\nRecover\nTrack'}
       </div>
       <div className="pointer-events-none absolute right-0 top-0 h-[380px] w-[380px] -translate-y-1/3 translate-x-1/4 rounded-full bg-health-green/6 blur-[120px]" />
       <div className="pointer-events-none absolute bottom-0 left-0 h-[380px] w-[380px] translate-y-1/3 -translate-x-1/4 rounded-full bg-medical-blue/8 blur-[120px]" />
@@ -59,31 +59,31 @@ const Hero = memo(({lang}: {lang: Language}) => {
           <GraduationCap className="h-4 w-4" />
           <span>
             {isAr
-              ? 'Ù…Ù†ØµØ© ØªØºØ°ÙŠØ© ÙˆØ¹Ù„Ø§Ø¬ Ø·Ø¨ÙŠØ¹ÙŠ Ù…Ø¨Ù†ÙŠØ© Ø¹Ù„Ù‰ Ø£Ø¯ÙˆØ§Øª Ø¹Ù…Ù„ÙŠØ©'
+              ? 'منصة تغذية وعلاج طبيعي مبنية على أدوات عملية'
               : 'A practical platform for nutrition and physical therapy'}
           </span>
         </div>
 
         <h1 className="mx-auto mb-5 max-w-4xl text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
-          {isAr ? 'ØµÙ…Ù… Ø®Ø·ØªÙƒ Ø§Ù„ØµØ­ÙŠØ©' : 'Build your health plan'}{' '}
+          {isAr ? 'صمم خطتك الصحية' : 'Build your health plan'}{' '}
           <span className="relative text-health-green">
-            {isAr ? 'Ø¨Ø¯Ù‚Ø© Ø¹Ù„Ù…ÙŠØ©' : 'with clinical precision'}
+            {isAr ? 'بدقة علمية' : 'with clinical precision'}
           </span>
           <br />
           <span className="text-slate-900">
-            {isAr ? 'ØªØºØ°ÙŠØ© ÙˆØªØ£Ù‡ÙŠÙ„ ÙÙŠ Ù…ÙƒØ§Ù† ÙˆØ§Ø­Ø¯' : 'nutrition and rehab in one place'}
+            {isAr ? 'تغذية وتأهيل في مكان واحد' : 'nutrition and rehab in one place'}
           </span>
         </h1>
 
         <p className="mx-auto mb-6 max-w-3xl text-base leading-8 text-slate-600 sm:text-lg">
           {isAr
-            ? 'Ø§Ø­Ø³Ø¨ Ø³Ø¹Ø±Ø§ØªÙƒØŒ Ù…Ø§ÙƒØ±ÙˆØ² Ø¬Ø³Ù…ÙƒØŒ ÙˆØ§Ø­ØªÙŠØ§Ø¬Ø§ØªÙƒ Ù…Ù† Ø§Ù„Ø¨Ø±ÙˆØªÙŠÙ† ÙˆØ§Ù„Ù…Ø§Ø¡ Ø¨Ù†Ø§Ø¡Ù‹ Ø¹Ù„Ù‰ Ù…Ø¹Ø§Ø¯Ù„Ø§Øª Ø·Ø¨ÙŠØ© Ù…Ø¹Ø±ÙˆÙØ©. Ù…Ù†ØµØ© PhysioNutrition ØªØ³Ø§Ø¹Ø¯Ùƒ ØªØ±Ø¨Ø· Ø¨ÙŠÙ† Ø§Ù„ØªØºØ°ÙŠØ©ØŒ Ø§Ù„Ø­Ø±ÙƒØ©ØŒ ÙˆØ§Ù„Ù…ØªØ§Ø¨Ø¹Ø© Ø¨Ø®Ø·ÙˆØ§Øª Ø£ÙˆØ¶Ø­ ÙˆØ£Ø³Ù‡Ù„.'
+            ? 'احسب سعراتك، ماكروز جسمك، واحتياجاتك من البروتين والماء بناءً على معادلات طبية معروفة. منصة PhysioNutrition تساعدك تربط بين التغذية، الحركة، والمتابعة بخطوات أوضح وأسهل.'
             : 'Estimate calories, macros, protein, and hydration using established medical formulas. PhysioNutrition helps connect nutrition, movement, and follow-up in a clearer way.'}
         </p>
 
         <div className="glass-panel mx-auto mb-7 max-w-3xl rounded-[1.75rem] border border-white/70 px-4 py-4 text-sm leading-7 text-slate-700 sm:px-5">
           {isAr
-            ? 'Ù‡Ù†Ø§ ØªØ¬Ø¯ Ø­Ø§Ø³Ø¨Ø§Øª ØªØºØ°ÙŠØ©ØŒ Ù…Ø­ØªÙˆÙ‰ ØªØ£Ù‡ÙŠÙ„ÙŠØŒ ÙˆÙ…ØªØ§Ø¨Ø¹Ø© Ø¹Ù…Ù„ÙŠØ© Ø¨Ø¯Ù„ Ø£Ø¯ÙˆØ§Øª Ù…Ù†ÙØµÙ„Ø© Ù„Ø§ ØªØ±Ø¨Ø· Ø¨ÙŠÙ† Ø§Ù„Ù†ØªÙŠØ¬Ø© ÙˆØ§Ù„Ø®Ø·ÙˆØ© Ø§Ù„ØªØ§Ù„ÙŠØ©.'
+            ? 'هنا تجد حاسبات تغذية، محتوى تأهيلي، ومتابعة عملية بدل أدوات منفصلة لا تربط بين النتيجة والخطوة التالية.'
             : 'Here you get calculators, rehab-focused content, and follow-up tools that work together instead of isolated pages.'}
         </div>
 
@@ -105,14 +105,14 @@ const Hero = memo(({lang}: {lang: Language}) => {
             className="inline-flex items-center justify-center gap-2 rounded-2xl bg-health-green px-6 py-4 text-sm font-bold text-white shadow-lg shadow-health-green/20 transition-all hover:-translate-y-0.5 hover:bg-health-green-dark"
           >
             <UserRoundPlus className="h-5 w-5" />
-            {isAr ? 'Ø§Ø¨Ø¯Ø£ Ø§Ù„Ø¢Ù† Ù…Ø¬Ø§Ù†Ù‹Ø§' : 'Start free now'}
+            {isAr ? 'ابدأ الآن مجانًا' : 'Start free now'}
           </Link>
           <a
             href="#calculators"
             className="glass-panel inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 px-6 py-4 text-sm font-bold text-slate-900 transition-all hover:-translate-y-0.5 hover:border-health-green"
           >
             <Calculator className="h-5 w-5 text-health-green" />
-            {isAr ? 'Ø§Ø³ØªÙƒØ´Ù Ø§Ù„Ø­Ø§Ø³Ø¨Ø§Øª' : 'Explore calculators'}
+            {isAr ? 'استكشف الحاسبات' : 'Explore calculators'}
           </a>
         </div>
 
@@ -122,14 +122,14 @@ const Hero = memo(({lang}: {lang: Language}) => {
             className="glass-panel inline-flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-3 text-sm font-bold text-slate-700 transition-all hover:-translate-y-0.5 hover:border-health-green"
           >
             <MessageSquareText className="h-4 w-4 text-health-green" />
-            {isAr ? 'Ø§Ø³Ø£Ù„ Ø§Ù„Ù…Ø³Ø§Ø¹Ø¯' : 'Ask the assistant'}
+            {isAr ? 'اسأل المساعد' : 'Ask the assistant'}
           </a>
           <a
             href="#architect"
             className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-3 text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-slate-800"
           >
             <Activity className="h-4 w-4" />
-            {isAr ? 'Ø®Ø·Ø© Ø§Ù„ØªØ¹Ø§ÙÙŠ' : 'Recovery planner'}
+            {isAr ? 'خطة التعافي' : 'Recovery planner'}
           </a>
         </div>
 
