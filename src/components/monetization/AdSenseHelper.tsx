@@ -24,7 +24,7 @@ export function AdSenseContainer({
   width?: string;
   height?: string;
 }) {
-  const adClient = import.meta.env.VITE_ADSENSE_CLIENT_ID || 'ca-pub-0000000000000000';
+  const adClient = import.meta.env.VITE_ADSENSE_CLIENT_ID || 'ca-pub-4879016113761897';
 
   useEffect(() => {
     // Push AdSense ads once component mounts
