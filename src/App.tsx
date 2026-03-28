@@ -409,29 +409,23 @@ export default function App({
   const updateArchitectDraft = (
     field: keyof typeof architectDraft,
     value: string,
+    sync?: {
+      profileKey: keyof HealthProfile;
+      min?: number;
+    },
   ) => {
     setArchitectDraft((prev) => ({ ...prev, [field]: value }));
-  };
 
-  const commitArchitectDraft = (
-    field: keyof typeof architectDraft,
-    profileKey: keyof HealthProfile,
-    options?: { min?: number },
-  ) => {
-    const rawValue = architectDraft[field];
-    const parsedValue = parseArchitectNumber(rawValue);
-    const minValue = options?.min ?? 0;
+    if (!sync) return;
+
+    const parsedValue = parseArchitectNumber(value);
+    const minValue = sync.min ?? 0;
     const nextValue = parsedValue > 0 ? Math.max(parsedValue, minValue) : 0;
 
     setArchitectProfile((prev) => {
-      if (prev[profileKey] === nextValue) return prev;
-      return { ...prev, [profileKey]: nextValue };
+      if (prev[sync.profileKey] === nextValue) return prev;
+      return { ...prev, [sync.profileKey]: nextValue };
     });
-
-    setArchitectDraft((prev) => ({
-      ...prev,
-      [field]: nextValue > 0 ? String(nextValue) : '',
-    }));
   };
 
   const calculateArchitectProfile = () => {
@@ -1165,8 +1159,7 @@ export default function App({
                         type="number" 
                         inputMode="numeric"
                         value={architectDraft.age}
-                        onChange={(e) => updateArchitectDraft('age', e.target.value)}
-                        onBlur={() => commitArchitectDraft('age', 'age', { min: 1 })}
+                        onChange={(e) => updateArchitectDraft('age', e.target.value, { profileKey: 'age', min: 1 })}
                         placeholder="25"
                         className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
                       />
@@ -1178,8 +1171,7 @@ export default function App({
                         type="number" 
                         inputMode="decimal"
                         value={architectDraft.weight}
-                        onChange={(e) => updateArchitectDraft('weight', e.target.value)}
-                        onBlur={() => commitArchitectDraft('weight', 'weight', { min: 1 })}
+                        onChange={(e) => updateArchitectDraft('weight', e.target.value, { profileKey: 'weight', min: 1 })}
                         placeholder="70"
                         className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
                       />
@@ -1193,8 +1185,7 @@ export default function App({
                       type="number" 
                       inputMode="numeric"
                       value={architectDraft.height}
-                      onChange={(e) => updateArchitectDraft('height', e.target.value)}
-                      onBlur={() => commitArchitectDraft('height', 'height', { min: 1 })}
+                      onChange={(e) => updateArchitectDraft('height', e.target.value, { profileKey: 'height', min: 1 })}
                       placeholder="175"
                       className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
                     />
@@ -1270,8 +1261,7 @@ export default function App({
                         max="52"
                         inputMode="numeric"
                         value={architectDraft.recoveryWeek}
-                        onChange={(e) => updateArchitectDraft('recoveryWeek', e.target.value)}
-                        onBlur={() => commitArchitectDraft('recoveryWeek', 'recoveryWeek', { min: 1 })}
+                        onChange={(e) => updateArchitectDraft('recoveryWeek', e.target.value, { profileKey: 'recoveryWeek', min: 1 })}
                         className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
                       />
                     </div>
@@ -1284,8 +1274,7 @@ export default function App({
                       type="number" 
                       inputMode="numeric"
                       value={architectDraft.waist}
-                      onChange={(e) => updateArchitectDraft('waist', e.target.value)}
-                      onBlur={() => commitArchitectDraft('waist', 'waist', { min: 1 })}
+                      onChange={(e) => updateArchitectDraft('waist', e.target.value, { profileKey: 'waist', min: 1 })}
                       placeholder="80"
                       className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
                     />
@@ -1298,8 +1287,7 @@ export default function App({
                       type="number" 
                       inputMode="numeric"
                       value={architectDraft.neck}
-                      onChange={(e) => updateArchitectDraft('neck', e.target.value)}
-                      onBlur={() => commitArchitectDraft('neck', 'neck', { min: 1 })}
+                      onChange={(e) => updateArchitectDraft('neck', e.target.value, { profileKey: 'neck', min: 1 })}
                       placeholder="38"
                       className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
                     />
@@ -1332,8 +1320,7 @@ export default function App({
                       type="number" 
                       inputMode="numeric"
                       value={architectDraft.waterIntake}
-                      onChange={(e) => updateArchitectDraft('waterIntake', e.target.value)}
-                      onBlur={() => commitArchitectDraft('waterIntake', 'waterIntake', { min: 1 })}
+                      onChange={(e) => updateArchitectDraft('waterIntake', e.target.value, { profileKey: 'waterIntake', min: 1 })}
                       placeholder="2500"
                       className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
                     />
