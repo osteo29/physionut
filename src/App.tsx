@@ -140,6 +140,18 @@ function HomeSectionFallback({
   );
 }
 
+function loadStoredArchitectProfile(): HealthProfile {
+  const saved = localStorage.getItem(ARCHITECT_STORAGE_KEY);
+  if (!saved) return EMPTY_ARCHITECT_PROFILE;
+
+  try {
+    const parsed = JSON.parse(saved) as HealthProfile;
+    return isLegacyDemoProfile(parsed) ? EMPTY_ARCHITECT_PROFILE : {...EMPTY_ARCHITECT_PROFILE, ...parsed};
+  } catch {
+    return EMPTY_ARCHITECT_PROFILE;
+  }
+}
+
 function parseArchitectNumber(value: string) {
   if (!value.trim()) return 0;
   const parsed = Number(value);
@@ -160,6 +172,7 @@ export default function App({
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeCalculator, setActiveCalculator] = useState<CalculatorType>(null);
   const [activeToolGroup, setActiveToolGroup] = useState<'all' | 'assessment' | 'metabolism' | 'nutrition' | 'planning'>('all');
+  const [initialArchitectProfile] = useState<HealthProfile>(() => loadStoredArchitectProfile());
   const [lang, setLang] = useState<Language>(() => {
     const saved = localStorage.getItem('physiohub_lang');
     return (saved as Language) || 'en';
@@ -168,15 +181,15 @@ export default function App({
   const t = translations[lang];
   
   // Form States
-  const [weight, setWeight] = useState<string>('');
-  const [height, setHeight] = useState<string>('');
-  const [age, setAge] = useState<string>('');
-  const [gender, setGender] = useState<'male' | 'female'>('male');
-  const [activity, setActivity] = useState<string>('1.2');
-  const [waist, setWaist] = useState<string>('');
-  const [neck, setNeck] = useState<string>('');
+  const [weight, setWeight] = useState<string>(() => architectNumberToInput(initialArchitectProfile.weight));
+  const [height, setHeight] = useState<string>(() => architectNumberToInput(initialArchitectProfile.height));
+  const [age, setAge] = useState<string>(() => architectNumberToInput(initialArchitectProfile.age));
+  const [gender, setGender] = useState<'male' | 'female'>(initialArchitectProfile.gender);
+  const [activity, setActivity] = useState<string>(() => String(initialArchitectProfile.activityLevel));
+  const [waist, setWaist] = useState<string>(() => architectNumberToInput(initialArchitectProfile.waist));
+  const [neck, setNeck] = useState<string>(() => architectNumberToInput(initialArchitectProfile.neck));
   const [hip, setHip] = useState<string>('');
-  const [goal, setGoal] = useState<GoalType>('maintain');
+  const [goal, setGoal] = useState<GoalType>(initialArchitectProfile.goal as GoalType);
   const [bodyType, setBodyType] = useState<BodyType>('mesomorph');
   const [pace, setPace] = useState(500);
   const [unitSystem, setUnitSystem] = useState<'metric' | 'imperial'>('metric');
@@ -186,17 +199,7 @@ export default function App({
   const [pregnancy, setPregnancy] = useState(false);
   
   // PhysioNutrition Architect State
-  const [architectProfile, setArchitectProfile] = useState<HealthProfile>(() => {
-    const saved = localStorage.getItem(ARCHITECT_STORAGE_KEY);
-    if (!saved) return EMPTY_ARCHITECT_PROFILE;
-
-    try {
-      const parsed = JSON.parse(saved) as HealthProfile;
-      return isLegacyDemoProfile(parsed) ? EMPTY_ARCHITECT_PROFILE : {...EMPTY_ARCHITECT_PROFILE, ...parsed};
-    } catch {
-      return EMPTY_ARCHITECT_PROFILE;
-    }
-  });
+  const [architectProfile, setArchitectProfile] = useState<HealthProfile>(initialArchitectProfile);
 
   const [architectMetrics, setArchitectMetrics] = useState<HealthMetrics | null>(null);
   const [aiDietPlan, setAiDietPlan] = useState<string | null>(null);
@@ -382,21 +385,6 @@ export default function App({
       setArchitectProfile((prev) => ({...prev, goal}));
     }
   }, [goal, architectProfile.goal]);
-
-  useEffect(() => {
-    if (!weight && architectProfile.weight > 0) setWeight(String(architectProfile.weight));
-    if (!height && architectProfile.height > 0) setHeight(String(architectProfile.height));
-    if (!age && architectProfile.age > 0) setAge(String(architectProfile.age));
-    if (!waist && (architectProfile.waist || 0) > 0) setWaist(String(architectProfile.waist));
-    if (!neck && (architectProfile.neck || 0) > 0) setNeck(String(architectProfile.neck));
-    if (gender !== architectProfile.gender) setGender(architectProfile.gender);
-    if (goal !== architectProfile.goal && ['lose', 'maintain', 'gain'].includes(String(architectProfile.goal))) {
-      setGoal(architectProfile.goal as GoalType);
-    }
-    if (activity !== String(architectProfile.activityLevel) && architectProfile.activityLevel > 0) {
-      setActivity(String(architectProfile.activityLevel));
-    }
-  }, [architectProfile]);
 
   useEffect(() => {
     setArchitectDraft({
