@@ -4,7 +4,6 @@ import {
   BookOpen,
   Brain,
   ClipboardList,
-  HeartPulse,
   LogOut,
   Menu,
   Moon,
@@ -26,6 +25,7 @@ import {
 } from '../../lib/supabase';
 import type {Language} from '../../services/translations';
 import {navigationPaths, removeLangPrefix} from '../../utils/langUrlHelper';
+import BrandLogo from '../common/BrandLogo';
 
 type CalculatorNavItem = {
   id: string;
@@ -133,19 +133,12 @@ const Navigation = memo(
       <Link
         to={navigationPaths.home(lang)}
         onClick={handleBrandClick}
-        className="group flex items-center gap-2"
+        className="group"
       >
-        <div className="rounded-xl bg-health-green p-1.5 shadow-sm transition-transform duration-300 group-hover:rotate-6">
-          <HeartPulse className="h-5 w-5 text-white" />
-        </div>
-        <div className="flex flex-col text-left">
-          <span className="text-base font-black leading-[0.85] tracking-tight text-slate-900 sm:text-lg">
-            PHYSIO
-          </span>
-          <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-health-green">
-            Nutrition
-          </span>
-        </div>
+        <BrandLogo
+          imageClassName="transition-transform duration-300 group-hover:rotate-3"
+          subtitle={isAr ? 'Clinical Recovery' : 'Clinical Recovery'}
+        />
       </Link>
     );
 

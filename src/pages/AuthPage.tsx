@@ -1,7 +1,8 @@
 import {type FormEvent, useEffect, useState} from 'react';
 import {Link, useLocation, useNavigate, useSearchParams} from 'react-router-dom';
-import {HeartPulse, LoaderCircle, LockKeyhole, Moon, Sun} from 'lucide-react';
+import {LoaderCircle, LockKeyhole, Moon, Sun} from 'lucide-react';
 import Seo from '../components/seo/Seo';
+import BrandLogo from '../components/common/BrandLogo';
 import usePreferredLang from './usePreferredLang';
 import {
   getCurrentUser,
@@ -202,13 +203,8 @@ export default function AuthPage({
 
       <nav className="sticky top-0 z-50 border-b border-slate-100 bg-white/85 px-3 backdrop-blur-md sm:px-6 lg:px-8">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3">
-          <Link to="/" className="group flex items-center gap-2">
-            <div className="rounded-lg bg-health-green p-1.5 transition-transform group-hover:scale-110">
-              <HeartPulse className="h-5 w-5 text-white" />
-            </div>
-            <span className="text-xl font-bold tracking-tight text-slate-900">
-              Physio<span className="text-health-green">Hub</span>
-            </span>
+          <Link to="/" className="group">
+            <BrandLogo imageClassName="transition-transform group-hover:scale-105" />
           </Link>
 
           <button

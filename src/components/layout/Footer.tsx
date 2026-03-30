@@ -1,7 +1,8 @@
 import {memo} from 'react';
 import {Link} from 'react-router-dom';
-import {Facebook, HeartPulse, Instagram, Mail, MapPin, ShieldAlert} from 'lucide-react';
+import {Facebook, Instagram, Mail, MapPin, ShieldAlert} from 'lucide-react';
 import type {Language} from '../../services/translations';
+import BrandLogo from '../common/BrandLogo';
 
 const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
   const currentYear = new Date().getFullYear();
@@ -16,12 +17,12 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-20 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-8">
-            <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-health-green shadow-lg shadow-health-green/20">
-                <HeartPulse className="h-7 w-7 text-white" />
-              </div>
-              <span className="text-2xl font-black tracking-tighter text-white">PhysioNutrition</span>
-            </div>
+            <BrandLogo
+              textTone="light"
+              imageClassName="h-12 w-12 border-white/15"
+              title="PhysioNutrition"
+              subtitle={lang === 'en' ? 'Clinical Recovery' : 'Clinical Recovery'}
+            />
             <p className="max-w-xs leading-relaxed text-slate-300">
               {lang === 'en'
                 ? 'Educational tools and clinical insights for recovery, nutrition, and safer decision support.'

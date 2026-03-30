@@ -1,5 +1,6 @@
 import Seo from '../components/seo/Seo';
 import ChatPanel from '../components/ai/ChatPanel';
+import BrandLogo from '../components/common/BrandLogo';
 import usePreferredLang from './usePreferredLang';
 import {Link, useSearchParams} from 'react-router-dom';
 import {navigationPaths} from '../utils/langUrlHelper';
@@ -7,7 +8,6 @@ import {
   ChevronLeft,
   ChevronRight,
   ClipboardList,
-  HeartPulse,
   Moon,
   ShieldCheck,
   Sparkles,
@@ -109,13 +109,8 @@ export default function AssistantPage({
 
       <nav className="sticky top-0 z-50 border-b border-slate-100 bg-white/85 px-3 backdrop-blur-md sm:px-6 lg:px-8">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3">
-          <Link to={navigationPaths.home(lang)} className="flex items-center gap-2 group">
-            <div className="rounded-lg bg-health-green p-1.5 transition-transform group-hover:scale-110">
-              <HeartPulse className="h-5 w-5 text-white" />
-            </div>
-            <span className="text-xl font-bold tracking-tight text-slate-900">
-              Physio<span className="text-health-green">Hub</span>
-            </span>
+          <Link to={navigationPaths.home(lang)} className="group">
+            <BrandLogo imageClassName="transition-transform group-hover:scale-105" />
           </Link>
 
           <div className="flex items-center gap-2 sm:gap-3">
