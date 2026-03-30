@@ -1,6 +1,7 @@
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
 import Seo from '../components/seo/Seo';
+import {buildHreflangs} from '../utils/langUrlHelper';
 
 export default function TermsOfService() {
   const lang = usePreferredLang();
@@ -14,6 +15,7 @@ export default function TermsOfService() {
             : 'شروط استخدام PhysioNutrition لحاسبات العلاج الطبيعي وأدوات التغذية العلاجية.'
         }
         canonicalPath="/terms"
+        hreflangs={buildHreflangs('/terms')}
       />
       <PageLayout title={lang === 'en' ? 'Terms of Service' : 'الشروط والأحكام'}>
       {lang === 'en' ? (

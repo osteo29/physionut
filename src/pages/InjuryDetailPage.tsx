@@ -142,6 +142,24 @@ function buildStageAnchor(phaseId: string, index: number) {
   return normalized || `phase-${index + 1}`;
 }
 
+function buildPlainLanguageInjurySummary(
+  injuryDisplayName: string,
+  bodyRegionDisplay: string,
+  categoryDisplay: string,
+  commonSymptoms: string[],
+  lang: 'en' | 'ar',
+) {
+  const topSymptoms = commonSymptoms.slice(0, 2);
+
+  if (lang === 'ar') {
+    const symptomsText = topSymptoms.length ? ` وغالبًا يظهر على شكل ${topSymptoms.join(' أو ')}.` : '.';
+    return `${injuryDisplayName} هو وصف مبسط لمشكلة تصيب ${bodyRegionDisplay} وتؤثر على الحركة أو التحميل اليومي. غالبًا يندرج تحت فئة ${categoryDisplay}${symptomsText}`;
+  }
+
+  const symptomsText = topSymptoms.length ? ` It often shows up as ${topSymptoms.join(' or ')}.` : '';
+  return `${injuryDisplayName} is a plain-language way to describe a ${categoryDisplay.toLowerCase()} problem affecting the ${bodyRegionDisplay.toLowerCase()}, often making movement or loading less comfortable.${symptomsText}`;
+}
+
 function getArabicFallbackRedFlags(bodyRegion: string) {
   return [
     `ألم شديد أو تورم سريع في ${bodyRegion}`,
@@ -304,6 +322,13 @@ export default function InjuryDetailPage() {
     isAr && (!customContent?.symptoms?.length || !customContent.symptoms.some((item) => textLooksArabic(normalizeCopy(item))))
       ? inferCommonSymptoms(injury.name, injury.bodyRegion, injury.category, 'ar')
       : (customContent?.symptoms || inferCommonSymptoms(injury.name, injury.bodyRegion, injury.category, 'en')).map(normalizeCopy);
+  const plainLanguageSummary = buildPlainLanguageInjurySummary(
+    injuryDisplayName,
+    bodyRegionDisplay,
+    categoryDisplay,
+    commonSymptoms,
+    lang,
+  );
 
   const redFlags =
     isAr && !listHasArabic(injury.redFlags)
@@ -457,6 +482,9 @@ export default function InjuryDetailPage() {
             </div>
             <h1 className="text-2xl font-black text-slate-900 sm:text-3xl">{injuryDisplayName}</h1>
             <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-600 sm:text-base">{introText}</p>
+            <p className="mt-3 max-w-3xl rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm leading-7 text-slate-700">
+              {plainLanguageSummary}
+            </p>
             <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-700">
               {isAr && !textLooksArabic(normalizeCopy(injury.rehabSummary))
                 ? `يعتمد التعافي هنا على ضبط الحمل التدريبي، والمتابعة الجيدة للأعراض، ودعم الأنسجة بالتغذية المناسبة حتى تستعيد ${bodyRegionDisplay} كفاءته تدريجيًا.`

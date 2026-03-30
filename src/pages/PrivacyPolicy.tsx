@@ -1,6 +1,7 @@
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
 import Seo from '../components/seo/Seo';
+import {buildHreflangs} from '../utils/langUrlHelper';
 
 export default function PrivacyPolicy() {
   const lang = usePreferredLang();
@@ -15,6 +16,7 @@ export default function PrivacyPolicy() {
             : 'سياسة خصوصية PhysioNutrition الخاصة بالحاسبات والمحتوى التعليمي والكوكيز والموافقة الإعلانية.'
         }
         canonicalPath="/privacy"
+        hreflangs={buildHreflangs('/privacy')}
       />
       <PageLayout title={lang === 'en' ? 'Privacy Policy' : 'سياسة الخصوصية'}>
         {lang === 'en' ? (

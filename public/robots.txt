@@ -7,14 +7,24 @@ Allow: /ar/injuries
 Allow: /en/insights
 Allow: /ar/insights
 
-# منع ملفات حساسة أو غير مهمة
+# Exclude operational and admin areas
+Disallow: /admin/
+Disallow: /auth/
+Disallow: /dashboard/
+Disallow: /studio/
+Disallow: /assistant/
+
+# Block common auth utility routes
+Disallow: /login
+Disallow: /register
+Disallow: /reset-password
+
+# Block sensitive or non-public files
 Disallow: /.env
 Disallow: /.git
 Disallow: /node_modules
 Disallow: /private
-Disallow: /admin
 Disallow: /dist
 Disallow: *?_vercel_analytics
 
-# خريطة الموقع
 Sitemap: https://physionutrition.vercel.app/sitemap.xml

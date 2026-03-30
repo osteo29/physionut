@@ -3,6 +3,7 @@ import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
 import Seo from '../components/seo/Seo';
 import {usePublishedArticles} from '../services/articleStudio';
+import {buildHreflangs} from '../utils/langUrlHelper';
 
 export default function InsightsPage() {
   const lang = usePreferredLang();
@@ -18,6 +19,7 @@ export default function InsightsPage() {
             : 'تصفح كل مقالات PhysioNutrition عن التغذية والتعافي والتأهيل وخسارة الدهون.'
         }
         canonicalPath="/insights"
+        hreflangs={buildHreflangs('/insights')}
       />
       <PageLayout title={lang === 'en' ? 'Insights' : 'المقالات'}>
         <p className="mb-8 text-slate-600">

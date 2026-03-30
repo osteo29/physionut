@@ -1,1052 +1,1706 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://physionutrition.vercel.app/en/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/" />
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/" />
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/calculators</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/calculators" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/calculators" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/calculators" />
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/calculators</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/calculators" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/calculators" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/calculators" />
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries" />
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries" />
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/insights</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/insights" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/insights" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/insights" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/insights</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/insights" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/insights" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/insights" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/en/assistant</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://physionutrition.vercel.app/en/diets</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/diets" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/diets" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/diets" />
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://physionutrition.vercel.app/ar/assistant</loc>
-    <changefreq>weekly</changefreq>
+    <loc>https://physionutrition.vercel.app/ar/diets</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/diets" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/diets" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/diets" />
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/privacy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/privacy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/privacy" />
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/privacy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/privacy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/privacy" />
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/about</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/about" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/about" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/about" />
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/about</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/about" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/about" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/about" />
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/contact</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/contact" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/contact" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/contact" />
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/contact</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/contact" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/contact" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/contact" />
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/terms</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/terms" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/terms" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/terms" />
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/terms</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/terms" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/terms" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/terms" />
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/cookies</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/cookies" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/cookies" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/cookies" />
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/cookies</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/cookies" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/cookies" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/cookies" />
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/disclaimer</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/disclaimer" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/disclaimer" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/disclaimer" />
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/disclaimer</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/disclaimer" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/disclaimer" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/disclaimer" />
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/insights/protein-after-acl-reconstruction</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://physionutrition.vercel.app/ar/insights/protein-after-acl-reconstruction</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/insights/protein-after-acl-reconstruction" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/insights/protein-after-acl-reconstruction" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/insights/protein-after-acl-reconstruction" />
+    <lastmod>2026-03-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/insights/why-tracking-measurements-matters</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://physionutrition.vercel.app/ar/insights/why-tracking-measurements-matters</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/insights/why-tracking-measurements-matters" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/insights/why-tracking-measurements-matters" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/insights/why-tracking-measurements-matters" />
+    <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/insights/nutrition-after-injury-basics</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://physionutrition.vercel.app/ar/insights/nutrition-after-injury-basics</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/insights/nutrition-after-injury-basics" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/insights/nutrition-after-injury-basics" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/insights/nutrition-after-injury-basics" />
+    <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/insights/supplements-that-may-support-recovery-after-injury</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://physionutrition.vercel.app/ar/insights/supplements-that-may-support-recovery-after-injury</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/insights/supplements-that-may-support-recovery-after-injury" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/insights/supplements-that-may-support-recovery-after-injury" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/insights/supplements-that-may-support-recovery-after-injury" />
+    <lastmod>2026-03-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/insights/is-physical-therapy-just-exercise</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://physionutrition.vercel.app/ar/insights/is-physical-therapy-just-exercise</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/insights/is-physical-therapy-just-exercise" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/insights/is-physical-therapy-just-exercise" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/insights/is-physical-therapy-just-exercise" />
+    <lastmod>2026-03-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/insights/calorie-deficit-without-extremes</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://physionutrition.vercel.app/ar/insights/calorie-deficit-without-extremes</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/insights/calorie-deficit-without-extremes" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/insights/calorie-deficit-without-extremes" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/insights/calorie-deficit-without-extremes" />
+    <lastmod>2026-03-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/insights/low-back-pain-rest-or-move</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://physionutrition.vercel.app/ar/insights/low-back-pain-rest-or-move</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/insights/low-back-pain-rest-or-move" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/insights/low-back-pain-rest-or-move" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/insights/low-back-pain-rest-or-move" />
+    <lastmod>2026-03-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/insights/diet-myths-that-waste-your-progress</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://physionutrition.vercel.app/ar/insights/diet-myths-that-waste-your-progress</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/insights/diet-myths-that-waste-your-progress" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/insights/diet-myths-that-waste-your-progress" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/insights/diet-myths-that-waste-your-progress" />
+    <lastmod>2026-03-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/insights/bmr-vs-tdee-calorie-calculation-myth</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://physionutrition.vercel.app/ar/insights/bmr-vs-tdee-calorie-calculation-myth</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/insights/bmr-vs-tdee-calorie-calculation-myth" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/insights/bmr-vs-tdee-calorie-calculation-myth" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/insights/bmr-vs-tdee-calorie-calculation-myth" />
+    <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/insights/gym-breathing-prevent-dizziness-and-boost-performance</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://physionutrition.vercel.app/ar/insights/gym-breathing-prevent-dizziness-and-boost-performance</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/insights/gym-breathing-prevent-dizziness-and-boost-performance" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/insights/gym-breathing-prevent-dizziness-and-boost-performance" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/insights/gym-breathing-prevent-dizziness-and-boost-performance" />
+    <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/insights/heart-health-gym-performance-guide</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://physionutrition.vercel.app/ar/insights/heart-health-gym-performance-guide</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/insights/heart-health-gym-performance-guide" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/insights/heart-health-gym-performance-guide" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/insights/heart-health-gym-performance-guide" />
+    <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/insights/how-exercise-changes-your-body-complete-guide</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/insights/how-exercise-changes-your-body-complete-guide" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/insights/how-exercise-changes-your-body-complete-guide" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/insights/how-exercise-changes-your-body-complete-guide" />
+    <lastmod>2026-03-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/insights/protein-after-acl-reconstruction</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/insights/protein-after-acl-reconstruction" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/insights/protein-after-acl-reconstruction" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/insights/protein-after-acl-reconstruction" />
+    <lastmod>2026-03-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/insights/why-tracking-measurements-matters</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/insights/why-tracking-measurements-matters" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/insights/why-tracking-measurements-matters" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/insights/why-tracking-measurements-matters" />
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/insights/nutrition-after-injury-basics</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/insights/nutrition-after-injury-basics" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/insights/nutrition-after-injury-basics" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/insights/nutrition-after-injury-basics" />
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/insights/supplements-that-may-support-recovery-after-injury</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/insights/supplements-that-may-support-recovery-after-injury" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/insights/supplements-that-may-support-recovery-after-injury" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/insights/supplements-that-may-support-recovery-after-injury" />
+    <lastmod>2026-03-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/insights/is-physical-therapy-just-exercise</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/insights/is-physical-therapy-just-exercise" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/insights/is-physical-therapy-just-exercise" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/insights/is-physical-therapy-just-exercise" />
+    <lastmod>2026-03-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/insights/calorie-deficit-without-extremes</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/insights/calorie-deficit-without-extremes" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/insights/calorie-deficit-without-extremes" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/insights/calorie-deficit-without-extremes" />
+    <lastmod>2026-03-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/insights/low-back-pain-rest-or-move</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/insights/low-back-pain-rest-or-move" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/insights/low-back-pain-rest-or-move" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/insights/low-back-pain-rest-or-move" />
+    <lastmod>2026-03-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/insights/diet-myths-that-waste-your-progress</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/insights/diet-myths-that-waste-your-progress" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/insights/diet-myths-that-waste-your-progress" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/insights/diet-myths-that-waste-your-progress" />
+    <lastmod>2026-03-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/insights/bmr-vs-tdee-calorie-calculation-myth</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/insights/bmr-vs-tdee-calorie-calculation-myth" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/insights/bmr-vs-tdee-calorie-calculation-myth" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/insights/bmr-vs-tdee-calorie-calculation-myth" />
+    <lastmod>2026-03-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/insights/gym-breathing-prevent-dizziness-and-boost-performance</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/insights/gym-breathing-prevent-dizziness-and-boost-performance" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/insights/gym-breathing-prevent-dizziness-and-boost-performance" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/insights/gym-breathing-prevent-dizziness-and-boost-performance" />
+    <lastmod>2026-03-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/insights/heart-health-gym-performance-guide</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/insights/heart-health-gym-performance-guide" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/insights/heart-health-gym-performance-guide" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/insights/heart-health-gym-performance-guide" />
+    <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/insights/how-exercise-changes-your-body-complete-guide</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/insights/how-exercise-changes-your-body-complete-guide" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/insights/how-exercise-changes-your-body-complete-guide" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/insights/how-exercise-changes-your-body-complete-guide" />
+    <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/ankle-sprain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/ankle-sprain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/ankle-sprain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/ankle-sprain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/ankle-sprain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/ankle-sprain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/ankle-sprain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/ankle-sprain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/acl-injury</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/acl-injury" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/acl-injury" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/acl-injury" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/acl-injury</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/acl-injury" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/acl-injury" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/acl-injury" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/rotator-cuff</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/rotator-cuff" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/rotator-cuff" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/rotator-cuff" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/rotator-cuff</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/rotator-cuff" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/rotator-cuff" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/rotator-cuff" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/hamstring-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/hamstring-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/hamstring-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/hamstring-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/hamstring-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/hamstring-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/hamstring-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/hamstring-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/stress-fracture</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/stress-fracture" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/stress-fracture" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/stress-fracture" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/stress-fracture</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/stress-fracture" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/stress-fracture" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/stress-fracture" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/quadriceps-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/quadriceps-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/quadriceps-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/quadriceps-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/quadriceps-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/quadriceps-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/quadriceps-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/quadriceps-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/calf-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/calf-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/calf-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/calf-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/calf-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/calf-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/calf-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/calf-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/biceps-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/biceps-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/biceps-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/biceps-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/biceps-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/biceps-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/biceps-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/biceps-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/triceps-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/triceps-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/triceps-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/triceps-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/triceps-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/triceps-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/triceps-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/triceps-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/pectoral-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/pectoral-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/pectoral-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/pectoral-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/pectoral-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/pectoral-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/pectoral-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/pectoral-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/deltoid-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/deltoid-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/deltoid-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/deltoid-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/deltoid-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/deltoid-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/deltoid-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/deltoid-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/forearm-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/forearm-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/forearm-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/forearm-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/forearm-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/forearm-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/forearm-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/forearm-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/glute-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/glute-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/glute-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/glute-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/glute-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/glute-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/glute-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/glute-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/oblique-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/oblique-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/oblique-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/oblique-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/oblique-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/oblique-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/oblique-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/oblique-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/erector-spinae-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/erector-spinae-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/erector-spinae-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/erector-spinae-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/erector-spinae-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/erector-spinae-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/erector-spinae-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/erector-spinae-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/neck-muscle-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/neck-muscle-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/neck-muscle-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/neck-muscle-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/neck-muscle-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/neck-muscle-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/neck-muscle-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/neck-muscle-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/adductor-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/adductor-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/adductor-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/adductor-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/adductor-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/adductor-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/adductor-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/adductor-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/tibialis-anterior-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/tibialis-anterior-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/tibialis-anterior-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/tibialis-anterior-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/tibialis-anterior-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/tibialis-anterior-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/tibialis-anterior-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/tibialis-anterior-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/pcl-injury</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/pcl-injury" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/pcl-injury" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/pcl-injury" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/pcl-injury</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/pcl-injury" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/pcl-injury" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/pcl-injury" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/mcl-sprain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/mcl-sprain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/mcl-sprain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/mcl-sprain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/mcl-sprain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/mcl-sprain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/mcl-sprain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/mcl-sprain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/lcl-sprain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/lcl-sprain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/lcl-sprain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/lcl-sprain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/lcl-sprain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/lcl-sprain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/lcl-sprain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/lcl-sprain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/ucl-injury</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/ucl-injury" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/ucl-injury" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/ucl-injury" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/ucl-injury</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/ucl-injury" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/ucl-injury" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/ucl-injury" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/thumb-collateral-ligament</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/thumb-collateral-ligament" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/thumb-collateral-ligament" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/thumb-collateral-ligament" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/thumb-collateral-ligament</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/thumb-collateral-ligament" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/thumb-collateral-ligament" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/thumb-collateral-ligament" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/ac-joint-sprain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/ac-joint-sprain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/ac-joint-sprain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/ac-joint-sprain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/ac-joint-sprain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/ac-joint-sprain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/ac-joint-sprain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/ac-joint-sprain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/knee-multiligament-injury</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/knee-multiligament-injury" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/knee-multiligament-injury" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/knee-multiligament-injury" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/knee-multiligament-injury</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/knee-multiligament-injury" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/knee-multiligament-injury" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/knee-multiligament-injury" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/spine-ligament-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/spine-ligament-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/spine-ligament-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/spine-ligament-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/spine-ligament-strain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/spine-ligament-strain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/spine-ligament-strain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/spine-ligament-strain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/achilles-tendinopathy</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/achilles-tendinopathy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/achilles-tendinopathy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/achilles-tendinopathy" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/achilles-tendinopathy</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/achilles-tendinopathy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/achilles-tendinopathy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/achilles-tendinopathy" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/patellar-tendinopathy</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/patellar-tendinopathy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/patellar-tendinopathy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/patellar-tendinopathy" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/patellar-tendinopathy</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/patellar-tendinopathy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/patellar-tendinopathy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/patellar-tendinopathy" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/biceps-tendinopathy</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/biceps-tendinopathy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/biceps-tendinopathy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/biceps-tendinopathy" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/biceps-tendinopathy</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/biceps-tendinopathy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/biceps-tendinopathy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/biceps-tendinopathy" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/lateral-epicondylitis</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/lateral-epicondylitis" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/lateral-epicondylitis" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/lateral-epicondylitis" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/lateral-epicondylitis</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/lateral-epicondylitis" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/lateral-epicondylitis" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/lateral-epicondylitis" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/medial-epicondylitis</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/medial-epicondylitis" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/medial-epicondylitis" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/medial-epicondylitis" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/medial-epicondylitis</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/medial-epicondylitis" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/medial-epicondylitis" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/medial-epicondylitis" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/glute-tendinopathy</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/glute-tendinopathy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/glute-tendinopathy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/glute-tendinopathy" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/glute-tendinopathy</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/glute-tendinopathy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/glute-tendinopathy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/glute-tendinopathy" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/hip-flexor-tendinopathy</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/hip-flexor-tendinopathy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/hip-flexor-tendinopathy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/hip-flexor-tendinopathy" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/hip-flexor-tendinopathy</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/hip-flexor-tendinopathy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/hip-flexor-tendinopathy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/hip-flexor-tendinopathy" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/hamstring-tendon-injury</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/hamstring-tendon-injury" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/hamstring-tendon-injury" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/hamstring-tendon-injury" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/hamstring-tendon-injury</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/hamstring-tendon-injury" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/hamstring-tendon-injury" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/hamstring-tendon-injury" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/plantar-achilles-insertion-tendinopathy</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/plantar-achilles-insertion-tendinopathy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/plantar-achilles-insertion-tendinopathy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/plantar-achilles-insertion-tendinopathy" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/plantar-achilles-insertion-tendinopathy</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/plantar-achilles-insertion-tendinopathy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/plantar-achilles-insertion-tendinopathy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/plantar-achilles-insertion-tendinopathy" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/bone-fracture-long-bone</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/bone-fracture-long-bone" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/bone-fracture-long-bone" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/bone-fracture-long-bone" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/bone-fracture-long-bone</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/bone-fracture-long-bone" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/bone-fracture-long-bone" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/bone-fracture-long-bone" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/vertebral-fracture</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/vertebral-fracture" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/vertebral-fracture" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/vertebral-fracture" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/vertebral-fracture</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/vertebral-fracture" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/vertebral-fracture" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/vertebral-fracture" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/rib-fracture</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/rib-fracture" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/rib-fracture" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/rib-fracture" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/rib-fracture</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/rib-fracture" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/rib-fracture" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/rib-fracture" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/scaphoid-fracture</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/scaphoid-fracture" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/scaphoid-fracture" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/scaphoid-fracture" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/scaphoid-fracture</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/scaphoid-fracture" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/scaphoid-fracture" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/scaphoid-fracture" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/calcaneus-fracture</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/calcaneus-fracture" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/calcaneus-fracture" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/calcaneus-fracture" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/calcaneus-fracture</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/calcaneus-fracture" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/calcaneus-fracture" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/calcaneus-fracture" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/patella-fracture</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/patella-fracture" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/patella-fracture" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/patella-fracture" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/patella-fracture</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/patella-fracture" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/patella-fracture" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/patella-fracture" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/talus-fracture</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/talus-fracture" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/talus-fracture" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/talus-fracture" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/talus-fracture</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/talus-fracture" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/talus-fracture" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/talus-fracture" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/humeral-head-fracture</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/humeral-head-fracture" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/humeral-head-fracture" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/humeral-head-fracture" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/humeral-head-fracture</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/humeral-head-fracture" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/humeral-head-fracture" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/humeral-head-fracture" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/pelvic-avulsion-fracture</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/pelvic-avulsion-fracture" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/pelvic-avulsion-fracture" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/pelvic-avulsion-fracture" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/pelvic-avulsion-fracture</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/pelvic-avulsion-fracture" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/pelvic-avulsion-fracture" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/pelvic-avulsion-fracture" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/meniscus-tear</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/meniscus-tear" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/meniscus-tear" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/meniscus-tear" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/meniscus-tear</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/meniscus-tear" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/meniscus-tear" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/meniscus-tear" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/labrum-tear</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/labrum-tear" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/labrum-tear" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/labrum-tear" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/labrum-tear</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/labrum-tear" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/labrum-tear" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/labrum-tear" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/ac-joint-injury</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/ac-joint-injury" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/ac-joint-injury" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/ac-joint-injury" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/ac-joint-injury</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/ac-joint-injury" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/ac-joint-injury" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/ac-joint-injury" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/patellofemoral-pain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/patellofemoral-pain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/patellofemoral-pain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/patellofemoral-pain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/patellofemoral-pain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/patellofemoral-pain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/patellofemoral-pain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/patellofemoral-pain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/ankle-instability</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/ankle-instability" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/ankle-instability" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/ankle-instability" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/ankle-instability</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/ankle-instability" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/ankle-instability" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/ankle-instability" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/osteoarthritis-flare</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/osteoarthritis-flare" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/osteoarthritis-flare" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/osteoarthritis-flare" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/osteoarthritis-flare</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/osteoarthritis-flare" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/osteoarthritis-flare" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/osteoarthritis-flare" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/tmj-disorder</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/tmj-disorder" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/tmj-disorder" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/tmj-disorder" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/tmj-disorder</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/tmj-disorder" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/tmj-disorder" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/tmj-disorder" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/elbow-instability</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/elbow-instability" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/elbow-instability" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/elbow-instability" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/elbow-instability</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/elbow-instability" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/elbow-instability" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/elbow-instability" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/shoulder-impingement</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/shoulder-impingement" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/shoulder-impingement" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/shoulder-impingement" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/shoulder-impingement</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/shoulder-impingement" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/shoulder-impingement" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/shoulder-impingement" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/glenohumeral-dislocation</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/glenohumeral-dislocation" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/glenohumeral-dislocation" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/glenohumeral-dislocation" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/glenohumeral-dislocation</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/glenohumeral-dislocation" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/glenohumeral-dislocation" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/glenohumeral-dislocation" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/hip-dysplasia-labral-tear</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/hip-dysplasia-labral-tear" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/hip-dysplasia-labral-tear" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/hip-dysplasia-labral-tear" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/hip-dysplasia-labral-tear</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/hip-dysplasia-labral-tear" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/hip-dysplasia-labral-tear" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/hip-dysplasia-labral-tear" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/wrist-instability-tfcc</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/wrist-instability-tfcc" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/wrist-instability-tfcc" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/wrist-instability-tfcc" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/wrist-instability-tfcc</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/wrist-instability-tfcc" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/wrist-instability-tfcc" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/wrist-instability-tfcc" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/low-back-pain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/low-back-pain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/low-back-pain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/low-back-pain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/low-back-pain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/low-back-pain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/low-back-pain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/low-back-pain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/neck-pain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/neck-pain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/neck-pain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/neck-pain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/neck-pain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/neck-pain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/neck-pain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/neck-pain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/plantar-fasciitis</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/plantar-fasciitis" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/plantar-fasciitis" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/plantar-fasciitis" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/plantar-fasciitis</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/plantar-fasciitis" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/plantar-fasciitis" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/plantar-fasciitis" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/it-band-syndrome</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/it-band-syndrome" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/it-band-syndrome" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/it-band-syndrome" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/it-band-syndrome</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/it-band-syndrome" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/it-band-syndrome" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/it-band-syndrome" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/shin-splints</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/shin-splints" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/shin-splints" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/shin-splints" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/shin-splints</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/shin-splints" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/shin-splints" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/shin-splints" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/carpal-tunnel-syndrome</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/carpal-tunnel-syndrome" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/carpal-tunnel-syndrome" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/carpal-tunnel-syndrome" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/carpal-tunnel-syndrome</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/carpal-tunnel-syndrome" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/carpal-tunnel-syndrome" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/carpal-tunnel-syndrome" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/tendinosis</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/tendinosis" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/tendinosis" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/tendinosis" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/tendinosis</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/tendinosis" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/tendinosis" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/tendinosis" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/bursitis</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/bursitis" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/bursitis" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/bursitis" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/bursitis</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/bursitis" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/bursitis" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/bursitis" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/myofascial-pain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/myofascial-pain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/myofascial-pain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/myofascial-pain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/myofascial-pain</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/myofascial-pain" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/myofascial-pain" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/myofascial-pain" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/chronic-ankle-instability</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/chronic-ankle-instability" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/chronic-ankle-instability" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/chronic-ankle-instability" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/chronic-ankle-instability</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/chronic-ankle-instability" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/chronic-ankle-instability" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/chronic-ankle-instability" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/acl-meniscus-combined</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/acl-meniscus-combined" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/acl-meniscus-combined" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/acl-meniscus-combined" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/acl-meniscus-combined</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/acl-meniscus-combined" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/acl-meniscus-combined" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/acl-meniscus-combined" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/rotator-cuff-labrum-complex</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/rotator-cuff-labrum-complex" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/rotator-cuff-labrum-complex" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/rotator-cuff-labrum-complex" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/rotator-cuff-labrum-complex</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/rotator-cuff-labrum-complex" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/rotator-cuff-labrum-complex" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/rotator-cuff-labrum-complex" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/overhead-throwers-shoulder</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/overhead-throwers-shoulder" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/overhead-throwers-shoulder" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/overhead-throwers-shoulder" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/overhead-throwers-shoulder</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/overhead-throwers-shoulder" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/overhead-throwers-shoulder" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/overhead-throwers-shoulder" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/runners-knee-patellar-tendon</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/runners-knee-patellar-tendon" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/runners-knee-patellar-tendon" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/runners-knee-patellar-tendon" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/runners-knee-patellar-tendon</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/runners-knee-patellar-tendon" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/runners-knee-patellar-tendon" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/runners-knee-patellar-tendon" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/jumpers-knee</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/jumpers-knee" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/jumpers-knee" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/jumpers-knee" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/jumpers-knee</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/jumpers-knee" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/jumpers-knee" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/jumpers-knee" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/gymnast-wrist-injury</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/gymnast-wrist-injury" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/gymnast-wrist-injury" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/gymnast-wrist-injury" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/gymnast-wrist-injury</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/gymnast-wrist-injury" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/gymnast-wrist-injury" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/gymnast-wrist-injury" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/swimmer-shoulder-impingement</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/swimmer-shoulder-impingement" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/swimmer-shoulder-impingement" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/swimmer-shoulder-impingement" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/swimmer-shoulder-impingement</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/swimmer-shoulder-impingement" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/swimmer-shoulder-impingement" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/swimmer-shoulder-impingement" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/growth-plate-fracture</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/growth-plate-fracture" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/growth-plate-fracture" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/growth-plate-fracture" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/growth-plate-fracture</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/growth-plate-fracture" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/growth-plate-fracture" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/growth-plate-fracture" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/osgood-schlatter</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/osgood-schlatter" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/osgood-schlatter" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/osgood-schlatter" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/osgood-schlatter</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/osgood-schlatter" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/osgood-schlatter" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/osgood-schlatter" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/severs-disease</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/severs-disease" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/severs-disease" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/severs-disease" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/severs-disease</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/severs-disease" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/severs-disease" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/severs-disease" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/geriatric-vertebral-compression-fracture</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/geriatric-vertebral-compression-fracture" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/geriatric-vertebral-compression-fracture" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/geriatric-vertebral-compression-fracture" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/geriatric-vertebral-compression-fracture</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/geriatric-vertebral-compression-fracture" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/geriatric-vertebral-compression-fracture" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/geriatric-vertebral-compression-fracture" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/geriatric-hip-fracture</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/geriatric-hip-fracture" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/geriatric-hip-fracture" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/geriatric-hip-fracture" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/geriatric-hip-fracture</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/geriatric-hip-fracture" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/geriatric-hip-fracture" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/geriatric-hip-fracture" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/geriatric-osteoarthritis-flare</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/geriatric-osteoarthritis-flare" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/geriatric-osteoarthritis-flare" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/geriatric-osteoarthritis-flare" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/geriatric-osteoarthritis-flare</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/geriatric-osteoarthritis-flare" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/geriatric-osteoarthritis-flare" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/geriatric-osteoarthritis-flare" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/acl-reconstruction</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/acl-reconstruction" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/acl-reconstruction" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/acl-reconstruction" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/acl-reconstruction</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/acl-reconstruction" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/acl-reconstruction" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/acl-reconstruction" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/rotator-cuff-repair</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/rotator-cuff-repair" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/rotator-cuff-repair" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/rotator-cuff-repair" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/rotator-cuff-repair</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/rotator-cuff-repair" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/rotator-cuff-repair" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/rotator-cuff-repair" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/en/injuries/meniscus-repair</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/meniscus-repair" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/meniscus-repair" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/meniscus-repair" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://physionutrition.vercel.app/ar/injuries/meniscus-repair</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries/meniscus-repair" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries/meniscus-repair" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/injuries/meniscus-repair" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

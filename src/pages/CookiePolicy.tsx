@@ -1,6 +1,7 @@
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
 import Seo from '../components/seo/Seo';
+import {buildHreflangs} from '../utils/langUrlHelper';
 
 export default function CookiePolicy() {
   const lang = usePreferredLang();
@@ -15,6 +16,7 @@ export default function CookiePolicy() {
             : 'سياسة الكوكيز في PhysioNutrition الخاصة بالتفضيلات والموافقة والتحليلات والإعلانات.'
         }
         canonicalPath="/cookies"
+        hreflangs={buildHreflangs('/cookies')}
       />
       <PageLayout title={lang === 'en' ? 'Cookie Policy' : 'سياسة الكوكيز'}>
         {lang === 'en' ? (

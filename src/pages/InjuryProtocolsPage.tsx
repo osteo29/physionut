@@ -17,6 +17,7 @@ import {
   getLocalizedInjuryOverview,
 } from '../services/injuryLocalization';
 import { fetchInjuriesFromSupabase, type InjuryRow } from '../services/injurySupabaseService';
+import {buildHreflangs} from '../utils/langUrlHelper';
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
 
@@ -143,7 +144,7 @@ export default function InjuryProtocolsPage() {
 
   return (
     <>
-      <Seo title={title} description={description} canonicalPath="/injuries" />
+      <Seo title={title} description={description} canonicalPath="/injuries" hreflangs={buildHreflangs('/injuries')} />
       <PageLayout title={title}>
         <div className="space-y-8 not-prose">
           <section className="rounded-[2rem] border border-slate-200 bg-slate-50 p-6 sm:p-8">

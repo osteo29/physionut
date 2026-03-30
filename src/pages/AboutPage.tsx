@@ -1,6 +1,7 @@
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
 import Seo from '../components/seo/Seo';
+import {buildHreflangs} from '../utils/langUrlHelper';
 
 export default function AboutPage() {
   const lang = usePreferredLang();
@@ -15,6 +16,7 @@ export default function AboutPage() {
             : 'تعرّف على PhysioNutrition ورسالة الموقع التعليمية وكيف تم بناء أدواته في التغذية والعلاج الطبيعي.'
         }
         canonicalPath="/about"
+        hreflangs={buildHreflangs('/about')}
       />
       <PageLayout title={lang === 'en' ? 'About PhysioNutrition' : 'من نحن'}>
         {lang === 'en' ? (

@@ -9,6 +9,8 @@ export type SeoConfig = {
 };
 
 const DEFAULT_SITE_NAME = 'PhysioNutrition';
+const SEO_JSON_LD_SELECTOR = 'script[type="application/ld+json"][data-seo-id]';
+const SEO_ALT_SELECTOR = 'link[rel="alternate"][hreflang]';
 
 function upsertMeta(nameOrProp: {name?: string; property?: string}, content: string) {
   const selector = nameOrProp.name
@@ -27,7 +29,7 @@ function upsertMeta(nameOrProp: {name?: string; property?: string}, content: str
 function upsertLink(rel: string, href: string, hreflangs?: Array<{lang: string; href: string}>) {
   if (rel === 'alternate' && hreflangs?.length) {
     // For hreflang links, remove all existing ones and add new ones
-    document.head.querySelectorAll(`link[rel="alternate"][hreflang]`).forEach((el) => el.remove());
+    document.head.querySelectorAll(SEO_ALT_SELECTOR).forEach((el) => el.remove());
     hreflangs.forEach((item) => {
       const el = document.createElement('link');
       el.setAttribute('rel', 'alternate');
@@ -66,27 +68,57 @@ function upsertJsonLd(id: string, json: unknown) {
   el.text = JSON.stringify(json);
 }
 
+function clearManagedAlternates() {
+  document.head.querySelectorAll(SEO_ALT_SELECTOR).forEach((el) => el.remove());
+}
+
+function syncJsonLd(structuredData: Array<{id: string; json: unknown}> = []) {
+  const nextIds = new Set(structuredData.map((item) => item.id));
+
+  document.head.querySelectorAll(SEO_JSON_LD_SELECTOR).forEach((node) => {
+    const id = node.getAttribute('data-seo-id');
+    if (!id || !nextIds.has(id)) {
+      node.remove();
+    }
+  });
+
+  structuredData.forEach((item) => {
+    upsertJsonLd(item.id, item.json);
+  });
+}
+
+function normalizeCanonicalPath(canonicalPath: string, currentLang?: string) {
+  const rawPath = canonicalPath.startsWith('/') ? canonicalPath : `/${canonicalPath}`;
+
+  if (
+    rawPath.startsWith('/en/') ||
+    rawPath.startsWith('/ar/') ||
+    rawPath === '/en' ||
+    rawPath === '/ar'
+  ) {
+    return rawPath;
+  }
+
+  if (!currentLang) {
+    return rawPath;
+  }
+
+  return rawPath === '/' ? `/${currentLang}/` : `/${currentLang}${rawPath}`;
+}
+
 export function applySeo(config: SeoConfig) {
   const siteUrl = import.meta.env.VITE_SITE_URL || 'https://physionutrition.vercel.app';
 
   const currentLangMatch =
     typeof window !== 'undefined' ? window.location.pathname.match(/^\/(en|ar)(?:\/|$)/) : null;
   const currentLang = currentLangMatch?.[1];
-  const rawPath = config.canonicalPath.startsWith('/') ? config.canonicalPath : `/${config.canonicalPath}`;
-  const normalizedPath =
-    rawPath.startsWith('/en/') ||
-    rawPath.startsWith('/ar/') ||
-    rawPath === '/en' ||
-    rawPath === '/ar'
-      ? rawPath
-      : currentLang
-        ? rawPath === '/'
-          ? `/${currentLang}/`
-          : `/${currentLang}${rawPath}`
-        : rawPath;
-  
+  const normalizedPath = normalizeCanonicalPath(config.canonicalPath, currentLang);
   const canonicalUrl = `${siteUrl.replace(/\/$/, '')}${normalizedPath}`;
   const ogImage = config.ogImage || `${siteUrl.replace(/\/$/, '')}/og-image.png`;
+
+  if (currentLang) {
+    document.documentElement.lang = currentLang;
+  }
 
   document.title = config.title.includes(DEFAULT_SITE_NAME)
     ? config.title
@@ -114,34 +146,39 @@ export function applySeo(config: SeoConfig) {
   upsertMeta({name: 'twitter:description'}, config.description);
   upsertMeta({name: 'twitter:image'}, ogImage);
 
-  // Add hreflang tags
   if (config.hreflangs?.length) {
     upsertLink('alternate', canonicalUrl, config.hreflangs);
+  } else {
+    clearManagedAlternates();
   }
 
-  upsertJsonLd('webapp', {
-    '@context': 'https://schema.org',
-    '@type': 'WebApplication',
-    name: DEFAULT_SITE_NAME,
-    url: siteUrl,
-    description: config.description,
-    applicationCategory: 'HealthApplication',
-    operatingSystem: 'All',
-  });
-
-  upsertJsonLd('organization', {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: DEFAULT_SITE_NAME,
-    url: siteUrl,
-    email: 'physionutritionofficial@gmail.com',
-    sameAs: [
-      'https://www.facebook.com/Physionutrition.official/',
-      'https://www.instagram.com/physionutrition.official/',
-    ],
-  });
-
-  config.structuredData?.forEach((item) => {
-    upsertJsonLd(item.id, item.json);
-  });
+  syncJsonLd([
+    {
+      id: 'webapp',
+      json: {
+        '@context': 'https://schema.org',
+        '@type': 'WebApplication',
+        name: DEFAULT_SITE_NAME,
+        url: siteUrl,
+        description: config.description,
+        applicationCategory: 'HealthApplication',
+        operatingSystem: 'All',
+      },
+    },
+    {
+      id: 'organization',
+      json: {
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: DEFAULT_SITE_NAME,
+        url: siteUrl,
+        email: 'physionutritionofficial@gmail.com',
+        sameAs: [
+          'https://www.facebook.com/Physionutrition.official/',
+          'https://www.instagram.com/physionutrition.official/',
+        ],
+      },
+    },
+    ...(config.structuredData ?? []),
+  ]);
 }

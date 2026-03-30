@@ -1,6 +1,7 @@
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
 import Seo from '../components/seo/Seo';
+import {buildHreflangs} from '../utils/langUrlHelper';
 
 export default function MedicalDisclaimer() {
   const lang = usePreferredLang();
@@ -15,6 +16,7 @@ export default function MedicalDisclaimer() {
             : 'إخلاء المسؤولية الطبي لمنصة PhysioNutrition وحاسبات العلاج الطبيعي والتغذية العلاجية.'
         }
         canonicalPath="/disclaimer"
+        hreflangs={buildHreflangs('/disclaimer')}
       />
       <PageLayout title={lang === 'en' ? 'Medical Disclaimer' : 'إخلاء المسؤولية الطبي'}>
       {lang === 'en' ? (

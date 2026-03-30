@@ -1,6 +1,7 @@
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
 import Seo from '../components/seo/Seo';
+import {buildHreflangs} from '../utils/langUrlHelper';
 
 export default function ContactPage() {
   const lang = usePreferredLang();
@@ -15,6 +16,7 @@ export default function ContactPage() {
             : 'تواصل مع PhysioNutrition للاستفسارات العامة أو طلبات الخصوصية أو التعاون.'
         }
         canonicalPath="/contact"
+        hreflangs={buildHreflangs('/contact')}
       />
       <PageLayout title={lang === 'en' ? 'Contact' : 'اتصل بنا'}>
         {lang === 'en' ? (

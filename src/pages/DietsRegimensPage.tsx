@@ -3,6 +3,7 @@ import Seo from '../components/seo/Seo';
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
 import {dietRegimensCatalog, type DietRegimen} from '../services/dietRegimensCatalog';
+import {buildHreflangs} from '../utils/langUrlHelper';
 
 function buildAnchor(id: string) {
   return id.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-');
@@ -40,7 +41,7 @@ export default function DietsRegimensPage() {
 
   return (
     <>
-      <Seo title={title} description={description} canonicalPath="/diets" noIndex={false} />
+      <Seo title={title} description={description} canonicalPath="/diets" noIndex={false} hreflangs={buildHreflangs('/diets')} />
       <PageLayout title={title}>
         <div className="space-y-6">
           <div className="rounded-3xl border border-slate-200 bg-slate-50 p-6">
