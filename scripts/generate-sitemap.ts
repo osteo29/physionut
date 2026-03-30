@@ -22,6 +22,13 @@ type RouteGroup = RouteEntry & {
 const staticRoutes: Array<{path: string; changefreq: string; priority: string}> = [
   {path: '/', changefreq: 'weekly', priority: '1.0'},
   {path: '/calculators', changefreq: 'weekly', priority: '0.9'},
+  {path: '/exercises', changefreq: 'weekly', priority: '0.9'},
+  {path: '/exercises/chest', changefreq: 'weekly', priority: '0.85'},
+  {path: '/exercises/back', changefreq: 'weekly', priority: '0.85'},
+  {path: '/exercises/shoulders', changefreq: 'weekly', priority: '0.85'},
+  {path: '/exercises/arms', changefreq: 'weekly', priority: '0.8'},
+  {path: '/exercises/core', changefreq: 'weekly', priority: '0.8'},
+  {path: '/exercises/legs', changefreq: 'weekly', priority: '0.85'},
   {path: '/injuries', changefreq: 'weekly', priority: '0.9'},
   {path: '/insights', changefreq: 'weekly', priority: '0.8'},
   {path: '/diets', changefreq: 'monthly', priority: '0.8'},
@@ -111,3 +118,4 @@ ${route.lastmod ? `    <lastmod>${route.lastmod}</lastmod>\n` : ''}    <changefr
 
 writeFileSync(resolve(process.cwd(), 'public', 'sitemap.xml'), xml, 'utf8');
 console.log(`Generated sitemap with ${allRoutes.length} URLs.`);
+

@@ -71,6 +71,8 @@ export const navigationPaths = {
   // Content pages
   insights: (lang: Language) => `/${lang}/insights`,
   insightsDetail: (lang: Language, slug: string) => `/${lang}/insights/${slug}`,
+  exercises: (lang: Language) => `/${lang}/exercises`,
+  exercisesMuscle: (lang: Language, slug: string) => `/${lang}/exercises/${slug}`,
   
   // Injury pages
   injuries: (lang: Language) => `/${lang}/injuries`,

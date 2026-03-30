@@ -33,6 +33,118 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://physionutrition.vercel.app/en/exercises</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/exercises" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/exercises" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/exercises" />
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/exercises</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/exercises" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/exercises" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/exercises" />
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/exercises/chest</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/exercises/chest" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/exercises/chest" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/exercises/chest" />
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/exercises/chest</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/exercises/chest" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/exercises/chest" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/exercises/chest" />
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/exercises/back</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/exercises/back" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/exercises/back" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/exercises/back" />
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/exercises/back</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/exercises/back" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/exercises/back" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/exercises/back" />
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/exercises/shoulders</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/exercises/shoulders" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/exercises/shoulders" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/exercises/shoulders" />
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/exercises/shoulders</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/exercises/shoulders" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/exercises/shoulders" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/exercises/shoulders" />
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/exercises/arms</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/exercises/arms" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/exercises/arms" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/exercises/arms" />
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/exercises/arms</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/exercises/arms" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/exercises/arms" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/exercises/arms" />
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/exercises/core</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/exercises/core" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/exercises/core" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/exercises/core" />
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/exercises/core</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/exercises/core" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/exercises/core" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/exercises/core" />
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/en/exercises/legs</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/exercises/legs" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/exercises/legs" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/exercises/legs" />
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://physionutrition.vercel.app/ar/exercises/legs</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/exercises/legs" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/exercises/legs" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physionutrition.vercel.app/en/exercises/legs" />
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://physionutrition.vercel.app/en/injuries</loc>
     <xhtml:link rel="alternate" hreflang="ar" href="https://physionutrition.vercel.app/ar/injuries" />
     <xhtml:link rel="alternate" hreflang="en" href="https://physionutrition.vercel.app/en/injuries" />

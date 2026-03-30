@@ -63,6 +63,9 @@ export default function PageLayout({
               <Link className="hover:text-health-green" to={`/${lang}/injuries`}>
                 {lang === 'en' ? 'Injury Protocols' : 'بروتوكولات الإصابات'}
               </Link>
+              <Link className="hover:text-health-green" to={`/${lang}/exercises`}>
+                {lang === 'en' ? 'Exercises' : 'التمارين'}
+              </Link>
               <Link className="hover:text-health-green" to={`/${lang}/diets`}>
                 {lang === 'en' ? 'Diet & Regimens' : 'الدايت والريجيم'}
               </Link>
@@ -106,3 +109,4 @@ export default function PageLayout({
     </div>
   );
 }
+

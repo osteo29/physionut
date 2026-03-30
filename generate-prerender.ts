@@ -489,6 +489,65 @@ function dietsRoute(lang: Lang): RouteDefinition {
   };
 }
 
+function exercisesRoute(lang: Lang, slug?: 'chest' | 'back' | 'shoulders' | 'arms' | 'core' | 'legs'): RouteDefinition {
+  const isAr = lang === 'ar';
+  const titleMap = {
+    chest: isAr ? 'تمارين الصدر' : 'Chest exercises',
+    back: isAr ? 'تمارين الظهر' : 'Back exercises',
+    shoulders: isAr ? 'تمارين الكتف' : 'Shoulder exercises',
+    arms: isAr ? 'تمارين الذراع' : 'Arm exercises',
+    core: isAr ? 'تمارين الكور' : 'Core exercises',
+    legs: isAr ? 'تمارين الرجل' : 'Leg exercises',
+  } as const;
+
+  const pageTitle = slug ? titleMap[slug] : isAr ? 'دليل التمارين' : 'Exercise Finder';
+  const pageDescription = slug
+    ? isAr
+      ? `صفحة قابلة للفهرسة تعرض ${titleMap[slug]} مع فلاتر للمستوى والمعدات ونوع التمرين والعضلات الفرعية.`
+      : `Indexable page for ${titleMap[slug].toLowerCase()} with filters for level, equipment, training goal, and sub-muscles.`
+    : isAr
+      ? 'صفحة تمارين واحدة تشمل كل العضلات مع فلاتر للتشريح والمستوى والمعدات ونوع التمرين.'
+      : 'One exercise finder page covering all muscles with filters for anatomy, level, equipment, and training goal.';
+
+  const links = [
+    {href: `/${lang}/exercises/chest`, label: isAr ? 'الصدر' : 'Chest'},
+    {href: `/${lang}/exercises/back`, label: isAr ? 'الظهر' : 'Back'},
+    {href: `/${lang}/exercises/shoulders`, label: isAr ? 'الكتف' : 'Shoulders'},
+    {href: `/${lang}/exercises/arms`, label: isAr ? 'الذراع' : 'Arms'},
+    {href: `/${lang}/exercises/core`, label: isAr ? 'الكور' : 'Core'},
+    {href: `/${lang}/exercises/legs`, label: isAr ? 'الرجل' : 'Legs'},
+  ];
+
+  return {
+    path: slug ? `/${lang}/exercises/${slug}` : `/${lang}/exercises`,
+    lang,
+    title: pageTitle,
+    description: pageDescription,
+    body: layout(
+      lang,
+      isAr ? 'دليل التمارين' : 'Exercise finder',
+      pageTitle,
+      pageDescription,
+      [
+        section(
+          isAr ? 'تصنيفات التمارين الرئيسية' : 'Main exercise categories',
+          `<ul class="link-list">${links
+            .map((item) => `<li><a href="${item.href}">${item.label}</a></li>`)
+            .join('')}</ul>`,
+        ),
+        section(
+          isAr ? 'طريقة استخدام الدليل' : 'How to use the finder',
+          `<ul>
+            <li>${isAr ? 'ابدأ بعضلة رئيسية أو صفحة ثابتة ثم خصص النتائج بالمستوى والمعدات ونوع التمرين.' : 'Start with a muscle group or static page, then refine by level, equipment, and training goal.'}</li>
+            <li>${isAr ? 'يمكن مشاركة الرابط مع الاحتفاظ بالفلاتر عبر query params.' : 'The URL can be shared while preserving filters through query params.'}</li>
+            <li>${isAr ? 'صفحات التأهيل والإصابات تبقى منفصلة عن هذا الدليل.' : 'Rehab and injury pages remain separate from this finder.'}</li>
+          </ul>`,
+        ),
+      ],
+    ),
+  };
+}
+
 const staticRoutes: RouteDefinition[] = [
   ...(['en', 'ar'] as Lang[]).flatMap((lang) => [
     homeRoute(lang),
@@ -496,6 +555,13 @@ const staticRoutes: RouteDefinition[] = [
     insightsRoute(lang),
     injuriesRoute(lang),
     dietsRoute(lang),
+    exercisesRoute(lang),
+    exercisesRoute(lang, 'chest'),
+    exercisesRoute(lang, 'back'),
+    exercisesRoute(lang, 'shoulders'),
+    exercisesRoute(lang, 'arms'),
+    exercisesRoute(lang, 'core'),
+    exercisesRoute(lang, 'legs'),
   ]),
   ...(['en', 'ar'] as Lang[]).flatMap((lang) => getArticles(lang).map((article) => articleRoute(lang, article))),
   ...(['en', 'ar'] as Lang[]).flatMap((lang) => getAllInjuries().map((injury) => injuryRoute(lang, injury))),
@@ -503,3 +569,5 @@ const staticRoutes: RouteDefinition[] = [
 
 staticRoutes.forEach(writeRoute);
 console.log(`Generated prerendered HTML for ${staticRoutes.length} routes.`);
+
+

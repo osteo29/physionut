@@ -9,11 +9,19 @@ import {
   LineChart,
   LoaderCircle,
   LogOut,
+  ShieldAlert,
 } from 'lucide-react';
 import Seo from '../components/seo/Seo';
 import type {DashboardPdfData} from '../services/pdfReports';
 import usePreferredLang from './usePreferredLang';
 import {navigationPaths} from '../utils/langUrlHelper';
+import {
+  buildDashboardSnapshot,
+  buildMetricGroups,
+  buildMetricInsight,
+  filterRecordsByRange,
+  type TimeRangeKey,
+} from '../services/dashboardInsights';
 import {
   deleteAssessment,
   getCurrentUser,
@@ -30,12 +38,6 @@ import {
 const TrendChart = lazy(() => import('../components/dashboard/TrendChart'));
 const TimelineLog = lazy(() => import('../components/dashboard/TimelineLog'));
 const LazyPdfReportSheet = lazy(() => import('../components/dashboard/LazyPdfReportSheet'));
-
-type NormalizedNumericRecord = AssessmentRecord & {
-  metricKey: string;
-  metricLabel: string;
-  numericValue: number;
-};
 
 function waitForCondition(check: () => boolean, timeoutMs = 4000) {
   return new Promise<void>((resolve, reject) => {
@@ -59,16 +61,30 @@ function waitForCondition(check: () => boolean, timeoutMs = 4000) {
   });
 }
 
-function normalizeNumericValue(value: AssessmentRecord['value_numeric']) {
-  const parsed =
-    typeof value === 'number'
-      ? value
-      : typeof value === 'string'
-        ? Number.parseFloat(value)
-        : Number.NaN;
+function formatNumericValue(value: number) {
+  if (!Number.isFinite(value)) return '-';
+  if (Math.abs(value) >= 100 || Number.isInteger(value)) {
+    return value.toLocaleString('en-US', {maximumFractionDigits: 0});
+  }
 
-  return Number.isFinite(parsed) ? parsed : null;
+  if (Math.abs(value) >= 10) {
+    return value.toLocaleString('en-US', {minimumFractionDigits: 1, maximumFractionDigits: 1});
+  }
+
+  return value.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 }
+
+const TIME_RANGE_OPTIONS: Array<{key: TimeRangeKey; label: {en: string; ar: string}}> = [
+  {key: '14d', label: {en: 'Last 14 days', ar: 'آخر 14 يومًا'}},
+  {key: '30d', label: {en: 'Last 30 days', ar: 'آخر 30 يومًا'}},
+  {key: 'all', label: {en: 'All time', ar: 'كل السجلات'}},
+];
+
+const insightToneClasses = {
+  positive: 'border-emerald-200 bg-emerald-50 text-emerald-900',
+  neutral: 'border-slate-200 bg-slate-50 text-slate-900',
+  caution: 'border-amber-200 bg-amber-50 text-amber-900',
+} as const;
 
 export default function TrackingDashboardPage() {
   const lang = usePreferredLang();
@@ -81,6 +97,7 @@ export default function TrackingDashboardPage() {
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
   const [shouldRenderPdfSheet, setShouldRenderPdfSheet] = useState(false);
   const [selectedMetricKey, setSelectedMetricKey] = useState('');
+  const [timeRange, setTimeRange] = useState<TimeRangeKey>('30d');
   const chartRef = useRef<any>(null);
   const pdfRef = useRef<HTMLDivElement | null>(null);
   const isPdfSheetReadyRef = useRef(false);
@@ -173,56 +190,8 @@ export default function TrackingDashboardPage() {
     }
   };
 
-  const numericRecords = useMemo(() => {
-    return [...records]
-      .map((item) => {
-        const numericValue = normalizeNumericValue(item.value_numeric);
-        if (numericValue === null) return null;
-
-        const unit = item.value_unit?.trim() || '';
-        return {
-          ...item,
-          numericValue,
-          metricKey: `${item.calculator_type}::${unit || 'no-unit'}`,
-          metricLabel: unit ? `${item.calculator_type} (${unit})` : item.calculator_type,
-        } satisfies NormalizedNumericRecord;
-      })
-      .filter((item): item is NormalizedNumericRecord => Boolean(item))
-      .reverse();
-  }, [records]);
-
-  const metricGroups = useMemo(() => {
-    const groups = new Map<
-      string,
-      {
-        key: string;
-        label: string;
-        records: NormalizedNumericRecord[];
-      }
-    >();
-
-    for (const item of numericRecords) {
-      const existing = groups.get(item.metricKey);
-      if (existing) {
-        existing.records.push(item);
-      } else {
-        groups.set(item.metricKey, {
-          key: item.metricKey,
-          label: item.metricLabel,
-          records: [item],
-        });
-      }
-    }
-
-    return Array.from(groups.values()).sort((a, b) => {
-      const byCount = b.records.length - a.records.length;
-      if (byCount !== 0) return byCount;
-      return (
-        new Date(b.records[b.records.length - 1].created_at).getTime() -
-        new Date(a.records[a.records.length - 1].created_at).getTime()
-      );
-    });
-  }, [numericRecords]);
+  const filteredRecords = useMemo(() => filterRecordsByRange(records, timeRange), [records, timeRange]);
+  const metricGroups = useMemo(() => buildMetricGroups(filteredRecords), [filteredRecords]);
 
   useEffect(() => {
     if (!metricGroups.length) {
@@ -275,6 +244,16 @@ export default function TrackingDashboardPage() {
       ],
     };
   }, [isAr, selectedMetric]);
+
+  const dashboardSnapshot = useMemo(
+    () => buildDashboardSnapshot(filteredRecords, metricGroups),
+    [filteredRecords, metricGroups],
+  );
+
+  const selectedMetricInsight = useMemo(
+    () => buildMetricInsight(selectedMetric, lang),
+    [lang, selectedMetric],
+  );
 
   const handleDownloadPdf = async () => {
     if (!user || isGeneratingPdf) return;
@@ -394,6 +373,7 @@ export default function TrackingDashboardPage() {
             </Link>
 
             <button
+              type="button"
               onClick={handleLogout}
               className="inline-flex items-center gap-2 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 font-bold text-rose-600 transition-all hover:bg-rose-100"
             >
@@ -408,6 +388,67 @@ export default function TrackingDashboardPage() {
             {message}
           </div>
         ) : null}
+
+        <div className="mb-6 rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-health-green">
+                {isAr ? 'عدسة المتابعة' : 'Recovery lens'}
+              </div>
+              <p className="mt-2 max-w-2xl text-sm text-slate-600">
+                {isAr
+                  ? 'اعرض بياناتك حسب الفترة الزمنية التي تريد مراجعتها، ثم راقب المؤشر نفسه بصورة متسقة حتى تكون المقارنة مفيدة سريريًا.'
+                  : 'Review one time window at a time, then keep tracking the same metric consistently so the comparisons stay clinically useful.'}
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              {TIME_RANGE_OPTIONS.map((option) => {
+                const isActive = option.key === timeRange;
+                return (
+                  <button
+                    key={option.key}
+                    type="button"
+                    onClick={() => setTimeRange(option.key)}
+                    className={`rounded-full px-4 py-2 text-sm font-semibold transition-all ${
+                      isActive
+                        ? 'bg-slate-900 text-white'
+                        : 'border border-slate-200 bg-white text-slate-600 hover:border-health-green/30 hover:text-slate-900'
+                    }`}
+                  >
+                    {isAr ? option.label.ar : option.label.en}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-3">
+            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+              <div className="mb-2 text-xs text-slate-500">{isAr ? 'السجلات في آخر 14 يومًا' : 'Records in the last 14 days'}</div>
+              <div className="text-2xl font-bold text-slate-900">{dashboardSnapshot.recentRecordCount}</div>
+            </div>
+            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+              <div className="mb-2 text-xs text-slate-500">{isAr ? 'أكثر مؤشر تمت متابعته' : 'Most tracked metric'}</div>
+              <div className="text-lg font-bold text-slate-900">
+                {dashboardSnapshot.mostTrackedLabel || (isAr ? 'لا يوجد بعد' : 'Not available yet')}
+              </div>
+              {dashboardSnapshot.mostTrackedCount > 0 ? (
+                <div className="mt-1 text-xs text-slate-500">
+                  {isAr
+                    ? `${dashboardSnapshot.mostTrackedCount} قراءة ضمن الفترة الحالية`
+                    : `${dashboardSnapshot.mostTrackedCount} readings in this window`}
+                </div>
+              ) : null}
+            </div>
+            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+              <div className="mb-2 text-xs text-slate-500">{isAr ? 'أحدث نتيجة في هذه الفترة' : 'Latest result in this window'}</div>
+              <div className="text-lg font-bold text-slate-900">
+                {dashboardSnapshot.latestRecordLabel || (isAr ? 'لا توجد نتائج' : 'No results')}
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.2fr_0.8fr]">
           <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
@@ -439,20 +480,22 @@ export default function TrackingDashboardPage() {
               <div className="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-3">
                 <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
                   <div className="text-xs text-slate-500">{isAr ? 'أحدث قيمة' : 'Latest value'}</div>
-                  <div className="mt-2 text-2xl font-black text-slate-900">{selectedMetricSummary.latest}</div>
+                  <div className="mt-2 text-2xl font-black text-slate-900">
+                    {formatNumericValue(selectedMetricSummary.latest)}
+                  </div>
                 </div>
                 <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
                   <div className="text-xs text-slate-500">{isAr ? 'التغيّر الأخير' : 'Latest change'}</div>
                   <div className="mt-2 text-2xl font-black text-slate-900">
                     {selectedMetricSummary.delta === null
                       ? '...'
-                      : `${selectedMetricSummary.delta > 0 ? '+' : ''}${selectedMetricSummary.delta.toFixed(2)}`}
+                      : `${selectedMetricSummary.delta > 0 ? '+' : ''}${formatNumericValue(selectedMetricSummary.delta)}`}
                   </div>
                 </div>
                 <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
                   <div className="text-xs text-slate-500">{isAr ? 'المدى المسجل' : 'Recorded range'}</div>
                   <div className="mt-2 text-lg font-black text-slate-900">
-                    {selectedMetricSummary.min} - {selectedMetricSummary.max}
+                    {formatNumericValue(selectedMetricSummary.min)} - {formatNumericValue(selectedMetricSummary.max)}
                   </div>
                 </div>
               </div>
@@ -479,9 +522,13 @@ export default function TrackingDashboardPage() {
               </Suspense>
             ) : (
               <div className="flex h-[320px] items-center justify-center rounded-[1.5rem] border border-dashed border-slate-200 bg-slate-50 px-8 text-center text-slate-500">
-                {isAr
-                  ? 'احفظ قياسات تحتوي على قيمة رقمية لتظهر هنا في الرسم البياني.'
-                  : 'Save assessments with numeric values to see them plotted here.'}
+                {records.length === 0
+                  ? isAr
+                    ? 'احفظ قياسات تحتوي على قيمة رقمية لتظهر هنا في الرسم البياني.'
+                    : 'Save assessments with numeric values to see them plotted here.'
+                  : isAr
+                    ? 'لا توجد قراءات رقمية ضمن الفترة الزمنية المختارة. غيّر الفترة أو سجّل قراءة جديدة.'
+                    : 'There are no numeric readings inside this time range yet. Try another range or log a new reading.'}
               </div>
             )}
           </div>
@@ -491,16 +538,18 @@ export default function TrackingDashboardPage() {
               <BarChart3 className="h-3.5 w-3.5" />
               <span>{isAr ? 'ملخص سريع' : 'Quick summary'}</span>
             </div>
+
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                <div className="mb-2 text-xs text-slate-500">{isAr ? 'إجمالي السجلات' : 'Total records'}</div>
-                <div className="text-2xl font-bold text-slate-900">{records.length}</div>
+                <div className="mb-2 text-xs text-slate-500">{isAr ? 'السجلات في العرض الحالي' : 'Records in current view'}</div>
+                <div className="text-2xl font-bold text-slate-900">
+                  {filteredRecords.length}
+                  <span className="ml-2 text-sm font-medium text-slate-500">/ {records.length}</span>
+                </div>
               </div>
               <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                <div className="mb-2 text-xs text-slate-500">
-                  {isAr ? 'أنواع المؤشرات الرقمية' : 'Tracked numeric metrics'}
-                </div>
-                <div className="text-2xl font-bold text-slate-900">{metricGroups.length}</div>
+                <div className="mb-2 text-xs text-slate-500">{isAr ? 'المؤشرات الرقمية المتاحة' : 'Tracked numeric metrics'}</div>
+                <div className="text-2xl font-bold text-slate-900">{dashboardSnapshot.trackedMetricCount}</div>
               </div>
             </div>
 
@@ -512,9 +561,22 @@ export default function TrackingDashboardPage() {
                 <div className="mt-2 text-lg font-black text-slate-900">{selectedMetric.label}</div>
                 <p className="mt-2 text-sm text-slate-600">
                   {isAr
-                    ? `يظهر الرسم لهذا المؤشر فقط من بين ${selectedMetric.records.length} قراءة محفوظة، حتى لا تختلط المقاييس المختلفة في منحنى واحد.`
-                    : `The chart now focuses on this metric only across ${selectedMetric.records.length} saved readings, instead of mixing different measurements together.`}
+                    ? `يظهر الرسم لهذا المؤشر فقط عبر ${selectedMetric.records.length} قراءة في الفترة الحالية، حتى لا تختلط المقاييس المختلفة في منحنى واحد.`
+                    : `The chart focuses on this metric only across ${selectedMetric.records.length} readings in the current window, so different measurements do not get mixed together.`}
                 </p>
+              </div>
+            ) : null}
+
+            {selectedMetricInsight ? (
+              <div className={`mt-4 rounded-[1.5rem] border p-4 ${insightToneClasses[selectedMetricInsight.tone]}`}>
+                <div className="flex items-start gap-3">
+                  <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0" />
+                  <div>
+                    <div className="font-bold">{selectedMetricInsight.title}</div>
+                    <p className="mt-2 text-sm leading-6">{selectedMetricInsight.summary}</p>
+                    <p className="mt-2 text-sm font-semibold">{selectedMetricInsight.action}</p>
+                  </div>
+                </div>
               </div>
             ) : null}
 
@@ -539,9 +601,17 @@ export default function TrackingDashboardPage() {
         </div>
 
         <div className="mt-8 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
-          <div className="mb-4 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-health-green">
-            <Calendar className="h-3.5 w-3.5" />
-            <span>{isAr ? 'السجل الزمني' : 'Timeline log'}</span>
+          <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-health-green">
+              <Calendar className="h-3.5 w-3.5" />
+              <span>{isAr ? 'السجل الزمني' : 'Timeline log'}</span>
+            </div>
+
+            <div className="text-sm text-slate-500">
+              {isAr
+                ? `يعرض ${filteredRecords.length} سجل${filteredRecords.length === 1 ? '' : 'ات'} ضمن ${isAr ? TIME_RANGE_OPTIONS.find((option) => option.key === timeRange)?.label.ar : ''}`
+                : `Showing ${filteredRecords.length} record${filteredRecords.length === 1 ? '' : 's'} in ${TIME_RANGE_OPTIONS.find((option) => option.key === timeRange)?.label.en}`}
+            </div>
           </div>
 
           <Suspense
@@ -551,7 +621,18 @@ export default function TrackingDashboardPage() {
               </div>
             }
           >
-            <TimelineLog isAr={isAr} records={records} onDelete={handleDelete} />
+            <TimelineLog
+              isAr={isAr}
+              records={filteredRecords}
+              onDelete={handleDelete}
+              emptyMessage={
+                timeRange === 'all'
+                  ? undefined
+                  : isAr
+                    ? 'لا توجد سجلات ضمن الفترة الزمنية المختارة.'
+                    : 'No saved records fall inside the selected time range.'
+              }
+            />
           </Suspense>
         </div>
       </div>

@@ -104,6 +104,27 @@ export default function SupportToolsSection({
           </div>
         </div>
 
+        <div className="mb-10 rounded-[2rem] border border-slate-200 bg-slate-50 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <h3 className="text-xl font-bold text-slate-900">
+                {isAr ? 'دليل التمارين حسب العضلة' : 'Exercise finder by muscle'}
+              </h3>
+              <p className="mt-2 max-w-3xl text-sm leading-7 text-slate-600">
+                {isAr
+                  ? 'ابحث عن التمارين حسب العضلة الرئيسية أو العضلات الفرعية، ثم فلتر بالمستوى والمعدات ونوع التمرين. الصفحة مناسبة للجيم وتبقى منفصلة عن بروتوكولات الإصابات.'
+                  : 'Browse exercises by main muscle or sub-muscle, then refine by level, equipment, and training goal. This page stays gym-focused and separate from injury protocol content.'}
+              </p>
+            </div>
+            <Link
+              to={navigationPaths.exercises(lang)}
+              className="inline-flex items-center justify-center rounded-2xl bg-white px-5 py-3 text-sm font-bold text-health-green shadow-sm"
+            >
+              {isAr ? 'افتح دليل التمارين' : 'Open exercise finder'}
+            </Link>
+          </div>
+        </div>
+
         <div className="mb-10 rounded-[2rem] border border-slate-200 bg-slate-50 p-6">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
