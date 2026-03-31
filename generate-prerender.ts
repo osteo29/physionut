@@ -3,6 +3,7 @@ import {dirname, join, resolve} from 'node:path';
 import {getArticles} from './src/services/articles';
 import {dietRegimensCatalog} from './src/services/dietRegimensCatalog';
 import {getAllInjuries, getInjuryPath, type InjuryProtocol} from './src/services/injuryDatabase';
+import {getLocalizedBodyRegion, getLocalizedCategory, getLocalizedInjuryName} from './src/services/injuryLocalization';
 import {decodeMojibake} from './src/services/textEncoding';
 
 type Lang = 'en' | 'ar';
@@ -136,6 +137,43 @@ function writeRoute(route: RouteDefinition) {
   const outputPath = join(DIST_DIR, route.path.replace(/^\//, ''), 'index.html');
   mkdirSync(dirname(outputPath), {recursive: true});
   writeFileSync(outputPath, html, 'utf8');
+}
+
+function writeRootShell() {
+  const canonical = absoluteUrl('/en/');
+  const rootBody = `
+    <main class="seo-shell" dir="ltr">
+      <span class="eyebrow">PhysioNutrition</span>
+      <h1>PhysioNutrition</h1>
+      <p class="muted">Choose your preferred language to continue to the main site sections.</p>
+      <section class="card">
+        <h2>Choose a language</h2>
+        <ul class="link-list">
+          <li><a href="/en/">English</a></li>
+          <li><a href="/ar/">العربية</a></li>
+        </ul>
+      </section>
+    </main>
+  `;
+
+  const html = injectRoot(
+    replaceMeta(
+      template,
+      'PhysioNutrition',
+      'Language gateway for the PhysioNutrition website.',
+      canonical,
+      'en',
+      true,
+    ),
+    rootBody,
+    [],
+    [
+      {lang: 'en', href: absoluteUrl('/en/')},
+      {lang: 'ar', href: absoluteUrl('/ar/')},
+    ],
+  );
+
+  writeFileSync(join(DIST_DIR, 'index.html'), html, 'utf8');
 }
 
 function buildArticleSections(content: string) {
@@ -384,22 +422,29 @@ function injuriesRoute(lang: Lang): RouteDefinition {
 
 function injuryRoute(lang: Lang, injury: InjuryProtocol): RouteDefinition {
   const isAr = lang === 'ar';
+  const localizedName = getLocalizedInjuryName(injury.id, injury.name, lang);
+  const localizedBodyRegion = getLocalizedBodyRegion(injury.bodyRegion, lang);
+  const localizedCategory = getLocalizedCategory(injury.category, lang);
   const relatedArticles = getArticles(lang).slice(0, 3);
+  const localizedDescription = isAr
+    ? `دليل عملي لإصابة ${localizedName} يشمل الأعراض الشائعة، مراحل التعافي، التمارين المناسبة، والتركيز الغذائي المرتبط بـ ${localizedBodyRegion}.`
+    : `${injury.name} recovery guide covering common symptoms, staged rehab, exercise focus, and nutrition considerations for the ${injury.bodyRegion.toLowerCase()}.`;
+
   return {
     path: getInjuryPath(injury, lang),
     lang,
-    title: isAr ? `${decodeMojibake(injury.name)} | بروتوكول التعافي` : `${injury.name} recovery protocol`,
-    description: decodeMojibake(injury.overview),
+    title: isAr ? `${decodeMojibake(localizedName)} | بروتوكول التعافي` : `${injury.name} recovery protocol`,
+    description: localizedDescription,
     body: layout(
       lang,
       isAr ? 'بروتوكول إصابة' : 'Injury protocol',
-      decodeMojibake(injury.name),
+      decodeMojibake(localizedName),
       text(injury.overview),
       [
         section(
           isAr ? 'ملخص الحالة' : 'Condition summary',
-          `<p><strong>${isAr ? 'التصنيف:' : 'Category:'}</strong> ${text(injury.category)}</p>
-           <p><strong>${isAr ? 'المنطقة:' : 'Body region:'}</strong> ${text(injury.bodyRegion)}</p>
+          `<p><strong>${isAr ? 'التصنيف:' : 'Category:'}</strong> ${text(localizedCategory)}</p>
+           <p><strong>${isAr ? 'المنطقة:' : 'Body region:'}</strong> ${text(localizedBodyRegion)}</p>
            <p><strong>${isAr ? 'شائع في:' : 'Common in:'}</strong> ${injury.commonIn.map(text).join(', ')}</p>`,
         ),
         section(
@@ -438,10 +483,10 @@ function injuryRoute(lang: Lang, injury: InjuryProtocol): RouteDefinition {
       {
         '@context': 'https://schema.org',
         '@type': 'MedicalWebPage',
-        name: decodeMojibake(injury.name),
-        description: decodeMojibake(injury.overview),
+        name: decodeMojibake(localizedName),
+        description: localizedDescription,
         url: absoluteUrl(getInjuryPath(injury, lang)),
-        about: {'@type': 'MedicalCondition', name: decodeMojibake(injury.name)},
+        about: {'@type': 'MedicalCondition', name: decodeMojibake(localizedName)},
       },
     ],
   };
@@ -568,6 +613,7 @@ const staticRoutes: RouteDefinition[] = [
 ];
 
 staticRoutes.forEach(writeRoute);
+writeRootShell();
 console.log(`Generated prerendered HTML for ${staticRoutes.length} routes.`);
 
 
