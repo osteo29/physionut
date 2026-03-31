@@ -1,7 +1,9 @@
 import {type ReactNode, useEffect, useId, useMemo, useState} from 'react';
 import {Dumbbell, Search, Share2, SlidersHorizontal, Target} from 'lucide-react';
+import {Link} from 'react-router-dom';
 import Seo from '../seo/Seo';
-import {buildHreflangs} from '../../utils/langUrlHelper';
+import type {Language} from '../../services/translations';
+import {buildHreflangs, navigationPaths} from '../../utils/langUrlHelper';
 
 const MUSCLE_TREE = {
   chest: ['upper_chest', 'middle_chest', 'lower_chest'],
@@ -51,6 +53,7 @@ type FilterState = {
 export type ExerciseFinderProps = {
   canonicalBasePath?: string;
   enableSeo?: boolean;
+  lang?: Language;
   pathMuscle?: StaticMuscleSlug | null;
 };
 
@@ -113,6 +116,25 @@ export const EXERCISE_FINDER_STATIC_LABELS: Record<StaticMuscleSlug, string> = {
   arms: 'Arms',
   core: 'Core',
   legs: 'Legs',
+};
+
+const EXERCISE_FINDER_STATIC_ARABIC_LABELS: Record<StaticMuscleSlug, string> = {
+  chest: 'الصدر',
+  back: 'الظهر',
+  shoulders: 'الكتف',
+  biceps: 'البايسبس',
+  triceps: 'الترايسبس',
+  forearms: 'الساعد',
+  abs: 'البطن',
+  obliques: 'الخواصر',
+  lower_back: 'أسفل الظهر',
+  glutes: 'المقعدة',
+  quadriceps: 'العضلة الأمامية',
+  hamstrings: 'العضلة الخلفية',
+  calves: 'السمانة',
+  arms: 'الذراع',
+  core: 'الجذع',
+  legs: 'الرجل',
 };
 
 const STATIC_GROUP_MUSCLES: Record<StaticMuscleSlug, MainMuscle[]> = {
@@ -1060,8 +1082,10 @@ function ExerciseCard({exercise}: {exercise: Exercise}) {
 export default function ExerciseFinder({
   canonicalBasePath = '/exercises',
   enableSeo = true,
+  lang = 'en',
   pathMuscle = null,
 }: ExerciseFinderProps) {
+  const isAr = lang === 'ar';
   const searchId = useId();
   const muscleId = useId();
   const subMuscleId = useId();
@@ -1114,16 +1138,26 @@ export default function ExerciseFinder({
     : filteredExercises.slice(0, 3);
 
   const headingLabel = selectedMainMuscle
-    ? `${EXERCISE_FINDER_STATIC_LABELS[selectedMainMuscle]} exercises`
+    ? isAr
+      ? `تمارين ${EXERCISE_FINDER_STATIC_ARABIC_LABELS[selectedMainMuscle]}`
+      : `${EXERCISE_FINDER_STATIC_LABELS[selectedMainMuscle]} exercises`
     : pathMuscle && isStaticSlug(pathMuscle)
-      ? `${EXERCISE_FINDER_STATIC_LABELS[pathMuscle]} exercises`
-      : 'Exercise Finder';
+      ? isAr
+        ? `تمارين ${EXERCISE_FINDER_STATIC_ARABIC_LABELS[pathMuscle]}`
+        : `${EXERCISE_FINDER_STATIC_LABELS[pathMuscle]} exercises`
+      : isAr
+        ? 'دليل التمارين'
+        : 'Exercise Finder';
 
   const canonicalPath = pathMuscle && isStaticSlug(pathMuscle) ? `${canonicalBasePath}/${pathMuscle}` : canonicalBasePath;
-  const pageTitle = `${headingLabel} | Gym Exercise Finder`;
+  const pageTitle = isAr ? `${headingLabel} | دليل تمارين الجيم` : `${headingLabel} | Gym Exercise Finder`;
   const pageDescription = selectedMainMuscle
-    ? `Browse ${EXERCISE_FINDER_STATIC_LABELS[selectedMainMuscle].toLowerCase()} exercises with filters for sub-muscles, equipment, level, and training goal.`
-    : 'Find gym exercises by muscle, sub-muscle, level, equipment, and training goal in a physiotherapy-aware exercise finder.';
+    ? isAr
+      ? `استعرض تمارين ${EXERCISE_FINDER_STATIC_ARABIC_LABELS[selectedMainMuscle]} مع فلاتر للعضلات الفرعية والمعدات والمستوى وهدف التمرين.`
+      : `Browse ${EXERCISE_FINDER_STATIC_LABELS[selectedMainMuscle].toLowerCase()} exercises with filters for sub-muscles, equipment, level, and training goal.`
+    : isAr
+      ? 'ابحث عن تمارين الجيم حسب العضلة والعضلات الفرعية والمستوى والمعدات وهدف التمرين داخل دليل مرتب وسهل الاستخدام.'
+      : 'Find gym exercises by muscle, sub-muscle, level, equipment, and training goal in a physiotherapy-aware exercise finder.';
 
   const activeFilterCount = [
     filters.muscle !== 'all',
@@ -1133,6 +1167,15 @@ export default function ExerciseFinder({
     filters.exerciseType !== 'all',
     filters.search.trim().length > 0,
   ].filter(Boolean).length;
+
+  const quickGroups = [
+    {slug: 'chest' as StaticMuscleSlug, accent: 'bg-rose-50 text-rose-700 border-rose-200'},
+    {slug: 'back' as StaticMuscleSlug, accent: 'bg-sky-50 text-sky-700 border-sky-200'},
+    {slug: 'shoulders' as StaticMuscleSlug, accent: 'bg-amber-50 text-amber-700 border-amber-200'},
+    {slug: 'arms' as StaticMuscleSlug, accent: 'bg-violet-50 text-violet-700 border-violet-200'},
+    {slug: 'core' as StaticMuscleSlug, accent: 'bg-emerald-50 text-emerald-700 border-emerald-200'},
+    {slug: 'legs' as StaticMuscleSlug, accent: 'bg-orange-50 text-orange-700 border-orange-200'},
+  ];
 
   return (
     <>
@@ -1146,37 +1189,66 @@ export default function ExerciseFinder({
         />
       ) : null}
 
-      <section aria-labelledby="exercise-finder-title" className="section-surface py-16 sm:py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <section aria-labelledby="exercise-finder-title" className="py-2 sm:py-4">
+        <div className="mx-auto max-w-7xl">
           <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm">
             <div className="border-b border-slate-200 bg-[linear-gradient(135deg,rgba(244,239,231,0.9),rgba(255,255,255,0.96))] px-5 py-8 sm:px-8">
               <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
                 <div className="max-w-4xl">
                   <div className="inline-flex items-center gap-2 rounded-full bg-health-green/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-health-green">
                     <SlidersHorizontal className="h-3.5 w-3.5" />
-                    <span>Gym Exercise Finder</span>
+                    <span>{isAr ? 'دليل تمارين الجيم' : 'Gym Exercise Finder'}</span>
                   </div>
                   <h1 id="exercise-finder-title" className="mt-4 text-3xl font-bold text-slate-900 sm:text-4xl">
                     {headingLabel}
                   </h1>
                   <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-600 sm:text-base">
-                    Explore gym exercises by muscle and sub-muscle, then narrow the list by level, equipment, and training goal. This finder stays fitness-focused while still using coaching cues that are sensible for physically active users.
+                    {isAr
+                      ? 'استعرض التمارين حسب العضلة الرئيسية أو الفرعية، ثم فلتر النتائج حسب المستوى والمعدات وهدف التمرين. الصفحة منظمة لتخدم الجيم بشكل واضح مع ملاحظات عملية تساعدك على الاختيار.'
+                      : 'Explore gym exercises by muscle and sub-muscle, then narrow the list by level, equipment, and training goal. This finder stays fitness-focused while still using coaching cues that are sensible for physically active users.'}
                   </p>
                 </div>
 
                 <div className="rounded-2xl border border-white/60 bg-white/70 px-4 py-3 text-sm text-slate-600" aria-live="polite">
-                  <div className="font-semibold text-slate-900">{filteredExercises.length} exercises shown</div>
-                  <div className="mt-1">{activeFilterCount > 0 ? `${activeFilterCount} active filters` : 'Shareable and query-param ready'}</div>
+                  <div className="font-semibold text-slate-900">
+                    {isAr ? `${filteredExercises.length} تمرين ظاهر الآن` : `${filteredExercises.length} exercises shown`}
+                  </div>
+                  <div className="mt-1">
+                    {activeFilterCount > 0
+                      ? isAr
+                        ? `${activeFilterCount} فلتر مفعل`
+                        : `${activeFilterCount} active filters`
+                      : isAr
+                        ? 'يمكن مشاركة الرابط الحالي بنفس الفلاتر'
+                        : 'Shareable and query-param ready'}
+                  </div>
                 </div>
               </div>
             </div>
 
             <div className="grid gap-8 p-5 sm:p-8 xl:grid-cols-[0.95fr_2.05fr]">
               <aside className="space-y-6">
+                <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5">
+                  <div className="text-sm font-bold text-slate-900">
+                    {isAr ? 'ابدأ من أقسام سريعة' : 'Start from quick groups'}
+                  </div>
+                  <div className="mt-3 grid grid-cols-2 gap-2">
+                    {quickGroups.map((item) => (
+                      <Link
+                        key={item.slug}
+                        to={navigationPaths.exercisesMuscle(lang, item.slug)}
+                        className={`rounded-2xl border px-4 py-3 text-sm font-semibold transition hover:scale-[1.01] ${item.accent}`}
+                      >
+                        {isAr ? EXERCISE_FINDER_STATIC_ARABIC_LABELS[item.slug] : EXERCISE_FINDER_STATIC_LABELS[item.slug]}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
                 <form className="grid gap-4" onSubmit={(event) => event.preventDefault()}>
                   <div className="space-y-2">
                     <label htmlFor={searchId} className="block text-sm font-semibold text-slate-700">
-                      Search exercise
+                      {isAr ? 'ابحث عن تمرين' : 'Search exercise'}
                     </label>
                     <div className="relative">
                       <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
@@ -1185,7 +1257,7 @@ export default function ExerciseFinder({
                         type="search"
                         value={filters.search}
                         onChange={(event) => setFilters((current) => ({...current, search: event.target.value}))}
-                        placeholder="Search by exercise name"
+                        placeholder={isAr ? 'ابحث باسم التمرين' : 'Search by exercise name'}
                         className="w-full rounded-2xl border border-slate-200 bg-white py-3 pl-11 pr-4 text-sm text-slate-900 outline-none transition focus:border-health-green focus:ring-2 focus:ring-health-green/20"
                       />
                     </div>
@@ -1193,7 +1265,7 @@ export default function ExerciseFinder({
 
                   <FilterField
                     id={muscleId}
-                    label="Main muscle"
+                    label={isAr ? 'العضلة الرئيسية' : 'Main muscle'}
                     value={filters.muscle}
                     onChange={(value) =>
                       setFilters((current) => ({
@@ -1207,7 +1279,7 @@ export default function ExerciseFinder({
 
                   <FilterField
                     id={subMuscleId}
-                    label="Sub-muscle"
+                    label={isAr ? 'العضلة الفرعية' : 'Sub-muscle'}
                     value={filters.subMuscle}
                     onChange={(value) => setFilters((current) => ({...current, subMuscle: value as SubMuscle | 'all'}))}
                     options={subMuscleOptions}
@@ -1215,7 +1287,7 @@ export default function ExerciseFinder({
 
                   <FilterField
                     id={levelId}
-                    label="Level"
+                    label={isAr ? 'المستوى' : 'Level'}
                     value={filters.level}
                     onChange={(value) => setFilters((current) => ({...current, level: value as Level | 'all'}))}
                     options={LEVEL_OPTIONS}
@@ -1223,7 +1295,7 @@ export default function ExerciseFinder({
 
                   <FilterField
                     id={equipmentId}
-                    label="Equipment"
+                    label={isAr ? 'المعدات' : 'Equipment'}
                     value={filters.equipment}
                     onChange={(value) => setFilters((current) => ({...current, equipment: value as Equipment | 'all'}))}
                     options={EQUIPMENT_OPTIONS}
@@ -1231,7 +1303,7 @@ export default function ExerciseFinder({
 
                   <FilterField
                     id={typeId}
-                    label="Exercise type"
+                    label={isAr ? 'نوع التمرين' : 'Exercise type'}
                     value={filters.exerciseType}
                     onChange={(value) =>
                       setFilters((current) => ({...current, exerciseType: value as ExerciseType | 'all'}))
@@ -1243,13 +1315,15 @@ export default function ExerciseFinder({
                 <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5">
                   <div className="flex items-center gap-2 text-sm font-bold text-slate-900">
                     <Target className="h-4 w-4 text-health-green" />
-                    <span>Target anatomy</span>
+                    <span>{isAr ? 'التركيز العضلي' : 'Target anatomy'}</span>
                   </div>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {anatomyList.length > 0 ? (
                       anatomyList.map((muscle) => <Badge key={muscle}>{toTitle(muscle)}</Badge>)
                     ) : (
-                      <span className="text-sm text-slate-600">Select a muscle group to focus the anatomy view.</span>
+                      <span className="text-sm text-slate-600">
+                        {isAr ? 'اختر مجموعة عضلية لتظهر لك العضلات الفرعية المرتبطة بها.' : 'Select a muscle group to focus the anatomy view.'}
+                      </span>
                     )}
                   </div>
                 </div>
@@ -1257,7 +1331,7 @@ export default function ExerciseFinder({
                 <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5">
                   <div className="flex items-center gap-2 text-sm font-bold text-slate-900">
                     <Dumbbell className="h-4 w-4 text-health-green" />
-                    <span>Popular exercises</span>
+                    <span>{isAr ? 'تمارين شائعة' : 'Popular exercises'}</span>
                   </div>
                   <div className="mt-3 space-y-3">
                     {popularExercises.map((exercise) => (
@@ -1272,27 +1346,73 @@ export default function ExerciseFinder({
                 <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5 text-sm text-slate-600">
                   <div className="flex items-center gap-2 font-bold text-slate-900">
                     <Share2 className="h-4 w-4 text-health-green" />
-                    <span>Sharing and SEO</span>
+                    <span>{isAr ? 'الروابط والمشاركة' : 'Sharing and SEO'}</span>
                   </div>
                   <p className="mt-2 leading-7">
-                    Share the current URL to preserve the selected muscle and active filters. Static page contexts like <span className="font-semibold text-slate-900">/exercises/chest</span> or <span className="font-semibold text-slate-900">/exercises/legs</span> can use the `pathMuscle` prop in this same component.
+                    {isAr
+                      ? 'يمكنك مشاركة الرابط الحالي للاحتفاظ بنفس العضلة والفلاتر المختارة. كما أن المسارات الثابتة مثل '
+                      : 'Share the current URL to preserve the selected muscle and active filters. Static page contexts like '}
+                    <span className="font-semibold text-slate-900">/exercises/chest</span>
+                    {isAr ? ' أو ' : ' or '}
+                    <span className="font-semibold text-slate-900">/exercises/legs</span>
+                    {isAr
+                      ? ' تسهّل الوصول المباشر إلى قسم عضلي محدد.'
+                      : ' can use the `pathMuscle` prop in this same component.'}
                   </p>
                 </div>
               </aside>
 
               <div className="space-y-6">
                 <section className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5">
-                  <h2 className="text-xl font-bold text-slate-900">Filtered exercise results</h2>
+                  <h2 className="text-xl font-bold text-slate-900">
+                    {isAr ? 'نتائج التمارين المفلترة' : 'Filtered exercise results'}
+                  </h2>
                   <p className="mt-2 text-sm leading-7 text-slate-600">
-                    Filter by anatomy first, then refine by training goal and equipment so the list stays relevant for both general gym use and movement-aware coaching.
+                    {isAr
+                      ? 'ابدأ بالعضلة المستهدفة أولًا، ثم ضيّق النتائج حسب الهدف والمعدات حتى تبقى القائمة مناسبة وسهلة المراجعة.'
+                      : 'Filter by anatomy first, then refine by training goal and equipment so the list stays relevant for both general gym use and movement-aware coaching.'}
                   </p>
+                </section>
+
+                <section className="grid gap-4 md:grid-cols-3">
+                  <Link
+                    to={navigationPaths.dashboard(lang)}
+                    className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5 transition hover:border-health-green/30 hover:bg-health-green/5"
+                  >
+                    <div className="text-sm font-bold text-slate-900">{isAr ? 'تابع تقدمك' : 'Track your progress'}</div>
+                    <p className="mt-2 text-sm leading-7 text-slate-600">
+                      {isAr ? 'اربط تمارينك بالنتائج والقياسات داخل لوحة المتابعة.' : 'Connect your exercise choices to your saved results in the dashboard.'}
+                    </p>
+                  </Link>
+                  <Link
+                    to={navigationPaths.injuries(lang)}
+                    className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5 transition hover:border-health-green/30 hover:bg-health-green/5"
+                  >
+                    <div className="text-sm font-bold text-slate-900">{isAr ? 'راجع الإصابات' : 'Review injury protocols'}</div>
+                    <p className="mt-2 text-sm leading-7 text-slate-600">
+                      {isAr ? 'إذا كان عندك ألم أو مرحلة تأهيل، افتح بروتوكولات الإصابات قبل اختيار التمرين.' : 'If you are managing pain or rehab, open the injury library before choosing exercises.'}
+                    </p>
+                  </Link>
+                  <Link
+                    to={navigationPaths.diets(lang)}
+                    className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5 transition hover:border-health-green/30 hover:bg-health-green/5"
+                  >
+                    <div className="text-sm font-bold text-slate-900">{isAr ? 'ادعم التمرين بالتغذية' : 'Support training with nutrition'}</div>
+                    <p className="mt-2 text-sm leading-7 text-slate-600">
+                      {isAr ? 'اختيار النظام الغذائي المناسب يساعدك على الاستشفاء والأداء.' : 'Pair your training with the right diet strategy for recovery and performance.'}
+                    </p>
+                  </Link>
                 </section>
 
                 {filteredExercises.length === 0 ? (
                   <div className="rounded-[2rem] border border-dashed border-slate-200 bg-slate-50 px-6 py-14 text-center">
-                    <h2 className="text-2xl font-bold text-slate-900">No exercises found</h2>
+                    <h2 className="text-2xl font-bold text-slate-900">
+                      {isAr ? 'لا توجد تمارين مطابقة' : 'No exercises found'}
+                    </h2>
                     <p className="mt-3 text-sm leading-7 text-slate-600">
-                      Try broadening the muscle, sub-muscle, level, or equipment filters. Very narrow combinations are useful, but they can intentionally reduce the list.
+                      {isAr
+                        ? 'جرّب توسيع الفلاتر قليلًا مثل العضلة أو المستوى أو المعدات. أحيانًا الدمج الضيق جدًا يقلل النتائج بشكل مقصود.'
+                        : 'Try broadening the muscle, sub-muscle, level, or equipment filters. Very narrow combinations are useful, but they can intentionally reduce the list.'}
                     </p>
                   </div>
                 ) : (

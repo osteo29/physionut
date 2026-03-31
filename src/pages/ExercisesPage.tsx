@@ -4,6 +4,7 @@ import ExerciseFinder, {
   EXERCISE_FINDER_STATIC_SLUGS,
   type StaticMuscleSlug,
 } from '../components/common/ExerciseFinder';
+import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
 
 function isStaticMuscleSlug(value: string | undefined): value is StaticMuscleSlug {
@@ -12,6 +13,7 @@ function isStaticMuscleSlug(value: string | undefined): value is StaticMuscleSlu
 
 export default function ExercisesPage() {
   const lang = usePreferredLang();
+  const isAr = lang === 'ar';
   const params = useParams<{muscle?: string}>();
 
   if (params.muscle && !isStaticMuscleSlug(params.muscle)) {
@@ -19,14 +21,20 @@ export default function ExercisesPage() {
   }
 
   const pathMuscle = isStaticMuscleSlug(params.muscle) ? params.muscle : null;
+  const title = isAr ? 'دليل التمارين' : 'Exercise Finder';
 
   return (
-    <ExerciseFinder
-      canonicalBasePath="/exercises"
-      enableSeo
-      pathMuscle={pathMuscle}
-      key={pathMuscle || 'all-exercises'}
-    />
+    <PageLayout title={title}>
+      <div className="not-prose">
+        <ExerciseFinder
+          canonicalBasePath="/exercises"
+          enableSeo
+          lang={lang}
+          pathMuscle={pathMuscle}
+          key={pathMuscle || 'all-exercises'}
+        />
+      </div>
+    </PageLayout>
   );
 }
 

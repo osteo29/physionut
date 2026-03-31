@@ -4,6 +4,7 @@ import {
   BookOpen,
   Brain,
   ClipboardList,
+  Dumbbell,
   LogOut,
   Menu,
   Moon,
@@ -294,6 +295,11 @@ const Navigation = memo(
                           icon: <ClipboardList className="h-5 w-5" />,
                           label: isAr ? 'بروتوكولات الإصابات' : 'Injury protocols',
                         },
+                        {
+                          href: navigationPaths.exercises(lang),
+                          icon: <Dumbbell className="h-5 w-5" />,
+                          label: isAr ? 'التمارين' : 'Exercises',
+                        },
                 {
                   href: navigationPaths.diets(lang),
                   icon: <Utensils className="h-5 w-5" />,
@@ -400,6 +406,9 @@ const Navigation = memo(
                 </a>
                 <Link to={navigationPaths.injuries(lang)} className="nav-link">
                   {isAr ? 'الإصابات' : 'Injuries'}
+                </Link>
+                <Link to={navigationPaths.exercises(lang)} className="nav-link">
+                  {isAr ? 'التمارين' : 'Exercises'}
                 </Link>
                 <Link to={navigationPaths.diets(lang)} className="nav-link">
                   {isAr ? 'الدايت والريجيم' : 'Diet & regimens'}

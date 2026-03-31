@@ -5,6 +5,7 @@ import {
   BarChart3,
   Calendar,
   ClipboardList,
+  Dumbbell,
   Download,
   LineChart,
   LoaderCircle,
@@ -593,6 +594,24 @@ export default function TrackingDashboardPage() {
                   {isAr
                     ? 'افتح مكتبة التعافي وخطط التغذية العلاجية مباشرة من لوحة المتابعة.'
                     : 'Open the rehab library and recovery nutrition plans directly from your dashboard.'}
+                </p>
+              </div>
+              <ArrowLeft className={`h-4 w-4 shrink-0 text-health-green ${isAr ? '' : 'rotate-180'}`} />
+            </Link>
+
+            <Link
+              to={navigationPaths.exercises(lang)}
+              className="mt-4 flex items-center justify-between gap-4 rounded-[1.5rem] border border-slate-200 bg-slate-50 px-4 py-4 transition-all hover:border-health-green/30 hover:bg-soft-blue"
+            >
+              <div>
+                <div className="flex items-center gap-2 text-sm font-bold text-slate-900">
+                  <Dumbbell className="h-4 w-4 text-health-green" />
+                  <span>{isAr ? 'دليل التمارين' : 'Exercise finder'}</span>
+                </div>
+                <p className="mt-2 text-sm text-slate-600">
+                  {isAr
+                    ? 'ارجع إلى صفحة التمارين لاختيار تمارين مناسبة ثم تابع تأثيرها هنا في السجل.'
+                    : 'Go back to the exercise page to choose movements, then track how they affect your log here.'}
                 </p>
               </div>
               <ArrowLeft className={`h-4 w-4 shrink-0 text-health-green ${isAr ? '' : 'rotate-180'}`} />
