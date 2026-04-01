@@ -1,5 +1,5 @@
 import {type ReactNode, useEffect, useId, useMemo, useState} from 'react';
-import {Dumbbell, Search, Share2, SlidersHorizontal, Target} from 'lucide-react';
+import {CalendarRange, Dumbbell, Flame, Layers3, Search, Share2, SlidersHorizontal, Sparkles, Target} from 'lucide-react';
 import {Link} from 'react-router-dom';
 import Seo from '../seo/Seo';
 import type {Language} from '../../services/translations';
@@ -26,6 +26,8 @@ type SubMuscle = (typeof MUSCLE_TREE)[MainMuscle][number];
 type Level = 'beginner' | 'intermediate' | 'advanced';
 type Equipment = 'bodyweight' | 'dumbbell' | 'barbell' | 'machine' | 'band';
 type ExerciseType = 'strength' | 'hypertrophy' | 'endurance';
+type TrainingSystemFocus = ExerciseType | 'mixed';
+type TrainingSystemEquipment = Equipment | 'mixed';
 export type StaticMuscleSlug = MainMuscle | 'arms' | 'core' | 'legs';
 
 type Exercise = {
@@ -48,6 +50,53 @@ type FilterState = {
   equipment: Equipment | 'all';
   exerciseType: ExerciseType | 'all';
   search: string;
+};
+
+type TrainingSystem = {
+  id: string;
+  title: string;
+  titleAr: string;
+  summary: string;
+  summaryAr: string;
+  split: string;
+  splitAr: string;
+  frequency: string;
+  frequencyAr: string;
+  recovery: string;
+  recoveryAr: string;
+  idealFor: string;
+  idealForAr: string;
+  focus: TrainingSystemFocus;
+  equipment: TrainingSystemEquipment;
+  levels: Level[];
+  muscleGroups: StaticMuscleSlug[];
+  accent: string;
+};
+
+type WeeklyDayPlan = {
+  day: string;
+  dayAr: string;
+  title: string;
+  titleAr: string;
+  details: string;
+  detailsAr: string;
+  sessionGoal: string;
+  sessionGoalAr: string;
+  prescriptions: WorkoutPrescription[];
+};
+
+type WeeklyPlan = {
+  systemId: string;
+  days: WeeklyDayPlan[];
+};
+
+type WorkoutPrescription = {
+  exerciseName: string;
+  sets: string;
+  reps: string;
+  rest: string;
+  notes: string;
+  notesAr: string;
 };
 
 export type ExerciseFinderProps = {
@@ -156,6 +205,22 @@ const STATIC_GROUP_MUSCLES: Record<StaticMuscleSlug, MainMuscle[]> = {
   legs: ['glutes', 'quadriceps', 'hamstrings', 'calves'],
 };
 
+const MAIN_MUSCLE_TO_STATIC_GROUP: Record<MainMuscle, StaticMuscleSlug> = {
+  chest: 'chest',
+  back: 'back',
+  shoulders: 'shoulders',
+  biceps: 'arms',
+  triceps: 'arms',
+  forearms: 'arms',
+  abs: 'core',
+  obliques: 'core',
+  lower_back: 'core',
+  glutes: 'legs',
+  quadriceps: 'legs',
+  hamstrings: 'legs',
+  calves: 'legs',
+};
+
 const INITIAL_FILTERS: FilterState = {
   muscle: 'all',
   subMuscle: 'all',
@@ -205,7 +270,9 @@ function getSubMuscleOptions(mainMuscle: MainMuscle | 'all') {
   ];
 }
 
-function getStaticSlugFilters(slug: StaticMuscleSlug | null | undefined) {
+function getStaticSlugFilters(
+  slug: StaticMuscleSlug | null | undefined,
+): {muscle: MainMuscle | 'all'; staticMuscles: MainMuscle[]} | null {
   if (!slug || !isStaticSlug(slug)) return null;
 
   const muscles = STATIC_GROUP_MUSCLES[slug];
@@ -361,6 +428,174 @@ function Badge({children, tone = 'neutral'}: {children: ReactNode; tone?: 'neutr
       {children}
     </span>
   );
+}
+
+function TrainingSystemCard({
+  system,
+  isAr,
+}: {
+  system: TrainingSystem;
+  isAr: boolean;
+}) {
+  return (
+    <article className={`overflow-hidden rounded-[1.75rem] border p-5 sm:p-6 ${system.accent}`}>
+      <div className="flex h-full flex-col gap-4">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/70 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-700">
+              <Layers3 className="h-3.5 w-3.5" />
+              <span>{isAr ? 'نظام تدريبي' : 'Training system'}</span>
+            </div>
+            <h3 className="mt-3 text-xl font-bold text-slate-900">{isAr ? system.titleAr : system.title}</h3>
+          </div>
+          <Badge tone="blue">{isAr ? system.frequencyAr : system.frequency}</Badge>
+        </div>
+
+        <p className="text-sm leading-7 text-slate-700">{isAr ? system.summaryAr : system.summary}</p>
+
+        <div className="grid gap-3 sm:grid-cols-2">
+          <div className="rounded-2xl border border-white/70 bg-white/70 p-4">
+            <div className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
+              {isAr ? 'التقسيم' : 'Split'}
+            </div>
+            <div className="mt-2 text-sm font-semibold text-slate-900">{isAr ? system.splitAr : system.split}</div>
+          </div>
+          <div className="rounded-2xl border border-white/70 bg-white/70 p-4">
+            <div className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
+              {isAr ? 'الاستشفاء' : 'Recovery'}
+            </div>
+            <div className="mt-2 text-sm font-semibold text-slate-900">
+              {isAr ? system.recoveryAr : system.recovery}
+            </div>
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-white/70 bg-white/65 p-4">
+          <div className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
+            {isAr ? 'مناسب لـ' : 'Ideal for'}
+          </div>
+          <p className="mt-2 text-sm text-slate-700">{isAr ? system.idealForAr : system.idealFor}</p>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function WeeklyPlanCard({
+  title,
+  titleAr,
+  plan,
+  isAr,
+}: {
+  title: string;
+  titleAr: string;
+  plan: WeeklyPlan;
+  isAr: boolean;
+}) {
+  return (
+    <article className="rounded-[1.75rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+      <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-slate-500">
+        <CalendarRange className="h-4 w-4 text-health-green" />
+        <span>{isAr ? 'مثال أسبوعي' : 'Weekly example'}</span>
+      </div>
+      <h3 className="mt-3 text-xl font-bold text-slate-900">{isAr ? titleAr : title}</h3>
+
+      <div className="mt-5 grid gap-3">
+        {plan.days.map((item) => (
+          <div key={`${plan.systemId}-${item.day}`} className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="text-sm font-bold text-slate-900">{isAr ? item.dayAr : item.day}</div>
+              <Badge>{isAr ? item.titleAr : item.title}</Badge>
+            </div>
+            <p className="mt-2 text-sm leading-7 text-slate-600">{isAr ? item.detailsAr : item.details}</p>
+            <div className="mt-3 rounded-2xl border border-health-green/15 bg-health-green/5 px-4 py-3">
+              <div className="text-xs font-bold uppercase tracking-[0.14em] text-health-green-dark">
+                {isAr ? 'هدف الحصة' : 'Session goal'}
+              </div>
+              <p className="mt-1 text-sm text-slate-700">{isAr ? item.sessionGoalAr : item.sessionGoal}</p>
+            </div>
+
+            <div className="mt-3 space-y-3">
+              {item.prescriptions.map((prescription) => {
+                const linkedExercise = EXERCISES.find((exercise) => exercise.name === prescription.exerciseName);
+
+                return (
+                  <div key={`${item.day}-${prescription.exerciseName}`} className="rounded-2xl border border-slate-200 bg-white p-4">
+                    <div className="flex flex-wrap items-start justify-between gap-2">
+                      <div>
+                        <div className="text-sm font-bold text-slate-900">{prescription.exerciseName}</div>
+                        {linkedExercise ? (
+                          <div className="mt-1 text-xs text-slate-500">
+                            {toTitle(linkedExercise.mainMuscle)} • {linkedExercise.equipment} • {linkedExercise.exerciseType}
+                          </div>
+                        ) : null}
+                      </div>
+                      <Badge tone="blue">
+                        {isAr ? `${prescription.sets} مجموعات` : `${prescription.sets} sets`}
+                      </Badge>
+                    </div>
+
+                    <div className="mt-3 grid gap-2 text-sm text-slate-700 sm:grid-cols-3">
+                      <div className="rounded-xl bg-slate-50 px-3 py-2">
+                        <span className="font-semibold">{isAr ? 'التكرارات:' : 'Reps:'}</span> {prescription.reps}
+                      </div>
+                      <div className="rounded-xl bg-slate-50 px-3 py-2">
+                        <span className="font-semibold">{isAr ? 'الراحة:' : 'Rest:'}</span> {prescription.rest}
+                      </div>
+                      <div className="rounded-xl bg-slate-50 px-3 py-2">
+                        <span className="font-semibold">{isAr ? 'التحميل:' : 'Load:'}</span>{' '}
+                        {isAr ? 'اترك 1-2 عدة في الاحتياط' : 'Leave 1-2 reps in reserve'}
+                      </div>
+                    </div>
+
+                    <p className="mt-3 text-sm leading-7 text-slate-600">
+                      {isAr ? prescription.notesAr : prescription.notes}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+    </article>
+  );
+}
+
+function getRecommendedSystems({
+  filters,
+  selectedStaticGroup,
+}: {
+  filters: FilterState;
+  selectedStaticGroup: StaticMuscleSlug | null;
+}) {
+  const matches = TRAINING_SYSTEMS.filter((system) => {
+    const matchesLevel = filters.level === 'all' || system.levels.includes(filters.level);
+    const matchesEquipment =
+      filters.equipment === 'all' || system.equipment === 'mixed' || system.equipment === filters.equipment;
+    const matchesFocus =
+      filters.exerciseType === 'all' || system.focus === 'mixed' || system.focus === filters.exerciseType;
+    const matchesMuscle = !selectedStaticGroup || system.muscleGroups.includes(selectedStaticGroup);
+
+    return matchesLevel && matchesEquipment && matchesFocus && matchesMuscle;
+  });
+
+  return (matches.length > 0 ? matches : TRAINING_SYSTEMS).slice(0, 4);
+}
+
+function getWeeklyPlans(systems: TrainingSystem[]) {
+  return systems
+    .map((system) => {
+      const plan = WEEKLY_PLANS.find((item) => item.systemId === system.id);
+      if (!plan) return null;
+
+      return {
+        system,
+        plan,
+      };
+    })
+    .filter((item): item is {system: TrainingSystem; plan: WeeklyPlan} => Boolean(item))
+    .slice(0, 2);
 }
 
 const EXERCISES: Exercise[] = [
@@ -1029,6 +1264,532 @@ const POPULAR_BY_MUSCLE: Record<MainMuscle, string[]> = {
   calves: ['Standing Calf Raise', 'Seated Calf Raise', 'Single-Leg Calf Raise'],
 };
 
+const TRAINING_SYSTEMS: TrainingSystem[] = [
+  {
+    id: 'full-body-foundation',
+    title: 'Full Body Foundation',
+    titleAr: 'نظام الجسم الكامل التأسيسي',
+    summary: 'Three balanced sessions that build movement quality, strength basics, and consistency without overwhelming recovery.',
+    summaryAr: 'ثلاث حصص متوازنة تبني أساس الحركة والقوة والالتزام بدون ضغط زائد على الاستشفاء.',
+    split: 'Full body x3',
+    splitAr: 'جسم كامل 3 مرات',
+    frequency: '3 days weekly',
+    frequencyAr: '3 أيام أسبوعياً',
+    recovery: 'Rest day between sessions with light walking or mobility.',
+    recoveryAr: 'يوم راحة بين الحصص مع مشي خفيف أو تمارين مرونة.',
+    idealFor: 'Beginners, returners, and anyone wanting a simple weekly structure.',
+    idealForAr: 'المبتدئين والعائدين للتمرين ومن يريد خطة أسبوعية سهلة وواضحة.',
+    focus: 'mixed',
+    equipment: 'mixed',
+    levels: ['beginner', 'intermediate'],
+    muscleGroups: ['chest', 'back', 'shoulders', 'arms', 'core', 'legs'],
+    accent: 'border-emerald-200 bg-[linear-gradient(180deg,rgba(236,253,245,0.95),rgba(255,255,255,0.98))]',
+  },
+  {
+    id: 'upper-lower-balance',
+    title: 'Upper / Lower Balance',
+    titleAr: 'نظام علوي / سفلي المتوازن',
+    summary: 'A four-day split that separates upper and lower work so volume stays organized and recovery remains predictable.',
+    summaryAr: 'تقسيم 4 أيام يفصل بين الجزء العلوي والسفلي ليبقى الحجم التدريبي منظماً والاستشفاء أوضح.',
+    split: 'Upper x2, Lower x2',
+    splitAr: 'علوي مرتان، سفلي مرتان',
+    frequency: '4 days weekly',
+    frequencyAr: '4 أيام أسبوعياً',
+    recovery: 'Best with two lighter recovery days and one full rest day.',
+    recoveryAr: 'الأفضل معه يومان أخف للاستشفاء ويوم راحة كامل.',
+    idealFor: 'Intermediate lifters who want muscle gain without losing weekly structure.',
+    idealForAr: 'المستوى المتوسط الذي يريد زيادة عضلية مع تنظيم أسبوعي واضح.',
+    focus: 'hypertrophy',
+    equipment: 'mixed',
+    levels: ['intermediate', 'advanced'],
+    muscleGroups: ['chest', 'back', 'shoulders', 'arms', 'core', 'legs'],
+    accent: 'border-sky-200 bg-[linear-gradient(180deg,rgba(239,246,255,0.95),rgba(255,255,255,0.98))]',
+  },
+  {
+    id: 'push-pull-legs',
+    title: 'Push Pull Legs',
+    titleAr: 'نظام دفع / سحب / أرجل',
+    summary: 'A classic hypertrophy layout that spreads volume across movement families and works well for gym-focused progression.',
+    summaryAr: 'تقسيم كلاسيكي لزيادة الكتلة العضلية يوزع الحجم التدريبي حسب أنماط الحركة ويناسب التقدم داخل الجيم.',
+    split: 'Push, Pull, Legs',
+    splitAr: 'دفع، سحب، أرجل',
+    frequency: '3 to 6 days weekly',
+    frequencyAr: 'من 3 إلى 6 أيام أسبوعياً',
+    recovery: 'Keep one full rest day and rotate hard leg sessions away from fatigue-heavy pull days.',
+    recoveryAr: 'احرص على يوم راحة كامل ووزّع أيام الأرجل الثقيلة بعيداً عن أيام السحب المرهقة.',
+    idealFor: 'Users chasing size, more variety, and better focus on each training day.',
+    idealForAr: 'من يبحث عن تنوع أكبر وتركيز أعلى على كل يوم تدريبي وزيادة الحجم العضلي.',
+    focus: 'hypertrophy',
+    equipment: 'barbell',
+    levels: ['intermediate', 'advanced'],
+    muscleGroups: ['chest', 'back', 'shoulders', 'arms', 'legs'],
+    accent: 'border-rose-200 bg-[linear-gradient(180deg,rgba(255,241,242,0.95),rgba(255,255,255,0.98))]',
+  },
+  {
+    id: 'strength-triad',
+    title: 'Strength Triad',
+    titleAr: 'نظام القوة الثلاثي',
+    summary: 'Three focused strength sessions built around presses, squats, hinges, and rows with lower accessory volume.',
+    summaryAr: 'ثلاث حصص قوة مركزة حول الضغط والسكوات والهيب هنج والرو مع حجم أقل للتمارين المساعدة.',
+    split: 'Heavy, medium, technique',
+    splitAr: 'ثقيل، متوسط، تقني',
+    frequency: '3 days weekly',
+    frequencyAr: '3 أيام أسبوعياً',
+    recovery: 'Two full recovery windows matter more than adding extra exercises.',
+    recoveryAr: 'فترات الاستشفاء الكاملة أهم هنا من إضافة تمارين كثيرة.',
+    idealFor: 'Lifters prioritizing measurable strength while keeping the week efficient.',
+    idealForAr: 'من يركز على القوة القابلة للقياس مع الحفاظ على أسبوع تدريبي مختصر وفعّال.',
+    focus: 'strength',
+    equipment: 'barbell',
+    levels: ['intermediate', 'advanced'],
+    muscleGroups: ['chest', 'back', 'shoulders', 'core', 'legs'],
+    accent: 'border-amber-200 bg-[linear-gradient(180deg,rgba(255,251,235,0.96),rgba(255,255,255,0.98))]',
+  },
+  {
+    id: 'dumbbell-hotel-plan',
+    title: 'Dumbbell Anywhere Plan',
+    titleAr: 'نظام الدمبل في أي مكان',
+    summary: 'A flexible hypertrophy routine using only dumbbells and benches, ideal for home setups or limited-equipment gyms.',
+    summaryAr: 'روتين مرن لزيادة الكتلة باستخدام الدمبل والمقعد فقط، مناسب للبيت أو للصالات محدودة المعدات.',
+    split: 'Alternate A/B sessions',
+    splitAr: 'حصص A و B بالتبادل',
+    frequency: '3 to 4 days weekly',
+    frequencyAr: '3 إلى 4 أيام أسبوعياً',
+    recovery: 'Alternate hard and moderate days to protect shoulders and lower back.',
+    recoveryAr: 'بدّل بين الأيام القوية والمتوسطة لحماية الكتف وأسفل الظهر.',
+    idealFor: 'Busy users, travel weeks, and anyone needing solid results with minimal equipment.',
+    idealForAr: 'لأصحاب الوقت المحدود وأسابيع السفر ومن يريد نتائج جيدة بأقل معدات.',
+    focus: 'hypertrophy',
+    equipment: 'dumbbell',
+    levels: ['beginner', 'intermediate'],
+    muscleGroups: ['chest', 'back', 'shoulders', 'arms', 'core', 'legs'],
+    accent: 'border-violet-200 bg-[linear-gradient(180deg,rgba(245,243,255,0.95),rgba(255,255,255,0.98))]',
+  },
+  {
+    id: 'bodyweight-conditioning',
+    title: 'Bodyweight Conditioning',
+    titleAr: 'نظام اللياقة بوزن الجسم',
+    summary: 'A repeatable bodyweight system that mixes pushing, pulling assistance, trunk control, and lower-body endurance.',
+    summaryAr: 'نظام متكرر بوزن الجسم يمزج بين الدفع والمساعدة على السحب وثبات الجذع وتحمل الجزء السفلي.',
+    split: 'Circuit plus skill work',
+    splitAr: 'دورات تدريبية مع مهارات',
+    frequency: '3 days weekly',
+    frequencyAr: '3 أيام أسبوعياً',
+    recovery: 'Use easy mobility days between sessions to keep joints fresh.',
+    recoveryAr: 'استعمل أيام مرونة خفيفة بين الحصص للحفاظ على راحة المفاصل.',
+    idealFor: 'General fitness, fat-loss support, and users training without machines.',
+    idealForAr: 'للياقة العامة ودعم خفض الدهون ولمن يتمرن بدون أجهزة.',
+    focus: 'endurance',
+    equipment: 'bodyweight',
+    levels: ['beginner', 'intermediate', 'advanced'],
+    muscleGroups: ['chest', 'back', 'shoulders', 'arms', 'core', 'legs'],
+    accent: 'border-orange-200 bg-[linear-gradient(180deg,rgba(255,247,237,0.96),rgba(255,255,255,0.98))]',
+  },
+  {
+    id: 'return-to-training',
+    title: 'Return to Training',
+    titleAr: 'نظام العودة الذكية للتمرين',
+    summary: 'A lower-stress weekly template that rebuilds tolerance using controlled effort, simpler movement choices, and extra recovery.',
+    summaryAr: 'خطة أسبوعية أقل ضغطاً تعيد بناء التحمل التدريجي بمجهود مضبوط وتمارين أبسط واستشفاء أكبر.',
+    split: '2 full body + 1 optional accessory day',
+    splitAr: 'جسم كامل مرتان + يوم إضافي اختياري',
+    frequency: '2 to 3 days weekly',
+    frequencyAr: '2 إلى 3 أيام أسبوعياً',
+    recovery: 'Leave at least 48 hours between harder sessions.',
+    recoveryAr: 'اترك 48 ساعة على الأقل بين الحصص الأكثر صعوبة.',
+    idealFor: 'People coming back after a break, soreness spikes, or a rehab-to-gym transition.',
+    idealForAr: 'للعائدين بعد انقطاع أو بعد زيادة الإجهاد أو الانتقال من التأهيل إلى الجيم.',
+    focus: 'mixed',
+    equipment: 'band',
+    levels: ['beginner', 'intermediate'],
+    muscleGroups: ['chest', 'back', 'shoulders', 'arms', 'core', 'legs'],
+    accent: 'border-slate-200 bg-[linear-gradient(180deg,rgba(248,250,252,0.96),rgba(255,255,255,0.99))]',
+  },
+];
+
+const WEEKLY_PLANS: WeeklyPlan[] = [
+  {
+    systemId: 'full-body-foundation',
+    days: [
+      {
+        day: 'Day 1',
+        dayAr: 'اليوم 1',
+        title: 'Squat + Push',
+        titleAr: 'سكوات + دفع',
+        details: 'Main lower-body pattern, horizontal press, easy row, and short core finisher.',
+        sessionGoal: 'Build technique and tolerance with simple compound patterns and controlled fatigue.',
+        sessionGoalAr: 'بناء التقنية والتحمل التدريجي عبر حركات مركبة بسيطة مع إجهاد مضبوط.',
+        prescriptions: [
+          {exerciseName: 'Goblet Squat', sets: '3', reps: '8-10', rest: '75-90 sec', notes: 'Use a load that keeps torso position clean and depth repeatable.', notesAr: 'استخدم حملاً يسمح بثبات الجذع والحفاظ على عمق ثابت.'},
+          {exerciseName: 'Flat Dumbbell Bench Press', sets: '3', reps: '8-10', rest: '90 sec', notes: 'Control the lowering phase and stop before shoulder discomfort appears.', notesAr: 'تحكم في النزول وتوقف قبل أي انزعاج واضح في الكتف.'},
+          {exerciseName: 'Chest-Supported Dumbbell Row', sets: '3', reps: '10-12', rest: '60-75 sec', notes: 'Pause briefly at the top to teach upper-back control.', notesAr: 'توقف لحظة قصيرة في أعلى الحركة لتحسين التحكم في أعلى الظهر.'},
+          {exerciseName: 'Crunch', sets: '2', reps: '12-15', rest: '45 sec', notes: 'Keep ribs down and avoid pulling from the neck.', notesAr: 'اثبت الأضلاع لأسفل وتجنب سحب الرقبة.'},
+        ],
+        detailsAr: 'نمط رئيسي للجزء السفلي مع ضغط أفقي ورو خفيف وإنهاء بسيط لتمارين الجذع.',
+      },
+      {
+        day: 'Day 2',
+        dayAr: 'اليوم 2',
+        title: 'Hinge + Pull',
+        titleAr: 'هيب هنج + سحب',
+        details: 'Hip hinge focus, vertical pull, shoulder accessory work, and light conditioning.',
+        sessionGoal: 'Train posterior chain and pulling patterns without turning the day into maximal fatigue.',
+        sessionGoalAr: 'تدريب السلسلة الخلفية وأنماط السحب بدون تحويل الحصة إلى إجهاد مرتفع جدًا.',
+        prescriptions: [
+          {exerciseName: 'Romanian Deadlift', sets: '3', reps: '8', rest: '90 sec', notes: 'Move from the hips and stop when spine position starts to change.', notesAr: 'ابدأ الحركة من الورك وتوقف عندما يبدأ وضع العمود الفقري بالتغير.'},
+          {exerciseName: 'Neutral-Grip Lat Pulldown', sets: '3', reps: '10', rest: '75 sec', notes: 'Pull toward upper chest without leaning back aggressively.', notesAr: 'اسحب نحو أعلى الصدر دون إرجاع مبالغ للجذع.'},
+          {exerciseName: 'Dumbbell Lateral Raise', sets: '2', reps: '12-15', rest: '45-60 sec', notes: 'Use lighter weight and keep the shoulder line smooth.', notesAr: 'استخدم وزنًا أخف وحافظ على مسار ناعم للكتف.'},
+          {exerciseName: 'Bird Dog', sets: '2', reps: '8 each side', rest: '30-45 sec', notes: 'Slow down each rep and avoid rotating through the pelvis.', notesAr: 'أبطئ كل عدة وتجنب دوران الحوض أثناء الأداء.'},
+        ],
+        detailsAr: 'تركيز على الهيب هنج مع سحب رأسي وتمارين مساعدة للكتف ولياقة خفيفة.',
+      },
+      {
+        day: 'Day 3',
+        dayAr: 'اليوم 3',
+        title: 'Single-Leg + Upper Mix',
+        titleAr: 'رجل واحدة + خليط علوي',
+        details: 'Unilateral leg work, upper-body mix, and trunk stability before recovery days.',
+        sessionGoal: 'Improve side-to-side balance while keeping weekly volume manageable.',
+        sessionGoalAr: 'تحسين التوازن بين الجانبين مع الحفاظ على حجم أسبوعي مناسب.',
+        prescriptions: [
+          {exerciseName: 'Single-Leg Hip Thrust', sets: '3', reps: '10 each side', rest: '60 sec', notes: 'Finish with glute tension rather than low-back extension.', notesAr: 'أنهِ كل عدة بانقباض الجلوتس لا بفرط تمديد أسفل الظهر.'},
+          {exerciseName: 'Push-Up', sets: '3', reps: '8-12', rest: '60 sec', notes: 'Raise the hands if full reps lose shape.', notesAr: 'ارفع اليدين إذا فقدت التكرارات شكلها الجيد.'},
+          {exerciseName: 'Band Face Pull', sets: '2', reps: '15', rest: '45 sec', notes: 'Let the shoulder blades rotate and finish with elbows high.', notesAr: 'اسمح بلوح الكتف بالحركة وأنهِ مع ارتفاع المرفقين.'},
+          {exerciseName: 'Suitcase Carry', sets: '2', reps: '20-30 m each side', rest: '45 sec', notes: 'Walk tall and resist side-bending.', notesAr: 'امشِ بوضعية طويلة وحارب الميل الجانبي.'},
+        ],
+        detailsAr: 'تمارين رجل واحدة مع خليط للجزء العلوي وثبات الجذع قبل أيام الاستشفاء.',
+      },
+    ],
+  },
+  {
+    systemId: 'upper-lower-balance',
+    days: [
+      {
+        day: 'Day 1',
+        dayAr: 'اليوم 1',
+        title: 'Upper Strength',
+        titleAr: 'قوة علوي',
+        details: 'Pressing, rowing, and upper-back work with lower rep ranges.',
+        sessionGoal: 'Drive load progression on the main upper-body lifts while keeping accessories tight.',
+        sessionGoalAr: 'رفع الأوزان تدريجيًا في الرفعات العلوية الرئيسية مع ضبط التمارين المساعدة.',
+        prescriptions: [
+          {exerciseName: 'Incline Bench Press', sets: '4', reps: '5-6', rest: '2 min', notes: 'Add load only when all sets stay technically identical.', notesAr: 'زد الحمل فقط إذا بقي الأداء متطابقًا تقنيًا في كل المجموعات.'},
+          {exerciseName: 'Barbell Row', sets: '4', reps: '6-8', rest: '90 sec', notes: 'Keep torso angle fixed and avoid hitching.', notesAr: 'حافظ على زاوية الجذع وتجنب الغش أثناء الأداء.'},
+          {exerciseName: 'Seated Dumbbell Overhead Press', sets: '3', reps: '6-8', rest: '90 sec', notes: 'Do not lean back to finish the last reps.', notesAr: 'لا تمِل للخلف لإكمال آخر التكرارات.'},
+          {exerciseName: 'Cable Rear Delt Fly', sets: '2', reps: '12-15', rest: '45 sec', notes: 'Smooth tempo is better than heavier cables here.', notesAr: 'الإيقاع السلس أفضل من حمل أعلى في هذا التمرين.'},
+        ],
+        detailsAr: 'ضغط ورو وتمارين أعلى الظهر بعدد تكرارات أقل وتركيز أعلى على القوة.',
+      },
+      {
+        day: 'Day 2',
+        dayAr: 'اليوم 2',
+        title: 'Lower Strength',
+        titleAr: 'قوة سفلي',
+        details: 'Squat or leg press focus, hinge assistance, calf work, and bracing drills.',
+        sessionGoal: 'Push lower-body strength without exhausting the next upper session.',
+        sessionGoalAr: 'تطوير قوة الجزء السفلي دون استنزاف الحصة العلوية التالية.',
+        prescriptions: [
+          {exerciseName: 'Front Squat', sets: '4', reps: '4-6', rest: '2 min', notes: 'Prioritize upright position and clean depth over absolute load.', notesAr: 'قدّم وضعية الجذع والعمق الجيد على الحمل الأقصى.'},
+          {exerciseName: 'Romanian Deadlift', sets: '3', reps: '6-8', rest: '90 sec', notes: 'Leave one strong rep in reserve on every set.', notesAr: 'اترك عدة قوية واحدة في الاحتياط في كل مجموعة.'},
+          {exerciseName: 'Standing Calf Raise', sets: '3', reps: '10-12', rest: '45 sec', notes: 'Pause at the top and bottom instead of bouncing.', notesAr: 'توقف في أعلى وأسفل الحركة بدل الارتداد.'},
+          {exerciseName: 'Bird Dog', sets: '2', reps: '8 each side', rest: '30-45 sec', notes: 'Use it as trunk control, not as a speed drill.', notesAr: 'اعتبره تدريب ثبات للجذع وليس تمرين سرعة.'},
+        ],
+        detailsAr: 'تركيز على السكوات أو الليج برس مع تمارين هنج مساعدة وسمانة وثبات.',
+      },
+      {
+        day: 'Day 4',
+        dayAr: 'اليوم 4',
+        title: 'Upper Volume',
+        titleAr: 'حجم علوي',
+        details: 'More total sets for chest, back, shoulders, and arms with moderate loads.',
+        sessionGoal: 'Accumulate quality volume for muscle gain while keeping joints comfortable.',
+        sessionGoalAr: 'تجميع حجم عضلي جيد لزيادة الكتلة مع الحفاظ على راحة المفاصل.',
+        prescriptions: [
+          {exerciseName: 'Low Incline Dumbbell Press', sets: '3', reps: '8-12', rest: '75 sec', notes: 'Stay in a pain-free pressing path and own the eccentric.', notesAr: 'حافظ على مسار ضغط مريح وتحكم في النزول بالكامل.'},
+          {exerciseName: 'Chest-Supported Dumbbell Row', sets: '3', reps: '10-12', rest: '60 sec', notes: 'Aim elbows slightly back and down for better balance.', notesAr: 'وجّه المرفقين قليلًا للخلف والأسفل لتحسين التوازن العضلي.'},
+          {exerciseName: 'Dumbbell Lateral Raise', sets: '3', reps: '12-15', rest: '45 sec', notes: 'Keep the first half of the rep identical to the last half.', notesAr: 'حافظ على نفس الجودة من أول الحركة إلى آخرها.'},
+          {exerciseName: 'EZ-Bar Curl', sets: '2', reps: '10-12', rest: '45 sec', notes: 'Control the lowering phase and avoid swinging.', notesAr: 'تحكم في النزول وتجنب التأرجح.'},
+        ],
+        detailsAr: 'حجم أعلى للصدر والظهر والأكتاف والذراعين بأحمال متوسطة.',
+      },
+      {
+        day: 'Day 5',
+        dayAr: 'اليوم 5',
+        title: 'Lower Volume',
+        titleAr: 'حجم سفلي',
+        details: 'Glutes, quads, hamstrings, and conditioning-focused lower-body finishers.',
+        sessionGoal: 'Build muscle through repeated exposure and moderate rest periods.',
+        sessionGoalAr: 'بناء العضلات عبر تكرار التعرض التدريبي مع فترات راحة متوسطة.',
+        prescriptions: [
+          {exerciseName: 'Leg Press', sets: '3', reps: '10-12', rest: '75 sec', notes: 'Use full controlled depth without hard pelvic tuck.', notesAr: 'استخدم عمقًا كاملاً مضبوطًا دون انثناء حوض قوي.'},
+          {exerciseName: 'Swiss Ball Hamstring Curl', sets: '3', reps: '10-12', rest: '60 sec', notes: 'Keep hips lifted through the whole set.', notesAr: 'حافظ على ارتفاع الحوض طوال المجموعة.'},
+          {exerciseName: 'Barbell Hip Thrust', sets: '3', reps: '8-10', rest: '75 sec', notes: 'Lock out with glutes, not lumbar extension.', notesAr: 'أنه الحركة بانقباض الجلوتس لا بفرط تمديد أسفل الظهر.'},
+          {exerciseName: 'Seated Calf Raise', sets: '2', reps: '12-15', rest: '45 sec', notes: 'Pause one second in stretch and peak contraction.', notesAr: 'توقف ثانية في التمدد وفي أعلى الانقباض.'},
+        ],
+        detailsAr: 'جلوتس وكوادز وهامسترنج مع إنهاءات لياقية موجهة للجزء السفلي.',
+      },
+    ],
+  },
+  {
+    systemId: 'push-pull-legs',
+    days: [
+      {
+        day: 'Day 1',
+        dayAr: 'اليوم 1',
+        title: 'Push',
+        titleAr: 'دفع',
+        details: 'Chest, shoulders, and triceps with one heavy press and focused accessory work.',
+        sessionGoal: 'Load the pressing pattern first, then use accessories to complete the volume target.',
+        sessionGoalAr: 'ابدأ بتحميل نمط الضغط ثم أكمل الحجم المطلوب عبر التمارين المساعدة.',
+        prescriptions: [
+          {exerciseName: 'Incline Bench Press', sets: '4', reps: '5-8', rest: '2 min', notes: 'Main performance lift of the day.', notesAr: 'هذا هو تمرين الأداء الرئيسي في اليوم.'},
+          {exerciseName: 'Landmine Press', sets: '3', reps: '8-10', rest: '75 sec', notes: 'A shoulder-friendly secondary press.', notesAr: 'تمرين ضغط ثانوي مناسب للكتف أكثر.'},
+          {exerciseName: 'Dumbbell Lateral Raise', sets: '3', reps: '12-15', rest: '45 sec', notes: 'Chase clean reps, not momentum.', notesAr: 'استهدف جودة التكرار لا الزخم.'},
+          {exerciseName: 'Cable Pressdown', sets: '3', reps: '10-12', rest: '45-60 sec', notes: 'Finish with elbows pinned and full lockout.', notesAr: 'أنه مع ثبات المرفقين وامتداد كامل مضبوط.'},
+        ],
+        detailsAr: 'صدر وأكتاف وترايسبس مع تمرين ضغط رئيسي قوي وتمارين مساعدة مركزة.',
+      },
+      {
+        day: 'Day 2',
+        dayAr: 'اليوم 2',
+        title: 'Pull',
+        titleAr: 'سحب',
+        details: 'Back thickness, vertical pulls, rear delts, and biceps progression.',
+        sessionGoal: 'Balance vertical and horizontal pulling while building arm support volume.',
+        sessionGoalAr: 'موازنة السحب الرأسي والأفقي مع إضافة حجم داعم للذراعين.',
+        prescriptions: [
+          {exerciseName: 'Pull-Up', sets: '4', reps: '4-6', rest: '2 min', notes: 'Use assistance if needed to keep clean full-range reps.', notesAr: 'استخدم مساعدة عند الحاجة للحفاظ على تكرارات كاملة ونظيفة.'},
+          {exerciseName: 'Barbell Row', sets: '3', reps: '6-8', rest: '90 sec', notes: 'Keep the bar path consistent every set.', notesAr: 'اجعل مسار البار ثابتًا في كل مجموعة.'},
+          {exerciseName: 'Band Face Pull', sets: '3', reps: '15', rest: '45 sec', notes: 'Use this to keep shoulders balanced under pressing volume.', notesAr: 'استخدمه للحفاظ على توازن الكتف مع حجم الضغط.'},
+          {exerciseName: 'Alternating Hammer Curl', sets: '3', reps: '10-12', rest: '45 sec', notes: 'Do not rotate the torso to finish the last reps.', notesAr: 'تجنب لف الجذع لإكمال آخر التكرارات.'},
+        ],
+        detailsAr: 'سماكة الظهر والسحب الرأسي والكتف الخلفي وتدرج لعضلة البايسبس.',
+      },
+      {
+        day: 'Day 3',
+        dayAr: 'اليوم 3',
+        title: 'Legs',
+        titleAr: 'أرجل',
+        details: 'Quads, glutes, hamstrings, calves, and core with enough total weekly volume.',
+        sessionGoal: 'Hit the whole lower body with one heavy anchor and targeted accessories.',
+        sessionGoalAr: 'تغطية الجزء السفلي كاملًا بتمرين رئيسي قوي وتمارين مساعدة موجهة.',
+        prescriptions: [
+          {exerciseName: 'Front Squat', sets: '4', reps: '5-6', rest: '2 min', notes: 'Lead with clean trunk position and consistent depth.', notesAr: 'ابدأ من وضعية جذع نظيفة مع عمق ثابت.'},
+          {exerciseName: 'Romanian Deadlift', sets: '3', reps: '8', rest: '90 sec', notes: 'Keep hamstrings loaded instead of chasing the floor.', notesAr: 'حافظ على تحميل الهامسترنج بدل محاولة الوصول للأرض فقط.'},
+          {exerciseName: 'Spanish Squat', sets: '2', reps: '12-15', rest: '60 sec', notes: 'Use it to add quad volume with less spinal loading.', notesAr: 'استعمله لإضافة حجم للكوادز مع ضغط أقل على العمود الفقري.'},
+          {exerciseName: 'Standing Calf Raise', sets: '3', reps: '12-15', rest: '45 sec', notes: 'Full range matters more than speed.', notesAr: 'المدى الكامل أهم من السرعة.'},
+        ],
+        detailsAr: 'كوادز وجلوتس وهامسترنج وسمانة وجذع بحجم أسبوعي كافٍ.',
+      },
+    ],
+  },
+  {
+    systemId: 'strength-triad',
+    days: [
+      {
+        day: 'Day 1',
+        dayAr: 'اليوم 1',
+        title: 'Heavy Main Lifts',
+        titleAr: 'الرفعات الرئيسية الثقيلة',
+        details: 'Primary squat or press emphasis with crisp low-rep work and long rest.',
+        sessionGoal: 'Practice heavy-quality reps and leave the gym with speed still intact.',
+        sessionGoalAr: 'تدرّب على تكرارات قوية عالية الجودة مع الحفاظ على السرعة وعدم الاستنزاف.',
+        prescriptions: [
+          {exerciseName: 'Front Squat', sets: '5', reps: '3-5', rest: '2-3 min', notes: 'Stop a set early if bar speed drops sharply.', notesAr: 'أوقف المجموعة مبكرًا إذا هبطت سرعة البار بوضوح.'},
+          {exerciseName: 'Incline Bench Press', sets: '4', reps: '4-6', rest: '2 min', notes: 'Treat every rep like a single clean effort.', notesAr: 'تعامل مع كل عدة كأنها محاولة منفصلة ونظيفة.'},
+          {exerciseName: 'Barbell Row', sets: '3', reps: '5-6', rest: '90 sec', notes: 'Use the row to support pressing and squat posture.', notesAr: 'استخدم الرو لدعم الضغط ووضعية السكوات.'},
+        ],
+        detailsAr: 'تركيز على السكوات أو الضغط الرئيسي بتكرارات قليلة وراحة أطول.',
+      },
+      {
+        day: 'Day 2',
+        dayAr: 'اليوم 2',
+        title: 'Medium Volume',
+        titleAr: 'حجم متوسط',
+        details: 'Moderate-load rows, secondary press, posterior chain, and trunk work.',
+        sessionGoal: 'Accumulate enough work to progress strength without drifting into excessive fatigue.',
+        sessionGoalAr: 'جمع حجم كافٍ لتقدم القوة دون الدخول في إجهاد مفرط.',
+        prescriptions: [
+          {exerciseName: 'Landmine Press', sets: '3', reps: '6-8', rest: '75 sec', notes: 'Press explosively, lower under control.', notesAr: 'ادفع بسرعة واضبط النزول بهدوء.'},
+          {exerciseName: 'Chest-Supported Dumbbell Row', sets: '3', reps: '8-10', rest: '75 sec', notes: 'Use an honest pause at the top.', notesAr: 'التزم بتوقف صادق في أعلى الحركة.'},
+          {exerciseName: 'Good Morning', sets: '3', reps: '8', rest: '90 sec', notes: 'Stay conservative and feel hamstrings carry the rep.', notesAr: 'ابقَ محافظًا في الحمل واشعر بأن الهامسترنج تحمل الحركة.'},
+          {exerciseName: 'Suitcase Carry', sets: '2', reps: '25-30 m each side', rest: '45 sec', notes: 'Use this as bracing practice, not grip-only work.', notesAr: 'اعتبره تدريب ثبات للجذع وليس للقبضة فقط.'},
+        ],
+        detailsAr: 'رو بأحمال متوسطة مع ضغط ثانوي وسلسلة خلفية وتمارين جذع.',
+      },
+      {
+        day: 'Day 3',
+        dayAr: 'اليوم 3',
+        title: 'Technique + Speed',
+        titleAr: 'تقنية + سرعة',
+        details: 'Cleaner bar paths, faster reps, and fewer accessories to protect recovery.',
+        sessionGoal: 'Refine execution and keep neural freshness high before the next heavy block.',
+        sessionGoalAr: 'تحسين التنفيذ والحفاظ على الجاهزية العصبية قبل الكتلة الثقيلة التالية.',
+        prescriptions: [
+          {exerciseName: 'Push-Up', sets: '3', reps: '6-10 fast clean reps', rest: '60 sec', notes: 'Use explosive intent without losing body line.', notesAr: 'نفذ بقصد سريع دون فقدان استقامة الجسم.'},
+          {exerciseName: 'Neutral-Grip Lat Pulldown', sets: '3', reps: '8', rest: '60 sec', notes: 'Prioritize the same bar path every time.', notesAr: 'حافظ على نفس مسار السحب في كل عدة.'},
+          {exerciseName: 'Prone Y Raise', sets: '2', reps: '12', rest: '45 sec', notes: 'This is shoulder positioning practice, not max effort.', notesAr: 'هذا التمرين لتحسين وضعية الكتف وليس للمجهود الأقصى.'},
+        ],
+        detailsAr: 'مسارات أنظف للبار وتكرارات أسرع وتمارين مساعدة أقل لحماية الاستشفاء.',
+      },
+    ],
+  },
+  {
+    systemId: 'dumbbell-hotel-plan',
+    days: [
+      {
+        day: 'Session A',
+        dayAr: 'الحصة A',
+        title: 'Push + Quads',
+        titleAr: 'دفع + كوادز',
+        details: 'Dumbbell pressing, squat patterns, shoulders, and simple trunk work.',
+        sessionGoal: 'Make minimal equipment productive by pairing the most versatile dumbbell patterns.',
+        sessionGoalAr: 'تحويل المعدات المحدودة إلى حصص فعالة عبر دمج أنماط الدمبل الأكثر فائدة.',
+        prescriptions: [
+          {exerciseName: 'Low Incline Dumbbell Press', sets: '4', reps: '8-10', rest: '75 sec', notes: 'Main upper push for the session.', notesAr: 'هذا هو تمرين الدفع الرئيسي في الحصة.'},
+          {exerciseName: 'Goblet Squat', sets: '4', reps: '10-12', rest: '75 sec', notes: 'Use a slow lowering phase to make light loads effective.', notesAr: 'استخدم نزولًا أبطأ لجعل الأوزان الأخف أكثر فعالية.'},
+          {exerciseName: 'Dumbbell Lateral Raise', sets: '3', reps: '12-15', rest: '45 sec', notes: 'Keep shoulders relaxed and raise through the elbows.', notesAr: 'حافظ على استرخاء الرقبة وارفع عبر المرفقين.'},
+          {exerciseName: 'Reverse Crunch', sets: '2', reps: '12-15', rest: '45 sec', notes: 'Posterior pelvic tilt is the main target.', notesAr: 'إمالة الحوض للخلف هي الهدف الأساسي.'},
+        ],
+        detailsAr: 'ضغط بالدمبل وأنماط سكوات وأكتاف وتمارين جذع بسيطة.',
+      },
+      {
+        day: 'Session B',
+        dayAr: 'الحصة B',
+        title: 'Pull + Posterior Chain',
+        titleAr: 'سحب + سلسلة خلفية',
+        details: 'Rows, hinges, split stance work, and arm accessories using minimal setup.',
+        sessionGoal: 'Cover back and posterior-chain needs without needing cables or machines.',
+        sessionGoalAr: 'تغطية احتياجات الظهر والسلسلة الخلفية دون الحاجة لأجهزة أو كيابل.',
+        prescriptions: [
+          {exerciseName: 'Chest-Supported Dumbbell Row', sets: '4', reps: '8-12', rest: '60-75 sec', notes: 'Make this the anchor movement of the day.', notesAr: 'اجعل هذا التمرين هو الارتكاز الأساسي في الحصة.'},
+          {exerciseName: 'Romanian Deadlift', sets: '3', reps: '8-10', rest: '90 sec', notes: 'Stop where tension stays in the hamstrings.', notesAr: 'توقف عند النقطة التي يبقى فيها الشد في الهامسترنج.'},
+          {exerciseName: 'Alternating Hammer Curl', sets: '3', reps: '10-12', rest: '45 sec', notes: 'Use a stable torso and full elbow extension.', notesAr: 'استخدم جذعًا ثابتًا ومدًّا كاملًا للمرفق.'},
+          {exerciseName: 'Back Extension', sets: '2', reps: '12', rest: '45 sec', notes: 'Finish in a neutral line rather than overextending.', notesAr: 'أنه الحركة مع وضع محايد بدل فرط التمديد.'},
+        ],
+        detailsAr: 'رو وهيب هنج ووضعيات منقسمة وتمارين ذراعين بأقل تجهيز ممكن.',
+      },
+      {
+        day: 'Session C',
+        dayAr: 'الحصة C',
+        title: 'Pump + Conditioning',
+        titleAr: 'ضخ دم + لياقة',
+        details: 'Lighter hypertrophy work with shorter rests and optional finisher sets.',
+        sessionGoal: 'Use density and shorter rests to keep the week productive even with limited load.',
+        sessionGoalAr: 'استخدم كثافة التمرين والراحات الأقصر للحفاظ على فعالية الأسبوع رغم محدودية الأوزان.',
+        prescriptions: [
+          {exerciseName: 'Push-Up', sets: '3', reps: '10-15', rest: '45 sec', notes: 'Use elevated hands or feet to match current level.', notesAr: 'عدّل الارتفاع لليدين أو القدمين حسب مستواك.'},
+          {exerciseName: 'Single-Leg Hip Thrust', sets: '3', reps: '12 each side', rest: '45 sec', notes: 'Keep the pelvis level throughout the rep.', notesAr: 'حافظ على مستوى الحوض ثابتًا طوال الحركة.'},
+          {exerciseName: 'EZ-Bar Curl', sets: '2', reps: '12', rest: '45 sec', notes: 'Any curl variation can substitute if equipment changes.', notesAr: 'يمكن استبداله بأي تمرين كيرل مشابه إذا تغيرت المعدات.'},
+          {exerciseName: 'Suitcase Carry', sets: '2', reps: '20 m each side', rest: '30 sec', notes: 'Finish with posture and breathing control.', notesAr: 'اختم الحصة مع تركيز على الوضعية والتنفس.'},
+        ],
+        detailsAr: 'عمل عضلي أخف مع راحات أقصر وإنهاءات اختيارية.',
+      },
+    ],
+  },
+  {
+    systemId: 'bodyweight-conditioning',
+    days: [
+      {
+        day: 'Day 1',
+        dayAr: 'اليوم 1',
+        title: 'Push Circuit',
+        titleAr: 'دورة دفع',
+        details: 'Push-up variations, squat reps, planks, and low-rest pacing.',
+        sessionGoal: 'Raise work capacity with simple movements that can be repeated consistently.',
+        sessionGoalAr: 'رفع القدرة البدنية عبر حركات بسيطة يمكن تكرارها باستمرار.',
+        prescriptions: [
+          {exerciseName: 'Push-Up', sets: '4', reps: '8-15', rest: '30-45 sec', notes: 'Leave room for clean reps and consistent tempo.', notesAr: 'اترك هامشًا يسمح بتكرارات نظيفة وإيقاع ثابت.'},
+          {exerciseName: 'Spanish Squat', sets: '3', reps: '12-15', rest: '30-45 sec', notes: 'Use it to build legs with less joint irritation.', notesAr: 'استخدمه لبناء الأرجل مع إجهاد أقل للمفاصل.'},
+          {exerciseName: 'Crunch', sets: '3', reps: '15', rest: '30 sec', notes: 'Keep the rib cage stacked over the pelvis.', notesAr: 'حافظ على القفص الصدري فوق الحوض.'},
+        ],
+        detailsAr: 'تنويعات الضغط مع سكوات وبلانك وإيقاع راحة قصير.',
+      },
+      {
+        day: 'Day 2',
+        dayAr: 'اليوم 2',
+        title: 'Pull Assist + Core',
+        titleAr: 'مساعدة سحب + جذع',
+        details: 'Band pulls, rear-chain work, anti-rotation drills, and mobility.',
+        sessionGoal: 'Keep shoulders and trunk balanced when equipment is limited.',
+        sessionGoalAr: 'الحفاظ على توازن الكتفين والجذع عندما تكون المعدات محدودة.',
+        prescriptions: [
+          {exerciseName: 'Straight-Arm Band Pulldown', sets: '3', reps: '12-15', rest: '30-45 sec', notes: 'Think armpits down and ribs quiet.', notesAr: 'فكّر في سحب الإبط للأسفل مع ثبات الأضلاع.'},
+          {exerciseName: 'Band Face Pull', sets: '3', reps: '15', rest: '30-45 sec', notes: 'Finish tall and do not shrug.', notesAr: 'انهِ الحركة بوضعية طويلة ومن دون رفع الكتفين.'},
+          {exerciseName: 'Bird Dog', sets: '3', reps: '8 each side', rest: '30 sec', notes: 'Slow tempo makes the drill harder and more useful.', notesAr: 'الإيقاع البطيء يجعل التمرين أصعب وأكثر فائدة.'},
+        ],
+        detailsAr: 'سحب بالمطاط وتمارين سلسلة خلفية ومقاومة دوران ومرونة.',
+      },
+      {
+        day: 'Day 3',
+        dayAr: 'اليوم 3',
+        title: 'Leg Endurance',
+        titleAr: 'تحمل الأرجل',
+        details: 'Lunges, split squats, calf volume, and aerobic finisher intervals.',
+        sessionGoal: 'Build lower-body stamina and tolerance without heavy loading.',
+        sessionGoalAr: 'بناء تحمل الجزء السفلي دون الاعتماد على أحمال ثقيلة.',
+        prescriptions: [
+          {exerciseName: 'Goblet Squat', sets: '3', reps: '12-15', rest: '45 sec', notes: 'Use tempo if load is light.', notesAr: 'استخدم الإيقاع البطيء إذا كان الحمل خفيفًا.'},
+          {exerciseName: 'Mini-Band Lateral Walk', sets: '3', reps: '12 steps each side', rest: '30 sec', notes: 'Stay low enough to feel glute medius working.', notesAr: 'انخفض بما يكفي لتشعر بعمل الجلوتس الجانبي.'},
+          {exerciseName: 'Single-Leg Calf Raise', sets: '3', reps: '12 each side', rest: '30 sec', notes: 'Use light support only if needed for balance.', notesAr: 'استخدم دعمًا خفيفًا فقط إذا احتجت للتوازن.'},
+        ],
+        detailsAr: 'لانجز وسبلت سكوات وحجم للسمانة وإنهاءات هوائية متقطعة.',
+      },
+    ],
+  },
+  {
+    systemId: 'return-to-training',
+    days: [
+      {
+        day: 'Day 1',
+        dayAr: 'اليوم 1',
+        title: 'Easy Full Body',
+        titleAr: 'جسم كامل خفيف',
+        details: 'Simple compound patterns at moderate effort with longer warm-up time.',
+        sessionGoal: 'Reintroduce training stress without triggering big soreness spikes.',
+        sessionGoalAr: 'إعادة إدخال الضغط التدريبي دون التسبب في موجات إجهاد كبيرة.',
+        prescriptions: [
+          {exerciseName: 'Glute Bridge', sets: '2', reps: '12', rest: '45 sec', notes: 'Start with a movement that restores confidence and hip extension.', notesAr: 'ابدأ بحركة تعيد الثقة وتُنشّط تمديد الورك.'},
+          {exerciseName: 'Push-Up', sets: '2', reps: '6-10', rest: '60 sec', notes: 'Use incline as needed to avoid compensation.', notesAr: 'استخدم نسخة مائلة عند الحاجة لتجنب التعويضات.'},
+          {exerciseName: 'Chest-Supported Dumbbell Row', sets: '2', reps: '10', rest: '60 sec', notes: 'Choose a load that feels easy-moderate in week one.', notesAr: 'اختر حملاً يبدو سهلاً إلى متوسط في الأسبوع الأول.'},
+          {exerciseName: 'Bird Dog', sets: '2', reps: '6 each side', rest: '30 sec', notes: 'Finish with control rather than fatigue.', notesAr: 'اختم الحصة بالتحكم لا بالإجهاد.'},
+        ],
+        detailsAr: 'أنماط مركبة بسيطة بمجهود متوسط مع وقت إحماء أطول.',
+      },
+      {
+        day: 'Day 3',
+        dayAr: 'اليوم 3',
+        title: 'Controlled Repeat',
+        titleAr: 'تكرار مضبوط',
+        details: 'Repeat the same patterns with small progression only if recovery stayed good.',
+        sessionGoal: 'Repeat exposure and earn progression rather than assuming it.',
+        sessionGoalAr: 'كرر التعرض التدريبي واكتسب التقدم بشكل مستحق لا افتراضي.',
+        prescriptions: [
+          {exerciseName: 'Goblet Squat', sets: '3', reps: '8-10', rest: '60 sec', notes: 'Increase load only if the first session felt clearly comfortable.', notesAr: 'زد الحمل فقط إذا بدت الحصة الأولى مريحة بوضوح.'},
+          {exerciseName: 'Low Incline Dumbbell Press', sets: '2', reps: '8-10', rest: '60 sec', notes: 'Keep shoulder comfort ahead of range obsession.', notesAr: 'اجعل راحة الكتف أولوية على المدى المبالغ فيه.'},
+          {exerciseName: 'Straight-Arm Band Pulldown', sets: '2', reps: '12-15', rest: '45 sec', notes: 'Use this to reconnect with lat control and rib position.', notesAr: 'استخدمه لاستعادة التحكم في اللاتس ووضعية الأضلاع.'},
+        ],
+        detailsAr: 'تكرار نفس الأنماط مع تقدم بسيط فقط إذا كان الاستشفاء جيداً.',
+      },
+      {
+        day: 'Optional',
+        dayAr: 'اختياري',
+        title: 'Mobility + Accessories',
+        titleAr: 'مرونة + مساعدات',
+        details: 'Short session for bands, trunk work, and restoring confidence in movement.',
+        sessionGoal: 'Add movement without turning the optional day into another hard workout.',
+        sessionGoalAr: 'أضف حركة مفيدة دون تحويل اليوم الاختياري إلى حصة شاقة.',
+        prescriptions: [
+          {exerciseName: 'Band External Rotation', sets: '2', reps: '12-15', rest: '30 sec', notes: 'Small and controlled beats heavy resistance.', notesAr: 'المقاومة البسيطة المضبوطة أفضل من المقاومة العالية هنا.'},
+          {exerciseName: 'Reverse Crunch', sets: '2', reps: '10-12', rest: '30 sec', notes: 'Keep it easy enough to leave feeling better, not flatter.', notesAr: 'اجعله خفيفًا بما يكفي لتخرج من الحصة وأنت أفضل.'},
+          {exerciseName: 'Mini-Band Lateral Walk', sets: '2', reps: '10 steps each side', rest: '30 sec', notes: 'Use it as activation and pelvic control work.', notesAr: 'استخدمه كتفعيل وتحكم بالحوض أكثر من كونه إجهادًا.'},
+        ],
+        detailsAr: 'حصة قصيرة للمطاط والجذع واستعادة الثقة بالحركة.',
+      },
+    ],
+  },
+];
+
 function ExerciseCard({exercise}: {exercise: Exercise}) {
   const isMultiMuscle = new Set(exercise.muscles.map((item) => item.split('_')[0])).size > 1;
 
@@ -1136,6 +1897,20 @@ export default function ExerciseFinder({
   const popularExercises = selectedMainMuscle
     ? filteredExercises.filter((exercise) => POPULAR_BY_MUSCLE[selectedMainMuscle].includes(exercise.name)).slice(0, 3)
     : filteredExercises.slice(0, 3);
+  const selectedStaticGroup = selectedMainMuscle ? MAIN_MUSCLE_TO_STATIC_GROUP[selectedMainMuscle] : pathMuscle || null;
+  const recommendedSystems = useMemo(
+    () => getRecommendedSystems({filters, selectedStaticGroup}),
+    [filters, selectedStaticGroup],
+  );
+  const weeklyPlans = useMemo(() => getWeeklyPlans(recommendedSystems), [recommendedSystems]);
+  const totalBeginnerExercises = filteredExercises.filter((exercise) => exercise.level === 'beginner').length;
+  const totalStrengthExercises = filteredExercises.filter((exercise) => exercise.exerciseType === 'strength').length;
+  const totalEquipmentOptions = new Set(filteredExercises.map((exercise) => exercise.equipment)).size;
+  const resetFilters = () =>
+    setFilters({
+      ...INITIAL_FILTERS,
+      muscle: staticContext?.muscle || 'all',
+    });
 
   const headingLabel = selectedMainMuscle
     ? isAr
@@ -1372,6 +2147,95 @@ export default function ExerciseFinder({
                       ? 'ابدأ بالعضلة المستهدفة أولًا، ثم ضيّق النتائج حسب الهدف والمعدات حتى تبقى القائمة مناسبة وسهلة المراجعة.'
                       : 'Filter by anatomy first, then refine by training goal and equipment so the list stays relevant for both general gym use and movement-aware coaching.'}
                   </p>
+
+                  <div className="mt-5 grid gap-3 sm:grid-cols-3">
+                    <div className="rounded-2xl border border-white/70 bg-white/80 p-4">
+                      <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
+                        <Sparkles className="h-4 w-4 text-health-green" />
+                        <span>{isAr ? 'مناسب للمبتدئين' : 'Beginner ready'}</span>
+                      </div>
+                      <div className="mt-3 text-2xl font-bold text-slate-900">{totalBeginnerExercises}</div>
+                      <p className="mt-1 text-sm text-slate-600">
+                        {isAr ? 'خيارات سهلة للبدء أو للعودة التدريجية.' : 'Lower-complexity options for starting or returning.'}
+                      </p>
+                    </div>
+
+                    <div className="rounded-2xl border border-white/70 bg-white/80 p-4">
+                      <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
+                        <Flame className="h-4 w-4 text-health-green" />
+                        <span>{isAr ? 'تمارين قوة' : 'Strength focus'}</span>
+                      </div>
+                      <div className="mt-3 text-2xl font-bold text-slate-900">{totalStrengthExercises}</div>
+                      <p className="mt-1 text-sm text-slate-600">
+                        {isAr ? 'تمارين مركبة ومباشرة لتطوير الأداء والقوة.' : 'Compound and direct options for performance-driven blocks.'}
+                      </p>
+                    </div>
+
+                    <div className="rounded-2xl border border-white/70 bg-white/80 p-4">
+                      <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
+                        <CalendarRange className="h-4 w-4 text-health-green" />
+                        <span>{isAr ? 'معدات متاحة' : 'Equipment range'}</span>
+                      </div>
+                      <div className="mt-3 text-2xl font-bold text-slate-900">{totalEquipmentOptions}</div>
+                      <p className="mt-1 text-sm text-slate-600">
+                        {isAr ? 'عدد أنواع المعدات المتوافقة مع الفلاتر الحالية.' : 'Distinct equipment types available under the current filters.'}
+                      </p>
+                    </div>
+                  </div>
+                </section>
+
+                <section className="rounded-[1.5rem] border border-slate-200 bg-[linear-gradient(180deg,rgba(248,250,252,0.98),rgba(255,255,255,0.98))] p-5">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                    <div>
+                      <h2 className="text-xl font-bold text-slate-900">
+                        {isAr ? 'أنظمة تمرين جاهزة' : 'Ready training systems'}
+                      </h2>
+                      <p className="mt-2 text-sm leading-7 text-slate-600">
+                        {isAr
+                          ? 'هذه أنظمة متنوعة مرتبطة بالهدف والمعدات والمستوى الحالي، ومبنية على تمارين موجودة فعليًا داخل الدليل مع مجموعات وتكرارات وراحة واضحة.'
+                          : 'These systems are tied to real exercises already listed in the finder, with actual sets, reps, rest, and weekly structure.'}
+                      </p>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={resetFilters}
+                      className="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-health-green/30 hover:text-health-green"
+                    >
+                      {isAr ? 'إعادة ضبط الفلاتر' : 'Reset filters'}
+                    </button>
+                  </div>
+
+                  <div className="mt-5 grid gap-4 xl:grid-cols-2">
+                    {recommendedSystems.map((system) => (
+                      <TrainingSystemCard key={system.id} system={system} isAr={isAr} />
+                    ))}
+                  </div>
+                </section>
+
+                <section className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5">
+                  <div className="max-w-3xl">
+                    <h2 className="text-xl font-bold text-slate-900">
+                      {isAr ? 'جدول أسبوعي مقترح' : 'Suggested weekly schedule'}
+                    </h2>
+                    <p className="mt-2 text-sm leading-7 text-slate-600">
+                      {isAr
+                        ? 'هذه جداول تنفيذية حقيقية داخل الصفحة، وكل يوم مرتبط بتمارين محددة موجودة في قاعدة التمارين وليس مجرد عرض شكلي أو Demo.'
+                        : 'These are executable weekly plans, and each day is tied to named exercises that already exist in the exercise library rather than placeholder demo content.'}
+                    </p>
+                  </div>
+
+                  <div className="mt-5 grid gap-4 xl:grid-cols-2">
+                    {weeklyPlans.map(({system, plan}) => (
+                      <WeeklyPlanCard
+                        key={`${system.id}-weekly-plan`}
+                        title={system.title}
+                        titleAr={system.titleAr}
+                        plan={plan}
+                        isAr={isAr}
+                      />
+                    ))}
+                  </div>
                 </section>
 
                 <section className="grid gap-4 md:grid-cols-3">

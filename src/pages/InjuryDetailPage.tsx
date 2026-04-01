@@ -23,6 +23,7 @@ import {
   type RecoveryWindow,
 } from '../services/injuryDatabase';
 import {getRehabStagePlans} from '../services/injuryRehabProtocols';
+import {getInjuryExerciseLinks} from '../services/injuryExerciseLinks';
 import {
   getLocalizedBodyRegion,
   getLocalizedCategory,
@@ -32,6 +33,7 @@ import {
 } from '../services/injuryLocalization';
 import {fetchCompleteInjuryProtocol, fetchInjuriesFromSupabase} from '../services/injurySupabaseService';
 import {decodeMojibake} from '../services/textEncoding';
+import {navigationPaths} from '../utils/langUrlHelper';
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
 
@@ -308,6 +310,11 @@ export default function InjuryDetailPage() {
     .filter((item) => item.category === injury.category || item.bodyRegion === injury.bodyRegion)
     .filter((item) => !remoteIds.length || !remoteIds.includes(item.id))
     .slice(0, 6);
+  const relatedExerciseLinks = getInjuryExerciseLinks({
+    injuryId: injury.id,
+    bodyRegion: injury.bodyRegion,
+    lang,
+  });
 
   const customContent = injuryPageContent[injury.id];
   const introText = getLocalizedInjuryOverview(
@@ -462,6 +469,45 @@ export default function InjuryDetailPage() {
         })),
       },
     },
+    {
+      id: `injury-breadcrumbs-${injury.id}`,
+      json: {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: isAr ? 'مكتبة الإصابات' : 'Injury Protocol Library',
+            item: `https://physionutrition.vercel.app${navigationPaths.injuries(lang)}`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: injuryDisplayName,
+            item: `https://physionutrition.vercel.app${path}`,
+          },
+        ],
+      },
+    },
+    ...(relatedExerciseLinks.length
+      ? [
+          {
+            id: `injury-related-exercises-${injury.id}`,
+            json: {
+              '@context': 'https://schema.org',
+              '@type': 'ItemList',
+              name: isAr ? `تمارين مرتبطة بـ ${injuryDisplayName}` : `Exercises related to ${injuryDisplayName}`,
+              itemListElement: relatedExerciseLinks.map((item, index) => ({
+                '@type': 'ListItem',
+                position: index + 1,
+                name: item.label,
+                url: `https://physionutrition.vercel.app${item.href}`,
+              })),
+            },
+          },
+        ]
+      : []),
   ];
 
   return (
@@ -503,6 +549,14 @@ export default function InjuryDetailPage() {
               >
                 {isAr ? 'اسأل المساعد عن هذه الحالة' : 'Ask the assistant about this injury'}
               </Link>
+              {relatedExerciseLinks[0] ? (
+                <Link
+                  to={relatedExerciseLinks[0].href}
+                  className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-700"
+                >
+                  {isAr ? 'افتح التمارين المناسبة' : 'Open matching exercises'}
+                </Link>
+              ) : null}
             </div>
           </section>
 
@@ -527,6 +581,49 @@ export default function InjuryDetailPage() {
               </ul>
             </div>
           </section>
+
+          {relatedExerciseLinks.length > 0 ? (
+            <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
+              <div className="mb-4 flex items-center justify-between gap-4">
+                <div>
+                  <h2 className="text-xl font-black text-slate-900">
+                    {isAr ? 'تمارين قد تفيد هذه الإصابة' : 'Exercises that may support this injury'}
+                  </h2>
+                  <p className="mt-2 max-w-3xl text-sm leading-7 text-slate-600">
+                    {isAr
+                      ? 'هذه روابط داخلية إلى أقسام التمارين الأقرب لهذه الحالة، حتى ينتقل المستخدم من البروتوكول إلى التمارين المناسبة داخل الموقع نفسه.'
+                      : 'These internal links point to the closest matching exercise sections so users can move from protocol guidance into practical exercise selection.'}
+                  </p>
+                </div>
+                <Link
+                  to={navigationPaths.exercises(lang)}
+                  className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-bold text-slate-700"
+                >
+                  {isAr ? 'كل التمارين' : 'All exercises'}
+                </Link>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                {relatedExerciseLinks.map((item) => (
+                  <Link
+                    key={item.slug}
+                    to={item.href}
+                    className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5 transition hover:border-health-green/30 hover:bg-health-green/5"
+                  >
+                    <div className="text-xs font-bold uppercase tracking-[0.16em] text-health-green">
+                      {isAr ? 'تمارين مرتبطة' : 'Related exercises'}
+                    </div>
+                    <div className="mt-2 text-lg font-black text-slate-900">{item.label}</div>
+                    <p className="mt-3 text-sm leading-7 text-slate-600">{item.reason}</p>
+                    <div className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-health-green">
+                      {isAr ? 'انتقل إلى القسم' : 'Go to section'}
+                      <ArrowRight className={`h-4 w-4 ${isAr ? 'rotate-180' : ''}`} />
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          ) : null}
 
           <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
             <div className="mb-4 flex items-center gap-2 font-black text-slate-900">

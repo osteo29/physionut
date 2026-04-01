@@ -16,8 +16,9 @@ import {
   getLocalizedInjuryName,
   getLocalizedInjuryOverview,
 } from '../services/injuryLocalization';
+import {getInjuryExerciseLinks} from '../services/injuryExerciseLinks';
 import { fetchInjuriesFromSupabase, type InjuryRow } from '../services/injurySupabaseService';
-import {buildHreflangs} from '../utils/langUrlHelper';
+import {buildHreflangs, navigationPaths} from '../utils/langUrlHelper';
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
 
@@ -142,9 +143,35 @@ export default function InjuryProtocolsPage() {
     ? 'دليل عملي يضم بروتوكولات الإصابات والتأهيل والتغذية العلاجية، مع صفحات مستقلة لكل إصابة لسهولة التصفح والفهرسة.'
     : 'A practical rehab and recovery nutrition directory with dedicated pages for each injury protocol.';
 
+  const structuredData = [
+    {
+      id: 'injury-library-page',
+      json: {
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        name: title,
+        description,
+        url: `https://physionutrition.vercel.app${navigationPaths.injuries(lang)}`,
+      },
+    },
+    {
+      id: 'injury-library-item-list',
+      json: {
+        '@context': 'https://schema.org',
+        '@type': 'ItemList',
+        itemListElement: filtered.slice(0, 18).map((injury, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: injury.name,
+          url: `https://physionutrition.vercel.app/${lang}/injuries/${injury.slug}`,
+        })),
+      },
+    },
+  ];
+
   return (
     <>
-      <Seo title={title} description={description} canonicalPath="/injuries" hreflangs={buildHreflangs('/injuries')} />
+      <Seo title={title} description={description} canonicalPath="/injuries" hreflangs={buildHreflangs('/injuries')} structuredData={structuredData} />
       <PageLayout title={title}>
         <div className="space-y-8 not-prose">
           <section className="rounded-[2rem] border border-slate-200 bg-slate-50 p-6 sm:p-8">
