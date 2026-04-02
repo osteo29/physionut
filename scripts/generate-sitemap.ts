@@ -1,11 +1,14 @@
 import {writeFileSync} from 'node:fs';
 import {resolve} from 'node:path';
+import {EXERCISE_FINDER_STATIC_SLUGS} from '../src/components/common/exercise-finder/constants';
 import {getArticles} from '../src/services/articles';
+import {dietRegimensCatalog} from '../src/services/dietRegimensCatalog';
 import {getAllInjuries, getInjuryPath} from '../src/services/injuryDatabase';
 
 const SITE_URL = 'https://physionutrition.vercel.app';
 const LANGUAGES = ['en', 'ar'] as const;
 type Language = (typeof LANGUAGES)[number];
+const GENERATED_LASTMOD = new Date().toISOString().slice(0, 10);
 
 type RouteEntry = {
   path: string;
@@ -19,25 +22,26 @@ type RouteGroup = RouteEntry & {
   groupKey: string;
 };
 
-const staticRoutes: Array<{path: string; changefreq: string; priority: string}> = [
-  {path: '/', changefreq: 'weekly', priority: '1.0'},
-  {path: '/calculators', changefreq: 'weekly', priority: '0.9'},
-  {path: '/exercises', changefreq: 'weekly', priority: '0.9'},
-  {path: '/exercises/chest', changefreq: 'weekly', priority: '0.85'},
-  {path: '/exercises/back', changefreq: 'weekly', priority: '0.85'},
-  {path: '/exercises/shoulders', changefreq: 'weekly', priority: '0.85'},
-  {path: '/exercises/arms', changefreq: 'weekly', priority: '0.8'},
-  {path: '/exercises/core', changefreq: 'weekly', priority: '0.8'},
-  {path: '/exercises/legs', changefreq: 'weekly', priority: '0.85'},
-  {path: '/injuries', changefreq: 'weekly', priority: '0.9'},
-  {path: '/insights', changefreq: 'weekly', priority: '0.8'},
-  {path: '/diets', changefreq: 'monthly', priority: '0.8'},
-  {path: '/privacy', changefreq: 'monthly', priority: '0.6'},
-  {path: '/about', changefreq: 'monthly', priority: '0.7'},
-  {path: '/contact', changefreq: 'monthly', priority: '0.7'},
-  {path: '/terms', changefreq: 'monthly', priority: '0.6'},
-  {path: '/cookies', changefreq: 'monthly', priority: '0.5'},
-  {path: '/disclaimer', changefreq: 'monthly', priority: '0.5'},
+const staticRoutes: RouteEntry[] = [
+  {path: '/', changefreq: 'weekly', priority: '1.0', lastmod: GENERATED_LASTMOD},
+  {path: '/calculators', changefreq: 'weekly', priority: '0.9', lastmod: GENERATED_LASTMOD},
+  {path: '/exercises', changefreq: 'weekly', priority: '0.9', lastmod: GENERATED_LASTMOD},
+  ...EXERCISE_FINDER_STATIC_SLUGS.map((slug) => ({
+    path: `/exercises/${slug}`,
+    changefreq: 'weekly',
+    priority: slug === 'chest' || slug === 'back' || slug === 'shoulders' || slug === 'legs' ? '0.85' : '0.8',
+    lastmod: GENERATED_LASTMOD,
+  })),
+  {path: '/injuries', changefreq: 'weekly', priority: '0.9', lastmod: GENERATED_LASTMOD},
+  {path: '/insights', changefreq: 'weekly', priority: '0.8', lastmod: GENERATED_LASTMOD},
+  {path: '/diets', changefreq: 'monthly', priority: '0.8', lastmod: GENERATED_LASTMOD},
+  {path: '/assistant', changefreq: 'weekly', priority: '0.7', lastmod: GENERATED_LASTMOD},
+  {path: '/privacy', changefreq: 'monthly', priority: '0.6', lastmod: GENERATED_LASTMOD},
+  {path: '/about', changefreq: 'monthly', priority: '0.7', lastmod: GENERATED_LASTMOD},
+  {path: '/contact', changefreq: 'monthly', priority: '0.7', lastmod: GENERATED_LASTMOD},
+  {path: '/terms', changefreq: 'monthly', priority: '0.6', lastmod: GENERATED_LASTMOD},
+  {path: '/cookies', changefreq: 'monthly', priority: '0.5', lastmod: GENERATED_LASTMOD},
+  {path: '/disclaimer', changefreq: 'monthly', priority: '0.5', lastmod: GENERATED_LASTMOD},
 ];
 
 function absoluteUrl(path: string) {
@@ -56,7 +60,7 @@ function buildRouteGroup(path: string, lang: Language, changefreq: string, prior
 }
 
 const langStaticRoutes: RouteGroup[] = staticRoutes.flatMap((route) =>
-  LANGUAGES.map((lang) => buildRouteGroup(route.path, lang, route.changefreq, route.priority)),
+  LANGUAGES.map((lang) => buildRouteGroup(route.path, lang, route.changefreq, route.priority, route.lastmod)),
 );
 
 const articleRoutes: RouteGroup[] = LANGUAGES.flatMap((lang) =>
@@ -66,7 +70,7 @@ const articleRoutes: RouteGroup[] = LANGUAGES.flatMap((lang) =>
     groupKey: `/insights/${article.slug}`,
     changefreq: 'monthly',
     priority: '0.8',
-    lastmod: article.date,
+    lastmod: article.date || GENERATED_LASTMOD,
   })),
 );
 
@@ -77,10 +81,22 @@ const injuryRoutes: RouteGroup[] = getAllInjuries().flatMap((injury) =>
     groupKey: getInjuryPath(injury, 'en').replace(/^\/en/, ''),
     changefreq: 'weekly',
     priority: '0.8',
+    lastmod: GENERATED_LASTMOD,
   })),
 );
 
-const allRoutes: RouteGroup[] = [...langStaticRoutes, ...articleRoutes, ...injuryRoutes];
+const dietRoutes: RouteGroup[] = dietRegimensCatalog.flatMap((diet) =>
+  LANGUAGES.map((lang) => ({
+    path: `/${lang}/diets/${diet.id}`,
+    lang,
+    groupKey: `/diets/${diet.id}`,
+    changefreq: 'monthly',
+    priority: '0.75',
+    lastmod: GENERATED_LASTMOD,
+  })),
+);
+
+const allRoutes: RouteGroup[] = [...langStaticRoutes, ...articleRoutes, ...injuryRoutes, ...dietRoutes];
 
 const alternatesByGroup = new Map<string, RouteGroup[]>();
 allRoutes.forEach((route) => {
@@ -108,7 +124,8 @@ ${alternates
   )
   .join('\n')}
     <xhtml:link rel="alternate" hreflang="x-default" href="${absoluteUrl(xDefault)}" />
-${route.lastmod ? `    <lastmod>${route.lastmod}</lastmod>\n` : ''}    <changefreq>${route.changefreq}</changefreq>
+    <lastmod>${route.lastmod || GENERATED_LASTMOD}</lastmod>
+    <changefreq>${route.changefreq}</changefreq>
     <priority>${route.priority}</priority>
   </url>`;
   })
@@ -118,4 +135,3 @@ ${route.lastmod ? `    <lastmod>${route.lastmod}</lastmod>\n` : ''}    <changefr
 
 writeFileSync(resolve(process.cwd(), 'public', 'sitemap.xml'), xml, 'utf8');
 console.log(`Generated sitemap with ${allRoutes.length} URLs.`);
-
