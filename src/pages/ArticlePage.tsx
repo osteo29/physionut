@@ -4,6 +4,7 @@ import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
 import Seo from '../components/seo/Seo';
 import {usePublishedArticles} from '../services/articleStudio';
+import type {Article} from '../services/articles';
 import type {Language} from '../services/translations';
 
 type ArticleBlock =
@@ -167,18 +168,19 @@ function renderBlocks(blocks: ArticleBlock[], lang: Language): ReactNode[] {
 }
 
 function getRelatedArticles(
-  articles: Array<{slug: string; category: string; date: string}>,
-  currentArticle: {slug: string; category: string},
+  articles: Article[],
+  currentArticle: Pick<Article, 'slug' | 'category'>,
 ) {
-  const sameCategory = articles.filter(
-    (entry) => entry.slug !== currentArticle.slug && entry.category === currentArticle.category,
-  );
+  const others = articles.filter((entry) => entry.slug !== currentArticle.slug);
 
-  const recentOthers = articles
-    .filter((entry) => entry.slug !== currentArticle.slug && entry.category !== currentArticle.category)
+  const sameCategory = others.filter((entry) => entry.category === currentArticle.category);
+
+  const recentOthers = others
+    .filter((entry) => entry.category !== currentArticle.category)
     .sort((a, b) => b.date.localeCompare(a.date));
 
-  return [...sameCategory, ...recentOthers].slice(0, 3);
+  const result = [...sameCategory, ...recentOthers].slice(0, 3);
+  return result;
 }
 
 export default function ArticlePage() {
@@ -332,11 +334,11 @@ export default function ArticlePage() {
 
           <div className="mt-8 space-y-5 leading-8 text-slate-700">{renderBlocks(blocks, lang)}</div>
 
-          {relatedArticles.length ? (
+          {relatedArticles.length > 0 ? (
             <section className="mt-10 rounded-[2rem] border border-slate-200 bg-slate-50 p-6 sm:p-8">
               <div className="mb-5">
                 <h2 className="text-2xl font-black text-slate-900">
-                  {lang === 'en' ? 'Related articles' : 'مقالات ذات صلة'}
+                  {lang === 'en' ? 'Keep reading' : 'استمر في القراءة'}
                 </h2>
                 <p className="mt-2 text-sm leading-7 text-slate-600">
                   {lang === 'en'

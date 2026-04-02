@@ -218,6 +218,15 @@
         <div class="boot-subtitle">Clinical recovery tools loading with a cleaner app-like experience.</div>
         <div class="boot-loader"></div>
       </div>
+      <script>
+        (function() {
+          var isAr = window.location.pathname.startsWith('/ar');
+          var sub = document.querySelector('#boot-splash .boot-subtitle');
+          if (sub && isAr) {
+            sub.textContent = 'جاري تحميل أدوات التعافي السريري...';
+          }
+        })();
+      </script>
     </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>

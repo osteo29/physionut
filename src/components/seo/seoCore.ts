@@ -106,6 +106,43 @@ function normalizeCanonicalPath(canonicalPath: string, currentLang?: string) {
   return rawPath === '/' ? `/${currentLang}/` : `/${currentLang}${rawPath}`;
 }
 
+function getPageKeywords(canonicalPath: string, lang: string): string {
+  const isAr = lang === 'ar';
+  if (canonicalPath.includes('/injuries/') && canonicalPath.split('/').length > 4) {
+    return isAr
+      ? 'بروتوكول تعافي، علاج طبيعي، إصابة رياضية، تغذية علاجية، تأهيل'
+      : 'injury recovery protocol, physical therapy, rehab nutrition, sports injury';
+  }
+  if (canonicalPath.includes('/injuries')) {
+    return isAr
+      ? 'مكتبة إصابات، بروتوكولات علاج طبيعي، تعافي من الإصابات، تأهيل'
+      : 'injury library, physical therapy protocols, sports rehabilitation';
+  }
+  if (canonicalPath.includes('/diets')) {
+    return isAr
+      ? 'أنواع الدايت، تغذية علاجية، نظام غذائي، ريجيم صحي، دايت مضاد للالتهاب'
+      : 'diet types, clinical nutrition, anti-inflammatory diet, meal plan';
+  }
+  if (canonicalPath.includes('/insights')) {
+    return isAr
+      ? 'مقالات علاج طبيعي، تغذية رياضية، تعافي من الإصابات، صحة'
+      : 'physical therapy articles, sports nutrition, recovery, health insights';
+  }
+  if (canonicalPath.includes('/calculators') || canonicalPath.includes('/#calculators')) {
+    return isAr
+      ? 'حاسبة BMI، حاسبة سعرات، احتياج البروتين، TDEE، BMR، ماكروز'
+      : 'BMI calculator, calorie calculator, protein needs, TDEE, BMR, macros';
+  }
+  if (canonicalPath.includes('/exercises')) {
+    return isAr
+      ? 'تمارين الجيم، دليل تمارين، تمارين عضلات، برنامج تدريبي'
+      : 'gym exercises, exercise finder, muscle workouts, training program';
+  }
+  return isAr
+    ? 'PhysioNutrition، علاج طبيعي، تغذية علاجية، حاسبات صحية، تعافي'
+    : 'PhysioNutrition, physical therapy, clinical nutrition, health calculators, recovery';
+}
+
 export function applySeo(config: SeoConfig) {
   const siteUrl = import.meta.env.VITE_SITE_URL || 'https://physionutrition.vercel.app';
 
@@ -125,10 +162,7 @@ export function applySeo(config: SeoConfig) {
     : `${config.title} | ${DEFAULT_SITE_NAME}`;
 
   upsertMeta({name: 'description'}, config.description);
-  upsertMeta(
-    {name: 'keywords'},
-    'Physical Therapy Calculators, Clinical Nutrition Tools, BMI, BMR, TDEE, Macro Calculator, Injury Recovery, Medical SEO, PhysioNutrition',
-  );
+  upsertMeta({name: 'keywords'}, getPageKeywords(normalizedPath, currentLang || 'en'));
 
   upsertLink('canonical', canonicalUrl);
 

@@ -1,4 +1,5 @@
 import {useMemo} from 'react';
+import {Link} from 'react-router-dom';
 import Seo from '../components/seo/Seo';
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
@@ -57,7 +58,11 @@ export default function DietsRegimensPage() {
           <div className="space-y-8">
             {items.map((item) => (
               <article key={item.id} id={buildAnchor(item.id)} className="rounded-[2rem] border border-slate-200 bg-white p-6">
-                <h2 className="mb-3 text-xl font-black text-slate-900">{isAr ? item.title.ar : item.title.en}</h2>
+                <h2 className="mb-3 text-xl font-black text-slate-900">
+                  <Link to={`/${lang}/diets/${item.id}`} className="hover:text-health-green hover:underline">
+                    {isAr ? item.title.ar : item.title.en}
+                  </Link>
+                </h2>
                 <p className="mb-4 text-sm leading-7 text-slate-700">{isAr ? item.summary.ar : item.summary.en}</p>
 
                 <div className="grid gap-4 md:grid-cols-2">

@@ -18,6 +18,7 @@ const ArticleStudioPage = lazy(() => import('./pages/ArticleStudioPage'));
 const AssistantPage = lazy(() => import('./pages/AssistantPage'));
 const AdminInjuryManager = lazy(() => import('./pages/AdminInjuryManager'));
 const DietsRegimensPage = lazy(() => import('./pages/DietsRegimensPage'));
+const DietDetailPage = lazy(() => import('./pages/DietDetailPage'));
 const ExercisesPage = lazy(() => import('./pages/ExercisesPage'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const TrackingDashboardPage = lazy(() => import('./pages/TrackingDashboardPage'));
@@ -92,6 +93,7 @@ export default function RouterApp() {
         <Route path="/:lang/admin/injuries" element={<AdminInjuryManager />} />
         <Route path="/admin/injuries" element={<AdminInjuryManager />} />
         <Route path="/:lang/diets" element={<DietsRegimensPage />} />
+        <Route path="/:lang/diets/:slug" element={<DietDetailPage />} />
         <Route path="/:lang/exercises" element={<ExercisesPage />} />
         <Route path="/:lang/exercises/:muscle" element={<ExercisesPage />} />
         <Route path="/:lang/insights/:slug" element={<ArticlePage />} />

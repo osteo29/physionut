@@ -46,7 +46,7 @@ export const dietRegimensCatalog: DietRegimen[] = [
     },
   },
   {
-    id: 'high-protein-rehab',
+    id: 'high-protein',
     title: {en: 'High-Protein Rehab Nutrition', ar: 'تغذية عالية البروتين للتأهيل'},
     summary: {
       en: 'A phase-aware approach that prioritizes protein adequacy to preserve lean mass and speed recovery when training volume drops.',
@@ -106,7 +106,7 @@ export const dietRegimensCatalog: DietRegimen[] = [
     },
   },
   {
-    id: 'maintenance-recomp',
+    id: 'recomp',
     title: {en: 'Maintenance / Recomposition', ar: 'ثبات / إعادة تشكيل الجسم (Recomp)'},
     summary: {
       en: 'A diet strategy that focuses on maintaining energy enough to train/recover while slowly improving body composition.',
@@ -136,7 +136,7 @@ export const dietRegimensCatalog: DietRegimen[] = [
     },
   },
   {
-    id: 'bulking-muscle-gain',
+    id: 'bulking',
     title: {en: 'Bulking / Muscle Gain Nutrition', ar: 'تغذية للتضخيم وبناء العضلات'},
     summary: {
       en: 'A controlled surplus to support training quality and lean mass gain while limiting unwanted fat gain.',
@@ -286,7 +286,7 @@ export const dietRegimensCatalog: DietRegimen[] = [
     },
   },
   {
-    id: 'plant-based-vegetarian',
+    id: 'plant-based',
     title: {en: 'Vegetarian / Plant-Based', ar: 'نباتي / Plant-Based'},
     summary: {
       en: 'A plant-forward approach with evidence-aligned protein planning for recovery and everyday health.',

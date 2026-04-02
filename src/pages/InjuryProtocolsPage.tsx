@@ -36,22 +36,31 @@ type CatalogInjury = {
 
 function mapSupabaseInjury(row: InjuryRow, lang: 'en' | 'ar'): CatalogInjury {
   const localizedName =
-    getLocalizedInjuryName(row.injury_id_slug, row.name_en, lang) ||
-    (lang === 'ar' ? row.name_ar || row.name_en : row.name_en);
+    lang === 'ar'
+      ? (row.name_ar && row.name_ar.trim() ? row.name_ar : null) ||
+        getLocalizedInjuryName(row.injury_id_slug, row.name_en, lang) ||
+        row.name_en
+      : getLocalizedInjuryName(row.injury_id_slug, row.name_en, lang) || row.name_en;
+
+  const overviewText =
+    lang === 'ar'
+      ? (row.overview_ar && row.overview_ar.trim() ? row.overview_ar : null) ||
+        getLocalizedInjuryOverview(localizedName, row.category, row.body_region_en, row.overview_en, lang)
+      : row.overview_en;
+
+  const bodyRegionText =
+    lang === 'ar'
+      ? (row.body_region_ar && row.body_region_ar.trim() ? row.body_region_ar : null) ||
+        getLocalizedBodyRegion(row.body_region_en, lang)
+      : row.body_region_en;
 
   return {
     id: row.injury_id_slug,
     slug: row.injury_id_slug.replace(/_/g, '-'),
     name: localizedName,
     category: getLocalizedCategory(row.category, lang),
-    bodyRegion: getLocalizedBodyRegion(row.body_region_en, lang),
-    overview: getLocalizedInjuryOverview(
-      localizedName,
-      row.category,
-      row.body_region_en,
-      lang === 'ar' ? row.overview_ar || row.overview_en : row.overview_en,
-      lang,
-    ),
+    bodyRegion: bodyRegionText,
+    overview: overviewText,
     commonIn: (row.common_in || []).map((item) => getLocalizedCommonInjuryContext(item, lang)),
     source: 'supabase',
   };
@@ -84,8 +93,8 @@ export default function InjuryProtocolsPage() {
   const isAr = lang === 'ar';
   const [remoteInjuries, setRemoteInjuries] = useState<CatalogInjury[]>([]);
   const [loading, setLoading] = useState(true);
-  const [category, setCategory] = useState('all');
-  const [bodyRegion, setBodyRegion] = useState('all');
+  const [category, setCategory] = useState('');
+  const [bodyRegion, setBodyRegion] = useState('');
   const [query, setQuery] = useState('');
 
   const fallbackInjuries = useMemo(
@@ -118,8 +127,8 @@ export default function InjuryProtocolsPage() {
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return injuries.filter((injury) => {
-      const byCategory = category === 'all' || injury.category === category;
-      const byRegion = bodyRegion === 'all' || injury.bodyRegion === bodyRegion;
+      const byCategory = !category || injury.category === category;
+      const byRegion = !bodyRegion || injury.bodyRegion === bodyRegion;
       const byQuery =
         !q ||
         injury.name.toLowerCase().includes(q) ||
@@ -226,37 +235,77 @@ export default function InjuryProtocolsPage() {
               <Search className="h-4 w-4 text-health-green" />
               <span>{isAr ? 'ابحث وفلتر الإصابات' : 'Search and filter injuries'}</span>
             </div>
-            <div className="grid gap-3 md:grid-cols-3">
+            <div className="space-y-4">
               <input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder={isAr ? 'ابحث باسم الإصابة أو المصطلح الطبي' : 'Search by injury or medical term'}
-                className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-health-green focus:ring-2 focus:ring-health-green/20"
+                className="w-full rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-health-green focus:ring-2 focus:ring-health-green/20"
               />
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-health-green focus:ring-2 focus:ring-health-green/20"
-              >
-                <option value="all">{isAr ? 'كل الفئات' : 'All categories'}</option>
-                {categories.map((item) => (
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
-              <select
-                value={bodyRegion}
-                onChange={(e) => setBodyRegion(e.target.value)}
-                className="rounded-2xl border border-slate-200 px-4 py-3 outline-none focus:border-health-green focus:ring-2 focus:ring-health-green/20"
-              >
-                <option value="all">{isAr ? 'كل المناطق' : 'All body regions'}</option>
-                {bodyRegions.map((item) => (
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </select>
+              <div>
+                <div className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
+                  {isAr ? 'الفئات' : 'Categories'}
+                </div>
+                <div className="flex gap-2 overflow-x-auto pb-1">
+                  <button
+                    type="button"
+                    onClick={() => setCategory('')}
+                    className={`whitespace-nowrap rounded-full border px-4 py-2 text-sm font-semibold transition ${
+                      !category
+                        ? 'border-health-green bg-health-green text-white'
+                        : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-health-green/30 hover:bg-health-green/5'
+                    }`}
+                  >
+                    {isAr ? 'كل الفئات' : 'All categories'}
+                  </button>
+                  {categories.map((item) => (
+                    <button
+                      key={item}
+                      type="button"
+                      onClick={() => setCategory((prev) => (prev === item ? '' : item))}
+                      className={`whitespace-nowrap rounded-full border px-4 py-2 text-sm font-semibold transition ${
+                        category === item
+                          ? 'border-health-green bg-health-green text-white'
+                          : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-health-green/30 hover:bg-health-green/5'
+                      }`}
+                    >
+                      {item}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <div className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
+                  {isAr ? 'مناطق الجسم' : 'Body regions'}
+                </div>
+                <div className="flex gap-2 overflow-x-auto pb-1">
+                  <button
+                    type="button"
+                    onClick={() => setBodyRegion('')}
+                    className={`whitespace-nowrap rounded-full border px-4 py-2 text-sm font-semibold transition ${
+                      !bodyRegion
+                        ? 'border-health-green bg-health-green text-white'
+                        : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-health-green/30 hover:bg-health-green/5'
+                    }`}
+                  >
+                    {isAr ? 'كل المناطق' : 'All body regions'}
+                  </button>
+                  {bodyRegions.map((item) => (
+                    <button
+                      key={item}
+                      type="button"
+                      onClick={() => setBodyRegion((prev) => (prev === item ? '' : item))}
+                      className={`whitespace-nowrap rounded-full border px-4 py-2 text-sm font-semibold transition ${
+                        bodyRegion === item
+                          ? 'border-health-green bg-health-green text-white'
+                          : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-health-green/30 hover:bg-health-green/5'
+                      }`}
+                    >
+                      {item}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           </section>
 
