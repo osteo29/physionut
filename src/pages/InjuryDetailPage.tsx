@@ -1,4 +1,4 @@
-import {lazy, Suspense, useEffect, useMemo, useState} from 'react';
+import {Fragment, lazy, Suspense, useEffect, useMemo, useState} from 'react';
 import {
   AlertTriangle,
   ArrowRight,
