@@ -3,7 +3,13 @@ import {dirname, join, resolve} from 'node:path';
 import {getArticles} from './src/services/articles';
 import {dietRegimensCatalog} from './src/services/dietRegimensCatalog';
 import {getAllInjuries, getInjuryPath, type InjuryProtocol} from './src/services/injuryDatabase';
-import {getLocalizedBodyRegion, getLocalizedCategory, getLocalizedInjuryName} from './src/services/injuryLocalization';
+import {
+  getLocalizedBodyRegion,
+  getLocalizedCategory,
+  getLocalizedCommonInjuryContext,
+  getLocalizedInjuryName,
+  getLocalizedInjuryOverview,
+} from './src/services/injuryLocalization';
 import {decodeMojibake} from './src/services/textEncoding';
 
 type Lang = 'en' | 'ar';
@@ -54,6 +60,68 @@ function escapeHtml(value: string) {
 
 function text(value: string) {
   return escapeHtml(decodeMojibake(value));
+}
+
+function formatList(items: string[] | undefined, separator: string) {
+  return (items ?? []).map(text).join(separator);
+}
+
+function getLocalizedOverview(injury: InjuryProtocol, lang: Lang) {
+  const withLocalizedFields = injury as InjuryProtocol & {overview_ar?: string; overview_en?: string};
+
+  if (lang === 'ar') {
+    return (
+      withLocalizedFields.overview_ar ||
+      getLocalizedInjuryOverview(
+        getLocalizedInjuryName(injury.id, injury.name, 'ar'),
+        injury.category,
+        injury.bodyRegion,
+        withLocalizedFields.overview_en || injury.overview,
+        'ar',
+      )
+    );
+  }
+
+  return withLocalizedFields.overview_en || injury.overview;
+}
+
+function getLocalizedCommonIn(lang: Lang, commonIn: string[]) {
+  return commonIn.map((item) => getLocalizedCommonInjuryContext(item, lang));
+}
+
+function getPhaseLabel(phase: InjuryProtocol['phases'][number], lang: Lang) {
+  const withLocalizedFields = phase as typeof phase & {label_ar?: string; label_en?: string};
+  return lang === 'ar'
+    ? withLocalizedFields.label_ar || withLocalizedFields.label_en || phase.label
+    : withLocalizedFields.label_en || phase.label;
+}
+
+function getPhaseGoals(phase: InjuryProtocol['phases'][number], lang: Lang) {
+  const withLocalizedFields = phase as typeof phase & {goals_ar?: string[]; goals_en?: string[]};
+  return lang === 'ar'
+    ? withLocalizedFields.goals_ar?.length
+      ? withLocalizedFields.goals_ar
+      : withLocalizedFields.goals_en || phase.goals
+    : withLocalizedFields.goals_en || phase.goals;
+}
+
+function getPhaseNutritionFocus(phase: InjuryProtocol['phases'][number], lang: Lang) {
+  const withLocalizedFields = phase as typeof phase & {
+    nutrition_focus_ar?: string[];
+    nutrition_focus_en?: string[];
+  };
+  return lang === 'ar'
+    ? withLocalizedFields.nutrition_focus_ar?.length
+      ? withLocalizedFields.nutrition_focus_ar
+      : withLocalizedFields.nutrition_focus_en || phase.nutritionFocus
+    : withLocalizedFields.nutrition_focus_en || phase.nutritionFocus;
+}
+
+function getPhaseBreakfast(phase: InjuryProtocol['phases'][number], lang: Lang) {
+  const meals = phase.meals as typeof phase.meals & {breakfast_ar?: string; breakfast_en?: string};
+  return lang === 'ar'
+    ? meals.breakfast_ar || meals.breakfast_en || phase.meals.breakfast
+    : meals.breakfast_en || phase.meals.breakfast;
 }
 
 function absoluteUrl(path: string) {
@@ -410,7 +478,7 @@ function injuriesRoute(lang: Lang): RouteDefinition {
               (injury) => `<article class="card">
                 <h3><a href="${getInjuryPath(injury, lang)}">${text(injury.name)}</a></h3>
                 <p class="meta">${text(injury.category)} · ${text(injury.bodyRegion)}</p>
-                <p>${text(injury.overview)}</p>
+                <p>${text(getLocalizedOverview(injury, lang))}</p>
               </article>`,
             )
             .join('')}</div>`,
@@ -439,13 +507,13 @@ function injuryRoute(lang: Lang, injury: InjuryProtocol): RouteDefinition {
       lang,
       isAr ? 'بروتوكول إصابة' : 'Injury protocol',
       decodeMojibake(localizedName),
-      text(injury.overview),
+      text(getLocalizedOverview(injury, lang)),
       [
         section(
           isAr ? 'ملخص الحالة' : 'Condition summary',
           `<p><strong>${isAr ? 'التصنيف:' : 'Category:'}</strong> ${text(localizedCategory)}</p>
            <p><strong>${isAr ? 'المنطقة:' : 'Body region:'}</strong> ${text(localizedBodyRegion)}</p>
-           <p><strong>${isAr ? 'شائع في:' : 'Common in:'}</strong> ${injury.commonIn.map(text).join(', ')}</p>`,
+           <p><strong>${isAr ? 'شائع في:' : 'Common in:'}</strong> ${formatList(getLocalizedCommonIn(lang, injury.commonIn), isAr ? '، ' : ', ')}</p>`,
         ),
         section(
           isAr ? 'مراحل التعافي' : 'Recovery phases',
@@ -453,10 +521,10 @@ function injuryRoute(lang: Lang, injury: InjuryProtocol): RouteDefinition {
             .slice(0, 3)
             .map(
               (phase) => `<div class="card">
-                <h3>${text(phase.label)} <span class="meta">(${text(phase.duration)})</span></h3>
-                <p><strong>${isAr ? 'الأهداف:' : 'Goals:'}</strong> ${phase.goals.map(text).join('، ')}</p>
-                <p><strong>${isAr ? 'التركيز الغذائي:' : 'Nutrition focus:'}</strong> ${phase.nutritionFocus.map(text).join('، ')}</p>
-                <p><strong>${isAr ? 'أمثلة الوجبات:' : 'Meal examples:'}</strong> ${text(phase.meals.breakfast)} / ${text(phase.meals.lunch)} / ${text(phase.meals.dinner)}</p>
+                <h3>${text(getPhaseLabel(phase, lang))} <span class="meta">(${text(phase.duration)})</span></h3>
+                <p><strong>${isAr ? 'الأهداف:' : 'Goals:'}</strong> ${formatList(getPhaseGoals(phase, lang), isAr ? '، ' : ', ')}</p>
+                <p><strong>${isAr ? 'التركيز الغذائي:' : 'Nutrition focus:'}</strong> ${formatList(getPhaseNutritionFocus(phase, lang), isAr ? '، ' : ', ')}</p>
+                <p><strong>${isAr ? 'أمثلة الوجبات:' : 'Meal examples:'}</strong> ${text(getPhaseBreakfast(phase, lang))} / ${text(phase.meals.lunch)} / ${text(phase.meals.dinner)}</p>
               </div>`,
             )
             .join(''),
@@ -615,5 +683,4 @@ const staticRoutes: RouteDefinition[] = [
 staticRoutes.forEach(writeRoute);
 writeRootShell();
 console.log(`Generated prerendered HTML for ${staticRoutes.length} routes.`);
-
 

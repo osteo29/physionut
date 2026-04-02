@@ -66,6 +66,9 @@ const Navigation = memo(
     const location = useLocation();
     const navigate = useNavigate();
     const [user, setUser] = useState<User | null>(null);
+    const isActivePath = (path: string) => {
+      return location.pathname.startsWith(path);
+    };
 
     /**
      * Generate URL for language switch (e.g., /en/page -> /ar/page)
@@ -316,7 +319,11 @@ const Navigation = memo(
                             key={item.href}
                             to={item.href}
                             onClick={() => setIsSidebarOpen(false)}
-                            className="flex items-center gap-3 rounded-2xl bg-slate-50 p-3 text-slate-700 transition-all hover:bg-soft-blue"
+                            className={`flex items-center gap-3 rounded-2xl p-3 transition-all ${
+                              location.pathname.startsWith(item.href)
+                                ? 'bg-health-green/10 border border-health-green/20 text-health-green'
+                                : 'bg-slate-50 text-slate-700 hover:bg-soft-blue'
+                            }`}
                           >
                             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-health-green shadow-sm">
                               {item.icon}
@@ -404,19 +411,31 @@ const Navigation = memo(
                 <a href="#calculators" className="nav-link">
                   {t.nav.calculators}
                 </a>
-                <Link to={navigationPaths.injuries(lang)} className="nav-link">
+                <Link
+                  to={navigationPaths.injuries(lang)}
+                  className={`nav-link ${isActivePath(navigationPaths.injuries(lang)) ? 'text-health-green border-b-2 border-health-green pb-1' : ''}`}
+                >
                   {isAr ? 'الإصابات' : 'Injuries'}
                 </Link>
-                <Link to={navigationPaths.exercises(lang)} className="nav-link">
+                <Link
+                  to={navigationPaths.exercises(lang)}
+                  className={`nav-link ${isActivePath(navigationPaths.exercises(lang)) ? 'text-health-green border-b-2 border-health-green pb-1' : ''}`}
+                >
                   {isAr ? 'التمارين' : 'Exercises'}
                 </Link>
-                <Link to={navigationPaths.diets(lang)} className="nav-link">
+                <Link
+                  to={navigationPaths.diets(lang)}
+                  className={`nav-link ${isActivePath(navigationPaths.diets(lang)) ? 'text-health-green border-b-2 border-health-green pb-1' : ''}`}
+                >
                   {isAr ? 'الدايت والريجيم' : 'Diet & regimens'}
                 </Link>
                 <a href="#blog" className="nav-link">
                   {t.nav.insights}
                 </a>
-                <Link to={navigationPaths.dashboard(lang)} className="nav-link">
+                <Link
+                  to={navigationPaths.dashboard(lang)}
+                  className={`nav-link ${isActivePath(navigationPaths.dashboard(lang)) ? 'text-health-green border-b-2 border-health-green pb-1' : ''}`}
+                >
                   {isAr ? 'المتابعة' : 'Tracking'}
                 </Link>
               </div>

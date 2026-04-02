@@ -28,10 +28,26 @@ function slugifyHeading(text: string, fallbackIndex: number) {
   return normalized || `section-${fallbackIndex + 1}`;
 }
 
+const ROUTE_MAP: Record<string, string> = {
+  '/calculators': '/#calculators',
+  '/assistant': '/assistant',
+  '/dashboard': '/dashboard',
+  '/injuries': '/injuries',
+  '/diets': '/diets',
+  '/insights': '/insights',
+  '/exercises': '/exercises',
+};
+
 function localizeInternalHref(href: string, lang: Language) {
   if (!href.startsWith('/')) return href;
   if (/^\/(en|ar)(\/|$)/.test(href)) return href;
-  return `/${lang}${href}`;
+
+  const hashIndex = href.indexOf('#');
+  const basePath = hashIndex >= 0 ? href.slice(0, hashIndex) : href;
+  const hash = hashIndex >= 0 ? href.slice(hashIndex) : '';
+  const mapped = ROUTE_MAP[basePath] || href;
+
+  return `/${lang}${mapped}${hash}`;
 }
 
 function renderInline(text: string, lang: Language): ReactNode[] {
@@ -183,6 +199,17 @@ function getRelatedArticles(
   return result;
 }
 
+function getReadingTime(content: string, lang: Language): string {
+  const wordsPerMinute = lang === 'ar' ? 180 : 200;
+  const wordCount = content.trim().split(/\s+/).length;
+  const minutes = Math.max(1, Math.round(wordCount / wordsPerMinute));
+
+  if (lang === 'ar') {
+    return minutes === 1 ? 'دقيقة واحدة' : `${minutes} دقائق`;
+  }
+  return minutes === 1 ? '1 min read' : `${minutes} min read`;
+}
+
 export default function ArticlePage() {
   const lang = usePreferredLang();
   const {slug = ''} = useParams();
@@ -250,6 +277,7 @@ export default function ArticlePage() {
         articleSection: article.category,
         datePublished: article.date,
         dateModified: article.date,
+        timeRequired: `PT${Math.max(1, Math.round(article.content.split(/\s+/).length / (lang === 'ar' ? 180 : 200)))}M`,
         inLanguage: lang,
         mainEntityOfPage: canonicalUrl,
         url: canonicalUrl,
@@ -302,8 +330,10 @@ export default function ArticlePage() {
           <header className="rounded-[2rem] border border-slate-200 bg-slate-50 p-6 sm:p-8">
             <div className="mb-4 flex flex-wrap gap-3 text-sm text-slate-500">
               <span>{article.category}</span>
-              <span>•</span>
+              <span>&bull;</span>
               <span>{article.date}</span>
+              <span>&bull;</span>
+              <span>{getReadingTime(article.content, lang)}</span>
             </div>
 
             <h1 className="text-3xl font-black leading-tight text-slate-900 sm:text-4xl">{article.title}</h1>

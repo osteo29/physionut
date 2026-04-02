@@ -143,6 +143,16 @@ function getPageKeywords(canonicalPath: string, lang: string): string {
     : 'PhysioNutrition, physical therapy, clinical nutrition, health calculators, recovery';
 }
 
+function getOgType(canonicalPath: string): string {
+  if (canonicalPath.includes('/insights/') && canonicalPath.split('/').filter(Boolean).length >= 3) {
+    return 'article';
+  }
+  if (canonicalPath.includes('/injuries/') && canonicalPath.split('/').filter(Boolean).length >= 3) {
+    return 'article';
+  }
+  return 'website';
+}
+
 export function applySeo(config: SeoConfig) {
   const siteUrl = import.meta.env.VITE_SITE_URL || 'https://physionutrition.vercel.app';
 
@@ -168,7 +178,11 @@ export function applySeo(config: SeoConfig) {
 
   upsertMeta({name: 'robots'}, config.noIndex ? 'noindex, nofollow' : 'index, follow');
 
-  upsertMeta({property: 'og:type'}, 'website');
+  upsertMeta({property: 'og:type'}, getOgType(normalizedPath));
+  if (getOgType(normalizedPath) === 'article') {
+    upsertMeta({property: 'article:author'}, 'PhysioNutrition');
+    upsertMeta({property: 'article:publisher'}, 'https://www.facebook.com/Physionutrition.official/');
+  }
   upsertMeta({property: 'og:site_name'}, DEFAULT_SITE_NAME);
   upsertMeta({property: 'og:url'}, canonicalUrl);
   upsertMeta({property: 'og:title'}, config.title);

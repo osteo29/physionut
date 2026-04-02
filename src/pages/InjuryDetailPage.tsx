@@ -627,6 +627,64 @@ export default function InjuryDetailPage() {
 
           <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
             <div className="mb-4 flex items-center gap-2 font-black text-slate-900">
+              <Timer className="h-4 w-4 text-health-green" />
+              <h2>{isAr ? 'مرحلتك في رحلة التعافي' : 'Your recovery stage'}</h2>
+            </div>
+
+            <div className="flex items-center gap-2 overflow-x-auto pb-2">
+              {recoveryWindows.map((window, index) => {
+                const isActive = window === recoveryWindow;
+                const isPast = recoveryWindows.indexOf(recoveryWindow) > index;
+
+                return (
+                  <Fragment key={window}>
+                    <button
+                      type="button"
+                      onClick={() => setRecoveryWindow(window)}
+                      className="group flex flex-1 min-w-[88px] flex-col items-center gap-1.5"
+                    >
+                      <div
+                        className={`flex h-10 w-10 items-center justify-center rounded-full border-2 text-sm font-black transition ${
+                          isActive
+                            ? 'border-health-green bg-health-green text-white'
+                            : isPast
+                              ? 'border-health-green bg-health-green/10 text-health-green-dark'
+                              : 'border-slate-200 bg-white text-slate-400'
+                        }`}
+                      >
+                        {isPast ? '✓' : index + 1}
+                      </div>
+                      <span
+                        className={`text-center text-xs font-semibold leading-5 transition ${
+                          isActive ? 'text-health-green-dark' : 'text-slate-500 group-hover:text-slate-700'
+                        }`}
+                      >
+                        {labels.window[window]}
+                      </span>
+                    </button>
+
+                    {index < recoveryWindows.length - 1 && (
+                      <div
+                        className={`h-1 flex-1 rounded-full ${
+                          recoveryWindows.indexOf(recoveryWindow) > index ? 'bg-health-green' : 'bg-slate-200'
+                        }`}
+                      />
+                    )}
+                  </Fragment>
+                );
+              })}
+            </div>
+
+            <div className="mt-4 text-center">
+              <div className="font-bold text-slate-900">{labels.window[recoveryWindow]}</div>
+              <div className="mt-1 text-sm text-slate-500">
+                {isAr ? 'اضغط على أي مرحلة للتغيير' : 'tap any stage to switch'}
+              </div>
+            </div>
+          </section>
+
+          <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="mb-4 flex items-center gap-2 font-black text-slate-900">
               <ClipboardList className="h-4 w-4 text-health-green" />
               <h2>{isAr ? 'بروتوكول التأهيل حسب المرحلة' : 'Phase-by-phase rehab protocol'}</h2>
             </div>

@@ -108,45 +108,53 @@ export type ExerciseFinderProps = {
 
 type Option = {value: string; label: string};
 
-const MAIN_MUSCLE_OPTIONS: Option[] = [
-  {value: 'all', label: 'All muscle groups'},
-  {value: 'chest', label: 'Chest'},
-  {value: 'back', label: 'Back'},
-  {value: 'shoulders', label: 'Shoulders'},
-  {value: 'biceps', label: 'Biceps'},
-  {value: 'triceps', label: 'Triceps'},
-  {value: 'forearms', label: 'Forearms'},
-  {value: 'abs', label: 'Abs'},
-  {value: 'obliques', label: 'Obliques'},
-  {value: 'lower_back', label: 'Lower back'},
-  {value: 'glutes', label: 'Glutes'},
-  {value: 'quadriceps', label: 'Quadriceps'},
-  {value: 'hamstrings', label: 'Hamstrings'},
-  {value: 'calves', label: 'Calves'},
-];
+function getLevelOptions(isAr: boolean): Option[] {
+  return [
+    {value: 'all', label: isAr ? 'كل المستويات' : 'All levels'},
+    {value: 'beginner', label: isAr ? 'مبتدئ' : 'Beginner'},
+    {value: 'intermediate', label: isAr ? 'متوسط' : 'Intermediate'},
+    {value: 'advanced', label: isAr ? 'متقدم' : 'Advanced'},
+  ];
+}
 
-const LEVEL_OPTIONS: Option[] = [
-  {value: 'all', label: 'All levels'},
-  {value: 'beginner', label: 'Beginner'},
-  {value: 'intermediate', label: 'Intermediate'},
-  {value: 'advanced', label: 'Advanced'},
-];
+function getEquipmentOptions(isAr: boolean): Option[] {
+  return [
+    {value: 'all', label: isAr ? 'كل المعدات' : 'All equipment'},
+    {value: 'bodyweight', label: isAr ? 'وزن الجسم' : 'Bodyweight'},
+    {value: 'dumbbell', label: isAr ? 'دمبل' : 'Dumbbell'},
+    {value: 'barbell', label: isAr ? 'بار' : 'Barbell'},
+    {value: 'machine', label: isAr ? 'جهاز' : 'Machine'},
+    {value: 'band', label: isAr ? 'مطاط' : 'Band'},
+  ];
+}
 
-const EQUIPMENT_OPTIONS: Option[] = [
-  {value: 'all', label: 'All equipment'},
-  {value: 'bodyweight', label: 'Bodyweight'},
-  {value: 'dumbbell', label: 'Dumbbell'},
-  {value: 'barbell', label: 'Barbell'},
-  {value: 'machine', label: 'Machine'},
-  {value: 'band', label: 'Band'},
-];
+function getExerciseTypeOptions(isAr: boolean): Option[] {
+  return [
+    {value: 'all', label: isAr ? 'كل الأهداف' : 'All goals'},
+    {value: 'strength', label: isAr ? 'قوة' : 'Strength'},
+    {value: 'hypertrophy', label: isAr ? 'ضخامة' : 'Hypertrophy'},
+    {value: 'endurance', label: isAr ? 'تحمل' : 'Endurance'},
+  ];
+}
 
-const EXERCISE_TYPE_OPTIONS: Option[] = [
-  {value: 'all', label: 'All goals'},
-  {value: 'strength', label: 'Strength'},
-  {value: 'hypertrophy', label: 'Hypertrophy'},
-  {value: 'endurance', label: 'Endurance'},
-];
+function getMainMuscleOptions(isAr: boolean): Option[] {
+  return [
+    {value: 'all', label: isAr ? 'كل العضلات' : 'All muscle groups'},
+    {value: 'chest', label: isAr ? 'الصدر' : 'Chest'},
+    {value: 'back', label: isAr ? 'الظهر' : 'Back'},
+    {value: 'shoulders', label: isAr ? 'الكتف' : 'Shoulders'},
+    {value: 'biceps', label: isAr ? 'البايسبس' : 'Biceps'},
+    {value: 'triceps', label: isAr ? 'الترايسبس' : 'Triceps'},
+    {value: 'forearms', label: isAr ? 'الساعد' : 'Forearms'},
+    {value: 'abs', label: isAr ? 'البطن' : 'Abs'},
+    {value: 'obliques', label: isAr ? 'الخواصر' : 'Obliques'},
+    {value: 'lower_back', label: isAr ? 'أسفل الظهر' : 'Lower back'},
+    {value: 'glutes', label: isAr ? 'المقعدة' : 'Glutes'},
+    {value: 'quadriceps', label: isAr ? 'الكوادز' : 'Quadriceps'},
+    {value: 'hamstrings', label: isAr ? 'الهامسترنج' : 'Hamstrings'},
+    {value: 'calves', label: isAr ? 'السمانة' : 'Calves'},
+  ];
+}
 
 export const EXERCISE_FINDER_STATIC_LABELS: Record<StaticMuscleSlug, string> = {
   chest: 'Chest',
@@ -250,6 +258,25 @@ function isSubMuscle(value: string): value is SubMuscle {
 
 function isStaticSlug(value: string | null | undefined): value is StaticMuscleSlug {
   return Boolean(value && value in EXERCISE_FINDER_STATIC_LABELS);
+}
+
+function translateBadge(value: string, isAr: boolean): string {
+  if (!isAr) return value;
+  const map: Record<string, string> = {
+    beginner: 'مبتدئ',
+    intermediate: 'متوسط',
+    advanced: 'متقدم',
+    bodyweight: 'وزن الجسم',
+    dumbbell: 'دمبل',
+    barbell: 'بار',
+    machine: 'جهاز',
+    band: 'مطاط',
+    strength: 'قوة',
+    hypertrophy: 'ضخامة',
+    endurance: 'تحمل',
+    'multi-muscle': 'متعدد',
+  };
+  return map[value] || value;
 }
 
 function getSubMuscleOptions(mainMuscle: MainMuscle | 'all') {
@@ -1790,7 +1817,7 @@ const WEEKLY_PLANS: WeeklyPlan[] = [
   },
 ];
 
-function ExerciseCard({exercise}: {exercise: Exercise}) {
+function ExerciseCard({exercise, isAr}: {exercise: Exercise; isAr: boolean}) {
   const isMultiMuscle = new Set(exercise.muscles.map((item) => item.split('_')[0])).size > 1;
 
   return (
@@ -1801,10 +1828,10 @@ function ExerciseCard({exercise}: {exercise: Exercise}) {
             <h3 className="text-xl font-bold text-slate-900">{exercise.name}</h3>
             <div className="mt-3 flex flex-wrap gap-2">
               <Badge tone="blue">{toTitle(exercise.mainMuscle)}</Badge>
-              <Badge>{exercise.level}</Badge>
-              <Badge>{exercise.equipment}</Badge>
-              <Badge tone="green">{exercise.exerciseType}</Badge>
-              {isMultiMuscle ? <Badge>multi-muscle</Badge> : null}
+              <Badge>{translateBadge(exercise.level, isAr)}</Badge>
+              <Badge>{translateBadge(exercise.equipment, isAr)}</Badge>
+              <Badge tone="green">{translateBadge(exercise.exerciseType, isAr)}</Badge>
+              {isMultiMuscle ? <Badge>{translateBadge('multi-muscle', isAr)}</Badge> : null}
             </div>
           </div>
         </div>
@@ -2049,7 +2076,7 @@ export default function ExerciseFinder({
                         subMuscle: 'all',
                       }))
                     }
-                    options={MAIN_MUSCLE_OPTIONS}
+                    options={getMainMuscleOptions(isAr)}
                   />
 
                   <FilterField
@@ -2065,7 +2092,7 @@ export default function ExerciseFinder({
                     label={isAr ? 'المستوى' : 'Level'}
                     value={filters.level}
                     onChange={(value) => setFilters((current) => ({...current, level: value as Level | 'all'}))}
-                    options={LEVEL_OPTIONS}
+                    options={getLevelOptions(isAr)}
                   />
 
                   <FilterField
@@ -2073,7 +2100,7 @@ export default function ExerciseFinder({
                     label={isAr ? 'المعدات' : 'Equipment'}
                     value={filters.equipment}
                     onChange={(value) => setFilters((current) => ({...current, equipment: value as Equipment | 'all'}))}
-                    options={EQUIPMENT_OPTIONS}
+                    options={getEquipmentOptions(isAr)}
                   />
 
                   <FilterField
@@ -2083,7 +2110,7 @@ export default function ExerciseFinder({
                     onChange={(value) =>
                       setFilters((current) => ({...current, exerciseType: value as ExerciseType | 'all'}))
                     }
-                    options={EXERCISE_TYPE_OPTIONS}
+                    options={getExerciseTypeOptions(isAr)}
                   />
                 </form>
 
@@ -2282,7 +2309,7 @@ export default function ExerciseFinder({
                 ) : (
                   <div className="grid gap-5 md:grid-cols-2">
                     {filteredExercises.map((exercise) => (
-                      <ExerciseCard key={`${exercise.mainMuscle}-${exercise.name}`} exercise={exercise} />
+                      <ExerciseCard key={`${exercise.mainMuscle}-${exercise.name}`} exercise={exercise} isAr={isAr} />
                     ))}
                   </div>
                 )}
