@@ -8,11 +8,12 @@ import { 
 import { lazy, Suspense, useState, useEffect, useMemo, memo } from 'react';
 import { Link } from 'react-router-dom';
 import { checkEnvironment } from './services/calculators';
-import { PhysioNutritionLogic, HealthProfile, HealthMetrics } from './services/physioNutritionLogic';
+import { type HealthProfile } from './services/physioNutritionLogic';
 import { injuryDatabase, getInjuryById } from './services/injuryDatabase';
 import { translations, Language } from './services/translations';
 import { usePublishedArticles } from './services/articleStudio';
 import { foodDatabase, FoodItem } from './services/foodData';
+import { architectNumberToInput, useArchitectProfile } from './hooks/useArchitectProfile';
 import {setPreferredLanguage} from './services/languagePreference';
 import {ClinicalCalculators, statusToTextClass, type HealthInterpretation, type GoalType, type BodyType} from './logic/physioNutritionLogic';
 import Hero from './components/home/Hero';
@@ -20,74 +21,10 @@ import Footer from './components/layout/Footer';
 import Navigation from './components/layout/Navigation';
 import ConsentBanner from './components/monetization/ConsentBanner';
 import AdSlot from './components/monetization/AdSlot';
+import HealthProfileSection from './components/architect/HealthProfileSection';
 import InjuryProtocolsHighlight from './components/home/InjuryProtocolsHighlight';
 
 type CalculatorType = 'BMI' | 'WHtR' | 'BMR' | 'TDEE' | 'Macros' | 'Protein' | 'IdealWeight' | 'BodyFat' | 'Water' | 'Deficit' | 'Meal' | null;
-
-const ARCHITECT_STORAGE_KEY = 'physiohub_architect_profile';
-
-const EMPTY_ARCHITECT_PROFILE: HealthProfile = {
-  age: 0,
-  weight: 0,
-  height: 0,
-  gender: 'male',
-  activityLevel: 1.2,
-  goal: 'maintain',
-  waist: 0,
-  neck: 0,
-  injuryType: null,
-  recoveryWeek: 1,
-  sleepHours: 8,
-  waterIntake: 0,
-  proteinCompliance: 0,
-};
-
-const LEGACY_DEMO_PROFILE = {
-  age: 25,
-  weight: 70,
-  height: 175,
-  gender: 'male',
-  activityLevel: 1.2,
-  goal: 'maintain',
-  waist: 80,
-  neck: 38,
-  injuryType: null,
-  recoveryWeek: 1,
-  sleepHours: 8,
-  waterIntake: 2500,
-  proteinCompliance: 0.8,
-};
-
-function isLegacyDemoProfile(profile: Partial<HealthProfile>) {
-  return (
-    profile.age === LEGACY_DEMO_PROFILE.age &&
-    profile.weight === LEGACY_DEMO_PROFILE.weight &&
-    profile.height === LEGACY_DEMO_PROFILE.height &&
-    profile.gender === LEGACY_DEMO_PROFILE.gender &&
-    profile.activityLevel === LEGACY_DEMO_PROFILE.activityLevel &&
-    profile.goal === LEGACY_DEMO_PROFILE.goal &&
-    profile.waist === LEGACY_DEMO_PROFILE.waist &&
-    profile.neck === LEGACY_DEMO_PROFILE.neck &&
-    profile.injuryType === LEGACY_DEMO_PROFILE.injuryType &&
-    profile.recoveryWeek === LEGACY_DEMO_PROFILE.recoveryWeek &&
-    profile.sleepHours === LEGACY_DEMO_PROFILE.sleepHours &&
-    profile.waterIntake === LEGACY_DEMO_PROFILE.waterIntake &&
-    profile.proteinCompliance === LEGACY_DEMO_PROFILE.proteinCompliance
-  );
-}
-
-function hasMeaningfulArchitectData(profile: HealthProfile) {
-  return Boolean(
-    profile.age > 0 ||
-      profile.weight > 0 ||
-      profile.height > 0 ||
-      (profile.waist || 0) > 0 ||
-      (profile.neck || 0) > 0 ||
-      (profile.waterIntake || 0) > 0 ||
-      profile.proteinCompliance > 0 ||
-      profile.injuryType,
-  );
-}
 
 interface MealItem {
   id: string;
@@ -140,28 +77,6 @@ function HomeSectionFallback({
   );
 }
 
-function loadStoredArchitectProfile(): HealthProfile {
-  const saved = localStorage.getItem(ARCHITECT_STORAGE_KEY);
-  if (!saved) return EMPTY_ARCHITECT_PROFILE;
-
-  try {
-    const parsed = JSON.parse(saved) as HealthProfile;
-    return isLegacyDemoProfile(parsed) ? EMPTY_ARCHITECT_PROFILE : {...EMPTY_ARCHITECT_PROFILE, ...parsed};
-  } catch {
-    return EMPTY_ARCHITECT_PROFILE;
-  }
-}
-
-function parseArchitectNumber(value: string) {
-  if (!value.trim()) return 0;
-  const parsed = Number(value);
-  return Number.isFinite(parsed) ? parsed : 0;
-}
-
-function architectNumberToInput(value: number | undefined | null) {
-  return value && value > 0 ? String(value) : '';
-}
-
 export default function App({
   theme,
   onToggleTheme,
@@ -172,7 +87,16 @@ export default function App({
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeCalculator, setActiveCalculator] = useState<CalculatorType>(null);
   const [activeToolGroup, setActiveToolGroup] = useState<'all' | 'assessment' | 'metabolism' | 'nutrition' | 'planning'>('all');
-  const [initialArchitectProfile] = useState<HealthProfile>(() => loadStoredArchitectProfile());
+  const {
+    architectDraft,
+    architectMetrics,
+    architectProfile,
+    architectResultsRef,
+    calculateArchitectProfile,
+    initialArchitectProfile,
+    setArchitectProfile,
+    updateArchitectDraft,
+  } = useArchitectProfile();
   const [lang, setLang] = useState<Language>(() => {
     const saved = localStorage.getItem('physiohub_lang');
     return (saved as Language) || 'en';
@@ -198,27 +122,8 @@ export default function App({
   const [hotClimate, setHotClimate] = useState(false);
   const [pregnancy, setPregnancy] = useState(false);
   
-  // PhysioNutrition Architect State
-  const [architectProfile, setArchitectProfile] = useState<HealthProfile>(initialArchitectProfile);
-
-  const [architectMetrics, setArchitectMetrics] = useState<HealthMetrics | null>(null);
   const [aiDietPlan, setAiDietPlan] = useState<string | null>(null);
   const [isGeneratingPlan, setIsGeneratingPlan] = useState(false);
-
-  useEffect(() => {
-    if (hasMeaningfulArchitectData(architectProfile)) {
-      localStorage.setItem(ARCHITECT_STORAGE_KEY, JSON.stringify(architectProfile));
-    } else {
-      localStorage.removeItem(ARCHITECT_STORAGE_KEY);
-    }
-
-    if (architectProfile.age > 0 && architectProfile.weight > 0 && architectProfile.height > 0) {
-      const metrics = PhysioNutritionLogic.calculateAllMetrics(architectProfile);
-      setArchitectMetrics(metrics);
-    } else {
-      setArchitectMetrics(null);
-    }
-  }, [architectProfile]);
 
   const generateAIDietPlan = async () => {
     if (!architectMetrics) return;
@@ -289,15 +194,6 @@ export default function App({
       return [];
     }
   });
-  const [architectDraft, setArchitectDraft] = useState(() => ({
-    age: architectNumberToInput(EMPTY_ARCHITECT_PROFILE.age),
-    weight: architectNumberToInput(EMPTY_ARCHITECT_PROFILE.weight),
-    height: architectNumberToInput(EMPTY_ARCHITECT_PROFILE.height),
-    recoveryWeek: String(EMPTY_ARCHITECT_PROFILE.recoveryWeek || 1),
-    waist: architectNumberToInput(EMPTY_ARCHITECT_PROFILE.waist),
-    neck: architectNumberToInput(EMPTY_ARCHITECT_PROFILE.neck),
-    waterIntake: architectNumberToInput(EMPTY_ARCHITECT_PROFILE.waterIntake),
-  }));
   const [isCustomModalOpen, setIsCustomModalOpen] = useState(false);
   const [showFoodTable, setShowFoodTable] = useState(false);
   const [isWristModalOpen, setIsWristModalOpen] = useState(false);
@@ -385,79 +281,6 @@ export default function App({
       setArchitectProfile((prev) => ({...prev, goal}));
     }
   }, [goal, architectProfile.goal]);
-
-  useEffect(() => {
-    setArchitectDraft({
-      age: architectNumberToInput(architectProfile.age),
-      weight: architectNumberToInput(architectProfile.weight),
-      height: architectNumberToInput(architectProfile.height),
-      recoveryWeek: String(architectProfile.recoveryWeek || 1),
-      waist: architectNumberToInput(architectProfile.waist),
-      neck: architectNumberToInput(architectProfile.neck),
-      waterIntake: architectNumberToInput(architectProfile.waterIntake),
-    });
-  }, [
-    architectProfile.age,
-    architectProfile.weight,
-    architectProfile.height,
-    architectProfile.recoveryWeek,
-    architectProfile.waist,
-    architectProfile.neck,
-    architectProfile.waterIntake,
-  ]);
-
-  const updateArchitectDraft = (
-    field: keyof typeof architectDraft,
-    value: string,
-    sync?: {
-      profileKey: keyof HealthProfile;
-      min?: number;
-    },
-  ) => {
-    setArchitectDraft((prev) => ({ ...prev, [field]: value }));
-
-    if (!sync) return;
-
-    const parsedValue = parseArchitectNumber(value);
-    const minValue = sync.min ?? 0;
-    const nextValue = parsedValue > 0 ? Math.max(parsedValue, minValue) : 0;
-
-    setArchitectProfile((prev) => {
-      if (prev[sync.profileKey] === nextValue) return prev;
-      return { ...prev, [sync.profileKey]: nextValue };
-    });
-  };
-
-  const calculateArchitectProfile = () => {
-    const nextProfile = {
-      ...architectProfile,
-      age: Math.max(parseArchitectNumber(architectDraft.age), 0),
-      weight: Math.max(parseArchitectNumber(architectDraft.weight), 0),
-      height: Math.max(parseArchitectNumber(architectDraft.height), 0),
-      recoveryWeek: Math.max(parseArchitectNumber(architectDraft.recoveryWeek), 1),
-      waist: Math.max(parseArchitectNumber(architectDraft.waist), 0),
-      neck: Math.max(parseArchitectNumber(architectDraft.neck), 0),
-      waterIntake: Math.max(parseArchitectNumber(architectDraft.waterIntake), 0),
-    };
-
-    setArchitectProfile(nextProfile);
-    setArchitectDraft({
-      age: architectNumberToInput(nextProfile.age),
-      weight: architectNumberToInput(nextProfile.weight),
-      height: architectNumberToInput(nextProfile.height),
-      recoveryWeek: String(nextProfile.recoveryWeek || 1),
-      waist: architectNumberToInput(nextProfile.waist),
-      neck: architectNumberToInput(nextProfile.neck),
-      waterIntake: architectNumberToInput(nextProfile.waterIntake),
-    });
-
-    requestAnimationFrame(() => {
-      document.getElementById('architect-results')?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      });
-    });
-  };
 
   useEffect(() => {
     if (!justCalculated) return;
@@ -1130,461 +953,21 @@ export default function App({
 
       <InjuryProtocolsHighlight lang={lang} />
 
-      {/* PhysioNutrition Architect Section */}
-      <section id="architect" className="py-24 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-medical-blue/10 px-4 py-1.5 text-sm font-bold text-medical-blue">
-              <Brain className="w-4 h-4" />
-              <span>{t.architect.title}</span>
-            </div>
-            <h2 className="mb-4 text-3xl font-bold text-slate-900 sm:text-4xl">{t.architect.subtitle}</h2>
-          </div>
+      <HealthProfileSection
+        aiDietPlan={aiDietPlan}
+        architectDraft={architectDraft}
+        architectMetrics={architectMetrics}
+        architectProfile={architectProfile}
+        architectResultsRef={architectResultsRef}
+        calculateArchitectProfile={calculateArchitectProfile}
+        generateAIDietPlan={generateAIDietPlan}
+        isGeneratingPlan={isGeneratingPlan}
+        lang={lang}
+        setArchitectProfile={setArchitectProfile}
+        t={t}
+        updateArchitectDraft={updateArchitectDraft}
+      />
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            {/* Form Column */}
-            <div className="lg:col-span-4 space-y-6">
-              <div className="medical-card p-6">
-                <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
-                  <ClipboardList className="w-5 h-5 text-medical-blue" />
-                  {t.architect.formTitle}
-                </h3>
-                
-                <div className="space-y-4">
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    <div className="space-y-1">
-                      <label htmlFor="architect-age" className="text-xs font-bold text-slate-700 uppercase">{t.forms.age}</label>
-                      <input 
-                        id="architect-age"
-                        type="number" 
-                        inputMode="numeric"
-                        value={architectDraft.age}
-                        onChange={(e) => updateArchitectDraft('age', e.target.value, { profileKey: 'age', min: 1 })}
-                        placeholder="25"
-                        className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
-                      />
-                    </div>
-                    <div className="space-y-1">
-                      <label htmlFor="architect-weight" className="text-xs font-bold text-slate-700 uppercase">{t.forms.weight}</label>
-                      <input 
-                        id="architect-weight"
-                        type="number" 
-                        inputMode="decimal"
-                        value={architectDraft.weight}
-                        onChange={(e) => updateArchitectDraft('weight', e.target.value, { profileKey: 'weight', min: 1 })}
-                        placeholder="70"
-                        className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-1">
-                    <label htmlFor="architect-height" className="text-xs font-bold text-slate-700 uppercase">{t.forms.height}</label>
-                    <input 
-                      id="architect-height"
-                      type="number" 
-                      inputMode="numeric"
-                      value={architectDraft.height}
-                      onChange={(e) => updateArchitectDraft('height', e.target.value, { profileKey: 'height', min: 1 })}
-                      placeholder="175"
-                      className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    <div className="space-y-1">
-                      <label htmlFor="architect-gender" className="text-xs font-bold text-slate-700 uppercase">{t.architect.gender}</label>
-                      <select 
-                        id="architect-gender"
-                        value={architectProfile.gender}
-                        onChange={(e) => setArchitectProfile({...architectProfile, gender: e.target.value as 'male' | 'female'})}
-                        className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm bg-white"
-                      >
-                        <option value="male">{t.forms.male}</option>
-                        <option value="female">{t.forms.female}</option>
-                      </select>
-                    </div>
-                    <div className="space-y-1">
-                      <label htmlFor="architect-goal" className="text-xs font-bold text-slate-700 uppercase">{t.architect.goal}</label>
-                      <select 
-                        id="architect-goal"
-                        value={architectProfile.goal}
-                        onChange={(e) => setArchitectProfile({...architectProfile, goal: e.target.value as any})}
-                        className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm bg-white"
-                      >
-                        <option value="maintain">{t.forms.maintain}</option>
-                        <option value="lose">{t.forms.lose}</option>
-                        <option value="gain">{t.forms.gain}</option>
-                        <option value="recovery">{lang === 'en' ? 'Recovery' : 'تعافي'}</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="space-y-1">
-                    <label htmlFor="architect-activity-level" className="text-xs font-bold text-slate-700 uppercase">{t.architect.activityLevel}</label>
-                    <select 
-                      id="architect-activity-level"
-                      value={architectProfile.activityLevel}
-                      onChange={(e) => setArchitectProfile({...architectProfile, activityLevel: Number(e.target.value)})}
-                      className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm bg-white"
-                    >
-                      <option value="1.2">{t.forms.sedentary}</option>
-                      <option value="1.375">{t.forms.lightly}</option>
-                      <option value="1.55">{t.forms.moderately}</option>
-                      <option value="1.725">{t.forms.very}</option>
-                      <option value="1.9">{t.forms.extra}</option>
-                    </select>
-                  </div>
-
-                  <div className="space-y-1">
-                    <label htmlFor="architect-injury-type" className="text-xs font-bold text-slate-700 uppercase">{t.architect.injuryType}</label>
-                    <select 
-                      id="architect-injury-type"
-                      value={architectProfile.injuryType || ''}
-                      onChange={(e) => setArchitectProfile({...architectProfile, injuryType: e.target.value || null})}
-                      className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm bg-white"
-                    >
-                      <option value="">{t.architect.noInjury}</option>
-                      {Object.keys(injuryDatabase).map(id => (
-                        <option key={id} value={id}>{id}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  {architectProfile.injuryType && (
-                    <div className="space-y-1">
-                      <label htmlFor="architect-recovery-week" className="text-xs font-bold text-slate-700 uppercase">{t.architect.recoveryWeek}</label>
-                      <input 
-                        id="architect-recovery-week"
-                        type="number" 
-                        min="1"
-                        max="52"
-                        inputMode="numeric"
-                        value={architectDraft.recoveryWeek}
-                        onChange={(e) => updateArchitectDraft('recoveryWeek', e.target.value, { profileKey: 'recoveryWeek', min: 1 })}
-                        className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
-                      />
-                    </div>
-                  )}
-
-                  <div className="space-y-1">
-                    <label htmlFor="architect-waist" className="text-xs font-bold text-slate-700 uppercase">{t.forms.waist} (cm)</label>
-                    <input 
-                      id="architect-waist"
-                      type="number" 
-                      inputMode="numeric"
-                      value={architectDraft.waist}
-                      onChange={(e) => updateArchitectDraft('waist', e.target.value, { profileKey: 'waist', min: 1 })}
-                      placeholder="80"
-                      className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
-                    />
-                  </div>
-
-                  <div className="space-y-1">
-                    <label htmlFor="architect-neck" className="text-xs font-bold text-slate-700 uppercase">{t.forms.neck} (cm)</label>
-                    <input 
-                      id="architect-neck"
-                      type="number" 
-                      inputMode="numeric"
-                      value={architectDraft.neck}
-                      onChange={(e) => updateArchitectDraft('neck', e.target.value, { profileKey: 'neck', min: 1 })}
-                      placeholder="38"
-                      className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
-                    />
-                  </div>
-
-                  <div className="space-y-1">
-                    <label htmlFor="architect-sleep-hours" className="text-xs font-bold text-slate-700 uppercase">{t.architect.sleep}</label>
-                    <input 
-                      id="architect-sleep-hours"
-                      type="range" 
-                      min="4"
-                      max="12"
-                      step="0.5"
-                      value={architectProfile.sleepHours}
-                      onChange={(e) => setArchitectProfile({...architectProfile, sleepHours: Number(e.target.value)})}
-                      className="w-full accent-medical-blue"
-                      aria-valuetext={`${architectProfile.sleepHours} hours`}
-                    />
-                    <div className="flex justify-between text-[10px] font-bold text-slate-600">
-                      <span>4h</span>
-                      <span className="text-blue-700">{architectProfile.sleepHours}h</span>
-                      <span>12h</span>
-                    </div>
-                  </div>
-
-                  <div className="space-y-1">
-                    <label htmlFor="architect-water-intake" className="text-xs font-bold text-slate-700 uppercase">{t.architect.water}</label>
-                    <input 
-                      id="architect-water-intake"
-                      type="number" 
-                      inputMode="numeric"
-                      value={architectDraft.waterIntake}
-                      onChange={(e) => updateArchitectDraft('waterIntake', e.target.value, { profileKey: 'waterIntake', min: 1 })}
-                      placeholder="2500"
-                      className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm"
-                    />
-                  </div>
-
-                  <div className="space-y-1">
-                    <label htmlFor="architect-protein-compliance" className="text-xs font-bold text-slate-700 uppercase">{t.architect.proteinComp}</label>
-                    <input 
-                      id="architect-protein-compliance"
-                      type="range" 
-                      min="0"
-                      max="1"
-                      step="0.1"
-                      value={architectProfile.proteinCompliance}
-                      onChange={(e) => setArchitectProfile({...architectProfile, proteinCompliance: Number(e.target.value)})}
-                      className="w-full accent-medical-blue"
-                      aria-valuetext={`${Math.round(architectProfile.proteinCompliance * 100)} percent`}
-                    />
-                    <div className="flex justify-between text-[10px] font-bold text-slate-600">
-                      <span>0%</span>
-                      <span className="text-blue-700">{Math.round(architectProfile.proteinCompliance * 100)}%</span>
-                      <span>100%</span>
-                    </div>
-                  </div>
-
-                  <div className="pt-3">
-                    <button
-                      type="button"
-                      onClick={calculateArchitectProfile}
-                      className="flex w-full items-center justify-center gap-2 rounded-2xl bg-medical-blue px-4 py-3 text-sm font-bold text-white transition-all hover:bg-blue-700"
-                    >
-                      <Calculator className="h-4 w-4" />
-                      <span>{lang === 'en' ? 'Calculate now' : 'احسب الآن'}</span>
-                    </button>
-                    <p className="mt-2 text-center text-xs text-slate-600">
-                      {lang === 'en'
-                        ? 'Your inputs are saved automatically, and this button updates the dashboard immediately.'
-                        : 'بياناتك تُحفظ تلقائيًا، وهذا الزر يحدّث اللوحة فورًا بعد إدخال الأرقام.'}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Dashboard Column */}
-            <div id="architect-results" className="lg:col-span-8 space-y-8">
-              {architectMetrics ? (
-                <>
-                  {/* Top Row: Score & Metrics */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="medical-card p-6 flex flex-col items-center justify-center text-center">
-                      <h4 className="text-sm font-bold text-slate-700 uppercase mb-4">{t.architect.scoreTitle}</h4>
-                      <div className="relative w-32 h-32 flex items-center justify-center">
-                        <svg className="w-full h-full transform -rotate-90">
-                          <circle
-                            cx="64"
-                            cy="64"
-                            r="58"
-                            stroke="currentColor"
-                            strokeWidth="8"
-                            fill="transparent"
-                            className="text-slate-100"
-                          />
-                          <circle
-                            cx="64"
-                            cy="64"
-                            r="58"
-                            stroke="currentColor"
-                            strokeWidth="8"
-                            fill="transparent"
-                            strokeDasharray={364.4}
-                            strokeDashoffset={364.4 - (364.4 * architectMetrics.healthScore) / 100}
-                            className="text-medical-blue transition-all duration-1000"
-                          />
-                        </svg>
-                        <span className="absolute text-3xl font-black text-slate-900">{architectMetrics.healthScore}</span>
-                      </div>
-                    </div>
-
-                    <div className="md:col-span-2 medical-card p-6">
-                      <h4 className="text-sm font-bold text-slate-700 uppercase mb-6">{t.architect.metricsTitle}</h4>
-                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
-                        <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
-                          <span className="mb-1 block text-[10px] font-bold uppercase text-slate-600">BMI</span>
-                          <div className="flex flex-col">
-                            <span className="text-lg font-black text-slate-900">{architectMetrics.bmi}</span>
-                            <span className="text-[9px] font-bold text-blue-700 leading-tight">{architectMetrics.bmiCategory}</span>
-                          </div>
-                        </div>
-                        <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
-                          <span className="mb-1 block text-[10px] font-bold uppercase text-slate-600">WHtR</span>
-                          <div className="flex flex-col">
-                            <span className="text-lg font-black text-slate-900">{architectMetrics.whtr}</span>
-                            <span className={`text-[9px] font-bold leading-tight ${
-                              architectMetrics.whtrCategory.includes('Healthy') ? 'text-health-green' : 
-                              architectMetrics.whtrCategory.includes('Risk') ? 'text-amber-500' : 'text-rose-500'
-                            }`}>
-                              {architectMetrics.whtrCategory}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
-                          <span className="mb-1 block text-[10px] font-bold uppercase text-slate-600">Calories</span>
-                          <span className="text-lg font-black text-slate-900">{architectMetrics.macros.totalCalories}</span>
-                        </div>
-                        <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
-                          <span className="mb-1 block text-[10px] font-bold uppercase text-slate-600">Protein</span>
-                          <span className="text-lg font-black text-slate-900">{architectMetrics.macros.protein}g</span>
-                        </div>
-                        <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
-                          <span className="mb-1 block text-[10px] font-bold uppercase text-slate-600">{lang === 'en' ? 'Water' : 'الماء'}</span>
-                          <span className="text-lg font-black text-slate-900">{architectMetrics.hydrationTarget}ml</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Recovery Timeline */}
-                  <div className="medical-card p-6">
-                    <h4 className="text-sm font-bold text-slate-700 uppercase mb-6 flex items-center gap-2">
-                      <Calendar className="w-4 h-4 text-medical-blue" />
-                      {t.architect.recoveryTimeline}
-                    </h4>
-                    
-                    <div className="relative">
-                      {architectProfile.injuryType ? (
-                        <>
-                          <div className="absolute top-1/2 left-0 w-full h-0.5 bg-slate-100 -translate-y-1/2" />
-                          <div className="relative flex justify-between">
-                            {['week1-2', 'week3-6', 'week7+'].map((stage, idx) => {
-                              const isCurrent = (architectProfile.recoveryWeek <= 2 && idx === 0) || 
-                                                (architectProfile.recoveryWeek > 2 && architectProfile.recoveryWeek <= 6 && idx === 1) ||
-                                                (architectProfile.recoveryWeek > 6 && idx === 2);
-                              return (
-                                <div key={stage} className="flex flex-col items-center relative z-10">
-                                  <div className={`w-4 h-4 rounded-full border-4 border-white shadow-sm ${isCurrent ? 'bg-medical-blue scale-125' : 'bg-slate-300'}`} />
-                                  <span className={`mt-2 text-[10px] font-bold uppercase ${isCurrent ? 'text-blue-700' : 'text-slate-600'}`}>
-                                    {stage.replace('week', 'W')}
-                                  </span>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </>
-                      ) : (
-                        <div className="flex items-center justify-center py-4 text-slate-400 text-sm font-medium italic">
-                          {lang === 'en' ? 'General Health & Longevity Mode' : 'وضع الصحة العامة وطول العمر'}
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="mt-8 p-4 rounded-2xl bg-medical-blue/5 border border-medical-blue/10">
-                      <div className="flex items-start gap-4">
-                        <div className="bg-medical-blue p-2 rounded-lg text-white">
-                          <Activity className="w-5 h-5" />
-                        </div>
-                        <div>
-                          <h5 className="font-bold text-slate-900 mb-1">{architectMetrics.recoveryStage}</h5>
-                          <p className="text-sm text-slate-600 mb-4"><span className="font-bold text-medical-blue">{t.architect.focus}:</span> {architectMetrics.recoveryFocus}</p>
-                          
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                              <h6 className="text-[10px] font-bold text-slate-400 uppercase mb-2">{t.architect.nutrients}</h6>
-                              <div className="flex flex-wrap gap-2">
-                                {architectMetrics.suggestedNutrients.map((n, i) => (
-                                  <span key={i} className="px-2 py-1 rounded-md bg-white border border-slate-200 text-[10px] font-medium text-slate-700">
-                                    {n.name} ({n.dosage})
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                            <div>
-                              <h6 className="text-[10px] font-bold text-slate-400 uppercase mb-2">{t.architect.foods}</h6>
-                              <div className="flex flex-wrap gap-2">
-                                {architectMetrics.suggestedFoods.map((f, i) => (
-                                  <span key={i} className="px-2 py-1 rounded-md bg-health-green/10 text-health-green text-[10px] font-bold">
-                                    {f}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-
-                          {architectProfile.injuryType && getInjuryById(architectProfile.injuryType)?.contraindications && (
-                            <div className="mt-6 pt-6 border-t border-slate-200">
-                              <h6 className="text-[10px] font-bold text-red-500 uppercase mb-3 flex items-center gap-1">
-                                <ShieldAlert className="w-3 h-3" />
-                                {t.architect.contraindications}
-                              </h6>
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                  <span className="text-[10px] font-bold text-slate-500 block mb-1">{t.architect.meds}</span>
-                                  <ul className="text-xs text-slate-600 list-disc list-inside">
-                                    {getInjuryById(architectProfile.injuryType!)?.contraindications?.medications.map((m, i) => (
-                                      <li key={i}>{m}</li>
-                                    ))}
-                                  </ul>
-                                </div>
-                                <div>
-                                  <span className="text-[10px] font-bold text-slate-500 block mb-1">{t.architect.supps}</span>
-                                  <ul className="text-xs text-slate-600 list-disc list-inside">
-                                    {getInjuryById(architectProfile.injuryType!)?.contraindications?.supplements.map((s, i) => (
-                                      <li key={i}>{s}</li>
-                                    ))}
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* AI Diet Preview */}
-                  <div className="medical-card p-6 overflow-hidden relative">
-                    <div className="flex justify-between items-center mb-6">
-                      <h4 className="text-sm font-bold text-slate-500 uppercase flex items-center gap-2">
-                        <Sparkles className="w-4 h-4 text-amber-500" />
-                        {t.architect.aiDietTitle}
-                      </h4>
-                      <button 
-                        onClick={generateAIDietPlan}
-                        disabled={isGeneratingPlan}
-                        className="bg-medical-blue text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-blue-700 transition-all disabled:opacity-50 flex items-center gap-2"
-                      >
-                        {isGeneratingPlan ? <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <Brain className="w-3 h-3" />}
-                        {t.architect.generatePlan}
-                      </button>
-                    </div>
-
-                    
-                      {aiDietPlan ? (
-                        <div className="prose prose-sm max-w-none text-slate-600 bg-slate-50 p-6 rounded-2xl border border-slate-100 max-h-96 overflow-y-auto">
-                          <div className="whitespace-pre-line break-words">{aiDietPlan}</div>
-                        </div>
-                      ) : (
-                        <div className="h-48 flex flex-col items-center justify-center text-center p-8 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
-                          <Sparkles className="w-8 h-8 text-slate-200 mb-4" />
-                          <p className="text-sm text-slate-400">{lang === 'en' ? 'Click the button to generate your personalized AI diet plan based on your recovery stage.' : 'انقر على الزر لإنشاء خطتك الغذائية المخصصة بالذكاء الاصطناعي بناءً على مرحلة تعافيك.'}</p>
-                        </div>
-                      )}
-                    
-                  </div>
-                </>
-              ) : (
-                <div className="medical-card p-6 md:p-8">
-                  <div className="mb-2 text-[11px] font-bold uppercase tracking-[0.18em] text-health-green">
-                    {lang === 'en' ? 'Live dashboard preview' : 'معاينة اللوحة المباشرة'}
-                  </div>
-                  <h4 className="text-2xl font-bold text-slate-900 mb-3">
-                    {lang === 'en' ? 'Enter your own values to activate the dashboard' : 'أدخل بياناتك الحقيقية لتفعيل اللوحة'}
-                  </h4>
-                  <p className="text-sm leading-7 text-slate-600 max-w-2xl">
-                    {lang === 'en'
-                      ? 'The fields show examples as placeholders only. Nothing is calculated or saved until you enter your own data.'
-                      : 'الحقول تعرض أمثلة إرشادية فقط داخل الـ placeholders. لن يتم حساب أو حفظ أي شيء حتى تدخل بياناتك أنت.'}
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Calculators Section */}
       <section id="calculators" className="bg-white py-16 sm:py-20 lg:py-24">

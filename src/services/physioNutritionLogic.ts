@@ -6,7 +6,7 @@ export interface HealthProfile {
   height: number; // in cm
   gender: 'male' | 'female';
   activityLevel: number;
-  goal: 'weight_loss' | 'maintenance' | 'muscle_gain' | 'recovery' | 'maintain' | 'lose' | 'gain';
+  goal: 'recovery' | 'maintain' | 'lose' | 'gain';
   waist?: number;
   neck?: number;
   injuryType: string | null;
@@ -71,9 +71,7 @@ export const PhysioNutritionLogic = {
     const tdee = ClinicalCalculators.tdee(bmr, activityLevel);
 
     // 4. Macros based on Goal
-    const normalizedGoal = goal === 'weight_loss' || goal === 'lose' ? 'lose' : 
-                          goal === 'muscle_gain' || goal === 'gain' ? 'gain' : 
-                          goal === 'recovery' ? 'recovery' : 'maintain';
+    const normalizedGoal = goal;
 
     const macros = ClinicalCalculators.macrosFromGoal(
       tdee,
@@ -132,7 +130,7 @@ export const PhysioNutritionLogic = {
     const waterScore = Math.min((waterIntake / hydrationTarget) * 15, 15);
     const sleepScore = Math.min((sleepHours / 8) * 20, 20);
 
-    const healthScore = Math.round(bmiScore + activityScore + proteinScore + waterScore + sleepScore);
+    const healthScore = Math.max(0, Math.min(100, Math.round(bmiScore + activityScore + proteinScore + waterScore + sleepScore)));
 
     return {
       bmi,
@@ -140,7 +138,7 @@ export const PhysioNutritionLogic = {
       whtr: parseFloat(whtr.toFixed(2)),
       whtrCategory,
       bmr,
-      tdee: macros.totalCalories,
+      tdee,
       macros: {
         protein: Math.max(macros.protein, proteinFloor),
         fats: macros.fats,
