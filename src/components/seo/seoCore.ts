@@ -135,8 +135,8 @@ function getPageKeywords(canonicalPath: string, lang: string): string {
   }
   if (canonicalPath.includes('/exercises')) {
     return isAr
-      ? 'تمارين الجيم، دليل تمارين، تمارين عضلات، برنامج تدريبي'
-      : 'gym exercises, exercise finder, muscle workouts, training program';
+      ? 'تمارين الجيم، دليل تمارين، تمارين عضلات، برنامج تدريبي، تمارين صدر، تمارين ظهر، تمارين رجل، تمارين كتف، تمارين ذراع'
+      : 'gym exercises, exercise finder, muscle workouts, training program, chest exercises, back exercises, leg exercises, shoulder exercises, arm exercises';
   }
   return isAr
     ? 'PhysioNutrition، علاج طبيعي، تغذية علاجية، حاسبات صحية، تعافي'

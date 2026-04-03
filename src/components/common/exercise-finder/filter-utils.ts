@@ -140,7 +140,7 @@ export function createStructuredData(
   description: string,
   canonicalPath: string,
   exercises: Exercise[],
-  siteOrigin = 'https://www.physionutrition.com',
+  siteOrigin = 'https://physionutrition.vercel.app',
 ) {
   const pageUrl = `${siteOrigin}${canonicalPath}`;
 
