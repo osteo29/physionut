@@ -187,8 +187,8 @@ export default function ArticleStudioPage() {
     setEditorLang(otherLang);
   };
 
-  const handleResetLanguage = () => {
-    const fallback = getFallbackArticles(editorLang);
+  const handleResetLanguage = async () => {
+    const fallback = await getFallbackArticles(editorLang);
     updateArticles(
       fallback,
       fallback[0]?.id ?? null,
@@ -453,7 +453,7 @@ export default function ArticleStudioPage() {
                     <button type="button" onClick={handleExport} className="rounded-2xl border border-slate-300 px-5 py-3 font-bold text-slate-700">
                       {uiLang === 'en' ? 'Copy JSON' : 'نسخ JSON'}
                     </button>
-                    <button type="button" onClick={handleResetLanguage} className="rounded-2xl border border-amber-300 px-5 py-3 font-bold text-amber-700">
+                    <button type="button" onClick={() => void handleResetLanguage()} className="rounded-2xl border border-amber-300 px-5 py-3 font-bold text-amber-700">
                       {uiLang === 'en' ? 'Load defaults' : 'تحميل النسخة الافتراضية'}
                     </button>
                   </div>

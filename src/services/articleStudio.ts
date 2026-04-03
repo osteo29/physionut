@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {getArticleBySlug, getArticles, type Article} from './articles';
+import type {Article} from './articles';
 import type {Language} from './translations';
 import {
   isSupabaseConfigured,
@@ -10,7 +10,12 @@ import {
   getArticleAdminEmail,
 } from '../lib/supabase';
 
-export function getFallbackArticles(lang: Language): Article[] {
+async function loadArticlesModule() {
+  return import('./articles');
+}
+
+export async function getFallbackArticles(lang: Language): Promise<Article[]> {
+  const {getArticles} = await loadArticlesModule();
   return getArticles(lang);
 }
 
@@ -19,7 +24,7 @@ export async function loadPublishedArticles(lang: Language): Promise<Article[]> 
 
   try {
     const cloudArticles = await listPublishedArticles(lang);
-    return cloudArticles.length ? cloudArticles : getFallbackArticles(lang);
+    return cloudArticles.length ? cloudArticles : await getFallbackArticles(lang);
   } catch {
     return getFallbackArticles(lang);
   }
@@ -29,6 +34,7 @@ export async function loadPublishedArticleBySlug(
   lang: Language,
   slug: string,
 ): Promise<Article | undefined> {
+  const {getArticleBySlug} = await loadArticlesModule();
   const articles = await loadPublishedArticles(lang);
   return articles.find((article) => article.slug === slug) ?? getArticleBySlug(lang, slug);
 }
@@ -79,7 +85,7 @@ export function getArticleAdminIdentity() {
 }
 
 export function usePublishedArticles(lang: Language) {
-  const [articles, setArticles] = useState<Article[]>(() => getFallbackArticles(lang));
+  const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

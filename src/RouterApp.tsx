@@ -1,5 +1,6 @@
 import {lazy, Suspense, useEffect, useState} from 'react';
 import {Navigate, Route, Routes, useLocation, useParams} from 'react-router-dom';
+import AdminRoute from './components/auth/AdminRoute';
 import {getPreferredLanguage} from './services/languagePreference';
 import HomeRoute from './pages/HomeRoute';
 import {navigationPaths} from './utils/langUrlHelper';
@@ -90,8 +91,8 @@ export default function RouterApp() {
         <Route path="/:lang/injury-protocols" element={<InjuryProtocolsRedirect />} />
         <Route path="/:lang/injuries" element={<InjuryProtocolsPage />} />
         <Route path="/:lang/injuries/:slug" element={<InjuryDetailPage />} />
-        <Route path="/:lang/admin/injuries" element={<AdminInjuryManager />} />
-        <Route path="/admin/injuries" element={<AdminInjuryManager />} />
+        <Route path="/:lang/admin/injuries" element={<AdminRoute><AdminInjuryManager /></AdminRoute>} />
+        <Route path="/admin/injuries" element={<AdminRoute><AdminInjuryManager /></AdminRoute>} />
         <Route path="/:lang/diets" element={<DietsRegimensPage />} />
         <Route path="/:lang/diets/:slug" element={<DietDetailPage />} />
         <Route path="/:lang/exercises" element={<ExercisesPage />} />

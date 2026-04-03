@@ -10,7 +10,6 @@ import {
 } from 'lucide-react';
 import {Link, Navigate, useParams} from 'react-router-dom';
 import Seo from '../components/seo/Seo';
-import {injuryPageContent} from '../services/injuryPageContent';
 import {
   generateRecoveryPlan,
   getAllInjuries,
@@ -243,6 +242,7 @@ export default function InjuryDetailPage() {
   const [injury, setInjury] = useState<InjuryProtocol | null>(fallbackInjury ?? null);
   const [loading, setLoading] = useState(true);
   const [remoteIds, setRemoteIds] = useState<string[]>([]);
+  const [customContentMap, setCustomContentMap] = useState<Record<string, unknown> | null>(null);
 
   const [profile, setProfile] = useState<ActivityProfile>('general');
   const [goal, setGoal] = useState<RecoveryGoal>('calm');
@@ -272,6 +272,21 @@ export default function InjuryDetailPage() {
       active = false;
     };
   }, [fallbackInjury, lang, slug]);
+
+  useEffect(() => {
+    let active = true;
+
+    const loadCustomContent = async () => {
+      const module = await import('../services/injuryPageContent');
+      if (active) setCustomContentMap(module.injuryPageContent);
+    };
+
+    void loadCustomContent();
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   if (!injury && !loading) {
     return <Navigate to={`/${lang}/injuries`} replace />;
@@ -316,7 +331,9 @@ export default function InjuryDetailPage() {
     lang,
   });
 
-  const customContent = injuryPageContent[injury.id];
+  const customContent = (customContentMap?.[injury.id] as
+    | {intro?: string; symptoms?: string[]; faq?: Array<{q: string; a: string}>}
+    | undefined);
   const introText = getLocalizedInjuryOverview(
     injuryDisplayName,
     injury.category,

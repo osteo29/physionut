@@ -1,4 +1,3 @@
-import {GoogleGenAI} from '@google/genai';
 import {decodeMojibake} from '../services/textEncoding';
 
 export type GeminiAskParams = {
@@ -8,22 +7,15 @@ export type GeminiAskParams = {
   cacheKey?: string;
 };
 
+type GeminiResponse = {
+  text?: string;
+  error?: string;
+};
+
 const AI_CACHE_PREFIX = 'physiohub_ai_cache_v1';
 
 function ar(text: string) {
   return decodeMojibake(text);
-}
-
-function getApiKey(): string | null {
-  const viteKey = import.meta.env.VITE_GEMINI_API_KEY;
-  if (typeof viteKey === 'string' && viteKey.trim().length > 0) return viteKey.trim();
-
-  const envKey =
-    (globalThis as any)?.process?.env?.GEMINI_API_KEY ??
-    (globalThis as any)?.process?.env?.VITE_GEMINI_API_KEY;
-  if (typeof envKey === 'string' && envKey.trim().length > 0) return envKey.trim();
-
-  return null;
 }
 
 function normalizeForCache(value: string) {
@@ -91,7 +83,7 @@ export function getStoredAiContext(lang: 'en' | 'ar' = 'en') {
     if (tracking?.name) {
       lines.push(
         lang === 'ar'
-          ? `${ar('Ø§Ø³Ù… Ø§Ù„Ù…Ø³ØªØ®Ø¯Ù…')}: ${tracking.name}`
+          ? `${ar('Ã˜Â§Ã˜Â³Ã™â€¦ Ã˜Â§Ã™â€žÃ™â€¦Ã˜Â³Ã˜ÂªÃ˜Â®Ã˜Â¯Ã™â€¦')}: ${tracking.name}`
           : `User name: ${tracking.name}`,
       );
     }
@@ -99,19 +91,19 @@ export function getStoredAiContext(lang: 'en' | 'ar' = 'en') {
     if (tracking?.email) {
       lines.push(
         lang === 'ar'
-          ? `${ar('Ù…Ø¹Ø±Ù Ø§Ù„Ù…ØªØ§Ø¨Ø¹Ø©')}: ${tracking.email}`
+          ? `${ar('Ã™â€¦Ã˜Â¹Ã˜Â±Ã™Â Ã˜Â§Ã™â€žÃ™â€¦Ã˜ÂªÃ˜Â§Ã˜Â¨Ã˜Â¹Ã˜Â©')}: ${tracking.email}`
           : `Tracking identity: ${tracking.email}`,
       );
     }
 
     if (architect?.age) {
-      lines.push(lang === 'ar' ? `${ar('Ø§Ù„Ø¹Ù…Ø±')}: ${architect.age}` : `Age: ${architect.age}`);
+      lines.push(lang === 'ar' ? `${ar('Ã˜Â§Ã™â€žÃ˜Â¹Ã™â€¦Ã˜Â±')}: ${architect.age}` : `Age: ${architect.age}`);
     }
 
     if (architect?.weight) {
       lines.push(
         lang === 'ar'
-          ? `${ar('Ø§Ù„ÙˆØ²Ù†')}: ${architect.weight} ${ar('ÙƒØ¬Ù…')}`
+          ? `${ar('Ã˜Â§Ã™â€žÃ™Ë†Ã˜Â²Ã™â€ ')}: ${architect.weight} ${ar('Ã™Æ’Ã˜Â¬Ã™â€¦')}`
           : `Weight: ${architect.weight} kg`,
       );
     }
@@ -119,25 +111,25 @@ export function getStoredAiContext(lang: 'en' | 'ar' = 'en') {
     if (architect?.height) {
       lines.push(
         lang === 'ar'
-          ? `${ar('Ø§Ù„Ø·ÙˆÙ„')}: ${architect.height} ${ar('Ø³Ù…')}`
+          ? `${ar('Ã˜Â§Ã™â€žÃ˜Â·Ã™Ë†Ã™â€ž')}: ${architect.height} ${ar('Ã˜Â³Ã™â€¦')}`
           : `Height: ${architect.height} cm`,
       );
     }
 
     if (architect?.gender) {
       lines.push(
-        lang === 'ar' ? `${ar('Ø§Ù„Ù†ÙˆØ¹')}: ${architect.gender}` : `Gender: ${architect.gender}`,
+        lang === 'ar' ? `${ar('Ã˜Â§Ã™â€žÃ™â€ Ã™Ë†Ã˜Â¹')}: ${architect.gender}` : `Gender: ${architect.gender}`,
       );
     }
 
     if (architect?.goal) {
-      lines.push(lang === 'ar' ? `${ar('Ø§Ù„Ù‡Ø¯Ù')}: ${architect.goal}` : `Goal: ${architect.goal}`);
+      lines.push(lang === 'ar' ? `${ar('Ã˜Â§Ã™â€žÃ™â€¡Ã˜Â¯Ã™Â')}: ${architect.goal}` : `Goal: ${architect.goal}`);
     }
 
     if (architect?.injuryType) {
       lines.push(
         lang === 'ar'
-          ? `${ar('Ø§Ù„Ø¥ØµØ§Ø¨Ø© Ø§Ù„Ø­Ø§Ù„ÙŠØ©')}: ${architect.injuryType}`
+          ? `${ar('Ã˜Â§Ã™â€žÃ˜Â¥Ã˜ÂµÃ˜Â§Ã˜Â¨Ã˜Â© Ã˜Â§Ã™â€žÃ˜Â­Ã˜Â§Ã™â€žÃ™Å Ã˜Â©')}: ${architect.injuryType}`
           : `Current injury: ${architect.injuryType}`,
       );
     }
@@ -145,7 +137,7 @@ export function getStoredAiContext(lang: 'en' | 'ar' = 'en') {
     if (architect?.recoveryWeek) {
       lines.push(
         lang === 'ar'
-          ? `${ar('Ø£Ø³Ø¨ÙˆØ¹ Ø§Ù„ØªØ¹Ø§ÙÙŠ')}: ${architect.recoveryWeek}`
+          ? `${ar('Ã˜Â£Ã˜Â³Ã˜Â¨Ã™Ë†Ã˜Â¹ Ã˜Â§Ã™â€žÃ˜ÂªÃ˜Â¹Ã˜Â§Ã™ÂÃ™Å ')}: ${architect.recoveryWeek}`
           : `Recovery week: ${architect.recoveryWeek}`,
       );
     }
@@ -197,66 +189,35 @@ export async function askGeminiText(params: GeminiAskParams): Promise<string> {
   const cached = getCachedAiResponse(params.cacheKey);
   if (cached) return cached;
 
-  const apiKey = getApiKey();
-  if (!apiKey) {
-    try {
-      console.log('[Gemini] Missing key debug', {
-        hasViteKey: Boolean(import.meta.env.VITE_GEMINI_API_KEY),
-        mode: import.meta.env.MODE,
-        baseUrl: import.meta.env.BASE_URL,
-        isLocalhost: typeof location !== 'undefined' ? location.hostname : undefined,
-      });
-    } catch {
-      // ignore
-    }
-
-    throw new Error('Missing GEMINI API key (set VITE_GEMINI_API_KEY)');
-  }
-
-  const ai = new GoogleGenAI({apiKey});
-
-  const contents = [
-    {
-      role: 'user' as const,
-      parts: [
-        {
-          text: [
-            params.system ? `SYSTEM ROLE:\n${params.system}` : '',
-            params.hiddenContext ? `\n\nHIDDEN CLINICAL CONTEXT:\n${params.hiddenContext}` : '',
-            `\n\nUSER QUESTION:\n${params.user}`,
-            `\n\nRESPONSE RULES:\n- Be concise, clinically grounded, and practical.\n- Do not diagnose.\n- Tie the answer to the user's weight, age, goal, and injury context when available.\n- If unclear or unsafe, recommend consulting a licensed clinician.\n- End with a short educational disclaimer.\n- Use bullet points when helpful.`,
-          ]
-            .filter(Boolean)
-            .join(''),
-        },
-      ],
+  const response = await fetch('/api/gemini', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
     },
-  ];
-
-  const res = await ai.models.generateContent({
-    model: 'gemini-3-flash-preview',
-    contents,
+    body: JSON.stringify({
+      system: params.system,
+      user: params.user,
+      hiddenContext: params.hiddenContext,
+    }),
   });
 
-  const text =
-    (res as any)?.text ??
-    (res as any)?.candidates?.[0]?.content?.parts
-      ?.map((part: any) => part?.text)
-      .filter(Boolean)
-      .join('\n') ??
-    '';
+  const payload = (await response.json().catch(() => ({}))) as GeminiResponse;
+  if (!response.ok) {
+    throw new Error(payload.error || 'AI request failed');
+  }
 
-  const answer = String(text || '').trim();
+  const answer = String(payload.text || '').trim();
   setCachedAiResponse(params.cacheKey, answer);
   return answer;
 }
 
-export function trackAiQuestion(question: string, meta?: Record<string, unknown>) {
-  console.log('[AI Question]', {question, ...(meta || {})});
-  const w = window as any;
-  if (typeof w.gtag === 'function') {
-    w.gtag('event', 'user_ai_question', {
-      question,
+export function trackAiQuestion(_question: string, meta?: Record<string, unknown>) {
+  const analyticsWindow = window as Window & {
+    gtag?: (eventName: string, action: string, params?: Record<string, unknown>) => void;
+  };
+
+  if (typeof analyticsWindow.gtag === 'function') {
+    analyticsWindow.gtag('event', 'user_ai_question', {
       ...(meta || {}),
     });
   }

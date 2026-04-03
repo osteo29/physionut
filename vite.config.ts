@@ -1,3 +1,4 @@
+import {GoogleGenAI} from '@google/genai';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
@@ -5,16 +6,87 @@ import {defineConfig, loadEnv} from 'vite';
 
 export default defineConfig(({mode}) => {
   const env = loadEnv(mode, '.', '');
-  return {
-    plugins: [react(), tailwindcss()],
-    define: {
-      // Back-compat for code that references process.env (client-side)
-      'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY || env.VITE_GEMINI_API_KEY),
-      // Ensure Vite exposes the key in the client bundle
-      'import.meta.env.VITE_GEMINI_API_KEY': JSON.stringify(env.VITE_GEMINI_API_KEY || env.GEMINI_API_KEY || ''),
-      'import.meta.env.VITE_SUPABASE_URL': JSON.stringify(env.VITE_SUPABASE_URL || ''),
-      'import.meta.env.VITE_SUPABASE_ANON_KEY': JSON.stringify(env.VITE_SUPABASE_ANON_KEY || ''),
+  const geminiApiKey = (env.GEMINI_API_KEY || env.VITE_GEMINI_API_KEY || '').trim();
+
+  const devGeminiProxy = {
+    name: 'dev-gemini-proxy',
+    configureServer(server: import('vite').ViteDevServer) {
+      server.middlewares.use('/api/gemini', async (req, res) => {
+        if (req.method !== 'POST') {
+          res.statusCode = 405;
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify({error: 'Method not allowed'}));
+          return;
+        }
+
+        if (!geminiApiKey) {
+          res.statusCode = 500;
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify({error: 'Missing GEMINI_API_KEY on the server'}));
+          return;
+        }
+
+        try {
+          const body = await new Promise<string>((resolve, reject) => {
+            let raw = '';
+            req.on('data', (chunk) => {
+              raw += chunk;
+            });
+            req.on('end', () => resolve(raw));
+            req.on('error', reject);
+          });
+
+          const payload = JSON.parse(body || '{}') as {
+            system?: string;
+            user?: string;
+            hiddenContext?: string;
+          };
+
+          if (!payload.user?.trim()) {
+            res.statusCode = 400;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({error: 'Missing user prompt'}));
+            return;
+          }
+
+          const ai = new GoogleGenAI({apiKey: geminiApiKey});
+          const contents = [
+            {
+              role: 'user' as const,
+              parts: [
+                {
+                  text: [
+                    payload.system ? `SYSTEM ROLE:\n${payload.system}` : '',
+                    payload.hiddenContext ? `\n\nHIDDEN CLINICAL CONTEXT:\n${payload.hiddenContext}` : '',
+                    `\n\nUSER QUESTION:\n${payload.user}`,
+                    `\n\nRESPONSE RULES:\n- Be concise, clinically grounded, and practical.\n- Do not diagnose.\n- Tie the answer to the user's weight, age, goal, and injury context when available.\n- If unclear or unsafe, recommend consulting a licensed clinician.\n- End with a short educational disclaimer.\n- Use bullet points when helpful.`,
+                  ]
+                    .filter(Boolean)
+                    .join(''),
+                },
+              ],
+            },
+          ];
+
+          const response = await ai.models.generateContent({
+            model: 'gemini-3-flash-preview',
+            contents,
+          });
+
+          res.statusCode = 200;
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify({text: response.text || ''}));
+        } catch (error) {
+          res.statusCode = 500;
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify({error: error instanceof Error ? error.message : 'Gemini request failed'}));
+        }
+      });
     },
+  };
+
+  return {
+    plugins: [react(), tailwindcss(), devGeminiProxy],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
@@ -88,6 +160,9 @@ export default defineConfig(({mode}) => {
     server: {
       port: 3000,
       host: '0.0.0.0',
+      watch: {
+        ignored: ['**/.local/**', '**/.replit/**', '**/tmp/**'],
+      },
       // HMR configuration for development
       hmr: {
         host: 'localhost',

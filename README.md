@@ -88,7 +88,7 @@ npm install
 # Set up environment variables
 cp .env.example .env.local
 # Edit .env.local with your API keys:
-# VITE_GEMINI_API_KEY=your_google_gemini_key
+# GEMINI_API_KEY=your_google_gemini_key
 # VITE_SUPABASE_URL=your_supabase_url
 # VITE_SUPABASE_ANON_KEY=your_supabase_key
 
@@ -286,7 +286,7 @@ If this project was helpful, please consider giving it a ⭐
 
 1. Install dependencies:
    `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+2. Set the server-side `GEMINI_API_KEY` in [.env.local](.env.local)
 3. Run the app:
    `npm run dev`
 

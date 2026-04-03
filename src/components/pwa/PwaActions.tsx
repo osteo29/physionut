@@ -127,6 +127,7 @@ export default function PwaActions({lang}: {lang: Language}) {
   const [isInstalled, setIsInstalled] = useState(false);
   const [isInstalling, setIsInstalling] = useState(false);
   const [installHint, setInstallHint] = useState('');
+  const [promptsReady, setPromptsReady] = useState(false);
   const [notificationState, setNotificationState] = useState<NotificationPermission | 'unsupported'>(
     getBrowserNotificationPermission(),
   );
@@ -158,6 +159,16 @@ export default function PwaActions({lang}: {lang: Language}) {
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
       window.removeEventListener('appinstalled', handleInstalled);
+    };
+  }, []);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setPromptsReady(true);
+    }, 5000);
+
+    return () => {
+      window.clearTimeout(timer);
     };
   }, []);
 
@@ -250,10 +261,11 @@ export default function PwaActions({lang}: {lang: Language}) {
       : 'You can install the site as an app for faster access from your device home screen.';
 
   const showNotificationPrompt =
+    promptsReady &&
     notificationState !== 'granted' &&
     notificationState !== 'unsupported' &&
     !notificationPromptDismissed;
-  const showInstallPrompt = !isInstalled && !installPromptDismissed;
+  const showInstallPrompt = promptsReady && !isInstalled && !installPromptDismissed;
 
   return (
     <>
