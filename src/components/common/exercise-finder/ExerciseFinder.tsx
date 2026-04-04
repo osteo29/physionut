@@ -245,6 +245,25 @@ export function ExerciseFinder({
     return () => window.removeEventListener('popstate', handlePopState);
   }, [pathMuscle]);
 
+  useEffect(() => {
+    if (!filtersOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setFiltersOpen(false);
+      }
+    };
+
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [filtersOpen]);
+
   const staticContext = useMemo(() => getStaticSlugFilters(pathMuscle), [pathMuscle]);
   const subMuscleOptions = useMemo(() => getSubMuscleOptions(filters.muscle, isAr), [filters.muscle, isAr]);
 
@@ -388,6 +407,18 @@ export function ExerciseFinder({
     systems: 'exercise-systems',
     schedule: 'exercise-schedule',
   };
+  const breadcrumbItems = [
+    {label: isAr ? 'الرئيسية' : 'Home', href: navigationPaths.home(lang)},
+    {label: isAr ? 'التمارين' : 'Exercises', href: navigationPaths.exercises(lang)},
+    selectedStaticGroup
+      ? {
+          label: isAr
+            ? EXERCISE_FINDER_STATIC_ARABIC_LABELS[selectedStaticGroup]
+            : EXERCISE_FINDER_STATIC_LABELS[selectedStaticGroup],
+          href: navigationPaths.exercisesMuscle(lang, selectedStaticGroup),
+        }
+      : null,
+  ].filter(Boolean) as Array<{label: string; href: string}>;
 
   return (
     <>
@@ -407,6 +438,23 @@ export function ExerciseFinder({
             <div className="border-b border-slate-200 bg-[linear-gradient(135deg,rgba(244,239,231,0.9),rgba(255,255,255,0.96))] px-5 py-8 sm:px-8">
               <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
                 <div className="max-w-4xl">
+                  <nav aria-label={isAr ? 'مسار التنقل' : 'Breadcrumb'} className="mb-4">
+                    <ol className="flex flex-wrap items-center gap-2 text-sm text-slate-500">
+                      {breadcrumbItems.map((item, index) => (
+                        <li key={`${item.href}-${index}`} className="inline-flex items-center gap-2">
+                          {index > 0 ? <span>/</span> : null}
+                          {index === breadcrumbItems.length - 1 ? (
+                            <span className="font-semibold text-slate-700">{item.label}</span>
+                          ) : (
+                            <Link to={item.href} className="transition hover:text-health-green">
+                              {item.label}
+                            </Link>
+                          )}
+                        </li>
+                      ))}
+                    </ol>
+                  </nav>
+
                   <div className="inline-flex items-center gap-2 rounded-full bg-health-green/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-health-green">
                     <SlidersHorizontal className="h-3.5 w-3.5" />
                     <span>{isAr ? 'دليل تمارين الجيم' : 'Gym Exercise Finder'}</span>
