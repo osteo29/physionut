@@ -1,5 +1,9 @@
 import {CalendarRange} from 'lucide-react';
+import {Link} from 'react-router-dom';
 
+import type {Language} from '../../../services/translations';
+import {navigationPaths} from '../../../utils/langUrlHelper';
+import {getExerciseRegion} from './content';
 import {EXERCISES} from './data/exercises';
 import {Badge} from './FilterField';
 import {toTitle} from './filter-utils';
@@ -10,11 +14,13 @@ function WeeklyPlanCard({
   titleAr,
   plan,
   isAr,
+  lang,
 }: {
   title: string;
   titleAr: string;
   plan: WeeklyPlan;
   isAr: boolean;
+  lang: Language;
 }) {
   return (
     <article className="rounded-[1.75rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
@@ -42,21 +48,29 @@ function WeeklyPlanCard({
             <div className="mt-3 space-y-3">
               {item.prescriptions.map((prescription) => {
                 const linkedExercise = EXERCISES.find((exercise) => exercise.name === prescription.exerciseName);
+                const exerciseRegion = linkedExercise ? getExerciseRegion(linkedExercise) : null;
 
                 return (
                   <div key={`${item.day}-${prescription.exerciseName}`} className="rounded-2xl border border-slate-200 bg-white p-4">
                     <div className="flex flex-wrap items-start justify-between gap-2">
                       <div>
-                        <div className="text-sm font-bold text-slate-900">{prescription.exerciseName}</div>
+                        {exerciseRegion ? (
+                          <Link
+                            to={navigationPaths.exercisesMuscle(lang, exerciseRegion)}
+                            className="text-sm font-bold text-slate-900 transition hover:text-health-green"
+                          >
+                            {prescription.exerciseName}
+                          </Link>
+                        ) : (
+                          <div className="text-sm font-bold text-slate-900">{prescription.exerciseName}</div>
+                        )}
                         {linkedExercise ? (
                           <div className="mt-1 text-xs text-slate-500">
                             {toTitle(linkedExercise.mainMuscle)} • {linkedExercise.equipment} • {linkedExercise.exerciseType}
                           </div>
                         ) : null}
                       </div>
-                      <Badge tone="blue">
-                        {isAr ? `${prescription.sets} مجموعات` : `${prescription.sets} sets`}
-                      </Badge>
+                      <Badge tone="blue">{isAr ? `${prescription.sets} مجموعات` : `${prescription.sets} sets`}</Badge>
                     </div>
 
                     <div className="mt-3 grid gap-2 text-sm text-slate-700 sm:grid-cols-3">
@@ -72,9 +86,16 @@ function WeeklyPlanCard({
                       </div>
                     </div>
 
-                    <p className="mt-3 text-sm leading-7 text-slate-600">
-                      {isAr ? prescription.notesAr : prescription.notes}
-                    </p>
+                    <p className="mt-3 text-sm leading-7 text-slate-600">{isAr ? prescription.notesAr : prescription.notes}</p>
+
+                    {exerciseRegion ? (
+                      <Link
+                        to={navigationPaths.exercisesMuscle(lang, exerciseRegion)}
+                        className="mt-3 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-health-green transition hover:text-health-green-dark"
+                      >
+                        {isAr ? 'افتح صفحة المنطقة والتمارين' : 'Open region exercise page'}
+                      </Link>
+                    ) : null}
                   </div>
                 );
               })}

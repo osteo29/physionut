@@ -1069,6 +1069,7 @@ export function ExerciseFinder({
                             titleAr={system.titleAr}
                             plan={plan}
                             isAr={isAr}
+                            lang={lang}
                           />
                         ))}
                       </div>

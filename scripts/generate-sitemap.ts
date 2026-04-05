@@ -1,6 +1,7 @@
 import {writeFileSync} from 'node:fs';
 import {resolve} from 'node:path';
 import {EXERCISE_FINDER_STATIC_SLUGS} from '../src/components/common/exercise-finder/constants';
+import {TRAINING_SYSTEMS} from '../src/components/common/exercise-finder/data/training-systems';
 import {getArticles} from '../src/services/articles';
 import {dietRegimensCatalog} from '../src/services/dietRegimensCatalog';
 import {getAllInjuries, getInjuryPath} from '../src/services/injuryDatabase';
@@ -26,6 +27,13 @@ const staticRoutes: RouteEntry[] = [
   {path: '/', changefreq: 'weekly', priority: '1.0', lastmod: GENERATED_LASTMOD},
   {path: '/calculators', changefreq: 'weekly', priority: '0.9', lastmod: GENERATED_LASTMOD},
   {path: '/exercises', changefreq: 'weekly', priority: '0.9', lastmod: GENERATED_LASTMOD},
+  {path: '/exercises/systems', changefreq: 'weekly', priority: '0.85', lastmod: GENERATED_LASTMOD},
+  ...TRAINING_SYSTEMS.map((system) => ({
+    path: `/exercises/systems/${system.id}`,
+    changefreq: 'weekly',
+    priority: '0.8',
+    lastmod: GENERATED_LASTMOD,
+  })),
   ...EXERCISE_FINDER_STATIC_SLUGS.map((slug) => ({
     path: `/exercises/${slug}`,
     changefreq: 'weekly',
@@ -135,3 +143,6 @@ ${alternates
 
 writeFileSync(resolve(process.cwd(), 'public', 'sitemap.xml'), xml, 'utf8');
 console.log(`Generated sitemap with ${allRoutes.length} URLs.`);
+
+
+

@@ -73,6 +73,8 @@ export const navigationPaths = {
   insightsDetail: (lang: Language, slug: string) => `/${lang}/insights/${slug}`,
   exercises: (lang: Language) => `/${lang}/exercises`,
   exercisesMuscle: (lang: Language, slug: string) => `/${lang}/exercises/${slug}`,
+  exerciseSystems: (lang: Language) => `/${lang}/exercises/systems`,
+  exerciseSystemDetail: (lang: Language, slug: string) => `/${lang}/exercises/systems/${slug}`,
   
   // Injury pages
   injuries: (lang: Language) => `/${lang}/injuries`,

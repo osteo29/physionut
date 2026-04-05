@@ -11,6 +11,8 @@ import {
   getLocalizedInjuryOverview,
 } from './src/services/injuryLocalization';
 import {decodeMojibake} from './src/services/textEncoding';
+import {EXERCISE_FINDER_STATIC_ARABIC_LABELS, EXERCISE_FINDER_STATIC_LABELS, EXERCISE_FINDER_STATIC_SLUGS} from './src/components/common/exercise-finder/constants';
+import {TRAINING_SYSTEMS} from './src/components/common/exercise-finder/data/training-systems';
 
 type Lang = 'en' | 'ar';
 
@@ -602,33 +604,29 @@ function dietsRoute(lang: Lang): RouteDefinition {
   };
 }
 
-function exercisesRoute(lang: Lang, slug?: 'chest' | 'back' | 'shoulders' | 'arms' | 'core' | 'legs'): RouteDefinition {
+function exercisesRoute(lang: Lang, slug?: (typeof EXERCISE_FINDER_STATIC_SLUGS)[number]): RouteDefinition {
   const isAr = lang === 'ar';
-  const titleMap = {
-    chest: isAr ? 'تمارين الصدر' : 'Chest exercises',
-    back: isAr ? 'تمارين الظهر' : 'Back exercises',
-    shoulders: isAr ? 'تمارين الكتف' : 'Shoulder exercises',
-    arms: isAr ? 'تمارين الذراع' : 'Arm exercises',
-    core: isAr ? 'تمارين الكور' : 'Core exercises',
-    legs: isAr ? 'تمارين الرجل' : 'Leg exercises',
-  } as const;
-
-  const pageTitle = slug ? titleMap[slug] : isAr ? 'دليل التمارين' : 'Exercise Finder';
+  const pageTitle = slug
+    ? isAr
+      ? `?????? ${EXERCISE_FINDER_STATIC_ARABIC_LABELS[slug]}`
+      : `${EXERCISE_FINDER_STATIC_LABELS[slug]} exercises`
+    : isAr
+      ? '???? ????????'
+      : 'Exercise Finder';
   const pageDescription = slug
     ? isAr
-      ? `صفحة قابلة للفهرسة تعرض ${titleMap[slug]} مع فلاتر للمستوى والمعدات ونوع التمرين والعضلات الفرعية.`
-      : `Indexable page for ${titleMap[slug].toLowerCase()} with filters for level, equipment, training goal, and sub-muscles.`
+      ? `???? ????? ??????? ???? ?????? ${EXERCISE_FINDER_STATIC_ARABIC_LABELS[slug]} ?? ????? ???? ?????? ?????? ??????? ?????? ?????????.`
+      : `Indexable page for ${EXERCISE_FINDER_STATIC_LABELS[slug].toLowerCase()} exercises with simple anatomy notes, internal links, and weekly-plan context.`
     : isAr
-      ? 'صفحة تمارين واحدة تشمل كل العضلات مع فلاتر للتشريح والمستوى والمعدات ونوع التمرين.'
-      : 'One exercise finder page covering all muscles with filters for anatomy, level, equipment, and training goal.';
+      ? '?????? ???????? ???????? ????? ??? ????? ???????? ?????? ??????? ??????? ?????? ??????? ?????????.'
+      : 'Main exercise hub that connects the exercise library, muscle-region pages, and training-system pages.';
 
   const links = [
-    {href: `/${lang}/exercises/chest`, label: isAr ? 'الصدر' : 'Chest'},
-    {href: `/${lang}/exercises/back`, label: isAr ? 'الظهر' : 'Back'},
-    {href: `/${lang}/exercises/shoulders`, label: isAr ? 'الكتف' : 'Shoulders'},
-    {href: `/${lang}/exercises/arms`, label: isAr ? 'الذراع' : 'Arms'},
-    {href: `/${lang}/exercises/core`, label: isAr ? 'الكور' : 'Core'},
-    {href: `/${lang}/exercises/legs`, label: isAr ? 'الرجل' : 'Legs'},
+    ...['chest', 'back', 'shoulders', 'arms', 'core', 'legs'].map((item) => ({
+      href: `/${lang}/exercises/${item}`,
+      label: isAr ? `?????? ${EXERCISE_FINDER_STATIC_ARABIC_LABELS[item as keyof typeof EXERCISE_FINDER_STATIC_ARABIC_LABELS]}` : `${EXERCISE_FINDER_STATIC_LABELS[item as keyof typeof EXERCISE_FINDER_STATIC_LABELS]} exercises`,
+    })),
+    {href: `/${lang}/exercises/systems`, label: isAr ? '????? ???????' : 'Training systems'},
   ];
 
   return {
@@ -638,22 +636,20 @@ function exercisesRoute(lang: Lang, slug?: 'chest' | 'back' | 'shoulders' | 'arm
     description: pageDescription,
     body: layout(
       lang,
-      isAr ? 'دليل التمارين' : 'Exercise finder',
+      isAr ? '???? ????????' : 'Exercise finder',
       pageTitle,
       pageDescription,
       [
         section(
-          isAr ? 'تصنيفات التمارين الرئيسية' : 'Main exercise categories',
-          `<ul class="link-list">${links
-            .map((item) => `<li><a href="${item.href}">${item.label}</a></li>`)
-            .join('')}</ul>`,
+          isAr ? '????? ?????? ????????' : 'Primary navigation links',
+          `<ul class="link-list">${links.map((item) => `<li><a href="${item.href}">${item.label}</a></li>`).join('')}</ul>`,
         ),
         section(
-          isAr ? 'طريقة استخدام الدليل' : 'How to use the finder',
+          isAr ? '????? ??????? ?????' : 'How to use this section',
           `<ul>
-            <li>${isAr ? 'ابدأ بعضلة رئيسية أو صفحة ثابتة ثم خصص النتائج بالمستوى والمعدات ونوع التمرين.' : 'Start with a muscle group or static page, then refine by level, equipment, and training goal.'}</li>
-            <li>${isAr ? 'يمكن مشاركة الرابط مع الاحتفاظ بالفلاتر عبر query params.' : 'The URL can be shared while preserving filters through query params.'}</li>
-            <li>${isAr ? 'صفحات التأهيل والإصابات تبقى منفصلة عن هذا الدليل.' : 'Rehab and injury pages remain separate from this finder.'}</li>
+            <li>${isAr ? '???? ?? ?????? ???????? ?? ???? ??????? ??????? ?? ?????? ???? ????? ????.' : 'Start from the hub, then open the region or system page that matches your goal.'}</li>
+            <li>${isAr ? '?? ???? ????? ???? ??? ??????? ?????? ????????? ??????? ???????? ????????.' : 'Each region page connects simple anatomy, the full exercise library, and related systems.'}</li>
+            <li>${isAr ? '?? ???? ???? ???? ????? ??? ?????? ????? ?????? ???? ??????? ??????? ??????.' : 'Each system page explains the split, compares it to others, and links it to a weekly plan and related exercises.'}</li>
           </ul>`,
         ),
       ],
@@ -661,6 +657,57 @@ function exercisesRoute(lang: Lang, slug?: 'chest' | 'back' | 'shoulders' | 'arm
   };
 }
 
+function exerciseSystemsRoute(lang: Lang): RouteDefinition {
+  const isAr = lang === 'ar';
+  return {
+    path: `/${lang}/exercises/systems`,
+    lang,
+    title: isAr ? '????? ????????' : 'Training systems',
+    description: isAr ? '???? ?????? ???????? ???????? ?? ??????? ?????? ??? ????? ????????? ?????? ????????.' : 'Index of training systems with comparisons, weekly plans, and links to related exercise pages.',
+    body: layout(
+      lang,
+      isAr ? '????? ????????' : 'Training systems',
+      isAr ? '????? ????? ???????' : 'Workout system pages',
+      isAr ? '???? ?? ???? ?? ???? ?????? ???? ?????? ?????? ??????? ??? ????????? ?????? ????????? ????????.' : 'Open each system in its own page to understand the split, comparisons, and linked weekly plan.',
+      [
+        section(
+          isAr ? '??????? ???????' : 'Available systems',
+          `<ul class="link-list">${TRAINING_SYSTEMS.map((system) => `<li><a href="/${lang}/exercises/systems/${system.id}">${text(isAr ? system.titleAr : system.title)}</a></li>`).join('')}</ul>`,
+        ),
+      ],
+    ),
+  };
+}
+
+function exerciseSystemDetailRoute(lang: Lang, system: (typeof TRAINING_SYSTEMS)[number]): RouteDefinition {
+  const isAr = lang === 'ar';
+  return {
+    path: `/${lang}/exercises/systems/${system.id}`,
+    lang,
+    title: text(isAr ? system.titleAr : system.title),
+    description: text(isAr ? system.summaryAr : system.summary),
+    body: layout(
+      lang,
+      isAr ? '???? ??????' : 'Training system',
+      text(isAr ? system.titleAr : system.title),
+      text(isAr ? system.summaryAr : system.summary),
+      [
+        section(
+          isAr ? '????? ??????' : 'System highlights',
+          `<ul>
+            <li>${text(isAr ? system.frequencyAr : system.frequency)}</li>
+            <li>${text(isAr ? system.splitAr : system.split)}</li>
+            <li>${text(isAr ? system.idealForAr : system.idealFor)}</li>
+          </ul>`,
+        ),
+        section(
+          isAr ? '????? ??????? ???????' : 'Linked muscle regions',
+          `<ul class="link-list">${system.muscleGroups.map((group) => `<li><a href="/${lang}/exercises/${group}">${isAr ? text(EXERCISE_FINDER_STATIC_ARABIC_LABELS[group]) : text(EXERCISE_FINDER_STATIC_LABELS[group])}</a></li>`).join('')}</ul>`,
+        ),
+      ],
+    ),
+  };
+}
 const staticRoutes: RouteDefinition[] = [
   ...(['en', 'ar'] as Lang[]).flatMap((lang) => [
     homeRoute(lang),
@@ -669,12 +716,9 @@ const staticRoutes: RouteDefinition[] = [
     injuriesRoute(lang),
     dietsRoute(lang),
     exercisesRoute(lang),
-    exercisesRoute(lang, 'chest'),
-    exercisesRoute(lang, 'back'),
-    exercisesRoute(lang, 'shoulders'),
-    exercisesRoute(lang, 'arms'),
-    exercisesRoute(lang, 'core'),
-    exercisesRoute(lang, 'legs'),
+    ...EXERCISE_FINDER_STATIC_SLUGS.map((slug) => exercisesRoute(lang, slug)),
+    exerciseSystemsRoute(lang),
+    ...TRAINING_SYSTEMS.map((system) => exerciseSystemDetailRoute(lang, system)),
   ]),
   ...(['en', 'ar'] as Lang[]).flatMap((lang) => getArticles(lang).map((article) => articleRoute(lang, article))),
   ...(['en', 'ar'] as Lang[]).flatMap((lang) => getAllInjuries().map((injury) => injuryRoute(lang, injury))),
@@ -683,4 +727,6 @@ const staticRoutes: RouteDefinition[] = [
 staticRoutes.forEach(writeRoute);
 writeRootShell();
 console.log(`Generated prerendered HTML for ${staticRoutes.length} routes.`);
+
+
 
