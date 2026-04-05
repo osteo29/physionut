@@ -27,4 +27,5 @@ Disallow: /private
 Disallow: /dist
 Disallow: *?_vercel_analytics
 
+Sitemap: https://physionutrition.vercel.app/sitemap-index.xml
 Sitemap: https://physionutrition.vercel.app/sitemap.xml

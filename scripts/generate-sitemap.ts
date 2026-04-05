@@ -1,4 +1,4 @@
-import {writeFileSync} from 'node:fs';
+import {readFileSync, writeFileSync} from 'node:fs';
 import {resolve} from 'node:path';
 import {EXERCISE_FINDER_STATIC_SLUGS} from '../src/components/common/exercise-finder/constants';
 import {TRAINING_SYSTEMS} from '../src/components/common/exercise-finder/data/training-systems';
@@ -141,8 +141,24 @@ ${alternates
 </urlset>
 `;
 
-writeFileSync(resolve(process.cwd(), 'public', 'sitemap.xml'), xml, 'utf8');
-console.log(`Generated sitemap with ${allRoutes.length} URLs.`);
+const sitemapIndexXml = `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>${SITE_URL}/sitemap.xml</loc>
+    <lastmod>${GENERATED_LASTMOD}</lastmod>
+  </sitemap>
+</sitemapindex>
+`;
 
+const publicDir = resolve(process.cwd(), 'public');
+writeFileSync(resolve(publicDir, 'sitemap.xml'), xml, 'utf8');
+writeFileSync(resolve(publicDir, 'sitemap-index.xml'), sitemapIndexXml, 'utf8');
 
+const robotsPath = resolve(publicDir, 'robots.txt');
+const robots = readFileSync(robotsPath, 'utf8')
+  .replace(/^Sitemap:.*$/gm, '')
+  .trimEnd();
+const nextRobots = `${robots}\n\nSitemap: ${SITE_URL}/sitemap-index.xml\nSitemap: ${SITE_URL}/sitemap.xml\n`;
+writeFileSync(robotsPath, nextRobots, 'utf8');
 
+console.log(`Generated sitemap with ${allRoutes.length} URLs and refreshed sitemap index.`);
