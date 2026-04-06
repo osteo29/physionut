@@ -4,16 +4,28 @@ import {Cookie, ShieldCheck} from 'lucide-react';
 type ConsentState = 'accepted' | 'rejected' | null;
 
 export function getStoredConsent(): ConsentState {
-  const saved = localStorage.getItem('physiohub_cookie_consent');
-  return saved === 'accepted' || saved === 'rejected' ? saved : null;
+  if (typeof window === 'undefined') return null;
+
+  try {
+    const saved = window.localStorage.getItem('physiohub_cookie_consent');
+    return saved === 'accepted' || saved === 'rejected' ? saved : null;
+  } catch {
+    return null;
+  }
 }
 
 export default function ConsentBanner({lang}: {lang: 'en' | 'ar'}) {
-  const [consent, setConsent] = useState<ConsentState>(null);
+  const [consent, setConsent] = useState<ConsentState>(() => getStoredConsent());
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    setConsent(getStoredConsent());
+    const storedConsent = getStoredConsent();
+    setConsent(storedConsent);
+
+    if (storedConsent) {
+      setIsVisible(false);
+      return;
+    }
 
     const timer = window.setTimeout(() => setIsVisible(true), 1200);
     return () => window.clearTimeout(timer);
@@ -22,13 +34,21 @@ export default function ConsentBanner({lang}: {lang: 'en' | 'ar'}) {
   if (consent) return null;
 
   const accept = () => {
-    localStorage.setItem('physiohub_cookie_consent', 'accepted');
+    try {
+      window.localStorage.setItem('physiohub_cookie_consent', 'accepted');
+    } catch {
+      // Ignore storage errors and still update the current session state.
+    }
     setConsent('accepted');
     window.dispatchEvent(new Event('physiohub-consent-change'));
   };
 
   const reject = () => {
-    localStorage.setItem('physiohub_cookie_consent', 'rejected');
+    try {
+      window.localStorage.setItem('physiohub_cookie_consent', 'rejected');
+    } catch {
+      // Ignore storage errors and still update the current session state.
+    }
     setConsent('rejected');
     window.dispatchEvent(new Event('physiohub-consent-change'));
   };
