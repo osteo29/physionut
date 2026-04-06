@@ -337,6 +337,7 @@ export default function TrackingDashboardPage() {
             : 'Review saved assessments and result history inside your PhysioNutrition account.'
         }
         canonicalPath="/dashboard"
+        noIndex
       />
 
       <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">

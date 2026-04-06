@@ -708,6 +708,132 @@ function exerciseSystemDetailRoute(lang: Lang, system: (typeof TRAINING_SYSTEMS)
     ),
   };
 }
+function infoPageRoute(lang: Lang, page: 'about' | 'contact' | 'privacy' | 'terms' | 'cookies' | 'disclaimer'): RouteDefinition {
+  const isAr = lang === 'ar';
+
+  const config = {
+    about: {
+      title: isAr ? 'من نحن' : 'About PhysioNutrition',
+      description: isAr
+        ? 'تعرّف على PhysioNutrition ورسالة الموقع التعليمية وكيف تم بناء أدواته في التغذية والعلاج الطبيعي.'
+        : 'Learn about PhysioNutrition, its educational purpose, and how its clinical calculators and nutrition tools are built.',
+      eyebrow: isAr ? 'About the platform' : 'About the platform',
+      heading: isAr ? 'معلومات عن PhysioNutrition' : 'About PhysioNutrition',
+      intro: isAr
+        ? 'PhysioNutrition منصة تعليمية تجمع بين العلاج الطبيعي والتغذية العلاجية والحاسبات العملية.'
+        : 'PhysioNutrition is an educational platform combining rehab, clinical nutrition, and practical health calculators.',
+      sections: [
+        section(
+          isAr ? 'ماذا يقدم الموقع؟' : 'What the site offers',
+          isAr
+            ? '<p>يوفر الموقع حاسبات صحية، مكتبة إصابات، مقالات تعليمية، وأدلة تساعد الزائر على فهم التعافي والتغذية وتتبع التقدم.</p>'
+            : '<p>The site offers health calculators, an injury library, educational articles, and practical guidance for recovery and nutrition.</p>',
+        ),
+      ],
+    },
+    contact: {
+      title: isAr ? 'اتصل بنا' : 'Contact',
+      description: isAr
+        ? 'طرق التواصل مع PhysioNutrition للاستفسارات العامة والتعاون والملاحظات.'
+        : 'Ways to contact PhysioNutrition for general questions, collaboration, or feedback.',
+      eyebrow: isAr ? 'التواصل' : 'Contact',
+      heading: isAr ? 'تواصل مع PhysioNutrition' : 'Contact PhysioNutrition',
+      intro: isAr
+        ? 'للاستفسارات العامة أو الملاحظات أو التعاون، يمكنك التواصل عبر البريد الإلكتروني.'
+        : 'For general questions, feedback, or collaboration requests, you can reach out by email.',
+      sections: [
+        section(
+          isAr ? 'البريد الإلكتروني' : 'Email',
+          '<p><a href="mailto:physionutritionofficial@gmail.com">physionutritionofficial@gmail.com</a></p>',
+        ),
+      ],
+    },
+    privacy: {
+      title: isAr ? 'سياسة الخصوصية' : 'Privacy Policy',
+      description: isAr
+        ? 'سياسة خصوصية PhysioNutrition الخاصة بالحاسبات والمحتوى التعليمي والكوكيز والموافقة الإعلانية.'
+        : 'PhysioNutrition privacy policy for calculators, educational content, cookies, and advertising consent.',
+      eyebrow: isAr ? 'الخصوصية' : 'Privacy',
+      heading: isAr ? 'سياسة الخصوصية' : 'Privacy Policy',
+      intro: isAr
+        ? 'توضح هذه الصفحة كيف يتم التعامل مع البيانات المحدودة والتفضيلات وخيارات الموافقة.'
+        : 'This page explains how limited site data, preferences, and consent choices are handled on the platform.',
+      sections: [
+        section(
+          isAr ? 'أبرز النقاط' : 'Key points',
+          isAr
+            ? '<ul><li>معظم مدخلات الحاسبات تتم معالجتها محليًا.</li><li>يتم حفظ تفضيلات مثل اللغة والمظهر والموافقة.</li><li>التقنيات الاختيارية لا تفعل إلا بعد القبول.</li></ul>'
+            : '<ul><li>Most calculator inputs are processed locally.</li><li>Preferences such as language, theme, and consent are stored in the browser.</li><li>Optional technologies are enabled only after consent.</li></ul>',
+        ),
+      ],
+    },
+    terms: {
+      title: isAr ? 'الشروط والأحكام' : 'Terms of Service',
+      description: isAr
+        ? 'شروط استخدام PhysioNutrition لحاسبات العلاج الطبيعي وأدوات التغذية العلاجية.'
+        : 'PhysioNutrition terms for using physical therapy calculators and clinical nutrition tools.',
+      eyebrow: isAr ? 'الشروط' : 'Terms',
+      heading: isAr ? 'الشروط والأحكام' : 'Terms of Service',
+      intro: isAr
+        ? 'باستخدامك للمنصة، فأنت تستخدم أدوات تعليمية وليست بديلاً عن الرعاية الطبية.'
+        : 'By using the platform, you agree that the tools are educational and do not replace professional care.',
+      sections: [
+        section(
+          isAr ? 'أهم الشروط' : 'Main terms',
+          isAr
+            ? '<ul><li>النتائج استرشادية وتقديرية.</li><li>المنصة لا تقدم تشخيصًا أو علاجًا.</li><li>يُمنع إساءة استخدام الخدمة.</li></ul>'
+            : '<ul><li>Outputs are estimates for educational use.</li><li>The platform does not provide diagnosis or treatment.</li><li>Misuse or disruption of the service is not allowed.</li></ul>',
+        ),
+      ],
+    },
+    cookies: {
+      title: isAr ? 'سياسة الكوكيز' : 'Cookie Policy',
+      description: isAr
+        ? 'سياسة الكوكيز في PhysioNutrition الخاصة بالتفضيلات والموافقة والتحليلات والإعلانات.'
+        : 'PhysioNutrition cookie policy covering essential preferences, consent choices, analytics, and advertising cookies.',
+      eyebrow: isAr ? 'الكوكيز' : 'Cookies',
+      heading: isAr ? 'سياسة الكوكيز' : 'Cookie Policy',
+      intro: isAr
+        ? 'توضح هذه الصفحة كيف يستخدم الموقع الكوكيز والتخزين المحلي.'
+        : 'This page describes how the site uses cookies and local storage for preferences, consent, and optional technologies.',
+      sections: [
+        section(
+          isAr ? 'أهم الاستخدامات' : 'Main uses',
+          isAr
+            ? '<ul><li>حفظ تفضيلات اللغة والمظهر.</li><li>تذكر اختيارات الموافقة.</li><li>التقنيات الاختيارية تعمل فقط بعد القبول.</li></ul>'
+            : '<ul><li>Remember language and theme preferences.</li><li>Store consent choices.</li><li>Enable optional analytics or ads only after consent.</li></ul>',
+        ),
+      ],
+    },
+    disclaimer: {
+      title: isAr ? 'إخلاء المسؤولية الطبي' : 'Medical Disclaimer',
+      description: isAr
+        ? 'إخلاء المسؤولية الطبي لمنصة PhysioNutrition وحاسبات العلاج الطبيعي والتغذية العلاجية.'
+        : 'Medical disclaimer for PhysioNutrition physical therapy calculators and clinical nutrition tools.',
+      eyebrow: isAr ? 'إخلاء المسؤولية' : 'Disclaimer',
+      heading: isAr ? 'إخلاء المسؤولية الطبي' : 'Medical Disclaimer',
+      intro: isAr
+        ? 'المحتوى والحاسبات لأغراض تعليمية فقط ولا تُعد بديلاً عن التقييم الطبي.'
+        : 'All content and calculator outputs are educational only and do not replace medical assessment.',
+      sections: [
+        section(
+          isAr ? 'تنبيه مهم' : 'Important notice',
+          isAr
+            ? '<ul><li>النتائج تقديرية وليست تشخيصًا.</li><li>يجب استشارة مختص في الحالات الطبية أو الإصابات.</li></ul>'
+            : '<ul><li>Results are estimates and not a diagnosis.</li><li>Consult a licensed professional for injuries, symptoms, or special medical circumstances.</li></ul>',
+        ),
+      ],
+    },
+  }[page];
+
+  return {
+    path: `/${lang}/${page}`,
+    lang,
+    title: config.title,
+    description: config.description,
+    body: layout(lang, config.eyebrow, config.heading, config.intro, config.sections),
+  };
+}
 const staticRoutes: RouteDefinition[] = [
   ...(['en', 'ar'] as Lang[]).flatMap((lang) => [
     homeRoute(lang),
@@ -715,6 +841,7 @@ const staticRoutes: RouteDefinition[] = [
     insightsRoute(lang),
     injuriesRoute(lang),
     dietsRoute(lang),
+    ...(['about', 'contact', 'privacy', 'terms', 'cookies', 'disclaimer'] as const).map((page) => infoPageRoute(lang, page)),
     exercisesRoute(lang),
     ...EXERCISE_FINDER_STATIC_SLUGS.map((slug) => exercisesRoute(lang, slug)),
     exerciseSystemsRoute(lang),
@@ -727,6 +854,8 @@ const staticRoutes: RouteDefinition[] = [
 staticRoutes.forEach(writeRoute);
 writeRootShell();
 console.log(`Generated prerendered HTML for ${staticRoutes.length} routes.`);
+
+
 
 
 

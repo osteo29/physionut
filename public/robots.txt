@@ -13,6 +13,16 @@ Disallow: /auth/
 Disallow: /dashboard/
 Disallow: /studio/
 Disallow: /assistant/
+Disallow: /en/admin/
+Disallow: /ar/admin/
+Disallow: /en/auth
+Disallow: /ar/auth
+Disallow: /en/dashboard
+Disallow: /ar/dashboard
+Disallow: /en/studio/
+Disallow: /ar/studio/
+Disallow: /en/assistant
+Disallow: /ar/assistant
 
 # Block common auth utility routes
 Disallow: /login

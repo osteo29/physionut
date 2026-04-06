@@ -199,6 +199,7 @@ export default function AuthPage({
             : 'Create an account or sign in to save results and review them in a secure tracking dashboard.'
         }
         canonicalPath="/auth"
+        noIndex
       />
 
       <nav className="sticky top-0 z-50 border-b border-slate-100 bg-white/85 px-3 backdrop-blur-md sm:px-6 lg:px-8">

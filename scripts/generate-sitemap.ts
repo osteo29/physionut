@@ -43,7 +43,6 @@ const staticRoutes: RouteEntry[] = [
   {path: '/injuries', changefreq: 'weekly', priority: '0.9', lastmod: GENERATED_LASTMOD},
   {path: '/insights', changefreq: 'weekly', priority: '0.8', lastmod: GENERATED_LASTMOD},
   {path: '/diets', changefreq: 'monthly', priority: '0.8', lastmod: GENERATED_LASTMOD},
-  {path: '/assistant', changefreq: 'weekly', priority: '0.7', lastmod: GENERATED_LASTMOD},
   {path: '/privacy', changefreq: 'monthly', priority: '0.6', lastmod: GENERATED_LASTMOD},
   {path: '/about', changefreq: 'monthly', priority: '0.7', lastmod: GENERATED_LASTMOD},
   {path: '/contact', changefreq: 'monthly', priority: '0.7', lastmod: GENERATED_LASTMOD},
