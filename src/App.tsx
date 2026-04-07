@@ -80,9 +80,11 @@ function HomeSectionFallback({
 export default function App({
   theme,
   onToggleTheme,
+  initialCalculatorId = null,
 }: {
   theme: 'light' | 'dark';
   onToggleTheme: () => void;
+  initialCalculatorId?: CalculatorType;
 }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeCalculator, setActiveCalculator] = useState<CalculatorType>(null);
@@ -656,6 +658,17 @@ export default function App({
     : calculators.filter((calc) => calc.group === activeToolGroup);
 
   const activeCalculatorMeta = calculators.find((c) => c.id === activeCalculator);
+
+  useEffect(() => {
+    if (!initialCalculatorId) return;
+
+    const nextCalculator = calculators.find((item) => item.id === initialCalculatorId);
+    if (!nextCalculator) return;
+
+    setActiveCalculator(nextCalculator.id as CalculatorType);
+    setActiveToolGroup(nextCalculator.group);
+    resetForm();
+  }, [initialCalculatorId, lang]);
 
   const quickSections = [
     {

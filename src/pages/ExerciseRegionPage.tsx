@@ -17,6 +17,7 @@ import {
 import {TrainingSystemCard} from '../components/common/exercise-finder/TrainingSystemCard';
 import {WeeklyPlanCard} from '../components/common/exercise-finder/WeeklyPlanCard';
 import Seo from '../components/seo/Seo';
+import {denormalizeExerciseUrlSlug, normalizeExerciseUrlSlug} from '../services/seoAliases';
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
 import {buildHreflangs, navigationPaths} from '../utils/langUrlHelper';
@@ -30,17 +31,22 @@ export default function ExerciseRegionPage() {
   const lang = usePreferredLang();
   const isAr = lang === 'ar';
   const {muscle} = useParams<{muscle: string}>();
+  const normalizedMuscle = denormalizeExerciseUrlSlug(muscle || '');
 
-  if (!isStaticMuscleSlug(muscle)) {
+  if (muscle && normalizeExerciseUrlSlug(normalizedMuscle) !== muscle) {
+    return <Navigate to={`/${lang}/exercises/${normalizeExerciseUrlSlug(normalizedMuscle)}`} replace />;
+  }
+
+  if (!isStaticMuscleSlug(normalizedMuscle)) {
     return <Navigate to={navigationPaths.exercises(lang)} replace />;
   }
 
-  const region = muscle;
+  const region = normalizedMuscle;
   const label = isAr ? EXERCISE_FINDER_STATIC_ARABIC_LABELS[region] : EXERCISE_FINDER_STATIC_LABELS[region];
   const content = REGION_CONTENT[region];
   const exercises = getExercisesForRegion(region);
   const systems = getSystemsForRegion(region).slice(0, 3);
-  const canonicalPath = `/exercises/${region}`;
+  const canonicalPath = `/exercises/${normalizeExerciseUrlSlug(region)}`;
   const seoTitle = isAr ? `تمارين ${label} | تشريح مبسط وخطة تمارين كاملة` : `${label} Exercises | Anatomy, exercise library, and workout systems`;
   const seoDescription = isAr
     ? `${content.introAr} ستجد أيضًا صفحات الأنظمة المناسبة وروابط الخطة الأسبوعية وتمارين ${label} الكاملة.`

@@ -31,6 +31,7 @@ import {
   textLooksArabic,
 } from '../services/injuryLocalization';
 import {fetchCompleteInjuryProtocol, fetchInjuriesFromSupabase} from '../services/injurySupabaseService';
+import {INJURY_CANONICAL_PARENT_MAP} from '../services/seoAliases';
 import {decodeMojibake} from '../services/textEncoding';
 import {navigationPaths} from '../utils/langUrlHelper';
 import PageLayout from './PageLayout';
@@ -394,6 +395,8 @@ export default function InjuryDetailPage() {
         }));
 
   const path = buildPath(injury.id, lang);
+  const canonicalInjuryId = INJURY_CANONICAL_PARENT_MAP[injury.id] || injury.id;
+  const canonicalPath = buildPath(canonicalInjuryId, lang);
   const labels = {
     title: isAr ? `بروتوكول ${injuryDisplayName}` : `${injuryDisplayName} Recovery Protocol`,
     description: isAr
@@ -424,8 +427,8 @@ export default function InjuryDetailPage() {
   } as const;
 
   const hreflangs = [
-    {lang: 'en', href: `https://physionutrition.vercel.app${buildPath(injury.id, 'en')}`},
-    {lang: 'ar', href: `https://physionutrition.vercel.app${buildPath(injury.id, 'ar')}`},
+    {lang: 'en', href: `https://physionutrition.vercel.app${buildPath(canonicalInjuryId, 'en')}`},
+    {lang: 'ar', href: `https://physionutrition.vercel.app${buildPath(canonicalInjuryId, 'ar')}`},
   ];
 
   const structuredData = [
@@ -436,7 +439,7 @@ export default function InjuryDetailPage() {
         '@type': 'MedicalWebPage',
         name: labels.title,
         description: labels.description,
-        url: `https://physionutrition.vercel.app${path}`,
+        url: `https://physionutrition.vercel.app${canonicalPath}`,
         about: {
           '@type': 'MedicalCondition',
           name: injuryDisplayName,
@@ -448,7 +451,7 @@ export default function InjuryDetailPage() {
         },
         hasPart: rehabStagePlans.map((stage, index) => ({
           '@type': 'WebPageElement',
-          '@id': `https://physionutrition.vercel.app${path}#${buildStageAnchor(stage.phaseId, index)}`,
+          '@id': `https://physionutrition.vercel.app${canonicalPath}#${buildStageAnchor(stage.phaseId, index)}`,
           name: normalizeCopy(stage.phaseLabel),
           description: normalizeCopy(stage.focus),
         })),
@@ -467,7 +470,7 @@ export default function InjuryDetailPage() {
           '@type': 'TherapeuticProcedure',
           name: normalizeCopy(stage.phaseLabel),
           description: `${normalizeCopy(stage.focus)} ${stage.exercises.map(normalizeCopy).join(', ')}`,
-          url: `https://physionutrition.vercel.app${path}#${buildStageAnchor(stage.phaseId, index)}`,
+          url: `https://physionutrition.vercel.app${canonicalPath}#${buildStageAnchor(stage.phaseId, index)}`,
         })),
       },
     },
@@ -502,7 +505,7 @@ export default function InjuryDetailPage() {
             '@type': 'ListItem',
             position: 2,
             name: injuryDisplayName,
-            item: `https://physionutrition.vercel.app${path}`,
+            item: `https://physionutrition.vercel.app${canonicalPath}`,
           },
         ],
       },
@@ -532,7 +535,7 @@ export default function InjuryDetailPage() {
       <Seo
         title={labels.title}
         description={labels.description}
-        canonicalPath={path}
+        canonicalPath={canonicalPath}
         structuredData={structuredData}
         hreflangs={hreflangs}
       />

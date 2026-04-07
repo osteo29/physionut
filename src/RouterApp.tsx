@@ -1,6 +1,8 @@
 import {lazy, Suspense, useEffect, useState} from 'react';
 import {Navigate, Route, Routes, useLocation, useParams} from 'react-router-dom';
 import AdminRoute from './components/auth/AdminRoute';
+import {getCalculatorPageBySlug, type CalculatorPageSlug} from './services/calculatorPages';
+import {normalizeExerciseUrlSlug} from './services/seoAliases';
 import {getPreferredLanguage} from './services/languagePreference';
 import HomeRoute from './pages/HomeRoute';
 import {navigationPaths} from './utils/langUrlHelper';
@@ -57,6 +59,27 @@ function InjuryProtocolsRedirect() {
   return <Navigate to={navigationPaths.injuries(lang)} replace />;
 }
 
+function CalculatorRouteRedirect({
+  theme,
+  onToggleTheme,
+}: {
+  theme: 'light' | 'dark';
+  onToggleTheme: () => void;
+}) {
+  const {lang = 'en', calculator} = useParams<{lang: 'en' | 'ar'; calculator: CalculatorPageSlug}>();
+  const page = getCalculatorPageBySlug(calculator);
+  if (!page) {
+    return <Navigate to={navigationPaths.calculators(lang)} replace />;
+  }
+
+  return <HomeRoute scrollToId="calculators" calculatorSlug={page.slug} theme={theme} onToggleTheme={onToggleTheme} />;
+}
+
+function LegacyExerciseSlugRedirect() {
+  const {lang = 'en', muscle = ''} = useParams<{lang: 'en' | 'ar'; muscle: string}>();
+  return <Navigate to={`/${lang}/exercises/${normalizeExerciseUrlSlug(muscle)}`} replace />;
+}
+
 export default function RouterApp() {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     const saved = localStorage.getItem('physiohub_theme');
@@ -82,6 +105,7 @@ export default function RouterApp() {
         {/* Language-prefixed routes: /en/* and /ar/* */}
         <Route path="/:lang" element={<HomeRoute theme={theme} onToggleTheme={toggleTheme} />} />
         <Route path="/:lang/calculators" element={<HomeRoute scrollToId="calculators" theme={theme} onToggleTheme={toggleTheme} />} />
+        <Route path="/:lang/calculators/:calculator" element={<CalculatorRouteRedirect theme={theme} onToggleTheme={toggleTheme} />} />
         
         {/* Public pages with language prefix */}
         <Route path="/:lang/privacy" element={<PrivacyPolicy />} />
@@ -101,6 +125,7 @@ export default function RouterApp() {
         <Route path="/:lang/exercises" element={<ExercisesPage />} />
         <Route path="/:lang/exercises/systems" element={<ExerciseSystemsPage />} />
         <Route path="/:lang/exercises/systems/:systemId" element={<ExerciseSystemDetailPage />} />
+        <Route path="/:lang/exercises/lower_back" element={<LegacyExerciseSlugRedirect />} />
         <Route path="/:lang/exercises/:muscle" element={<ExerciseRegionPage />} />
         <Route path="/:lang/insights/:slug" element={<ArticlePage />} />
         <Route path="/:lang/studio/articles" element={<ArticleStudioPage />} />
@@ -110,6 +135,7 @@ export default function RouterApp() {
 
         {/* Legacy routes without language prefix - redirect to language-prefixed versions */}
         <Route path="/calculators" element={<LegacyRouteRedirect />} />
+        <Route path="/calculators/:calculator" element={<LegacyRouteRedirect />} />
         <Route path="/privacy" element={<LegacyRouteRedirect />} />
         <Route path="/terms" element={<LegacyRouteRedirect />} />
         <Route path="/cookies" element={<LegacyRouteRedirect />} />
@@ -129,6 +155,7 @@ export default function RouterApp() {
         <Route path="/exercises" element={<LegacyRouteRedirect />} />
         <Route path="/exercises/systems" element={<LegacyRouteRedirect />} />
         <Route path="/exercises/systems/:systemId" element={<LegacyRouteRedirect />} />
+        <Route path="/exercises/lower_back" element={<LegacyRouteRedirect />} />
         <Route path="/exercises/:muscle" element={<LegacyRouteRedirect />} />
 
         {/* 404 - Not Found */}

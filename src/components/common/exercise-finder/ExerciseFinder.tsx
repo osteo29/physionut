@@ -4,6 +4,7 @@ import {CalendarRange, Dumbbell, Flame, Search, Share2, SlidersHorizontal, Spark
 import {Link} from 'react-router-dom';
 
 import Seo from '../../seo/Seo';
+import {normalizeExerciseUrlSlug} from '../../../services/seoAliases';
 import {useDebounce} from '../../../hooks/useDebounce';
 import {buildHreflangs, navigationPaths} from '../../../utils/langUrlHelper';
 import {ExerciseCard} from './ExerciseCard';
@@ -342,7 +343,8 @@ export function ExerciseFinder({
       ? 'تمارين الجيم'
       : 'Gym exercises';
 
-  const canonicalPath = pathMuscle && isStaticSlug(pathMuscle) ? `${canonicalBasePath}/${pathMuscle}` : canonicalBasePath;
+  const canonicalPath =
+    pathMuscle && isStaticSlug(pathMuscle) ? `${canonicalBasePath}/${normalizeExerciseUrlSlug(pathMuscle)}` : canonicalBasePath;
   const pageTitle = isAr
     ? `${seoKeywordLead} | دليل تمارين الجيم وبرامج التدريب`
     : `${seoKeywordLead} | Gym Exercise Finder, Workouts, and Training Plans`;

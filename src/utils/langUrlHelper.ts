@@ -5,6 +5,7 @@
  */
 
 import type { Language } from '../services/translations';
+import {normalizeExerciseUrlSlug} from '../services/seoAliases';
 
 /**
  * Get the base path without language prefix
@@ -72,7 +73,7 @@ export const navigationPaths = {
   insights: (lang: Language) => `/${lang}/insights`,
   insightsDetail: (lang: Language, slug: string) => `/${lang}/insights/${slug}`,
   exercises: (lang: Language) => `/${lang}/exercises`,
-  exercisesMuscle: (lang: Language, slug: string) => `/${lang}/exercises/${slug}`,
+  exercisesMuscle: (lang: Language, slug: string) => `/${lang}/exercises/${normalizeExerciseUrlSlug(slug)}`,
   exerciseSystems: (lang: Language) => `/${lang}/exercises/systems`,
   exerciseSystemDetail: (lang: Language, slug: string) => `/${lang}/exercises/systems/${slug}`,
   

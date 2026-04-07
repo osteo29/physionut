@@ -12,6 +12,8 @@ import {
 } from './src/services/injuryLocalization';
 import {decodeMojibake} from './src/services/textEncoding';
 import {EXERCISE_FINDER_STATIC_ARABIC_LABELS, EXERCISE_FINDER_STATIC_LABELS, EXERCISE_FINDER_STATIC_SLUGS} from './src/components/common/exercise-finder/constants';
+import {CALCULATOR_PAGE_CONFIGS} from './src/services/calculatorPages';
+import {normalizeExerciseUrlSlug} from './src/services/seoAliases';
 import {TRAINING_SYSTEMS} from './src/components/common/exercise-finder/data/training-systems';
 
 type Lang = 'en' | 'ar';
@@ -377,6 +379,47 @@ function calculatorsRoute(lang: Lang): RouteDefinition {
   };
 }
 
+function calculatorDetailRoute(
+  lang: Lang,
+  calculator: (typeof CALCULATOR_PAGE_CONFIGS)[number],
+): RouteDefinition {
+  const isAr = lang === 'ar';
+  const title = isAr ? calculator.titleAr : calculator.titleEn;
+  const description = isAr ? calculator.descriptionAr : calculator.descriptionEn;
+
+  return {
+    path: `/${lang}/calculators/${calculator.slug}`,
+    lang,
+    title,
+    description,
+    body: layout(
+      lang,
+      'Focused calculator',
+      title,
+      description,
+      [
+        section(
+          'What you will find here',
+          `<ul>
+            <li>Direct access to the matching calculator without browsing the full tool hub.</li>
+            <li>A concise purpose statement so the page is indexable and easier to understand.</li>
+            <li>Helpful next steps into diets, injuries, and the tracking dashboard.</li>
+          </ul>`,
+        ),
+        section(
+          'Helpful next steps',
+          `<ul class="link-list">
+            <li><a href="/${lang}/calculators">Back to the calculators hub</a></li>
+            <li><a href="/${lang}/injuries">Open the injury library</a></li>
+            <li><a href="/${lang}/diets">Review diet guides</a></li>
+            <li><a href="/${lang}/dashboard">Track results in the dashboard</a></li>
+          </ul>`,
+        ),
+      ],
+    ),
+  };
+}
+
 function insightsRoute(lang: Lang): RouteDefinition {
   const isAr = lang === 'ar';
   const articles = getArticles(lang);
@@ -630,7 +673,7 @@ function exercisesRoute(lang: Lang, slug?: (typeof EXERCISE_FINDER_STATIC_SLUGS)
   ];
 
   return {
-    path: slug ? `/${lang}/exercises/${slug}` : `/${lang}/exercises`,
+    path: slug ? `/${lang}/exercises/${normalizeExerciseUrlSlug(slug)}` : `/${lang}/exercises`,
     lang,
     title: pageTitle,
     description: pageDescription,
@@ -838,6 +881,7 @@ const staticRoutes: RouteDefinition[] = [
   ...(['en', 'ar'] as Lang[]).flatMap((lang) => [
     homeRoute(lang),
     calculatorsRoute(lang),
+    ...CALCULATOR_PAGE_CONFIGS.map((calculator) => calculatorDetailRoute(lang, calculator)),
     insightsRoute(lang),
     injuriesRoute(lang),
     dietsRoute(lang),

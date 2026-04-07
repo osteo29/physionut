@@ -1,7 +1,9 @@
 import {readFileSync, writeFileSync} from 'node:fs';
 import {resolve} from 'node:path';
 import {EXERCISE_FINDER_STATIC_SLUGS} from '../src/components/common/exercise-finder/constants';
+import {CALCULATOR_PAGE_CONFIGS} from '../src/services/calculatorPages';
 import {TRAINING_SYSTEMS} from '../src/components/common/exercise-finder/data/training-systems';
+import {normalizeExerciseUrlSlug} from '../src/services/seoAliases';
 import {getArticles} from '../src/services/articles';
 import {dietRegimensCatalog} from '../src/services/dietRegimensCatalog';
 import {getAllInjuries, getInjuryPath} from '../src/services/injuryDatabase';
@@ -26,6 +28,12 @@ type RouteGroup = RouteEntry & {
 const staticRoutes: RouteEntry[] = [
   {path: '/', changefreq: 'weekly', priority: '1.0', lastmod: GENERATED_LASTMOD},
   {path: '/calculators', changefreq: 'weekly', priority: '0.9', lastmod: GENERATED_LASTMOD},
+  ...CALCULATOR_PAGE_CONFIGS.map((calculator) => ({
+    path: `/calculators/${calculator.slug}`,
+    changefreq: 'weekly',
+    priority: '0.85',
+    lastmod: GENERATED_LASTMOD,
+  })),
   {path: '/exercises', changefreq: 'weekly', priority: '0.9', lastmod: GENERATED_LASTMOD},
   {path: '/exercises/systems', changefreq: 'weekly', priority: '0.85', lastmod: GENERATED_LASTMOD},
   ...TRAINING_SYSTEMS.map((system) => ({
@@ -35,14 +43,14 @@ const staticRoutes: RouteEntry[] = [
     lastmod: GENERATED_LASTMOD,
   })),
   ...EXERCISE_FINDER_STATIC_SLUGS.map((slug) => ({
-    path: `/exercises/${slug}`,
+    path: `/exercises/${normalizeExerciseUrlSlug(slug)}`,
     changefreq: 'weekly',
     priority: slug === 'chest' || slug === 'back' || slug === 'shoulders' || slug === 'legs' ? '0.85' : '0.8',
     lastmod: GENERATED_LASTMOD,
   })),
   {path: '/injuries', changefreq: 'weekly', priority: '0.9', lastmod: GENERATED_LASTMOD},
   {path: '/insights', changefreq: 'weekly', priority: '0.8', lastmod: GENERATED_LASTMOD},
-  {path: '/diets', changefreq: 'monthly', priority: '0.8', lastmod: GENERATED_LASTMOD},
+  {path: '/diets', changefreq: 'monthly', priority: '0.85', lastmod: GENERATED_LASTMOD},
   {path: '/privacy', changefreq: 'monthly', priority: '0.6', lastmod: GENERATED_LASTMOD},
   {path: '/about', changefreq: 'monthly', priority: '0.7', lastmod: GENERATED_LASTMOD},
   {path: '/contact', changefreq: 'monthly', priority: '0.7', lastmod: GENERATED_LASTMOD},
@@ -98,7 +106,7 @@ const dietRoutes: RouteGroup[] = dietRegimensCatalog.flatMap((diet) =>
     lang,
     groupKey: `/diets/${diet.id}`,
     changefreq: 'monthly',
-    priority: '0.75',
+    priority: '0.8',
     lastmod: GENERATED_LASTMOD,
   })),
 );
