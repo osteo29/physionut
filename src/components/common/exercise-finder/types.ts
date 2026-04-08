@@ -9,7 +9,7 @@ export type Equipment = 'bodyweight' | 'dumbbell' | 'barbell' | 'machine' | 'ban
 export type ExerciseType = 'strength' | 'hypertrophy' | 'endurance';
 export type TrainingSystemFocus = ExerciseType | 'mixed';
 export type TrainingSystemEquipment = Equipment | 'mixed';
-export type StaticMuscleSlug = MainMuscle | 'arms' | 'core' | 'legs';
+export type StaticMuscleSlug = MainMuscle | 'arms' | 'core' | 'legs' | 'neck' | 'hip' | 'wrist-rehab' | 'full-body-rehab';
 
 export type Exercise = {
   name: string;

@@ -18,7 +18,7 @@ export const TRAINING_SYSTEMS: TrainingSystem[] = [
     focus: 'mixed',
     equipment: 'mixed',
     levels: ['beginner', 'intermediate'],
-    muscleGroups: ['chest', 'back', 'shoulders', 'arms', 'core', 'legs'],
+    muscleGroups: ['chest', 'back', 'shoulders', 'arms', 'core', 'legs', 'full-body-rehab'],
     accent: 'border-emerald-200 bg-[linear-gradient(180deg,rgba(236,253,245,0.95),rgba(255,255,255,0.98))]',
   },
   {
@@ -118,7 +118,7 @@ export const TRAINING_SYSTEMS: TrainingSystem[] = [
     focus: 'endurance',
     equipment: 'bodyweight',
     levels: ['beginner', 'intermediate', 'advanced'],
-    muscleGroups: ['chest', 'back', 'shoulders', 'arms', 'core', 'legs'],
+    muscleGroups: ['chest', 'back', 'shoulders', 'arms', 'core', 'legs', 'full-body-rehab'],
     accent: 'border-orange-200 bg-[linear-gradient(180deg,rgba(255,247,237,0.96),rgba(255,255,255,0.98))]',
   },
   {
@@ -138,7 +138,7 @@ export const TRAINING_SYSTEMS: TrainingSystem[] = [
     focus: 'mixed',
     equipment: 'band',
     levels: ['beginner', 'intermediate'],
-    muscleGroups: ['chest', 'back', 'shoulders', 'arms', 'core', 'legs'],
+    muscleGroups: ['chest', 'back', 'shoulders', 'arms', 'core', 'legs', 'neck', 'hip', 'wrist-rehab', 'full-body-rehab'],
     accent: 'border-slate-200 bg-[linear-gradient(180deg,rgba(248,250,252,0.96),rgba(255,255,255,0.99))]',
   },
 ];

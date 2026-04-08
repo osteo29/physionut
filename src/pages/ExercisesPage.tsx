@@ -12,6 +12,7 @@ import {navigationPaths} from '../utils/langUrlHelper';
 import type {StaticMuscleSlug} from '../components/common/exercise-finder/types';
 
 const HUB_REGIONS: StaticMuscleSlug[] = ['chest', 'back', 'shoulders', 'arms', 'core', 'legs'];
+const REHAB_REGIONS: StaticMuscleSlug[] = ['neck', 'hip', 'wrist-rehab', 'full-body-rehab'];
 
 export default function ExercisesPage() {
   const lang = usePreferredLang();
@@ -85,6 +86,39 @@ export default function ExercisesPage() {
                 </div>
                 <div className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-health-green transition group-hover:text-health-green-dark">
                   <span>{isAr ? 'افتح الصفحة' : 'Open page'}</span>
+                  <ArrowRight className="h-4 w-4" />
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <section className="space-y-5">
+          <div>
+            <h2 className="text-2xl font-black text-slate-900">{isAr ? 'Rehab pages' : 'Targeted rehab pages'}</h2>
+            <p className="mt-2 text-sm leading-7 text-slate-600">
+              {isAr ? 'Focused pages for neck, hip, wrist, and broader return-to-training exercise discovery.' : 'Focused pages for neck, hip, wrist, and broader return-to-training exercise discovery.'}
+            </p>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {REHAB_REGIONS.map((region) => (
+              <Link
+                key={region}
+                to={navigationPaths.exercisesMuscle(lang, region)}
+                className="group rounded-[1.6rem] border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-health-green/30"
+              >
+                <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">
+                  {isAr ? 'Rehab page' : 'Rehab page'}
+                </div>
+                <div className="mt-3 text-xl font-black text-slate-900">
+                  {isAr ? EXERCISE_FINDER_STATIC_ARABIC_LABELS[region] : EXERCISE_FINDER_STATIC_LABELS[region]}
+                </div>
+                <div className="mt-2 text-sm leading-7 text-slate-600">
+                  {isAr ? 'Curated exercise groups connected to rehab and return-to-training needs.' : 'Curated exercise groups connected to rehab and return-to-training needs.'}
+                </div>
+                <div className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-health-green transition group-hover:text-health-green-dark">
+                  <span>{isAr ? 'Open page' : 'Open page'}</span>
                   <ArrowRight className="h-4 w-4" />
                 </div>
               </Link>

@@ -33,6 +33,10 @@ export const EXERCISE_FINDER_STATIC_LABELS: Record<StaticMuscleSlug, string> = {
   arms: 'Arms',
   core: 'Core',
   legs: 'Legs',
+  neck: 'Neck rehab',
+  hip: 'Hip rehab',
+  'wrist-rehab': 'Wrist rehab',
+  'full-body-rehab': 'Full-body rehab',
 };
 
 export const EXERCISE_FINDER_STATIC_ARABIC_LABELS: Record<StaticMuscleSlug, string> = {
@@ -102,6 +106,10 @@ export const STATIC_GROUP_MUSCLES: Record<StaticMuscleSlug, MainMuscle[]> = {
   arms: ['biceps', 'triceps', 'forearms'],
   core: ['abs', 'obliques', 'lower_back'],
   legs: ['glutes', 'quadriceps', 'hamstrings', 'calves'],
+  neck: ['shoulders', 'back'],
+  hip: ['glutes', 'hamstrings', 'quadriceps'],
+  'wrist-rehab': ['forearms'],
+  'full-body-rehab': ['back', 'shoulders', 'lower_back', 'glutes', 'quadriceps', 'hamstrings', 'calves'],
 };
 
 export const MAIN_MUSCLE_TO_STATIC_GROUP: Record<MainMuscle, StaticMuscleSlug> = {
