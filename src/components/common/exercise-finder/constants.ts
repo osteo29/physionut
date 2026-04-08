@@ -56,6 +56,10 @@ export const EXERCISE_FINDER_STATIC_ARABIC_LABELS: Record<StaticMuscleSlug, stri
   arms: 'الذراع',
   core: 'الجذع',
   legs: 'الرجل',
+  neck: 'تأهيل الرقبة',
+  hip: 'تأهيل الورك',
+  'wrist-rehab': 'تأهيل الرسغ',
+  'full-body-rehab': 'تأهيل الجسم بالكامل',
 };
 
 export const SUB_MUSCLE_AR_LABELS: Record<string, string> = {

@@ -16,12 +16,15 @@ import {
 } from '../components/common/exercise-finder/constants';
 import {TrainingSystemCard} from '../components/common/exercise-finder/TrainingSystemCard';
 import {WeeklyPlanCard} from '../components/common/exercise-finder/WeeklyPlanCard';
+import type {StaticMuscleSlug} from '../components/common/exercise-finder/types';
 import Seo from '../components/seo/Seo';
+import {getAllInjuries, getInjuryPath} from '../services/injuryDatabase';
+import {getLocalizedBodyRegion, getLocalizedCategory, getLocalizedInjuryName} from '../services/injuryLocalization';
+import {REHAB_REGION_CONFIG} from '../services/rehabRegionConfig';
 import {denormalizeExerciseUrlSlug, normalizeExerciseUrlSlug} from '../services/seoAliases';
+import {buildHreflangs, navigationPaths} from '../utils/langUrlHelper';
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
-import {buildHreflangs, navigationPaths} from '../utils/langUrlHelper';
-import type {StaticMuscleSlug} from '../components/common/exercise-finder/types';
 
 function isStaticMuscleSlug(value: string | undefined): value is StaticMuscleSlug {
   return Boolean(value && EXERCISE_FINDER_STATIC_SLUGS.includes(value as StaticMuscleSlug));
@@ -46,8 +49,14 @@ export default function ExerciseRegionPage() {
   const content = REGION_CONTENT[region];
   const exercises = getExercisesForRegion(region);
   const systems = getSystemsForRegion(region).slice(0, 3);
+  const rehabConfig = REHAB_REGION_CONFIG[region];
+  const relatedInjuries = rehabConfig
+    ? getAllInjuries().filter((injury) => rehabConfig.relatedInjuryIds.includes(injury.id))
+    : [];
   const canonicalPath = `/exercises/${normalizeExerciseUrlSlug(region)}`;
-  const seoTitle = isAr ? `تمارين ${label} | تشريح مبسط وخطة تمارين كاملة` : `${label} Exercises | Anatomy, exercise library, and workout systems`;
+  const seoTitle = isAr
+    ? `تمارين ${label} | تشريح مبسط وخطة تمارين كاملة`
+    : `${label} Exercises | Anatomy, exercise library, and workout systems`;
   const seoDescription = isAr
     ? `${content.introAr} ستجد أيضًا صفحات الأنظمة المناسبة وروابط الخطة الأسبوعية وتمارين ${label} الكاملة.`
     : `${content.introEn} Explore full ${EXERCISE_FINDER_STATIC_LABELS[region].toLowerCase()} exercises, simple anatomy notes, linked workout systems, and weekly plan guidance.`;
@@ -75,9 +84,14 @@ export default function ExerciseRegionPage() {
             <div className="max-w-3xl space-y-4">
               <div className="inline-flex items-center gap-2 rounded-full border border-health-green/20 bg-health-green/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-health-green-dark">
                 <Activity className="h-4 w-4" />
-                <span>{isAr ? 'منطقة عضلية' : 'Region page'}</span>
+                <span>{rehabConfig ? (isAr ? 'دليل تأهيل' : 'Rehab guide') : isAr ? 'منطقة عضلية' : 'Region page'}</span>
               </div>
               <p className="text-base leading-8 text-slate-700">{isAr ? content.introAr : content.introEn}</p>
+              {rehabConfig ? (
+                <div className="rounded-[1.5rem] border border-health-green/15 bg-white/75 p-4 text-sm leading-7 text-slate-700">
+                  {isAr ? rehabConfig.summaryAr : rehabConfig.summaryEn}
+                </div>
+              ) : null}
             </div>
             <div className="grid gap-3 sm:min-w-[220px]">
               <div className="rounded-2xl border border-white/70 bg-white/80 p-4">
@@ -88,6 +102,12 @@ export default function ExerciseRegionPage() {
                 <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">{isAr ? 'أنظمة مرتبطة' : 'Related systems'}</div>
                 <div className="mt-2 text-2xl font-black text-slate-900">{systems.length}</div>
               </div>
+              {rehabConfig ? (
+                <div className="rounded-2xl border border-white/70 bg-white/80 p-4">
+                  <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">{isAr ? 'إصابات مرتبطة' : 'Related injuries'}</div>
+                  <div className="mt-2 text-2xl font-black text-slate-900">{relatedInjuries.length}</div>
+                </div>
+              ) : null}
             </div>
           </div>
 
@@ -95,6 +115,16 @@ export default function ExerciseRegionPage() {
             <a href="#region-anatomy" className="rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-health-green/30 hover:text-health-green">
               {isAr ? 'التشريح المبسط' : 'Simple anatomy'}
             </a>
+            {rehabConfig ? (
+              <a href="#rehab-guidance" className="rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-health-green/30 hover:text-health-green">
+                {isAr ? 'التوجيه العلاجي' : 'Rehab guidance'}
+              </a>
+            ) : null}
+            {rehabConfig ? (
+              <a href="#related-injuries" className="rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-health-green/30 hover:text-health-green">
+                {isAr ? 'الإصابات المرتبطة' : 'Related injuries'}
+              </a>
+            ) : null}
             <a href="#region-exercises" className="rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-health-green/30 hover:text-health-green">
               {isAr ? 'التمارين الكاملة' : 'Exercise library'}
             </a>
@@ -103,6 +133,37 @@ export default function ExerciseRegionPage() {
             </Link>
           </div>
         </section>
+
+        {rehabConfig ? (
+          <section id="rehab-guidance" className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
+            <article className="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-slate-500">
+                <Activity className="h-4 w-4 text-health-green" />
+                <span>{isAr ? 'توجيه علاجي مختصر' : 'Rehab focus'}</span>
+              </div>
+              <div className="mt-4 space-y-3">
+                {(isAr ? rehabConfig.medicalNotesAr : rehabConfig.medicalNotesEn).map((item) => (
+                  <div key={item} className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm leading-7 text-slate-700">
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </article>
+
+            <article className="rounded-[1.75rem] border border-amber-200 bg-amber-50/70 p-6 shadow-sm sm:p-8">
+              <div className="text-xs font-bold uppercase tracking-[0.18em] text-amber-700">
+                {isAr ? 'متى تخفف الحمل أو تطلب تقييمًا' : 'When to scale back'}
+              </div>
+              <div className="mt-4 space-y-3">
+                {(isAr ? rehabConfig.redFlagNotesAr : rehabConfig.redFlagNotesEn).map((item) => (
+                  <div key={item} className="rounded-2xl border border-amber-200 bg-white/80 px-4 py-3 text-sm leading-7 text-slate-700">
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </article>
+          </section>
+        ) : null}
 
         <section id="region-anatomy" className="grid gap-6 lg:grid-cols-[1.35fr_0.95fr]">
           <article className="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
@@ -144,6 +205,45 @@ export default function ExerciseRegionPage() {
           </article>
         </section>
 
+        {rehabConfig && relatedInjuries.length > 0 ? (
+          <section id="related-injuries" className="space-y-5">
+            <div>
+              <h2 className="text-2xl font-black text-slate-900">{isAr ? 'إصابات مرتبطة بهذا التأهيل' : 'Related injury pages'}</h2>
+              <p className="mt-2 text-sm leading-7 text-slate-600">
+                {isAr
+                  ? 'هذه الروابط تجمع بين صفحة التأهيل العامة وصفحات الإصابات الأقرب لها، حتى يقرأ المستخدم التمرين داخل سياق إصابة أو مرحلة تعافٍ أكثر دقة.'
+                  : 'These links connect the general rehab page with the injury guides most likely to need this exercise focus, giving users more condition-specific context.'}
+              </p>
+            </div>
+
+            <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
+              {relatedInjuries.map((injury) => (
+                <Link
+                  key={injury.id}
+                  to={getInjuryPath(injury, lang)}
+                  className="group rounded-[1.6rem] border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-health-green/30"
+                >
+                  <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">
+                    {isAr ? 'صفحة إصابة' : 'Injury guide'}
+                  </div>
+                  <div className="mt-3 text-lg font-black leading-8 text-slate-900">
+                    {getLocalizedInjuryName(injury.id, injury.name, lang)}
+                  </div>
+                  <div className="mt-2 text-sm leading-7 text-slate-600">
+                    {isAr
+                      ? `${getLocalizedCategory(injury.category, lang)} • ${getLocalizedBodyRegion(injury.bodyRegion, lang)}`
+                      : `${injury.category} • ${injury.bodyRegion}`}
+                  </div>
+                  <div className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-health-green transition group-hover:text-health-green-dark">
+                    <span>{isAr ? 'افتح دليل الإصابة' : 'Open injury guide'}</span>
+                    <ArrowRight className="h-4 w-4" />
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+        ) : null}
+
         <section className="space-y-5">
           <div className="flex items-center justify-between gap-4">
             <div>
@@ -175,7 +275,9 @@ export default function ExerciseRegionPage() {
           <div>
             <h2 className="text-2xl font-black text-slate-900">{isAr ? `كل تمارين ${label}` : `All ${EXERCISE_FINDER_STATIC_LABELS[region]} exercises`}</h2>
             <p className="mt-2 text-sm leading-7 text-slate-600">
-              {isAr ? 'القائمة هنا مخصصة بالكامل لهذه المنطقة، مع ملاحظات تقنية وتفاصيل إضافية عند الفتح.' : 'This page collects the full exercise library for the region, with technique notes and expandable details.'}
+              {isAr
+                ? 'القائمة هنا مخصصة بالكامل لهذه المنطقة، مع ملاحظات تقنية وتفاصيل إضافية عند الفتح.'
+                : 'This page collects the full exercise library for the region, with technique notes and expandable details.'}
             </p>
           </div>
           <div className="grid gap-4 xl:grid-cols-2">
@@ -190,7 +292,9 @@ export default function ExerciseRegionPage() {
             <div>
               <h2 className="text-2xl font-black text-slate-900">{isAr ? 'مثال ربط مع الخطة الأسبوعية' : 'Linked weekly plan example'}</h2>
               <p className="mt-2 text-sm leading-7 text-slate-600">
-                {isAr ? 'الجزء ده يوضح كيف ترتبط تمارين هذه المنطقة مباشرة بأسبوع تدريبي حقيقي.' : 'This section shows how the region connects to a real weekly training structure.'}
+                {isAr
+                  ? 'الجزء ده يوضح كيف ترتبط تمارين هذه المنطقة مباشرة بأسبوع تدريبي حقيقي.'
+                  : 'This section shows how the region connects to a real weekly training structure.'}
               </p>
             </div>
             {systems.slice(0, 1).map((system) => {

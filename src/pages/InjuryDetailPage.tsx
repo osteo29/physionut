@@ -23,6 +23,7 @@ import {
 } from '../services/injuryDatabase';
 import {getRehabStagePlans} from '../services/injuryRehabProtocols';
 import {getInjuryExerciseLinks} from '../services/injuryExerciseLinks';
+import {getInjuryRehabLinks} from '../services/injuryRehabLinks';
 import {
   getLocalizedBodyRegion,
   getLocalizedCategory,
@@ -218,7 +219,15 @@ function getArabicFallbackNutritionFocus() {
   ];
 }
 
-function getArabicFallbackFaq(injuryDisplayName: string, redFlags: string[]) {
+function getArabicFallbackFaq(
+  injuryDisplayName: string,
+  phaseLabel: string,
+  bodyRegion: string,
+  redFlags: string[],
+  phaseGoals: string[],
+) {
+  const topGoals = phaseGoals.slice(0, 2);
+
   return [
     {
       q: `ما أهم هدف في بداية ${injuryDisplayName}؟`,
@@ -232,8 +241,41 @@ function getArabicFallbackFaq(injuryDisplayName: string, redFlags: string[]) {
       q: 'هل التغذية وحدها تكفي؟',
       a: 'لا. التغذية تدعم التعافي، لكنها تعمل أفضل مع تشخيص مناسب، تحميل تدريجي، ونوم جيد.',
     },
+    {
+      q: `ما الأولوية في مرحلة ${phaseLabel}؟`,
+      a: topGoals.length
+        ? `الأولوية الآن هي ${topGoals.join(' ثم ')}, مع مراقبة استجابة ${bodyRegion} بعد التمرين وفي اليوم التالي.`
+        : `الأولوية في هذه المرحلة هي التدرج الهادئ ومراقبة استجابة ${bodyRegion} للحمل.`,
+    },
   ];
 }
+
+function buildRehabMatchReason({
+  injuryName,
+  bodyRegion,
+  phaseLabel,
+  phaseFocus,
+  rehabLabel,
+  lang,
+}: {
+  injuryName: string;
+  bodyRegion: string;
+  phaseLabel: string;
+  phaseFocus: string;
+  rehabLabel: string;
+  lang: 'en' | 'ar';
+}) {
+  if (lang === 'ar') {
+    const focusText = phaseFocus
+      ? ` وفي هذه المرحلة (${phaseLabel}) يكون التركيز على ${phaseFocus}.`
+      : ` خصوصًا في مرحلة ${phaseLabel}.`;
+    return `صفحة ${rehabLabel} مناسبة لحالة ${injuryName} لأنها تجمع التحميل التدريجي والتمارين الأقرب لاحتياج ${bodyRegion}.${focusText}`;
+  }
+
+  const focusText = phaseFocus ? ` In the ${phaseLabel} phase, the focus is ${phaseFocus}.` : ` This is especially useful during the ${phaseLabel} phase.`;
+  return `${rehabLabel} fits ${injuryName} because it groups the closest graded-loading exercises for the ${bodyRegion.toLowerCase()}.${focusText}`;
+}
+
 
 export default function InjuryDetailPage() {
   const {slug = ''} = useParams();
@@ -331,6 +373,11 @@ export default function InjuryDetailPage() {
     bodyRegion: injury.bodyRegion,
     lang,
   });
+  const relatedRehabLinks = getInjuryRehabLinks({
+    injuryId: injury.id,
+    bodyRegion: injury.bodyRegion,
+    lang,
+  });
 
   const customContent = (customContentMap?.[injury.id] as
     | {intro?: string; symptoms?: string[]; faq?: Array<{q: string; a: string}>}
@@ -370,6 +417,17 @@ export default function InjuryDetailPage() {
       : suggestedPhase.exercises.map(normalizeCopy);
 
   const stageFocusText = selectedStagePlan ? normalizeCopy(selectedStagePlan.focus) : '';
+  const relatedRehabCards = relatedRehabLinks.map((item) => ({
+    ...item,
+    phaseReason: buildRehabMatchReason({
+      injuryName: injuryDisplayName,
+      bodyRegion: bodyRegionDisplay,
+      phaseLabel: normalizeCopy(activePhase.label),
+      phaseFocus: stageFocusText,
+      rehabLabel: item.label,
+      lang,
+    }),
+  }));
 
   const nutritionFocus =
     isAr && !listHasArabic(activePhase.nutritionFocus)
@@ -388,8 +446,8 @@ export default function InjuryDetailPage() {
       !customContent.faq.some(
         (item) => textLooksArabic(normalizeCopy(item.q)) || textLooksArabic(normalizeCopy(item.a)),
       ))
-      ? getArabicFallbackFaq(injuryDisplayName, redFlags)
-      : (customContent?.faq || getArabicFallbackFaq(injuryDisplayName, redFlags)).map((item) => ({
+      ? getArabicFallbackFaq(injuryDisplayName, normalizeCopy(activePhase.label), bodyRegionDisplay, redFlags, phaseGoals)
+      : (customContent?.faq || getArabicFallbackFaq(injuryDisplayName, normalizeCopy(activePhase.label), bodyRegionDisplay, redFlags, phaseGoals)).map((item) => ({
           q: normalizeCopy(item.q),
           a: normalizeCopy(item.a),
         }));
@@ -637,6 +695,52 @@ export default function InjuryDetailPage() {
                     <p className="mt-3 text-sm leading-7 text-slate-600">{item.reason}</p>
                     <div className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-health-green">
                       {isAr ? 'انتقل إلى القسم' : 'Go to section'}
+                      <ArrowRight className={`h-4 w-4 ${isAr ? 'rotate-180' : ''}`} />
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          ) : null}
+
+          {relatedRehabCards.length > 0 ? (
+            <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
+              <div className="mb-4 flex items-center justify-between gap-4">
+                <div>
+                  <h2 className="text-xl font-black text-slate-900">
+                    {isAr ? 'صفحات التأهيل الموجه المناسبة' : 'Targeted rehab pages'}
+                  </h2>
+                  <p className="mt-2 max-w-3xl text-sm leading-7 text-slate-600">
+                    {isAr
+                      ? 'هذه الصفحات تربط بروتوكول الإصابة بصفحات تأهيل أوسع وموجهة، لتسهيل الانتقال من مرحلة العلاج إلى تحميل تدريجي أكثر تنظيمًا.'
+                      : 'These pages bridge the injury protocol into broader rehab-focused exercise hubs, helping users move from symptom management into more organized graded loading.'}
+                  </p>
+                </div>
+                <Link
+                  to={navigationPaths.exercises(lang)}
+                  className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-bold text-slate-700"
+                >
+                  {isAr ? 'مكتبة التمارين' : 'Exercise hub'}
+                </Link>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2">
+                {relatedRehabCards.map((item) => (
+                  <Link
+                    key={item.slug}
+                    to={item.href}
+                    className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5 transition hover:border-health-green/30 hover:bg-health-green/5"
+                  >
+                    <div className="text-xs font-bold uppercase tracking-[0.16em] text-health-green">
+                      {isAr ? 'صفحة تأهيل' : 'Rehab page'}
+                    </div>
+                    <div className="mt-2 text-lg font-black text-slate-900">{item.label}</div>
+                    <p className="mt-3 text-sm leading-7 text-slate-600">{item.phaseReason}</p>
+                    <div className="mt-3 rounded-xl border border-slate-200 bg-white/80 px-3 py-3 text-xs leading-6 text-slate-500">
+                      {item.reason}
+                    </div>
+                    <div className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-health-green">
+                      {isAr ? 'افتح الصفحة' : 'Open page'}
                       <ArrowRight className={`h-4 w-4 ${isAr ? 'rotate-180' : ''}`} />
                     </div>
                   </Link>
