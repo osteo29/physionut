@@ -7,6 +7,7 @@ import {
 import type {Article} from '../services/articles';
 import {decodeMojibake} from '../services/textEncoding';
 import type {Language} from '../services/translations';
+import type {Database, TableInsert, TableRow} from './supabaseDatabase';
 
 const rawSupabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const rawSupabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -17,7 +18,7 @@ const supabaseAnonKey = typeof rawSupabaseAnonKey === 'string' ? rawSupabaseAnon
 export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey);
 
 export const supabase = isSupabaseConfigured
-  ? createClient(supabaseUrl, supabaseAnonKey, {
+  ? createClient<Database>(supabaseUrl, supabaseAnonKey, {
       auth: {
         persistSession: true,
         autoRefreshToken: true,
@@ -25,39 +26,9 @@ export const supabase = isSupabaseConfigured
     })
   : null;
 
-export type AssessmentRecord = {
-  id: string;
-  created_at: string;
-  user_id: string;
-  name: string | null;
-  email: string | null;
-  calculator_type: string;
-  value_label: string;
-  value_numeric: number | null;
-  value_unit: string | null;
-  lang: 'en' | 'ar';
-  note: string | null;
-};
-
-export type AssessmentInsert = Omit<
-  AssessmentRecord,
-  'id' | 'created_at' | 'user_id' | 'name' | 'email'
->;
-
-export type PublishedArticleRecord = {
-  id: string;
-  created_at: string;
-  updated_at: string;
-  lang: Language;
-  slug: string;
-  title: string;
-  excerpt: string;
-  content: string;
-  category: string;
-  date: string;
-  icon: string;
-  image: string | null;
-};
+export type AssessmentRecord = TableRow<'assessments'>;
+export type AssessmentInsert = Omit<TableInsert<'assessments'>, 'id' | 'created_at' | 'user_id' | 'name' | 'email'>;
+export type PublishedArticleRecord = TableRow<'articles'>;
 
 const articleAdminEmailRaw = import.meta.env.VITE_ARTICLE_ADMIN_EMAIL;
 const articleAdminEmail =
@@ -258,12 +229,12 @@ export async function saveAssessment(input: AssessmentInsert) {
     user_id: user.id,
     name: fallbackName,
     email: user.email || null,
-  };
+  } satisfies TableInsert<'assessments'>;
 
   const {data, error} = await client.from('assessments').insert(payload).select('*').single();
 
   if (error) throw error;
-  return data as AssessmentRecord;
+  return data;
 }
 
 export async function listAssessmentsForCurrentUser() {
@@ -281,7 +252,7 @@ export async function listAssessmentsForCurrentUser() {
     .order('created_at', {ascending: false});
 
   if (error) throw error;
-  return (data || []) as AssessmentRecord[];
+  return data || [];
 }
 
 export async function updateAssessmentNote(id: string, note: string) {
@@ -289,7 +260,7 @@ export async function updateAssessmentNote(id: string, note: string) {
   const {data, error} = await client.from('assessments').update({note}).eq('id', id).select('*').single();
 
   if (error) throw error;
-  return data as AssessmentRecord;
+  return data;
 }
 
 export async function deleteAssessment(id: string) {
@@ -322,7 +293,7 @@ export async function listPublishedArticles(lang: Language) {
     .order('created_at', {ascending: false});
 
   if (error) throw error;
-  return ((data || []) as PublishedArticleRecord[]).map(mapRecordToArticle);
+  return (data || []).map(mapRecordToArticle);
 }
 
 export async function replacePublishedArticles(lang: Language, articles: Article[]) {
@@ -338,7 +309,7 @@ export async function replacePublishedArticles(lang: Language, articles: Article
 
   if (!articles.length) return;
 
-  const payload = articles.map((article) => ({
+  const payload: TableInsert<'articles'>[] = articles.map((article) => ({
     lang,
     slug: article.slug,
     title: article.title,

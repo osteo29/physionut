@@ -82,7 +82,10 @@ export const navigationPaths = {
   injuryDetail: (lang: Language, slug: string) => `/${lang}/injuries/${slug}`,
   
   // Features
-  studio: (lang: Language) => `/${lang}/studio/articles`,
+  adminHome: (lang: Language) => `/${lang}/admin`,
+  adminInjuries: (lang: Language) => `/${lang}/admin/injuries`,
+  adminArticles: (lang: Language) => `/${lang}/admin/articles`,
+  studio: (lang: Language) => `/${lang}/admin/articles`,
   assistant: (lang: Language) => `/${lang}/assistant`,
   auth: (lang: Language) => `/${lang}/auth`,
   dashboard: (lang: Language) => `/${lang}/dashboard`,

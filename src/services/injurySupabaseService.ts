@@ -3,14 +3,15 @@
  * Centralized API for managing injury protocols, phases, supplements, and meals
  */
 
-import { supabase } from '../lib/supabase';
+import {supabase} from '../lib/supabase';
+import type {TableInsert, TableRow, TableUpdate} from '../lib/supabaseDatabase';
 import type {
   InjuryProtocol,
   InjuryPhase,
   SupplementProtocol,
   MealExamples,
 } from './injuryDatabase';
-import type { Language } from './translations';
+import type {Language} from './translations';
 
 function getSupabaseClient() {
   if (!supabase) {
@@ -20,115 +21,23 @@ function getSupabaseClient() {
   return supabase;
 }
 
-export interface InjuryRow {
-  id: string;
-  injury_id_slug: string;
-  name_en: string;
-  name_ar: string;
-  category: string;
-  body_region_en: string;
-  body_region_ar: string;
-  overview_en: string;
-  overview_ar: string;
-  rehab_summary_en: string;
-  rehab_summary_ar: string;
-  common_in: string[];
-  red_flags: string[];
-  related_calculators: string[];
-  created_at: string;
-  updated_at: string;
-}
+export type InjuryRow = TableRow<'injuries'>;
+export type InjuryInsert = TableInsert<'injuries'>;
+export type InjuryUpdate = TableUpdate<'injuries'>;
 
-export interface PhaseRow {
-  id: string;
-  injury_id: string;
-  phase_number: number;
-  label_en: string;
-  label_ar: string;
-  duration_en: string;
-  duration_ar: string;
-  recovery_window: string;
-  goals_en: string[];
-  goals_ar: string[];
-  nutrition_focus_en: string[];
-  nutrition_focus_ar: string[];
-  recommended_foods_en: string[];
-  recommended_foods_ar: string[];
-  avoid_foods_en: string[];
-  avoid_foods_ar: string[];
-  focus_en?: string | null;
-  focus_ar?: string | null;
-  progression_markers_en?: string[] | null;
-  progression_markers_ar?: string[] | null;
-  cautions_en?: string[] | null;
-  cautions_ar?: string[] | null;
-  nutrition_notes_en?: string[] | null;
-  nutrition_notes_ar?: string[] | null;
-  exercise_plans?: any[] | null;
-  exercises_en: string[];
-  exercises_ar: string[];
-  prohibited_movements_en: string[];
-  prohibited_movements_ar: string[];
-  protein_min_per_kg: number | null;
-  protein_max_per_kg: number | null;
-  hydration_ml_per_kg: number | null;
-  omega3_grams: number | null;
-  creatine_grams: number | null;
-  collagen_min_per_kg: number | null;
-  collagen_max_per_kg: number | null;
-  vitamin_c_mg: number | null;
-  calcium_mg: number | null;
-  created_at: string;
-  updated_at: string;
-}
+export type PhaseRow = TableRow<'injury_phases'>;
+export type PhaseInsert = TableInsert<'injury_phases'>;
+export type PhaseUpdate = TableUpdate<'injury_phases'>;
 
-export interface SupplementRow {
-  id: string;
-  phase_id: string;
-  name: string;
-  dose_en: string;
-  dose_ar: string;
-  reason_en: string;
-  reason_ar: string;
-  timing_en: string | null;
-  timing_ar: string | null;
-  caution_en: string | null;
-  caution_ar: string | null;
-  order_index: number;
-  created_at: string;
-  updated_at: string;
-}
+export type SupplementRow = TableRow<'supplements'>;
+export type SupplementInsert = TableInsert<'supplements'>;
+export type SupplementUpdate = TableUpdate<'supplements'>;
 
-export interface MealRow {
-  id: string;
-  phase_id: string;
-  diet_style: string;
-  breakfast_en: string;
-  breakfast_ar: string;
-  lunch_en: string;
-  lunch_ar: string;
-  dinner_en: string;
-  dinner_ar: string;
-  snack_en: string | null;
-  snack_ar: string | null;
-  shopping_list_en: string[];
-  shopping_list_ar: string[];
-  created_at: string;
-  updated_at: string;
-}
+export type MealRow = TableRow<'meal_examples'>;
+export type MealInsert = TableInsert<'meal_examples'>;
+export type MealUpdate = TableUpdate<'meal_examples'>;
 
-export interface SafetyNotesRow {
-  id: string;
-  injury_id: string;
-  medications_en: string[];
-  medications_ar: string[];
-  supplements_en: string[];
-  supplements_ar: string[];
-  contraindication_medications: string[];
-  contraindication_supplements: string[];
-  created_at: string;
-  updated_at: string;
-}
+export type SafetyNotesRow = TableRow<'safety_notes'>;
 
 /**
  * Fetch all injuries from Supabase
@@ -403,7 +312,7 @@ export async function fetchCompleteInjuryProtocol(
 /**
  * ADMIN: Create new injury
  */
-export async function createInjury(data: Omit<InjuryRow, 'id' | 'created_at' | 'updated_at'>) {
+export async function createInjury(data: InjuryInsert) {
   try {
     const db = getSupabaseClient();
     const { data: result, error } = await db
@@ -423,7 +332,7 @@ export async function createInjury(data: Omit<InjuryRow, 'id' | 'created_at' | '
 /**
  * ADMIN: Update injury
  */
-export async function updateInjury(id: string, data: Partial<InjuryRow>) {
+export async function updateInjury(id: string, data: InjuryUpdate) {
   try {
     const db = getSupabaseClient();
     const { data: result, error } = await db
@@ -464,7 +373,7 @@ export async function deleteInjury(id: string) {
 /**
  * ADMIN: Create phase
  */
-export async function createPhase(data: Omit<PhaseRow, 'id' | 'created_at' | 'updated_at'>) {
+export async function createPhase(data: PhaseInsert) {
   try {
     const db = getSupabaseClient();
     const { data: result, error } = await db
@@ -484,7 +393,7 @@ export async function createPhase(data: Omit<PhaseRow, 'id' | 'created_at' | 'up
 /**
  * ADMIN: Update phase
  */
-export async function updatePhase(id: string, data: Partial<PhaseRow>) {
+export async function updatePhase(id: string, data: PhaseUpdate) {
   try {
     const db = getSupabaseClient();
     const { data: result, error } = await db
@@ -526,7 +435,7 @@ export async function deletePhase(id: string) {
  * ADMIN: Create supplement
  */
 export async function createSupplement(
-  data: Omit<SupplementRow, 'id' | 'created_at' | 'updated_at'>
+  data: SupplementInsert
 ) {
   try {
     const db = getSupabaseClient();
@@ -547,7 +456,7 @@ export async function createSupplement(
 /**
  * ADMIN: Update supplement
  */
-export async function updateSupplement(id: string, data: Partial<SupplementRow>) {
+export async function updateSupplement(id: string, data: SupplementUpdate) {
   try {
     const db = getSupabaseClient();
     const { data: result, error } = await db
@@ -588,7 +497,7 @@ export async function deleteSupplement(id: string) {
 /**
  * ADMIN: Create meal
  */
-export async function createMeal(data: Omit<MealRow, 'id' | 'created_at' | 'updated_at'>) {
+export async function createMeal(data: MealInsert) {
   try {
     const db = getSupabaseClient();
     const { data: result, error } = await db
@@ -608,7 +517,7 @@ export async function createMeal(data: Omit<MealRow, 'id' | 'created_at' | 'upda
 /**
  * ADMIN: Update meal
  */
-export async function updateMeal(id: string, data: Partial<MealRow>) {
+export async function updateMeal(id: string, data: MealUpdate) {
   try {
     const db = getSupabaseClient();
     const { data: result, error } = await db

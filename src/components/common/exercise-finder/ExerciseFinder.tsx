@@ -47,57 +47,57 @@ const SEO_INTROS: Record<
     titleEn: 'Gym exercise finder for muscle-focused training',
     titleAr: 'دليل تمارين جيم مخصص لاستهداف العضلات',
     bodyEn:
-      'Use this exercise finder to discover gym exercises by muscle group, sub-muscle, equipment, level, and training goal. It is built to help users compare chest, back, shoulder, arm, core, and leg exercises in one searchable library.',
+      'Use this exercise finder to discover gym exercises by muscle group, sub-muscle, equipment, level, and training goal. It helps users understand what each region does, why a movement is useful for strength or muscle gain, and how to pick safer exercise options when rebuilding after pain, stiffness, or time away from training.',
     bodyAr:
-      'استخدم دليل التمارين ده لاكتشاف تمارين الجيم حسب العضلة الأساسية، العضلة الفرعية، المعدات، المستوى، وهدف التمرين. الصفحة مصممة علشان تساعدك تقارن بين تمارين الصدر والظهر والكتف والذراع والجذع والرجل داخل مكتبة واحدة سهلة البحث.',
+      'استخدم دليل التمارين ده لاكتشاف تمارين الجيم حسب العضلة الأساسية، العضلة الفرعية، المعدات، المستوى، وهدف التمرين. الصفحة كمان بتساعدك تفهم وظيفة كل منطقة، وفائدة كل تمرين للقوة أو الضخامة، وإزاي تختار خيارات أكثر أمانًا لو كنت راجع من ألم أو تيبّس أو فترة انقطاع.',
   },
   chest: {
     titleEn: 'Chest exercises for upper, middle, and lower chest training',
     titleAr: 'تمارين صدر لاستهداف أعلى ووسط وأسفل الصدر',
     bodyEn:
-      'Browse chest exercises for upper chest, middle chest, and lower chest development with options for dumbbells, barbells, bodyweight, and machines. This section helps users find pressing and chest-building movements based on their available equipment and level.',
+      'Browse chest exercises for upper chest, middle chest, and lower chest development with options for dumbbells, barbells, bodyweight, and machines. This section explains how pressing patterns support chest size and pushing strength, and it also helps users returning from shoulder irritation choose more controlled chest-training options.',
     bodyAr:
-      'استعرض تمارين الصدر لاستهداف الجزء العلوي والوسط والسفلي مع خيارات بالدمبل والبار ووزن الجسم والأجهزة. الجزء ده بيساعد المستخدم يلاقي أفضل تمارين الضغط وبناء الصدر حسب المعدات المتاحة والمستوى التدريبي.',
+      'استعرض تمارين الصدر لاستهداف الجزء العلوي والوسط والسفلي مع خيارات بالدمبل والبار ووزن الجسم والأجهزة. الجزء ده يوضح كيف تخدم تمارين الضغط بناء الصدر وقوة الدفع، ويساعد أيضًا من يعود من تهيج الكتف على اختيار بدائل أكثر تحكمًا.',
   },
   back: {
     titleEn: 'Back exercises for lats, traps, rhomboids, and lower back',
     titleAr: 'تمارين ظهر للاتس والترابيس والرومبويد وأسفل الظهر',
     bodyEn:
-      'Find back exercises for width, thickness, posture, and pulling strength. The page covers lats, traps, rhomboids, and spinal erectors so users can build a stronger back using bodyweight, dumbbells, barbells, bands, or machines.',
+      'Find back exercises for width, thickness, posture, and pulling strength. The page covers lats, traps, rhomboids, and spinal erectors so users can build a stronger back using bodyweight, dumbbells, barbells, bands, or machines, with useful options for people who need better posture or a gradual return after low-back or neck tension.',
     bodyAr:
-      'اعثر على تمارين ظهر مناسبة للعرض والسماكة والقوة ووضعية الجسم. الصفحة تغطي اللاتس والترابيس والرومبويد وعضلات أسفل الظهر لمساعدة المستخدم على بناء ظهر أقوى باستخدام وزن الجسم أو الدمبل أو البار أو الأجهزة.',
+      'اعثر على تمارين ظهر مناسبة للعرض والسماكة والقوة ووضعية الجسم. الصفحة تغطي اللاتس والترابيس والرومبويد وعضلات أسفل الظهر لمساعدة المستخدم على بناء ظهر أقوى باستخدام وزن الجسم أو الدمبل أو البار أو الأجهزة، مع خيارات مفيدة لتحسين القوام أو العودة التدريجية بعد شد أسفل الظهر أو الرقبة.',
   },
   shoulders: {
     titleEn: 'Shoulder exercises for front, side, and rear delts',
     titleAr: 'تمارين كتف للجزء الأمامي والجانبي والخلفي',
     bodyEn:
-      'Explore shoulder exercises for front delts, side delts, and rear delts with a mix of presses, raises, and shoulder-friendly strength work. It is useful for users searching for balanced shoulder workouts and better movement quality.',
+      'Explore shoulder exercises for front delts, side delts, and rear delts with a mix of presses, raises, and shoulder-friendly strength work. It is useful for balanced shoulder development, scapular control, and users who need smarter exercise choices after overhead pain or limited range of motion.',
     bodyAr:
-      'استكشف تمارين الكتف للجزء الأمامي والجانبي والخلفي مع خليط من الضغط والرفرفة وتمارين قوة مناسبة للكتف. ده مفيد للمستخدم اللي بيدور على برنامج كتف متوازن وتحكم حركي أفضل.',
+      'استكشف تمارين الكتف للجزء الأمامي والجانبي والخلفي مع خليط من الضغط والرفرفة وتمارين قوة مناسبة للكتف. هذا مفيد لبناء كتف متوازن وتحسين التحكم بلوح الكتف، خاصة لمن يحتاج اختيارات أذكى بعد ألم الرفع فوق الرأس أو محدودية المدى الحركي.',
   },
   arms: {
     titleEn: 'Arm exercises for biceps, triceps, and forearms',
     titleAr: 'تمارين ذراع للبايسبس والترايسبس والساعد',
     bodyEn:
-      'Review arm exercises that target biceps, triceps, and forearms through direct isolation work and compound pulling or pressing patterns. This section is designed for users comparing arm day options and accessory exercises.',
+      'Review arm exercises that target biceps, triceps, and forearms through direct isolation work and compound pulling or pressing patterns. This section is designed for users comparing arm-day options, improving grip and elbow comfort, and choosing accessory work that supports bigger lifts without unnecessary joint stress.',
     bodyAr:
-      'راجع تمارين الذراع التي تستهدف البايسبس والترايسبس والساعد من خلال تمارين عزل مباشرة وتمارين مركبة للسحب والدفع. الجزء ده مناسب للمستخدم الذي يقارن بين اختيارات arm day وتمارين الإكسسوري.',
+      'راجع تمارين الذراع التي تستهدف البايسبس والترايسبس والساعد من خلال تمارين عزل مباشرة وتمارين مركبة للسحب والدفع. هذا القسم مناسب لمن يقارن بين اختيارات arm day، أو يريد تحسين القبضة وراحة الكوع، أو اختيار تمارين إكسسوري تدعم التمارين الكبرى بدون ضغط مفصلي زائد.',
   },
   core: {
     titleEn: 'Core exercises for abs, obliques, and lower back',
     titleAr: 'تمارين كور للبطن والخواصر وأسفل الظهر',
     bodyEn:
-      'Find core exercises for abs, obliques, and lower back stability with options that support trunk strength, control, and endurance. These exercises fit users who want athletic core work instead of random ab routines.',
+      'Find core exercises for abs, obliques, and lower back stability with options that support trunk strength, control, and endurance. These exercises fit users who want athletic core work instead of random ab routines, and they are especially useful when rebuilding trunk control after low-back discomfort or poor bracing habits.',
     bodyAr:
-      'اعثر على تمارين كور للبطن والخواصر وأسفل الظهر مع خيارات تدعم الثبات والقوة والتحمل. التمارين هنا مناسبة للمستخدم الذي يريد تمارين جذع رياضية مفيدة بدل روتين بطن عشوائي.',
+      'اعثر على تمارين كور للبطن والخواصر وأسفل الظهر مع خيارات تدعم الثبات والقوة والتحمل. التمارين هنا مناسبة لمن يريد عملًا رياضيًا مفيدًا للجذع بدل روتين بطن عشوائي، وهي مفيدة أيضًا لاستعادة التحكم بعد انزعاج أسفل الظهر أو ضعف الثبات.',
   },
   legs: {
     titleEn: 'Leg exercises for glutes, quads, hamstrings, and calves',
     titleAr: 'تمارين رجل للجلووتس والكوادز والهامسترينج والسمانة',
     bodyEn:
-      'Browse leg exercises for glutes, quadriceps, hamstrings, and calves with options for strength blocks, hypertrophy work, and lower-body endurance. This section helps users plan full leg sessions based on their equipment and experience.',
+      'Browse leg exercises for glutes, quadriceps, hamstrings, and calves with options for strength blocks, hypertrophy work, and lower-body endurance. This section helps users plan full leg sessions based on their equipment and experience, while also highlighting smarter lower-body choices when returning after knee stiffness, hip weakness, or ankle limitation.',
     bodyAr:
-      'استعرض تمارين الرجل للجلووتس والكوادز والهامسترينج والسمانة مع خيارات للقوة والضخامة والتحمل. الجزء ده يساعد المستخدم يخطط يوم رجل كامل حسب المعدات المتاحة والخبرة.',
+      'استعرض تمارين الرجل للجلووتس والكوادز والهامسترينج والسمانة مع خيارات للقوة والضخامة والتحمل. هذا القسم يساعد المستخدم على تخطيط يوم رجل كامل حسب المعدات والخبرة، مع الإشارة أيضًا لاختيارات أذكى عند العودة بعد تيبس الركبة أو ضعف الورك أو محدودية الكاحل.',
   },
   biceps: {
     titleEn: 'Biceps exercises for arm growth and pulling support',
@@ -163,33 +163,33 @@ const SEO_INTROS: Record<
     titleEn: 'Neck rehab exercises for posture, shoulder-blade control, and training tolerance',
     titleAr: 'تمارين تأهيل الرقبة لتحسين الوضعية والتحمل',
     bodyEn:
-      'Find neck-friendly exercise options that emphasize posture, scapular control, and gradual return to training without forcing high-irritation shrugging or loaded neck work.',
+      'Find neck-friendly exercise options that emphasize posture, scapular control, and gradual return to training without forcing high-irritation shrugging or loaded neck work. These drills are useful when neck symptoms are linked to desk posture, upper-trap dominance, or returning to pulling days after flare-ups.',
     bodyAr:
-      'اعثر على خيارات مناسبة لتأهيل الرقبة تركّز على الوضعية والتحكم في لوح الكتف والعودة التدريجية للتدريب دون فرض تمارين مزعجة أو تحميل مباشر زائد على الرقبة.',
+      'اعثر على خيارات مناسبة لتأهيل الرقبة تركّز على الوضعية والتحكم في لوح الكتف والعودة التدريجية للتدريب دون فرض تمارين مزعجة أو تحميل مباشر زائد على الرقبة. هذه الخيارات مفيدة عندما تكون الأعراض مرتبطة بوضعية الجلوس أو سيطرة الترابيس العلوية أو العودة ليوم السحب بعد نوبات تهيج.',
   },
   hip: {
     titleEn: 'Hip rehab exercises for pelvic control, glute strength, and return to movement',
     titleAr: 'تمارين تأهيل الورك للتحكم الحركي والعودة للحركة',
     bodyEn:
-      'Browse hip rehab exercise options built around glute strength, pelvic control, split-stance work, and safe progressions for rebuilding lower-body confidence.',
+      'Browse hip rehab exercise options built around glute strength, pelvic control, split-stance work, and safe progressions for rebuilding lower-body confidence. This page is useful for users managing hip stiffness, weak single-leg control, or gradual return after groin, glute, or lateral-hip irritation.',
     bodyAr:
-      'تصفح خيارات تأهيل الورك المبنية على قوة الجلوتس والتحكم في الحوض والعمل الأحادي والتدرج الآمن لاستعادة الثقة في الجزء السفلي.',
+      'تصفح خيارات تأهيل الورك المبنية على قوة الجلوتس والتحكم في الحوض والعمل الأحادي والتدرج الآمن لاستعادة الثقة في الجزء السفلي. الصفحة مفيدة لمن يدير تيبس الورك أو ضعف الاتزان على رجل واحدة أو العودة التدريجية بعد تهيج المغبن أو الجلوتس أو جانب الورك.',
   },
   'wrist-rehab': {
     titleEn: 'Wrist rehab exercises for grip tolerance, control, and gradual loading',
     titleAr: 'تمارين تأهيل الرسغ لتحمل القبضة والتحميل التدريجي',
     bodyEn:
-      'Explore wrist rehab exercise options that support grip tolerance, forearm strength, and controlled loading so users can return to pressing, carrying, and pulling more comfortably.',
+      'Explore wrist rehab exercise options that support grip tolerance, forearm strength, and controlled loading so users can return to pressing, carrying, and pulling more comfortably. They are especially relevant after overuse from push-ups, heavy curls, gripping fatigue, or long breaks that reduce wrist tolerance.',
     bodyAr:
-      'استكشف خيارات تأهيل الرسغ التي تدعم تحمل القبضة وقوة الساعد والتحميل المضبوط حتى يتمكن المستخدم من العودة للضغط والحمل والسحب براحة أكبر.',
+      'استكشف خيارات تأهيل الرسغ التي تدعم تحمل القبضة وقوة الساعد والتحميل المضبوط حتى يتمكن المستخدم من العودة للضغط والحمل والسحب براحة أكبر. وهي مفيدة خصوصًا بعد الإجهاد الزائد من الضغط الأرضي أو الكيرلز الثقيلة أو إرهاق القبضة أو فترات الانقطاع التي تقلل تحمل الرسغ.',
   },
   'full-body-rehab': {
     titleEn: 'Full-body rehab exercises for controlled return to training',
     titleAr: 'تمارين تأهيل الجسم بالكامل للعودة التدريجية للتدريب',
     bodyEn:
-      'Review full-body rehab exercise options that reconnect trunk control, lower-body support, shoulder function, and low-cost conditioning in a manageable weekly flow.',
+      'Review full-body rehab exercise options that reconnect trunk control, lower-body support, shoulder function, and low-cost conditioning in a manageable weekly flow. This section is built for users returning after layoffs, multi-area stiffness, or deconditioning who need a complete but conservative weekly structure.',
     bodyAr:
-      'راجع خيارات تأهيل الجسم بالكامل التي تعيد ربط التحكم في الجذع ودعم الجزء السفلي ووظيفة الكتف والتحمل الخفيف ضمن تدفق أسبوعي يمكن الالتزام به.',
+      'راجع خيارات تأهيل الجسم بالكامل التي تعيد ربط التحكم في الجذع ودعم الجزء السفلي ووظيفة الكتف والتحمل الخفيف ضمن تدفق أسبوعي يمكن الالتزام به. هذا القسم مناسب لمن يعود بعد انقطاع طويل أو تيبس في أكثر من منطقة أو تراجع عام في اللياقة ويحتاج هيكلًا محافظًا لكن متكاملًا.',
   },
 };
 
