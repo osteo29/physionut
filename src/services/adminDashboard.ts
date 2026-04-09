@@ -1,4 +1,5 @@
 import {supabase} from '../lib/supabase';
+import type {Database} from '../lib/supabaseDatabase';
 
 export type AdminDashboardMetrics = {
   injuries: number;
@@ -16,7 +17,12 @@ function ensureSupabase() {
   return supabase;
 }
 
-async function fetchCount(table: keyof AdminDashboardMetrics extends never ? never : string) {
+type DashboardTable = keyof Pick<
+  Database['public']['Tables'],
+  'injuries' | 'injury_phases' | 'articles' | 'assessments' | 'assessment_leads'
+>;
+
+async function fetchCount(table: DashboardTable) {
   const client = ensureSupabase();
   const {count, error} = await client.from(table).select('*', {count: 'exact', head: true});
   if (error) throw error;

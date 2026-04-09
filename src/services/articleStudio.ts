@@ -46,6 +46,12 @@ export async function publishArticles(lang: Language, articles: Article[]) {
   }
 }
 
+export async function importFallbackArticlesToSupabase(lang: Language) {
+  const fallbackArticles = await getFallbackArticles(lang);
+  await publishArticles(lang, fallbackArticles);
+  return fallbackArticles;
+}
+
 export function createBlankArticle(lang: Language, existingArticles: Article[]): Article {
   const nextId = existingArticles.reduce((max, article) => Math.max(max, article.id), 0) + 1;
 

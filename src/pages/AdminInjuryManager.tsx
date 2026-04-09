@@ -3,6 +3,7 @@ import {Link, Navigate} from 'react-router-dom';
 import {CopyPlus, FileDown, Plus, Save, Trash2} from 'lucide-react';
 import Seo from '../components/seo/Seo';
 import PageLayout from './PageLayout';
+import AdminShell from '../components/admin/AdminShell';
 import usePreferredLang from './usePreferredLang';
 import {
   getArticleAdminEmail,
@@ -922,7 +923,18 @@ export default function AdminInjuryManager() {
         canonicalPath="/admin/injuries"
         noIndex
       />
-      <PageLayout title={isAr ? 'إدارة الإصابات' : 'Injury Studio'}>
+      <AdminShell
+        title={isAr ? 'إدارة الإصابات وخطط المراحل' : 'Injury protocols workspace'}
+        description={
+          isAr
+            ? 'حرر الإصابات والمراحل والمكملات والوجبات من نفس مساحة الإدارة، مع بقاء الربط المباشر بسوبا بيز وعمليات الحفظ الحالية.'
+            : 'Manage injuries, phases, supplements, and meal examples from the same admin workspace while keeping the current Supabase save flow.'
+        }
+        currentTab="injuries"
+        user={user}
+        canManageInjuries
+        canManageArticles={isArticleAdminUser(user)}
+      >
         <div className="space-y-8">
           <div className="rounded-2xl border border-emerald-100 bg-emerald-50 p-4 text-sm leading-7 text-slate-700">
             <p>{isAr ? 'الصفحة دي بقت بنفس أسلوب ستوديو المقالات: صلاحيات واضحة، ولوحة تحرير أسهل للإضافة والتعديل.' : 'This page now follows the article studio style with clearer access control and easier editing.'}</p>
@@ -1312,7 +1324,7 @@ export default function AdminInjuryManager() {
             </section>
           </div>
         </div>
-      </PageLayout>
+      </AdminShell>
     </>
   );
 }

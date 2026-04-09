@@ -1,8 +1,8 @@
 import {mkdirSync, readFileSync, writeFileSync} from 'node:fs';
 import {dirname, join, resolve} from 'node:path';
-import {getArticles} from './src/services/articles';
+import {getArticles as getLocalArticles} from './src/services/articles';
 import {dietRegimensCatalog} from './src/services/dietRegimensCatalog';
-import {getAllInjuries, getInjuryPath, type InjuryProtocol} from './src/services/injuryDatabase';
+import {getAllInjuries as getLocalInjuries, getInjuryPath, type InjuryProtocol} from './src/services/injuryDatabase';
 import {
   getLocalizedBodyRegion,
   getLocalizedCategory,
@@ -15,6 +15,7 @@ import {EXERCISE_FINDER_STATIC_ARABIC_LABELS, EXERCISE_FINDER_STATIC_LABELS, EXE
 import {CALCULATOR_PAGE_CONFIGS} from './src/services/calculatorPages';
 import {normalizeExerciseUrlSlug} from './src/services/seoAliases';
 import {TRAINING_SYSTEMS} from './src/components/common/exercise-finder/data/training-systems';
+import {getBuildArticles, getBuildInjuries} from './scripts/buildContentSource';
 
 type Lang = 'en' | 'ar';
 
@@ -32,6 +33,12 @@ const SITE_URL = 'https://physionutrition.vercel.app';
 const DIST_DIR = resolve(process.cwd(), 'dist');
 const TEMPLATE_PATH = resolve(DIST_DIR, 'index.html');
 const template = readFileSync(TEMPLATE_PATH, 'utf8');
+const buildArticlesByLang = Object.fromEntries(
+  await Promise.all((['en', 'ar'] as Lang[]).map(async (lang) => [lang, await getBuildArticles(lang)])),
+) as Record<Lang, Awaited<ReturnType<typeof getBuildArticles>>>;
+const buildInjuries = await getBuildInjuries();
+const getArticles = (lang: Lang) => buildArticlesByLang[lang] || getLocalArticles(lang);
+const getAllInjuries = () => (buildInjuries.length ? buildInjuries : getLocalInjuries());
 
 const SEO_SHELL_CSS = `
 <style data-prerender-seo="true">
@@ -898,6 +905,8 @@ const staticRoutes: RouteDefinition[] = [
 staticRoutes.forEach(writeRoute);
 writeRootShell();
 console.log(`Generated prerendered HTML for ${staticRoutes.length} routes.`);
+
+
 
 
 

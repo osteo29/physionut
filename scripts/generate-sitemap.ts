@@ -4,9 +4,9 @@ import {EXERCISE_FINDER_STATIC_SLUGS} from '../src/components/common/exercise-fi
 import {CALCULATOR_PAGE_CONFIGS} from '../src/services/calculatorPages';
 import {TRAINING_SYSTEMS} from '../src/components/common/exercise-finder/data/training-systems';
 import {normalizeExerciseUrlSlug} from '../src/services/seoAliases';
-import {getArticles} from '../src/services/articles';
+import {getBuildArticles, getBuildInjuries} from './buildContentSource';
 import {dietRegimensCatalog} from '../src/services/dietRegimensCatalog';
-import {getAllInjuries, getInjuryPath} from '../src/services/injuryDatabase';
+import {getInjuryPath} from '../src/services/injuryDatabase';
 
 const SITE_URL = 'https://physionutrition.vercel.app';
 const LANGUAGES = ['en', 'ar'] as const;
@@ -78,8 +78,14 @@ const langStaticRoutes: RouteGroup[] = staticRoutes.flatMap((route) =>
   LANGUAGES.map((lang) => buildRouteGroup(route.path, lang, route.changefreq, route.priority, route.lastmod)),
 );
 
+const buildArticlesByLang = Object.fromEntries(
+  await Promise.all(LANGUAGES.map(async (lang) => [lang, await getBuildArticles(lang)])),
+) as Record<Language, Awaited<ReturnType<typeof getBuildArticles>>>;
+
+const buildInjuries = await getBuildInjuries();
+
 const articleRoutes: RouteGroup[] = LANGUAGES.flatMap((lang) =>
-  getArticles(lang).map((article) => ({
+  buildArticlesByLang[lang].map((article) => ({
     path: `/${lang}/insights/${article.slug}`,
     lang,
     groupKey: `/insights/${article.slug}`,
@@ -89,7 +95,7 @@ const articleRoutes: RouteGroup[] = LANGUAGES.flatMap((lang) =>
   })),
 );
 
-const injuryRoutes: RouteGroup[] = getAllInjuries().flatMap((injury) =>
+const injuryRoutes: RouteGroup[] = buildInjuries.flatMap((injury) =>
   LANGUAGES.map((lang) => ({
     path: getInjuryPath(injury, lang),
     lang,
@@ -169,3 +175,5 @@ const nextRobots = `${robots}\n\nSitemap: ${SITE_URL}/sitemap-index.xml\nSitemap
 writeFileSync(robotsPath, nextRobots, 'utf8');
 
 console.log(`Generated sitemap with ${allRoutes.length} URLs and refreshed sitemap index.`);
+
+

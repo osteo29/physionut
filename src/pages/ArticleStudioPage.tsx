@@ -1,27 +1,23 @@
 import {useEffect, useMemo, useState} from 'react';
 import {Link, Navigate} from 'react-router-dom';
-import PageLayout from './PageLayout';
+import {FileDown} from 'lucide-react';
 import usePreferredLang from './usePreferredLang';
+import PageLayout from './PageLayout';
 import Seo from '../components/seo/Seo';
+import AdminAccessBoundary from '../components/admin/AdminAccessBoundary';
+import AdminShell from '../components/admin/AdminShell';
 import {navigationPaths} from '../utils/langUrlHelper';
 import {
-  canManageArticles,
   createBlankArticle,
-  getArticleAdminIdentity,
   getFallbackArticles,
+  importFallbackArticlesToSupabase,
   loadPublishedArticles,
   publishArticles,
   slugifyArticleTitle,
 } from '../services/articleStudio';
 import type {Article} from '../services/articles';
 import type {Language} from '../services/translations';
-import {
-  getCurrentUser,
-  getSupabaseConfigurationMessage,
-  isSupabaseConfigured,
-  onSupabaseAuthChange,
-  type User,
-} from '../lib/supabase';
+import useAdminAccess from '../hooks/useAdminAccess';
 
 type EditableFields = keyof Pick<
   Article,
@@ -30,60 +26,26 @@ type EditableFields = keyof Pick<
 
 export default function ArticleStudioPage() {
   const uiLang = usePreferredLang();
+  const access = useAdminAccess(uiLang);
   const [editorLang, setEditorLang] = useState<Language>(uiLang);
-  const [user, setUser] = useState<User | null>(null);
-  const [authChecked, setAuthChecked] = useState(false);
   const [articles, setArticles] = useState<Article[]>([]);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [importText, setImportText] = useState('');
   const [notice, setNotice] = useState('');
   const [loadingArticles, setLoadingArticles] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [importingLegacy, setImportingLegacy] = useState(false);
   const [search, setSearch] = useState('');
   const [pendingSlug, setPendingSlug] = useState<string | null>(null);
   const [otherLangArticles, setOtherLangArticles] = useState<Article[]>([]);
 
   const isAr = uiLang === 'ar';
   const otherLang: Language = editorLang === 'ar' ? 'en' : 'ar';
-  const adminEmail = getArticleAdminIdentity();
-  const isAdmin = canManageArticles(user);
-
-  useEffect(() => {
-    let mounted = true;
-
-    const bootstrap = async () => {
-      if (!isSupabaseConfigured) {
-        setAuthChecked(true);
-        return;
-      }
-
-      try {
-        const currentUser = await getCurrentUser();
-        if (!mounted) return;
-        setUser(currentUser);
-      } catch {
-        if (!mounted) return;
-        setUser(null);
-      } finally {
-        if (mounted) setAuthChecked(true);
-      }
-    };
-
-    void bootstrap();
-
-    if (!isSupabaseConfigured) return () => void 0;
-
-    const {data} = onSupabaseAuthChange((_, session) => {
-      if (!mounted) return;
-      setUser(session?.user || null);
-      setAuthChecked(true);
-    });
-
-    return () => {
-      mounted = false;
-      data.subscription.unsubscribe();
-    };
-  }, []);
+  const user = access.user;
+  const authChecked = access.authChecked;
+  const isAdmin = access.canManageArticles;
+  const adminEmail = access.configuredAdminEmail;
+  const isSupabaseConfigured = access.isSupabaseConfigured;
 
   useEffect(() => {
     let active = true;
@@ -218,12 +180,44 @@ export default function ArticleStudioPage() {
     }
   };
 
+  const handleImportLegacyArticles = async () => {
+    const confirmed = window.confirm(
+      uiLang === 'en'
+        ? `Import legacy ${editorLang.toUpperCase()} articles to Supabase now?`
+        : `استيراد مقالات ${editorLang === 'ar' ? 'العربية' : 'الإنجليزية'} القديمة إلى Supabase الآن؟`,
+    );
+
+    if (!confirmed) return;
+
+    try {
+      setImportingLegacy(true);
+      const imported = await importFallbackArticlesToSupabase(editorLang);
+      setArticles(imported);
+      setSelectedId(imported[0]?.id ?? null);
+      setNotice(
+        uiLang === 'en'
+          ? `Imported ${imported.length} legacy ${editorLang.toUpperCase()} articles to Supabase.`
+          : `تم استيراد ${imported.length} من مقالات ${editorLang === 'ar' ? 'العربية' : 'الإنجليزية'} القديمة إلى Supabase.`,
+      );
+    } catch (error) {
+      setNotice(
+        error instanceof Error
+          ? error.message
+          : uiLang === 'en'
+            ? 'Legacy article import failed.'
+            : 'فشل استيراد المقالات القديمة.',
+      );
+    } finally {
+      setImportingLegacy(false);
+    }
+  };
+
   if (!isSupabaseConfigured) {
     return (
       <>
-        <Seo title={uiLang === 'en' ? 'Article Studio' : 'ستوديو المقالات'} description={getSupabaseConfigurationMessage(uiLang)} canonicalPath="/studio/articles" noIndex />
+        <Seo title={uiLang === 'en' ? 'Article Studio' : 'ستوديو المقالات'} description={access.configMessage} canonicalPath="/admin/articles" noIndex />
         <PageLayout title={uiLang === 'en' ? 'Article Studio' : 'ستوديو المقالات'}>
-          <p>{getSupabaseConfigurationMessage(uiLang)}</p>
+          <p>{access.configMessage}</p>
         </PageLayout>
       </>
     );
@@ -280,10 +274,28 @@ export default function ArticleStudioPage() {
             ? 'Manage and publish PhysioNutrition articles from one secure admin page.'
             : 'أدر وانشر مقالات PhysioNutrition من صفحة أدمن واحدة وآمنة.'
         }
-        canonicalPath="/studio/articles"
+        canonicalPath="/admin/articles"
         noIndex
       />
-      <PageLayout title={uiLang === 'en' ? 'Article Studio' : 'ستوديو المقالات'}>
+      <AdminAccessBoundary
+        access={access}
+        lang={uiLang}
+        title={uiLang === 'en' ? 'Article Studio' : 'ستوديو المقالات'}
+        canonicalPath="/admin/articles"
+        requiredPermission="articles"
+      >
+      <AdminShell
+        title={uiLang === 'en' ? 'Article publishing' : 'إدارة المقالات'}
+        description={
+          uiLang === 'en'
+            ? 'Edit, compare, and publish article content to Supabase from one organized admin workspace.'
+            : 'حرر المقالات وقارن النسختين العربية والإنجليزية وانشرها إلى Supabase من مساحة إدارة منظمة.'
+        }
+        currentTab="articles"
+        user={user}
+        canManageInjuries={access.canManageInjuries}
+        canManageArticles={access.canManageArticles}
+      >
         <div className="space-y-8">
           <div className="rounded-2xl border border-emerald-100 bg-emerald-50 p-4 text-sm leading-7 text-slate-700">
             <p>
@@ -319,7 +331,22 @@ export default function ArticleStudioPage() {
             >
               English
             </button>
-            <span className="text-sm text-slate-500">{user.email}</span>
+            <button
+              type="button"
+              onClick={() => void handleImportLegacyArticles()}
+              disabled={importingLegacy}
+              className="rounded-2xl border border-amber-300 px-4 py-2 text-sm font-bold text-amber-700 disabled:opacity-60"
+            >
+              <FileDown className="mr-2 inline h-4 w-4" />
+              {importingLegacy
+                ? uiLang === 'en'
+                  ? 'Importing...'
+                  : 'جار الاستيراد...'
+                : uiLang === 'en'
+                  ? `Import ${editorLang.toUpperCase()} legacy articles`
+                  : `استيراد مقالات ${editorLang === 'ar' ? 'العربية' : 'الإنجليزية'} القديمة`}
+            </button>
+            <span className="text-sm text-slate-500">{user?.email}</span>
             {notice ? <span className="text-sm font-medium text-health-green">{notice}</span> : null}
           </div>
 
@@ -479,7 +506,8 @@ export default function ArticleStudioPage() {
             </div>
           </div>
         </div>
-      </PageLayout>
+      </AdminShell>
+      </AdminAccessBoundary>
     </>
   );
 }
