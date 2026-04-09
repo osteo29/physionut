@@ -159,6 +159,38 @@ const SEO_INTROS: Record<
     bodyEn: 'Review calf exercises that improve ankle strength, stiffness, and lower-leg development for gym and sport.',
     bodyAr: 'راجع تمارين السمانة لتحسين قوة الكاحل والتطور العضلي ودعم الأداء الرياضي.',
   },
+  neck: {
+    titleEn: 'Neck rehab exercises for posture, shoulder-blade control, and training tolerance',
+    titleAr: 'تمارين تأهيل الرقبة لتحسين الوضعية والتحمل',
+    bodyEn:
+      'Find neck-friendly exercise options that emphasize posture, scapular control, and gradual return to training without forcing high-irritation shrugging or loaded neck work.',
+    bodyAr:
+      'اعثر على خيارات مناسبة لتأهيل الرقبة تركّز على الوضعية والتحكم في لوح الكتف والعودة التدريجية للتدريب دون فرض تمارين مزعجة أو تحميل مباشر زائد على الرقبة.',
+  },
+  hip: {
+    titleEn: 'Hip rehab exercises for pelvic control, glute strength, and return to movement',
+    titleAr: 'تمارين تأهيل الورك للتحكم الحركي والعودة للحركة',
+    bodyEn:
+      'Browse hip rehab exercise options built around glute strength, pelvic control, split-stance work, and safe progressions for rebuilding lower-body confidence.',
+    bodyAr:
+      'تصفح خيارات تأهيل الورك المبنية على قوة الجلوتس والتحكم في الحوض والعمل الأحادي والتدرج الآمن لاستعادة الثقة في الجزء السفلي.',
+  },
+  'wrist-rehab': {
+    titleEn: 'Wrist rehab exercises for grip tolerance, control, and gradual loading',
+    titleAr: 'تمارين تأهيل الرسغ لتحمل القبضة والتحميل التدريجي',
+    bodyEn:
+      'Explore wrist rehab exercise options that support grip tolerance, forearm strength, and controlled loading so users can return to pressing, carrying, and pulling more comfortably.',
+    bodyAr:
+      'استكشف خيارات تأهيل الرسغ التي تدعم تحمل القبضة وقوة الساعد والتحميل المضبوط حتى يتمكن المستخدم من العودة للضغط والحمل والسحب براحة أكبر.',
+  },
+  'full-body-rehab': {
+    titleEn: 'Full-body rehab exercises for controlled return to training',
+    titleAr: 'تمارين تأهيل الجسم بالكامل للعودة التدريجية للتدريب',
+    bodyEn:
+      'Review full-body rehab exercise options that reconnect trunk control, lower-body support, shoulder function, and low-cost conditioning in a manageable weekly flow.',
+    bodyAr:
+      'راجع خيارات تأهيل الجسم بالكامل التي تعيد ربط التحكم في الجذع ودعم الجزء السفلي ووظيفة الكتف والتحمل الخفيف ضمن تدفق أسبوعي يمكن الالتزام به.',
+  },
 };
 
 function AnimatedCount({value}: {value: number}) {

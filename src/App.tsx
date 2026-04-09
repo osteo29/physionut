@@ -25,6 +25,7 @@ import HealthProfileSection from './components/architect/HealthProfileSection';
 import InjuryProtocolsHighlight from './components/home/InjuryProtocolsHighlight';
 
 type CalculatorType = 'BMI' | 'WHtR' | 'BMR' | 'TDEE' | 'Macros' | 'Protein' | 'IdealWeight' | 'BodyFat' | 'Water' | 'Deficit' | 'Meal' | null;
+type ToolGroup = 'all' | 'assessment' | 'metabolism' | 'nutrition' | 'planning';
 
 interface MealItem {
   id: string;
@@ -88,7 +89,7 @@ export default function App({
 }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeCalculator, setActiveCalculator] = useState<CalculatorType>(null);
-  const [activeToolGroup, setActiveToolGroup] = useState<'all' | 'assessment' | 'metabolism' | 'nutrition' | 'planning'>('all');
+  const [activeToolGroup, setActiveToolGroup] = useState<ToolGroup>('all');
   const {
     architectDraft,
     architectMetrics,
@@ -611,7 +612,14 @@ export default function App({
     });
   }, [foodSearch, foodCategory, customFoods]);
 
-  const calculators = [
+  const calculators: Array<{
+    id: Exclude<CalculatorType, null>;
+    group: Exclude<ToolGroup, 'all'>;
+    title: string;
+    icon: React.ReactNode;
+    desc: string;
+    hint: string;
+  }> = [
     { id: 'BMI', group: 'assessment', title: t.calculators.bmi.title, icon: <Activity className="w-6 h-6" />, desc: t.calculators.bmi.desc, hint: t.calculators.bmi.hint },
     { id: 'WHtR', group: 'assessment', title: t.calculators.whtr.title, icon: <Scale className="w-6 h-6" />, desc: t.calculators.whtr.desc, hint: t.calculators.whtr.hint },
     { id: 'BodyFat', group: 'assessment', title: t.calculators.bodyFat.title, icon: <Percent className="w-6 h-6" />, desc: t.calculators.bodyFat.desc, hint: t.calculators.bodyFat.hint },
@@ -625,7 +633,11 @@ export default function App({
     { id: 'Meal', group: 'planning', title: t.calculators.meal.title, icon: <Utensils className="w-6 h-6" />, desc: t.calculators.meal.desc, hint: t.calculators.meal.hint },
   ];
 
-  const toolGroups = [
+  const toolGroups: Array<{
+    id: ToolGroup;
+    label: string;
+    desc: string;
+  }> = [
     {
       id: 'all',
       label: lang === 'en' ? 'All tools' : 'كل الأدوات',
