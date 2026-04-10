@@ -4,6 +4,7 @@ import {LoaderCircle, LockKeyhole, Moon, Sun} from 'lucide-react';
 import Seo from '../components/seo/Seo';
 import BrandLogo from '../components/common/BrandLogo';
 import usePreferredLang from './usePreferredLang';
+import AuthButtons from '../lib/AuthButtons';
 import {
   getCurrentUser,
   getSupabaseActionErrorMessage,
@@ -281,6 +282,18 @@ export default function AuthPage({
                   >
                     {isAr ? 'إنشاء حساب' : 'Create account'}
                   </button>
+                </div>
+
+                <div className="mb-6">
+                  <AuthButtons lang={lang} variant="embedded" />
+                </div>
+
+                <div className="mb-6 flex items-center gap-3">
+                  <div className="h-px flex-1 bg-slate-200" />
+                  <span className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">
+                    {isAr ? 'أو' : 'or'}
+                  </span>
+                  <div className="h-px flex-1 bg-slate-200" />
                 </div>
 
                 <form className="space-y-4" onSubmit={handleSubmit}>
