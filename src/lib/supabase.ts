@@ -11,9 +11,11 @@ import type {Database, TableInsert, TableRow} from './supabaseDatabase';
 
 const rawSupabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const rawSupabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const rawSiteUrl = import.meta.env.VITE_SITE_URL;
 
 const supabaseUrl = typeof rawSupabaseUrl === 'string' ? rawSupabaseUrl.trim() : '';
 const supabaseAnonKey = typeof rawSupabaseAnonKey === 'string' ? rawSupabaseAnonKey.trim() : '';
+const configuredSiteUrl = typeof rawSiteUrl === 'string' ? rawSiteUrl.trim().replace(/\/+$/, '') : '';
 
 export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey);
 
@@ -128,6 +130,12 @@ export function getSupabaseActionErrorMessage(
       : 'Could not reach Supabase right now. Check your internet connection or project URL.';
   }
 
+  if (/provider is not enabled/i.test(message) || /unsupported provider/i.test(message)) {
+    return lang === 'ar'
+      ? 'مزود تسجيل الدخول الاجتماعي هذا غير مفعّل حاليًا داخل Supabase Auth.'
+      : 'This social login provider is not enabled in Supabase Auth yet.';
+  }
+
   if (action === 'auth') {
     return lang === 'ar' ? ar(arMessages.auth) : 'Could not complete authentication right now.';
   }
@@ -164,11 +172,16 @@ export async function getCurrentUser() {
 
 export async function signInWithSocial(provider: 'google' | 'facebook') {
   const client = ensureSupabase();
+  const redirectBase =
+    configuredSiteUrl ||
+    (typeof window !== 'undefined' && window.location.origin
+      ? window.location.origin.replace(/\/+$/, '')
+      : 'https://physionutrition.vercel.app');
   const {data, error} = await client.auth.signInWithOAuth({
     provider,
     options: {
       // توجيه المستخدم لهذا الرابط بعد نجاح العملية في Google/Facebook
-      redirectTo: 'https://physionutrition.vercel.app',
+      redirectTo: `${redirectBase}/auth/callback`,
     },
   });
   if (error) throw error;

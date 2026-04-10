@@ -28,10 +28,12 @@ const ExerciseSystemsPage = lazy(() => import('../pages/ExerciseSystemsPage'));
 const ExerciseSystemDetailPage = lazy(() => import('../pages/ExerciseSystemDetailPage'));
 const TrackingDashboardPage = lazy(() => import('../pages/TrackingDashboardPage'));
 const AuthPage = lazy(() => import('../pages/AuthPage'));
+const AuthCallbackPage = lazy(() => import('../pages/AuthCallbackPage'));
 const NotFound = lazy(() => import('../pages/NotFound'));
 
 function RootRedirect() {
-  return <Navigate to={`/${getPreferredLanguage()}/`} replace />;
+  const location = useLocation();
+  return <Navigate to={`/${getPreferredLanguage()}/${location.search}${location.hash}`} replace />;
 }
 
 function LegacyRouteRedirect() {
@@ -97,7 +99,9 @@ export default function AppRoutes({theme, onToggleTheme}: {theme: 'light' | 'dar
       <Route path="/:lang/studio/articles" element={<AdminArticlesRedirect />} />
       <Route path="/:lang/assistant" element={<AssistantPage theme={theme} onToggleTheme={onToggleTheme} />} />
       <Route path="/:lang/auth" element={<AuthPage theme={theme} onToggleTheme={onToggleTheme} />} />
+      <Route path="/:lang/auth/callback" element={<AuthCallbackPage />} />
       <Route path="/:lang/dashboard" element={<TrackingDashboardPage />} />
+      <Route path="/auth/callback" element={<AuthCallbackPage />} />
 
       {[
         '/calculators',
@@ -119,6 +123,7 @@ export default function AppRoutes({theme, onToggleTheme}: {theme: 'light' | 'dar
         '/studio/articles',
         '/assistant',
         '/auth',
+        '/auth/callback',
         '/dashboard',
         '/diets',
         '/exercises',
