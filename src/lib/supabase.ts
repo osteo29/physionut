@@ -162,6 +162,19 @@ export async function getCurrentUser() {
   return data.user;
 }
 
+export async function signInWithSocial(provider: 'google' | 'facebook') {
+  const client = ensureSupabase();
+  const {data, error} = await client.auth.signInWithOAuth({
+    provider,
+    options: {
+      // توجيه المستخدم لهذا الرابط بعد نجاح العملية في Google/Facebook
+      redirectTo: 'https://physionutrition.vercel.app',
+    },
+  });
+  if (error) throw error;
+  return data;
+}
+
 export async function getCurrentSession() {
   const client = ensureSupabase();
   const {data, error} = await client.auth.getSession();
