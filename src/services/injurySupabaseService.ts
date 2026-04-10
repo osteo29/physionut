@@ -8,6 +8,7 @@ import type {TableInsert, TableRow, TableUpdate} from '../lib/supabaseDatabase';
 import type {
   InjuryProtocol,
   InjuryPhase,
+  InjuryPageContentData,
   SupplementProtocol,
   MealExamples,
 } from './injuryDatabase';
@@ -38,6 +39,7 @@ export type MealInsert = TableInsert<'meal_examples'>;
 export type MealUpdate = TableUpdate<'meal_examples'>;
 
 export type SafetyNotesRow = TableRow<'safety_notes'>;
+export type InjuryPageContentRow = TableRow<'injury_page_content'>;
 
 /**
  * Fetch all injuries from Supabase
@@ -154,6 +156,23 @@ export async function fetchSafetyNotesByInjuryId(injuryId: string): Promise<Safe
   }
 }
 
+export async function fetchInjuryPageContentByInjuryId(injuryId: string): Promise<InjuryPageContentRow | null> {
+  try {
+    const db = getSupabaseClient();
+    const { data, error } = await db
+      .from('injury_page_content')
+      .select('*')
+      .eq('injury_id', injuryId)
+      .maybeSingle();
+
+    if (error) throw error;
+    return data;
+  } catch (err) {
+    console.error(`Error fetching page content for injury ${injuryId}:`, err);
+    return null;
+  }
+}
+
 /**
  * Fetch complete injury protocol with all related data
  */
@@ -165,8 +184,11 @@ export async function fetchCompleteInjuryProtocol(
     const injury = await fetchInjuryBySlug(slug);
     if (!injury) return null;
 
-    const phases = await fetchPhasesByInjuryId(injury.id);
-    const safetyNotes = await fetchSafetyNotesByInjuryId(injury.id);
+    const [phases, safetyNotes, pageContent] = await Promise.all([
+      fetchPhasesByInjuryId(injury.id),
+      fetchSafetyNotesByInjuryId(injury.id),
+      fetchInjuryPageContentByInjuryId(injury.id),
+    ]);
     const useArabic = lang === 'ar';
 
     // Fetch supplements and meals for each phase
@@ -279,6 +301,38 @@ export async function fetchCompleteInjuryProtocol(
       })
     );
 
+    const faqItems = Array.isArray(pageContent?.faq_items) ? pageContent.faq_items : [];
+    const mappedPageContent: InjuryPageContentData | undefined =
+      pageContent
+        ? {
+            intro: useArabic ? pageContent.intro_ar || pageContent.intro_en || undefined : pageContent.intro_en || undefined,
+            symptoms:
+              useArabic && pageContent.symptoms_ar?.length
+                ? pageContent.symptoms_ar
+                : pageContent.symptoms_en || [],
+            rehabNotes:
+              useArabic && pageContent.rehab_notes_ar?.length
+                ? pageContent.rehab_notes_ar
+                : pageContent.rehab_notes_en || [],
+            nutritionNotes:
+              useArabic && pageContent.nutrition_notes_ar?.length
+                ? pageContent.nutrition_notes_ar
+                : pageContent.nutrition_notes_en || [],
+            faq: faqItems
+              .map((item) => {
+                if (!item || typeof item !== 'object') return null;
+                const qEn = typeof item.q_en === 'string' ? item.q_en : typeof item.q === 'string' ? item.q : '';
+                const aEn = typeof item.a_en === 'string' ? item.a_en : typeof item.a === 'string' ? item.a : '';
+                const qAr = typeof item.q_ar === 'string' ? item.q_ar : qEn;
+                const aAr = typeof item.a_ar === 'string' ? item.a_ar : aEn;
+                const q = useArabic ? qAr || qEn : qEn || qAr;
+                const a = useArabic ? aAr || aEn : aEn || aAr;
+                return q && a ? {q, a} : null;
+              })
+              .filter(Boolean) as Array<{q: string; a: string}>,
+          }
+        : undefined;
+
     const protocol: InjuryProtocol = {
       id: injury.injury_id_slug,
       name: useArabic ? injury.name_ar || injury.name_en : injury.name_en,
@@ -300,6 +354,7 @@ export async function fetchCompleteInjuryProtocol(
             : safetyNotes?.supplements_en || [],
       },
       phases: phasesWithData,
+      pageContent: mappedPageContent,
     };
 
     return protocol;

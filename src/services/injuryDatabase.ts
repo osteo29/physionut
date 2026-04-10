@@ -61,6 +61,14 @@ export interface ExercisePlan {
   cues?: string[];
 }
 
+export interface InjuryPageContentData {
+  intro?: string;
+  symptoms?: string[];
+  faq?: Array<{q: string; a: string}>;
+  rehabNotes?: string[];
+  nutritionNotes?: string[];
+}
+
 export interface InjuryPhase {
   id: string;
   label: string;
@@ -102,6 +110,7 @@ export interface InjuryProtocol {
   relatedCalculators: string[];
   safetyNotes: {medications: string[]; supplements: string[]};
   phases: InjuryPhase[];
+  pageContent?: InjuryPageContentData;
   contraindications?: {medications: string[]; supplements: string[]};
   stages?: Record<
     string,

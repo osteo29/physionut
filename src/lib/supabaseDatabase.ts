@@ -401,6 +401,53 @@ export type Database = {
           updated_at?: string | null;
         };
       };
+      injury_page_content: {
+        Row: {
+          id: string;
+          injury_id: string;
+          intro_en: string | null;
+          intro_ar: string | null;
+          symptoms_en: string[] | null;
+          symptoms_ar: string[] | null;
+          rehab_notes_en: string[] | null;
+          rehab_notes_ar: string[] | null;
+          nutrition_notes_en: string[] | null;
+          nutrition_notes_ar: string[] | null;
+          faq_items: Json[] | null;
+          created_at: string | null;
+          updated_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          injury_id: string;
+          intro_en?: string | null;
+          intro_ar?: string | null;
+          symptoms_en?: string[] | null;
+          symptoms_ar?: string[] | null;
+          rehab_notes_en?: string[] | null;
+          rehab_notes_ar?: string[] | null;
+          nutrition_notes_en?: string[] | null;
+          nutrition_notes_ar?: string[] | null;
+          faq_items?: Json[] | null;
+          created_at?: string | null;
+          updated_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          injury_id?: string;
+          intro_en?: string | null;
+          intro_ar?: string | null;
+          symptoms_en?: string[] | null;
+          symptoms_ar?: string[] | null;
+          rehab_notes_en?: string[] | null;
+          rehab_notes_ar?: string[] | null;
+          nutrition_notes_en?: string[] | null;
+          nutrition_notes_ar?: string[] | null;
+          faq_items?: Json[] | null;
+          created_at?: string | null;
+          updated_at?: string | null;
+        };
+      };
       safety_notes: {
         Row: {
           id: string;

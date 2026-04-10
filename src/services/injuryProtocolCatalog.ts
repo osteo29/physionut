@@ -462,6 +462,8 @@ const generatedProtocolSeeds: ProtocolSeed[] = [
   {id: 'glenohumeral_dislocation', name: 'Glenohumeral dislocation / subluxation', category: 'Joint', bodyRegion: 'Shoulder', flavor: 'joint'},
   {id: 'hip_dysplasia_labral_tear', name: 'Hip dysplasia / labral tear', category: 'Joint', bodyRegion: 'Hip', flavor: 'joint'},
   {id: 'wrist_instability_tfcc', name: 'Wrist instability / TFCC injury', category: 'Joint', bodyRegion: 'Wrist', flavor: 'joint'},
+  {id: 'frozen_shoulder', name: 'Frozen shoulder (Adhesive capsulitis)', category: 'Joint', bodyRegion: 'Shoulder', flavor: 'joint'},
+  {id: 'femoroacetabular_impingement', name: 'Femoroacetabular impingement (FAI)', category: 'Joint', bodyRegion: 'Hip', flavor: 'joint'},
 
   {id: 'low_back_pain', name: 'Low back pain / lumbar strain', category: 'Overuse', bodyRegion: 'Back', flavor: 'overuse'},
   {id: 'neck_pain', name: 'Neck pain / cervical strain', category: 'Overuse', bodyRegion: 'Neck', flavor: 'overuse'},
@@ -473,6 +475,14 @@ const generatedProtocolSeeds: ProtocolSeed[] = [
   {id: 'bursitis', name: 'Bursitis (Shoulder / Hip / Knee / Elbow)', category: 'Overuse', bodyRegion: 'Whole body', flavor: 'overuse'},
   {id: 'myofascial_pain', name: 'Myofascial pain syndrome', category: 'Overuse', bodyRegion: 'Whole body', flavor: 'overuse'},
   {id: 'chronic_ankle_instability', name: 'Chronic ankle instability', category: 'Overuse', bodyRegion: 'Ankle', flavor: 'overuse'},
+  {id: 'cervical_disc_herniation', name: 'Cervical disc herniation', category: 'Overuse', bodyRegion: 'Neck', flavor: 'overuse'},
+  {id: 'whiplash_injury', name: 'Whiplash-associated disorder', category: 'Overuse', bodyRegion: 'Neck', flavor: 'overuse'},
+  {id: 'lumbar_disc_herniation', name: 'Lumbar disc herniation', category: 'Overuse', bodyRegion: 'Back', flavor: 'overuse'},
+  {id: 'lumbar_spinal_stenosis', name: 'Lumbar spinal stenosis', category: 'Overuse', bodyRegion: 'Back', flavor: 'overuse'},
+  {id: 'de_quervain_tenosynovitis', name: 'De Quervain tenosynovitis', category: 'Overuse', bodyRegion: 'Wrist', flavor: 'overuse'},
+  {id: 'greater_trochanteric_pain_syndrome', name: 'Greater trochanteric pain syndrome', category: 'Overuse', bodyRegion: 'Hip', flavor: 'overuse'},
+  {id: 'cubital_tunnel_syndrome', name: 'Cubital tunnel syndrome', category: 'Overuse', bodyRegion: 'Elbow', flavor: 'overuse'},
+  {id: 'sciatica', name: 'Sciatica / lumbar radicular pain', category: 'Overuse', bodyRegion: 'Back', flavor: 'overuse'},
 
   {id: 'acl_meniscus_combined', name: 'ACL + Meniscus combined injury', category: 'Sports', bodyRegion: 'Knee', flavor: 'sports'},
   {id: 'rotator_cuff_labrum_complex', name: 'Rotator cuff + Labrum complex shoulder injury', category: 'Sports', bodyRegion: 'Shoulder', flavor: 'sports'},
@@ -493,6 +503,14 @@ const generatedProtocolSeeds: ProtocolSeed[] = [
   {id: 'acl_reconstruction', name: 'ACL reconstruction', category: 'Post-surgery', bodyRegion: 'Knee', flavor: 'postsurgery'},
   {id: 'rotator_cuff_repair', name: 'Rotator cuff repair', category: 'Post-surgery', bodyRegion: 'Shoulder', flavor: 'postsurgery'},
   {id: 'meniscus_repair', name: 'Meniscus repair', category: 'Post-surgery', bodyRegion: 'Knee', flavor: 'postsurgery'},
+  {id: 'growing_pains', name: 'Growing pains', category: 'Pediatric', bodyRegion: 'Whole body', flavor: 'pediatric'},
+  {id: 'rheumatoid_arthritis', name: 'Rheumatoid arthritis', category: 'Geriatric', bodyRegion: 'Whole body', flavor: 'geriatric'},
+  {id: 'gout', name: 'Gout flare', category: 'Geriatric', bodyRegion: 'Foot', flavor: 'geriatric'},
+  {id: 'fibromyalgia', name: 'Fibromyalgia', category: 'Geriatric', bodyRegion: 'Whole body', flavor: 'geriatric'},
+  {id: 'clavicle_fracture_rehab', name: 'Clavicle fracture rehab', category: 'Post-surgery', bodyRegion: 'Shoulder', flavor: 'postsurgery'},
+  {id: 'distal_radius_fracture_rehab', name: 'Distal radius fracture rehab', category: 'Post-surgery', bodyRegion: 'Wrist', flavor: 'postsurgery'},
+  {id: 'ankle_fracture_rehab', name: 'Ankle fracture rehab', category: 'Post-surgery', bodyRegion: 'Ankle', flavor: 'postsurgery'},
+  {id: 'concussion_recovery', name: 'Concussion recovery', category: 'Post-surgery', bodyRegion: 'Whole body', flavor: 'postsurgery'},
 ];
 
 export const generatedInjuryProtocols: InjuryProtocol[] = generatedProtocolSeeds.map(createGeneratedProtocol);

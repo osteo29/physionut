@@ -320,8 +320,8 @@ export default function InjuryDetailPage() {
     let active = true;
 
     const loadCustomContent = async () => {
-      const module = await import('../services/injuryPageContent');
-      if (active) setCustomContentMap(module.injuryPageContent);
+      const module = await import('../services/injuryPageContentCatalog');
+      if (active) setCustomContentMap(module.injuryPageContentCatalog);
     };
 
     void loadCustomContent();
@@ -379,9 +379,10 @@ export default function InjuryDetailPage() {
     lang,
   });
 
-  const customContent = (customContentMap?.[injury.id] as
+  const customContent = (injury.pageContent ||
+    (customContentMap?.[injury.id] as
     | {intro?: string; symptoms?: string[]; faq?: Array<{q: string; a: string}>}
-    | undefined);
+    | undefined));
   const introText = getLocalizedInjuryOverview(
     injuryDisplayName,
     injury.category,
