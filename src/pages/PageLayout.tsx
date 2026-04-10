@@ -3,12 +3,22 @@ import {Link, useLocation, useNavigate} from 'react-router-dom';
 import {setPreferredLanguage} from '../services/languagePreference';
 import usePreferredLang from './usePreferredLang';
 
+export type PageLayoutRelatedLink = {
+  label: string;
+  href: string;
+  description?: string;
+};
+
 export default function PageLayout({
   title,
   children,
+  relatedLinks = [],
+  relatedTitle,
 }: {
   title: string;
   children: ReactNode;
+  relatedLinks?: PageLayoutRelatedLink[];
+  relatedTitle?: string;
 }) {
   const lang = usePreferredLang();
   const location = useLocation();
@@ -100,10 +110,38 @@ export default function PageLayout({
 
       <main className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
         <h1 className="mb-6 text-3xl font-black text-slate-900 sm:text-4xl">{title}</h1>
-        <div className="prose prose-slate max-w-none">
-          <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-            {children}
+        <div className="space-y-6">
+          <div className="prose prose-slate max-w-none">
+            <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+              {children}
+            </div>
           </div>
+
+          {relatedLinks.length > 0 ? (
+            <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+              <div className="mb-4 flex items-center justify-between gap-3">
+                <h2 className="text-lg font-black text-slate-900">
+                  {relatedTitle ?? (lang === 'en' ? 'Related pages' : 'صفحات مقترحة')}
+                </h2>
+                <Link to={`/${lang}/`} className="text-sm font-semibold text-health-green transition hover:text-health-green-dark">
+                  {lang === 'en' ? 'Home' : 'الرئيسية'}
+                </Link>
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-2">
+                {relatedLinks.map((item) => (
+                  <Link
+                    key={`${item.href}-${item.label}`}
+                    to={item.href}
+                    className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4 transition hover:border-health-green/40 hover:bg-health-green/5"
+                  >
+                    <div className="text-sm font-bold text-slate-900">{item.label}</div>
+                    {item.description ? <div className="mt-1 text-sm leading-6 text-slate-600">{item.description}</div> : null}
+                  </Link>
+                ))}
+              </div>
+            </section>
+          ) : null}
         </div>
       </main>
     </div>
