@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import {generatedInjuryProtocols} from '../src/services/injuryProtocolCatalog';
+import {getAllInjuries} from '../src/services/injuryDatabase';
 
 type Args = {
   inputPath: string;
@@ -46,6 +46,8 @@ const DEFAULT_OUTPUT = path.resolve(process.cwd(), 'src', 'services', 'injuryExe
 const DEFAULT_REPORT = path.resolve(process.cwd(), 'tmp', 'injury-import', 'last-import-report.txt');
 const PAGE_NOISE_PATTERN = /physionutrition|evidence-based rehab|\|\s*\d+\s*$/i;
 const HEADING_PATTERN = /^(?:[A-Z][A-Z\s/&-]+\s+)?\d+\.\s+.+/;
+const STANDALONE_HEADING_NUMBER_PATTERN = /^\d+\.$/;
+const SECTION_LABEL_PATTERN = /^(?:[A-Z][A-Z\s/&-]+|[A-Z][A-Z\s/&-]+\s+&\s+[A-Z][A-Z\s/&-]+)$/;
 const PHASE_HEADER_PATTERN = /^Phase\s+(\d+)\s*[\u2013\u2014-]\s*(.+)$/i;
 const BULLET_PATTERN = /^[\-*\u2022]\s*/;
 const CRITERIA_TITLE_PATTERN = /criteria to progress/i;
@@ -54,6 +56,82 @@ const PRECAUTIONS_TITLE_PATTERN = /precautions/i;
 const REFERENCES_TITLE_PATTERN = /references/i;
 const EXERCISE_TITLE_PATTERN = /^exercise parameters/i;
 const DOSING_PATTERN = /(\b\d+\s*[x\u00d7]\s*\d+|\b\d+\s*(?:min|mins|minutes|sec|secs|seconds|reps|rep|sets|steps|hours|hour|days|day|weeks|week|months|month)\b|\bstart\s+\d+\s*min)/i;
+
+const EXPLICIT_SLUG_ALIASES: Record<string, string> = {
+  'acl tear conservative management': 'acl_injury',
+  'pcl tear conservative': 'pcl_injury',
+  'iliotibial band syndrome': 'it_band_syndrome',
+  'knee osteoarthritis conservative': 'osteoarthritis_flare',
+  'hip osteoarthritis conservative': 'osteoarthritis_flare',
+  'anterior shoulder dislocation first time': 'glenohumeral_dislocation',
+  'posterior shoulder instability': 'glenohumeral_dislocation',
+  'calcific tendinitis': 'shoulder_impingement',
+  'slap lesion conservative': 'labrum_tear',
+  'supraspinatus tear partial conservative': 'rotator_cuff',
+  'lateral ankle sprain grade i ii': 'ankle_sprain',
+  'hip labral tear conservative': 'hip_dysplasia_labral_tear',
+  'lateral epicondylalgia tennis elbow': 'lateral_epicondylitis',
+  'medial epicondylalgia golfers elbow': 'medial_epicondylitis',
+  'medial epicondylalgia golfer s elbow': 'medial_epicondylitis',
+  'ucl sprain elbow ulnar collateral ligament': 'ucl_injury',
+  'de quervains tenosynovitis': 'de_quervain_tenosynovitis',
+  'de quervain s tenosynovitis': 'de_quervain_tenosynovitis',
+  'tfcc injury triangular fibrocartilage complex conservative': 'wrist_instability_tfcc',
+  'thumb ucl sprain skiers thumb': 'thumb_collateral_ligament',
+  'thumb ucl sprain skier s thumb': 'thumb_collateral_ligament',
+  'distal radius fracture post immobilisation': 'distal_radius_fracture_rehab',
+  'ankle fracture post immobilisation': 'ankle_fracture_rehab',
+  'hip flexor strain iliopsoas': 'hip_flexor_tendinopathy',
+  'adductor groin strain': 'adductor_strain',
+  'gluteal muscle strain': 'glute_strain',
+  'rectus femoris strain': 'quadriceps_strain',
+  'pectoralis major tear conservative': 'pectoral_strain',
+  'stress reaction femoral neck': 'stress_fracture',
+  'piriformis syndrome': 'sciatica',
+  'proximal humerus fracture non operative': 'humeral_head_fracture',
+  'temporomandibular joint dysfunction tmj': 'tmj_disorder',
+  'cervical radiculopathy': 'cervical_disc_herniation',
+  'thoracic outlet syndrome tos': 'thoracic_outlet_syndrome',
+  'spinal stenosis lumbar conservative': 'lumbar_spinal_stenosis',
+  'facet joint dysfunction lumbar': 'lumbar_facet_joint_dysfunction',
+  'sacroiliac joint dysfunction': 'sacroiliac_joint_dysfunction',
+  'piriformis syndrome sciatic nerve compression': 'sciatica',
+  'cervical facet joint pain': 'cervical_facet_joint_pain',
+  'scheuermann s kyphosis conservative': 'scheuermanns_kyphosis',
+  'thoracic disc herniation': 'thoracic_disc_herniation',
+  'peroneal tendinopathy': 'peroneal_tendinopathy',
+  'posterior tibial tendon dysfunction pttd': 'posterior_tibial_tendon_dysfunction',
+  'sinus tarsi syndrome': 'sinus_tarsi_syndrome',
+  '5th metatarsal fracture jones fracture': 'jones_fracture_rehab',
+  'ankle fracture orif post operative': 'ankle_fracture_orif_rehab',
+  'hallux valgus post surgical rehabilitation': 'hallux_valgus_rehab',
+  'tibialis anterior tendinopathy': 'tibialis_anterior_tendinopathy',
+  'total knee arthroplasty tka': 'total_knee_arthroplasty',
+  'quadriceps tendinopathy': 'quadriceps_tendinopathy',
+  'baker s cyst': 'bakers_cyst',
+  'tibial plateau fracture post op': 'tibial_plateau_fracture_rehab',
+  'meniscectomy post operative': 'meniscectomy_rehab',
+  'spondylolisthesis grade i ii conservative': 'spondylolisthesis',
+  'post laminectomy rehabilitation': 'post_laminectomy_rehab',
+  'total hip arthroplasty tha': 'total_hip_arthroplasty',
+  'snapping hip syndrome coxa saltans': 'snapping_hip_syndrome',
+  'radial tunnel syndrome': 'radial_tunnel_syndrome',
+  'trigger finger post injection post op': 'trigger_finger',
+  'mallet finger': 'mallet_finger',
+  'boutonniere deformity': 'boutonniere_deformity',
+  'flexor tendon repair zone ii': 'flexor_tendon_repair_zone_ii',
+  'extensor tendon repair': 'extensor_tendon_repair',
+  'dupuytren s contracture post surgical': 'dupuytrens_contracture',
+  'biceps rupture distal post op': 'distal_biceps_rupture_rehab',
+  'triceps tendinopathy': 'triceps_tendinopathy',
+  'little leaguer s shoulder proximal humeral epiphysiolysis': 'little_leaguers_shoulder',
+  'sinding larsen johansson syndrome': 'sinding_larsen_johansson',
+  'perthes disease rehabilitation': 'perthes_disease',
+  'peripheral nerve injury peroneal nerve palsy': 'peroneal_nerve_palsy',
+  'complex regional pain syndrome crps type i': 'crps_type_i',
+  'brachial plexus neuropraxia burner stinger': 'brachial_plexus_neuropraxia',
+  'thoracic hyperkyphosis postural': 'thoracic_hyperkyphosis'
+};
 
 function parseArgs(argv: string[]): Args {
   const args: Args = {
@@ -106,7 +184,7 @@ function tokenize(value: string) {
 }
 
 function buildCandidates() {
-  return generatedInjuryProtocols.map<InjuryCandidate>((protocol) => ({
+  return getAllInjuries().map<InjuryCandidate>((protocol) => ({
     id: protocol.id,
     name: protocol.name,
     normalizedId: normalizeText(protocol.id.replace(/_/g, ' ')),
@@ -134,23 +212,61 @@ function extractRequestedSlug(line: string) {
   return match?.[1]?.trim().toLowerCase();
 }
 
+function prepareLines(rawText: string) {
+  const originalLines = rawText.split(/\r?\n/);
+  const prepared: string[] = [];
+
+  for (let index = 0; index < originalLines.length; index += 1) {
+    const line = cleanLine(originalLines[index]);
+    if (!line) continue;
+    if (PAGE_NOISE_PATTERN.test(line)) continue;
+    if (SECTION_LABEL_PATTERN.test(line) && !isHeadingLine(line)) continue;
+
+    if (STANDALONE_HEADING_NUMBER_PATTERN.test(line)) {
+      let lookaheadIndex = index + 1;
+      let titleLine = '';
+
+      while (lookaheadIndex < originalLines.length) {
+        const nextLine = cleanLine(originalLines[lookaheadIndex]);
+        if (!nextLine) {
+          lookaheadIndex += 1;
+          continue;
+        }
+
+        if (PAGE_NOISE_PATTERN.test(nextLine) || SECTION_LABEL_PATTERN.test(nextLine)) {
+          lookaheadIndex += 1;
+          continue;
+        }
+
+        titleLine = nextLine;
+        break;
+      }
+
+      if (titleLine) {
+        prepared.push(`${line} ${titleLine}`);
+        index = lookaheadIndex;
+        continue;
+      }
+    }
+
+    prepared.push(line);
+  }
+
+  return prepared;
+}
+
 function splitInjuryBlocks(rawText: string) {
-  const lines = rawText.split(/\r?\n/);
+  const lines = prepareLines(rawText);
   const blocks: Array<{requestedSlug?: string; lines: string[]}> = [];
   let currentLines: string[] = [];
   let pendingSlug: string | undefined;
 
-  for (const originalLine of lines) {
-    const line = cleanLine(originalLine);
-    if (!line) continue;
-
+  for (const line of lines) {
     const requestedSlug = extractRequestedSlug(line);
     if (requestedSlug) {
       pendingSlug = requestedSlug;
       continue;
     }
-
-    if (PAGE_NOISE_PATTERN.test(line)) continue;
 
     if (isHeadingLine(line)) {
       if (currentLines.length) blocks.push({requestedSlug: pendingSlug, lines: currentLines});
@@ -192,6 +308,9 @@ function scoreCandidate(sourceTitle: string, candidate: InjuryCandidate) {
 
 function resolveSlug(sourceTitle: string, requestedSlug: string | undefined, candidates: InjuryCandidate[]) {
   if (requestedSlug) return candidates.find((candidate) => candidate.id === requestedSlug)?.id;
+
+  const aliasMatch = EXPLICIT_SLUG_ALIASES[normalizeText(sourceTitle)];
+  if (aliasMatch) return aliasMatch;
 
   const ranked = candidates
     .map((candidate) => ({id: candidate.id, score: scoreCandidate(sourceTitle, candidate)}))
@@ -313,20 +432,22 @@ function parsePhaseLines(lines: string[]) {
 }
 
 function parseBlocks(rawText: string, candidates: InjuryCandidate[]) {
-  return splitInjuryBlocks(rawText).map<InjuryImport>((block) => {
-    const heading = block.lines[0];
-    const sourceTitle = parseSourceTitle(heading);
-    const firstPhaseHeader = heading.match(/(Phase\s+1\s*[\u2013\u2014-]\s*.+)$/i)?.[1];
-    const phaseLines = firstPhaseHeader ? [cleanLine(firstPhaseHeader), ...block.lines.slice(1)] : block.lines.slice(1);
+  return splitInjuryBlocks(rawText)
+    .map<InjuryImport>((block) => {
+      const heading = block.lines[0];
+      const sourceTitle = parseSourceTitle(heading);
+      const firstPhaseHeader = heading.match(/(Phase\s+1\s*[\u2013\u2014-]\s*.+)$/i)?.[1];
+      const phaseLines = firstPhaseHeader ? [cleanLine(firstPhaseHeader), ...block.lines.slice(1)] : block.lines.slice(1);
 
-    return {
-      heading,
-      sourceTitle,
-      requestedSlug: block.requestedSlug,
-      matchedSlug: resolveSlug(sourceTitle, block.requestedSlug, candidates),
-      phases: parsePhaseLines(phaseLines),
-    };
-  });
+      return {
+        heading,
+        sourceTitle,
+        requestedSlug: block.requestedSlug,
+        matchedSlug: resolveSlug(sourceTitle, block.requestedSlug, candidates),
+        phases: parsePhaseLines(phaseLines),
+      };
+    })
+    .filter((injury) => injury.phases.length > 0);
 }
 
 function renderOverridesFile(injuries: InjuryImport[]) {
@@ -394,6 +515,15 @@ function main() {
 }
 
 main();
+
+
+
+
+
+
+
+
+
 
 
 
