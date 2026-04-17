@@ -1,9 +1,9 @@
 import {Link} from 'react-router-dom';
-import PageLayout from './PageLayout';
-import usePreferredLang from './usePreferredLang';
-import Seo from '../components/seo/Seo';
+import ManagedSeo from '../components/seo/ManagedSeo';
 import {usePublishedArticles} from '../services/articleStudio';
 import {buildHreflangs} from '../utils/langUrlHelper';
+import PageLayout from './PageLayout';
+import usePreferredLang from './usePreferredLang';
 
 export default function InsightsPage() {
   const lang = usePreferredLang();
@@ -11,13 +11,9 @@ export default function InsightsPage() {
 
   return (
     <>
-      <Seo
-        title={lang === 'en' ? 'Insights' : 'المقالات'}
-        description={
-          lang === 'en'
-            ? 'Browse all PhysioNutrition articles about nutrition, recovery, rehabilitation, and fat loss.'
-            : 'تصفح كل مقالات PhysioNutrition عن التغذية والتعافي والتأهيل وخسارة الدهون.'
-        }
+      <ManagedSeo
+        pageKey="insights"
+        lang={lang}
         canonicalPath="/insights"
         hreflangs={buildHreflangs('/insights')}
       />

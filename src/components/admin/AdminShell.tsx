@@ -1,12 +1,12 @@
 import type {ReactNode} from 'react';
+import type {User} from '@supabase/supabase-js';
+import {Activity, FileText, Search, ShieldCheck, Stethoscope} from 'lucide-react';
 import {Link, useLocation} from 'react-router-dom';
-import {Activity, FileText, ShieldCheck, Stethoscope} from 'lucide-react';
 import PageLayout from '../../pages/PageLayout';
 import usePreferredLang from '../../pages/usePreferredLang';
 import {navigationPaths} from '../../utils/langUrlHelper';
-import type {User} from '@supabase/supabase-js';
 
-type AdminTab = 'dashboard' | 'injuries' | 'articles';
+type AdminTab = 'dashboard' | 'injuries' | 'articles' | 'seo';
 
 function shellCopy(lang: 'en' | 'ar') {
   return {
@@ -14,11 +14,12 @@ function shellCopy(lang: 'en' | 'ar') {
     dashboard: lang === 'ar' ? 'لوحة التحكم' : 'Overview',
     injuries: lang === 'ar' ? 'الإصابات' : 'Injuries',
     articles: lang === 'ar' ? 'المقالات' : 'Articles',
+    seo: lang === 'ar' ? 'إدارة SEO' : 'SEO',
     account: lang === 'ar' ? 'الحساب الحالي' : 'Current account',
     capabilities: lang === 'ar' ? 'الصلاحيات' : 'Permissions',
     articleAdmin: lang === 'ar' ? 'مسؤول المقالات' : 'Article admin',
     injuryAdmin: lang === 'ar' ? 'إدارة الإصابات' : 'Injury manager',
-    connected: lang === 'ar' ? 'متصل بسوبا بيز' : 'Connected to Supabase',
+    connected: lang === 'ar' ? 'متصل بسوبابيز' : 'Connected to Supabase',
     quickLinks: lang === 'ar' ? 'روابط سريعة' : 'Quick links',
     publicSite: lang === 'ar' ? 'الموقع العام' : 'Public site',
     protocols: lang === 'ar' ? 'بروتوكولات الإصابات' : 'Injury protocols',
@@ -69,6 +70,13 @@ export default function AdminShell({
       to: navigationPaths.adminArticles(lang),
       enabled: canManageArticles,
     },
+    {
+      key: 'seo',
+      label: copy.seo,
+      icon: Search,
+      to: navigationPaths.adminSeo(lang),
+      enabled: canManageInjuries || canManageArticles,
+    },
   ] as const;
 
   return (
@@ -106,7 +114,10 @@ export default function AdminShell({
 
                   if (!item.enabled) {
                     return (
-                      <div key={item.key} className="rounded-2xl border border-dashed border-slate-200 px-4 py-3 text-sm text-slate-400">
+                      <div
+                        key={item.key}
+                        className="rounded-2xl border border-dashed border-slate-200 px-4 py-3 text-sm text-slate-400"
+                      >
                         <Icon className="mr-2 inline h-4 w-4" />
                         {item.label}
                       </div>
@@ -114,7 +125,11 @@ export default function AdminShell({
                   }
 
                   return (
-                    <Link key={item.key} to={item.to} className={`block rounded-2xl border px-4 py-3 text-sm font-bold transition ${classes}`}>
+                    <Link
+                      key={item.key}
+                      to={item.to}
+                      className={`block rounded-2xl border px-4 py-3 text-sm font-bold transition ${classes}`}
+                    >
                       <Icon className="mr-2 inline h-4 w-4" />
                       {item.label}
                     </Link>
@@ -129,8 +144,12 @@ export default function AdminShell({
                 {copy.capabilities}
               </div>
               <div>{copy.connected}</div>
-              <div>{copy.injuryAdmin}: {canManageInjuries ? 'Yes' : 'No'}</div>
-              <div>{copy.articleAdmin}: {canManageArticles ? 'Yes' : 'No'}</div>
+              <div>
+                {copy.injuryAdmin}: {canManageInjuries ? 'Yes' : 'No'}
+              </div>
+              <div>
+                {copy.articleAdmin}: {canManageArticles ? 'Yes' : 'No'}
+              </div>
             </div>
 
             <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">

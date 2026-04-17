@@ -1,5 +1,6 @@
 import {Fragment, type ReactNode} from 'react';
 import {Link, useParams} from 'react-router-dom';
+import ManagedSeo from '../components/seo/ManagedSeo';
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
 import Seo from '../components/seo/Seo';
@@ -318,12 +319,16 @@ export default function ArticlePage() {
 
   return (
     <>
-      <Seo
-        title={article.title}
-        description={article.excerpt}
+      <ManagedSeo
+        pageKey="article_detail"
+        lang={lang}
         canonicalPath={canonicalPath}
         structuredData={structuredData}
         hreflangs={hreflangs}
+        templateValues={{
+          articleTitle: article.title,
+          articleExcerpt: article.excerpt,
+        }}
       />
       <PageLayout title={article.title}>
         <article className="not-prose">

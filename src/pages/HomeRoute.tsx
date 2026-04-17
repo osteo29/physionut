@@ -1,8 +1,9 @@
 import {useEffect} from 'react';
 import App from '../App';
-import Seo from '../components/seo/Seo';
+import ManagedSeo from '../components/seo/ManagedSeo';
 import {getCalculatorPageBySlug, type CalculatorPageSlug} from '../services/calculatorPages';
 import {buildHreflangs} from '../utils/langUrlHelper';
+import usePreferredLang from './usePreferredLang';
 
 export default function HomeRoute({
   scrollToId,
@@ -15,16 +16,14 @@ export default function HomeRoute({
   theme: 'light' | 'dark';
   onToggleTheme: () => void;
 }) {
+  const lang = usePreferredLang();
   const calculatorPage = getCalculatorPageBySlug(calculatorSlug);
   const canonicalPath = calculatorPage
     ? `/calculators/${calculatorPage.slug}`
     : scrollToId
       ? `/${scrollToId === 'calculators' ? 'calculators' : scrollToId}`
       : '/';
-  const title = calculatorPage
-    ? `${calculatorPage.titleEn} | PhysioNutrition`
-    : 'PhysioNutrition | Clinical Calculators for Therapy & Nutrition';
-  const description = calculatorPage?.descriptionEn || 'Evidence-based clinical calculators for physical therapists, nutritionists, and fitness enthusiasts. BMI, BMR, TDEE, and more.';
+  const pageKey = calculatorPage ? 'calculator_detail' : scrollToId === 'calculators' ? 'calculators' : 'home';
 
   useEffect(() => {
     if (!scrollToId) return;
@@ -36,13 +35,26 @@ export default function HomeRoute({
 
   return (
     <>
-      <Seo
-        title={title}
-        description={description}
+      <ManagedSeo
+        pageKey={pageKey}
+        lang={lang}
         canonicalPath={canonicalPath}
         hreflangs={buildHreflangs(canonicalPath)}
+        templateValues={
+          calculatorPage
+            ? {
+                calculatorTitle: lang === 'ar' ? calculatorPage.titleAr : calculatorPage.titleEn,
+                calculatorDescription:
+                  lang === 'ar' ? calculatorPage.descriptionAr : calculatorPage.descriptionEn,
+              }
+            : undefined
+        }
       />
-      <App theme={theme} onToggleTheme={onToggleTheme} initialCalculatorId={calculatorPage?.calculatorId || null} />
+      <App
+        theme={theme}
+        onToggleTheme={onToggleTheme}
+        initialCalculatorId={calculatorPage?.calculatorId || null}
+      />
     </>
   );
 }

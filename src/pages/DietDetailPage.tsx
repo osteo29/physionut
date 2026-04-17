@@ -1,7 +1,7 @@
 import {Link, Navigate, useParams} from 'react-router-dom';
-import Seo from '../components/seo/Seo';
+import ManagedSeo from '../components/seo/ManagedSeo';
 import {dietRegimensCatalog} from '../services/dietRegimensCatalog';
-import {navigationPaths, buildHreflangs} from '../utils/langUrlHelper';
+import {buildHreflangs, navigationPaths} from '../utils/langUrlHelper';
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
 
@@ -21,11 +21,15 @@ export default function DietDetailPage() {
 
   return (
     <>
-      <Seo
-        title={title}
-        description={description}
+      <ManagedSeo
+        pageKey="diet_detail"
+        lang={lang}
         canonicalPath={canonicalPath}
         hreflangs={buildHreflangs(canonicalPath)}
+        templateValues={{
+          dietName: title,
+          dietSummary: description,
+        }}
       />
       <PageLayout title={title}>
         <div className="space-y-6">
@@ -53,7 +57,9 @@ export default function DietDetailPage() {
             </div>
 
             <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-              <h2 className="mb-2 text-sm font-bold text-slate-900">{isAr ? 'المبادئ الأساسية' : 'Key principles'}</h2>
+              <h2 className="mb-2 text-sm font-bold text-slate-900">
+                {isAr ? 'المبادئ الأساسية' : 'Key principles'}
+              </h2>
               <ul className="space-y-2 text-sm text-slate-700">
                 {(isAr ? diet.keyPrinciples.ar : diet.keyPrinciples.en).map((item) => (
                   <li key={item} className="rounded-xl bg-white px-3 py-2">

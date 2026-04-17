@@ -536,6 +536,38 @@ export type Database = {
           updated_at?: string | null;
         };
       };
+      seo_pages: {
+        Row: {
+          id: string;
+          page_key: string;
+          title_en: string;
+          description_en: string;
+          title_ar: string;
+          description_ar: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          page_key: string;
+          title_en: string;
+          description_en: string;
+          title_ar: string;
+          description_ar: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          page_key?: string;
+          title_en?: string;
+          description_en?: string;
+          title_ar?: string;
+          description_ar?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
       supplements: {
         Row: {
           id: string;

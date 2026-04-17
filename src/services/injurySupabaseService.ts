@@ -736,7 +736,7 @@ export async function createInjuryProtocolImportRun(data: {
   status?: ImportRunStatus;
   notes?: string;
   actor?: {id?: string | null; email?: string | null};
-}): Promise<InjuryProtocolImportRunRow | null> {
+}): Promise<InjuryProtocolImportRunRow> {
   try {
     const db = getSupabaseClient();
     const {data: result, error} = await db
@@ -763,7 +763,7 @@ export async function createInjuryProtocolImportRun(data: {
     return result as InjuryProtocolImportRunRow;
   } catch (err) {
     console.error('Error creating injury protocol import run:', err);
-    return null;
+    throw new Error(formatImportPermissionError(err));
   }
 }
 
@@ -857,7 +857,7 @@ export async function importExerciseProtocolsToSupabase(params: {
     }
 
     return {
-      runId: run?.id || null,
+      runId: run.id,
       importedCount,
       summary,
     };
@@ -871,4 +871,8 @@ export async function importExerciseProtocolsToSupabase(params: {
     throw error;
   }
 }
+
+
+
+
 

@@ -85,6 +85,7 @@ export const navigationPaths = {
   adminHome: (lang: Language) => `/${lang}/admin`,
   adminInjuries: (lang: Language) => `/${lang}/admin/injuries`,
   adminArticles: (lang: Language) => `/${lang}/admin/articles`,
+  adminSeo: (lang: Language) => `/${lang}/admin/seo`,
   studio: (lang: Language) => `/${lang}/admin/articles`,
   assistant: (lang: Language) => `/${lang}/assistant`,
   auth: (lang: Language) => `/${lang}/auth`,
