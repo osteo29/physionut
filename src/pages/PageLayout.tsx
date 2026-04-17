@@ -23,6 +23,7 @@ export default function PageLayout({
   const lang = usePreferredLang();
   const location = useLocation();
   const navigate = useNavigate();
+  const isAr = lang === 'ar';
 
   const handleBrandClick = () => {
     const rootPath = `/${lang}/`;
@@ -31,17 +32,14 @@ export default function PageLayout({
     }
   };
 
-  /**
-   * Generate URL for language switch
-   */
   const generateLanguageSwitchUrl = (targetLang: 'en' | 'ar'): string => {
     const pathname = location.pathname;
     const match = pathname.match(/^\/(en|ar)\//);
-    
+
     if (match) {
       return pathname.replace(/^\/(en|ar)\//, `/${targetLang}/`);
     }
-    
+
     return `/${targetLang}${pathname}`;
   };
 
@@ -52,35 +50,32 @@ export default function PageLayout({
   };
 
   return (
-    <div className="min-h-screen bg-soft-blue" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+    <div className="min-h-screen bg-soft-blue" dir={isAr ? 'rtl' : 'ltr'}>
       <header className="border-b border-slate-200/70 bg-white/70 backdrop-blur">
-        <div className="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-4 px-4 py-5 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-4 py-5 sm:px-6 lg:px-8">
           <Link to={`/${lang}/`} onClick={handleBrandClick} className="font-black tracking-tight text-slate-900">
             PhysioNutrition
           </Link>
 
           <div className="flex flex-wrap items-center gap-4">
             <nav className="flex flex-wrap items-center gap-4 text-sm font-semibold text-slate-700">
-              <Link className="hover:text-health-green" to={`/${lang}/privacy`}>
-                {lang === 'en' ? 'Privacy' : 'الخصوصية'}
-              </Link>
-              <Link className="hover:text-health-green" to={`/${lang}/about`}>
-                {lang === 'en' ? 'About' : 'من نحن'}
-              </Link>
-              <Link className="hover:text-health-green" to={`/${lang}/contact`}>
-                {lang === 'en' ? 'Contact' : 'اتصل بنا'}
-              </Link>
               <Link className="hover:text-health-green" to={`/${lang}/injuries`}>
-                {lang === 'en' ? 'Injury Protocols' : 'بروتوكولات الإصابات'}
+                {isAr ? '?????????? ????????' : 'Injury Protocols'}
               </Link>
               <Link className="hover:text-health-green" to={`/${lang}/exercises`}>
-                {lang === 'en' ? 'Exercises' : 'التمارين'}
+                {isAr ? '????????' : 'Exercises'}
               </Link>
               <Link className="hover:text-health-green" to={`/${lang}/diets`}>
-                {lang === 'en' ? 'Diet & Regimens' : 'الدايت والريجيم'}
+                {isAr ? '??????? ????????' : 'Diet Plans'}
               </Link>
-              <Link className="hover:text-health-green" to={`/${lang}/terms`}>
-                {lang === 'en' ? 'Terms' : 'الشروط'}
+              <Link className="hover:text-health-green" to={`/${lang}/insights`}>
+                {isAr ? '????????' : 'Insights'}
+              </Link>
+              <Link className="hover:text-health-green" to={`/${lang}/about`}>
+                {isAr ? '?? ???' : 'About'}
+              </Link>
+              <Link className="hover:text-health-green" to={`/${lang}/contact`}>
+                {isAr ? '???? ???' : 'Contact'}
               </Link>
             </nav>
 
@@ -108,7 +103,7 @@ export default function PageLayout({
         </div>
       </header>
 
-      <main className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
+      <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
         <h1 className="mb-6 text-3xl font-black text-slate-900 sm:text-4xl">{title}</h1>
         <div className="space-y-6">
           <div className="prose prose-slate max-w-none">
@@ -121,10 +116,10 @@ export default function PageLayout({
             <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
               <div className="mb-4 flex items-center justify-between gap-3">
                 <h2 className="text-lg font-black text-slate-900">
-                  {relatedTitle ?? (lang === 'en' ? 'Related pages' : 'صفحات مقترحة')}
+                  {relatedTitle ?? (isAr ? '????? ??????' : 'Related pages')}
                 </h2>
                 <Link to={`/${lang}/`} className="text-sm font-semibold text-health-green transition hover:text-health-green-dark">
-                  {lang === 'en' ? 'Home' : 'الرئيسية'}
+                  {isAr ? '????????' : 'Home'}
                 </Link>
               </div>
 
@@ -147,4 +142,3 @@ export default function PageLayout({
     </div>
   );
 }
-

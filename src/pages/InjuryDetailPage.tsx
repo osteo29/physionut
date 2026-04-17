@@ -809,157 +809,6 @@ export default function InjuryDetailPage() {
           </section>
 
           <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
-            <div className="mb-4 flex items-center gap-2 font-black text-slate-900">
-              <ClipboardList className="h-4 w-4 text-health-green" />
-              <h2>{isAr ? 'بروتوكول التأهيل حسب المرحلة' : 'Phase-by-phase rehab protocol'}</h2>
-            </div>
-            <div className="mb-4 flex flex-wrap gap-2">
-              {rehabStagePlans.map((stage, index) => {
-                const anchorId = buildStageAnchor(stage.phaseId, index);
-                const linkLabel =
-                  isAr && !textLooksArabic(normalizeCopy(stage.phaseLabel))
-                    ? `المرحلة ${index + 1}`
-                    : normalizeCopy(stage.phaseLabel);
-
-                return (
-                  <a
-                    key={`nav-${stage.phaseId}-${index}`}
-                    href={`#${anchorId}`}
-                    className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:border-health-green/40 hover:bg-health-green/5 hover:text-health-green-dark"
-                  >
-                    {linkLabel}
-                  </a>
-                );
-              })}
-            </div>
-            <div className="grid gap-4 xl:grid-cols-3">
-              {rehabStagePlans.map((stage, index) => {
-                const isActive = stage.phaseId === selectedStagePlan?.phaseId;
-                const anchorId = buildStageAnchor(stage.phaseId, index);
-                const phaseForCard = injury.phases.find((p) => p.id === stage.phaseId);
-                const labelText =
-                  isAr && !textLooksArabic(normalizeCopy(stage.phaseLabel))
-                    ? `المرحلة ${index + 1}`
-                    : normalizeCopy(stage.phaseLabel);
-
-                return (
-                  <article
-                    id={anchorId}
-                    key={`${stage.phaseId}-${stage.duration}`}
-                    className={`rounded-[1.5rem] border p-5 ${
-                      isActive ? 'border-health-green bg-health-green/5' : 'border-slate-200 bg-slate-50'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between gap-3">
-                      <div>
-                        <div className="text-xs font-bold uppercase tracking-[0.18em] text-slate-400">
-                          {isAr ? `المرحلة ${index + 1}` : `Phase ${index + 1}`}
-                        </div>
-                        <h3 className="mt-1 font-black text-slate-900">
-                          <a href={`#${anchorId}`} className="transition hover:text-health-green-dark">
-                            {labelText}
-                          </a>
-                        </h3>
-                      </div>
-                      <div className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-slate-500">
-                        {normalizeCopy(stage.duration)}
-                      </div>
-                    </div>
-
-                    <p className="mt-4 text-sm leading-7 text-slate-700">{normalizeCopy(stage.focus)}</p>
-
-                    <div className="mt-4">
-                      <h4 className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
-                        {isAr ? 'التمارين المناسبة' : 'Exercises'}
-                      </h4>
-                      {phaseForCard?.exercisePlans?.length ? (
-                        <div className="space-y-2 text-sm text-slate-700">
-                          {phaseForCard.exercisePlans.map((plan, planIndex) => (
-                            <div key={`${plan.label}-${planIndex}`} className="rounded-xl bg-white px-3 py-2">
-                              <div className="font-semibold text-slate-900">{normalizeCopy(plan.label)}</div>
-                              {(plan.sets || plan.reps || plan.rest || plan.equipment) ? (
-                                <div className="mt-2 space-y-1">
-                                  {plan.sets ? <div><span className="font-semibold">{isAr ? 'سِت:' : 'Sets'} </span>{normalizeCopy(plan.sets)}</div> : null}
-                                  {plan.reps ? <div><span className="font-semibold">{isAr ? 'تكرارات:' : 'Reps'} </span>{normalizeCopy(plan.reps)}</div> : null}
-                                  {plan.rest ? <div><span className="font-semibold">{isAr ? 'راحة:' : 'Rest'} </span>{normalizeCopy(plan.rest)}</div> : null}
-                                  {plan.equipment ? <div><span className="font-semibold">{isAr ? 'معدات:' : 'Equipment'} </span>{normalizeCopy(plan.equipment)}</div> : null}
-                                </div>
-                              ) : null}
-
-                              {plan.alternatives?.length ? (
-                                <div className="mt-3">
-                                  <div className="font-semibold text-slate-900">{isAr ? 'بدائل:' : 'Alternatives:'}</div>
-                                  <ul className="mt-2 space-y-1">
-                                    {plan.alternatives.map((item) => (
-                                      <li key={item} className="rounded-lg bg-slate-50 px-3 py-2">{normalizeCopy(item)}</li>
-                                    ))}
-                                  </ul>
-                                </div>
-                              ) : null}
-
-                              {plan.cues?.length ? (
-                                <div className="mt-3">
-                                  <div className="font-semibold text-slate-900">{isAr ? 'ملاحظات:' : 'Cues:'}</div>
-                                  <ul className="mt-2 space-y-1">
-                                    {plan.cues.map((item) => (
-                                      <li key={item} className="rounded-lg bg-slate-50 px-3 py-2">{normalizeCopy(item)}</li>
-                                    ))}
-                                  </ul>
-                                </div>
-                              ) : null}
-                            </div>
-                          ))}
-                        </div>
-                      ) : (
-                        <ul className="space-y-2 text-sm text-slate-700">
-                          {stage.exercises.map((item) => (
-                            <li key={item} className="rounded-xl bg-white px-3 py-2">{normalizeCopy(item)}</li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-
-                    <div className="mt-4">
-                      <h4 className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
-                        {isAr ? 'علامات الانتقال للمرحلة التالية' : 'Ready to progress when'}
-                      </h4>
-                      <ul className="space-y-2 text-sm text-slate-700">
-                        {stage.progressionMarkers.map((item) => (
-                          <li key={item} className="rounded-xl bg-white px-3 py-2">{normalizeCopy(item)}</li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="mt-4">
-                      <h4 className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
-                        {isAr ? 'تجنب' : 'Avoid'}
-                      </h4>
-                      <ul className="space-y-2 text-sm text-slate-700">
-                        {stage.cautions.map((item) => (
-                          <li key={item} className="rounded-xl bg-amber-50 px-3 py-2">{normalizeCopy(item)}</li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    {phaseForCard?.nutritionNotes?.length ? (
-                      <div className="mt-4">
-                        <h4 className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
-                          {isAr ? 'ملاحظات التغذية' : 'Nutrition notes'}
-                        </h4>
-                        <ul className="space-y-2 text-sm text-slate-700">
-                          {phaseForCard.nutritionNotes.map((item) => (
-                            <li key={item} className="rounded-xl bg-white px-3 py-2">{normalizeCopy(item)}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    ) : null}
-                  </article>
-                );
-              })}
-            </div>
-          </section>
-
-          <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
             <div className="mb-4 flex items-center gap-2 text-sm font-bold text-slate-900">
               <Timer className="h-4 w-4 text-health-green" />
               <span>{isAr ? 'مخصص خطة التعافي' : 'Recovery plan customizer'}</span>
@@ -1190,6 +1039,111 @@ export default function InjuryDetailPage() {
             </div>
           </section>
 
+          <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
+            <div className="mb-4 flex items-center justify-between gap-4">
+              <div>
+                <h2 className="text-xl font-black text-slate-900">Full phase-by-phase protocol</h2>
+                <p className="mt-2 max-w-3xl text-sm leading-7 text-slate-600">
+                  This section shows every rehab phase in sequence, including goals, precautions, progression markers, and detailed exercise plans.
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-5">
+              {injury.phases.map((phase, index) => (
+                <article
+                  key={`${phase.id}-${index}`}
+                  id={buildStageAnchor(phase.id, index)}
+                  className="rounded-[1.75rem] border border-slate-200 bg-slate-50 p-5"
+                >
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div>
+                      <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">{`Phase ${index + 1}`}</div>
+                      <h3 className="mt-1 text-lg font-black text-slate-900">{normalizeCopy(phase.label)}</h3>
+                      <div className="mt-1 text-sm text-slate-500">{normalizeCopy(phase.duration)}</div>
+                    </div>
+                    {phase.focus ? (
+                      <div className="max-w-xl rounded-2xl bg-white px-4 py-3 text-sm leading-7 text-slate-700">
+                        {normalizeCopy(phase.focus)}
+                      </div>
+                    ) : null}
+                  </div>
+
+                  <div className="mt-4 grid gap-4 xl:grid-cols-3">
+                    <div className="rounded-2xl bg-white p-4">
+                      <div className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-400">Goals</div>
+                      <ul className="space-y-2 text-sm text-slate-700">
+                        {phase.goals.map((item) => (
+                          <li key={item} className="rounded-xl bg-slate-50 px-3 py-2">{normalizeCopy(item)}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="rounded-2xl bg-white p-4">
+                      <div className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-400">Precautions</div>
+                      <ul className="space-y-2 text-sm text-slate-700">
+                        {(phase.cautions?.length ? phase.cautions : ['No extra precautions recorded.']).map((item) => (
+                          <li key={item} className="rounded-xl bg-amber-50 px-3 py-2">{normalizeCopy(item)}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="rounded-2xl bg-white p-4">
+                      <div className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-400">Progression markers</div>
+                      <ul className="space-y-2 text-sm text-slate-700">
+                        {(phase.progressionMarkers?.length ? phase.progressionMarkers : ['No extra progression markers recorded.']).map((item) => (
+                          <li key={item} className="rounded-xl bg-slate-50 px-3 py-2">{normalizeCopy(item)}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 rounded-2xl bg-white p-4">
+                    <div className="mb-3 text-sm font-black text-slate-900">Detailed exercise plan</div>
+                    {phase.exercisePlans?.length ? (
+                      <div className="space-y-3">
+                        {phase.exercisePlans.map((plan, planIndex) => (
+                          <div key={`${plan.label}-${planIndex}`} className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                            <div className="font-bold text-slate-900">{normalizeCopy(plan.label)}</div>
+                            {plan.sets ? (
+                              <div className="mt-2 text-sm text-slate-700">
+                                <span className="font-semibold">Dose: </span>
+                                {normalizeCopy(plan.sets)}
+                              </div>
+                            ) : null}
+                            {plan.cues?.length ? (
+                              <ul className="mt-3 space-y-2 text-sm text-slate-700">
+                                {plan.cues.map((item) => (
+                                  <li key={item} className="rounded-xl bg-white px-3 py-2">{normalizeCopy(item)}</li>
+                                ))}
+                              </ul>
+                            ) : null}
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <ul className="space-y-2 text-sm text-slate-700">
+                        {phase.exercises.map((item) => (
+                          <li key={item} className="rounded-xl bg-slate-50 px-3 py-2">{normalizeCopy(item)}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+
+                  {phase.nutritionNotes?.length ? (
+                    <div className="mt-4 rounded-2xl bg-health-green/5 p-4">
+                      <div className="mb-2 text-sm font-black text-slate-900">Nutrition notes for this phase</div>
+                      <ul className="space-y-2 text-sm text-slate-700">
+                        {phase.nutritionNotes.map((item) => (
+                          <li key={item} className="rounded-xl bg-white px-3 py-2">{normalizeCopy(item)}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
+                </article>
+              ))}
+            </div>
+          </section>
           <section className="grid gap-6 xl:grid-cols-2">
             <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
               <div className="mb-3 flex items-center gap-2 font-black text-slate-900">
@@ -1278,3 +1232,6 @@ export default function InjuryDetailPage() {
     </>
   );
 }
+
+
+

@@ -4,6 +4,7 @@ import {CopyPlus, FileDown, Plus, Save, Trash2} from 'lucide-react';
 import Seo from '../components/seo/Seo';
 import PageLayout from './PageLayout';
 import AdminShell from '../components/admin/AdminShell';
+import ProtocolImportPanel from '../components/admin/ProtocolImportPanel';
 import usePreferredLang from './usePreferredLang';
 import {
   getArticleAdminEmail,
@@ -1149,6 +1150,15 @@ export default function AdminInjuryManager() {
             {notice ? <span className="text-sm font-medium text-health-green">{notice}</span> : null}
           </div>
 
+          <ProtocolImportPanel
+            lang={uiLang}
+            user={user}
+            onNotice={setNotice}
+            onImported={async () => {
+              await loadInjuries(selectedId);
+            }}
+          />
+
           <div className="grid gap-6 xl:grid-cols-[300px,minmax(0,1fr)]">
             <aside className="space-y-4 rounded-3xl border border-slate-200 bg-slate-50 p-4">
               <div className="text-xs font-bold uppercase tracking-[0.18em] text-slate-400">{isAr ? 'الإصابات' : 'Injuries'}</div>
@@ -1328,3 +1338,4 @@ export default function AdminInjuryManager() {
     </>
   );
 }
+

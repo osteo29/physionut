@@ -448,6 +448,56 @@ export type Database = {
           updated_at?: string | null;
         };
       };
+      injury_protocol_import_runs: {
+        Row: {
+          id: string;
+          source_name: string | null;
+          raw_text: string;
+          parsed_count: number;
+          matched_count: number;
+          unmatched_count: number;
+          imported_slugs: string[] | null;
+          unmatched_titles: string[] | null;
+          status: string;
+          notes: string | null;
+          created_by: string | null;
+          created_by_email: string | null;
+          created_at: string | null;
+          updated_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          source_name?: string | null;
+          raw_text: string;
+          parsed_count?: number;
+          matched_count?: number;
+          unmatched_count?: number;
+          imported_slugs?: string[] | null;
+          unmatched_titles?: string[] | null;
+          status?: string;
+          notes?: string | null;
+          created_by?: string | null;
+          created_by_email?: string | null;
+          created_at?: string | null;
+          updated_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          source_name?: string | null;
+          raw_text?: string;
+          parsed_count?: number;
+          matched_count?: number;
+          unmatched_count?: number;
+          imported_slugs?: string[] | null;
+          unmatched_titles?: string[] | null;
+          status?: string;
+          notes?: string | null;
+          created_by?: string | null;
+          created_by_email?: string | null;
+          created_at?: string | null;
+          updated_at?: string | null;
+        };
+      };
       safety_notes: {
         Row: {
           id: string;
@@ -546,3 +596,4 @@ export type TableInsert<TableName extends keyof Database['public']['Tables']> =
   Database['public']['Tables'][TableName]['Insert'];
 export type TableUpdate<TableName extends keyof Database['public']['Tables']> =
   Database['public']['Tables'][TableName]['Update'];
+

@@ -13,6 +13,8 @@ import type {
   MealExamples,
 } from './injuryDatabase';
 import type {Language} from './translations';
+import type {ImportedInjuryProtocol, ProtocolImportSummary} from './injuryProtocolImport';
+import {getAllInjuries, type RecoveryWindow} from './injuryDatabase';
 
 function getSupabaseClient() {
   if (!supabase) {
@@ -605,3 +607,268 @@ export async function deleteMeal(id: string) {
     throw err;
   }
 }
+
+
+type ImportRunStatus = 'preview' | 'imported' | 'failed';
+
+export type InjuryProtocolImportRunRow = {
+  id: string;
+  source_name: string | null;
+  raw_text: string;
+  parsed_count: number;
+  matched_count: number;
+  unmatched_count: number;
+  imported_slugs: string[];
+  unmatched_titles: string[];
+  status: ImportRunStatus;
+  notes: string | null;
+  created_by: string | null;
+  created_by_email: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+function inferRecoveryWindow(phaseNumber: number): RecoveryWindow {
+  if (phaseNumber <= 1) return 'under_48h';
+  if (phaseNumber === 2) return 'days_3_14';
+  if (phaseNumber === 3) return 'weeks_2_6';
+  return 'over_6_weeks';
+}
+
+function getLocalProtocolMap() {
+  return new Map(getAllInjuries().map((injury) => [injury.id, injury]));
+}
+
+function buildFallbackInjuryInsert(slug: string, sourceTitle: string): InjuryInsert {
+  return {
+    injury_id_slug: slug,
+    name_en: sourceTitle,
+    name_ar: sourceTitle,
+    category: 'Overuse',
+    body_region_en: 'Whole body',
+    body_region_ar: 'Whole body',
+    overview_en: sourceTitle,
+    overview_ar: sourceTitle,
+    rehab_summary_en: 'Imported from admin protocol workflow.',
+    rehab_summary_ar: 'Imported from admin protocol workflow.',
+    common_in: [],
+    red_flags: [],
+    related_calculators: [],
+  };
+}
+
+function buildLocalInjuryInsert(injury: InjuryProtocol): InjuryInsert {
+  return {
+    injury_id_slug: injury.id,
+    name_en: injury.name,
+    name_ar: injury.name,
+    category: injury.category,
+    body_region_en: injury.bodyRegion,
+    body_region_ar: injury.bodyRegion,
+    overview_en: injury.overview,
+    overview_ar: injury.overview,
+    rehab_summary_en: injury.rehabSummary,
+    rehab_summary_ar: injury.rehabSummary,
+    common_in: injury.commonIn,
+    red_flags: injury.redFlags,
+    related_calculators: injury.relatedCalculators,
+  };
+}
+
+function buildPhasePayload(
+  injuryId: string,
+  phaseNumber: number,
+  importedPhase: ImportedInjuryProtocol['phases'][number],
+  existingPhase?: PhaseRow,
+  basePhase?: InjuryPhase,
+): PhaseInsert | PhaseUpdate {
+  const fallbackLabel = importedPhase.label || basePhase?.label || `Phase ${phaseNumber}`;
+  const fallbackDuration = importedPhase.duration || basePhase?.duration || '';
+  const fallbackWindow = existingPhase?.recovery_window || basePhase?.window || inferRecoveryWindow(phaseNumber);
+
+  return {
+    injury_id: injuryId,
+    phase_number: phaseNumber,
+    label_en: importedPhase.label || existingPhase?.label_en || basePhase?.label || fallbackLabel,
+    label_ar: existingPhase?.label_ar || importedPhase.label || basePhase?.label || fallbackLabel,
+    duration_en: importedPhase.duration || existingPhase?.duration_en || basePhase?.duration || fallbackDuration,
+    duration_ar: existingPhase?.duration_ar || importedPhase.duration || basePhase?.duration || fallbackDuration,
+    recovery_window: fallbackWindow,
+    goals_en: importedPhase.goals.length ? importedPhase.goals : existingPhase?.goals_en || basePhase?.goals || [],
+    goals_ar: existingPhase?.goals_ar || basePhase?.goals || importedPhase.goals,
+    nutrition_focus_en: existingPhase?.nutrition_focus_en || basePhase?.nutritionFocus || [],
+    nutrition_focus_ar: existingPhase?.nutrition_focus_ar || basePhase?.nutritionFocus || [],
+    recommended_foods_en: existingPhase?.recommended_foods_en || basePhase?.recommendedFoods || [],
+    recommended_foods_ar: existingPhase?.recommended_foods_ar || basePhase?.recommendedFoods || [],
+    avoid_foods_en: existingPhase?.avoid_foods_en || basePhase?.avoidFoods || [],
+    avoid_foods_ar: existingPhase?.avoid_foods_ar || basePhase?.avoidFoods || [],
+    focus_en: existingPhase?.focus_en || basePhase?.focus || '',
+    focus_ar: existingPhase?.focus_ar || basePhase?.focus || '',
+    progression_markers_en: importedPhase.progressionMarkers.length
+      ? importedPhase.progressionMarkers
+      : existingPhase?.progression_markers_en || basePhase?.progressionMarkers || [],
+    progression_markers_ar: existingPhase?.progression_markers_ar || basePhase?.progressionMarkers || importedPhase.progressionMarkers,
+    cautions_en: importedPhase.cautions.length ? importedPhase.cautions : existingPhase?.cautions_en || basePhase?.cautions || [],
+    cautions_ar: existingPhase?.cautions_ar || basePhase?.cautions || importedPhase.cautions,
+    nutrition_notes_en: existingPhase?.nutrition_notes_en || basePhase?.nutritionNotes || [],
+    nutrition_notes_ar: existingPhase?.nutrition_notes_ar || basePhase?.nutritionNotes || [],
+    exercise_plans: importedPhase.exercisePlans.length ? importedPhase.exercisePlans : existingPhase?.exercise_plans || basePhase?.exercisePlans || [],
+    exercises_en: importedPhase.exercises.length ? importedPhase.exercises : existingPhase?.exercises_en || basePhase?.exercises || [],
+    exercises_ar: existingPhase?.exercises_ar || basePhase?.exercises || importedPhase.exercises,
+    prohibited_movements_en: existingPhase?.prohibited_movements_en || basePhase?.prohibitedMovements || [],
+    prohibited_movements_ar: existingPhase?.prohibited_movements_ar || basePhase?.prohibitedMovements || [],
+    protein_min_per_kg: existingPhase?.protein_min_per_kg ?? basePhase?.proteinPerKg?.min ?? null,
+    protein_max_per_kg: existingPhase?.protein_max_per_kg ?? basePhase?.proteinPerKg?.max ?? null,
+    hydration_ml_per_kg: existingPhase?.hydration_ml_per_kg ?? basePhase?.hydrationMlPerKg ?? null,
+    omega3_grams: existingPhase?.omega3_grams ?? basePhase?.omega3Grams ?? null,
+    creatine_grams: existingPhase?.creatine_grams ?? basePhase?.creatineGrams ?? null,
+    collagen_min_per_kg: existingPhase?.collagen_min_per_kg ?? basePhase?.collagenPerKg?.min ?? null,
+    collagen_max_per_kg: existingPhase?.collagen_max_per_kg ?? basePhase?.collagenPerKg?.max ?? null,
+    vitamin_c_mg: existingPhase?.vitamin_c_mg ?? basePhase?.vitaminCMg ?? null,
+    calcium_mg: existingPhase?.calcium_mg ?? basePhase?.calciumMg ?? null,
+  };
+}
+
+export async function createInjuryProtocolImportRun(data: {
+  rawText: string;
+  sourceName?: string;
+  summary: ProtocolImportSummary;
+  status?: ImportRunStatus;
+  notes?: string;
+  actor?: {id?: string | null; email?: string | null};
+}): Promise<InjuryProtocolImportRunRow | null> {
+  try {
+    const db = getSupabaseClient();
+    const {data: result, error} = await db
+      .from('injury_protocol_import_runs')
+      .insert([
+        {
+          source_name: data.sourceName || null,
+          raw_text: data.rawText,
+          parsed_count: data.summary.parsedCount,
+          matched_count: data.summary.matchedCount,
+          unmatched_count: data.summary.unmatchedCount,
+          imported_slugs: data.summary.matched.map((item) => item.matchedSlug).filter(Boolean),
+          unmatched_titles: data.summary.unmatched.map((item) => item.sourceTitle),
+          status: data.status || 'preview',
+          notes: data.notes || null,
+          created_by: data.actor?.id || null,
+          created_by_email: data.actor?.email || null,
+        },
+      ])
+      .select()
+      .single();
+
+    if (error) throw error;
+    return result as InjuryProtocolImportRunRow;
+  } catch (err) {
+    console.error('Error creating injury protocol import run:', err);
+    return null;
+  }
+}
+
+export async function updateInjuryProtocolImportRun(
+  id: string,
+  data: Partial<Pick<InjuryProtocolImportRunRow, 'status' | 'notes' | 'parsed_count' | 'matched_count' | 'unmatched_count' | 'imported_slugs' | 'unmatched_titles'>>,
+) {
+  try {
+    const db = getSupabaseClient();
+    const {data: result, error} = await db
+      .from('injury_protocol_import_runs')
+      .update(data)
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return result as InjuryProtocolImportRunRow;
+  } catch (err) {
+    console.error('Error updating injury protocol import run:', err);
+    throw err;
+  }
+}
+
+export async function importExerciseProtocolsToSupabase(params: {
+  rawText: string;
+  parsedInjuries: ImportedInjuryProtocol[];
+  sourceName?: string;
+  actor?: {id?: string | null; email?: string | null};
+}) {
+  const summary = {
+    parsedCount: params.parsedInjuries.length,
+    matchedCount: params.parsedInjuries.filter((item) => item.matchedSlug).length,
+    unmatchedCount: params.parsedInjuries.filter((item) => !item.matchedSlug).length,
+    matched: params.parsedInjuries.filter((item) => item.matchedSlug),
+    unmatched: params.parsedInjuries.filter((item) => !item.matchedSlug),
+  } satisfies ProtocolImportSummary;
+
+  const run = await createInjuryProtocolImportRun({
+    rawText: params.rawText,
+    sourceName: params.sourceName,
+    summary,
+    status: 'preview',
+    actor: params.actor,
+  });
+
+  try {
+    const localProtocols = getLocalProtocolMap();
+    const remoteRows = await fetchInjuriesFromSupabase();
+    const remoteBySlug = new Map(remoteRows.map((row) => [row.injury_id_slug, row]));
+    let importedCount = 0;
+
+    for (const imported of params.parsedInjuries) {
+      if (!imported.matchedSlug) continue;
+
+      const localProtocol = localProtocols.get(imported.matchedSlug);
+      let remoteInjury = remoteBySlug.get(imported.matchedSlug) || null;
+
+      if (!remoteInjury) {
+        remoteInjury = await createInjury(
+          localProtocol
+            ? buildLocalInjuryInsert(localProtocol)
+            : buildFallbackInjuryInsert(imported.matchedSlug, imported.sourceTitle),
+        );
+        remoteBySlug.set(imported.matchedSlug, remoteInjury);
+      }
+
+      const existingPhases = await fetchPhasesByInjuryId(remoteInjury.id);
+      const existingByNumber = new Map(existingPhases.map((phase) => [phase.phase_number, phase]));
+
+      for (const importedPhase of imported.phases) {
+        const existing = existingByNumber.get(importedPhase.phaseNumber);
+        const basePhase = localProtocol?.phases[importedPhase.phaseNumber - 1];
+        const payload = buildPhasePayload(remoteInjury.id, importedPhase.phaseNumber, importedPhase, existing, basePhase);
+
+        if (existing) {
+          await updatePhase(existing.id, payload as PhaseUpdate);
+        } else {
+          await createPhase(payload as PhaseInsert);
+        }
+      }
+
+      importedCount += 1;
+    }
+
+    if (run) {
+      await updateInjuryProtocolImportRun(run.id, {
+        status: 'imported',
+        notes: `Imported ${importedCount} matched injuries into Supabase.`,
+      });
+    }
+
+    return {
+      runId: run?.id || null,
+      importedCount,
+      summary,
+    };
+  } catch (error) {
+    if (run) {
+      await updateInjuryProtocolImportRun(run.id, {
+        status: 'failed',
+        notes: error instanceof Error ? error.message : 'Import failed',
+      });
+    }
+    throw error;
+  }
+}
+

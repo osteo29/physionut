@@ -1,12 +1,12 @@
 import {readFileSync, writeFileSync} from 'node:fs';
 import {resolve} from 'node:path';
 import {EXERCISE_FINDER_STATIC_SLUGS} from '../src/components/common/exercise-finder/constants';
-import {CALCULATOR_PAGE_CONFIGS} from '../src/services/calculatorPages';
 import {TRAINING_SYSTEMS} from '../src/components/common/exercise-finder/data/training-systems';
-import {normalizeExerciseUrlSlug} from '../src/services/seoAliases';
-import {getBuildArticles, getBuildInjuries} from './buildContentSource';
+import {CALCULATOR_PAGE_CONFIGS} from '../src/services/calculatorPages';
 import {dietRegimensCatalog} from '../src/services/dietRegimensCatalog';
 import {getInjuryPath} from '../src/services/injuryDatabase';
+import {normalizeExerciseUrlSlug} from '../src/services/seoAliases';
+import {getBuildArticles, getBuildInjuries} from './buildContentSource';
 
 const SITE_URL = 'https://physionutrition.vercel.app';
 const LANGUAGES = ['en', 'ar'] as const;
@@ -23,6 +23,11 @@ type RouteEntry = {
 type RouteGroup = RouteEntry & {
   lang: Language;
   groupKey: string;
+};
+
+type SitemapFile = {
+  filename: string;
+  routes: RouteGroup[];
 };
 
 const staticRoutes: RouteEntry[] = [
@@ -45,7 +50,8 @@ const staticRoutes: RouteEntry[] = [
   ...EXERCISE_FINDER_STATIC_SLUGS.map((slug) => ({
     path: `/exercises/${normalizeExerciseUrlSlug(slug)}`,
     changefreq: 'weekly',
-    priority: slug === 'chest' || slug === 'back' || slug === 'shoulders' || slug === 'legs' ? '0.85' : '0.8',
+    priority:
+      slug === 'chest' || slug === 'back' || slug === 'shoulders' || slug === 'legs' ? '0.85' : '0.8',
     lastmod: GENERATED_LASTMOD,
   })),
   {path: '/injuries', changefreq: 'weekly', priority: '0.9', lastmod: GENERATED_LASTMOD},
@@ -63,7 +69,13 @@ function absoluteUrl(path: string) {
   return `${SITE_URL}${path}`;
 }
 
-function buildRouteGroup(path: string, lang: Language, changefreq: string, priority: string, lastmod?: string): RouteGroup {
+function buildRouteGroup(
+  path: string,
+  lang: Language,
+  changefreq: string,
+  priority: string,
+  lastmod?: string,
+): RouteGroup {
   return {
     path: `/${lang}${path}`,
     lang,
@@ -72,6 +84,59 @@ function buildRouteGroup(path: string, lang: Language, changefreq: string, prior
     priority,
     ...(lastmod ? {lastmod} : {}),
   };
+}
+
+function renderUrlSet(routes: RouteGroup[]) {
+  const alternatesByGroup = new Map<string, RouteGroup[]>();
+
+  routes.forEach((route) => {
+    const current = alternatesByGroup.get(route.groupKey);
+    if (current) {
+      current.push(route);
+    } else {
+      alternatesByGroup.set(route.groupKey, [route]);
+    }
+  });
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${routes
+  .map((route) => {
+    const alternates = (alternatesByGroup.get(route.groupKey) || [route]).sort((a, b) => a.lang.localeCompare(b.lang));
+    const xDefault = alternates.find((item) => item.lang === 'en')?.path || route.path;
+
+    return `  <url>
+    <loc>${absoluteUrl(route.path)}</loc>
+${alternates
+  .map(
+    (alternate) =>
+      `    <xhtml:link rel="alternate" hreflang="${alternate.lang}" href="${absoluteUrl(alternate.path)}" />`,
+  )
+  .join('\n')}
+    <xhtml:link rel="alternate" hreflang="x-default" href="${absoluteUrl(xDefault)}" />
+    <lastmod>${route.lastmod || GENERATED_LASTMOD}</lastmod>
+    <changefreq>${route.changefreq}</changefreq>
+    <priority>${route.priority}</priority>
+  </url>`;
+  })
+  .join('\n')}
+</urlset>
+`;
+}
+
+function renderSitemapIndex(files: SitemapFile[]) {
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${files
+  .map(
+    (file) => `  <sitemap>
+    <loc>${SITE_URL}/${file.filename}</loc>
+    <lastmod>${GENERATED_LASTMOD}</lastmod>
+  </sitemap>`,
+  )
+  .join('\n')}
+</sitemapindex>
+`;
 }
 
 const langStaticRoutes: RouteGroup[] = staticRoutes.flatMap((route) =>
@@ -117,63 +182,29 @@ const dietRoutes: RouteGroup[] = dietRegimensCatalog.flatMap((diet) =>
   })),
 );
 
-const allRoutes: RouteGroup[] = [...langStaticRoutes, ...articleRoutes, ...injuryRoutes, ...dietRoutes];
-
-const alternatesByGroup = new Map<string, RouteGroup[]>();
-allRoutes.forEach((route) => {
-  const group = alternatesByGroup.get(route.groupKey);
-  if (group) {
-    group.push(route);
-  } else {
-    alternatesByGroup.set(route.groupKey, [route]);
-  }
-});
-
-const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-${allRoutes
-  .map((route) => {
-    const alternates = (alternatesByGroup.get(route.groupKey) || [route]).sort((a, b) => a.lang.localeCompare(b.lang));
-    const xDefault = alternates.find((item) => item.lang === 'en')?.path || route.path;
-
-    return `  <url>
-    <loc>${absoluteUrl(route.path)}</loc>
-${alternates
-  .map(
-    (alternate) =>
-      `    <xhtml:link rel="alternate" hreflang="${alternate.lang}" href="${absoluteUrl(alternate.path)}" />`,
-  )
-  .join('\n')}
-    <xhtml:link rel="alternate" hreflang="x-default" href="${absoluteUrl(xDefault)}" />
-    <lastmod>${route.lastmod || GENERATED_LASTMOD}</lastmod>
-    <changefreq>${route.changefreq}</changefreq>
-    <priority>${route.priority}</priority>
-  </url>`;
-  })
-  .join('\n')}
-</urlset>
-`;
-
-const sitemapIndexXml = `<?xml version="1.0" encoding="UTF-8"?>
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <sitemap>
-    <loc>${SITE_URL}/sitemap.xml</loc>
-    <lastmod>${GENERATED_LASTMOD}</lastmod>
-  </sitemap>
-</sitemapindex>
-`;
+const sitemapFiles: SitemapFile[] = [
+  {filename: 'sitemap-static.xml', routes: langStaticRoutes},
+  {filename: 'sitemap-articles.xml', routes: articleRoutes},
+  {filename: 'sitemap-injuries.xml', routes: injuryRoutes},
+  {filename: 'sitemap-diets.xml', routes: dietRoutes},
+];
 
 const publicDir = resolve(process.cwd(), 'public');
-writeFileSync(resolve(publicDir, 'sitemap.xml'), xml, 'utf8');
+
+sitemapFiles.forEach((file) => {
+  writeFileSync(resolve(publicDir, file.filename), renderUrlSet(file.routes), 'utf8');
+});
+
+const sitemapIndexXml = renderSitemapIndex(sitemapFiles);
+writeFileSync(resolve(publicDir, 'sitemap.xml'), sitemapIndexXml, 'utf8');
 writeFileSync(resolve(publicDir, 'sitemap-index.xml'), sitemapIndexXml, 'utf8');
 
 const robotsPath = resolve(publicDir, 'robots.txt');
-const robots = readFileSync(robotsPath, 'utf8')
+const robotsBody = readFileSync(robotsPath, 'utf8')
   .replace(/^Sitemap:.*$/gm, '')
   .trimEnd();
-const nextRobots = `${robots}\n\nSitemap: ${SITE_URL}/sitemap-index.xml\nSitemap: ${SITE_URL}/sitemap.xml\n`;
+const nextRobots = `${robotsBody}\n\nSitemap: ${SITE_URL}/sitemap.xml\n`;
 writeFileSync(robotsPath, nextRobots, 'utf8');
 
-console.log(`Generated sitemap with ${allRoutes.length} URLs and refreshed sitemap index.`);
-
-
+const totalRoutes = sitemapFiles.reduce((sum, file) => sum + file.routes.length, 0);
+console.log(`Generated ${sitemapFiles.length} sitemap files with ${totalRoutes} URLs and refreshed sitemap index.`);

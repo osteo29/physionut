@@ -57,6 +57,8 @@
 /manifest.json
 /robots.txt
 /sitemap.xml
+/sitemap-index.xml
+/sitemap-*.xml
   Cache-Control: public, max-age=86400
 
 # PWA icons
@@ -86,3 +88,4 @@
   Access-Control-Allow-Origin: *
   Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
   Access-Control-Allow-Headers: Content-Type, Authorization
+
