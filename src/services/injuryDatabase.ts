@@ -1,4 +1,5 @@
 import {generatedInjuryProtocols} from './injuryProtocolCatalog';
+import {applyInjuryExerciseProtocolOverrides} from './injuryExerciseProtocolMerge';
 
 export type InjuryCategory =
   | 'Ligament'
@@ -588,8 +589,10 @@ function buildLegacyStages(phases: InjuryPhase[]) {
   );
 }
 
+const mergedInjuryProtocols = applyInjuryExerciseProtocolOverrides(injuryProtocols);
+
 export const injuryDatabase: Record<string, InjuryProtocol> = Object.fromEntries(
-  injuryProtocols.map((injury) => [
+  mergedInjuryProtocols.map((injury) => [
     injury.id,
     {
       ...injury,
@@ -599,9 +602,9 @@ export const injuryDatabase: Record<string, InjuryProtocol> = Object.fromEntries
   ]),
 );
 
-export const getAllInjuries = () => injuryProtocols;
-export const getAllCategories = (): InjuryCategory[] => [...new Set(injuryProtocols.map((injury) => injury.category))] as InjuryCategory[];
-export const getAllBodyRegions = (): BodyRegion[] => [...new Set(injuryProtocols.map((injury) => injury.bodyRegion))] as BodyRegion[];
+export const getAllInjuries = () => mergedInjuryProtocols;
+export const getAllCategories = (): InjuryCategory[] => [...new Set(mergedInjuryProtocols.map((injury) => injury.category))] as InjuryCategory[];
+export const getAllBodyRegions = (): BodyRegion[] => [...new Set(mergedInjuryProtocols.map((injury) => injury.bodyRegion))] as BodyRegion[];
 export const getInjurySlug = (injury: InjuryProtocol) => injury.id.replace(/_/g, '-');
 export const getInjuryPath = (injury: InjuryProtocol, lang?: string) => {
   const slug = getInjurySlug(injury);
@@ -609,7 +612,7 @@ export const getInjuryPath = (injury: InjuryProtocol, lang?: string) => {
 };
 export const getInjuryById = (id: string) => injuryDatabase[id];
 export const getInjuryBySlug = (slug: string) =>
-  injuryProtocols.find((injury) => getInjurySlug(injury) === slug);
+  mergedInjuryProtocols.find((injury) => getInjurySlug(injury) === slug);
 export const getSuggestedPhaseForWindow = (injury: InjuryProtocol, window: RecoveryWindow) =>
   injury.phases.find((phase) => phase.window === window) || injury.phases[0];
 
@@ -667,3 +670,6 @@ export function generateRecoveryPlan({
     },
   };
 }
+
+
+

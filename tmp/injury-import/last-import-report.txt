@@ -1,0 +1,9 @@
+Parsed injuries: 1
+Matched injuries: 1
+Unmatched injuries: 0
+Output: D:\gpa calc\physio\physionut-main\src\services\injuryExerciseProtocolOverrides.ts
+
+Matched:
+- ACL Reconstruction (Hamstring Graft) -> acl_reconstruction (4 phases)
+
+Unmatched:
