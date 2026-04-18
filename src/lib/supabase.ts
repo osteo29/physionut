@@ -9,9 +9,9 @@ import {decodeMojibake} from '../services/textEncoding';
 import type {Language} from '../services/translations';
 import type {Database, TableInsert, TableRow} from './supabaseDatabase';
 
-const rawSupabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const rawSupabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-const rawSiteUrl = import.meta.env.VITE_SITE_URL;
+const rawSupabaseUrl = (typeof import.meta !== 'undefined' && import.meta.env) ? import.meta.env.VITE_SUPABASE_URL : (typeof process !== 'undefined' ? process.env.VITE_SUPABASE_URL : '');
+const rawSupabaseAnonKey = (typeof import.meta !== 'undefined' && import.meta.env) ? import.meta.env.VITE_SUPABASE_ANON_KEY : (typeof process !== 'undefined' ? process.env.VITE_SUPABASE_ANON_KEY : '');
+const rawSiteUrl = (typeof import.meta !== 'undefined' && import.meta.env) ? import.meta.env.VITE_SITE_URL : (typeof process !== 'undefined' ? process.env.VITE_SITE_URL : '');
 
 const supabaseUrl = typeof rawSupabaseUrl === 'string' ? rawSupabaseUrl.trim() : '';
 const supabaseAnonKey = typeof rawSupabaseAnonKey === 'string' ? rawSupabaseAnonKey.trim() : '';
@@ -32,7 +32,7 @@ export type AssessmentRecord = TableRow<'assessments'>;
 export type AssessmentInsert = Omit<TableInsert<'assessments'>, 'id' | 'created_at' | 'user_id' | 'name' | 'email'>;
 export type PublishedArticleRecord = TableRow<'articles'>;
 
-const articleAdminEmailRaw = import.meta.env.VITE_ARTICLE_ADMIN_EMAIL;
+const articleAdminEmailRaw = (typeof import.meta !== 'undefined' && import.meta.env) ? import.meta.env.VITE_ARTICLE_ADMIN_EMAIL : (typeof process !== 'undefined' ? process.env.VITE_ARTICLE_ADMIN_EMAIL : '');
 const articleAdminEmail =
   typeof articleAdminEmailRaw === 'string' ? articleAdminEmailRaw.trim().toLowerCase() : '';
 

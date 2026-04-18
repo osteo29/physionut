@@ -608,6 +608,45 @@ export async function deleteMeal(id: string) {
   }
 }
 
+export async function upsertSafetyNotes(injuryId: string, data: Omit<TableInsert<'safety_notes'>, 'id' | 'injury_id' | 'created_at' | 'updated_at'>) {
+  try {
+    const db = getSupabaseClient();
+    const { data: existing } = await db.from('safety_notes').select('id').eq('injury_id', injuryId).maybeSingle();
+    
+    if (existing) {
+      const { data: result, error } = await db.from('safety_notes').update(data).eq('id', existing.id).select().single();
+      if (error) throw error;
+      return result;
+    } else {
+      const { data: result, error } = await db.from('safety_notes').insert([{ injury_id: injuryId, ...data }]).select().single();
+      if (error) throw error;
+      return result;
+    }
+  } catch (err) {
+    console.error('Error upserting safety notes:', err);
+    throw err;
+  }
+}
+
+export async function upsertInjuryPageContent(injuryId: string, data: Omit<TableInsert<'injury_page_content'>, 'id' | 'injury_id' | 'created_at' | 'updated_at'>) {
+  try {
+    const db = getSupabaseClient();
+    const { data: existing } = await db.from('injury_page_content').select('id').eq('injury_id', injuryId).maybeSingle();
+    
+    if (existing) {
+      const { data: result, error } = await db.from('injury_page_content').update(data).eq('id', existing.id).select().single();
+      if (error) throw error;
+      return result;
+    } else {
+      const { data: result, error } = await db.from('injury_page_content').insert([{ injury_id: injuryId, ...data }]).select().single();
+      if (error) throw error;
+      return result;
+    }
+  } catch (err) {
+    console.error('Error upserting injury page content:', err);
+    throw err;
+  }
+}
 
 type ImportRunStatus = 'preview' | 'imported' | 'failed';
 
@@ -627,6 +666,15 @@ export type InjuryProtocolImportRunRow = {
   created_at: string;
   updated_at: string;
 };
+
+function formatImportPermissionError(error: unknown) {
+  const code = (error as any)?.code;
+  const message = (error as any)?.message || String(error);
+  if (code === '42501' || message.toLowerCase().includes('policy')) {
+    return 'Permission denied. Ensure you are signed in and have admin rights.';
+  }
+  return message;
+}
 
 function inferRecoveryWindow(phaseNumber: number): RecoveryWindow {
   if (phaseNumber <= 1) return 'under_48h';
@@ -839,11 +887,82 @@ export async function importExerciseProtocolsToSupabase(params: {
         const basePhase = localProtocol?.phases[importedPhase.phaseNumber - 1];
         const payload = buildPhasePayload(remoteInjury.id, importedPhase.phaseNumber, importedPhase, existing, basePhase);
 
+        let phaseId: string;
         if (existing) {
-          await updatePhase(existing.id, payload as PhaseUpdate);
+          const result = await updatePhase(existing.id, payload as PhaseUpdate);
+          phaseId = result.id;
         } else {
-          await createPhase(payload as PhaseInsert);
+          const result = await createPhase(payload as PhaseInsert);
+          phaseId = result.id;
         }
+
+        // FULL SYNC: Supplements
+        const db = getSupabaseClient();
+        await db.from('supplements').delete().eq('phase_id', phaseId);
+        if (basePhase?.supplements?.length) {
+          for (let i = 0; i < basePhase.supplements.length; i++) {
+            const supp = basePhase.supplements[i];
+            await createSupplement({
+              phase_id: phaseId,
+              name: supp.name,
+              dose_en: supp.dose,
+              dose_ar: supp.dose,
+              reason_en: supp.reason,
+              reason_ar: supp.reason,
+              timing_en: supp.timing || '',
+              timing_ar: supp.timing || '',
+              caution_en: supp.caution || '',
+              caution_ar: supp.caution || '',
+              order_index: i
+            });
+          }
+        }
+
+        // FULL SYNC: Meals
+        await db.from('meal_examples').delete().eq('phase_id', phaseId);
+        if (basePhase?.meals && basePhase.meals.breakfast) {
+          await createMeal({
+            phase_id: phaseId,
+            diet_style: 'omnivore',
+            breakfast_en: basePhase.meals.breakfast,
+            breakfast_ar: basePhase.meals.breakfast,
+            lunch_en: basePhase.meals.lunch,
+            lunch_ar: basePhase.meals.lunch,
+            dinner_en: basePhase.meals.dinner,
+            dinner_ar: basePhase.meals.dinner,
+            snack_en: basePhase.meals.snack || '',
+            snack_ar: basePhase.meals.snack || '',
+            shopping_list_en: basePhase.meals.shoppingList || [],
+            shopping_list_ar: basePhase.meals.shoppingList || []
+          });
+        }
+      }
+
+      // FULL SYNC: Safety Notes
+      if (localProtocol?.safetyNotes) {
+        await upsertSafetyNotes(remoteInjury.id, {
+          medications_en: localProtocol.safetyNotes.medications || [],
+          medications_ar: localProtocol.safetyNotes.medications || [],
+          supplements_en: localProtocol.safetyNotes.supplements || [],
+          supplements_ar: localProtocol.safetyNotes.supplements || [],
+          contraindication_medications: [],
+          contraindication_supplements: []
+        });
+      }
+
+      // FULL SYNC: Page Content
+      if (localProtocol?.pageContent) {
+        await upsertInjuryPageContent(remoteInjury.id, {
+          intro_en: localProtocol.pageContent.intro || '',
+          intro_ar: localProtocol.pageContent.intro || '',
+          symptoms_en: localProtocol.pageContent.symptoms || [],
+          symptoms_ar: localProtocol.pageContent.symptoms || [],
+          rehab_notes_en: localProtocol.pageContent.rehabNotes || [],
+          rehab_notes_ar: localProtocol.pageContent.rehabNotes || [],
+          nutrition_notes_en: localProtocol.pageContent.nutritionNotes || [],
+          nutrition_notes_ar: localProtocol.pageContent.nutritionNotes || [],
+          faq_items: localProtocol.pageContent.faq as any || []
+        });
       }
 
       importedCount += 1;
