@@ -1,10 +1,5 @@
-import fs from 'node:fs';
 import path from 'node:path';
-import {
-  parseInjuryProtocolText,
-  renderInjuryProtocolImportReport,
-  renderInjuryProtocolOverridesTS,
-} from '../src/services/injuryProtocolImport';
+import {buildInjuryDataWorkspace, DEFAULT_INJURY_DATA_PATHS, writeInjuryDataWorkspace} from './injury-data-workspace';
 
 type Args = {
   inputPath: string;
@@ -12,9 +7,9 @@ type Args = {
   reportPath: string;
 };
 
-const DEFAULT_INPUT = path.resolve(process.cwd(), 'tmp', 'injury-import', 'bulk-protocols.txt');
-const DEFAULT_OUTPUT = path.resolve(process.cwd(), 'src', 'services', 'injuryExerciseProtocolOverrides.ts');
-const DEFAULT_REPORT = path.resolve(process.cwd(), 'tmp', 'injury-import', 'last-import-report.txt');
+const DEFAULT_INPUT = DEFAULT_INJURY_DATA_PATHS.inputPath;
+const DEFAULT_OUTPUT = DEFAULT_INJURY_DATA_PATHS.outputPath;
+const DEFAULT_REPORT = DEFAULT_INJURY_DATA_PATHS.reportPath;
 
 function parseArgs(argv: string[]): Args {
   const args: Args = {
@@ -51,22 +46,21 @@ function parseArgs(argv: string[]): Args {
 
 function main() {
   const args = parseArgs(process.argv.slice(2));
+  const workspace = buildInjuryDataWorkspace({
+    paths: {
+      inputPath: args.inputPath,
+      outputPath: args.outputPath,
+      reportPath: args.reportPath,
+    },
+  });
 
-  if (!fs.existsSync(args.inputPath)) {
-    throw new Error(`Input file not found: ${args.inputPath}`);
-  }
+  writeInjuryDataWorkspace(workspace, {
+    inputPath: args.inputPath,
+    outputPath: args.outputPath,
+    reportPath: args.reportPath,
+  });
 
-  const rawText = fs.readFileSync(args.inputPath, 'utf8');
-  const injuries = parseInjuryProtocolText(rawText);
-  const overridesFile = renderInjuryProtocolOverridesTS(injuries);
-  const report = renderInjuryProtocolImportReport(injuries, args.outputPath);
-
-  fs.mkdirSync(path.dirname(args.outputPath), {recursive: true});
-  fs.mkdirSync(path.dirname(args.reportPath), {recursive: true});
-  fs.writeFileSync(args.outputPath, overridesFile, 'utf8');
-  fs.writeFileSync(args.reportPath, report, 'utf8');
-
-  console.log(report);
+  console.log(workspace.report);
 }
 
 main();

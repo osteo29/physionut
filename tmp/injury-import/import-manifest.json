@@ -1,0 +1,721 @@
+{
+  "generatedAt": "2026-04-20T22:57:01.702Z",
+  "source": {
+    "name": "bulk-protocols.txt",
+    "inputPath": "D:\\gpa calc\\physio\\physionut-main\\tmp\\injury-import\\bulk-protocols.txt"
+  },
+  "files": {
+    "input": "D:\\gpa calc\\physio\\physionut-main\\tmp\\injury-import\\bulk-protocols.txt",
+    "overridesTs": "D:\\gpa calc\\physio\\physionut-main\\src\\services\\injuryExerciseProtocolOverrides.ts",
+    "reportTxt": "D:\\gpa calc\\physio\\physionut-main\\tmp\\injury-import\\last-import-report.txt",
+    "parsedJson": "D:\\gpa calc\\physio\\physionut-main\\tmp\\injury-import\\parsed-protocols.json",
+    "manifestJson": "D:\\gpa calc\\physio\\physionut-main\\tmp\\injury-import\\import-manifest.json"
+  },
+  "summary": {
+    "parsedCount": 100,
+    "matchedCount": 100,
+    "unmatchedCount": 0
+  },
+  "matched": [
+    {
+      "sourceTitle": "ACL Reconstruction (Hamstring Graft)",
+      "matchedSlug": "acl_reconstruction",
+      "phaseCount": 4
+    },
+    {
+      "sourceTitle": "ACL Tear - Conservative Management",
+      "matchedSlug": "acl_injury",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Meniscus Repair (Post-operative)",
+      "matchedSlug": "meniscus_repair",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Patellofemoral Pain Syndrome (PFPS)",
+      "matchedSlug": "patellofemoral_pain",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Patellar Tendinopathy",
+      "matchedSlug": "patellar_tendinopathy",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "MCL Sprain (Grade II)",
+      "matchedSlug": "mcl_sprain",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Total Knee Arthroplasty (TKA)",
+      "matchedSlug": "total_knee_arthroplasty",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "PCL Tear - Conservative",
+      "matchedSlug": "pcl_injury",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Iliotibial Band Syndrome",
+      "matchedSlug": "it_band_syndrome",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Quadriceps Tendinopathy",
+      "matchedSlug": "quadriceps_tendinopathy",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Pes Anserine Bursitis",
+      "matchedSlug": "bursitis",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Baker's Cyst",
+      "matchedSlug": "bakers_cyst",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Tibial Plateau Fracture (Post-op)",
+      "matchedSlug": "tibial_plateau_fracture_rehab",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Knee Osteoarthritis (Conservative)",
+      "matchedSlug": "osteoarthritis_flare",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Osgood-Schlatter Disease",
+      "matchedSlug": "osgood_schlatter",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Meniscectomy (Post-operative)",
+      "matchedSlug": "meniscectomy_rehab",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Rotator Cuff Repair (Post-operative)",
+      "matchedSlug": "rotator_cuff_repair",
+      "phaseCount": 4
+    },
+    {
+      "sourceTitle": "Shoulder Impingement Syndrome",
+      "matchedSlug": "shoulder_impingement",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Frozen Shoulder (Adhesive Capsulitis)",
+      "matchedSlug": "frozen_shoulder",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Anterior Shoulder Dislocation (First-time)",
+      "matchedSlug": "glenohumeral_dislocation",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "AC Joint Sprain (Grade I-II)",
+      "matchedSlug": "ac_joint_sprain",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Biceps Tendinopathy (Long Head)",
+      "matchedSlug": "biceps_tendinopathy",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "SLAP Lesion (Conservative)",
+      "matchedSlug": "labrum_tear",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Posterior Shoulder Instability",
+      "matchedSlug": "glenohumeral_dislocation",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Supraspinatus Tear (Partial - Conservative)",
+      "matchedSlug": "rotator_cuff",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Calcific Tendinitis",
+      "matchedSlug": "shoulder_impingement",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Lateral Ankle Sprain (Grade I-II)",
+      "matchedSlug": "ankle_sprain",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Achilles Tendinopathy",
+      "matchedSlug": "achilles_tendinopathy",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Plantar Fasciitis",
+      "matchedSlug": "plantar_fasciitis",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Ankle Fracture (Post-immobilisation)",
+      "matchedSlug": "ankle_fracture_rehab",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Peroneal Tendinopathy",
+      "matchedSlug": "peroneal_tendinopathy",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Posterior Tibial Tendon Dysfunction (PTTD)",
+      "matchedSlug": "posterior_tibial_tendon_dysfunction",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Sinus Tarsi Syndrome",
+      "matchedSlug": "sinus_tarsi_syndrome",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "5th Metatarsal Fracture (Jones Fracture)",
+      "matchedSlug": "jones_fracture_rehab",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Ankle Fracture ORIF (Post-operative)",
+      "matchedSlug": "ankle_fracture_orif_rehab",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Hallux Valgus (Post-surgical Rehabilitation)",
+      "matchedSlug": "hallux_valgus_rehab",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Tibialis Anterior Tendinopathy",
+      "matchedSlug": "tibialis_anterior_tendinopathy",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Non-specific Low Back Pain (Acute)",
+      "matchedSlug": "low_back_pain",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Lumbar Disc Herniation with Radiculopathy",
+      "matchedSlug": "lumbar_disc_herniation",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Cervical Radiculopathy",
+      "matchedSlug": "cervical_disc_herniation",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Spondylolisthesis (Grade I - II, Conservative)",
+      "matchedSlug": "spondylolisthesis",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Thoracic Outlet Syndrome (TOS)",
+      "matchedSlug": "thoracic_outlet_syndrome",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Spinal Stenosis (Lumbar - Conservative)",
+      "matchedSlug": "lumbar_spinal_stenosis",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Facet Joint Dysfunction (Lumbar)",
+      "matchedSlug": "lumbar_facet_joint_dysfunction",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Sacroiliac Joint Dysfunction",
+      "matchedSlug": "sacroiliac_joint_dysfunction",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Piriformis Syndrome / Sciatic Nerve Compression",
+      "matchedSlug": "sciatica",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Cervical Facet Joint Pain",
+      "matchedSlug": "cervical_facet_joint_pain",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Whiplash Associated Disorder (WAD Grade II)",
+      "matchedSlug": "whiplash_injury",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Osteoporotic Vertebral Fracture (Conservative)",
+      "matchedSlug": "vertebral_fracture",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Scheuermann's Kyphosis (Conservative)",
+      "matchedSlug": "scheuermanns_kyphosis",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Thoracic Disc Herniation",
+      "matchedSlug": "thoracic_disc_herniation",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Post-Laminectomy Rehabilitation",
+      "matchedSlug": "post_laminectomy_rehab",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Hip Labral Tear (Conservative)",
+      "matchedSlug": "hip_dysplasia_labral_tear",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Total Hip Arthroplasty (THA)",
+      "matchedSlug": "total_hip_arthroplasty",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Hamstring Strain (Grade II)",
+      "matchedSlug": "hamstring_strain",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Greater Trochanteric Pain Syndrome (GTPS)",
+      "matchedSlug": "greater_trochanteric_pain_syndrome",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Femoroacetabular Impingement (FAI) - Conservative",
+      "matchedSlug": "femoroacetabular_impingement",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Hip Flexor Strain (Iliopsoas)",
+      "matchedSlug": "hip_flexor_tendinopathy",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Adductor / Groin Strain",
+      "matchedSlug": "adductor_strain",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Piriformis Syndrome",
+      "matchedSlug": "sciatica",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Hip Osteoarthritis (Conservative)",
+      "matchedSlug": "osteoarthritis_flare",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Snapping Hip Syndrome (Coxa Saltans)",
+      "matchedSlug": "snapping_hip_syndrome",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Lateral Epicondylalgia (Tennis Elbow)",
+      "matchedSlug": "lateral_epicondylitis",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Distal Radius Fracture (Post-immobilisation)",
+      "matchedSlug": "distal_radius_fracture_rehab",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Medial Epicondylalgia (Golfer's Elbow)",
+      "matchedSlug": "medial_epicondylitis",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "UCL Sprain - Elbow (Ulnar Collateral Ligament)",
+      "matchedSlug": "ucl_injury",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Carpal Tunnel Syndrome (Conservative)",
+      "matchedSlug": "carpal_tunnel_syndrome",
+      "phaseCount": 2
+    },
+    {
+      "sourceTitle": "De Quervain's Tenosynovitis",
+      "matchedSlug": "de_quervain_tenosynovitis",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Scaphoid Fracture (Post-immobilisation)",
+      "matchedSlug": "scaphoid_fracture",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "TFCC Injury - Triangular Fibrocartilage Complex (Conservative)",
+      "matchedSlug": "wrist_instability_tfcc",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Cubital Tunnel Syndrome",
+      "matchedSlug": "cubital_tunnel_syndrome",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Radial Tunnel Syndrome",
+      "matchedSlug": "radial_tunnel_syndrome",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Trigger Finger (Post-injection / Post-op)",
+      "matchedSlug": "trigger_finger",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Mallet Finger",
+      "matchedSlug": "mallet_finger",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Boutonniere Deformity",
+      "matchedSlug": "boutonniere_deformity",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Flexor Tendon Repair (Zone II)",
+      "matchedSlug": "flexor_tendon_repair_zone_ii",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Extensor Tendon Repair",
+      "matchedSlug": "extensor_tendon_repair",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Dupuytren's Contracture (Post-surgical)",
+      "matchedSlug": "dupuytrens_contracture",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Thumb UCL Sprain (Skier's Thumb)",
+      "matchedSlug": "thumb_collateral_ligament",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Proximal Humerus Fracture (Non-operative)",
+      "matchedSlug": "humeral_head_fracture",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Quadriceps Strain (Grade II)",
+      "matchedSlug": "quadriceps_strain",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Calf Strain (Gastrocnemius)",
+      "matchedSlug": "calf_strain",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Rectus Femoris Strain",
+      "matchedSlug": "quadriceps_strain",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Gluteal Muscle Strain",
+      "matchedSlug": "glute_strain",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Tibial Stress Fracture (Return to Running)",
+      "matchedSlug": "stress_fracture",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Medial Tibial Stress Syndrome (Shin Splints)",
+      "matchedSlug": "shin_splints",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Stress Reaction (Femoral Neck)",
+      "matchedSlug": "stress_fracture",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Pectoralis Major Tear (Conservative)",
+      "matchedSlug": "pectoral_strain",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Biceps Rupture - Distal (Post-op)",
+      "matchedSlug": "distal_biceps_rupture_rehab",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Triceps Tendinopathy",
+      "matchedSlug": "triceps_tendinopathy",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Sever's Disease (Calcaneal Apophysitis)",
+      "matchedSlug": "severs_disease",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Little Leaguer's Shoulder (Proximal Humeral Epiphysiolysis)",
+      "matchedSlug": "little_leaguers_shoulder",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Juvenile Osgood-Schlatter",
+      "matchedSlug": "osgood_schlatter",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Sinding-Larsen-Johansson Syndrome",
+      "matchedSlug": "sinding_larsen_johansson",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Perthes Disease (Rehabilitation)",
+      "matchedSlug": "perthes_disease",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Peripheral Nerve Injury (Peroneal Nerve Palsy)",
+      "matchedSlug": "peroneal_nerve_palsy",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Complex Regional Pain Syndrome (CRPS Type I)",
+      "matchedSlug": "crps_type_i",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Brachial Plexus Neuropraxia (Burner/Stinger)",
+      "matchedSlug": "brachial_plexus_neuropraxia",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Thoracic Hyperkyphosis (Postural)",
+      "matchedSlug": "thoracic_hyperkyphosis",
+      "phaseCount": 3
+    },
+    {
+      "sourceTitle": "Temporomandibular Joint Dysfunction (TMJ)",
+      "matchedSlug": "tmj_disorder",
+      "phaseCount": 3
+    }
+  ],
+  "unmatched": [],
+  "localLibraryCoverage": {
+    "totalInjuries": 138,
+    "importedCoverageCount": 93,
+    "missingCoverageCount": 45,
+    "missingCoverage": [
+      {
+        "id": "ac_joint_injury",
+        "name": "AC joint injury"
+      },
+      {
+        "id": "acl_meniscus_combined",
+        "name": "ACL + Meniscus combined injury"
+      },
+      {
+        "id": "ankle_instability",
+        "name": "Ankle instability"
+      },
+      {
+        "id": "biceps_strain",
+        "name": "Biceps strain"
+      },
+      {
+        "id": "bone_fracture_long_bone",
+        "name": "Bone fracture (Radius, Ulna, Humerus, Clavicle, Femur, Pelvis)"
+      },
+      {
+        "id": "calcaneus_fracture",
+        "name": "Calcaneus fracture"
+      },
+      {
+        "id": "chronic_ankle_instability",
+        "name": "Chronic ankle instability"
+      },
+      {
+        "id": "clavicle_fracture_rehab",
+        "name": "Clavicle fracture rehab"
+      },
+      {
+        "id": "concussion_recovery",
+        "name": "Concussion recovery"
+      },
+      {
+        "id": "deltoid_strain",
+        "name": "Deltoid strain"
+      },
+      {
+        "id": "elbow_instability",
+        "name": "Elbow instability / subluxation"
+      },
+      {
+        "id": "erector_spinae_strain",
+        "name": "Erector spinae strain"
+      },
+      {
+        "id": "fibromyalgia",
+        "name": "Fibromyalgia"
+      },
+      {
+        "id": "forearm_strain",
+        "name": "Forearm flexor/extensor strain"
+      },
+      {
+        "id": "geriatric_hip_fracture",
+        "name": "Geriatric hip fracture"
+      },
+      {
+        "id": "geriatric_osteoarthritis_flare",
+        "name": "Geriatric osteoarthritis flare"
+      },
+      {
+        "id": "geriatric_vertebral_compression_fracture",
+        "name": "Geriatric vertebral compression fracture"
+      },
+      {
+        "id": "glute_tendinopathy",
+        "name": "Gluteus medius / minimus tendinopathy"
+      },
+      {
+        "id": "gout",
+        "name": "Gout flare"
+      },
+      {
+        "id": "growing_pains",
+        "name": "Growing pains"
+      },
+      {
+        "id": "growth_plate_fracture",
+        "name": "Growth plate fractures"
+      },
+      {
+        "id": "gymnast_wrist_injury",
+        "name": "Gymnast wrist injury"
+      },
+      {
+        "id": "hamstring_tendon_injury",
+        "name": "Hamstring tendon tear / tendinopathy"
+      },
+      {
+        "id": "jumpers_knee",
+        "name": "Jumper’s knee"
+      },
+      {
+        "id": "knee_multiligament_injury",
+        "name": "Knee multiligament injury"
+      },
+      {
+        "id": "lcl_sprain",
+        "name": "LCL sprain (Lateral collateral ligament)"
+      },
+      {
+        "id": "meniscus_tear",
+        "name": "Meniscus tear (Knee, Medial/Lateral)"
+      },
+      {
+        "id": "myofascial_pain",
+        "name": "Myofascial pain syndrome"
+      },
+      {
+        "id": "neck_muscle_strain",
+        "name": "Neck muscles strain (Sternocleidomastoid, Trapezius)"
+      },
+      {
+        "id": "neck_pain",
+        "name": "Neck pain / cervical strain"
+      },
+      {
+        "id": "oblique_strain",
+        "name": "Oblique strain"
+      },
+      {
+        "id": "overhead_throwers_shoulder",
+        "name": "Overhead thrower’s shoulder (internal impingement)"
+      },
+      {
+        "id": "patella_fracture",
+        "name": "Patella fracture"
+      },
+      {
+        "id": "pelvic_avulsion_fracture",
+        "name": "Pelvic avulsion fracture"
+      },
+      {
+        "id": "plantar_achilles_insertion_tendinopathy",
+        "name": "Plantar fascia / Achilles insertion tendonopathy"
+      },
+      {
+        "id": "rheumatoid_arthritis",
+        "name": "Rheumatoid arthritis"
+      },
+      {
+        "id": "rib_fracture",
+        "name": "Rib fracture"
+      },
+      {
+        "id": "rotator_cuff_labrum_complex",
+        "name": "Rotator cuff + Labrum complex shoulder injury"
+      },
+      {
+        "id": "runners_knee_patellar_tendon",
+        "name": "Runner’s knee / Patellar tendinopathy"
+      },
+      {
+        "id": "spine_ligament_strain",
+        "name": "Spine ligament strain (Ligamentum flavum, Interspinous ligaments)"
+      },
+      {
+        "id": "swimmer_shoulder_impingement",
+        "name": "Swimmer shoulder impingement"
+      },
+      {
+        "id": "talus_fracture",
+        "name": "Talus fracture"
+      },
+      {
+        "id": "tendinosis",
+        "name": "Tendinosis (elbow, shoulder, knee)"
+      },
+      {
+        "id": "tibialis_anterior_strain",
+        "name": "Tibialis anterior strain"
+      },
+      {
+        "id": "triceps_strain",
+        "name": "Triceps strain"
+      }
+    ]
+  },
+  "supabaseSync": {
+    "tablesTouched": [
+      "injuries",
+      "injury_phases",
+      "supplements",
+      "meal_examples",
+      "safety_notes",
+      "injury_page_content",
+      "injury_protocol_import_runs"
+    ],
+    "recommendedCommand": "npm run protocols:sync"
+  }
+}
