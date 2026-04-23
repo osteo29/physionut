@@ -1,4 +1,4 @@
-import {type ReactNode} from 'react';
+﻿import {type ReactNode} from 'react';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import {setPreferredLanguage} from '../services/languagePreference';
 import usePreferredLang from './usePreferredLang';
@@ -60,22 +60,22 @@ export default function PageLayout({
           <div className="flex flex-wrap items-center gap-4">
             <nav className="flex flex-wrap items-center gap-4 text-sm font-semibold text-slate-700">
               <Link className="hover:text-health-green" to={`/${lang}/injuries`}>
-                {isAr ? '?????????? ????????' : 'Injury Protocols'}
+                {isAr ? 'بروتوكولات الإصابات' : 'Injury Protocols'}
               </Link>
               <Link className="hover:text-health-green" to={`/${lang}/exercises`}>
-                {isAr ? '????????' : 'Exercises'}
+                {isAr ? 'التمارين' : 'Exercises'}
               </Link>
               <Link className="hover:text-health-green" to={`/${lang}/diets`}>
-                {isAr ? '??????? ????????' : 'Diet Plans'}
+                {isAr ? 'خطط التغذية' : 'Diet Plans'}
               </Link>
               <Link className="hover:text-health-green" to={`/${lang}/insights`}>
-                {isAr ? '????????' : 'Insights'}
+                {isAr ? 'المقالات' : 'Insights'}
               </Link>
               <Link className="hover:text-health-green" to={`/${lang}/about`}>
-                {isAr ? '?? ???' : 'About'}
+                {isAr ? 'من نحن' : 'About'}
               </Link>
               <Link className="hover:text-health-green" to={`/${lang}/contact`}>
-                {isAr ? '???? ???' : 'Contact'}
+                {isAr ? 'اتصل بنا' : 'Contact'}
               </Link>
             </nav>
 
@@ -116,10 +116,10 @@ export default function PageLayout({
             <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
               <div className="mb-4 flex items-center justify-between gap-3">
                 <h2 className="text-lg font-black text-slate-900">
-                  {relatedTitle ?? (isAr ? '????? ??????' : 'Related pages')}
+                  {relatedTitle ?? (isAr ? 'صفحات ذات صلة' : 'Related pages')}
                 </h2>
                 <Link to={`/${lang}/`} className="text-sm font-semibold text-health-green transition hover:text-health-green-dark">
-                  {isAr ? '????????' : 'Home'}
+                  {isAr ? 'الرئيسية' : 'Home'}
                 </Link>
               </div>
 
@@ -142,3 +142,4 @@ export default function PageLayout({
     </div>
   );
 }
+
