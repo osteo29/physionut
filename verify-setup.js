@@ -19,8 +19,8 @@ const requiredFiles = [
   'src/pages/AdminInjuryManager.tsx',
   'src/RouterApp.tsx',
   'supabase/schema.sql',
-  'supabase/migrations/20260424_000000_baseline_schema.sql',
-  'supabase/migrations/20260424_add_assessments.sql',
+  'supabase/legacy/20260424_baseline_schema.sql',
+  'supabase/migrations/20260424000100_add_assessments.sql',
   'supabase/seed_injury_library.sql',
   'supabase/README.md',
   'supabase/ARCHITECTURE.md',
@@ -51,3 +51,6 @@ if (allPresent) {
 }
 
 console.log('\n' + '='.repeat(50) + '\n');
+
+
+

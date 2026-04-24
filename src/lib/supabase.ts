@@ -16,14 +16,16 @@ const rawSiteUrl = (typeof import.meta !== 'undefined' && import.meta.env) ? imp
 const supabaseUrl = typeof rawSupabaseUrl === 'string' ? rawSupabaseUrl.trim() : '';
 const supabaseAnonKey = typeof rawSupabaseAnonKey === 'string' ? rawSupabaseAnonKey.trim() : '';
 const configuredSiteUrl = typeof rawSiteUrl === 'string' ? rawSiteUrl.trim().replace(/\/+$/, '') : '';
+const isBrowser = typeof window !== 'undefined';
 
 export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey);
 
 export const supabase = isSupabaseConfigured
   ? createClient<Database>(supabaseUrl, supabaseAnonKey, {
       auth: {
-        persistSession: true,
-        autoRefreshToken: true,
+        persistSession: isBrowser,
+        autoRefreshToken: isBrowser,
+        detectSessionInUrl: isBrowser,
       },
     })
   : null;
@@ -352,3 +354,4 @@ export async function replacePublishedArticles(lang: Language, articles: Article
 }
 
 export type {User, Session};
+

@@ -3,6 +3,7 @@ import {ArrowRight, ClipboardList, Search, SlidersHorizontal, Timer, X} from 'lu
 import {Link} from 'react-router-dom';
 import Seo from '../components/seo/Seo';
 import {getAllInjuries, type InjuryProtocol} from '../services/injuryDatabase';
+import {getCatalogInjuries, getLocalCatalogInjuries} from '../services/injuryService';
 import {
   getLocalizedBodyRegion,
   getLocalizedCategory,
@@ -84,7 +85,7 @@ export default function InjuryProtocolsPage() {
   const [bodyRegion, setBodyRegion] = useState('');
   const [query, setQuery] = useState('');
 
-  const fallbackInjuries = useMemo(() => getAllInjuries().map((injury) => mapLocalInjury(injury, lang)), [lang]);
+  const fallbackInjuries = useMemo(() => getLocalCatalogInjuries(lang), [lang]);
 
   useEffect(() => {
     let active = true;
@@ -402,4 +403,5 @@ export default function InjuryProtocolsPage() {
     </>
   );
 }
+
 

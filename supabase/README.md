@@ -22,8 +22,8 @@ This folder is the active home for the project's database work.
 ## Current source-of-truth rules
 
 1. Rebuild or evolve the database through `supabase/migrations/`.
-2. Start from `supabase/migrations/20260424_000000_baseline_schema.sql` for the current baseline.
-3. Apply `supabase/migrations/20260424_add_assessments.sql` for the `assessments` table path that used to live outside migrations.
+2. Treat `supabase/legacy/20260424_baseline_schema.sql` as archived reference only; do not apply new work there.
+3. Apply `supabase/migrations/20260424000100_add_assessments.sql` for the `assessments` table path that used to live outside migrations.
 4. Treat `supabase/seed_injury_library.sql` as the canonical generated seed file.
 5. Treat everything under `supabase/legacy/` as archive-only compatibility material.
 6. Do not treat `supabase/.temp/` as versioned project logic.
@@ -33,3 +33,6 @@ This folder is the active home for the project's database work.
 - Older non-timestamped migrations are still kept because they reflect production history.
 - The `database/` folder is not the active database workspace.
 - Future migrations should stay timestamped so ordering stays obvious.
+
+
+

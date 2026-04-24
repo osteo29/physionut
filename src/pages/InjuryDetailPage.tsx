@@ -13,7 +13,6 @@ import Seo from '../components/seo/Seo';
 import {
   generateRecoveryPlan,
   getAllInjuries,
-  getInjuryBySlug,
   getSuggestedPhaseForWindow,
   type ActivityProfile,
   type DietStyle,
@@ -31,7 +30,7 @@ import {
   getLocalizedInjuryOverview,
   textLooksArabic,
 } from '../services/injuryLocalization';
-import {fetchCompleteInjuryProtocol, fetchInjuriesFromSupabase} from '../services/injurySupabaseService';
+import {getInjuryProtocolBySlugWithFallback} from '../services/injuryService';
 import {INJURY_CANONICAL_PARENT_MAP} from '../services/seoAliases';
 import {decodeMojibake} from '../services/textEncoding';
 import {navigationPaths} from '../utils/langUrlHelper';
@@ -281,8 +280,7 @@ export default function InjuryDetailPage() {
   const {slug = ''} = useParams();
   const lang = usePreferredLang();
   const isAr = lang === 'ar';
-  const fallbackInjury = useMemo(() => getInjuryBySlug(slug), [slug]);
-  const [injury, setInjury] = useState<InjuryProtocol | null>(fallbackInjury ?? null);
+  const [injury, setInjury] = useState<InjuryProtocol | null>(null);
   const [loading, setLoading] = useState(true);
   const [remoteIds, setRemoteIds] = useState<string[]>([]);
   const [customContentMap, setCustomContentMap] = useState<Record<string, unknown> | null>(null);
@@ -298,14 +296,11 @@ export default function InjuryDetailPage() {
 
     const load = async () => {
       setLoading(true);
-      const [protocol, rows] = await Promise.all([
-        fetchCompleteInjuryProtocol(slug, lang),
-        fetchInjuriesFromSupabase(),
-      ]);
+      const result = await getInjuryProtocolBySlugWithFallback(slug, lang);
 
       if (!active) return;
-      setInjury(protocol ?? fallbackInjury ?? null);
-      setRemoteIds(rows.map((row) => row.injury_id_slug));
+      setInjury(result.injury);
+      setRemoteIds(result.remoteIds);
       setLoading(false);
     };
 
@@ -314,7 +309,7 @@ export default function InjuryDetailPage() {
     return () => {
       active = false;
     };
-  }, [fallbackInjury, lang, slug]);
+  }, [lang, slug]);
 
   useEffect(() => {
     let active = true;
@@ -1232,6 +1227,8 @@ export default function InjuryDetailPage() {
     </>
   );
 }
+
+
 
 
 

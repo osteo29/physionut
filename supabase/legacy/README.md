@@ -14,10 +14,11 @@ Archive-only rules:
 - `SUPABASE_SQL_CLEAN.sql`
   Old one-shot bootstrap SQL used before migrations became the official path.
 - `SUPABASE_ASSESSMENTS.sql`
-  Archived assessment SQL that has now been promoted into `../migrations/20260424_add_assessments.sql`.
+  Archived assessment SQL that has now been promoted into `../migrations/20260424000100_add_assessments.sql`.
 - `SUPABASE_AUTH_ASSESSMENTS.sql`
   Older assessment/auth variant kept only for comparison.
 - `SUPABASE_HARDENING_PLAN.md`
   Historical notes from the hardening pass.
 - `sql-editor-chunks/`
   Old chunked seed fallback. Keep only if manual SQL editor pasting is still needed for historical reference.
+

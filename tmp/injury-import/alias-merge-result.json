@@ -1,0 +1,126 @@
+{
+  "before": {
+    "injuries": 216,
+    "phases": 637,
+    "phaseExercises": 807,
+    "phaseGoals": 816,
+    "phasePrecautions": 1083
+  },
+  "after": {
+    "injuries": 204,
+    "phases": 601,
+    "phaseExercises": 796,
+    "phaseGoals": 804,
+    "phasePrecautions": 1074
+  },
+  "mergeLog": [
+    {
+      "sourceTitle": "Greater Trochanteric Pain Syndrome (GTPS)",
+      "canonical": "greater_trochanteric_pain_syndrome",
+      "duplicate": "greater_trochanteric_pain_syndrome_gtps",
+      "phasesMerged": 3,
+      "goalsMoved": 10,
+      "precautionsMoved": 10,
+      "exercisesMoved": 0
+    },
+    {
+      "sourceTitle": "Juvenile Osgood-Schlatter",
+      "canonical": "osgood_schlatter",
+      "duplicate": "juvenile_osgood_schlatter",
+      "phasesMerged": 3,
+      "goalsMoved": 1,
+      "precautionsMoved": 0,
+      "exercisesMoved": 0
+    },
+    {
+      "sourceTitle": "Osgood-Schlatter Disease",
+      "canonical": "osgood_schlatter",
+      "duplicate": "osgood_schlatter_disease",
+      "phasesMerged": 0,
+      "goalsMoved": 0,
+      "precautionsMoved": 0,
+      "exercisesMoved": 0
+    },
+    {
+      "sourceTitle": "Patellofemoral Pain Syndrome (PFPS)",
+      "canonical": "patellofemoral_pain",
+      "duplicate": "patellofemoral_pain_syndrome_pfps",
+      "phasesMerged": 3,
+      "goalsMoved": 9,
+      "precautionsMoved": 7,
+      "exercisesMoved": 13
+    },
+    {
+      "sourceTitle": "Peripheral Nerve Injury (Peroneal Nerve Palsy)",
+      "canonical": "peroneal_nerve_palsy",
+      "duplicate": "peripheral_nerve_injury_peroneal_nerve_palsy",
+      "phasesMerged": 3,
+      "goalsMoved": 0,
+      "precautionsMoved": 0,
+      "exercisesMoved": 0
+    },
+    {
+      "sourceTitle": "Perthes Disease (Rehabilitation)",
+      "canonical": "perthes_disease",
+      "duplicate": "perthes_disease_rehabilitation",
+      "phasesMerged": 3,
+      "goalsMoved": 1,
+      "precautionsMoved": 0,
+      "exercisesMoved": 0
+    },
+    {
+      "sourceTitle": "Posterior Tibial Tendon Dysfunction (PTTD)",
+      "canonical": "posterior_tibial_tendon_dysfunction",
+      "duplicate": "posterior_tibial_tendon_dysfunction_pttd",
+      "phasesMerged": 3,
+      "goalsMoved": 13,
+      "precautionsMoved": 14,
+      "exercisesMoved": 12
+    },
+    {
+      "sourceTitle": "Snapping Hip Syndrome (Coxa Saltans)",
+      "canonical": "snapping_hip_syndrome",
+      "duplicate": "snapping_hip_syndrome_coxa_saltans",
+      "phasesMerged": 3,
+      "goalsMoved": 10,
+      "precautionsMoved": 7,
+      "exercisesMoved": 0
+    },
+    {
+      "sourceTitle": "Thoracic Hyperkyphosis (Postural)",
+      "canonical": "thoracic_hyperkyphosis",
+      "duplicate": "thoracic_hyperkyphosis_postural",
+      "phasesMerged": 3,
+      "goalsMoved": 0,
+      "precautionsMoved": 0,
+      "exercisesMoved": 0
+    },
+    {
+      "sourceTitle": "Thoracic Outlet Syndrome (TOS)",
+      "canonical": "thoracic_outlet_syndrome",
+      "duplicate": "thoracic_outlet_syndrome_tos",
+      "phasesMerged": 3,
+      "goalsMoved": 14,
+      "precautionsMoved": 17,
+      "exercisesMoved": 15
+    },
+    {
+      "sourceTitle": "Total Hip Arthroplasty (THA)",
+      "canonical": "total_hip_arthroplasty",
+      "duplicate": "total_hip_arthroplasty_tha",
+      "phasesMerged": 3,
+      "goalsMoved": 10,
+      "precautionsMoved": 12,
+      "exercisesMoved": 0
+    },
+    {
+      "sourceTitle": "Total Knee Arthroplasty (TKA)",
+      "canonical": "total_knee_arthroplasty",
+      "duplicate": "total_knee_arthroplasty_tka",
+      "phasesMerged": 3,
+      "goalsMoved": 12,
+      "precautionsMoved": 8,
+      "exercisesMoved": 15
+    }
+  ]
+}

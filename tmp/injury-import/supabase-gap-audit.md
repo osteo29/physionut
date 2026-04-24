@@ -1,0 +1,238 @@
+# Supabase Gap Audit
+
+Generated: 2026-04-24T19:42:30.967Z
+
+## Totals
+- Remote injuries: 218
+- Missing rehab protocols from original local library: 45
+- Duplicate/split-identity candidates: 78
+- Updated existing correctly: 17
+- Added as genuinely new injuries: 2
+- Missing safety notes: 2
+- Missing page content: 166
+- Missing supplements only: 59
+- Missing full nutrition package in at least one phase: 30
+
+## Missing Rehab Protocols
+- AC joint injury (ac_joint_injury)
+- ACL + Meniscus combined injury (acl_meniscus_combined)
+- Ankle instability (ankle_instability)
+- Biceps strain (biceps_strain)
+- Bone fracture (Radius, Ulna, Humerus, Clavicle, Femur, Pelvis) (bone_fracture_long_bone)
+- Calcaneus fracture (calcaneus_fracture)
+- Chronic ankle instability (chronic_ankle_instability)
+- Clavicle fracture rehab (clavicle_fracture_rehab)
+- Concussion recovery (concussion_recovery)
+- Deltoid strain (deltoid_strain)
+- Elbow instability / subluxation (elbow_instability)
+- Erector spinae strain (erector_spinae_strain)
+- Fibromyalgia (fibromyalgia)
+- Forearm flexor/extensor strain (forearm_strain)
+- Geriatric hip fracture (geriatric_hip_fracture)
+- Geriatric osteoarthritis flare (geriatric_osteoarthritis_flare)
+- Geriatric vertebral compression fracture (geriatric_vertebral_compression_fracture)
+- Gluteus medius / minimus tendinopathy (glute_tendinopathy)
+- Gout flare (gout)
+- Growing pains (growing_pains)
+- Growth plate fractures (growth_plate_fracture)
+- Gymnast wrist injury (gymnast_wrist_injury)
+- Hamstring tendon tear / tendinopathy (hamstring_tendon_injury)
+- Jumper’s knee (jumpers_knee)
+- Knee multiligament injury (knee_multiligament_injury)
+- LCL sprain (Lateral collateral ligament) (lcl_sprain)
+- Meniscus tear (Knee, Medial/Lateral) (meniscus_tear)
+- Myofascial pain syndrome (myofascial_pain)
+- Neck muscles strain (Sternocleidomastoid, Trapezius) (neck_muscle_strain)
+- Neck pain / cervical strain (neck_pain)
+- Oblique strain (oblique_strain)
+- Overhead thrower’s shoulder (internal impingement) (overhead_throwers_shoulder)
+- Patella fracture (patella_fracture)
+- Pelvic avulsion fracture (pelvic_avulsion_fracture)
+- Plantar fascia / Achilles insertion tendonopathy (plantar_achilles_insertion_tendinopathy)
+- Rheumatoid arthritis (rheumatoid_arthritis)
+- Rib fracture (rib_fracture)
+- Rotator cuff + Labrum complex shoulder injury (rotator_cuff_labrum_complex)
+- Runner’s knee / Patellar tendinopathy (runners_knee_patellar_tendon)
+- Spine ligament strain (Ligamentum flavum, Interspinous ligaments) (spine_ligament_strain)
+- Swimmer shoulder impingement (swimmer_shoulder_impingement)
+- Talus fracture (talus_fracture)
+- Tendinosis (elbow, shoulder, knee) (tendinosis)
+- Tibialis anterior strain (tibialis_anterior_strain)
+- Triceps strain (triceps_strain)
+
+## Missing Safety Notes
+- New injury (new-injury-1)
+- New injury (new-injury-79)
+
+## Missing Full Nutrition Package
+- Vertebral fracture (Compression, Burst) (vertebral_fracture) -> Long-Term Osteoporosis Management: nutrition_focus, recommended_foods, avoid_foods, supplements, meals
+- Sever’s disease (severs_disease) -> Full Sport Return & Prevention: nutrition_focus, recommended_foods, avoid_foods, supplements, meals | Load Management & Pain Reduction: supplements
+- ACL Reconstruction (Hamstring Graft) (acl_reconstruction_hamstring_graft) -> Return to Sport: nutrition_focus, recommended_foods, avoid_foods, supplements, meals
+- Humeral head fracture (humeral_head_fracture) -> Active-Assisted & Active ROM: supplements | Progressive Strengthening & Return to Function: nutrition_focus, recommended_foods, avoid_foods, supplements, meals | Protection & Pendular Exercises: supplements
+- Scaphoid fracture (Wrist) (scaphoid_fracture) -> Return to Full Activity: nutrition_focus, recommended_foods, avoid_foods, supplements, meals
+- Little Leaguer's shoulder (little_leaguers_shoulder) -> Return to Throwing & Pitching: nutrition_focus, recommended_foods, avoid_foods, supplements, meals
+- Perthes disease (perthes_disease) -> Return to Activity & Long-Term Monitoring: nutrition_focus, recommended_foods, avoid_foods, supplements, meals
+- Scheuermann's kyphosis (scheuermanns_kyphosis) -> Maintenance & Long-Term Management: nutrition_focus, recommended_foods, avoid_foods, supplements, meals
+- Osgood-Schlatter (osgood_schlatter) -> Return to Full Sport: nutrition_focus, recommended_foods, avoid_foods, supplements, meals
+- Supraspinatus Tear (Partial - Conservative) (supraspinatus_tear_partial_conservative) -> Return to Sport / Full Activity: nutrition_focus, recommended_foods, avoid_foods, supplements, meals
+- Rotator Cuff Injury (rotator_cuff) -> Return to Sport / Full Activity: nutrition_focus, recommended_foods, avoid_foods, supplements, meals
+- Hamstring Strain (hamstring_strain) -> Return to Sport: nutrition_focus, recommended_foods, avoid_foods, supplements, meals
+- Stress Fracture (stress_fracture) -> Protected Weight Bearing & Bone Protection: supplements | Progressive Weight Bearing & Strengthening: supplements | Return to Running & Sport: nutrition_focus, recommended_foods, avoid_foods, supplements, meals
+- Osgood-Schlatter Disease (osgood_schlatter_disease) -> Return to Sport / Full Activity: nutrition_focus, recommended_foods, avoid_foods, supplements, meals
+- Rotator Cuff Repair (Post-operative) (rotator_cuff_repair_post_operative) -> Return to Full Activity: nutrition_focus, recommended_foods, avoid_foods, supplements, meals
+- ACL reconstruction (acl_reconstruction) -> Return to Sport: nutrition_focus, recommended_foods, avoid_foods, supplements, meals
+- Rotator cuff repair (rotator_cuff_repair) -> Return to Full Activity: nutrition_focus, recommended_foods, avoid_foods, supplements, meals
+- Osteoporotic Vertebral Fracture (Conservative) (osteoporotic_vertebral_fracture_conservative) -> Protection & Pain Management: supplements | Extension Strengthening: supplements | Long-Term Osteoporosis Management: nutrition_focus, recommended_foods, avoid_foods, supplements, meals
+- Scheuermann's Kyphosis (Conservative) (scheuermann_s_kyphosis_conservative) -> Postural Awareness & Flexibility: supplements | Targeted Strengthening: supplements | Maintenance & Long-Term Management: nutrition_focus, recommended_foods, avoid_foods, supplements, meals
+- Hamstring Strain (Grade II) (hamstring_strain_grade_ii) -> Acute Protection & Early Loading: supplements | Progressive Eccentric Strengthening: supplements | Return to Sport: nutrition_focus, recommended_foods, avoid_foods, supplements, meals
+- Scaphoid Fracture (Post-immobilisation) (scaphoid_fracture_post_immobilisation) -> Post-cast Mobilisation: supplements | Progressive Strengthening: supplements | Return to Full Activity: nutrition_focus, recommended_foods, avoid_foods, supplements, meals
+- Mallet finger (mallet_finger) -> Immobilisation: supplements | Graduated Mobilisation: supplements | Return to Full Function: nutrition_focus, recommended_foods, avoid_foods, supplements, meals
+- Proximal Humerus Fracture (Non-operative) (proximal_humerus_fracture_non_operative) -> Protection & Pendular Exercises: supplements | Active-Assisted & Active ROM: supplements | Progressive Strengthening & Return to Function: nutrition_focus, recommended_foods, avoid_foods, supplements, meals
+- Tibial Stress Fracture (Return to Running) (tibial_stress_fracture_return_to_running) -> Rest & Load Reduction: supplements | Progressive Walking & Walk-Run: supplements | Return to Full Running & Sport: nutrition_focus, recommended_foods, avoid_foods, supplements, meals
+- Stress Reaction (Femoral Neck) (stress_reaction_femoral_neck) -> Progressive Weight Bearing & Strengthening: supplements | Return to Running & Sport: nutrition_focus, recommended_foods, avoid_foods, supplements, meals | Protected Weight Bearing & Bone Protection: supplements
+- Sever's Disease (Calcaneal Apophysitis) (sever_s_disease_calcaneal_apophysitis) -> Full Sport Return & Prevention: nutrition_focus, recommended_foods, avoid_foods, supplements, meals | Load Management & Pain Reduction: supplements | Strengthening & Graduated Return: supplements
+- Little Leaguer's Shoulder (Proximal Humeral Epiphysiolysis) (little_leaguer_s_shoulder_proximal_humeral_epiphysiolysis) -> Rest & Physeal Protection: supplements | Shoulder Strengthening & Mechanics: supplements | Return to Throwing & Pitching: nutrition_focus, recommended_foods, avoid_foods, supplements, meals
+- Juvenile Osgood-Schlatter (juvenile_osgood_schlatter) -> Load Management & Symptom Control: supplements | Strengthening & Graduated Return: supplements | Return to Full Sport: nutrition_focus, recommended_foods, avoid_foods, supplements, meals
+- Sinding-Larsen-Johansson syndrome (sinding_larsen_johansson) -> Load Reduction & Protection: supplements | Progressive Strengthening: supplements | Return to Full Sport: nutrition_focus, recommended_foods, avoid_foods, supplements, meals
+- Perthes Disease (Rehabilitation) (perthes_disease_rehabilitation) -> Return to Activity & Long-Term Monitoring: nutrition_focus, recommended_foods, avoid_foods, supplements, meals | Acute Phase - Pain Management & Containment: supplements | Revascularisation Phase - Strengthening: supplements
+
+## Missing Supplements Only
+- Trigger finger (trigger_finger) -> Oedema Control & Early Mobilisation, Progressive Strengthening, Return to Full Function
+- Radial tunnel syndrome (radial_tunnel_syndrome) -> Return to Full Activity, Load Reduction & Pain Management, Progressive Strengthening
+- Shin splints (Medial tibial stress syndrome) (shin_splints) -> Load Reduction & Bone Stress Protection, Graduated Return to Running, Return to Full Sport & Recurrence Prevention
+- Boutonniere deformity (boutonniere_deformity) -> PIP Extension Splinting, Graduated PIP Mobilisation, Strengthening & Return to Function
+- Extensor tendon repair (extensor_tendon_repair) -> Immobilisation / Early Mobilisation by Zone, Active Motion & Strengthening, Progressive Loading & Return to Function
+- Thumb collateral ligament injury (thumb_collateral_ligament) -> Immobilisation & Protection, Progressive Mobilisation, Return to Sport & Work
+- AC joint sprain (Shoulder) (ac_joint_sprain) -> Protection, ROM & Early Strength
+- Dupuytren's contracture (dupuytrens_contracture) -> Progressive ROM & Strengthening, Return to Full Function & Maintenance, Wound Healing & Oedema Control
+- Distal biceps rupture rehab (distal_biceps_rupture_rehab) -> Protection & Wound Healing, Progressive Loading, Return to Full Function
+- Cervical facet joint pain (cervical_facet_joint_pain) -> Return to Full Activity, Pain Control & Mobility, Deep Stabiliser Strengthening
+- Sinus tarsi syndrome (sinus_tarsi_syndrome) -> Strengthening, Return to Activity, Pain Reduction & Protection
+- Tibialis anterior tendinopathy (tibialis_anterior_tendinopathy) -> Return to Sport, Heavy Slow Resistance, Isometric Loading & Load Management
+- Calf strain (Gastrocnemius / Soleus) (calf_strain) -> Acute Management
+- Pectoral strain (pectoral_strain) -> Protection & Pain Management, Return to Full Sport, Progressive Strengthening
+- Ankle Fracture ORIF (Post-operative) (ankle_fracture_orif_post_operative) -> Protection, Progressive Loading, Return to Function
+- Peroneal tendinopathy (peroneal_tendinopathy) -> Return to Sport
+- Posterior Tibial Tendon Dysfunction (PTTD) (posterior_tibial_tendon_dysfunction_pttd) -> Acute / Offloading, Progressive Strengthening, Return to Full Activity
+- 5th Metatarsal Fracture (Jones Fracture) (5th_metatarsal_fracture_jones_fracture) -> Protection / Immobilisation, Progressive Weight Bearing, Return to Activity
+- Hallux Valgus (Post-surgical Rehabilitation) (hallux_valgus_post_surgical_rehabilitation) -> Protection, Progressive Loading, Return to Activity
+- Non-specific Low Back Pain (Acute) (non_specific_low_back_pain_acute) -> Acute Pain Management, Motor Control & Strengthening, Return to Full Activity
+- Sacroiliac joint dysfunction (sacroiliac_joint_dysfunction) -> Return to Full Activity
+- Piriformis Syndrome / Sciatic Nerve Compression (piriformis_syndrome_sciatic_nerve_compression) -> Acute Symptom Management, Strengthening & Neural Mobilisation, Return to Activity
+- Whiplash Associated Disorder (WAD Grade II) (whiplash_associated_disorder_wad_grade_ii) -> Acute Management, Active Rehabilitation, Return to Full Activity
+- Thoracic disc herniation (thoracic_disc_herniation) -> Acute Management, Stabilisation & Strengthening, Return to Full Activity
+- De Quervain's Tenosynovitis (de_quervain_s_tenosynovitis) -> Load Reduction & Isometric Loading, Heavy Slow Resistance, Return to Full Activity
+- Post-laminectomy rehabilitation (post_laminectomy_rehab) -> Immediate Post-operative, Core Activation & Mobility, Progressive Strengthening & Return to Activity
+- Hip Labral Tear (Conservative) (hip_labral_tear_conservative) -> Pain Reduction & Activity Modification, Stabilisation & Progressive Strengthening, Return to Sport & Function
+- Total Hip Arthroplasty (THA) (total_hip_arthroplasty_tha) -> Acute Post-operative, Progressive Strengthening, Return to Function
+- Greater Trochanteric Pain Syndrome (GTPS) (greater_trochanteric_pain_syndrome_gtps) -> Load Reduction & Isometric Loading, Progressive Tendon Loading, Return to Running & Sport
+- Femoroacetabular Impingement (FAI) - Conservative (femoroacetabular_impingement_fai_conservative) -> Pain Reduction & Movement Optimisation, Strengthening & Movement Retraining, Return to Sport
+- Hip Flexor Strain (Iliopsoas) (hip_flexor_strain_iliopsoas) -> Acute Management, Progressive Strengthening, Return to Sport
+- Adductor / Groin Strain (adductor_groin_strain) -> Acute Phase & Isometric Loading, Progressive Strengthening, Return to Sport
+- Piriformis Syndrome (piriformis_syndrome) -> Pain Reduction & Neural Desensitisation, Strengthening & Biomechanical Correction, Return to Activity
+- Hip Osteoarthritis (Conservative) (hip_osteoarthritis_conservative) -> Pain Management & Education, Progressive Strengthening, Long-term Maintenance
+- Snapping Hip Syndrome (Coxa Saltans) (snapping_hip_syndrome_coxa_saltans) -> Pain Reduction & Load Modification, Targeted Strengthening, Return to Activity
+- Lateral Epicondylalgia (Tennis Elbow) (lateral_epicondylalgia_tennis_elbow) -> Isometric Loading & Load Management, Heavy Slow Resistance, Return to Sport & Work
+- Distal Radius Fracture (Post-immobilisation) (distal_radius_fracture_post_immobilisation) -> Post-immobilisation Mobilisation, Strengthening & Functional Restoration, Return to Full Activity
+- Medial Epicondylalgia (Golfer's Elbow) (medial_epicondylalgia_golfer_s_elbow) -> Isometric Loading & Load Management, Heavy Slow Resistance, Return to Sport
+- UCL Sprain - Elbow (Ulnar Collateral Ligament) (ucl_sprain_elbow_ulnar_collateral_ligament) -> Acute Protection & Early Mobilisation, Strengthening, Return to Throwing
+- Carpal Tunnel Syndrome (Conservative) (carpal_tunnel_syndrome_conservative) -> Neural Desensitisation & Symptom Control, Strengthening & Function Restoration
+- TFCC Injury - Triangular Fibrocartilage Complex (Conservative) (tfcc_injury_triangular_fibrocartilage_complex_conservative) -> Protection & Pain Reduction, Progressive Strengthening, Return to Full Activity
+- Cubital tunnel syndrome (cubital_tunnel_syndrome) -> Return to Full Activity, Conservative Management & Nerve Protection, Neural Mobilisation & Strengthening
+- Trigger Finger (Post-injection / Post-op) (trigger_finger_post_injection_post_op) -> Oedema Control & Early Mobilisation, Progressive Strengthening, Return to Full Function
+- Flexor tendon repair (Zone II) (flexor_tendon_repair_zone_ii) -> Progressive Strengthening & Return to Function, Early Protected Mobilisation, Early Active Motion
+- Dupuytren's Contracture (Post-surgical) (dupuytren_s_contracture_post_surgical) -> Wound Healing & Oedema Control, Progressive ROM & Strengthening, Return to Full Function & Maintenance
+- Thumb UCL Sprain (Skier's Thumb) (thumb_ucl_sprain_skier_s_thumb) -> Immobilisation & Protection, Progressive Mobilisation, Return to Sport & Work
+- Quadriceps Strain (Grade II) (quadriceps_strain_grade_ii) -> Return to Sport, Acute Management, Progressive Loading
+- Calf Strain (Gastrocnemius) (calf_strain_gastrocnemius) -> Acute Management, Progressive Loading, Return to Sport
+- Rectus Femoris Strain (rectus_femoris_strain) -> Acute Management, Progressive Loading, Return to Sport
+- Gluteal Muscle Strain (gluteal_muscle_strain) -> Acute Management, Progressive Strengthening, Return to Sport
+- Medial Tibial Stress Syndrome (Shin Splints) (medial_tibial_stress_syndrome_shin_splints) -> Load Reduction & Bone Stress Protection, Graduated Return to Running, Return to Full Sport & Recurrence Prevention
+- Pectoralis Major Tear (Conservative) (pectoralis_major_tear_conservative) -> Progressive Strengthening, Return to Full Sport, Protection & Pain Management
+- Biceps Rupture - Distal (Post-op) (biceps_rupture_distal_post_op) -> Protection & Wound Healing, Progressive Loading, Return to Full Function
+- Triceps tendinopathy (triceps_tendinopathy) -> Heavy Slow Resistance, Isometric Loading & Load Management, Return to Sport
+- Peripheral Nerve Injury (Peroneal Nerve Palsy) (peripheral_nerve_injury_peroneal_nerve_palsy) -> Nerve Protection & Functional Maintenance, Motor Re-education & Progressive Strengthening, Functional Recovery & Return to Activity
+- Complex Regional Pain Syndrome (CRPS Type I) (complex_regional_pain_syndrome_crps_type_i) -> Pain Desensitisation & Gentle Activation, Progressive Movement Exposure, Functional Restoration & Self-Management
+- Brachial Plexus Neuropraxia (Burner/Stinger) (brachial_plexus_neuropraxia_burner_stinger) -> Acute Management & Symptom Resolution, Cervical & Shoulder Strengthening, Return to Full Contact Sport
+- Thoracic Hyperkyphosis (Postural) (thoracic_hyperkyphosis_postural) -> Postural Education & Mobility, Strengthening & Postural Control, Long-Term Maintenance & Prevention
+- Temporomandibular Joint Dysfunction (TMJ) (temporomandibular_joint_dysfunction_tmj) -> Pain Reduction & Joint Protection, Jaw Mobility & Muscle Re-education, Long-Term Self-Management & Prevention
+
+## Duplicate Candidates
+- 5th Metatarsal Fracture (Jones Fracture) -> existing jones_fracture_rehab, imported duplicate 5th_metatarsal_fracture_jones_fracture
+- AC Joint Sprain (Grade I-II) -> existing ac_joint_sprain, imported duplicate ac_joint_sprain_grade_i_ii
+- ACL Reconstruction (Hamstring Graft) -> existing acl_reconstruction, imported duplicate acl_reconstruction_hamstring_graft
+- ACL Tear - Conservative Management -> existing acl_injury, imported duplicate acl_tear_conservative_management
+- Adductor / Groin Strain -> existing adductor_strain, imported duplicate adductor_groin_strain
+- Ankle Fracture (Post-immobilisation) -> existing ankle_fracture_rehab, imported duplicate ankle_fracture_post_immobilisation
+- Ankle Fracture ORIF (Post-operative) -> existing ankle_fracture_orif_rehab, imported duplicate ankle_fracture_orif_post_operative
+- Anterior Shoulder Dislocation (First-time) -> existing glenohumeral_dislocation, imported duplicate anterior_shoulder_dislocation_first_time
+- Biceps Rupture - Distal (Post-op) -> existing distal_biceps_rupture_rehab, imported duplicate biceps_rupture_distal_post_op
+- Biceps Tendinopathy (Long Head) -> existing biceps_tendinopathy, imported duplicate biceps_tendinopathy_long_head
+- Brachial Plexus Neuropraxia (Burner/Stinger) -> existing brachial_plexus_neuropraxia, imported duplicate brachial_plexus_neuropraxia_burner_stinger
+- Calcific Tendinitis -> existing shoulder_impingement, imported duplicate calcific_tendinitis
+- Calf Strain (Gastrocnemius) -> existing calf_strain, imported duplicate calf_strain_gastrocnemius
+- Carpal Tunnel Syndrome (Conservative) -> existing carpal_tunnel_syndrome, imported duplicate carpal_tunnel_syndrome_conservative
+- Cervical Radiculopathy -> existing cervical_disc_herniation, imported duplicate cervical_radiculopathy
+- Complex Regional Pain Syndrome (CRPS Type I) -> existing crps_type_i, imported duplicate complex_regional_pain_syndrome_crps_type_i
+- De Quervain's Tenosynovitis -> existing de_quervain_tenosynovitis, imported duplicate de_quervain_s_tenosynovitis
+- Distal Radius Fracture (Post-immobilisation) -> existing distal_radius_fracture_rehab, imported duplicate distal_radius_fracture_post_immobilisation
+- Dupuytren's Contracture (Post-surgical) -> existing dupuytrens_contracture, imported duplicate dupuytren_s_contracture_post_surgical
+- Facet Joint Dysfunction (Lumbar) -> existing lumbar_facet_joint_dysfunction, imported duplicate facet_joint_dysfunction_lumbar
+- Femoroacetabular Impingement (FAI) - Conservative -> existing femoroacetabular_impingement, imported duplicate femoroacetabular_impingement_fai_conservative
+- Gluteal Muscle Strain -> existing glute_strain, imported duplicate gluteal_muscle_strain
+- Greater Trochanteric Pain Syndrome (GTPS) -> existing greater_trochanteric_pain_syndrome, imported duplicate greater_trochanteric_pain_syndrome_gtps
+- Hallux Valgus (Post-surgical Rehabilitation) -> existing hallux_valgus_rehab, imported duplicate hallux_valgus_post_surgical_rehabilitation
+- Hamstring Strain (Grade II) -> existing hamstring_strain, imported duplicate hamstring_strain_grade_ii
+- Hip Flexor Strain (Iliopsoas) -> existing hip_flexor_tendinopathy, imported duplicate hip_flexor_strain_iliopsoas
+- Hip Labral Tear (Conservative) -> existing hip_dysplasia_labral_tear, imported duplicate hip_labral_tear_conservative
+- Hip Osteoarthritis (Conservative) -> existing osteoarthritis_flare, imported duplicate hip_osteoarthritis_conservative
+- Iliotibial Band Syndrome -> existing it_band_syndrome, imported duplicate iliotibial_band_syndrome
+- Juvenile Osgood-Schlatter -> existing osgood_schlatter, imported duplicate juvenile_osgood_schlatter
+- Knee Osteoarthritis (Conservative) -> existing osteoarthritis_flare, imported duplicate knee_osteoarthritis_conservative
+- Lateral Ankle Sprain (Grade I-II) -> existing ankle_sprain, imported duplicate lateral_ankle_sprain_grade_i_ii
+- Lateral Epicondylalgia (Tennis Elbow) -> existing lateral_epicondylitis, imported duplicate lateral_epicondylalgia_tennis_elbow
+- Little Leaguer's Shoulder (Proximal Humeral Epiphysiolysis) -> existing little_leaguers_shoulder, imported duplicate little_leaguer_s_shoulder_proximal_humeral_epiphysiolysis
+- Lumbar Disc Herniation with Radiculopathy -> existing lumbar_disc_herniation, imported duplicate lumbar_disc_herniation_with_radiculopathy
+- MCL Sprain (Grade II) -> existing mcl_sprain, imported duplicate mcl_sprain_grade_ii
+- Medial Epicondylalgia (Golfer's Elbow) -> existing medial_epicondylitis, imported duplicate medial_epicondylalgia_golfer_s_elbow
+- Medial Tibial Stress Syndrome (Shin Splints) -> existing shin_splints, imported duplicate medial_tibial_stress_syndrome_shin_splints
+- Meniscectomy (Post-operative) -> existing meniscectomy_rehab, imported duplicate meniscectomy_post_operative
+- Meniscus Repair (Post-operative) -> existing meniscus_repair, imported duplicate meniscus_repair_post_operative
+- Non-specific Low Back Pain (Acute) -> existing low_back_pain, imported duplicate non_specific_low_back_pain_acute
+- Osgood-Schlatter Disease -> existing osgood_schlatter, imported duplicate osgood_schlatter_disease
+- Osteoporotic Vertebral Fracture (Conservative) -> existing vertebral_fracture, imported duplicate osteoporotic_vertebral_fracture_conservative
+- Patellofemoral Pain Syndrome (PFPS) -> existing patellofemoral_pain, imported duplicate patellofemoral_pain_syndrome_pfps
+- PCL Tear - Conservative -> existing pcl_injury, imported duplicate pcl_tear_conservative
+- Pectoralis Major Tear (Conservative) -> existing pectoral_strain, imported duplicate pectoralis_major_tear_conservative
+- Peripheral Nerve Injury (Peroneal Nerve Palsy) -> existing peroneal_nerve_palsy, imported duplicate peripheral_nerve_injury_peroneal_nerve_palsy
+- Perthes Disease (Rehabilitation) -> existing perthes_disease, imported duplicate perthes_disease_rehabilitation
+- Pes Anserine Bursitis -> existing bursitis, imported duplicate pes_anserine_bursitis
+- Piriformis Syndrome -> existing sciatica, imported duplicate piriformis_syndrome
+- Piriformis Syndrome / Sciatic Nerve Compression -> existing sciatica, imported duplicate piriformis_syndrome_sciatic_nerve_compression
+- Posterior Shoulder Instability -> existing glenohumeral_dislocation, imported duplicate posterior_shoulder_instability
+- Posterior Tibial Tendon Dysfunction (PTTD) -> existing posterior_tibial_tendon_dysfunction, imported duplicate posterior_tibial_tendon_dysfunction_pttd
+- Proximal Humerus Fracture (Non-operative) -> existing humeral_head_fracture, imported duplicate proximal_humerus_fracture_non_operative
+- Quadriceps Strain (Grade II) -> existing quadriceps_strain, imported duplicate quadriceps_strain_grade_ii
+- Rectus Femoris Strain -> existing quadriceps_strain, imported duplicate rectus_femoris_strain
+- Rotator Cuff Repair (Post-operative) -> existing rotator_cuff_repair, imported duplicate rotator_cuff_repair_post_operative
+- Scaphoid Fracture (Post-immobilisation) -> existing scaphoid_fracture, imported duplicate scaphoid_fracture_post_immobilisation
+- Scheuermann's Kyphosis (Conservative) -> existing scheuermanns_kyphosis, imported duplicate scheuermann_s_kyphosis_conservative
+- Sever's Disease (Calcaneal Apophysitis) -> existing severs_disease, imported duplicate sever_s_disease_calcaneal_apophysitis
+- SLAP Lesion (Conservative) -> existing labrum_tear, imported duplicate slap_lesion_conservative
+- Snapping Hip Syndrome (Coxa Saltans) -> existing snapping_hip_syndrome, imported duplicate snapping_hip_syndrome_coxa_saltans
+- Spinal Stenosis (Lumbar - Conservative) -> existing lumbar_spinal_stenosis, imported duplicate spinal_stenosis_lumbar_conservative
+- Spondylolisthesis (Grade I - II, Conservative) -> existing spondylolisthesis, imported duplicate spondylolisthesis_grade_i_ii_conservative
+- Stress Reaction (Femoral Neck) -> existing stress_fracture, imported duplicate stress_reaction_femoral_neck
+- Supraspinatus Tear (Partial - Conservative) -> existing rotator_cuff, imported duplicate supraspinatus_tear_partial_conservative
+- Temporomandibular Joint Dysfunction (TMJ) -> existing tmj_disorder, imported duplicate temporomandibular_joint_dysfunction_tmj
+- TFCC Injury - Triangular Fibrocartilage Complex (Conservative) -> existing wrist_instability_tfcc, imported duplicate tfcc_injury_triangular_fibrocartilage_complex_conservative
+- Thoracic Hyperkyphosis (Postural) -> existing thoracic_hyperkyphosis, imported duplicate thoracic_hyperkyphosis_postural
+- Thoracic Outlet Syndrome (TOS) -> existing thoracic_outlet_syndrome, imported duplicate thoracic_outlet_syndrome_tos
+- Thumb UCL Sprain (Skier's Thumb) -> existing thumb_collateral_ligament, imported duplicate thumb_ucl_sprain_skier_s_thumb
+- Tibial Plateau Fracture (Post-op) -> existing tibial_plateau_fracture_rehab, imported duplicate tibial_plateau_fracture_post_op
+- Tibial Stress Fracture (Return to Running) -> existing stress_fracture, imported duplicate tibial_stress_fracture_return_to_running
+- Total Hip Arthroplasty (THA) -> existing total_hip_arthroplasty, imported duplicate total_hip_arthroplasty_tha
+- Total Knee Arthroplasty (TKA) -> existing total_knee_arthroplasty, imported duplicate total_knee_arthroplasty_tka
+- Trigger Finger (Post-injection / Post-op) -> existing trigger_finger, imported duplicate trigger_finger_post_injection_post_op
+- UCL Sprain - Elbow (Ulnar Collateral Ligament) -> existing ucl_injury, imported duplicate ucl_sprain_elbow_ulnar_collateral_ligament
+- Whiplash Associated Disorder (WAD Grade II) -> existing whiplash_injury, imported duplicate whiplash_associated_disorder_wad_grade_ii

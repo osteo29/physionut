@@ -1,0 +1,564 @@
+{
+  "generatedAt": "2026-04-24T19:56:09.830Z",
+  "deletedJunkRows": [
+    "new-injury-1",
+    "new-injury-79"
+  ],
+  "totals": {
+    "mergeAliasCandidates": 12,
+    "keepDistinctCandidates": 39,
+    "needsReview": 27
+  },
+  "mergeAliasCandidates": [
+    {
+      "sourceTitle": "Greater Trochanteric Pain Syndrome (GTPS)",
+      "matchedSlug": "greater_trochanteric_pain_syndrome",
+      "matchedName": "Greater trochanteric pain syndrome",
+      "remoteSlug": "greater_trochanteric_pain_syndrome_gtps",
+      "remoteName": "Greater Trochanteric Pain Syndrome (GTPS)"
+    },
+    {
+      "sourceTitle": "Juvenile Osgood-Schlatter",
+      "matchedSlug": "osgood_schlatter",
+      "matchedName": "Osgood-Schlatter",
+      "remoteSlug": "juvenile_osgood_schlatter",
+      "remoteName": "Juvenile Osgood-Schlatter"
+    },
+    {
+      "sourceTitle": "Osgood-Schlatter Disease",
+      "matchedSlug": "osgood_schlatter",
+      "matchedName": "Osgood-Schlatter",
+      "remoteSlug": "osgood_schlatter_disease",
+      "remoteName": "Osgood-Schlatter Disease"
+    },
+    {
+      "sourceTitle": "Patellofemoral Pain Syndrome (PFPS)",
+      "matchedSlug": "patellofemoral_pain",
+      "matchedName": "Patellofemoral pain syndrome",
+      "remoteSlug": "patellofemoral_pain_syndrome_pfps",
+      "remoteName": "Patellofemoral Pain Syndrome (PFPS)"
+    },
+    {
+      "sourceTitle": "Peripheral Nerve Injury (Peroneal Nerve Palsy)",
+      "matchedSlug": "peroneal_nerve_palsy",
+      "matchedName": "Peroneal nerve palsy",
+      "remoteSlug": "peripheral_nerve_injury_peroneal_nerve_palsy",
+      "remoteName": "Peripheral Nerve Injury (Peroneal Nerve Palsy)"
+    },
+    {
+      "sourceTitle": "Perthes Disease (Rehabilitation)",
+      "matchedSlug": "perthes_disease",
+      "matchedName": "Perthes disease",
+      "remoteSlug": "perthes_disease_rehabilitation",
+      "remoteName": "Perthes Disease (Rehabilitation)"
+    },
+    {
+      "sourceTitle": "Posterior Tibial Tendon Dysfunction (PTTD)",
+      "matchedSlug": "posterior_tibial_tendon_dysfunction",
+      "matchedName": "Posterior tibial tendon dysfunction",
+      "remoteSlug": "posterior_tibial_tendon_dysfunction_pttd",
+      "remoteName": "Posterior Tibial Tendon Dysfunction (PTTD)"
+    },
+    {
+      "sourceTitle": "Snapping Hip Syndrome (Coxa Saltans)",
+      "matchedSlug": "snapping_hip_syndrome",
+      "matchedName": "Snapping hip syndrome",
+      "remoteSlug": "snapping_hip_syndrome_coxa_saltans",
+      "remoteName": "Snapping Hip Syndrome (Coxa Saltans)"
+    },
+    {
+      "sourceTitle": "Thoracic Hyperkyphosis (Postural)",
+      "matchedSlug": "thoracic_hyperkyphosis",
+      "matchedName": "Thoracic hyperkyphosis",
+      "remoteSlug": "thoracic_hyperkyphosis_postural",
+      "remoteName": "Thoracic Hyperkyphosis (Postural)"
+    },
+    {
+      "sourceTitle": "Thoracic Outlet Syndrome (TOS)",
+      "matchedSlug": "thoracic_outlet_syndrome",
+      "matchedName": "Thoracic outlet syndrome",
+      "remoteSlug": "thoracic_outlet_syndrome_tos",
+      "remoteName": "Thoracic Outlet Syndrome (TOS)"
+    },
+    {
+      "sourceTitle": "Total Hip Arthroplasty (THA)",
+      "matchedSlug": "total_hip_arthroplasty",
+      "matchedName": "Total hip arthroplasty",
+      "remoteSlug": "total_hip_arthroplasty_tha",
+      "remoteName": "Total Hip Arthroplasty (THA)"
+    },
+    {
+      "sourceTitle": "Total Knee Arthroplasty (TKA)",
+      "matchedSlug": "total_knee_arthroplasty",
+      "matchedName": "Total knee arthroplasty",
+      "remoteSlug": "total_knee_arthroplasty_tka",
+      "remoteName": "Total Knee Arthroplasty (TKA)"
+    }
+  ],
+  "keepDistinctCandidates": [
+    {
+      "sourceTitle": "AC Joint Sprain (Grade I-II)",
+      "matchedSlug": "ac_joint_sprain",
+      "matchedName": "AC joint sprain (Shoulder)",
+      "remoteSlug": "ac_joint_sprain_grade_i_ii",
+      "remoteName": "AC Joint Sprain (Grade I-II)"
+    },
+    {
+      "sourceTitle": "ACL Reconstruction (Hamstring Graft)",
+      "matchedSlug": "acl_reconstruction",
+      "matchedName": "ACL reconstruction",
+      "remoteSlug": "acl_reconstruction_hamstring_graft",
+      "remoteName": "ACL Reconstruction (Hamstring Graft)"
+    },
+    {
+      "sourceTitle": "ACL Tear - Conservative Management",
+      "matchedSlug": "acl_injury",
+      "matchedName": "ACL Injury",
+      "remoteSlug": "acl_tear_conservative_management",
+      "remoteName": "ACL Tear - Conservative Management"
+    },
+    {
+      "sourceTitle": "Ankle Fracture ORIF (Post-operative)",
+      "matchedSlug": "ankle_fracture_orif_rehab",
+      "matchedName": "Ankle fracture ORIF rehab",
+      "remoteSlug": "ankle_fracture_orif_post_operative",
+      "remoteName": "Ankle Fracture ORIF (Post-operative)"
+    },
+    {
+      "sourceTitle": "Anterior Shoulder Dislocation (First-time)",
+      "matchedSlug": "glenohumeral_dislocation",
+      "matchedName": "Glenohumeral dislocation / subluxation",
+      "remoteSlug": "anterior_shoulder_dislocation_first_time",
+      "remoteName": "Anterior Shoulder Dislocation (First-time)"
+    },
+    {
+      "sourceTitle": "Biceps Rupture - Distal (Post-op)",
+      "matchedSlug": "distal_biceps_rupture_rehab",
+      "matchedName": "Distal biceps rupture rehab",
+      "remoteSlug": "biceps_rupture_distal_post_op",
+      "remoteName": "Biceps Rupture - Distal (Post-op)"
+    },
+    {
+      "sourceTitle": "Brachial Plexus Neuropraxia (Burner/Stinger)",
+      "matchedSlug": "brachial_plexus_neuropraxia",
+      "matchedName": "Brachial plexus neuropraxia",
+      "remoteSlug": "brachial_plexus_neuropraxia_burner_stinger",
+      "remoteName": "Brachial Plexus Neuropraxia (Burner/Stinger)"
+    },
+    {
+      "sourceTitle": "Carpal Tunnel Syndrome (Conservative)",
+      "matchedSlug": "carpal_tunnel_syndrome",
+      "matchedName": "Carpal tunnel syndrome",
+      "remoteSlug": "carpal_tunnel_syndrome_conservative",
+      "remoteName": "Carpal Tunnel Syndrome (Conservative)"
+    },
+    {
+      "sourceTitle": "Dupuytren's Contracture (Post-surgical)",
+      "matchedSlug": "dupuytrens_contracture",
+      "matchedName": "Dupuytren's contracture",
+      "remoteSlug": "dupuytren_s_contracture_post_surgical",
+      "remoteName": "Dupuytren's Contracture (Post-surgical)"
+    },
+    {
+      "sourceTitle": "Femoroacetabular Impingement (FAI) - Conservative",
+      "matchedSlug": "femoroacetabular_impingement",
+      "matchedName": "Femoroacetabular impingement (FAI)",
+      "remoteSlug": "femoroacetabular_impingement_fai_conservative",
+      "remoteName": "Femoroacetabular Impingement (FAI) - Conservative"
+    },
+    {
+      "sourceTitle": "Hallux Valgus (Post-surgical Rehabilitation)",
+      "matchedSlug": "hallux_valgus_rehab",
+      "matchedName": "Hallux valgus rehab",
+      "remoteSlug": "hallux_valgus_post_surgical_rehabilitation",
+      "remoteName": "Hallux Valgus (Post-surgical Rehabilitation)"
+    },
+    {
+      "sourceTitle": "Hamstring Strain (Grade II)",
+      "matchedSlug": "hamstring_strain",
+      "matchedName": "Hamstring Strain",
+      "remoteSlug": "hamstring_strain_grade_ii",
+      "remoteName": "Hamstring Strain (Grade II)"
+    },
+    {
+      "sourceTitle": "Hip Labral Tear (Conservative)",
+      "matchedSlug": "hip_dysplasia_labral_tear",
+      "matchedName": "Hip dysplasia / labral tear",
+      "remoteSlug": "hip_labral_tear_conservative",
+      "remoteName": "Hip Labral Tear (Conservative)"
+    },
+    {
+      "sourceTitle": "Hip Osteoarthritis (Conservative)",
+      "matchedSlug": "osteoarthritis_flare",
+      "matchedName": "Osteoarthritis flare (Knee, Hip, Shoulder)",
+      "remoteSlug": "hip_osteoarthritis_conservative",
+      "remoteName": "Hip Osteoarthritis (Conservative)"
+    },
+    {
+      "sourceTitle": "Knee Osteoarthritis (Conservative)",
+      "matchedSlug": "osteoarthritis_flare",
+      "matchedName": "Osteoarthritis flare (Knee, Hip, Shoulder)",
+      "remoteSlug": "knee_osteoarthritis_conservative",
+      "remoteName": "Knee Osteoarthritis (Conservative)"
+    },
+    {
+      "sourceTitle": "Lateral Ankle Sprain (Grade I-II)",
+      "matchedSlug": "ankle_sprain",
+      "matchedName": "Ankle Sprain",
+      "remoteSlug": "lateral_ankle_sprain_grade_i_ii",
+      "remoteName": "Lateral Ankle Sprain (Grade I-II)"
+    },
+    {
+      "sourceTitle": "Little Leaguer's Shoulder (Proximal Humeral Epiphysiolysis)",
+      "matchedSlug": "little_leaguers_shoulder",
+      "matchedName": "Little Leaguer's shoulder",
+      "remoteSlug": "little_leaguer_s_shoulder_proximal_humeral_epiphysiolysis",
+      "remoteName": "Little Leaguer's Shoulder (Proximal Humeral Epiphysiolysis)"
+    },
+    {
+      "sourceTitle": "Lumbar Disc Herniation with Radiculopathy",
+      "matchedSlug": "lumbar_disc_herniation",
+      "matchedName": "Lumbar disc herniation",
+      "remoteSlug": "lumbar_disc_herniation_with_radiculopathy",
+      "remoteName": "Lumbar Disc Herniation with Radiculopathy"
+    },
+    {
+      "sourceTitle": "MCL Sprain (Grade II)",
+      "matchedSlug": "mcl_sprain",
+      "matchedName": "MCL sprain (Medial collateral ligament)",
+      "remoteSlug": "mcl_sprain_grade_ii",
+      "remoteName": "MCL Sprain (Grade II)"
+    },
+    {
+      "sourceTitle": "Meniscectomy (Post-operative)",
+      "matchedSlug": "meniscectomy_rehab",
+      "matchedName": "Meniscectomy rehab",
+      "remoteSlug": "meniscectomy_post_operative",
+      "remoteName": "Meniscectomy (Post-operative)"
+    },
+    {
+      "sourceTitle": "Meniscus Repair (Post-operative)",
+      "matchedSlug": "meniscus_repair",
+      "matchedName": "Meniscus repair",
+      "remoteSlug": "meniscus_repair_post_operative",
+      "remoteName": "Meniscus Repair (Post-operative)"
+    },
+    {
+      "sourceTitle": "Osteoporotic Vertebral Fracture (Conservative)",
+      "matchedSlug": "vertebral_fracture",
+      "matchedName": "Vertebral fracture (Compression, Burst)",
+      "remoteSlug": "osteoporotic_vertebral_fracture_conservative",
+      "remoteName": "Osteoporotic Vertebral Fracture (Conservative)"
+    },
+    {
+      "sourceTitle": "PCL Tear - Conservative",
+      "matchedSlug": "pcl_injury",
+      "matchedName": "PCL tear / sprain",
+      "remoteSlug": "pcl_tear_conservative",
+      "remoteName": "PCL Tear - Conservative"
+    },
+    {
+      "sourceTitle": "Pectoralis Major Tear (Conservative)",
+      "matchedSlug": "pectoral_strain",
+      "matchedName": "Pectoral strain",
+      "remoteSlug": "pectoralis_major_tear_conservative",
+      "remoteName": "Pectoralis Major Tear (Conservative)"
+    },
+    {
+      "sourceTitle": "Proximal Humerus Fracture (Non-operative)",
+      "matchedSlug": "humeral_head_fracture",
+      "matchedName": "Humeral head fracture",
+      "remoteSlug": "proximal_humerus_fracture_non_operative",
+      "remoteName": "Proximal Humerus Fracture (Non-operative)"
+    },
+    {
+      "sourceTitle": "Quadriceps Strain (Grade II)",
+      "matchedSlug": "quadriceps_strain",
+      "matchedName": "Quadriceps strain",
+      "remoteSlug": "quadriceps_strain_grade_ii",
+      "remoteName": "Quadriceps Strain (Grade II)"
+    },
+    {
+      "sourceTitle": "Rotator Cuff Repair (Post-operative)",
+      "matchedSlug": "rotator_cuff_repair",
+      "matchedName": "Rotator cuff repair",
+      "remoteSlug": "rotator_cuff_repair_post_operative",
+      "remoteName": "Rotator Cuff Repair (Post-operative)"
+    },
+    {
+      "sourceTitle": "Scheuermann's Kyphosis (Conservative)",
+      "matchedSlug": "scheuermanns_kyphosis",
+      "matchedName": "Scheuermann's kyphosis",
+      "remoteSlug": "scheuermann_s_kyphosis_conservative",
+      "remoteName": "Scheuermann's Kyphosis (Conservative)"
+    },
+    {
+      "sourceTitle": "Sever's Disease (Calcaneal Apophysitis)",
+      "matchedSlug": "severs_disease",
+      "matchedName": "Sever’s disease",
+      "remoteSlug": "sever_s_disease_calcaneal_apophysitis",
+      "remoteName": "Sever's Disease (Calcaneal Apophysitis)"
+    },
+    {
+      "sourceTitle": "SLAP Lesion (Conservative)",
+      "matchedSlug": "labrum_tear",
+      "matchedName": "Labrum tear (Shoulder / Hip)",
+      "remoteSlug": "slap_lesion_conservative",
+      "remoteName": "SLAP Lesion (Conservative)"
+    },
+    {
+      "sourceTitle": "Spinal Stenosis (Lumbar - Conservative)",
+      "matchedSlug": "lumbar_spinal_stenosis",
+      "matchedName": "Lumbar spinal stenosis",
+      "remoteSlug": "spinal_stenosis_lumbar_conservative",
+      "remoteName": "Spinal Stenosis (Lumbar - Conservative)"
+    },
+    {
+      "sourceTitle": "Spondylolisthesis (Grade I - II, Conservative)",
+      "matchedSlug": "spondylolisthesis",
+      "matchedName": "Spondylolisthesis",
+      "remoteSlug": "spondylolisthesis_grade_i_ii_conservative",
+      "remoteName": "Spondylolisthesis (Grade I - II, Conservative)"
+    },
+    {
+      "sourceTitle": "Stress Reaction (Femoral Neck)",
+      "matchedSlug": "stress_fracture",
+      "matchedName": "Stress Fracture",
+      "remoteSlug": "stress_reaction_femoral_neck",
+      "remoteName": "Stress Reaction (Femoral Neck)"
+    },
+    {
+      "sourceTitle": "Supraspinatus Tear (Partial - Conservative)",
+      "matchedSlug": "rotator_cuff",
+      "matchedName": "Rotator Cuff Injury",
+      "remoteSlug": "supraspinatus_tear_partial_conservative",
+      "remoteName": "Supraspinatus Tear (Partial - Conservative)"
+    },
+    {
+      "sourceTitle": "TFCC Injury - Triangular Fibrocartilage Complex (Conservative)",
+      "matchedSlug": "wrist_instability_tfcc",
+      "matchedName": "Wrist instability / TFCC injury",
+      "remoteSlug": "tfcc_injury_triangular_fibrocartilage_complex_conservative",
+      "remoteName": "TFCC Injury - Triangular Fibrocartilage Complex (Conservative)"
+    },
+    {
+      "sourceTitle": "Tibial Plateau Fracture (Post-op)",
+      "matchedSlug": "tibial_plateau_fracture_rehab",
+      "matchedName": "Tibial plateau fracture rehab",
+      "remoteSlug": "tibial_plateau_fracture_post_op",
+      "remoteName": "Tibial Plateau Fracture (Post-op)"
+    },
+    {
+      "sourceTitle": "Tibial Stress Fracture (Return to Running)",
+      "matchedSlug": "stress_fracture",
+      "matchedName": "Stress Fracture",
+      "remoteSlug": "tibial_stress_fracture_return_to_running",
+      "remoteName": "Tibial Stress Fracture (Return to Running)"
+    },
+    {
+      "sourceTitle": "Trigger Finger (Post-injection / Post-op)",
+      "matchedSlug": "trigger_finger",
+      "matchedName": "Trigger finger",
+      "remoteSlug": "trigger_finger_post_injection_post_op",
+      "remoteName": "Trigger Finger (Post-injection / Post-op)"
+    },
+    {
+      "sourceTitle": "Whiplash Associated Disorder (WAD Grade II)",
+      "matchedSlug": "whiplash_injury",
+      "matchedName": "Whiplash-associated disorder",
+      "remoteSlug": "whiplash_associated_disorder_wad_grade_ii",
+      "remoteName": "Whiplash Associated Disorder (WAD Grade II)"
+    }
+  ],
+  "needsReview": [
+    {
+      "sourceTitle": "5th Metatarsal Fracture (Jones Fracture)",
+      "matchedSlug": "jones_fracture_rehab",
+      "matchedName": "Jones fracture rehab",
+      "remoteSlug": "5th_metatarsal_fracture_jones_fracture",
+      "remoteName": "5th Metatarsal Fracture (Jones Fracture)"
+    },
+    {
+      "sourceTitle": "Adductor / Groin Strain",
+      "matchedSlug": "adductor_strain",
+      "matchedName": "Adductor strain (Groin pull)",
+      "remoteSlug": "adductor_groin_strain",
+      "remoteName": "Adductor / Groin Strain"
+    },
+    {
+      "sourceTitle": "Ankle Fracture (Post-immobilisation)",
+      "matchedSlug": "ankle_fracture_rehab",
+      "matchedName": "Ankle fracture rehab",
+      "remoteSlug": "ankle_fracture_post_immobilisation",
+      "remoteName": "Ankle Fracture (Post-immobilisation)"
+    },
+    {
+      "sourceTitle": "Biceps Tendinopathy (Long Head)",
+      "matchedSlug": "biceps_tendinopathy",
+      "matchedName": "Biceps tendinopathy / tear",
+      "remoteSlug": "biceps_tendinopathy_long_head",
+      "remoteName": "Biceps Tendinopathy (Long Head)"
+    },
+    {
+      "sourceTitle": "Calcific Tendinitis",
+      "matchedSlug": "shoulder_impingement",
+      "matchedName": "Shoulder impingement syndrome",
+      "remoteSlug": "calcific_tendinitis",
+      "remoteName": "Calcific Tendinitis"
+    },
+    {
+      "sourceTitle": "Calf Strain (Gastrocnemius)",
+      "matchedSlug": "calf_strain",
+      "matchedName": "Calf strain (Gastrocnemius / Soleus)",
+      "remoteSlug": "calf_strain_gastrocnemius",
+      "remoteName": "Calf Strain (Gastrocnemius)"
+    },
+    {
+      "sourceTitle": "Cervical Radiculopathy",
+      "matchedSlug": "cervical_disc_herniation",
+      "matchedName": "Cervical disc herniation",
+      "remoteSlug": "cervical_radiculopathy",
+      "remoteName": "Cervical Radiculopathy"
+    },
+    {
+      "sourceTitle": "Complex Regional Pain Syndrome (CRPS Type I)",
+      "matchedSlug": "crps_type_i",
+      "matchedName": "Complex regional pain syndrome (Type I)",
+      "remoteSlug": "complex_regional_pain_syndrome_crps_type_i",
+      "remoteName": "Complex Regional Pain Syndrome (CRPS Type I)"
+    },
+    {
+      "sourceTitle": "De Quervain's Tenosynovitis",
+      "matchedSlug": "de_quervain_tenosynovitis",
+      "matchedName": "De Quervain tenosynovitis",
+      "remoteSlug": "de_quervain_s_tenosynovitis",
+      "remoteName": "De Quervain's Tenosynovitis"
+    },
+    {
+      "sourceTitle": "Distal Radius Fracture (Post-immobilisation)",
+      "matchedSlug": "distal_radius_fracture_rehab",
+      "matchedName": "Distal radius fracture rehab",
+      "remoteSlug": "distal_radius_fracture_post_immobilisation",
+      "remoteName": "Distal Radius Fracture (Post-immobilisation)"
+    },
+    {
+      "sourceTitle": "Facet Joint Dysfunction (Lumbar)",
+      "matchedSlug": "lumbar_facet_joint_dysfunction",
+      "matchedName": "Lumbar facet joint dysfunction",
+      "remoteSlug": "facet_joint_dysfunction_lumbar",
+      "remoteName": "Facet Joint Dysfunction (Lumbar)"
+    },
+    {
+      "sourceTitle": "Gluteal Muscle Strain",
+      "matchedSlug": "glute_strain",
+      "matchedName": "Gluteus maximus / medius strain",
+      "remoteSlug": "gluteal_muscle_strain",
+      "remoteName": "Gluteal Muscle Strain"
+    },
+    {
+      "sourceTitle": "Hip Flexor Strain (Iliopsoas)",
+      "matchedSlug": "hip_flexor_tendinopathy",
+      "matchedName": "Hip flexor tendinopathy (Iliopsoas)",
+      "remoteSlug": "hip_flexor_strain_iliopsoas",
+      "remoteName": "Hip Flexor Strain (Iliopsoas)"
+    },
+    {
+      "sourceTitle": "Iliotibial Band Syndrome",
+      "matchedSlug": "it_band_syndrome",
+      "matchedName": "IT band syndrome",
+      "remoteSlug": "iliotibial_band_syndrome",
+      "remoteName": "Iliotibial Band Syndrome"
+    },
+    {
+      "sourceTitle": "Lateral Epicondylalgia (Tennis Elbow)",
+      "matchedSlug": "lateral_epicondylitis",
+      "matchedName": "Wrist extensor tendinopathy (Tennis elbow / Lateral epicondylitis)",
+      "remoteSlug": "lateral_epicondylalgia_tennis_elbow",
+      "remoteName": "Lateral Epicondylalgia (Tennis Elbow)"
+    },
+    {
+      "sourceTitle": "Medial Epicondylalgia (Golfer's Elbow)",
+      "matchedSlug": "medial_epicondylitis",
+      "matchedName": "Wrist flexor tendinopathy (Golfer’s elbow / Medial epicondylitis)",
+      "remoteSlug": "medial_epicondylalgia_golfer_s_elbow",
+      "remoteName": "Medial Epicondylalgia (Golfer's Elbow)"
+    },
+    {
+      "sourceTitle": "Medial Tibial Stress Syndrome (Shin Splints)",
+      "matchedSlug": "shin_splints",
+      "matchedName": "Shin splints (Medial tibial stress syndrome)",
+      "remoteSlug": "medial_tibial_stress_syndrome_shin_splints",
+      "remoteName": "Medial Tibial Stress Syndrome (Shin Splints)"
+    },
+    {
+      "sourceTitle": "Non-specific Low Back Pain (Acute)",
+      "matchedSlug": "low_back_pain",
+      "matchedName": "Low back pain / lumbar strain",
+      "remoteSlug": "non_specific_low_back_pain_acute",
+      "remoteName": "Non-specific Low Back Pain (Acute)"
+    },
+    {
+      "sourceTitle": "Pes Anserine Bursitis",
+      "matchedSlug": "bursitis",
+      "matchedName": "Bursitis (Shoulder / Hip / Knee / Elbow)",
+      "remoteSlug": "pes_anserine_bursitis",
+      "remoteName": "Pes Anserine Bursitis"
+    },
+    {
+      "sourceTitle": "Piriformis Syndrome",
+      "matchedSlug": "sciatica",
+      "matchedName": "Sciatica / lumbar radicular pain",
+      "remoteSlug": "piriformis_syndrome",
+      "remoteName": "Piriformis Syndrome"
+    },
+    {
+      "sourceTitle": "Piriformis Syndrome / Sciatic Nerve Compression",
+      "matchedSlug": "sciatica",
+      "matchedName": "Sciatica / lumbar radicular pain",
+      "remoteSlug": "piriformis_syndrome_sciatic_nerve_compression",
+      "remoteName": "Piriformis Syndrome / Sciatic Nerve Compression"
+    },
+    {
+      "sourceTitle": "Posterior Shoulder Instability",
+      "matchedSlug": "glenohumeral_dislocation",
+      "matchedName": "Glenohumeral dislocation / subluxation",
+      "remoteSlug": "posterior_shoulder_instability",
+      "remoteName": "Posterior Shoulder Instability"
+    },
+    {
+      "sourceTitle": "Rectus Femoris Strain",
+      "matchedSlug": "quadriceps_strain",
+      "matchedName": "Quadriceps strain",
+      "remoteSlug": "rectus_femoris_strain",
+      "remoteName": "Rectus Femoris Strain"
+    },
+    {
+      "sourceTitle": "Scaphoid Fracture (Post-immobilisation)",
+      "matchedSlug": "scaphoid_fracture",
+      "matchedName": "Scaphoid fracture (Wrist)",
+      "remoteSlug": "scaphoid_fracture_post_immobilisation",
+      "remoteName": "Scaphoid Fracture (Post-immobilisation)"
+    },
+    {
+      "sourceTitle": "Temporomandibular Joint Dysfunction (TMJ)",
+      "matchedSlug": "tmj_disorder",
+      "matchedName": "TMJ disorder",
+      "remoteSlug": "temporomandibular_joint_dysfunction_tmj",
+      "remoteName": "Temporomandibular Joint Dysfunction (TMJ)"
+    },
+    {
+      "sourceTitle": "Thumb UCL Sprain (Skier's Thumb)",
+      "matchedSlug": "thumb_collateral_ligament",
+      "matchedName": "Thumb collateral ligament injury",
+      "remoteSlug": "thumb_ucl_sprain_skier_s_thumb",
+      "remoteName": "Thumb UCL Sprain (Skier's Thumb)"
+    },
+    {
+      "sourceTitle": "UCL Sprain - Elbow (Ulnar Collateral Ligament)",
+      "matchedSlug": "ucl_injury",
+      "matchedName": "UCL injury (Elbow, Thrower’s elbow)",
+      "remoteSlug": "ucl_sprain_elbow_ulnar_collateral_ligament",
+      "remoteName": "UCL Sprain - Elbow (Ulnar Collateral Ligament)"
+    }
+  ]
+}

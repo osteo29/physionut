@@ -568,6 +568,120 @@ export type Database = {
           updated_at?: string;
         };
       };
+      phase_goals: {
+        Row: {
+          id: string;
+          phase_id: string;
+          order_index: number;
+          text_en: string;
+          text_ar: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          phase_id: string;
+          order_index?: number;
+          text_en: string;
+          text_ar?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          phase_id?: string;
+          order_index?: number;
+          text_en?: string;
+          text_ar?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      phase_precautions: {
+        Row: {
+          id: string;
+          phase_id: string;
+          order_index: number;
+          text_en: string;
+          text_ar: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          phase_id: string;
+          order_index?: number;
+          text_en: string;
+          text_ar?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          phase_id?: string;
+          order_index?: number;
+          text_en?: string;
+          text_ar?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      phase_exercises: {
+        Row: {
+          id: string;
+          phase_id: string;
+          order_index: number;
+          name_en: string;
+          name_ar: string;
+          prescription_en: string | null;
+          prescription_ar: string | null;
+          sets: string | null;
+          reps: string | null;
+          rest: string | null;
+          cue_en: string | null;
+          cue_ar: string | null;
+          notes_en: string | null;
+          notes_ar: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          phase_id: string;
+          order_index?: number;
+          name_en: string;
+          name_ar?: string;
+          prescription_en?: string | null;
+          prescription_ar?: string | null;
+          sets?: string | null;
+          reps?: string | null;
+          rest?: string | null;
+          cue_en?: string | null;
+          cue_ar?: string | null;
+          notes_en?: string | null;
+          notes_ar?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          phase_id?: string;
+          order_index?: number;
+          name_en?: string;
+          name_ar?: string;
+          prescription_en?: string | null;
+          prescription_ar?: string | null;
+          sets?: string | null;
+          reps?: string | null;
+          rest?: string | null;
+          cue_en?: string | null;
+          cue_ar?: string | null;
+          notes_en?: string | null;
+          notes_ar?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
       supplements: {
         Row: {
           id: string;
@@ -628,4 +742,5 @@ export type TableInsert<TableName extends keyof Database['public']['Tables']> =
   Database['public']['Tables'][TableName]['Insert'];
 export type TableUpdate<TableName extends keyof Database['public']['Tables']> =
   Database['public']['Tables'][TableName]['Update'];
+
 

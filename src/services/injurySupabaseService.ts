@@ -687,27 +687,107 @@ function getLocalProtocolMap() {
   return new Map(getAllInjuries().map((injury) => [injury.id, injury]));
 }
 
-function buildFallbackInjuryInsert(slug: string, sourceTitle: string): InjuryInsert {
+function stripParentheticalAcronyms(value: string) {
+  return value.replace(/\(([A-Z]{2,8})\)/g, ' ');
+}
+
+function normalizeImportValue(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/&/g, ' and ')
+    .replace(/[()[\]{}]/g, ' ')
+    .replace(/[^a-z0-9\s]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function normalizeAliasImportValue(value: string) {
+  return normalizeImportValue(stripParentheticalAcronyms(value))
+    .split(' ')
+    .filter((word) => !['syndrome', 'disorder', 'pain'].includes(word))
+    .join(' ')
+    .trim();
+}
+
+function slugifyImportTitle(value: string) {
+  const normalized = normalizeImportValue(value);
+  return normalized ? normalized.replace(/\s+/g, '_') : 'imported_protocol';
+}
+
+function titleCaseWords(value: string) {
+  return value
+    .toLowerCase()
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
+}
+
+function inferBodyRegionFromHeading(heading: string) {
+  const match = heading.match(/^([A-Z][A-Z\s/&-]+?)\s+\d+\./);
+  return match?.[1] ? titleCaseWords(match[1].replace(/[&/-]+/g, ' ')) : 'Imported protocol';
+}
+
+function shouldReuseMatchedSlug(imported: ImportedInjuryProtocol, localProtocol?: InjuryProtocol) {
+  if (!imported.matchedSlug || !localProtocol) return false;
+
+  const sourceTitle = normalizeImportValue(imported.sourceTitle);
+  const localName = normalizeImportValue(localProtocol.name);
+  const localId = normalizeImportValue(localProtocol.id.replace(/_/g, ' '));
+
+  if (sourceTitle === localName || sourceTitle === localId) return true;
+
+  const sourceAlias = normalizeAliasImportValue(imported.sourceTitle);
+  const localNameAlias = normalizeAliasImportValue(localProtocol.name);
+  const localIdAlias = normalizeAliasImportValue(localProtocol.id.replace(/_/g, ' '));
+
+  return sourceAlias === localNameAlias || sourceAlias === localIdAlias;
+}
+
+function buildProtocolSlug(
+  imported: ImportedInjuryProtocol,
+  localProtocol: InjuryProtocol | undefined,
+  remoteBySlug: Map<string, InjuryRow>,
+  usedSlugs: Set<string>,
+) {
+  if (imported.requestedSlug) return imported.requestedSlug.trim().toLowerCase();
+  if (shouldReuseMatchedSlug(imported, localProtocol) && imported.matchedSlug) return imported.matchedSlug;
+
+  const baseSlug = slugifyImportTitle(imported.sourceTitle);
+  let slug = baseSlug;
+  let counter = 2;
+
+  while (usedSlugs.has(slug) && !remoteBySlug.has(slug)) {
+    slug = `${baseSlug}_${counter}`;
+    counter += 1;
+  }
+
+  return slug;
+}
+
+function buildFallbackInjuryInsert(slug: string, sourceTitle: string, heading: string): InjuryInsert {
+  const bodyRegion = inferBodyRegionFromHeading(heading);
+
   return {
     injury_id_slug: slug,
     name_en: sourceTitle,
     name_ar: sourceTitle,
-    category: 'Overuse',
-    body_region_en: 'Whole body',
-    body_region_ar: 'Whole body',
-    overview_en: sourceTitle,
-    overview_ar: sourceTitle,
-    rehab_summary_en: 'Imported from admin protocol workflow.',
-    rehab_summary_ar: 'Imported from admin protocol workflow.',
+    category: bodyRegion,
+    body_region_en: bodyRegion,
+    body_region_ar: bodyRegion,
+    overview_en: `Imported protocol for ${sourceTitle}.`,
+    overview_ar: `Imported protocol for ${sourceTitle}.`,
+    rehab_summary_en: 'Imported from bulk protocol workflow.',
+    rehab_summary_ar: 'Imported from bulk protocol workflow.',
     common_in: [],
     red_flags: [],
     related_calculators: [],
   };
 }
 
-function buildLocalInjuryInsert(injury: InjuryProtocol): InjuryInsert {
+function buildLocalInjuryInsert(injury: InjuryProtocol, overrideSlug?: string): InjuryInsert {
   return {
-    injury_id_slug: injury.id,
+    injury_id_slug: overrideSlug || injury.id,
     name_en: injury.name,
     name_ar: injury.name,
     category: injury.category,
@@ -720,6 +800,39 @@ function buildLocalInjuryInsert(injury: InjuryProtocol): InjuryInsert {
     common_in: injury.commonIn,
     red_flags: injury.redFlags,
     related_calculators: injury.relatedCalculators,
+  };
+}
+
+function parsePrescriptionDetails(prescription: string | undefined) {
+  if (!prescription) {
+    return {
+      prescription: null,
+      sets: null,
+      reps: null,
+      rest: null,
+      cue: null,
+    };
+  }
+
+  const cleaned = prescription.trim();
+  const setsRepsMatch = cleaned.match(/(\d+)\s*x\s*(\d+(?:\s*-\s*\d+)?)(?:\s*(reps?))?/i);
+  const restMatch = cleaned.match(/(\d+\s*(?:sec|secs|seconds|min|mins|minutes))(?:\s*(?:rest|hold))?/i);
+
+  let cue = cleaned;
+  if (setsRepsMatch?.[0]) {
+    cue = cue.replace(setsRepsMatch[0], '').trim();
+  }
+  if (restMatch?.[0]) {
+    cue = cue.replace(restMatch[0], '').trim();
+  }
+  cue = cue.replace(/^[-,:;\s]+/, '').trim();
+
+  return {
+    prescription: cleaned,
+    sets: setsRepsMatch?.[1] || null,
+    reps: setsRepsMatch ? `${setsRepsMatch[2]}${setsRepsMatch[3] ? ` ${setsRepsMatch[3]}` : ''}` : null,
+    rest: restMatch?.[1] || null,
+    cue: cue || null,
   };
 }
 
@@ -776,6 +889,77 @@ function buildPhasePayload(
     calcium_mg: existingPhase?.calcium_mg ?? basePhase?.calciumMg ?? null,
   };
 }
+
+async function syncPhaseGoals(phaseId: string, goals: string[]) {
+  const db = getSupabaseClient();
+  await db.from('phase_goals').delete().eq('phase_id', phaseId);
+
+  if (!goals.length) return;
+
+  const {error} = await db.from('phase_goals').insert(
+    goals.map((goal, index) => ({
+      phase_id: phaseId,
+      order_index: index,
+      text_en: goal,
+      text_ar: goal,
+    })),
+  );
+
+  if (error) throw error;
+}
+
+async function syncPhasePrecautions(phaseId: string, precautions: string[]) {
+  const db = getSupabaseClient();
+  await db.from('phase_precautions').delete().eq('phase_id', phaseId);
+
+  if (!precautions.length) return;
+
+  const {error} = await db.from('phase_precautions').insert(
+    precautions.map((precaution, index) => ({
+      phase_id: phaseId,
+      order_index: index,
+      text_en: precaution,
+      text_ar: precaution,
+    })),
+  );
+
+  if (error) throw error;
+}
+
+async function syncPhaseExercises(phaseId: string, importedPhase: ImportedInjuryProtocol['phases'][number]) {
+  const db = getSupabaseClient();
+  await db.from('phase_exercises').delete().eq('phase_id', phaseId);
+
+  const sourceExercises: Array<{plan: ImportedInjuryProtocol['phases'][number]['exercisePlans'][number]; index: number}> = importedPhase.exercisePlans.length
+    ? importedPhase.exercisePlans.map((plan, index) => ({plan, index}))
+    : importedPhase.exercises.map((exercise, index) => ({plan: {label: exercise, sets: undefined, cues: []}, index}));
+
+  if (!sourceExercises.length) return;
+
+  const {error} = await db.from('phase_exercises').insert(
+    sourceExercises.map(({plan, index}) => {
+      const parsed = parsePrescriptionDetails(plan.sets);
+      return {
+        phase_id: phaseId,
+        order_index: index,
+        name_en: plan.label,
+        name_ar: plan.label,
+        prescription_en: parsed.prescription,
+        prescription_ar: parsed.prescription,
+        sets: parsed.sets,
+        reps: parsed.reps,
+        rest: parsed.rest,
+        cue_en: parsed.cue,
+        cue_ar: parsed.cue,
+        notes_en: plan.sets || null,
+        notes_ar: plan.sets || null,
+      };
+    }),
+  );
+
+  if (error) throw error;
+}
+
 
 export async function createInjuryProtocolImportRun(data: {
   rawText: string;
@@ -862,21 +1046,26 @@ export async function importExerciseProtocolsToSupabase(params: {
     const localProtocols = getLocalProtocolMap();
     const remoteRows = await fetchInjuriesFromSupabase();
     const remoteBySlug = new Map(remoteRows.map((row) => [row.injury_id_slug, row]));
+    const usedSlugs = new Set(remoteRows.map((row) => row.injury_id_slug));
     let importedCount = 0;
+    const importedSlugs: string[] = [];
 
     for (const imported of params.parsedInjuries) {
-      if (!imported.matchedSlug) continue;
-
-      const localProtocol = localProtocols.get(imported.matchedSlug);
-      let remoteInjury = remoteBySlug.get(imported.matchedSlug) || null;
+      const localProtocol = imported.matchedSlug ? localProtocols.get(imported.matchedSlug) : undefined;
+      const targetSlug = buildProtocolSlug(imported, localProtocol, remoteBySlug, usedSlugs);
+      let remoteInjury = remoteBySlug.get(targetSlug) || null;
+      const injuryPayload =
+        localProtocol && shouldReuseMatchedSlug(imported, localProtocol)
+          ? buildLocalInjuryInsert(localProtocol, targetSlug)
+          : buildFallbackInjuryInsert(targetSlug, imported.sourceTitle, imported.heading);
 
       if (!remoteInjury) {
-        remoteInjury = await createInjury(
-          localProtocol
-            ? buildLocalInjuryInsert(localProtocol)
-            : buildFallbackInjuryInsert(imported.matchedSlug, imported.sourceTitle),
-        );
-        remoteBySlug.set(imported.matchedSlug, remoteInjury);
+        remoteInjury = await createInjury(injuryPayload);
+        remoteBySlug.set(targetSlug, remoteInjury);
+        usedSlugs.add(targetSlug);
+      } else {
+        remoteInjury = await updateInjury(remoteInjury.id, injuryPayload);
+        remoteBySlug.set(targetSlug, remoteInjury);
       }
 
       const existingPhases = await fetchPhasesByInjuryId(remoteInjury.id);
@@ -896,11 +1085,14 @@ export async function importExerciseProtocolsToSupabase(params: {
           phaseId = result.id;
         }
 
-        // FULL SYNC: Supplements
+        await syncPhaseGoals(phaseId, importedPhase.goals);
+        await syncPhasePrecautions(phaseId, importedPhase.cautions);
+        await syncPhaseExercises(phaseId, importedPhase);
+
         const db = getSupabaseClient();
         await db.from('supplements').delete().eq('phase_id', phaseId);
         if (basePhase?.supplements?.length) {
-          for (let i = 0; i < basePhase.supplements.length; i++) {
+          for (let i = 0; i < basePhase.supplements.length; i += 1) {
             const supp = basePhase.supplements[i];
             await createSupplement({
               phase_id: phaseId,
@@ -913,12 +1105,11 @@ export async function importExerciseProtocolsToSupabase(params: {
               timing_ar: supp.timing || '',
               caution_en: supp.caution || '',
               caution_ar: supp.caution || '',
-              order_index: i
+              order_index: i,
             });
           }
         }
 
-        // FULL SYNC: Meals
         await db.from('meal_examples').delete().eq('phase_id', phaseId);
         if (basePhase?.meals && basePhase.meals.breakfast) {
           await createMeal({
@@ -933,12 +1124,11 @@ export async function importExerciseProtocolsToSupabase(params: {
             snack_en: basePhase.meals.snack || '',
             snack_ar: basePhase.meals.snack || '',
             shopping_list_en: basePhase.meals.shoppingList || [],
-            shopping_list_ar: basePhase.meals.shoppingList || []
+            shopping_list_ar: basePhase.meals.shoppingList || [],
           });
         }
       }
 
-      // FULL SYNC: Safety Notes
       if (localProtocol?.safetyNotes) {
         await upsertSafetyNotes(remoteInjury.id, {
           medications_en: localProtocol.safetyNotes.medications || [],
@@ -946,11 +1136,10 @@ export async function importExerciseProtocolsToSupabase(params: {
           supplements_en: localProtocol.safetyNotes.supplements || [],
           supplements_ar: localProtocol.safetyNotes.supplements || [],
           contraindication_medications: [],
-          contraindication_supplements: []
+          contraindication_supplements: [],
         });
       }
 
-      // FULL SYNC: Page Content
       if (localProtocol?.pageContent) {
         await upsertInjuryPageContent(remoteInjury.id, {
           intro_en: localProtocol.pageContent.intro || '',
@@ -961,19 +1150,19 @@ export async function importExerciseProtocolsToSupabase(params: {
           rehab_notes_ar: localProtocol.pageContent.rehabNotes || [],
           nutrition_notes_en: localProtocol.pageContent.nutritionNotes || [],
           nutrition_notes_ar: localProtocol.pageContent.nutritionNotes || [],
-          faq_items: localProtocol.pageContent.faq as any || []
+          faq_items: localProtocol.pageContent.faq as any || [],
         });
       }
 
+      importedSlugs.push(targetSlug);
       importedCount += 1;
     }
 
-    if (run) {
-      await updateInjuryProtocolImportRun(run.id, {
-        status: 'imported',
-        notes: `Imported ${importedCount} matched injuries into Supabase.`,
-      });
-    }
+    await updateInjuryProtocolImportRun(run.id, {
+      status: 'imported',
+      imported_slugs: importedSlugs,
+      notes: `Imported ${importedCount} protocol records into Supabase.`,
+    });
 
     return {
       runId: run.id,
@@ -981,17 +1170,13 @@ export async function importExerciseProtocolsToSupabase(params: {
       summary,
     };
   } catch (error) {
-    if (run) {
-      await updateInjuryProtocolImportRun(run.id, {
-        status: 'failed',
-        notes: error instanceof Error ? error.message : 'Import failed',
-      });
-    }
+    await updateInjuryProtocolImportRun(run.id, {
+      status: 'failed',
+      notes: error instanceof Error ? error.message : 'Import failed',
+    });
     throw error;
   }
 }
-
-
 
 
 

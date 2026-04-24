@@ -49,7 +49,7 @@ Key findings:
 
 - `SUPABASE_SQL_CLEAN.sql` covers only the early injury tables, public read policies, and a few indexes.
 - It does not include later database objects now expected by the app, such as `assessment_leads`, `admin_users`, and `injury_protocol_import_runs`.
-- It does not include the `assessments` table path, which has now been promoted into `supabase/migrations/20260424_add_assessments.sql`.
+- It does not include the `assessments` table path, which has now been promoted into `supabase/migrations/20260424000100_add_assessments.sql`.
 - It does not reflect the current admin/RLS hardening model.
 - It does not include the newer injury-phase enrichment columns like focus, progression markers, cautions, and nutrition notes.
 
@@ -77,3 +77,5 @@ The remaining cleanup work is documentation convergence:
 
 - retire old setup docs that still describe legacy bootstrap flows
 - keep one active setup flow that points only to migrations and seed
+
+

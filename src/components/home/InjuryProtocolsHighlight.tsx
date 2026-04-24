@@ -1,13 +1,33 @@
+﻿import {useEffect, useMemo, useState} from 'react';
 import {ArrowRight, ClipboardList, ShieldAlert, Timer} from 'lucide-react';
 import {Link} from 'react-router-dom';
-import {injuryDatabase} from '../../services/injuryDatabase';
+import {getCatalogInjuries, getLocalCatalogInjuries, type InjuryCatalogEntry} from '../../services/injuryService';
 import type {Language} from '../../services/translations';
 import {navigationPaths} from '../../utils/langUrlHelper';
 
 export default function InjuryProtocolsHighlight({lang}: {lang: Language}) {
   const isAr = lang === 'ar';
-  const injuries = Object.values(injuryDatabase);
-  const categories = [...new Set(injuries.map((item) => item.category))];
+  const [injuries, setInjuries] = useState<InjuryCatalogEntry[]>([]);
+  const fallbackInjuries = useMemo(() => getLocalCatalogInjuries(lang), [lang]);
+
+  useEffect(() => {
+    let active = true;
+
+    const load = async () => {
+      const {injuries: nextInjuries} = await getCatalogInjuries(lang);
+      if (!active) return;
+      setInjuries(nextInjuries);
+    };
+
+    void load();
+
+    return () => {
+      active = false;
+    };
+  }, [lang]);
+
+  const visibleInjuries = injuries.length ? injuries : fallbackInjuries;
+  const categories = [...new Set(visibleInjuries.map((item) => item.category))];
 
   return (
     <section className="bg-slate-50 py-20">
@@ -48,7 +68,7 @@ export default function InjuryProtocolsHighlight({lang}: {lang: Language}) {
               <div className="mb-3 inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-soft-blue text-medical-blue">
                 <Timer className="h-5 w-5" />
               </div>
-              <div className="text-3xl font-black text-slate-900">{injuries.length}</div>
+              <div className="text-3xl font-black text-slate-900">{visibleInjuries.length}</div>
               <div className="mt-2 text-sm text-slate-600">
                 {isAr ? 'إصابات ومنعطفات تعافٍ متاحة الآن' : 'Injuries and recovery pathways available'}
               </div>
@@ -79,3 +99,5 @@ export default function InjuryProtocolsHighlight({lang}: {lang: Language}) {
     </section>
   );
 }
+
+
