@@ -12,7 +12,7 @@
 
 ### الكود الجاهز للنسخ:
 ```
-✅ SUPABASE_SQL_CLEAN.sql
+✅ supabase/legacy/SUPABASE_SQL_CLEAN.sql
    → انسخ محتوياته وامسحها في Supabase
    → كل حاجة هناك (5 جداول + RLS + Indexes)
 ```
@@ -45,7 +45,7 @@
 2. **README_FINAL.md** (5 دقائق)
 
 ### ثم نفذ الخطوات الـ 6:
-1. افتح SUPABASE_SQL_CLEAN.sql
+1. افتح supabase/legacy/SUPABASE_SQL_CLEAN.sql
 2. انسخ ولصق في Supabase
 3. اضغط Run
 4. شغّل npm run dev
@@ -102,7 +102,7 @@ node verify-setup.js
 - ضع علامة ✅ بجانب كل خطوة
 
 ### ✔️ الشيء الأساسي: ابدأ الآن!
-1. افتح **SUPABASE_SQL_CLEAN.sql**
+1. افتح **supabase/legacy/SUPABASE_SQL_CLEAN.sql**
 2. انسخ محتوياته
 3. اذهب **Supabase Dashboard**
 4. **SQL Editor → New Query**
@@ -117,7 +117,7 @@ node verify-setup.js
 
 - ✅ نعم، شغّل npm run dev
 - ✅ نعم، افتح الملفات
-- ✅ نعم، ابدأ من SUPABASE_SQL_CLEAN.sql
+- ✅ نعم، ابدأ من supabase/legacy/SUPABASE_SQL_CLEAN.sql
 
 **يلا! 🚀**
 

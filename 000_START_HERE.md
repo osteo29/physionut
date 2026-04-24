@@ -12,7 +12,7 @@
 
 ### 1️⃣ الكود SQL (النسخة النظيفة الجاهزة للنسخ)
 ```
-✅ SUPABASE_SQL_CLEAN.sql         (200 سطر)
+✅ supabase/legacy/SUPABASE_SQL_CLEAN.sql         (200 سطر)
    └─ كود SQL نقي جاهز للنسخ واللصق في Supabase
    └─ يشغّل كل الجداول + RLS + Indexes
    └─ لا تحتاج أي تعديل
@@ -145,7 +145,7 @@ Meals:                  متغير حسب الإصابة
 - لا تحتاج عمل config جديد
 
 ### ✅ ما تحتاج تفعله فقط:
-1. **انسخ الكود SQL** (من SUPABASE_SQL_CLEAN.sql)
+1. **انسخ الكود SQL** (من supabase/legacy/SUPABASE_SQL_CLEAN.sql)
 2. **الصقه في Supabase** (SQL Editor)
 3. **اضغط Run**
 4. **شغّل npm run dev**
@@ -159,7 +159,7 @@ Meals:                  متغير حسب الإصابة
 ```
 الوقت         الخطوة         الملف
 ────────────────────────────────────
-0:00-0:05    نسخ SQL        SUPABASE_SQL_CLEAN.sql
+0:00-0:05    نسخ SQL        supabase/legacy/SUPABASE_SQL_CLEAN.sql
 0:05-0:10    تشغيل SQL      Supabase Dashboard
 0:10-0:12    تشغيل env      npm run dev
 0:12-0:14    اختبار لوحة    http://localhost:5173/admin/injuries

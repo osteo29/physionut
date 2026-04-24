@@ -9,7 +9,7 @@
 - [ ] فتحت https://supabase.com/dashboard
 - [ ] اخترت مشروعي
 - [ ] فتحت SQL Editor → New Query
-- [ ] نسخت الف محتويات من SUPABASE_SQL_CLEAN.sql
+- [ ] نسخت الف محتويات من supabase/legacy/SUPABASE_SQL_CLEAN.sql
 - [ ] لصقت في SQL Editor
 - [ ] اضغطت Run
 - [ ] قرأت الرسالة الخضراء: ✓ Success
@@ -165,7 +165,7 @@ README_FINAL.md              ← الخطوات الـ 6 بسرعة
 STEPS.md                     ← 8 خطوات سريعة
 FILE_CHECKLIST.md            ← الملفات الموجودة
 FINAL_SETUP_COMPLETE.md      ← التفاصيل الكاملة
-SUPABASE_SQL_CLEAN.sql       ← الكود الجاهز
+supabase/legacy/SUPABASE_SQL_CLEAN.sql       ← الكود الجاهز
 ```
 
 ---

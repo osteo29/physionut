@@ -17,7 +17,7 @@
 
 ### 1️⃣ افتح الملف:
 ```
-SUPABASE_SQL_CLEAN.sql
+supabase/legacy/SUPABASE_SQL_CLEAN.sql
 ```
 
 ### 2️⃣ انسخ كل المحتويات:
@@ -136,7 +136,7 @@ A: روح FINAL_SETUP_COMPLETE.md فيه تفاصيل كاملة
 ---
 
 P.S: الملفات دي موجودة:
-- ✅ SUPABASE_SQL_CLEAN.sql ← الكود الجاهز
+- ✅ supabase/legacy/SUPABASE_SQL_CLEAN.sql ← الكود الجاهز
 - ✅ STEPS.md ← الخطوات السريعة
 - ✅ FILE_CHECKLIST.md ← الملفات الموجودة
 - ✅ FINAL_SETUP_COMPLETE.md ← التفاصيل الكاملة

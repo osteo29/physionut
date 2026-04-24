@@ -97,6 +97,54 @@ async function syncToSupabase(
   };
 
   const {importExerciseProtocolsToSupabase} = await import('../src/services/injurySupabaseService');
+  const {getCurrentUser, signInWithEmail, supabase} = await import('../src/lib/supabase');
+
+  const adminEmail = process.env.SUPABASE_ADMIN_EMAIL?.trim().toLowerCase();
+  const adminPassword = process.env.SUPABASE_ADMIN_PASSWORD?.trim();
+  const configuredArticleAdmin = process.env.VITE_ARTICLE_ADMIN_EMAIL?.trim().toLowerCase();
+
+  if (adminEmail && adminPassword) {
+    console.log(`Signing in to Supabase as ${adminEmail}...`);
+    await signInWithEmail(adminEmail, adminPassword);
+
+    const user = await getCurrentUser();
+    if (user?.email?.trim().toLowerCase() === configuredArticleAdmin && supabase) {
+      const {data: existingAdmin, error: existingAdminError} = await supabase
+        .from('admin_users')
+        .select('id')
+        .eq('email', adminEmail)
+        .maybeSingle();
+
+      if (existingAdminError) {
+        console.warn(`Could not verify admin_users row: ${existingAdminError.message}`);
+      } else if (!existingAdmin) {
+        console.log(`Bootstrapping admin_users row for ${adminEmail}...`);
+        const {error: bootstrapError} = await supabase.from('admin_users').insert([
+          {
+            user_id: user.id,
+            email: adminEmail,
+            full_name:
+              typeof user.user_metadata?.full_name === 'string' && user.user_metadata.full_name.trim()
+                ? user.user_metadata.full_name.trim()
+                : adminEmail.split('@')[0],
+            role: 'admin',
+            can_edit_injuries: true,
+            can_edit_phases: true,
+            can_edit_supplements: true,
+            can_delete: true,
+          },
+        ]);
+
+        if (bootstrapError) {
+          console.warn(`Could not bootstrap admin_users row automatically: ${bootstrapError.message}`);
+        } else {
+          console.log('Admin bootstrap completed.');
+        }
+      }
+    }
+  } else {
+    console.log('No CLI admin credentials found. Sync will use the current Supabase session only.');
+  }
 
   return importExerciseProtocolsToSupabase({
     rawText,

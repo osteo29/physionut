@@ -40,7 +40,7 @@ const arMessages = {
   config:
     'إعداد Supabase غير ظاهر داخل التطبيق الآن. تأكد من وجود VITE_SUPABASE_URL و VITE_SUPABASE_ANON_KEY ثم أعد تشغيل npm run dev أو أعد بناء الموقع.',
   tableMissing:
-    'جدول assessments غير موجود في Supabase حتى الآن. نفذ ملف SQL الخاص بالنظام الآمن أولًا.',
+    'The assessments table does not exist in Supabase yet. Run the assessments migration first.',
   rls:
     'تم رفض العملية من Supabase بسبب الصلاحيات أو سياسات RLS. راجع سياسات جدول assessments.',
   invalidCredentials: 'بيانات تسجيل الدخول غير صحيحة.',
@@ -103,7 +103,7 @@ export function getSupabaseActionErrorMessage(
   if (code === '42P01' || /relation .*assessments.* does not exist/i.test(message)) {
     return lang === 'ar'
       ? ar(arMessages.tableMissing)
-      : 'The assessments table does not exist in Supabase yet. Run the secure SQL setup first.';
+      : 'The assessments table does not exist in Supabase yet. Run the assessments migration first.';
   }
 
   if (code === '42501' || /row-level security/i.test(message)) {

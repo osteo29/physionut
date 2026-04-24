@@ -8,7 +8,7 @@
    - الملف الأصلي الموجود فيه الـ schema الكامل
    - لا تحتاج تعديل فيه، كل حاجة موجودة
 
-✅ **SUPABASE_SQL_CLEAN.sql** ← **الملف الجديد**
+✅ **supabase/legacy/SUPABASE_SQL_CLEAN.sql** ← **الملف الجديد**
    - نسخة نظيفة من الـ SQL فقط
    - هذا الملف اللي تنسخه وتمسحه في Supabase
 
@@ -85,14 +85,14 @@
 2. ⭐ **FINAL_SETUP_COMPLETE.md** ← التفاصيل الكاملة
 
 ### للمرجعية:
-3. **SUPABASE_SQL_CLEAN.sql** ← الكود الجاهز للنسخ
+3. **supabase/legacy/SUPABASE_SQL_CLEAN.sql** ← الكود الجاهز للنسخ
 4. **INJURY_MANAGEMENT_SETUP.md** ← الشرح العميق
 5. **INTEGRATION_GUIDE.md** ← لتحديث الصفحات (اختياري)
 
 ---
 
 ## ❌ لا تستخدم هذه الملفات:
-- ❌ **supabase/schema.sql** - استخدم **SUPABASE_SQL_CLEAN.sql** بدلاً منه
+- ❌ **supabase/schema.sql** - استخدم **supabase/legacy/SUPABASE_SQL_CLEAN.sql** بدلاً منه
   (الملف الأصلي فيه كود قديم أيضاً، لذا بنينا ملف نظيف)
 
 ---
@@ -101,7 +101,7 @@
 
 | الملف | الغرض | هل تعدل فيه؟ |
 |------|-------|----------|
-| SUPABASE_SQL_CLEAN.sql | الكود SQL للـ Database | ❌ لا - تنسخه فقط |
+| supabase/legacy/SUPABASE_SQL_CLEAN.sql | الكود SQL للـ Database | ❌ لا - تنسخه فقط |
 | injurySupabaseService.ts | خدمة قاعدة البيانات | ❌ لا - جاهز |
 | healthCheck.ts | فحص الاتصال | ❌ لا - جاهز |
 | dataMigration.ts | نقل البيانات | ❌ لا - جاهز |
@@ -116,7 +116,7 @@
 
 ### 1️⃣ الإعداد (Setup)
 ```
-SUPABASE_SQL_CLEAN.sql → Supabase Dashboard → Run SQL
+supabase/legacy/SUPABASE_SQL_CLEAN.sql → Supabase Dashboard → Run SQL
 ```
 
 ### 2️⃣ التحقق (Verification)

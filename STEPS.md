@@ -2,7 +2,7 @@
 
 ## الخطوة 1: انسخ الكود SQL
 
-افتح الملف: `SUPABASE_SQL_CLEAN.sql`
+افتح الملف: `supabase/legacy/SUPABASE_SQL_CLEAN.sql`
 
 انسخ **كل** المحتويات (Ctrl+A ثم Ctrl+C)
 

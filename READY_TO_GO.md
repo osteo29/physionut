@@ -12,7 +12,7 @@
 - ✅ المسار الإداري مضاف في RouterApp.tsx
 
 ### ✅ قاعدة البيانات:
-- ✅ SQL Schema كامل (SUPABASE_SQL_CLEAN.sql)
+- ✅ SQL Schema كامل (supabase/legacy/SUPABASE_SQL_CLEAN.sql)
 - ✅ جداول منظمة (5 جداول)
 - ✅ RLS Policies مفعّلة
 - ✅ Indexes للأداء العالي
@@ -32,7 +32,7 @@
 
 ### 1️⃣ افتح ملف الكود SQL:
 ```
-SUPABASE_SQL_CLEAN.sql
+supabase/legacy/SUPABASE_SQL_CLEAN.sql
 ```
 
 ### 2️⃣ انسخ كل محتوياته:
@@ -81,7 +81,7 @@ await migrateAllInjuriesToSupabase();
 ## 📊 الملفات الموجودة الآن:
 
 ```
-✅ SUPABASE_SQL_CLEAN.sql        ← الكود الجاهز
+✅ supabase/legacy/SUPABASE_SQL_CLEAN.sql        ← الكود الجاهز
 ✅ src/services/injurySupabaseService.ts
 ✅ src/services/healthCheck.ts
 ✅ src/utils/dataMigration.ts

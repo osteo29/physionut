@@ -3,7 +3,7 @@
 ## في 20 دقيقة فقط:
 
 ```
-Step 1: 📄 افتح SUPABASE_SQL_CLEAN.sql
+Step 1: 📄 افتح supabase/legacy/SUPABASE_SQL_CLEAN.sql
         └─ انسخ كل محتويات (Ctrl+A → Ctrl+C)
 
 Step 2: 🌐 اذهب https://supabase.com/dashboard
@@ -29,7 +29,7 @@ Step 6: 🎉 اضغط F5 وشوف 95 إصابة!
 ## الملفات اللي تحتاجها:
 
 ```
-SUPABASE_SQL_CLEAN.sql   ← الكود الجاهز
+supabase/legacy/SUPABASE_SQL_CLEAN.sql   ← الكود الجاهز
 AdminInjuryManager.tsx    ← في src/pages (جاهزة)
 dataMigration.ts          ← في src/utils (جاهزة)
 RouterApp.tsx             ← (خلصنا إضافة المسار)
