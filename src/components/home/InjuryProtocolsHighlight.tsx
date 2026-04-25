@@ -37,12 +37,12 @@ export default function InjuryProtocolsHighlight({lang}: {lang: Language}) {
               <span>{isAr ? 'بروتوكولات الإصابات' : 'Injury protocols'}</span>
             </div>
             <h2 className="mb-4 text-3xl font-black text-slate-900 sm:text-4xl">
-              {isAr ? 'بروتوكولات التأهيل الجديدة اتربطت بطبقة التغذية' : 'The new rehab protocol dataset is now paired with the nutrition layer'}
+              {isAr ? 'مكتبة شاملة لبروتوكولات التأهيل المتكامل' : 'Comprehensive Integrated Rehab Protocols'}
             </h2>
             <p className="max-w-3xl text-sm leading-7 text-slate-600 sm:text-base">
               {isAr
-                ? 'المكتبة تعرض البروتوكولات المستوردة الجديدة نفسها: مراحل واضحة، احتياطات، معايير انتقال، وتمارين مفصلة، مع إبقاء التغذية الداعمة داخل كل مرحلة.'
-                : 'The library now surfaces the imported rehab protocols themselves: clear phases, precautions, progression criteria, and detailed exercises, while keeping nutrition support inside each phase.'}
+                ? 'تصفح بروتوكولات تفصيلية مبنية على المعايير الطبية. كل بروتوكول مقسم لمراحل واضحة تشمل التمارين العلاجية، معايير التقدم، المحاذير، مع خطة تغذية لدعم وتسريع الشفاء.'
+                : 'Browse detailed protocols based on medical standards. Each protocol is structured into clear phases including exercises, progression criteria, precautions, and nutrition support.'}
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <Link
@@ -68,7 +68,7 @@ export default function InjuryProtocolsHighlight({lang}: {lang: Language}) {
               </div>
               <div className="text-3xl font-black text-slate-900">{injuries.length}</div>
               <div className="mt-2 text-sm text-slate-600">
-                {isAr ? 'بروتوكولات متاحة الآن من قاعدة البيانات الجديدة' : 'Protocols currently available from the new database'}
+                {isAr ? 'بروتوكول تأهيلي متكامل يغطي مختلف الإصابات' : 'Complete rehab protocols covering various injuries'}
               </div>
             </div>
             <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
@@ -77,7 +77,7 @@ export default function InjuryProtocolsHighlight({lang}: {lang: Language}) {
               </div>
               <div className="text-3xl font-black text-slate-900">{categories.length}</div>
               <div className="mt-2 text-sm text-slate-600">
-                {isAr ? 'تقسيمات رئيسية مثل الركبة والكتف والعمود الفقري' : 'Main groupings such as knee, shoulder, and spine'}
+                {isAr ? 'مناطق تشريحية تشمل الطرف العلوي، السفلي، والعمود الفقري' : 'Anatomical regions including upper/lower limbs and spine'}
               </div>
             </div>
             <div className="rounded-[2rem] border border-amber-200 bg-amber-50 p-6 shadow-sm">
@@ -85,10 +85,10 @@ export default function InjuryProtocolsHighlight({lang}: {lang: Language}) {
                 <ShieldAlert className="h-5 w-5" />
               </div>
               <div className="text-lg font-black text-slate-900">
-                {isAr ? 'دعم التغذية والسلامة' : 'Nutrition and safety support'}
+                {isAr ? 'دعم التغذية والسلامة' : 'Nutrition & safety support'}
               </div>
               <div className="mt-2 text-sm text-slate-700">
-                {isAr ? 'تم الإبقاء على طبقة التغذية والمكملات والتنبيهات الداعمة داخل كل مرحلة.' : 'The nutrition layer, supplement notes, and safety reminders still support every phase.'}
+                {isAr ? 'كل مرحلة تأهيلية مدعومة بملاحظات تغذية ومكملات لتسريع الاستشفاء.' : 'Every rehab phase is supported by clinical nutrition and supplement guidelines.'}
               </div>
             </div>
           </div>

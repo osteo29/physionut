@@ -160,7 +160,11 @@ const articleRoutes: RouteGroup[] = LANGUAGES.flatMap((lang) =>
   })),
 );
 
-const injuryRoutes: RouteGroup[] = buildInjuries.flatMap((injury) =>
+import {INJURY_CANONICAL_PARENT_MAP} from '../src/services/seoAliases';
+
+const canonicalInjuries = buildInjuries.filter((injury) => !INJURY_CANONICAL_PARENT_MAP[injury.id]);
+
+const injuryRoutes: RouteGroup[] = canonicalInjuries.flatMap((injury) =>
   LANGUAGES.map((lang) => ({
     path: getInjuryPath(injury, lang),
     lang,

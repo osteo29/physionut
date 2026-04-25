@@ -64,14 +64,14 @@ const Hero = memo(({lang}: {lang: Language}) => {
           </span>
         </div>
 
-        <h1 className="mx-auto mb-5 max-w-4xl text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
-          {isAr ? 'صمم خطتك الصحية' : 'Build your health plan'}{' '}
-          <span className="relative text-health-green">
-            {isAr ? 'بدقة علمية' : 'with clinical precision'}
+        <h1 className="mx-auto mb-5 max-w-4xl text-4xl font-black leading-[1.15] tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
+          {isAr ? 'صمم خطة تعافيك' : 'Build your recovery plan'}{' '}
+          <span className="relative bg-gradient-to-r from-health-green to-health-green-dark bg-clip-text text-transparent">
+            {isAr ? 'بدقة طبية' : 'with clinical precision'}
           </span>
           <br />
-          <span className="text-slate-900">
-            {isAr ? 'تغذية وتأهيل في مكان واحد' : 'nutrition and rehab in one place'}
+          <span className="text-slate-800 font-extrabold mt-2 block text-3xl sm:text-4xl lg:text-5xl">
+            {isAr ? 'تغذية وتأهيل رياضي متكامل' : 'Integrated nutrition & rehab'}
           </span>
         </h1>
 
@@ -81,10 +81,10 @@ const Hero = memo(({lang}: {lang: Language}) => {
             : 'Estimate calories, macros, protein, and hydration using established medical formulas. PhysioNutrition helps connect nutrition, movement, and follow-up in a clearer way.'}
         </p>
 
-        <div className="glass-panel mx-auto mb-7 max-w-3xl rounded-[1.75rem] border border-white/70 px-4 py-4 text-sm leading-7 text-slate-700 sm:px-5">
+        <div className="glass-panel mx-auto mb-7 max-w-3xl rounded-[1.75rem] border border-health-green/10 bg-white/60 backdrop-blur-md px-5 py-4 text-sm font-medium leading-7 text-slate-700 shadow-sm sm:px-6">
           {isAr
-            ? 'هنا تجد حاسبات تغذية، محتوى تأهيلي، ومتابعة عملية بدل أدوات منفصلة لا تربط بين النتيجة والخطوة التالية.'
-            : 'Here you get calculators, rehab-focused content, and follow-up tools that work together instead of isolated pages.'}
+            ? 'هنا تجد حاسبات تغذية، بروتوكولات إصابات تفصيلية، ومتابعة عملية تدلك على خطوتك التالية في رحلة التعافي.'
+            : 'Find nutrition calculators, detailed injury protocols, and practical follow-up tools that guide your next step in recovery.'}
         </div>
 
         <div className="mb-8 flex snap-x gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:justify-center sm:overflow-visible">
@@ -99,37 +99,37 @@ const Hero = memo(({lang}: {lang: Language}) => {
           ))}
         </div>
 
-        <div className="mx-auto mb-4 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-2">
+        <div className="mx-auto mb-6 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-2">
           <Link
             to={navigationPaths.auth(lang)}
-            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-health-green px-6 py-4 text-sm font-bold text-white shadow-lg shadow-health-green/20 transition-all hover:-translate-y-0.5 hover:bg-health-green-dark"
+            className="group flex items-center justify-center gap-2 rounded-full bg-slate-900 px-6 py-4 text-sm font-bold text-white shadow-lg transition-all hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-xl"
           >
-            <UserRoundPlus className="h-5 w-5" />
-            {isAr ? 'ابدأ الآن مجانًا' : 'Start free now'}
+            <UserRoundPlus className="h-5 w-5 transition-transform group-hover:scale-110" />
+            {isAr ? 'ابدأ رحلتك مجانًا' : 'Start your journey free'}
           </Link>
           <a
-            href="#calculators"
-            className="glass-panel inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 px-6 py-4 text-sm font-bold text-slate-900 transition-all hover:-translate-y-0.5 hover:border-health-green"
+            href={navigationPaths.injuries(lang)}
+            className="group flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-4 text-sm font-bold text-slate-900 shadow-sm transition-all hover:-translate-y-0.5 hover:border-health-green hover:shadow-md"
           >
-            <Calculator className="h-5 w-5 text-health-green" />
-            {isAr ? 'استكشف الحاسبات' : 'Explore calculators'}
+            <Activity className="h-5 w-5 text-health-green transition-transform group-hover:scale-110" />
+            {isAr ? 'تصفح بروتوكولات الإصابات' : 'Browse injury protocols'}
           </a>
         </div>
 
-        <div className="mb-8 flex flex-wrap items-center justify-center gap-3">
+        <div className="mb-10 flex flex-wrap items-center justify-center gap-3">
           <a
             href={navigationPaths.assistant(lang)}
-            className="glass-panel inline-flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-3 text-sm font-bold text-slate-700 transition-all hover:-translate-y-0.5 hover:border-health-green"
+            className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/50 backdrop-blur-sm px-5 py-3 text-sm font-bold text-slate-700 transition-all hover:-translate-y-0.5 hover:border-health-green hover:bg-white"
           >
             <MessageSquareText className="h-4 w-4 text-health-green" />
-            {isAr ? 'اسأل المساعد' : 'Ask the assistant'}
+            {isAr ? 'اسأل الذكاء الاصطناعي' : 'Ask AI Assistant'}
           </a>
           <a
             href="#architect"
-            className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-3 text-sm font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-slate-800"
+            className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/50 backdrop-blur-sm px-5 py-3 text-sm font-bold text-slate-700 transition-all hover:-translate-y-0.5 hover:border-health-green hover:bg-white"
           >
-            <Activity className="h-4 w-4" />
-            {isAr ? 'خطة التعافي' : 'Recovery planner'}
+            <Calculator className="h-4 w-4 text-health-green" />
+            {isAr ? 'حاسبات التغذية' : 'Nutrition calculators'}
           </a>
         </div>
 
