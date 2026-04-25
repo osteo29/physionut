@@ -1,0 +1,6 @@
+{
+  "name": "PhysioRehab Protocols Database",
+  "description": "A database-driven application managing 100 evidence-based MSK rehabilitation protocols with phased recovery plans.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}

@@ -1,14 +1,13 @@
-﻿import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {ArrowRight, ClipboardList, ShieldAlert, Timer} from 'lucide-react';
 import {Link} from 'react-router-dom';
-import {getCatalogInjuries, getLocalCatalogInjuries, type InjuryCatalogEntry} from '../../services/injuryService';
+import {getCatalogInjuries, type InjuryCatalogEntry} from '../../services/injuryService';
 import type {Language} from '../../services/translations';
 import {navigationPaths} from '../../utils/langUrlHelper';
 
 export default function InjuryProtocolsHighlight({lang}: {lang: Language}) {
   const isAr = lang === 'ar';
   const [injuries, setInjuries] = useState<InjuryCatalogEntry[]>([]);
-  const fallbackInjuries = useMemo(() => getLocalCatalogInjuries(lang), [lang]);
 
   useEffect(() => {
     let active = true;
@@ -26,8 +25,7 @@ export default function InjuryProtocolsHighlight({lang}: {lang: Language}) {
     };
   }, [lang]);
 
-  const visibleInjuries = injuries.length ? injuries : fallbackInjuries;
-  const categories = [...new Set(visibleInjuries.map((item) => item.category))];
+  const categories = [...new Set(injuries.map((item) => item.category))];
 
   return (
     <section className="bg-slate-50 py-20">
@@ -39,12 +37,12 @@ export default function InjuryProtocolsHighlight({lang}: {lang: Language}) {
               <span>{isAr ? 'بروتوكولات الإصابات' : 'Injury protocols'}</span>
             </div>
             <h2 className="mb-4 text-3xl font-black text-slate-900 sm:text-4xl">
-              {isAr ? 'قاعدة إصابات عملية تربط التأهيل بالتغذية' : 'A practical injury library that links rehab with nutrition'}
+              {isAr ? 'بروتوكولات التأهيل الجديدة اتربطت بطبقة التغذية' : 'The new rehab protocol dataset is now paired with the nutrition layer'}
             </h2>
             <p className="max-w-3xl text-sm leading-7 text-slate-600 sm:text-base">
               {isAr
-                ? 'بدل ما تكون المعلومة مخفية داخل الواجهة، جمعنا الإصابات الشائعة في صفحة واحدة واضحة: مراحل التعافي، المغذيات المفيدة، الأطعمة المقترحة، وما يحتاج حذرًا مع الأدوية أو المكملات.'
-                : 'Instead of burying this value at the bottom of the homepage, common injuries now live in one clearer place with recovery stages, useful nutrients, suggested foods, and medication or supplement cautions.'}
+                ? 'المكتبة تعرض البروتوكولات المستوردة الجديدة نفسها: مراحل واضحة، احتياطات، معايير انتقال، وتمارين مفصلة، مع إبقاء التغذية الداعمة داخل كل مرحلة.'
+                : 'The library now surfaces the imported rehab protocols themselves: clear phases, precautions, progression criteria, and detailed exercises, while keeping nutrition support inside each phase.'}
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <Link
@@ -58,7 +56,7 @@ export default function InjuryProtocolsHighlight({lang}: {lang: Language}) {
                 to={navigationPaths.assistant(lang)}
                 className="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-700"
               >
-                {isAr ? 'اسأل عن إصابتك' : 'Ask about your injury'}
+                {isAr ? 'اسأل عن بروتوكولك' : 'Ask about your protocol'}
               </Link>
             </div>
           </div>
@@ -68,9 +66,9 @@ export default function InjuryProtocolsHighlight({lang}: {lang: Language}) {
               <div className="mb-3 inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-soft-blue text-medical-blue">
                 <Timer className="h-5 w-5" />
               </div>
-              <div className="text-3xl font-black text-slate-900">{visibleInjuries.length}</div>
+              <div className="text-3xl font-black text-slate-900">{injuries.length}</div>
               <div className="mt-2 text-sm text-slate-600">
-                {isAr ? 'إصابات ومنعطفات تعافٍ متاحة الآن' : 'Injuries and recovery pathways available'}
+                {isAr ? 'بروتوكولات متاحة الآن من قاعدة البيانات الجديدة' : 'Protocols currently available from the new database'}
               </div>
             </div>
             <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
@@ -79,7 +77,7 @@ export default function InjuryProtocolsHighlight({lang}: {lang: Language}) {
               </div>
               <div className="text-3xl font-black text-slate-900">{categories.length}</div>
               <div className="mt-2 text-sm text-slate-600">
-                {isAr ? 'فئات رئيسية مثل الركبة والعمود الفقري والكتف' : 'Main categories like knee, spine, and shoulder'}
+                {isAr ? 'تقسيمات رئيسية مثل الركبة والكتف والعمود الفقري' : 'Main groupings such as knee, shoulder, and spine'}
               </div>
             </div>
             <div className="rounded-[2rem] border border-amber-200 bg-amber-50 p-6 shadow-sm">
@@ -87,10 +85,10 @@ export default function InjuryProtocolsHighlight({lang}: {lang: Language}) {
                 <ShieldAlert className="h-5 w-5" />
               </div>
               <div className="text-lg font-black text-slate-900">
-                {isAr ? 'تنبيهات مهمة' : 'Safety cues included'}
+                {isAr ? 'دعم التغذية والسلامة' : 'Nutrition and safety support'}
               </div>
               <div className="mt-2 text-sm text-slate-700">
-                {isAr ? 'تنبيهات دوائية ومكملات ومحاذير مرتبطة ببعض الإصابات.' : 'Medication, supplement, and caution notes where relevant.'}
+                {isAr ? 'تم الإبقاء على طبقة التغذية والمكملات والتنبيهات الداعمة داخل كل مرحلة.' : 'The nutrition layer, supplement notes, and safety reminders still support every phase.'}
               </div>
             </div>
           </div>
@@ -99,5 +97,3 @@ export default function InjuryProtocolsHighlight({lang}: {lang: Language}) {
     </section>
   );
 }
-
-

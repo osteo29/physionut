@@ -12,7 +12,6 @@ import {Link, Navigate, useParams} from 'react-router-dom';
 import Seo from '../components/seo/Seo';
 import {
   generateRecoveryPlan,
-  getAllInjuries,
   getSuggestedPhaseForWindow,
   type ActivityProfile,
   type DietStyle,
@@ -30,7 +29,11 @@ import {
   getLocalizedInjuryOverview,
   textLooksArabic,
 } from '../services/injuryLocalization';
-import {getInjuryProtocolBySlugWithFallback} from '../services/injuryService';
+import {
+  getCatalogInjuries,
+  getInjuryProtocolBySlugWithFallback,
+  type InjuryCatalogEntry,
+} from '../services/injuryService';
 import {INJURY_CANONICAL_PARENT_MAP} from '../services/seoAliases';
 import {decodeMojibake} from '../services/textEncoding';
 import {navigationPaths} from '../utils/langUrlHelper';
@@ -282,8 +285,7 @@ export default function InjuryDetailPage() {
   const isAr = lang === 'ar';
   const [injury, setInjury] = useState<InjuryProtocol | null>(null);
   const [loading, setLoading] = useState(true);
-  const [remoteIds, setRemoteIds] = useState<string[]>([]);
-  const [customContentMap, setCustomContentMap] = useState<Record<string, unknown> | null>(null);
+  const [catalogInjuries, setCatalogInjuries] = useState<InjuryCatalogEntry[]>([]);
 
   const [profile, setProfile] = useState<ActivityProfile>('general');
   const [goal, setGoal] = useState<RecoveryGoal>('calm');
@@ -296,11 +298,14 @@ export default function InjuryDetailPage() {
 
     const load = async () => {
       setLoading(true);
-      const result = await getInjuryProtocolBySlugWithFallback(slug, lang);
+      const [result, catalog] = await Promise.all([
+        getInjuryProtocolBySlugWithFallback(slug, lang),
+        getCatalogInjuries(lang),
+      ]);
 
       if (!active) return;
       setInjury(result.injury);
-      setRemoteIds(result.remoteIds);
+      setCatalogInjuries(catalog.injuries);
       setLoading(false);
     };
 
@@ -310,21 +315,6 @@ export default function InjuryDetailPage() {
       active = false;
     };
   }, [lang, slug]);
-
-  useEffect(() => {
-    let active = true;
-
-    const loadCustomContent = async () => {
-      const module = await import('../services/injuryPageContentCatalog');
-      if (active) setCustomContentMap(module.injuryPageContentCatalog);
-    };
-
-    void loadCustomContent();
-
-    return () => {
-      active = false;
-    };
-  }, []);
 
   if (!injury && !loading) {
     return <Navigate to={`/${lang}/injuries`} replace />;
@@ -358,10 +348,9 @@ export default function InjuryDetailPage() {
     dietStyle: diet,
   });
 
-  const relatedInjuries = getAllInjuries()
+  const relatedInjuries = catalogInjuries
     .filter((item) => item.id !== injury.id)
-    .filter((item) => item.category === injury.category || item.bodyRegion === injury.bodyRegion)
-    .filter((item) => !remoteIds.length || !remoteIds.includes(item.id))
+    .filter((item) => item.category === categoryDisplay || item.bodyRegion === bodyRegionDisplay)
     .slice(0, 6);
   const relatedExerciseLinks = getInjuryExerciseLinks({
     injuryId: injury.id,
@@ -374,10 +363,7 @@ export default function InjuryDetailPage() {
     lang,
   });
 
-  const customContent = (injury.pageContent ||
-    (customContentMap?.[injury.id] as
-    | {intro?: string; symptoms?: string[]; faq?: Array<{q: string; a: string}>}
-    | undefined));
+  const customContent = injury.pageContent;
   const introText = getLocalizedInjuryOverview(
     injuryDisplayName,
     injury.category,
@@ -921,7 +907,7 @@ export default function InjuryDetailPage() {
               </div>
 
               <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
-                <div className="mb-3 font-black text-slate-900">{isAr ? 'التمارين المناسبة' : 'Rehab exercise focus'}</div>
+                <div className="mb-3 font-black text-slate-900">{isAr ? 'التمارين المناسبة' : 'Exercises for this phase'}</div>
                 {activePhase.exercisePlans?.length ? (
                   <div className="space-y-3">
                     {activePhase.exercisePlans.map((plan, idx) => (
@@ -929,7 +915,7 @@ export default function InjuryDetailPage() {
                         <div className="font-bold text-slate-900">{normalizeCopy(plan.label)}</div>
                         {(plan.sets || plan.reps || plan.rest || plan.equipment) ? (
                           <div className="mt-2 space-y-1 text-sm text-slate-700">
-                            {plan.sets ? <div><span className="font-semibold">{isAr ? 'سِت:' : 'Sets'} </span>{normalizeCopy(plan.sets)}</div> : null}
+                            {plan.sets ? <div><span className="font-semibold">{isAr ? 'الجرعة / البارامتر:' : 'Prescription:'} </span>{normalizeCopy(plan.sets)}</div> : null}
                             {plan.reps ? <div><span className="font-semibold">{isAr ? 'تكرارات:' : 'Reps'} </span>{normalizeCopy(plan.reps)}</div> : null}
                             {plan.rest ? <div><span className="font-semibold">{isAr ? 'راحة:' : 'Rest'} </span>{normalizeCopy(plan.rest)}</div> : null}
                             {plan.equipment ? <div><span className="font-semibold">{isAr ? 'معدات:' : 'Equipment'} </span>{normalizeCopy(plan.equipment)}</div> : null}
@@ -949,7 +935,7 @@ export default function InjuryDetailPage() {
 
                         {plan.cues?.length ? (
                           <div className="mt-3 text-sm">
-                            <div className="font-bold text-slate-900">{isAr ? 'ملاحظات التنفيذ:' : 'Cues:'}</div>
+                            <div className="font-bold text-slate-900">{isAr ? 'الملاحظة الإكلينيكية / السبب:' : 'Clinical cue / rationale:'}</div>
                             <ul className="mt-2 space-y-1">
                               {plan.cues.map((item) => (
                                 <li key={item} className="rounded-xl bg-white px-3 py-2 text-slate-700">{normalizeCopy(item)}</li>
@@ -1039,7 +1025,7 @@ export default function InjuryDetailPage() {
               <div>
                 <h2 className="text-xl font-black text-slate-900">Full phase-by-phase protocol</h2>
                 <p className="mt-2 max-w-3xl text-sm leading-7 text-slate-600">
-                  This section shows every rehab phase in sequence, including goals, precautions, progression markers, and detailed exercise plans.
+                  This section shows every rehab phase in sequence, including goals, precautions, criteria to progress, and detailed exercise plans.
                 </p>
               </div>
             </div>
@@ -1084,9 +1070,9 @@ export default function InjuryDetailPage() {
                     </div>
 
                     <div className="rounded-2xl bg-white p-4">
-                      <div className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-400">Progression markers</div>
+                      <div className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-400">Criteria to progress</div>
                       <ul className="space-y-2 text-sm text-slate-700">
-                        {(phase.progressionMarkers?.length ? phase.progressionMarkers : ['No extra progression markers recorded.']).map((item) => (
+                        {(phase.progressionMarkers?.length ? phase.progressionMarkers : ['No extra criteria recorded.']).map((item) => (
                           <li key={item} className="rounded-xl bg-slate-50 px-3 py-2">{normalizeCopy(item)}</li>
                         ))}
                       </ul>
@@ -1102,7 +1088,7 @@ export default function InjuryDetailPage() {
                             <div className="font-bold text-slate-900">{normalizeCopy(plan.label)}</div>
                             {plan.sets ? (
                               <div className="mt-2 text-sm text-slate-700">
-                                <span className="font-semibold">Dose: </span>
+                                <span className="font-semibold">Prescription: </span>
                                 {normalizeCopy(plan.sets)}
                               </div>
                             ) : null}

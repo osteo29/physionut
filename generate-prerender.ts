@@ -2,7 +2,7 @@ import {mkdirSync, readFileSync, writeFileSync} from 'node:fs';
 import {dirname, join, resolve} from 'node:path';
 import {getArticles as getLocalArticles} from './src/services/articles';
 import {dietRegimensCatalog} from './src/services/dietRegimensCatalog';
-import {getAllInjuries as getLocalInjuries, getInjuryPath, type InjuryProtocol} from './src/services/injuryDatabase';
+import {getInjuryPath, type InjuryProtocol} from './src/services/injuryDatabase';
 import {
   getLocalizedBodyRegion,
   getLocalizedCategory,
@@ -38,7 +38,7 @@ const buildArticlesByLang = Object.fromEntries(
 ) as Record<Lang, Awaited<ReturnType<typeof getBuildArticles>>>;
 const buildInjuries = await getBuildInjuries();
 const getArticles = (lang: Lang) => buildArticlesByLang[lang] || getLocalArticles(lang);
-const getAllInjuries = () => (buildInjuries.length ? buildInjuries : getLocalInjuries());
+const getAllInjuries = () => buildInjuries;
 
 const SEO_SHELL_CSS = `
 <style data-prerender-seo="true">

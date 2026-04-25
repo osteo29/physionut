@@ -164,6 +164,90 @@ export type Database = {
           image?: string | null;
         };
       };
+      protocols: {
+        Row: {
+          id: number;
+          name: string;
+          category: string;
+          description: string | null;
+          created_at: string | null;
+        };
+        Insert: {
+          id?: number;
+          name: string;
+          category: string;
+          description?: string | null;
+          created_at?: string | null;
+        };
+        Update: {
+          id?: number;
+          name?: string;
+          category?: string;
+          description?: string | null;
+          created_at?: string | null;
+        };
+      };
+      phases: {
+        Row: {
+          id: number;
+          protocol_id: number;
+          phase_number: number;
+          title: string;
+          timeline: string | null;
+          goals: string[] | null;
+          precautions: string[] | null;
+          criteria_to_progress: string[] | null;
+          created_at: string | null;
+        };
+        Insert: {
+          id?: number;
+          protocol_id: number;
+          phase_number: number;
+          title: string;
+          timeline?: string | null;
+          goals?: string[] | null;
+          precautions?: string[] | null;
+          criteria_to_progress?: string[] | null;
+          created_at?: string | null;
+        };
+        Update: {
+          id?: number;
+          protocol_id?: number;
+          phase_number?: number;
+          title?: string;
+          timeline?: string | null;
+          goals?: string[] | null;
+          precautions?: string[] | null;
+          criteria_to_progress?: string[] | null;
+          created_at?: string | null;
+        };
+      };
+      exercises: {
+        Row: {
+          id: number;
+          phase_id: number;
+          name: string;
+          parameters: string | null;
+          clinical_cue_rationale: string | null;
+          created_at: string | null;
+        };
+        Insert: {
+          id?: number;
+          phase_id: number;
+          name: string;
+          parameters?: string | null;
+          clinical_cue_rationale?: string | null;
+          created_at?: string | null;
+        };
+        Update: {
+          id?: number;
+          phase_id?: number;
+          name?: string;
+          parameters?: string | null;
+          clinical_cue_rationale?: string | null;
+          created_at?: string | null;
+        };
+      };
       injuries: {
         Row: {
           id: string;
