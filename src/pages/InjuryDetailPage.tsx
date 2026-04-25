@@ -19,7 +19,6 @@ import {
   type RecoveryGoal,
   type RecoveryWindow,
 } from '../services/injuryDatabase';
-import {getRehabStagePlans} from '../services/injuryRehabProtocols';
 import {getInjuryExerciseLinks} from '../services/injuryExerciseLinks';
 import {getInjuryRehabLinks} from '../services/injuryRehabLinks';
 import {
@@ -334,12 +333,7 @@ export default function InjuryDetailPage() {
   const categoryDisplay = getLocalizedCategory(injury.category, lang);
   const bodyRegionDisplay = getLocalizedBodyRegion(injury.bodyRegion, lang);
   const suggestedPhase = getSuggestedPhaseForWindow(injury, recoveryWindow);
-  const rehabStagePlans = getRehabStagePlans(injury, lang);
-  const selectedStagePlan =
-    rehabStagePlans.find((item) => item.phaseId === suggestedPhase.id) ??
-    rehabStagePlans.find((item, index) => injury.phases[index]?.window === suggestedPhase.window) ??
-    rehabStagePlans[0];
-  const activePhase = injury.phases.find((p) => p.id === selectedStagePlan?.phaseId) ?? suggestedPhase;
+  const activePhase = injury.phases.find((p) => p.window === recoveryWindow) ?? suggestedPhase;
   const plan = generateRecoveryPlan({
     weightKg,
     phase: suggestedPhase,
@@ -392,13 +386,13 @@ export default function InjuryDetailPage() {
   const phaseGoals =
     isAr && !listHasArabic(activePhase.goals) ? getArabicFallbackGoals(bodyRegionDisplay) : activePhase.goals.map(normalizeCopy);
 
-  const exerciseFocus = selectedStagePlan?.exercises?.length
-    ? selectedStagePlan.exercises.map(normalizeCopy)
-    : isAr && !listHasArabic(suggestedPhase.exercises)
+  const exerciseFocus = activePhase.exercises?.length
+    ? activePhase.exercises.map(normalizeCopy)
+    : isAr && !listHasArabic(activePhase.exercises)
       ? getArabicFallbackExercises(injury.category, bodyRegionDisplay)
-      : suggestedPhase.exercises.map(normalizeCopy);
+      : activePhase.exercises.map(normalizeCopy);
 
-  const stageFocusText = selectedStagePlan ? normalizeCopy(selectedStagePlan.focus) : '';
+  const stageFocusText = activePhase.focus ? normalizeCopy(activePhase.focus) : '';
   const relatedRehabCards = relatedRehabLinks.map((item) => ({
     ...item,
     phaseReason: buildRehabMatchReason({
@@ -489,11 +483,11 @@ export default function InjuryDetailPage() {
             name: item,
           })),
         },
-        hasPart: rehabStagePlans.map((stage, index) => ({
+        hasPart: injury.phases.map((phase, index) => ({
           '@type': 'WebPageElement',
-          '@id': `https://physionutrition.vercel.app${canonicalPath}#${buildStageAnchor(stage.phaseId, index)}`,
-          name: normalizeCopy(stage.phaseLabel),
-          description: normalizeCopy(stage.focus),
+          '@id': `https://physionutrition.vercel.app${canonicalPath}#${buildStageAnchor(phase.id, index)}`,
+          name: normalizeCopy(phase.label),
+          description: normalizeCopy(phase.focus || ''),
         })),
       },
     },
@@ -506,11 +500,11 @@ export default function InjuryDetailPage() {
         description: introText,
         associatedAnatomy: bodyRegionDisplay,
         signOrSymptom: commonSymptoms,
-        possibleTreatment: rehabStagePlans.map((stage, index) => ({
+        possibleTreatment: injury.phases.map((phase, index) => ({
           '@type': 'TherapeuticProcedure',
-          name: normalizeCopy(stage.phaseLabel),
-          description: `${normalizeCopy(stage.focus)} ${stage.exercises.map(normalizeCopy).join(', ')}`,
-          url: `https://physionutrition.vercel.app${canonicalPath}#${buildStageAnchor(stage.phaseId, index)}`,
+          name: normalizeCopy(phase.label),
+          description: `${normalizeCopy(phase.focus || '')} ${phase.exercises.map(normalizeCopy).join(', ')}`,
+          url: `https://physionutrition.vercel.app${canonicalPath}#${buildStageAnchor(phase.id, index)}`,
         })),
       },
     },
@@ -642,94 +636,7 @@ export default function InjuryDetailPage() {
             </div>
           </section>
 
-          {relatedExerciseLinks.length > 0 ? (
-            <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
-              <div className="mb-4 flex items-center justify-between gap-4">
-                <div>
-                  <h2 className="text-xl font-black text-slate-900">
-                    {isAr ? 'تمارين قد تفيد هذه الإصابة' : 'Exercises that may support this injury'}
-                  </h2>
-                  <p className="mt-2 max-w-3xl text-sm leading-7 text-slate-600">
-                    {isAr
-                      ? 'هذه روابط داخلية إلى أقسام التمارين الأقرب لهذه الحالة، حتى ينتقل المستخدم من البروتوكول إلى التمارين المناسبة داخل الموقع نفسه.'
-                      : 'These internal links point to the closest matching exercise sections so users can move from protocol guidance into practical exercise selection.'}
-                  </p>
-                </div>
-                <Link
-                  to={navigationPaths.exercises(lang)}
-                  className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-bold text-slate-700"
-                >
-                  {isAr ? 'كل التمارين' : 'All exercises'}
-                </Link>
-              </div>
 
-              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                {relatedExerciseLinks.map((item) => (
-                  <Link
-                    key={item.slug}
-                    to={item.href}
-                    className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5 transition hover:border-health-green/30 hover:bg-health-green/5"
-                  >
-                    <div className="text-xs font-bold uppercase tracking-[0.16em] text-health-green">
-                      {isAr ? 'تمارين مرتبطة' : 'Related exercises'}
-                    </div>
-                    <div className="mt-2 text-lg font-black text-slate-900">{item.label}</div>
-                    <p className="mt-3 text-sm leading-7 text-slate-600">{item.reason}</p>
-                    <div className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-health-green">
-                      {isAr ? 'انتقل إلى القسم' : 'Go to section'}
-                      <ArrowRight className={`h-4 w-4 ${isAr ? 'rotate-180' : ''}`} />
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </section>
-          ) : null}
-
-          {relatedRehabCards.length > 0 ? (
-            <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
-              <div className="mb-4 flex items-center justify-between gap-4">
-                <div>
-                  <h2 className="text-xl font-black text-slate-900">
-                    {isAr ? 'صفحات التأهيل الموجه المناسبة' : 'Targeted rehab pages'}
-                  </h2>
-                  <p className="mt-2 max-w-3xl text-sm leading-7 text-slate-600">
-                    {isAr
-                      ? 'هذه الصفحات تربط بروتوكول الإصابة بصفحات تأهيل أوسع وموجهة، لتسهيل الانتقال من مرحلة العلاج إلى تحميل تدريجي أكثر تنظيمًا.'
-                      : 'These pages bridge the injury protocol into broader rehab-focused exercise hubs, helping users move from symptom management into more organized graded loading.'}
-                  </p>
-                </div>
-                <Link
-                  to={navigationPaths.exercises(lang)}
-                  className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-bold text-slate-700"
-                >
-                  {isAr ? 'مكتبة التمارين' : 'Exercise hub'}
-                </Link>
-              </div>
-
-              <div className="grid gap-4 md:grid-cols-2">
-                {relatedRehabCards.map((item) => (
-                  <Link
-                    key={item.slug}
-                    to={item.href}
-                    className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5 transition hover:border-health-green/30 hover:bg-health-green/5"
-                  >
-                    <div className="text-xs font-bold uppercase tracking-[0.16em] text-health-green">
-                      {isAr ? 'صفحة تأهيل' : 'Rehab page'}
-                    </div>
-                    <div className="mt-2 text-lg font-black text-slate-900">{item.label}</div>
-                    <p className="mt-3 text-sm leading-7 text-slate-600">{item.phaseReason}</p>
-                    <div className="mt-3 rounded-xl border border-slate-200 bg-white/80 px-3 py-3 text-xs leading-6 text-slate-500">
-                      {item.reason}
-                    </div>
-                    <div className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-health-green">
-                      {isAr ? 'افتح الصفحة' : 'Open page'}
-                      <ArrowRight className={`h-4 w-4 ${isAr ? 'rotate-180' : ''}`} />
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </section>
-          ) : null}
 
           <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
             <div className="mb-4 flex items-center gap-2 font-black text-slate-900">
@@ -844,26 +751,26 @@ export default function InjuryDetailPage() {
                   {phaseGoals.map((item) => <li key={item} className="rounded-xl bg-white px-3 py-2">{item}</li>)}
                 </ul>
 
-                {selectedStagePlan?.progressionMarkers?.length ? (
+                {activePhase.progressionMarkers?.length ? (
                   <div className="mt-4">
                     <h4 className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
                       {isAr ? 'علامات الانتقال للمرحلة التالية' : 'Ready to progress when'}
                     </h4>
                     <ul className="space-y-2 text-sm text-slate-700">
-                      {selectedStagePlan.progressionMarkers.map((item) => (
+                      {activePhase.progressionMarkers.map((item) => (
                         <li key={item} className="rounded-xl bg-white px-3 py-2">{normalizeCopy(item)}</li>
                       ))}
                     </ul>
                   </div>
                 ) : null}
 
-                {selectedStagePlan?.cautions?.length ? (
+                {activePhase.cautions?.length ? (
                   <div className="mt-4">
                     <h4 className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
                       {isAr ? 'تجنب' : 'Avoid'}
                     </h4>
                     <ul className="space-y-2 text-sm text-slate-700">
-                      {selectedStagePlan.cautions.map((item) => (
+                      {activePhase.cautions.map((item) => (
                         <li key={item} className="rounded-xl bg-amber-50 px-3 py-2">{normalizeCopy(item)}</li>
                       ))}
                     </ul>
@@ -1159,6 +1066,95 @@ export default function InjuryDetailPage() {
               </Suspense>
             </div>
           </section>
+
+          {relatedExerciseLinks.length > 0 ? (
+            <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
+              <div className="mb-4 flex items-center justify-between gap-4">
+                <div>
+                  <h2 className="text-xl font-black text-slate-900">
+                    {isAr ? 'تمارين قد تفيد هذه الإصابة' : 'Exercises that may support this injury'}
+                  </h2>
+                  <p className="mt-2 max-w-3xl text-sm leading-7 text-slate-600">
+                    {isAr
+                      ? 'هذه روابط داخلية إلى أقسام التمارين الأقرب لهذه الحالة، حتى ينتقل المستخدم من البروتوكول إلى التمارين المناسبة داخل الموقع نفسه.'
+                      : 'These internal links point to the closest matching exercise sections so users can move from protocol guidance into practical exercise selection.'}
+                  </p>
+                </div>
+                <Link
+                  to={navigationPaths.exercises(lang)}
+                  className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-bold text-slate-700"
+                >
+                  {isAr ? 'كل التمارين' : 'All exercises'}
+                </Link>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                {relatedExerciseLinks.map((item) => (
+                  <Link
+                    key={item.slug}
+                    to={item.href}
+                    className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5 transition hover:border-health-green/30 hover:bg-health-green/5"
+                  >
+                    <div className="text-xs font-bold uppercase tracking-[0.16em] text-health-green">
+                      {isAr ? 'تمارين مرتبطة' : 'Related exercises'}
+                    </div>
+                    <div className="mt-2 text-lg font-black text-slate-900">{item.label}</div>
+                    <p className="mt-3 text-sm leading-7 text-slate-600">{item.reason}</p>
+                    <div className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-health-green">
+                      {isAr ? 'انتقل إلى القسم' : 'Go to section'}
+                      <ArrowRight className={`h-4 w-4 ${isAr ? 'rotate-180' : ''}`} />
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          ) : null}
+
+          {relatedRehabCards.length > 0 ? (
+            <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
+              <div className="mb-4 flex items-center justify-between gap-4">
+                <div>
+                  <h2 className="text-xl font-black text-slate-900">
+                    {isAr ? 'صفحات التأهيل الموجه المناسبة' : 'Targeted rehab pages'}
+                  </h2>
+                  <p className="mt-2 max-w-3xl text-sm leading-7 text-slate-600">
+                    {isAr
+                      ? 'هذه الصفحات تربط بروتوكول الإصابة بصفحات تأهيل أوسع وموجهة، لتسهيل الانتقال من مرحلة العلاج إلى تحميل تدريجي أكثر تنظيمًا.'
+                      : 'These pages bridge the injury protocol into broader rehab-focused exercise hubs, helping users move from symptom management into more organized graded loading.'}
+                  </p>
+                </div>
+                <Link
+                  to={navigationPaths.exercises(lang)}
+                  className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-bold text-slate-700"
+                >
+                  {isAr ? 'مكتبة التمارين' : 'Exercise hub'}
+                </Link>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2">
+                {relatedRehabCards.map((item) => (
+                  <Link
+                    key={item.slug}
+                    to={item.href}
+                    className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5 transition hover:border-health-green/30 hover:bg-health-green/5"
+                  >
+                    <div className="text-xs font-bold uppercase tracking-[0.16em] text-health-green">
+                      {isAr ? 'صفحة تأهيل' : 'Rehab page'}
+                    </div>
+                    <div className="mt-2 text-lg font-black text-slate-900">{item.label}</div>
+                    <p className="mt-3 text-sm leading-7 text-slate-600">{item.phaseReason}</p>
+                    <div className="mt-3 rounded-xl border border-slate-200 bg-white/80 px-3 py-3 text-xs leading-6 text-slate-500">
+                      {item.reason}
+                    </div>
+                    <div className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-health-green">
+                      {isAr ? 'افتح الصفحة' : 'Open page'}
+                      <ArrowRight className={`h-4 w-4 ${isAr ? 'rotate-180' : ''}`} />
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          ) : null}
 
           <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
             <div className="mb-4 font-black text-slate-900">{isAr ? 'أسئلة شائعة' : 'FAQ'}</div>
