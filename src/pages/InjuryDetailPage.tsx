@@ -986,37 +986,7 @@ export default function InjuryDetailPage() {
                     </div>
                   </div>
 
-                  <div className="mt-4 rounded-2xl bg-white p-4">
-                    <div className="mb-3 text-sm font-black text-slate-900">Detailed exercise plan</div>
-                    {phase.exercisePlans?.length ? (
-                      <div className="space-y-3">
-                        {phase.exercisePlans.map((plan, planIndex) => (
-                          <div key={`${plan.label}-${planIndex}`} className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                            <div className="font-bold text-slate-900">{normalizeCopy(plan.label)}</div>
-                            {plan.sets ? (
-                              <div className="mt-2 text-sm text-slate-700">
-                                <span className="font-semibold">Prescription: </span>
-                                {normalizeCopy(plan.sets)}
-                              </div>
-                            ) : null}
-                            {plan.cues?.length ? (
-                              <ul className="mt-3 space-y-2 text-sm text-slate-700">
-                                {plan.cues.map((item) => (
-                                  <li key={item} className="rounded-xl bg-white px-3 py-2">{normalizeCopy(item)}</li>
-                                ))}
-                              </ul>
-                            ) : null}
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <ul className="space-y-2 text-sm text-slate-700">
-                        {phase.exercises.map((item) => (
-                          <li key={item} className="rounded-xl bg-slate-50 px-3 py-2">{normalizeCopy(item)}</li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
+
 
                   {phase.nutritionNotes?.length ? (
                     <div className="mt-4 rounded-2xl bg-health-green/5 p-4">
