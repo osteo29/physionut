@@ -323,10 +323,11 @@ export async function fetchCompleteInjuryProtocol(
             faq: faqItems
               .map((item) => {
                 if (!item || typeof item !== 'object') return null;
-                const qEn = typeof item.q_en === 'string' ? item.q_en : typeof item.q === 'string' ? item.q : '';
-                const aEn = typeof item.a_en === 'string' ? item.a_en : typeof item.a === 'string' ? item.a : '';
-                const qAr = typeof item.q_ar === 'string' ? item.q_ar : qEn;
-                const aAr = typeof item.a_ar === 'string' ? item.a_ar : aEn;
+                const faqObj = item as any;
+                const qEn = typeof faqObj.q_en === 'string' ? faqObj.q_en : typeof faqObj.q === 'string' ? faqObj.q : '';
+                const aEn = typeof faqObj.a_en === 'string' ? faqObj.a_en : typeof faqObj.a === 'string' ? faqObj.a : '';
+                const qAr = typeof faqObj.q_ar === 'string' ? faqObj.q_ar : qEn;
+                const aAr = typeof faqObj.a_ar === 'string' ? faqObj.a_ar : aEn;
                 const q = useArabic ? qAr || qEn : qEn || qAr;
                 const a = useArabic ? aAr || aEn : aEn || aAr;
                 return q && a ? {q, a} : null;
@@ -372,8 +373,7 @@ export async function fetchCompleteInjuryProtocol(
 export async function createInjury(data: InjuryInsert) {
   try {
     const db = getSupabaseClient();
-    const { data: result, error } = await db
-      .from('injuries')
+    const { data: result, error } = await (db.from('injuries') as any)
       .insert([data])
       .select()
       .single();
@@ -392,9 +392,8 @@ export async function createInjury(data: InjuryInsert) {
 export async function updateInjury(id: string, data: InjuryUpdate) {
   try {
     const db = getSupabaseClient();
-    const { data: result, error } = await db
-      .from('injuries')
-      .update(data)
+    const { data: result, error } = await (db.from('injuries') as any)
+      .update(data as any)
       .eq('id', id)
       .select()
       .single();
@@ -433,8 +432,7 @@ export async function deleteInjury(id: string) {
 export async function createPhase(data: PhaseInsert) {
   try {
     const db = getSupabaseClient();
-    const { data: result, error } = await db
-      .from('injury_phases')
+    const { data: result, error } = await (db.from('injury_phases') as any)
       .insert([data])
       .select()
       .single();
@@ -453,9 +451,8 @@ export async function createPhase(data: PhaseInsert) {
 export async function updatePhase(id: string, data: PhaseUpdate) {
   try {
     const db = getSupabaseClient();
-    const { data: result, error } = await db
-      .from('injury_phases')
-      .update(data)
+    const { data: result, error } = await (db.from('injury_phases') as any)
+      .update(data as any)
       .eq('id', id)
       .select()
       .single();
@@ -496,8 +493,7 @@ export async function createSupplement(
 ) {
   try {
     const db = getSupabaseClient();
-    const { data: result, error } = await db
-      .from('supplements')
+    const { data: result, error } = await (db.from('supplements') as any)
       .insert([data])
       .select()
       .single();
@@ -516,9 +512,8 @@ export async function createSupplement(
 export async function updateSupplement(id: string, data: SupplementUpdate) {
   try {
     const db = getSupabaseClient();
-    const { data: result, error } = await db
-      .from('supplements')
-      .update(data)
+    const { data: result, error } = await (db.from('supplements') as any)
+      .update(data as any)
       .eq('id', id)
       .select()
       .single();
@@ -557,8 +552,7 @@ export async function deleteSupplement(id: string) {
 export async function createMeal(data: MealInsert) {
   try {
     const db = getSupabaseClient();
-    const { data: result, error } = await db
-      .from('meal_examples')
+    const { data: result, error } = await (db.from('meal_examples') as any)
       .insert([data])
       .select()
       .single();
@@ -577,9 +571,8 @@ export async function createMeal(data: MealInsert) {
 export async function updateMeal(id: string, data: MealUpdate) {
   try {
     const db = getSupabaseClient();
-    const { data: result, error } = await db
-      .from('meal_examples')
-      .update(data)
+    const { data: result, error } = await (db.from('meal_examples') as any)
+      .update(data as any)
       .eq('id', id)
       .select()
       .single();
@@ -614,11 +607,11 @@ export async function upsertSafetyNotes(injuryId: string, data: Omit<TableInsert
     const { data: existing } = await db.from('safety_notes').select('id').eq('injury_id', injuryId).maybeSingle();
     
     if (existing) {
-      const { data: result, error } = await db.from('safety_notes').update(data).eq('id', existing.id).select().single();
+      const { data: result, error } = await (db.from('safety_notes') as any).update(data as any).eq('id', existing.id).select().single();
       if (error) throw error;
       return result;
     } else {
-      const { data: result, error } = await db.from('safety_notes').insert([{ injury_id: injuryId, ...data }]).select().single();
+      const { data: result, error } = await (db.from('safety_notes') as any).insert([{ injury_id: injuryId, ...data }]).select().single();
       if (error) throw error;
       return result;
     }
@@ -634,11 +627,11 @@ export async function upsertInjuryPageContent(injuryId: string, data: Omit<Table
     const { data: existing } = await db.from('injury_page_content').select('id').eq('injury_id', injuryId).maybeSingle();
     
     if (existing) {
-      const { data: result, error } = await db.from('injury_page_content').update(data).eq('id', existing.id).select().single();
+      const { data: result, error } = await (db.from('injury_page_content') as any).update(data as any).eq('id', existing.id).select().single();
       if (error) throw error;
       return result;
     } else {
-      const { data: result, error } = await db.from('injury_page_content').insert([{ injury_id: injuryId, ...data }]).select().single();
+      const { data: result, error } = await (db.from('injury_page_content') as any).insert([{ injury_id: injuryId, ...data }]).select().single();
       if (error) throw error;
       return result;
     }
@@ -896,7 +889,7 @@ async function syncPhaseGoals(phaseId: string, goals: string[]) {
 
   if (!goals.length) return;
 
-  const {error} = await db.from('phase_goals').insert(
+  const {error} = await (db.from('phase_goals') as any).insert(
     goals.map((goal, index) => ({
       phase_id: phaseId,
       order_index: index,
@@ -914,7 +907,7 @@ async function syncPhasePrecautions(phaseId: string, precautions: string[]) {
 
   if (!precautions.length) return;
 
-  const {error} = await db.from('phase_precautions').insert(
+  const {error} = await (db.from('phase_precautions') as any).insert(
     precautions.map((precaution, index) => ({
       phase_id: phaseId,
       order_index: index,
@@ -936,7 +929,7 @@ async function syncPhaseExercises(phaseId: string, importedPhase: ImportedInjury
 
   if (!sourceExercises.length) return;
 
-  const {error} = await db.from('phase_exercises').insert(
+  const {error} = await (db.from('phase_exercises') as any).insert(
     sourceExercises.map(({plan, index}) => {
       const parsed = parsePrescriptionDetails(plan.sets);
       return {
@@ -971,8 +964,7 @@ export async function createInjuryProtocolImportRun(data: {
 }): Promise<InjuryProtocolImportRunRow> {
   try {
     const db = getSupabaseClient();
-    const {data: result, error} = await db
-      .from('injury_protocol_import_runs')
+    const {data: result, error} = await (db.from('injury_protocol_import_runs') as any)
       .insert([
         {
           source_name: data.sourceName || null,
@@ -986,7 +978,7 @@ export async function createInjuryProtocolImportRun(data: {
           notes: data.notes || null,
           created_by: data.actor?.id || null,
           created_by_email: data.actor?.email || null,
-        },
+        } as any,
       ])
       .select()
       .single();
@@ -1005,9 +997,8 @@ export async function updateInjuryProtocolImportRun(
 ) {
   try {
     const db = getSupabaseClient();
-    const {data: result, error} = await db
-      .from('injury_protocol_import_runs')
-      .update(data)
+    const {data: result, error} = await (db.from('injury_protocol_import_runs') as any)
+      .update(data as any)
       .eq('id', id)
       .select()
       .single();
@@ -1079,10 +1070,12 @@ export async function importExerciseProtocolsToSupabase(params: {
         let phaseId: string;
         if (existing) {
           const result = await updatePhase(existing.id, payload as PhaseUpdate);
-          phaseId = result.id;
+          if (!result) throw new Error('Failed to update phase');
+          phaseId = (result as any).id;
         } else {
           const result = await createPhase(payload as PhaseInsert);
-          phaseId = result.id;
+          if (!result) throw new Error('Failed to create phase');
+          phaseId = (result as any).id;
         }
 
         await syncPhaseGoals(phaseId, importedPhase.goals);

@@ -5,7 +5,7 @@ import {TRAINING_SYSTEMS} from '../src/components/common/exercise-finder/data/tr
 import {CALCULATOR_PAGE_CONFIGS} from '../src/services/calculatorPages';
 import {dietRegimensCatalog} from '../src/services/dietRegimensCatalog';
 import {getInjuryPath} from '../src/services/injuryDatabase';
-import {normalizeExerciseUrlSlug} from '../src/services/seoAliases';
+import {INJURY_CANONICAL_PARENT_MAP, normalizeExerciseUrlSlug} from '../src/services/seoAliases';
 import {getBuildArticles, getBuildInjuries} from './buildContentSource';
 
 const SITE_URL = 'https://physionutrition.vercel.app';
@@ -159,9 +159,6 @@ const articleRoutes: RouteGroup[] = LANGUAGES.flatMap((lang) =>
     lastmod: article.date || GENERATED_LASTMOD,
   })),
 );
-
-import {INJURY_CANONICAL_PARENT_MAP} from '../src/services/seoAliases';
-
 const canonicalInjuries = buildInjuries.filter((injury) => !INJURY_CANONICAL_PARENT_MAP[injury.id]);
 
 const injuryRoutes: RouteGroup[] = canonicalInjuries.flatMap((injury) =>

@@ -8,7 +8,8 @@ export function getStoredConsent(): ConsentState {
 
   try {
     const saved = window.localStorage.getItem('physiohub_cookie_consent');
-    return saved === 'accepted' || saved === 'rejected' ? saved : null;
+    // If they previously accepted, return accepted. If rejected or null, return null to show again.
+    return saved === 'accepted' ? 'accepted' : null;
   } catch {
     return null;
   }
@@ -37,19 +38,21 @@ export default function ConsentBanner({lang}: {lang: 'en' | 'ar'}) {
     try {
       window.localStorage.setItem('physiohub_cookie_consent', 'accepted');
     } catch {
-      // Ignore storage errors and still update the current session state.
+      // Ignore storage errors
     }
     setConsent('accepted');
+    setIsVisible(false);
     window.dispatchEvent(new Event('physiohub-consent-change'));
   };
 
   const reject = () => {
+    // According to user request: "يظهروا تاني لو كان رفضهم بس"
+    // We only set it in state for the current session, so it appears again next time.
     try {
-      window.localStorage.setItem('physiohub_cookie_consent', 'rejected');
-    } catch {
-      // Ignore storage errors and still update the current session state.
-    }
+      window.localStorage.removeItem('physiohub_cookie_consent');
+    } catch {}
     setConsent('rejected');
+    setIsVisible(false);
     window.dispatchEvent(new Event('physiohub-consent-change'));
   };
 

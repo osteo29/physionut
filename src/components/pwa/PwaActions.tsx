@@ -174,25 +174,25 @@ export default function PwaActions({lang}: {lang: Language}) {
 
   useEffect(() => {
     if (isInstalled) {
-      setInstallPromptDismissed(false);
-      writeDismissedState(INSTALL_PROMPT_DISMISSED_KEY, false);
+      setInstallPromptDismissed(true); // Don't prompt if already installed
+      writeDismissedState(INSTALL_PROMPT_DISMISSED_KEY, true);
     }
   }, [isInstalled]);
 
   useEffect(() => {
     if (notificationState === 'granted' || notificationState === 'unsupported') {
-      setNotificationPromptDismissed(false);
-      writeDismissedState(NOTIFICATION_PROMPT_DISMISSED_KEY, false);
+      setNotificationPromptDismissed(true); // Don't prompt if already granted or unsupported
+      writeDismissedState(NOTIFICATION_PROMPT_DISMISSED_KEY, true);
     }
   }, [notificationState]);
 
   const requestNotifications = async () => {
+    // Persist immediately so it doesn't show again on reload, even if they dismiss the native browser prompt.
+    setNotificationPromptDismissed(true);
+    writeDismissedState(NOTIFICATION_PROMPT_DISMISSED_KEY, true);
+
     const permission = await requestBrowserNotifications(lang);
     setNotificationState(permission);
-    if (permission === 'granted') {
-      setNotificationPromptDismissed(false);
-      writeDismissedState(NOTIFICATION_PROMPT_DISMISSED_KEY, false);
-    }
   };
 
   const triggerInstall = async () => {
@@ -205,12 +205,14 @@ export default function PwaActions({lang}: {lang: Language}) {
     setInstallHint('');
 
     try {
+      // Persist immediately so it doesn't prompt again automatically if they interact
+      setInstallPromptDismissed(true);
+      writeDismissedState(INSTALL_PROMPT_DISMISSED_KEY, true);
+
       await deferredPrompt.prompt();
       const choice = await deferredPrompt.userChoice;
       if (choice.outcome === 'accepted') {
         setIsInstalled(true);
-        setInstallPromptDismissed(false);
-        writeDismissedState(INSTALL_PROMPT_DISMISSED_KEY, false);
       } else {
         setInstallHint(getInstallInstructions(lang));
       }
@@ -222,12 +224,12 @@ export default function PwaActions({lang}: {lang: Language}) {
 
   const dismissInstallPrompt = () => {
     setInstallPromptDismissed(true);
-    writeDismissedState(INSTALL_PROMPT_DISMISSED_KEY, true);
+    // User requested to show again if rejected: do not save to localStorage
   };
 
   const dismissNotificationPrompt = () => {
     setNotificationPromptDismissed(true);
-    writeDismissedState(NOTIFICATION_PROMPT_DISMISSED_KEY, true);
+    // User requested to show again if rejected: do not save to localStorage
   };
 
   const notificationLabel = useMemo(() => {

@@ -99,20 +99,21 @@ const Hero = memo(({lang}: {lang: Language}) => {
           ))}
         </div>
 
-        <div className="mx-auto mb-6 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-2">
+        <div className="mx-auto mb-6 grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-2">
           <Link
             to={navigationPaths.auth(lang)}
-            className="group flex items-center justify-center gap-2 rounded-full bg-slate-900 px-6 py-4 text-sm font-bold text-white shadow-lg transition-all hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-xl"
+            className="group relative overflow-hidden flex items-center justify-center gap-2 rounded-full bg-slate-900 px-6 py-4 text-sm font-bold text-white shadow-lg transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-health-green/20"
           >
-            <UserRoundPlus className="h-5 w-5 transition-transform group-hover:scale-110" />
-            {isAr ? 'ابدأ رحلتك مجانًا' : 'Start your journey free'}
+            <div className="absolute inset-0 bg-gradient-to-r from-health-green/20 to-medical-blue/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <UserRoundPlus className="relative z-10 h-5 w-5 transition-transform group-hover:scale-110" />
+            <span className="relative z-10">{isAr ? 'ابدأ رحلتك مجانًا' : 'Start your journey free'}</span>
           </Link>
           <a
             href={navigationPaths.injuries(lang)}
-            className="group flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-4 text-sm font-bold text-slate-900 shadow-sm transition-all hover:-translate-y-0.5 hover:border-health-green hover:shadow-md"
+            className="group relative overflow-hidden flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white/80 backdrop-blur-sm px-6 py-4 text-sm font-bold text-slate-900 shadow-sm transition-all hover:-translate-y-1 hover:border-health-green/50 hover:shadow-md hover:bg-white"
           >
             <Activity className="h-5 w-5 text-health-green transition-transform group-hover:scale-110" />
-            {isAr ? 'تصفح بروتوكولات الإصابات' : 'Browse injury protocols'}
+            <span>{isAr ? 'تصفح بروتوكولات الإصابات' : 'Browse injury protocols'}</span>
           </a>
         </div>
 

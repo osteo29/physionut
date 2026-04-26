@@ -93,11 +93,13 @@ export async function migrateAllInjuriesToSupabase(): Promise<MigrationResult> {
         related_calculators: protocol.relatedCalculators || [],
       });
 
+      if (!injuryData) throw new Error('Failed to create injury');
+
       for (let i = 0; i < protocol.phases.length; i++) {
         const phaseData = protocol.phases[i];
 
         const phase = await createPhase({
-          injury_id: injuryData.id,
+          injury_id: (injuryData as any).id,
           phase_number: i + 1,
           label_en: phaseData.label,
           label_ar: '',
@@ -127,11 +129,13 @@ export async function migrateAllInjuriesToSupabase(): Promise<MigrationResult> {
           calcium_mg: phaseData.calciumMg || null,
         });
 
+        if (!phase) throw new Error('Failed to create phase');
+
         if (phaseData.supplements?.length) {
           for (let j = 0; j < phaseData.supplements.length; j++) {
             const supplement = phaseData.supplements[j];
             await createSupplement({
-              phase_id: phase.id,
+              phase_id: (phase as any).id,
               name: supplement.name,
               dose_en: supplement.dose,
               dose_ar: '',
@@ -148,7 +152,7 @@ export async function migrateAllInjuriesToSupabase(): Promise<MigrationResult> {
 
         if (phaseData.meals) {
           await createMeal({
-            phase_id: phase.id,
+            phase_id: (phase as any).id,
             diet_style: 'omnivore',
             breakfast_en: phaseData.meals.breakfast || '',
             breakfast_ar: '',

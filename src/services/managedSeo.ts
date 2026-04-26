@@ -549,7 +549,7 @@ export async function saveSeoPageOverride(input: {
 
   const {data, error} = await supabase
     .from('seo_pages')
-    .upsert(payload, {onConflict: 'page_key'})
+    .upsert(payload as any, {onConflict: 'page_key'})
     .select('*')
     .single();
 

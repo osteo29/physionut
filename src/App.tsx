@@ -12,6 +12,7 @@ import {HomeSectionFallback, IconComponent} from './components/home/AppShellHelp
 import CalculatorSection from './components/app/CalculatorSection';
 import HealthProfileSection from './components/architect/HealthProfileSection';
 import Hero from './components/home/Hero';
+import FeaturesShowcase from './components/home/FeaturesShowcase';
 import InjuryProtocolsHighlight from './components/home/InjuryProtocolsHighlight';
 import Footer from './components/layout/Footer';
 import Navigation from './components/layout/Navigation';
@@ -102,76 +103,7 @@ export default function App({
       <main id="main-content" className="flex-1">
         <Hero lang={lang} />
 
-        <section className="border-b border-slate-100 bg-white py-6 sm:py-8">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-              {quickSections.map((section) => (
-                <a
-                  key={section.id}
-                  href={`#${section.id}`}
-                  className="group rounded-3xl border border-slate-200 bg-slate-50 p-5 transition-all hover:border-health-green/30 hover:bg-white hover:shadow-lg"
-                >
-                  <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-soft-blue text-health-green transition-transform group-hover:scale-105">
-                    <section.icon className="h-5 w-5" />
-                  </div>
-                  <h2 className="mb-1 font-bold text-slate-900">{section.title}</h2>
-                  <p className="text-sm leading-6 text-slate-600">{section.desc}</p>
-                </a>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="border-b border-slate-100 bg-slate-50 py-5 sm:py-6">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-              {[
-                {
-                  title: lang === 'en' ? 'Built for rehab and recovery' : 'مصمم للتعافي وإعادة التأهيل',
-                  desc: lang === 'en'
-                    ? 'The positioning is now centered around injured users, recovery, and physio workflows.'
-                    : 'تم توجيه الرسالة لتناسب المصابين، التعافي، وسيناريوهات العلاج الطبيعي.',
-                },
-                {
-                  title: lang === 'en' ? 'Clinical formulas + context' : 'معادلات سريرية + سياق',
-                  desc: lang === 'en'
-                    ? 'Results are based on established formulas, then translated into easier next actions.'
-                    : 'النتائج مبنية على معادلات معروفة، ثم تتحول إلى خطوات أوضح وأسهل.',
-                },
-                {
-                  title: lang === 'en' ? 'Educational, not diagnostic' : 'إرشادي وليس تشخيصيًا',
-                  desc: lang === 'en'
-                    ? 'Useful for planning and education, while medical decisions should still involve professionals.'
-                    : 'مفيد للتخطيط والتوعية، مع بقاء القرارات الطبية عند المختصين.',
-                },
-              ].map((item) => (
-                <div key={item.title} className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
-                  <h2 className="mb-2 font-bold text-slate-900">{item.title}</h2>
-                  <p className="text-sm leading-6 text-slate-600">{item.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <Suspense fallback={<HomeSectionFallback className="bg-white py-12" />}>
-          <TrustSection lang={lang} />
-        </Suspense>
-
-        <section className="bg-white py-8">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <AdSlot
-              lang={lang}
-              label={lang === 'en' ? 'Sponsored area' : 'مساحة إعلانية'}
-              slot={import.meta.env.VITE_ADSENSE_SLOT_INLINE}
-              format="horizontal"
-            />
-          </div>
-        </section>
-
-        <Suspense fallback={<HomeSectionFallback className="bg-white py-16" />}>
-          <WhatsNew lang={lang} />
-        </Suspense>
+        <FeaturesShowcase lang={lang} quickSections={quickSections} />
 
         <InjuryProtocolsHighlight lang={lang} />
 
@@ -212,6 +144,25 @@ export default function App({
             addFoodToMeal={calculator.addFoodToMeal}
             setIsCustomModalOpen={calculator.setIsCustomModalOpen}
           />
+        </Suspense>
+
+        <Suspense fallback={<HomeSectionFallback className="bg-white py-16" />}>
+          <WhatsNew lang={lang} />
+        </Suspense>
+
+        <section className="bg-slate-50 py-8">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <AdSlot
+              lang={lang}
+              label={lang === 'en' ? 'Sponsored area' : 'مساحة إعلانية'}
+              slot={import.meta.env.VITE_ADSENSE_SLOT_INLINE}
+              format="horizontal"
+            />
+          </div>
+        </section>
+
+        <Suspense fallback={<HomeSectionFallback className="bg-white py-12" />}>
+          <TrustSection lang={lang} />
         </Suspense>
 
         <Suspense fallback={<HomeSectionFallback className="bg-slate-50 py-20" />}>

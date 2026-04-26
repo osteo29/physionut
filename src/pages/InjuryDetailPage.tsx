@@ -11,7 +11,6 @@ import {
   getLocalizedBodyRegion,
   getLocalizedCategory,
   getLocalizedInjuryName,
-  textLooksArabic,
 } from '../services/injuryLocalization';
 import {
   getCatalogInjuries,
