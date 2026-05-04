@@ -1,22 +1,4 @@
-export type GeneratedRehabProtocol = {
-  name: string;
-  category: string;
-  phases: Array<{
-    phaseNumber: number;
-    title: string;
-    timeline: string;
-    goals: string[];
-    precautions: string[];
-    criteriaToProgress: string[];
-    exercises: Array<{
-      name: string;
-      parameters: string;
-      clinicalCueRationale: string;
-    }>;
-  }>;
-};
-
-export const generatedRehabProtocols: GeneratedRehabProtocol[] = [
+[
   {
     "name": "5th Metatarsal Fracture (Jones Fracture)",
     "category": "Ankle & Foot",
@@ -12008,5 +11990,4 @@ export const generatedRehabProtocols: GeneratedRehabProtocol[] = [
       }
     ]
   }
-];
-
+]

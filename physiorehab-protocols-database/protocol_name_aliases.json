@@ -1,0 +1,74 @@
+[
+  {
+    "legacyName": "ACL Tear — Conservative Management",
+    "mergedName": "ACL Strain (Grade I-II - Conservative)"
+  },
+  {
+    "legacyName": "Patellar Tendinopathy",
+    "mergedName": "Patellar Tendinopathy (Jumper's Knee)"
+  },
+  {
+    "legacyName": "MCL Sprain (Grade II)",
+    "mergedName": "MCL Tear (Grade II - Conservative)"
+  },
+  {
+    "legacyName": "Total Knee Arthroplasty (TKA)",
+    "mergedName": "Total Knee Replacement (Arthroplasty)"
+  },
+  {
+    "legacyName": "PCL Tear — Conservative",
+    "mergedName": "PCL Reconstruction"
+  },
+  {
+    "legacyName": "Shoulder Impingement Syndrome",
+    "mergedName": "Subacromial Pain Syndrome (Impingement)"
+  },
+  {
+    "legacyName": "Frozen Shoulder (Adhesive Capsulitis)",
+    "mergedName": "Adhesive Capsulitis (Frozen Shoulder)"
+  },
+  {
+    "legacyName": "Spondylolisthesis (Grade I-II Conservative)",
+    "mergedName": "Spondylolysis / Spondylolisthesis"
+  },
+  {
+    "legacyName": "Total Hip Arthroplasty (THA)",
+    "mergedName": "Total Hip Replacement (Arthroplasty)"
+  },
+  {
+    "legacyName": "Distal Radius Fracture (Post-immobilisation)",
+    "mergedName": "Distal Radius Fracture (Post-operative)"
+  },
+  {
+    "legacyName": "Greater Trochanteric Pain Syndrome",
+    "mergedName": "Greater Trochanteric Pain Syndrome (GTPS)"
+  },
+  {
+    "legacyName": "Thoracic Outlet Syndrome",
+    "mergedName": "Thoracic Outlet Syndrome (TOS)"
+  },
+  {
+    "legacyName": "Scaphoid Fracture (Post-immobilisation)",
+    "mergedName": "Scaphoid Fracture (Non-operative)"
+  },
+  {
+    "legacyName": "TFCC Injury (Conservative)",
+    "mergedName": "TFCC Tear (Conservative)"
+  },
+  {
+    "legacyName": "Baker's Cyst",
+    "mergedName": "Popliteal Cyst (Baker's Cyst)"
+  },
+  {
+    "legacyName": "Posterior Tibial Tendon Dysfunction",
+    "mergedName": "Tibialis Posterior Tendinopathy"
+  },
+  {
+    "legacyName": "Hallux Valgus (Post-surgical)",
+    "mergedName": "Hallux Valgus (Bunions)"
+  },
+  {
+    "legacyName": "Whiplash Associated Disorder (WAD Grade II)",
+    "mergedName": "Whiplash Associated Disorder (WAD)"
+  }
+]

@@ -1,0 +1,61 @@
+{
+  "entities": {
+    "Protocol": {
+      "title": "Protocol",
+      "description": "A rehabilitation protocol for a specific injury or post-operative condition.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Name of the injury or procedure." },
+        "category": { "type": "string", "description": "Body part or category (e.g., Knee, Shoulder)." },
+        "phases": {
+          "type": "array",
+          "description": "List of rehabilitation phases.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "number": { "type": "integer" },
+              "title": { "type": "string" },
+              "timeline": { "type": "string" },
+              "goals": { "type": "array", "items": { "type": "string" } },
+              "precautions": { "type": "array", "items": { "type": "string" } },
+              "criteria": { "type": "array", "items": { "type": "string" } },
+              "exercises": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "parameters": { "type": "string" },
+                    "cue": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "category", "phases"]
+    },
+    "Admin": {
+      "title": "Admin",
+      "description": "System administrators who can edit protocols.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" }
+      },
+      "required": ["email"]
+    }
+  },
+  "firestore": {
+    "/protocols/{protocolId}": {
+      "schema": "Protocol",
+      "description": "Library of medical rehabilitation protocols."
+    },
+    "/admins/{userId}": {
+      "schema": "Admin",
+      "description": "List of users with administrative privileges."
+    }
+  }
+}

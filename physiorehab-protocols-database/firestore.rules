@@ -1,0 +1,76 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 0. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- Helpers ---
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isVerified() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // --- Protocol Validation ---
+    function isValidProtocol(data) {
+      return data.keys().hasAll(['name', 'category', 'phases'])
+        && data.name is string && data.name.size() >= 1 && data.name.size() <= 200
+        && data.category is string && data.category.size() >= 1 && data.category.size() <= 100
+        && data.phases is list && data.phases.size() <= 20
+        // Basic check for first phase to prevent shadow injections
+        && (data.phases.size() == 0 || (
+          data.phases[0].keys().hasAll(['number', 'title', 'timeline'])
+          && data.phases[0].number is int
+          && data.phases[0].title is string
+          && data.phases[0].timeline is string
+        ))
+        && (!data.hasAny(['createdAt']) || data.createdAt == request.time)
+        && (!data.hasAny(['updatedAt']) || data.updatedAt == request.time);
+    }
+
+    // --- Rules ---
+
+    match /protocols/{protocolId} {
+      allow get: if true; // Publicly accessible
+      allow list: if true; // Publicly indexable
+      
+      allow create: if isAdmin() 
+        && isValidId(protocolId) 
+        && isValidProtocol(incoming())
+        && incoming().createdAt == request.time;
+        
+      allow update: if isAdmin()
+        && isValidId(protocolId)
+        && isValidProtocol(incoming())
+        && incoming().updatedAt == request.time
+        && incoming().createdAt == existing().createdAt; // Immutable
+        
+      allow delete: if isAdmin();
+    }
+
+    match /admins/{userId} {
+      allow get: if isSignedIn() && request.auth.uid == userId;
+      allow write: if false; // Only manageable via console or service account for security
+    }
+  }
+}

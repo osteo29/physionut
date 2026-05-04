@@ -8,6 +8,7 @@
         "generate:sitemap": "tsx scripts/generate-sitemap.ts",
         "generate:prerender": "tsx generate-prerender.ts",
         "import:injury-protocols": "tsx scripts/import-raw-injury-protocols.ts",
+        "rehab:build": "node scripts/generate-rehab-protocols.mjs",
         "prebuild": "npm run generate:sitemap",
         "build": "vite build",
         "postbuild": "npm run generate:prerender",
@@ -17,7 +18,8 @@
         "test": "vitest run",
         "test:watch": "vitest",
         "organize:injury-data": "tsx scripts/organize-injury-data.ts",
-        "protocols:sync": "tsx scripts/organize-injury-data.ts --sync-supabase"
+        "protocols:sync": "tsx scripts/organize-injury-data.ts --sync-supabase",
+        "rehab:sync-supabase": "tsx scripts/sync-rehab-protocols-to-supabase.ts"
     },
     "dependencies": {
         "@google/genai": "^1.29.0",

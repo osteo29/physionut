@@ -1,0 +1,7541 @@
+[
+  {
+    "name": "Lateral Ankle Sprain (Grade I-II)",
+    "category": "Ankle/Foot",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Protection & PRICER",
+        "timeline": "Week 0–1",
+        "goals": [
+          "Reduce swelling/pain",
+          "Early mobilization"
+        ],
+        "precautions": [
+          "No painful weight bearing",
+          "Avoid excessive inversion"
+        ],
+        "criteria": [
+          "Pain-free walking (full WB)",
+          "Minimal effusion"
+        ],
+        "exercises": [
+          {
+            "name": "Ankle Pumps",
+            "parameters": "3 × 30 reps",
+            "cue": "Swelling control"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Mobilization & Balance",
+        "timeline": "Week 1–4",
+        "goals": [
+          "Full ROM",
+          "Proprioception",
+          "Strength"
+        ],
+        "precautions": [
+          "Avoid uneven ground initially"
+        ],
+        "criteria": [
+          "Symmetric ROM",
+          "Neg Talar Tilt"
+        ],
+        "exercises": [
+          {
+            "name": "Single-leg Balance (Flat surface)",
+            "parameters": "3 × 30 sec",
+            "cue": "Proprioception"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "title": "Power & Agility",
+        "timeline": "Week 4–12",
+        "goals": [
+          "Return to running",
+          "Hopping drills",
+          "Reactive speed"
+        ],
+        "precautions": [
+          "Monitor focal pain"
+        ],
+        "criteria": [
+          "Full independent run"
+        ],
+        "exercises": [
+          {
+            "name": "Figure-8 Running",
+            "parameters": "3 sets",
+            "cue": "Integrated agility"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "title": "Maintenance & Prevention",
+        "timeline": "Month 3+",
+        "goals": [
+          "Zero recurrence",
+          "Independent drills"
+        ],
+        "precautions": [
+          "Monitor shoe wear"
+        ],
+        "criteria": [
+          "Full season participation"
+        ],
+        "exercises": [
+          {
+            "name": "Peroneal Power Loading (Band)",
+            "parameters": "3 × 15 reps",
+            "cue": "Maintenance of lateral protection"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Plantar Fasciitis",
+    "category": "Ankle/Foot",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Acute Pain Relief",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Reduce \"first-step\" pain",
+          "Mobilize foot"
+        ],
+        "precautions": [
+          "Avoid barefoot on hard floors"
+        ],
+        "criteria": [
+          "Morning pain reduction > 50%"
+        ],
+        "exercises": [
+          {
+            "name": "Frozen Water Bottle Roll",
+            "parameters": "5 min",
+            "cue": "Analgesic effect"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Load Progression",
+        "timeline": "Week 4–8",
+        "goals": [
+          "Tolerate windlass loading",
+          "Flexibility"
+        ],
+        "precautions": [
+          "Monitor focal arch pain"
+        ],
+        "criteria": [
+          "Full WB tolerance"
+        ],
+        "exercises": [
+          {
+            "name": "Rathleff Protocol (Weighted Heel Raises)",
+            "parameters": "3 × 12 reps",
+            "cue": "Load the fascia to promote remodeling"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "title": "Functional Strength",
+        "timeline": "Week 8–16",
+        "goals": [
+          "Running re-integration",
+          "Intrinsic strength"
+        ],
+        "precautions": [
+          "Paced volume"
+        ],
+        "criteria": [
+          "Zero pain with impact"
+        ],
+        "exercises": [
+          {
+            "name": "Towel Curls (Intrinsics)",
+            "parameters": "3 × 1 min",
+            "cue": "Foot core stability"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "title": "Maintenance",
+        "timeline": "Month 4+",
+        "goals": [
+          "Prevention",
+          "Full activity"
+        ],
+        "precautions": [
+          "Independent load monitoring"
+        ],
+        "criteria": [
+          "Zero recurring symptoms"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Achilles Tendinopathy",
+    "category": "Ankle/Foot",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Isometric & Loading Intro",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Pain control",
+          "Establish load habit"
+        ],
+        "precautions": [
+          "Limit high-velocity elastic work (jumping)"
+        ],
+        "criteria": [
+          "Tolerate 45 sec iso hold"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Isotonic Loading (HSR)",
+        "timeline": "Week 4–12",
+        "goals": [
+          "Build tendon bulk",
+          "Eccentric strength"
+        ],
+        "precautions": [
+          "Monitor 24hr tendon pain"
+        ],
+        "criteria": [
+          "Symmetric calf bulk"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Power & Sport Integration",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Plyometrics",
+          "Running mileage"
+        ],
+        "precautions": [
+          "Monitor for stiffness"
+        ],
+        "criteria": [
+          "VISA-A Score > 80"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Maintenance",
+        "timeline": "Month 6+",
+        "goals": [
+          "Lifetime health",
+          "Performance"
+        ],
+        "precautions": [
+          "Maintain HSR weekly"
+        ],
+        "criteria": [
+          "Full season play"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "5th Metatarsal Fracture (Jones/Stress)",
+    "category": "Ankle/Foot",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Immobilization",
+        "timeline": "Week 0–6",
+        "goals": [
+          "Fracture union",
+          "Protection"
+        ],
+        "precautions": [
+          "Strict NWB as per surgeon"
+        ],
+        "criteria": [
+          "Callus on X-ray"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Mobilization",
+        "timeline": "Week 6–12",
+        "goals": [
+          "Full active ROM",
+          "Early WB"
+        ],
+        "precautions": [
+          "Avoid lateral torque"
+        ],
+        "criteria": [
+          "Full active ROM"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Integrated Strength",
+        "timeline": "Week 12–20",
+        "goals": [
+          "Global power",
+          "Impact tolerance"
+        ],
+        "precautions": [
+          "Stop if bone pain returns"
+        ],
+        "criteria": [
+          "Hop symmetry > 90%"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Maintenance",
+        "timeline": "Month 5+",
+        "goals": [
+          "Full sport return",
+          "Prevention"
+        ],
+        "precautions": [
+          "Independent pacing"
+        ],
+        "criteria": [
+          "Full return to competition"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Tibialis Posterior Tendinopathy",
+    "category": "Ankle/Foot",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Unloading & Protection",
+        "timeline": "Week 0–6",
+        "goals": [
+          "Settle arch pain"
+        ],
+        "precautions": [
+          "Avoid excessive pronation"
+        ],
+        "criteria": [
+          "Reduced navicular drop pain"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Isometric to Isotonic",
+        "timeline": "Week 6–12",
+        "goals": [
+          "Build arch power"
+        ],
+        "precautions": [
+          "Monitor medial ankle pain"
+        ],
+        "criteria": [
+          "Able to do 10 heel raises"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Impact Integration",
+        "timeline": "Week 12–24",
+        "goals": [
+          "Running return",
+          "Stability"
+        ],
+        "precautions": [
+          "Stop if arch fatigue spikes"
+        ],
+        "criteria": [
+          "Zero pain with jumping"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Maintenance",
+        "timeline": "Month 6+",
+        "goals": [
+          "Prevention",
+          "Full life"
+        ],
+        "precautions": [
+          "Independent arch routine"
+        ],
+        "criteria": [
+          "Full functional return"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Lateral Epicondylalgia (Tennis Elbow)",
+    "category": "Elbow/Forearm",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Unloading & Isometric Intro",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Settle peak pain",
+          "Identify load triggers"
+        ],
+        "precautions": [
+          "Avoid heavy gripping",
+          "No repetitive wrist extension"
+        ],
+        "criteria": [
+          "VAS Pain < 3/10",
+          "Tolerate 45s isometric hold"
+        ],
+        "exercises": [
+          {
+            "name": "Isometric Wrist Extension",
+            "parameters": "3 × 45 sec",
+            "cue": "Pain modulation"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Isotonic Loading (HSR)",
+        "timeline": "Week 4–8",
+        "goals": [
+          "Build tendon capacity",
+          "Grip strength"
+        ],
+        "precautions": [
+          "Monitor for night pain"
+        ],
+        "criteria": [
+          "Full strength symmetry"
+        ],
+        "exercises": [
+          {
+            "name": "Weighted Wrist Eccentric Extension",
+            "parameters": "3 × 12 reps",
+            "cue": "Tendon remodeling"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "title": "Advanced Return to Sport",
+        "timeline": "Week 8–16",
+        "goals": [
+          "Plyometrics (Tennis focus)",
+          "High load training"
+        ],
+        "precautions": [
+          "Avoid volume spikes"
+        ],
+        "criteria": [
+          "Zero pain with full match play"
+        ],
+        "exercises": [
+          {
+            "name": "Ball Squeeze & Release Drills",
+            "parameters": "3 × 1 min",
+            "cue": "Grip endurance"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "title": "Maintenance",
+        "timeline": "Month 4+",
+        "goals": [
+          "Prevention",
+          "Technique optimization"
+        ],
+        "precautions": [
+          "Maintain HSR weekly"
+        ],
+        "criteria": [
+          "Full season participation"
+        ],
+        "exercises": [
+          {
+            "name": "Forearm Flexor/Extensor Maintenance",
+            "parameters": "3 × 15 reps",
+            "cue": "Maintenance of capacity"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Medial Epicondylalgia (Golfer''s Elbow)",
+    "category": "Elbow/Forearm",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Calming & Initial Load",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Reduce medial pain",
+          "Activity modification"
+        ],
+        "precautions": [
+          "No forced curls",
+          "Avoid heavy valgus load"
+        ],
+        "criteria": [
+          "Pain-free daily grip"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Isotonic Enrichment",
+        "timeline": "Week 4–8",
+        "goals": [
+          "Load flexor tendons"
+        ],
+        "precautions": [
+          "Monitor ulnar nerve signs"
+        ],
+        "criteria": [
+          "Full grip strength"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Sports Drills",
+        "timeline": "Week 8–16",
+        "goals": [
+          "Swing mechanics",
+          "Power"
+        ],
+        "precautions": [
+          "Monitor post-activity ache"
+        ],
+        "criteria": [
+          "Zero pain with impact"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Prevention",
+        "timeline": "Month 4+",
+        "goals": [
+          "Independent management",
+          "Prevention"
+        ],
+        "precautions": [
+          "Maintain forearm bulk"
+        ],
+        "criteria": [
+          "Full seasonal return"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Distal Radius Fracture (Post-operative)",
+    "category": "Elbow/Forearm",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Post-op Protection",
+        "timeline": "Week 0–2",
+        "goals": [
+          "Wound healing",
+          "Edema control",
+          "Early digital ROM"
+        ],
+        "precautions": [
+          "NWB on extremity",
+          "No heavy lifting"
+        ],
+        "criteria": [
+          "Full digital active ROM"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Wrist Mobilization",
+        "timeline": "Week 2–6",
+        "goals": [
+          "Active wrist ROM",
+          "Supination/Pronation"
+        ],
+        "precautions": [
+          "No resistive loading yet"
+        ],
+        "criteria": [
+          "Functional wrist ROM achieved"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Resistance Training",
+        "timeline": "Week 6–12",
+        "goals": [
+          "Grip strength",
+          "Global limb power"
+        ],
+        "precautions": [
+          "Monitor bone site pain"
+        ],
+        "criteria": [
+          "Symmetric grip power"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Functional Return",
+        "timeline": "Month 3+",
+        "goals": [
+          "Full ADL/Work return",
+          "Sport"
+        ],
+        "precautions": [
+          "Maintain flexibility"
+        ],
+        "criteria": [
+          "Independent function achieved"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Elbow Dislocation (Non-operative)",
+    "category": "Elbow/Forearm",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Stable Protection",
+        "timeline": "Week 0–2",
+        "goals": [
+          "Protect collateral ligaments",
+          "Edema control"
+        ],
+        "precautions": [
+          "Avoid extension > 30° initially",
+          "No heavy load"
+        ],
+        "criteria": [
+          "ROM 30-90° achieved"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Functional ROM",
+        "timeline": "Week 2–6",
+        "goals": [
+          "Restore near full ROM",
+          "Early stabilization"
+        ],
+        "precautions": [
+          "Avoid valgus/varus torque"
+        ],
+        "criteria": [
+          "Flexion > 130°"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Advanced Strength",
+        "timeline": "Week 6–12",
+        "goals": [
+          "Restore full extension",
+          "Strength"
+        ],
+        "precautions": [
+          "Monitor joint tolerance"
+        ],
+        "criteria": [
+          "Symmetric power"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Return to Play",
+        "timeline": "Month 3+",
+        "goals": [
+          "Contact sports clearance",
+          "Prevention"
+        ],
+        "precautions": [
+          "Independent maintenance"
+        ],
+        "criteria": [
+          "Zero instability signs"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Olecranon Bursitis",
+    "category": "Elbow/Forearm",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Infection Rule-out & Unloading",
+        "timeline": "Week 0–2",
+        "goals": [
+          "Exclude septic bursitis",
+          "Compressive therapy",
+          "Protect site"
+        ],
+        "precautions": [
+          "Avoid direct pressure on tip of elbow"
+        ],
+        "criteria": [
+          "Reduced focal swelling"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Mobilization",
+        "timeline": "Week 2–4",
+        "goals": [
+          "Gentle ROM",
+          "Settle remaining fluid"
+        ],
+        "precautions": [
+          "No repetitive friction"
+        ],
+        "criteria": [
+          "Full pain-free extension"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Gradual Return",
+        "timeline": "Week 4–8",
+        "goals": [
+          "Return to ADLs/Contact"
+        ],
+        "precautions": [
+          "Use elbow padding for contact"
+        ],
+        "criteria": [
+          "Zero recurring fluid"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Maintenance",
+        "timeline": "Month 2+",
+        "goals": [
+          "Prevention"
+        ],
+        "precautions": [
+          "Avoid chronic friction"
+        ],
+        "criteria": [
+          "Stable recovery"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Hallux Valgus (Bunions)",
+    "category": "Ankle/Foot",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Initial Unloading & Mobilization",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Reduce bunion site pain",
+          "Intrinsic foot strength",
+          "Footwear correction"
+        ],
+        "precautions": [
+          "Avoid tight/pointed footwear",
+          "No heavy toe-loading ADLs"
+        ],
+        "criteria": [
+          "Zero pain with walking in wide shoes"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Load Progression",
+        "timeline": "Week 4–8",
+        "goals": [
+          "Single leg balance",
+          "Great toe mobilization"
+        ],
+        "precautions": [
+          "Stop if joint warmth returns"
+        ],
+        "criteria": [
+          "Full intrinsic control"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Integrated Impact",
+        "timeline": "Week 8–16",
+        "goals": [
+          "Jogging in wider toe box",
+          "Power"
+        ],
+        "precautions": [
+          "Monitor post-activity ache"
+        ],
+        "criteria": [
+          "Zero pain with running"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Maintenance",
+        "timeline": "Ongoing",
+        "goals": [
+          "Prevention of progression",
+          "Lifetime footwear choice"
+        ],
+        "precautions": [
+          "Maintain intrinsic habit"
+        ],
+        "criteria": [
+          "Full life participation"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Hammer Toe (Management)",
+    "category": "Ankle/Foot",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Calming & Splinting",
+        "timeline": "Week 0-4",
+        "goals": [
+          "Settle peak joint pain",
+          "Correction"
+        ],
+        "precautions": [
+          "Avoid tight shoes"
+        ],
+        "criteria": [
+          "Painless daily walking"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Morton''s Neuroma",
+    "category": "Ankle/Foot",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Decompression & Pacing",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Reduce digital nerve irritation",
+          "Metatarsal padding education"
+        ],
+        "precautions": [
+          "No narrow shoes",
+          "Avoid repetitive forefoot pivot"
+        ],
+        "criteria": [
+          "Reduced \"shooting\" pain frequency"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Intrinsic Support",
+        "timeline": "Week 4–8",
+        "goals": [
+          "Strengthen transverse arch muscles"
+        ],
+        "precautions": [
+          "Monitor for numbness return"
+        ],
+        "criteria": [
+          "Full WB tolerance"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Impact Load",
+        "timeline": "Week 8–16",
+        "goals": [
+          "Running in corrected shoes",
+          "Agility"
+        ],
+        "precautions": [
+          "Monitor post-activity neuro ache"
+        ],
+        "criteria": [
+          "Zero pain with running"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Maintenance",
+        "timeline": "Ongoing",
+        "goals": [
+          "Prevention",
+          "Independent load monitoring"
+        ],
+        "precautions": [
+          "Maintain footwear habit"
+        ],
+        "criteria": [
+          "Full seasonal return"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Tarsal Tunnel Syndrome",
+    "category": "Ankle/Foot",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Neural Unloading",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Reduce posterior tibial nerve compression",
+          "Nerve sliders"
+        ],
+        "precautions": [
+          "Avoid prolonged standing initially",
+          "Limit excessive pronation"
+        ],
+        "criteria": [
+          "Reduced paresthesia in foot"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Arch Stabilization",
+        "timeline": "Week 4–12",
+        "goals": [
+          "Build arch bulk",
+          "Stability"
+        ],
+        "precautions": [
+          "Stop if sharp neuro signs returns"
+        ],
+        "criteria": [
+          "Improved gait mechanical symmetry"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Functional Strength",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Restore power",
+          "Running"
+        ],
+        "precautions": [
+          "Monitor post-activity neuro-fade"
+        ],
+        "criteria": [
+          "Zero pain with impact"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Prevention",
+        "timeline": "Ongoing",
+        "goals": [
+          "Technique optimization",
+          "Maintenance"
+        ],
+        "precautions": [
+          "Maintain arch support habit"
+        ],
+        "criteria": [
+          "Full functional return"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Metatarsalgia (Generic)",
+    "category": "Ankle/Foot",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Unloading & Settlement",
+        "timeline": "Week 0-4",
+        "goals": [
+          "Settle forefoot pain"
+        ],
+        "precautions": [
+          "Avoid barefoot on hard floors"
+        ],
+        "criteria": [
+          "Painless walking"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Osteoporosis (Safe Loading)",
+    "category": "Systemic",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Postural Integrity & Intake",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Safety awareness",
+          "Fall prevention initiation"
+        ],
+        "precautions": [
+          "Avoid high velocity spinal torsion",
+          "Limit heavy forward flexion"
+        ],
+        "criteria": [
+          "Neg fear of exercise"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Bone Loading (Low Impact)",
+        "timeline": "Week 4–12",
+        "goals": [
+          "Bilateral WB exercises",
+          "Walking program"
+        ],
+        "precautions": [
+          "Protect ribs/spine from high pressure"
+        ],
+        "criteria": [
+          "Independent walking mileage"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Progressive Resistance",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Build muscle shock absorbers",
+          "Density loading"
+        ],
+        "precautions": [
+          "Monitor for fracture signs if pain spikes"
+        ],
+        "criteria": [
+          "LSI > 80%"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Lifelong Habituation",
+        "timeline": "Ongoing",
+        "goals": [
+          "Maintenance",
+          "Wellness"
+        ],
+        "precautions": [
+          "Maintain seasonal pacing"
+        ],
+        "criteria": [
+          "Stable BMD on next DEXA"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Sepsis Recovery (Functional)",
+    "category": "Systemic",
+    "phases": [
+      {
+        "number": 1,
+        "title": "In-Hospital / Early Mobility",
+        "timeline": "Acute",
+        "goals": [
+          "Prevent lung complication",
+          "Early transfers"
+        ],
+        "precautions": [
+          "Monitor hemodynamics",
+          "Fatigue pacing"
+        ],
+        "criteria": [
+          "Safe independent sitting"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Pelvic Floor Dysfunction",
+    "category": "Systemic",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Awareness & Isolation",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Identify PF muscle contraction",
+          "Breathing coordination"
+        ],
+        "precautions": [
+          "Avoid heavy impact initially if incontinent"
+        ],
+        "criteria": [
+          "Stable contraction achieved"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Burn Injury (Scar Mobility)",
+    "category": "Systemic",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Acute Healing & Protection",
+        "timeline": "Acute",
+        "goals": [
+          "Wound closure",
+          "Prevent contracture (splinting)"
+        ],
+        "precautions": [
+          "Protect new grafts",
+          "Gentle movement"
+        ],
+        "criteria": [
+          "Closed wound site"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Hyperlaxity Syndrome (General)",
+    "category": "Systemic",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Joint Sensing & Awareness",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Identify neutral joint position",
+          "Avoid locking habit"
+        ],
+        "precautions": [
+          "No end-range yoga stretching",
+          "Avoid heavy high impact initially"
+        ],
+        "criteria": [
+          "Neg apprehension in ADLs"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Muscle Armor Build",
+        "timeline": "Week 4–12",
+        "goals": [
+          "Global muscle bulk for joint support",
+          "Core"
+        ],
+        "precautions": [
+          "Monitor for subluxation during fatigue"
+        ],
+        "criteria": [
+          "Full strength symmetry"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Dynamic Stability",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Agility in neutral",
+          "Integrated power"
+        ],
+        "precautions": [
+          "Maintain control over range"
+        ],
+        "criteria": [
+          "Zero recurring joint pain"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Functional Maintenance",
+        "timeline": "Lifelong",
+        "goals": [
+          "Prevention of secondary injury",
+          "Wellness"
+        ],
+        "precautions": [
+          "Maintain muscle armor habit"
+        ],
+        "criteria": [
+          "Independent management achieved"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Hamstring Strain (Grade II)",
+    "category": "Hip/Pelvis",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Acute Protection",
+        "timeline": "Week 0–1",
+        "goals": [
+          "Protect healing tissue",
+          "Reduce pain/swelling"
+        ],
+        "precautions": [
+          "No aggressive stretching",
+          "Avoid fast walking"
+        ],
+        "criteria": [
+          "Pain-free walking",
+          "Minimal pain with isometric"
+        ],
+        "exercises": [
+          {
+            "name": "Isometric Bridge",
+            "parameters": "3 × 30 sec",
+            "cue": "Early muscle activation"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Mobilization & Early Loading",
+        "timeline": "Week 1–4",
+        "goals": [
+          "Restore range",
+          "Initial eccentric loading"
+        ],
+        "precautions": [
+          "Stop at sharp focal pain"
+        ],
+        "criteria": [
+          "Full AROM flexion",
+          "Jogging initial tolerance"
+        ],
+        "exercises": [
+          {
+            "name": "Hamstring Slides",
+            "parameters": "3 × 12 reps",
+            "cue": "Eccentric introduction"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "title": "High Intensity Agility",
+        "timeline": "Week 4–12",
+        "goals": [
+          "Full sprinting power",
+          "Elite eccentric strength"
+        ],
+        "precautions": [
+          "Monitor for \"tightness\" during cold start"
+        ],
+        "criteria": [
+          "Symmetric power"
+        ],
+        "exercises": [
+          {
+            "name": "Nordic Hamstring Curls (Assisted)",
+            "parameters": "3 × 5 reps",
+            "cue": "Gold standard eccentric strength"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "title": "Performance Maintenance & Prevention",
+        "timeline": "Month 3+",
+        "goals": [
+          "Zero recurrence",
+          "Nordic maintenance"
+        ],
+        "precautions": [
+          "Maintain volume pacing"
+        ],
+        "criteria": [
+          "Full season participation"
+        ],
+        "exercises": [
+          {
+            "name": "Maximal Sprinting (Graded)",
+            "parameters": "5 reps",
+            "cue": "Highest level of fiber load"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Iliotibial Band Syndrome",
+    "category": "Hip/Pelvis",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Phase of Calming",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Reduce lateral knee pain",
+          "Identify shoe/gait issues"
+        ],
+        "precautions": [
+          "Avoid repetitive impact activity"
+        ],
+        "criteria": [
+          "VAS Pain < 3/10 during walking"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Hip & Core Loading",
+        "timeline": "Week 4–8",
+        "goals": [
+          "Strengthen abductors",
+          "Pelvic stability"
+        ],
+        "precautions": [
+          "Monitor lateral compression"
+        ],
+        "criteria": [
+          "Single leg squat control"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Running Re-integration",
+        "timeline": "Week 8–16",
+        "goals": [
+          "Gradual mileage",
+          "Agility drills"
+        ],
+        "precautions": [
+          "Avoid hill running initially"
+        ],
+        "criteria": [
+          "Pain-free 5km run"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Maintenance",
+        "timeline": "Month 4+",
+        "goals": [
+          "Prevention",
+          "Full mileage"
+        ],
+        "precautions": [
+          "Independent foam rolling / drills"
+        ],
+        "criteria": [
+          "Zero recurring symptoms"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Adductor / Groin Strain",
+    "category": "Hip/Pelvis",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Protection",
+        "timeline": "Week 0–2",
+        "goals": [
+          "Settle peak pain",
+          "Protect fibers"
+        ],
+        "precautions": [
+          "No wide-leg lunges"
+        ],
+        "criteria": [
+          "Pain-free adductor squeeze"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Isotonic Loading",
+        "timeline": "Week 2–6",
+        "goals": [
+          "Restore length",
+          "Initial strength"
+        ],
+        "precautions": [
+          "Avoid explosive kicks"
+        ],
+        "criteria": [
+          "Full pain-free range"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Advanced Strength",
+        "timeline": "Week 6–12",
+        "goals": [
+          "Full power",
+          "Return to drills"
+        ],
+        "precautions": [
+          "Monitor for tugging"
+        ],
+        "criteria": [
+          "HAGOS Score improvement"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Full Return",
+        "timeline": "Month 3+",
+        "goals": [
+          "Prevention",
+          "Contact sport return"
+        ],
+        "precautions": [
+          "Maintain adductor endurance"
+        ],
+        "criteria": [
+          "Full season participation"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Hip Labral Tear (Conservative)",
+    "category": "Hip/Pelvis",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Settling & Neutrality",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Settle joint irritation",
+          "Improve core habit"
+        ],
+        "precautions": [
+          "Avoid deep flexion/internal rotation"
+        ],
+        "criteria": [
+          "Neg FADIR test early range"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Hip Strengthening",
+        "timeline": "Week 4–12",
+        "goals": [
+          "Gluteal bulk",
+          "Joint stability"
+        ],
+        "precautions": [
+          "Monitor for catching"
+        ],
+        "criteria": [
+          "Pain-free stairs"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Functional Impact",
+        "timeline": "Week 12–20",
+        "goals": [
+          "Return to running",
+          "High load strength"
+        ],
+        "precautions": [
+          "Avoid end-range repetitive load"
+        ],
+        "criteria": [
+          "Full functional confidence"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Maintenance",
+        "timeline": "Month 5+",
+        "goals": [
+          "Independent care",
+          "Prevention"
+        ],
+        "precautions": [
+          "Maintain joint health"
+        ],
+        "criteria": [
+          "Zero limitations"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Athletic Pubalgia (Sports Hernia)",
+    "category": "Hip/Pelvis",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Core-Pelvic Protection",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Reduce symphysis pain"
+        ],
+        "precautions": [
+          "No sit-ups",
+          "Avoid high volume loading"
+        ],
+        "criteria": [
+          "Pain-free cough/sneeze"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Neutral Strengthening",
+        "timeline": "Week 4–8",
+        "goals": [
+          "Symmetric hip/core flow"
+        ],
+        "precautions": [
+          "No explosive twist"
+        ],
+        "criteria": [
+          "Stable pelvis in bridge"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Dynamic Power",
+        "timeline": "Week 8–16",
+        "goals": [
+          "Kicking power",
+          "Sprinting"
+        ],
+        "precautions": [
+          "Monitor groin tugGING"
+        ],
+        "criteria": [
+          "LSI > 90%"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Full Resilience",
+        "timeline": "Month 4+",
+        "goals": [
+          "Prevention",
+          "Match return"
+        ],
+        "precautions": [
+          "Maintain core habit"
+        ],
+        "criteria": [
+          "Full seasonal play"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "ACL Reconstruction (Hamstring Graft)",
+    "category": "Knee",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Immediate Post-op",
+        "timeline": "Week 0–2",
+        "goals": [
+          "Control pain & swelling",
+          "Achieve full passive extension",
+          "Quadriceps activation"
+        ],
+        "precautions": [
+          "No active extension 0–90°",
+          "Protect graft",
+          "PWB with crutches"
+        ],
+        "criteria": [
+          "Full passive extension",
+          "SLR without lag"
+        ],
+        "exercises": [
+          {
+            "name": "Quadriceps Sets",
+            "parameters": "3 × 20 reps",
+            "cue": "VMO activation"
+          },
+          {
+            "name": "Ankle Pumps",
+            "parameters": "3 × 30 reps",
+            "cue": "DVT prevention"
+          },
+          {
+            "name": "Heel Slides",
+            "parameters": "3 × 15 reps",
+            "cue": "Gentle flexion"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Early Strengthening",
+        "timeline": "Week 2–6",
+        "goals": [
+          "0–120° ROM",
+          "Normalise gait",
+          "Neuromuscular re-ed"
+        ],
+        "precautions": [
+          "Avoid OKC extension 0–60°",
+          "No pivoting"
+        ],
+        "criteria": [
+          "Full ROM 0–120°",
+          "Normal gait pattern"
+        ],
+        "exercises": [
+          {
+            "name": "Mini Squats (0–45°)",
+            "parameters": "3 × 15 reps",
+            "cue": "Control valgus"
+          },
+          {
+            "name": "Step-Ups",
+            "parameters": "3 × 15 reps",
+            "cue": "Lead with affected leg"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "title": "Advanced Strengthening",
+        "timeline": "Week 6–12",
+        "goals": [
+          "LSI > 70%",
+          "Begin jogging",
+          "Develop power"
+        ],
+        "precautions": [
+          "No reactive sports",
+          "Monitor effusion"
+        ],
+        "criteria": [
+          "LSI > 80% strength",
+          "Hop test symmetry > 80%"
+        ],
+        "exercises": [
+          {
+            "name": "Bulgarian Split Squats",
+            "parameters": "4 × 10 reps",
+            "cue": "Tolerate single leg load"
+          },
+          {
+            "name": "Romanian Deadlifts",
+            "parameters": "4 × 10 reps",
+            "cue": "Posterior chain focus"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "title": "Return to Performance",
+        "timeline": "Month 4–9+",
+        "goals": [
+          "LSI > 90%",
+          "Sport-specific agility",
+          "Psychological readiness"
+        ],
+        "precautions": [
+          "Avoid sudden volume spikes",
+          "9 months min for contact"
+        ],
+        "criteria": [
+          "LSI > 90%",
+          "ACL-RSI score > 65"
+        ],
+        "exercises": [
+          {
+            "name": "T-Agility Drills",
+            "parameters": "5 sets",
+            "cue": "Reactive speed"
+          },
+          {
+            "name": "FIFA 11+ Maintenance",
+            "parameters": "20 min",
+            "cue": "Injury prevention"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "ACL Strain (Grade I-II - Conservative)",
+    "category": "Knee",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Acute Protection",
+        "timeline": "Week 0–2",
+        "goals": [
+          "Reduce effusion",
+          "Restore extension",
+          "Basic quad activation"
+        ],
+        "precautions": [
+          "No pivoting",
+          "Brace if unstable"
+        ],
+        "criteria": [
+          "Full extension",
+          "Minimal swelling"
+        ],
+        "exercises": [
+          {
+            "name": "Quad Sets",
+            "parameters": "3 × 15 reps",
+            "cue": "Isometric activation"
+          },
+          {
+            "name": "Straight Leg Raise",
+            "parameters": "3 × 15 reps",
+            "cue": "Proximal control"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Dynamic Stability",
+        "timeline": "Week 2–8",
+        "goals": [
+          "Normal gait",
+          "LSI > 80%"
+        ],
+        "precautions": [
+          "Avoid high-risk pivots"
+        ],
+        "criteria": [
+          "Neg giving way"
+        ],
+        "exercises": [
+          {
+            "name": "Single-leg Balance",
+            "parameters": "3 × 30 sec",
+            "cue": "Proprioception"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "title": "Power & Agility",
+        "timeline": "Week 8–16",
+        "goals": [
+          "Full power",
+          "Return to drills"
+        ],
+        "precautions": [
+          "Monitor impact"
+        ],
+        "criteria": [
+          "Symmetric hop tests"
+        ],
+        "exercises": [
+          {
+            "name": "45° Cutting Drills",
+            "parameters": "3 × 10 reps",
+            "cue": "Specific ACL load"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "title": "High Performance",
+        "timeline": "Month 4+",
+        "goals": [
+          "Sport return",
+          "Prevention"
+        ],
+        "precautions": [
+          "Maintenance loading"
+        ],
+        "criteria": [
+          "Full season play"
+        ],
+        "exercises": [
+          {
+            "name": "Sprints with Deceleration",
+            "parameters": "5 reps",
+            "cue": "Final stage control"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Meniscus Tear (Conservative)",
+    "category": "Knee",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Protection & Settling",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Decrease pain/swelling",
+          "Restore ROM",
+          "Maintain quad tone"
+        ],
+        "precautions": [
+          "Avoid deep squats > 90°",
+          "No pivoting"
+        ],
+        "criteria": [
+          "Pain-free walking",
+          "Full extension"
+        ],
+        "exercises": [
+          {
+            "name": "Wall Squats (0-45°)",
+            "parameters": "3 × 15 reps",
+            "cue": "Quad activation"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Isotonic Loading",
+        "timeline": "Week 4–8",
+        "goals": [
+          "Increase weight-bearing",
+          "Strength"
+        ],
+        "precautions": [
+          "No twisting"
+        ],
+        "criteria": [
+          "Full strength"
+        ],
+        "exercises": [
+          {
+            "name": "Step Ups",
+            "parameters": "3 × 12 reps",
+            "cue": "Functional strength"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "title": "Power & Agility",
+        "timeline": "Week 8–16",
+        "goals": [
+          "Return to impact",
+          "Power"
+        ],
+        "precautions": [
+          "Monitor locking"
+        ],
+        "criteria": [
+          "Hop symmetry > 90%"
+        ],
+        "exercises": [
+          {
+            "name": "Split Squats",
+            "parameters": "3 × 10 reps",
+            "cue": "Unilateral load"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "title": "Discharge & Maintenance",
+        "timeline": "Month 4+",
+        "goals": [
+          "Prevention",
+          "Full sport"
+        ],
+        "precautions": [
+          "Load management"
+        ],
+        "criteria": [
+          "Zero symptoms"
+        ],
+        "exercises": [
+          {
+            "name": "Pogo Hops",
+            "parameters": "3 × 20 reps",
+            "cue": "Tendon stiffness"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Meniscus Repair (Surgical)",
+    "category": "Knee",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Maximum Protection",
+        "timeline": "Week 0–6",
+        "goals": [
+          "Protect repair site",
+          "Full extension",
+          "Quad activation"
+        ],
+        "precautions": [
+          "NWB/PWB based on surgeon",
+          "Flexion limited to 90°",
+          "No active hamstrings if posterior horn"
+        ],
+        "criteria": [
+          "Healed incision",
+          "90° flexion achieved"
+        ],
+        "exercises": [
+          {
+            "name": "Quad Sets",
+            "parameters": "3 × 20 reps",
+            "cue": "Maintain muscle tone"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Weight Bearing Progression",
+        "timeline": "Week 6–12",
+        "goals": [
+          "Full WB",
+          "Full ROM",
+          "Basic strength"
+        ],
+        "precautions": [
+          "No deep squats"
+        ],
+        "criteria": [
+          "Normal gait"
+        ],
+        "exercises": [
+          {
+            "name": "Bilateral Leg Press (0-90°)",
+            "parameters": "3 × 15 reps",
+            "cue": "Controlled loading"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "title": "Advanced Strengthening",
+        "timeline": "Month 3–5",
+        "goals": [
+          "Restore power",
+          "Initial jogging"
+        ],
+        "precautions": [
+          "No pivoting"
+        ],
+        "criteria": [
+          "LSI > 80%"
+        ],
+        "exercises": [
+          {
+            "name": "Single-leg Squats",
+            "parameters": "3 × 10 reps",
+            "cue": "Balance and power"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "title": "Return to Sport",
+        "timeline": "Month 5–9",
+        "goals": [
+          "Full agility",
+          "Contact readiness"
+        ],
+        "precautions": [
+          "Monitor swelling"
+        ],
+        "criteria": [
+          "LSI > 95%"
+        ],
+        "exercises": [
+          {
+            "name": "Cutting Drills",
+            "parameters": "5 sets",
+            "cue": "Reactive stability"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Patellofemoral Pain Syndrome (PFPS)",
+    "category": "Knee",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Calming & Initial Strength",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Pain reduction",
+          "VMO/Hip activation",
+          "Biomechanical education"
+        ],
+        "precautions": [
+          "Avoid aggravating stairs",
+          "No heavy deep lunges"
+        ],
+        "criteria": [
+          "VAS Pain < 3/10",
+          "Good hip control in mini-squat"
+        ],
+        "exercises": [
+          {
+            "name": "Clamshells",
+            "parameters": "3 × 20 reps",
+            "cue": "Gluteus medius focus"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Loading & Mechanics",
+        "timeline": "Week 4–8",
+        "goals": [
+          "Load tolerance",
+          "Hip muscle bulk"
+        ],
+        "precautions": [
+          "Monitor patellar tracking"
+        ],
+        "criteria": [
+          "Pain-free step-downs"
+        ],
+        "exercises": [
+          {
+            "name": "Spanish Squats",
+            "parameters": "3 × 45 sec",
+            "cue": "Isometric tendon/quad load"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "title": "Impact & Running",
+        "timeline": "Week 8–16",
+        "goals": [
+          "Running re-integration",
+          "High power"
+        ],
+        "precautions": [
+          "Soft landings"
+        ],
+        "criteria": [
+          "Zero pain with impact"
+        ],
+        "exercises": [
+          {
+            "name": "Box Jumps (Soft)",
+            "parameters": "3 × 10 reps",
+            "cue": "Force attenuation"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "title": "Independent Care",
+        "timeline": "Month 4+",
+        "goals": [
+          "Prevention",
+          "Full mileage"
+        ],
+        "precautions": [
+          "Maintain glute strength"
+        ],
+        "criteria": [
+          "Zero limitations"
+        ],
+        "exercises": [
+          {
+            "name": "Single-leg Leg Press",
+            "parameters": "3 × 15 reps",
+            "cue": "Maintenance of symmetric power"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Greater Trochanteric Pain Syndrome (GTPS)",
+    "category": "Hip/Pelvis",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Calming & Tension Reducing",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Reduce lateral hip compression",
+          "Improve gluteal habit"
+        ],
+        "precautions": [
+          "Avoid crossing legs",
+          "No side-lying on affected side without pillow"
+        ],
+        "criteria": [
+          "Pain VAS < 3/10",
+          "Painless single leg stance"
+        ],
+        "exercises": [
+          {
+            "name": "Clamshells (Isometric)",
+            "parameters": "3 × 45 sec",
+            "cue": "Early gluteal activation"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Isotonic Loading",
+        "timeline": "Week 4–12",
+        "goals": [
+          "Build gluteus medius bulk",
+          "Pelvic stability"
+        ],
+        "precautions": [
+          "Monitor for night pain"
+        ],
+        "criteria": [
+          "Full strength symmetry"
+        ],
+        "exercises": [
+          {
+            "name": "Lateral Band Walks",
+            "parameters": "3 × 15 steps",
+            "cue": "Dynamic abductor load"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "title": "High Load Resistance",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Restore full power",
+          "Return to impact"
+        ],
+        "precautions": [
+          "Monitor post-ex ache"
+        ],
+        "criteria": [
+          "VISA-G Score > 80"
+        ],
+        "exercises": [
+          {
+            "name": "Step-downs",
+            "parameters": "3 × 12 reps",
+            "cue": "Functional stability"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "title": "Maintenance",
+        "timeline": "Month 6+",
+        "goals": [
+          "Prevention",
+          "Independent care"
+        ],
+        "precautions": [
+          "Maintain gluteal habit weekly"
+        ],
+        "criteria": [
+          "Zero recurring symptoms"
+        ],
+        "exercises": [
+          {
+            "name": "Single-leg Hip Hikes",
+            "parameters": "3 × 15 reps",
+            "cue": "Maintenance of pelvic control"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Patellar Tendinopathy (Jumper''s Knee)",
+    "category": "Knee",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Isometric & Pain Modulation",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Reduce tendon pain",
+          "Maintain quad tone"
+        ],
+        "precautions": [
+          "Avoid high velocity jumping"
+        ],
+        "criteria": [
+          "Painless 45 sec isometric hold"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Isotonic Loading (HSR)",
+        "timeline": "Week 4–12",
+        "goals": [
+          "Build tendon bulk",
+          "Improve quad capacity"
+        ],
+        "precautions": [
+          "Monitor for post-ex pain spikes"
+        ],
+        "criteria": [
+          "Symmetric calf/quad bulk"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Power & Plyometrics",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Return to hopping/jumping",
+          "Speed"
+        ],
+        "precautions": [
+          "Monitor for 24h ache"
+        ],
+        "criteria": [
+          "VISA-P Score > 80"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Performance Maintenance",
+        "timeline": "Month 6+",
+        "goals": [
+          "Lifetime management",
+          "Sport return"
+        ],
+        "precautions": [
+          "Maintain HSR twice weekly"
+        ],
+        "criteria": [
+          "Full season participation"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Knee Osteoarthritis",
+    "category": "Knee",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Joint Unloading",
+        "timeline": "Week 0-4",
+        "goals": [
+          "Settle joint/effusion",
+          "Mechanical fixes"
+        ],
+        "precautions": [
+          "Avoid deep squats"
+        ],
+        "criteria": [
+          "Reduced swelling"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Muscle Armor Build",
+        "timeline": "Week 4-12",
+        "goals": [
+          "Quad strength (shock absorber)"
+        ],
+        "precautions": [
+          "Monitor for warmth"
+        ],
+        "criteria": [
+          "Independent walking"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Life Integration",
+        "timeline": "Month 3-6",
+        "goals": [
+          "Return to hiking/golf",
+          "ADL power"
+        ],
+        "precautions": [
+          "Pace volume"
+        ],
+        "criteria": [
+          "KOOS Score improvement"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Maintenance",
+        "timeline": "Ongoing",
+        "goals": [
+          "Prevention of progression"
+        ],
+        "precautions": [
+          "Maintain hydration/weight"
+        ],
+        "criteria": [
+          "Stable motor function"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Popliteal Cyst (Baker''s Cyst)",
+    "category": "Knee",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Resolution of Primary Pathology",
+        "timeline": "Week 0-4",
+        "goals": [
+          "Identify primary cause (meniscus/OA)",
+          "Edema control"
+        ],
+        "precautions": [
+          "Avoid excessive knee extension if tight"
+        ],
+        "criteria": [
+          "Reduced posterior tightness"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Mobilization",
+        "timeline": "Week 4-8",
+        "goals": [
+          "Restore range",
+          "Gentle activations"
+        ],
+        "precautions": [
+          "Stop if fluid spikes"
+        ],
+        "criteria": [
+          "Full ROM"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Strength Re-integration",
+        "timeline": "Month 2-4",
+        "goals": [
+          "Stability",
+          "Power"
+        ],
+        "precautions": [
+          "Monitor joint tolerance"
+        ],
+        "criteria": [
+          "Symmetric power"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Prevention",
+        "timeline": "Ongoing",
+        "goals": [
+          "Independent monitoring"
+        ],
+        "precautions": [
+          "Maintain primary pathology control"
+        ],
+        "criteria": [
+          "Zero recurring fluid"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Hip Labral Tear (Surgical)",
+    "category": "Hip/Pelvis",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Maximum Protection",
+        "timeline": "Week 0–6",
+        "goals": [
+          "Protect repair",
+          "Gentle mobility"
+        ],
+        "precautions": [
+          "Strict WB limit (crutches)",
+          "No flexion > 90°",
+          "No ER > 20°"
+        ],
+        "criteria": [
+          "Clinical range met",
+          "Stable incision"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Weight Bearing Progress",
+        "timeline": "Week 6–12",
+        "goals": [
+          "Wean off crutches",
+          "Neutral strength"
+        ],
+        "precautions": [
+          "No deep lunges"
+        ],
+        "criteria": [
+          "Normal gait"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Advanced Strengthening",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Restore bulk",
+          "Initial impact"
+        ],
+        "precautions": [
+          "Monitor for joint catching"
+        ],
+        "criteria": [
+          "LSI > 80%"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Return to Sport",
+        "timeline": "Month 6+",
+        "goals": [
+          "Full agility",
+          "Agility drills"
+        ],
+        "precautions": [
+          "Maintain core stability"
+        ],
+        "criteria": [
+          "LSI > 90%"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "MCL Tear (Grade II - Conservative)",
+    "category": "Knee",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Protection & Settling",
+        "timeline": "Week 0–3",
+        "goals": [
+          "Protect healing MCL",
+          "Reduce pain/swelling",
+          "Restore extension"
+        ],
+        "precautions": [
+          "Avoid valgus stress",
+          "Limit active flexion if painful",
+          "Hinged brace often used"
+        ],
+        "criteria": [
+          "Full extension",
+          "Neg valgus stress pain at 30°"
+        ],
+        "exercises": [
+          {
+            "name": "Quad Sets",
+            "parameters": "3 × 15 reps",
+            "cue": "Maintain muscle tone"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Isotonic Loading",
+        "timeline": "Week 3–8",
+        "goals": [
+          "Restore range",
+          "Initial strength"
+        ],
+        "precautions": [
+          "No pivoting initially"
+        ],
+        "criteria": [
+          "Full range ROM"
+        ],
+        "exercises": [
+          {
+            "name": "Wall Squats",
+            "parameters": "3 × 12 reps",
+            "cue": "Controlled loading"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "title": "Agility & Impact",
+        "timeline": "Week 8–16",
+        "goals": [
+          "Return to running",
+          "Higher power"
+        ],
+        "precautions": [
+          "Monitor medial joint line"
+        ],
+        "criteria": [
+          "Zero pain with cutting"
+        ],
+        "exercises": [
+          {
+            "name": "Lateral Band Walks",
+            "parameters": "3 × 10 steps",
+            "cue": "Specific valgus control training"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "title": "Full Return",
+        "timeline": "Month 4+",
+        "goals": [
+          "Prevention",
+          "Full season play"
+        ],
+        "precautions": [
+          "Independent load monitoring"
+        ],
+        "criteria": [
+          "Full athletic confidence"
+        ],
+        "exercises": [
+          {
+            "name": "Cutting Drills",
+            "parameters": "5 sets",
+            "cue": "Reactive stability"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "LCL Tear (Grade II - Conservative)",
+    "category": "Knee",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Protection & PRICER",
+        "timeline": "Week 0–3",
+        "goals": [
+          "Protect LCL",
+          "Reduce swelling"
+        ],
+        "precautions": [
+          "Avoid varus stress",
+          "Avoid tibial internal rotation"
+        ],
+        "criteria": [
+          "Neg varus stress pain"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Range & Mobility",
+        "timeline": "Week 3–8",
+        "goals": [
+          "Restore range",
+          "Muscle activations"
+        ],
+        "precautions": [
+          "Stop at sharp lateral pain"
+        ],
+        "criteria": [
+          "Full ROM achieved"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Integrated Load",
+        "timeline": "Week 8–16",
+        "goals": [
+          "Return to run",
+          "Higher power"
+        ],
+        "precautions": [
+          "Monitor post-activity ache"
+        ],
+        "criteria": [
+          "Zero pain with impact"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Maintenance",
+        "timeline": "Month 4+",
+        "goals": [
+          "Prevention",
+          "Competition"
+        ],
+        "precautions": [
+          "Independent maintenance"
+        ],
+        "criteria": [
+          "Zero recurring instability"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "PCL Reconstruction",
+    "category": "Knee",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Maximum Protection",
+        "timeline": "Week 0–6",
+        "goals": [
+          "Protect PCL repair",
+          "Control swelling"
+        ],
+        "precautions": [
+          "Strict NWB",
+          "Avoid active hamstring tasks",
+          "No posterior tibial translation"
+        ],
+        "criteria": [
+          "Wound healed",
+          "ROM goals met"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "WB Progression",
+        "timeline": "Week 6–12",
+        "goals": [
+          "Wean gait aid",
+          "Restore neutral range"
+        ],
+        "precautions": [
+          "No deep flexion under load"
+        ],
+        "criteria": [
+          "Normal gait"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Advanced Strength",
+        "timeline": "Month 4–8",
+        "goals": [
+          "Restore bulk",
+          "Power"
+        ],
+        "precautions": [
+          "Monitor for joint catching"
+        ],
+        "criteria": [
+          "LSI > 80%"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Performance Ready",
+        "timeline": "Month 9+",
+        "goals": [
+          "Return to play",
+          "Prevention"
+        ],
+        "precautions": [
+          "Independent maintenance"
+        ],
+        "criteria": [
+          "LSI > 95%"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Quadriceps Contusion (Cork Thigh)",
+    "category": "Hip/Pelvis",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Acute Compression",
+        "timeline": "Week 0–1",
+        "goals": [
+          "Reduce hematoma",
+          "Maintain range"
+        ],
+        "precautions": [
+          "Avoid heatmap in first 48h",
+          "No aggressive massage"
+        ],
+        "criteria": [
+          "Flexion > 90° achieving"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Mobilization",
+        "timeline": "Week 1–3",
+        "goals": [
+          "Full range",
+          "Activation"
+        ],
+        "precautions": [
+          "Stop at sharp focal pain"
+        ],
+        "criteria": [
+          "Full passive flexion achieved"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Strength & Agility",
+        "timeline": "Week 3–6",
+        "goals": [
+          "Return to running",
+          "Strength"
+        ],
+        "precautions": [
+          "Monitor site tenderness"
+        ],
+        "criteria": [
+          "Symmetric power"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Full Return",
+        "timeline": "Month 2+",
+        "goals": [
+          "Prevention",
+          "Full contact"
+        ],
+        "precautions": [
+          "Independent monitoring"
+        ],
+        "criteria": [
+          "Neg palpation pain"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Tibial Stress Fracture (Conservative)",
+    "category": "Ankle/Foot",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Unloading & Settlement",
+        "timeline": "Week 0–6",
+        "goals": [
+          "Bony healing",
+          "Pain control"
+        ],
+        "precautions": [
+          "Strict NWB/PWB",
+          "No high impact activity"
+        ],
+        "criteria": [
+          "Zero pain with daily walking"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Early Load Integration",
+        "timeline": "Week 6–12",
+        "goals": [
+          "Isotonic strength",
+          "ROM restoration"
+        ],
+        "precautions": [
+          "Monitor for focal bone ache return"
+        ],
+        "criteria": [
+          "Full WB tolerance"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Impact Progress",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Jogging initiation",
+          "Jump mechanics"
+        ],
+        "precautions": [
+          "Prioritize mechanics over volume"
+        ],
+        "criteria": [
+          "Symmetric hop tests"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Performance Return",
+        "timeline": "Month 6+",
+        "goals": [
+          "Full seasonal play",
+          "Prevention"
+        ],
+        "precautions": [
+          "Independent load monitoring"
+        ],
+        "criteria": [
+          "Zero recurring symptoms"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Stroke Recovery (Sub-acute)",
+    "category": "Neurological",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Acute Neuro-Facilitation",
+        "timeline": "Month 0–1",
+        "goals": [
+          "Early mobility",
+          "Prevent contractures",
+          "Core stability"
+        ],
+        "precautions": [
+          "Monitor BP/HR spikes",
+          "Aspiration precautions"
+        ],
+        "criteria": [
+          "Stable sitting balance"
+        ],
+        "exercises": [
+          {
+            "name": "Weight Shifting (Sitting)",
+            "parameters": "3 × 1 min",
+            "cue": "Neuro-muscular facilitation"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Task-Specific Training",
+        "timeline": "Month 1–3",
+        "goals": [
+          "Walking with assistance",
+          "Upper limb reaching"
+        ],
+        "precautions": [
+          "Fatigue management"
+        ],
+        "criteria": [
+          "Safe transfer ability"
+        ],
+        "exercises": [
+          {
+            "name": "Sit-to-Stand Drills",
+            "parameters": "3 × 10 reps",
+            "cue": "Functional strength"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "title": "Functional Gait Optimization",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Improve gait speed/quality",
+          "ADL integration"
+        ],
+        "precautions": [
+          "Fall risk management"
+        ],
+        "criteria": [
+          "Berg Balance Score improvement"
+        ],
+        "exercises": [
+          {
+            "name": "Obstacle Course Walking",
+            "parameters": "15 min",
+            "cue": "Reactive balance"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "title": "Community Integration",
+        "timeline": "Month 6+",
+        "goals": [
+          "Participation in social life",
+          "Maintenance"
+        ],
+        "precautions": [
+          "Prevent secondary atrophy"
+        ],
+        "criteria": [
+          "Independent community ambulation"
+        ],
+        "exercises": [
+          {
+            "name": "Group Community Exercise",
+            "parameters": "2 weekly",
+            "cue": "Maintenance and social"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Parkinson''s Disease (Early Stage)",
+    "category": "Neurological",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Diagnostic Intake & Calibration",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Establish baseline fitness",
+          "Neuro-education"
+        ],
+        "precautions": [
+          "Monitor orthostatic hypotension"
+        ],
+        "criteria": [
+          "Stable movement habit"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Large Amplitude Training",
+        "timeline": "Week 4–12",
+        "goals": [
+          "Combat bradykinesia",
+          "Improve amplitude"
+        ],
+        "precautions": [
+          "Avoid risky balance moves solo"
+        ],
+        "criteria": [
+          "Improved gait speed"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "High Intensity Dual-Task",
+        "timeline": "Month 3+",
+        "goals": [
+          "Complex move training",
+          "Dual tasking"
+        ],
+        "precautions": [
+          "Prioritize quality of move"
+        ],
+        "criteria": [
+          "Stabilized motor score"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Maintenance",
+        "timeline": "Ongoing",
+        "goals": [
+          "Neuroprotection",
+          "Active life"
+        ],
+        "precautions": [
+          "Independent monitoring"
+        ],
+        "criteria": [
+          "Stable motor performance"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Multiple Sclerosis (Relapsing-Remitting)",
+    "category": "Neurological",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Energy Conservation & Basic Strength",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Establish low-exertion baseline"
+        ],
+        "precautions": [
+          "Avoid overheating"
+        ],
+        "criteria": [
+          "Stable fatigue score"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Aerobic Optimization",
+        "timeline": "Week 4–12",
+        "goals": [
+          "Improve O2 uptake",
+          "Reduce fatigue"
+        ],
+        "precautions": [
+          "Use cooling vests if needed"
+        ],
+        "criteria": [
+          "Increased 6-min walk distance"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Functional Tasks",
+        "timeline": "Week 12+",
+        "goals": [
+          "Independent stair climbing"
+        ],
+        "precautions": [
+          "Prioritize quality over volume"
+        ],
+        "criteria": [
+          "Improved independence scores"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Wellness Maintenance",
+        "timeline": "Ongoing",
+        "goals": [
+          "Maintain current level",
+          "Manage flares"
+        ],
+        "precautions": [
+          "Adjust during relapses"
+        ],
+        "criteria": [
+          "Stable performance"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Bell''s Palsy (Facial Nerve Palsy)",
+    "category": "Neurological",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Initial Protection",
+        "timeline": "Week 0–2",
+        "goals": [
+          "Eye protection (patching)",
+          "Reduce inflammation"
+        ],
+        "precautions": [
+          "Do not use electrical stim"
+        ],
+        "criteria": [
+          "Full eye closure with help"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Mimetic Initiation",
+        "timeline": "Week 2–8",
+        "goals": [
+          "Initial muscle flares"
+        ],
+        "precautions": [
+          "Avoid over-straining"
+        ],
+        "criteria": [
+          "Visible muscle contraction"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Symmetry & Coordination",
+        "timeline": "Week 8–16",
+        "goals": [
+          "Facial symmetry during speech"
+        ],
+        "precautions": [
+          "Monitor synkinesis"
+        ],
+        "criteria": [
+          "Full eye closure"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Maintenance",
+        "timeline": "Month 4+",
+        "goals": [
+          "Lifetime tone management"
+        ],
+        "precautions": [
+          "Gentle massage"
+        ],
+        "criteria": [
+          "Stable recovery"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Complex Regional Pain Syndrome (CRPS Type I)",
+    "category": "Neurological",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Desensitization",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Reduce hyperalgesia",
+          "GMI (Mirror therapy)"
+        ],
+        "precautions": [
+          "Avoid \"no pain, no gain\" approach"
+        ],
+        "criteria": [
+          "Painless touch of different textures"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Graded Motor Imagery",
+        "timeline": "Week 4–8",
+        "goals": [
+          "Correct cortical mapping"
+        ],
+        "precautions": [
+          "Monitor for symptom spikes"
+        ],
+        "criteria": [
+          "Normal lateralization speed"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "High Intensity Loading",
+        "timeline": "Month 3+",
+        "goals": [
+          "Improve muscle bulk",
+          "ADL use"
+        ],
+        "precautions": [
+          "Monitor for 24h flare"
+        ],
+        "criteria": [
+          "Limb symmetry > 75%"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Social Integration",
+        "timeline": "Month 6+",
+        "goals": [
+          "Full return to life",
+          "Pain management"
+        ],
+        "precautions": [
+          "Address emotional resilience"
+        ],
+        "criteria": [
+          "Full return to work"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Sever''s Disease (Calcaneal Apophysitis)",
+    "category": "Pediatrics",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Initial Calming",
+        "timeline": "Week 0–2",
+        "goals": [
+          "Reduce heel pain",
+          "Load management education",
+          "Calf flexibility"
+        ],
+        "precautions": [
+          "Avoid high impact (jumping/running)",
+          "No barefoot walking on hard floors"
+        ],
+        "criteria": [
+          "Pain-free walking",
+          "Zero resting pain"
+        ],
+        "exercises": [
+          {
+            "name": "Gastroc/Soleus Stretches",
+            "parameters": "3 × 30 sec",
+            "cue": "Reduce tensile load on apophysis"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Graduated Loading",
+        "timeline": "Week 2–8",
+        "goals": [
+          "Calf strengthening",
+          "Functional stability",
+          "Initial impact tolerance"
+        ],
+        "precautions": [
+          "Stop at pain > 3/10 during activity"
+        ],
+        "criteria": [
+          "Full strength symmetry",
+          "Painless heel rise"
+        ],
+        "exercises": [
+          {
+            "name": "Double Leg Heel Raises",
+            "parameters": "3 × 15 reps",
+            "cue": "Calf capacity build"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "title": "Impact & Sport Integration",
+        "timeline": "Week 8–16",
+        "goals": [
+          "Return to running/sport",
+          "Plyometric power"
+        ],
+        "precautions": [
+          "Monitor for tournament volume spikes"
+        ],
+        "criteria": [
+          "Zero pain with jumping"
+        ],
+        "exercises": [
+          {
+            "name": "Linear Sprints with Soft Landing",
+            "parameters": "5 reps",
+            "cue": "Specific impact tolerance"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "title": "Growth Maintenance",
+        "timeline": "Until Maturity",
+        "goals": [
+          "Prevention during growth spurts",
+          "Maintenance of flexibility"
+        ],
+        "precautions": [
+          "Re-screen every 3 months"
+        ],
+        "criteria": [
+          "Full seasonal participation"
+        ],
+        "exercises": [
+          {
+            "name": "Daily Flexibility Routine",
+            "parameters": "5 min daily",
+            "cue": "Maintenance during growth"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Juvenile Osgood-Schlatter",
+    "category": "Pediatrics",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Settling & Unloading",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Reduce tibial tubercle pain",
+          "Improve quad length"
+        ],
+        "precautions": [
+          "Avoid repetitive kneeling or jumping"
+        ],
+        "criteria": [
+          "Neg pressure pain at tubercle"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Isotonic Loading",
+        "timeline": "Week 4–12",
+        "goals": [
+          "Build quad load tolerance",
+          "Improve hip stability"
+        ],
+        "precautions": [
+          "Stop if aching returns"
+        ],
+        "criteria": [
+          "Full quad capacity symmetry"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Agility & Impact",
+        "timeline": "Week 12+",
+        "goals": [
+          "Return to sport speed",
+          "Safe jumping mechanics"
+        ],
+        "precautions": [
+          "Monitor post-match swelling"
+        ],
+        "criteria": [
+          "Zero pain with acceleration"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Prevention",
+        "timeline": "Ongoing",
+        "goals": [
+          "Maintenance",
+          "Growth management"
+        ],
+        "precautions": [
+          "Independent load monitoring"
+        ],
+        "criteria": [
+          "Skeletal maturity achieved without disability"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Sinding-Larsen-Johansson Syndrome",
+    "category": "Pediatrics",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Acute Calming",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Settle inferior patellar pole pain"
+        ],
+        "precautions": [
+          "Limit heavy impact"
+        ],
+        "criteria": [
+          "Reduced focal tenderness"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Quad Control",
+        "timeline": "Week 4–8",
+        "goals": [
+          "Improve quad length/control"
+        ],
+        "precautions": [
+          "Monitor for irritation spurts"
+        ],
+        "criteria": [
+          "Zero pain with stairs"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Power Return",
+        "timeline": "Week 8–16",
+        "goals": [
+          "Return to youth sport",
+          "Jumping mechanics"
+        ],
+        "precautions": [
+          "Monitor season spikes"
+        ],
+        "criteria": [
+          "Pain-free jumping"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Maintenance",
+        "timeline": "Ongoing",
+        "goals": [
+          "Prevention during growth",
+          "Flexibility maintenance"
+        ],
+        "precautions": [
+          "Independent monitoring"
+        ],
+        "criteria": [
+          "Zero recurring symptoms"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Perthes Disease (Conservative)",
+    "category": "Pediatrics",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Joint Unloading",
+        "timeline": "Month 0–6",
+        "goals": [
+          "Protect femoral head",
+          "Maintain ROM"
+        ],
+        "precautions": [
+          "Restrict impact activity (as per staging)"
+        ],
+        "criteria": [
+          "Neg hip irrigation"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Early Active Loading",
+        "timeline": "Month 6–12",
+        "goals": [
+          "NWB to PWB transition",
+          "Muscle activation"
+        ],
+        "precautions": [
+          "X-ray monitoring"
+        ],
+        "criteria": [
+          "Stable re-ossification"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Re-integration",
+        "timeline": "Year 1–2",
+        "goals": [
+          "Gradual return to ADLs",
+          "Swimming/Cycling"
+        ],
+        "precautions": [
+          "Avoid high impact"
+        ],
+        "criteria": [
+          "Stable clinical exam"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Maintenance",
+        "timeline": "Ongoing",
+        "goals": [
+          "Lifelong hip health",
+          "Low impact activity"
+        ],
+        "precautions": [
+          "Maintain range"
+        ],
+        "criteria": [
+          "Mature femoral head form"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "SCFE (Post-operative)",
+    "category": "Pediatrics",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Post-op Protection",
+        "timeline": "Week 0–6",
+        "goals": [
+          "Protect stabilization",
+          "Early mobilization"
+        ],
+        "precautions": [
+          "Restrict weight bearing as ordered"
+        ],
+        "criteria": [
+          "Wound healing",
+          "Full active ROM"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "WB Progression",
+        "timeline": "Week 6–12",
+        "goals": [
+          "PWB to FWB",
+          "Muscle activation"
+        ],
+        "precautions": [
+          "No high impact"
+        ],
+        "criteria": [
+          "Normal gait"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Advanced Strength",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Full power",
+          "Low impact activity"
+        ],
+        "precautions": [
+          "Monitor hip joint symptoms"
+        ],
+        "criteria": [
+          "Symmetric power"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Return to Play",
+        "timeline": "Month 6+",
+        "goals": [
+          "Full youth sport return",
+          "Prevention"
+        ],
+        "precautions": [
+          "Independent load monitoring"
+        ],
+        "criteria": [
+          "Full season participation"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Anterior Shoulder Dislocation (First-time)",
+    "category": "Shoulder",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Acute Protection",
+        "timeline": "Week 0–3",
+        "goals": [
+          "Protect healing capsule",
+          "Reduce pain/swelling",
+          "Maintain hand/wrist function"
+        ],
+        "precautions": [
+          "No Abduction + External Rotation (High five position)",
+          "Avoid forced extension",
+          "Sling for comfort"
+        ],
+        "criteria": [
+          "Minimal pain at rest",
+          "Active ROM 90° flexion"
+        ],
+        "exercises": [
+          {
+            "name": "Pendulum Swings",
+            "parameters": "3 × 1 min",
+            "cue": "Passive mobility"
+          },
+          {
+            "name": "External Rotation (Isometric)",
+            "parameters": "3 × 10 reps",
+            "cue": "Cuff activation without movement"
+          },
+          {
+            "name": "Scapular Squeezes",
+            "parameters": "3 × 15 reps",
+            "cue": "Proximal stability"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Mobilization & Early Strength",
+        "timeline": "Week 3–8",
+        "goals": [
+          "Restore near full ROM",
+          "Steady cuff strengthening"
+        ],
+        "precautions": [
+          "Avoid end-range ER"
+        ],
+        "criteria": [
+          "ER > 45°",
+          "Neg apprehension at 90°"
+        ],
+        "exercises": [
+          {
+            "name": "ER with Band (Arm at side)",
+            "parameters": "3 × 15 reps",
+            "cue": "Cuff isolation"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "title": "Advanced Integrated Strength",
+        "timeline": "Week 8–16",
+        "goals": [
+          "Full power",
+          "Proprioception",
+          "Heavy loading"
+        ],
+        "precautions": [
+          "Build load gradually"
+        ],
+        "criteria": [
+          "Symmetric strength"
+        ],
+        "exercises": [
+          {
+            "name": "Push-up into Plank Plus",
+            "parameters": "3 × 12 reps",
+            "cue": "Scapular stability"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "title": "Return to Contact / Sport",
+        "timeline": "Month 4+",
+        "goals": [
+          "Full contact",
+          "Reactive stability",
+          "Prevention"
+        ],
+        "precautions": [
+          "Maintain cuff endurance"
+        ],
+        "criteria": [
+          "Full confidence",
+          "WOSI Score > 85%"
+        ],
+        "exercises": [
+          {
+            "name": "Plyometric Push-ups",
+            "parameters": "3 × 10 reps",
+            "cue": "Power and reactive stability"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Rotator Cuff Repair (Surgical)",
+    "category": "Shoulder",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Protective PROM",
+        "timeline": "Week 0–6",
+        "goals": [
+          "Protect repair",
+          "Passive ROM goals"
+        ],
+        "precautions": [
+          "No active movement",
+          "Strict sling use"
+        ],
+        "criteria": [
+          "Passive Flexion 120°"
+        ],
+        "exercises": [
+          {
+            "name": "Table Slides",
+            "parameters": "3 × 10 reps",
+            "cue": "Passive flexion"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "title": "AAROM to AROM",
+        "timeline": "Week 6–12",
+        "goals": [
+          "Full active ROM",
+          "Early isometrics"
+        ],
+        "precautions": [
+          "No heavy lifting"
+        ],
+        "criteria": [
+          "Full active ROM pain-free"
+        ],
+        "exercises": [
+          {
+            "name": "Wall Crawls",
+            "parameters": "3 × 10 reps",
+            "cue": "Assist active elevation"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "title": "Resistance Training",
+        "timeline": "Week 12–20",
+        "goals": [
+          "Restore strength",
+          "ADL integration"
+        ],
+        "precautions": [
+          "Monitor pain"
+        ],
+        "criteria": [
+          "Strength > 80% other side"
+        ],
+        "exercises": [
+          {
+            "name": "Full Can Raises",
+            "parameters": "3 × 12 reps",
+            "cue": "Supraspinatus strengthening"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "title": "Functional Maintenance",
+        "timeline": "Month 5+",
+        "goals": [
+          "Full sport/work return",
+          "Prevention"
+        ],
+        "precautions": [
+          "Gradual overhead loading"
+        ],
+        "criteria": [
+          "Full independence"
+        ],
+        "exercises": [
+          {
+            "name": "Resistance Band High-to-Low Rows",
+            "parameters": "3 × 15 reps",
+            "cue": "Maintenance of posterior stability"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Subacromial Pain Syndrome (Impingement)",
+    "category": "Shoulder",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Pain Control & Posture",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Reduce impingement",
+          "Restore range"
+        ],
+        "precautions": [
+          "Avoid painful overhead move"
+        ],
+        "criteria": [
+          "VAS < 3/10"
+        ],
+        "exercises": [
+          {
+            "name": "Sleeper Stretch",
+            "parameters": "3 × 30 sec",
+            "cue": "Address GIRD"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Cuff Strengthening",
+        "timeline": "Week 4–8",
+        "goals": [
+          "Load cuff",
+          "Scapular control"
+        ],
+        "precautions": [
+          "Paced volume"
+        ],
+        "criteria": [
+          "Pain-free elevation"
+        ],
+        "exercises": [
+          {
+            "name": "Scapular Rows",
+            "parameters": "3 × 15 reps",
+            "cue": "Setting the base"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "title": "Load Progression",
+        "timeline": "Week 8–16",
+        "goals": [
+          "Heavy loading",
+          "Full function"
+        ],
+        "precautions": [
+          "Monitor focal pain"
+        ],
+        "criteria": [
+          "Full strength"
+        ],
+        "exercises": [
+          {
+            "name": "Military Press (Dumbbell)",
+            "parameters": "3 × 10 reps",
+            "cue": "Overhead load tolerance"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "title": "Prevention",
+        "timeline": "Month 4+",
+        "goals": [
+          "Maintenance",
+          "Performance"
+        ],
+        "precautions": [
+          "Maintain endurance"
+        ],
+        "criteria": [
+          "Zero recurring symptoms"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "AC Joint Sprain (Grade I-II)",
+    "category": "Shoulder",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Initial Protection",
+        "timeline": "Week 0–2",
+        "goals": [
+          "Settle peak pain"
+        ],
+        "precautions": [
+          "No horiz. adduction"
+        ],
+        "criteria": [
+          "ROM to 90° flexion"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Mobilization",
+        "timeline": "Week 2–6",
+        "goals": [
+          "Restore range",
+          "Cuff strength"
+        ],
+        "precautions": [
+          "No heavy carry"
+        ],
+        "criteria": [
+          "Full range"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Power & Agility",
+        "timeline": "Week 6–12",
+        "goals": [
+          "Push/pull power"
+        ],
+        "precautions": [
+          "Monitor AC tenderness"
+        ],
+        "criteria": [
+          "Neg Cross-arm test"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Contact Return",
+        "timeline": "Month 3+",
+        "goals": [
+          "Full sport"
+        ],
+        "precautions": [
+          "Maintain stability"
+        ],
+        "criteria": [
+          "Clearance for contact"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Clavicle Fracture (Non-operative)",
+    "category": "Shoulder",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Immobilization",
+        "timeline": "Week 0–6",
+        "goals": [
+          "Fracture healing",
+          "Pain control"
+        ],
+        "precautions": [
+          "No elevation > 90°"
+        ],
+        "criteria": [
+          "Clinical union signs"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Mobilization",
+        "timeline": "Week 6–12",
+        "goals": [
+          "Full active ROM"
+        ],
+        "precautions": [
+          "NWB on limb"
+        ],
+        "criteria": [
+          "Full ROM"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Resistance",
+        "timeline": "Week 12–20",
+        "goals": [
+          "Strength",
+          "ADL integration"
+        ],
+        "precautions": [
+          "Monitor site pain"
+        ],
+        "criteria": [
+          "Full union confirmed"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Full Return",
+        "timeline": "Month 5+",
+        "goals": [
+          "Sport return"
+        ],
+        "precautions": [
+          "Zero pain with load"
+        ],
+        "criteria": [
+          "Full seasonal participation"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Adhesive Capsulitis (Frozen Shoulder)",
+    "category": "Shoulder",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Pain Management & Calming",
+        "timeline": "Month 0–4",
+        "goals": [
+          "Settle severe inflammatory pain",
+          "Maintain functional range",
+          "Patient education (long course)"
+        ],
+        "precautions": [
+          "Avoid aggressive stretching (may flare)",
+          "Do not force through \"hard\" block"
+        ],
+        "criteria": [
+          "Reduced night pain",
+          "VAS Pain < 4/10"
+        ],
+        "exercises": [
+          {
+            "name": "Pendulum Swings",
+            "parameters": "3 × 1 min",
+            "cue": "Gentle joint decompression"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Gradual Mobilization",
+        "timeline": "Month 4–12",
+        "goals": [
+          "Restore capsular extensibility",
+          "Improve multi-planar range"
+        ],
+        "precautions": [
+          "Stop if pain persists > 24h"
+        ],
+        "criteria": [
+          "Improved ROM > 50%"
+        ],
+        "exercises": [
+          {
+            "name": "Pulley-assisted Elevation",
+            "parameters": "3 × 10 reps",
+            "cue": "Passive-active range focus"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "title": "Resistance & Integration",
+        "timeline": "Month 12–18",
+        "goals": [
+          "Restore muscle bulk",
+          "Return to overhead task"
+        ],
+        "precautions": [
+          "Monitor joint tolerance"
+        ],
+        "criteria": [
+          "Near full symmetric ROM"
+        ],
+        "exercises": [
+          {
+            "name": "Full Can Raises",
+            "parameters": "3 × 12 reps",
+            "cue": "Supraspinatus strengthening"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "title": "Functional Maintenance",
+        "timeline": "Month 18+",
+        "goals": [
+          "Prevention",
+          "Full work/sport"
+        ],
+        "precautions": [
+          "Maintain overhead endurance"
+        ],
+        "criteria": [
+          "Zero restrictions"
+        ],
+        "exercises": [
+          {
+            "name": "Overhead Carry (Lockout)",
+            "parameters": "3 × 20 meters",
+            "cue": "Shoulder stability maintenance"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Biceps Tendinopathy (Long Head)",
+    "category": "Shoulder",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Unloading & Isometrics",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Reduce anterior pain",
+          "Activity modification"
+        ],
+        "precautions": [
+          "No heavy curls",
+          "Avoid rapid overhead reaching"
+        ],
+        "criteria": [
+          "Pain-free daily use"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Isotonic Loading",
+        "timeline": "Week 4–8",
+        "goals": [
+          "Build tendon capacity",
+          "Scapular control"
+        ],
+        "precautions": [
+          "Monitor for night pain"
+        ],
+        "criteria": [
+          "Full strength symmetry"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Integrated Loading",
+        "timeline": "Week 8–16",
+        "goals": [
+          "Global power",
+          "Specific task drill"
+        ],
+        "precautions": [
+          "Monitor for focal throbbing"
+        ],
+        "criteria": [
+          "Zero pain with load"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Maintenance",
+        "timeline": "Month 4+",
+        "goals": [
+          "Prevention",
+          "Performance"
+        ],
+        "precautions": [
+          "Maintain HSR weekly"
+        ],
+        "criteria": [
+          "Full return to play"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Pectoralis Major Tear",
+    "category": "Shoulder",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Protection & Settling",
+        "timeline": "Week 0–6",
+        "goals": [
+          "Protect healing fiber",
+          "ROM into tolerance"
+        ],
+        "precautions": [
+          "Strict NWB",
+          "No heavy horizontal adduction"
+        ],
+        "criteria": [
+          "Clinical range goals met"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Mobilization",
+        "timeline": "Week 6–12",
+        "goals": [
+          "Full range",
+          "Early activation"
+        ],
+        "precautions": [
+          "No high impact load"
+        ],
+        "criteria": [
+          "Full passive ROM"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Power & Strength",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Restore bench press/push capacity"
+        ],
+        "precautions": [
+          "Monitor for focal pull"
+        ],
+        "criteria": [
+          "LSI > 80%"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Full Return",
+        "timeline": "Month 6+",
+        "goals": [
+          "Prevention",
+          "Competition"
+        ],
+        "precautions": [
+          "Maintain muscle habit"
+        ],
+        "criteria": [
+          "Full performance return"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Sternoclavicular Joint Sprain",
+    "category": "Shoulder",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Symptom Reduction",
+        "timeline": "Week 0–2",
+        "goals": [
+          "Settle joint pain",
+          "Protect"
+        ],
+        "precautions": [
+          "Avoid overhead elevation initially"
+        ],
+        "criteria": [
+          "Painless daily reaching"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Mobilization",
+        "timeline": "Week 2–6",
+        "goals": [
+          "Restore scapular flow",
+          "Cuff strength"
+        ],
+        "precautions": [
+          "No heavy carry on side"
+        ],
+        "criteria": [
+          "Full active ROM shoulder"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Resistance",
+        "timeline": "Week 6–12",
+        "goals": [
+          "Integrated power",
+          "Scapular stability"
+        ],
+        "precautions": [
+          "Monitor joint clicking"
+        ],
+        "criteria": [
+          "Symmetric power"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Participation",
+        "timeline": "Month 3+",
+        "goals": [
+          "Full return to sport",
+          "Prevention"
+        ],
+        "precautions": [
+          "Maintain posture habit"
+        ],
+        "criteria": [
+          "Full season play"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Scapular Dyskinesis",
+    "category": "Shoulder",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Conscious Correction",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Identify scapular tilt",
+          "Lower trap activation"
+        ],
+        "precautions": [
+          "Avoid heavy overhead initially"
+        ],
+        "criteria": [
+          "Good control in mini-wall slide"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Strength & Endurance",
+        "timeline": "Week 4–8",
+        "goals": [
+          "Trap/Serratus bulk",
+          "Cuff support"
+        ],
+        "precautions": [
+          "Monitor for fatigue based shrugging"
+        ],
+        "criteria": [
+          "Zero winging in push-up"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "High Intensity Agility",
+        "timeline": "Week 8–16",
+        "goals": [
+          "Reactive stability",
+          "Power"
+        ],
+        "precautions": [
+          "Maintain form"
+        ],
+        "criteria": [
+          "Full athletic confidence"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Functional Maintenance",
+        "timeline": "Month 4+",
+        "goals": [
+          "Prevention during play",
+          "Maintenance"
+        ],
+        "precautions": [
+          "Independent screen every month"
+        ],
+        "criteria": [
+          "Zero focal fatigue pain"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Posterior Shoulder Instability",
+    "category": "Shoulder",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Protective Stability",
+        "timeline": "Week 0–6",
+        "goals": [
+          "Protect posterior capsule",
+          "Settle joint pain",
+          "Initial cuff activation"
+        ],
+        "precautions": [
+          "Avoid excessive horizontal adduction + internal rotation",
+          "No heavy push moves"
+        ],
+        "criteria": [
+          "Minimal pain with daily tasks",
+          "Stable joint in neutral"
+        ],
+        "exercises": [
+          {
+            "name": "ER/IR Isometrics",
+            "parameters": "3 × 45 sec",
+            "cue": "Early joint control"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Mobilization & Early Strength",
+        "timeline": "Week 6–12",
+        "goals": [
+          "Restore near full ROM",
+          "Steady cuff load"
+        ],
+        "precautions": [
+          "Pace push-volume"
+        ],
+        "criteria": [
+          "Full active ROM in neutral"
+        ],
+        "exercises": [
+          {
+            "name": "Serratus Punch",
+            "parameters": "3 × 15 reps",
+            "cue": "Scapular support"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "title": "Advanced Integrated Load",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Restore bench/push power",
+          "Proprioception"
+        ],
+        "precautions": [
+          "Monitor post-activity instability sense"
+        ],
+        "criteria": [
+          "Symmetric power"
+        ],
+        "exercises": [
+          {
+            "name": "Close-grip Bench Press",
+            "parameters": "3 × 12 reps",
+            "cue": "Controlled posterior loading"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "title": "Full Contact Return",
+        "timeline": "Month 6+",
+        "goals": [
+          "Prevention",
+          "Full season sport"
+        ],
+        "precautions": [
+          "Maintain cuff habit"
+        ],
+        "criteria": [
+          "Full performance ready"
+        ],
+        "exercises": [
+          {
+            "name": "Medicine Ball Wall Chest Pass",
+            "parameters": "3 × 10 reps",
+            "cue": "Power and reactive speed"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "SLAP Lesion (Conservative)",
+    "category": "Shoulder",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Unloading & Calming",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Settle joint irritation",
+          "Address post-capsule tightness"
+        ],
+        "precautions": [
+          "Avoid biceps heavy loading",
+          "No overhead throwing initially"
+        ],
+        "criteria": [
+          "Neg O'Briens test early range"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Mobilization & Strength",
+        "timeline": "Week 4–12",
+        "goals": [
+          "Restore range",
+          "Cuff stabilization"
+        ],
+        "precautions": [
+          "No rapid biceps curls"
+        ],
+        "criteria": [
+          "Full range elevation"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Functional Loading",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Return to overhead work",
+          "High power"
+        ],
+        "precautions": [
+          "Monitor for joint clicking"
+        ],
+        "criteria": [
+          "Symmetric power"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Participation",
+        "timeline": "Month 6+",
+        "goals": [
+          "Prevention",
+          "Full seasonal participation"
+        ],
+        "precautions": [
+          "Maintain overhead endurance"
+        ],
+        "criteria": [
+          "Zero recurring symptoms"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "SLAP Lesion Repair (Surgical)",
+    "category": "Shoulder",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Protection Phase",
+        "timeline": "Week 0–6",
+        "goals": [
+          "Protect labral repair",
+          "Gentle mobility"
+        ],
+        "precautions": [
+          "Strict NWB",
+          "No active biceps contraction",
+          "Sling use"
+        ],
+        "criteria": [
+          "Healed surgical site",
+          "ROM goals met"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Sub-maximal Strength/ROM",
+        "timeline": "Week 6–12",
+        "goals": [
+          "Restore ROM",
+          "Early activations"
+        ],
+        "precautions": [
+          "No heavy biceps load yet"
+        ],
+        "criteria": [
+          "Full active ROM achieved"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Advanced Strengthening",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Restore bulk",
+          "Initial impact"
+        ],
+        "precautions": [
+          "Monitor joint tolerance"
+        ],
+        "criteria": [
+          "LSI > 80%"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "High Performance",
+        "timeline": "Month 6–9",
+        "goals": [
+          "Full sport agility",
+          "Contact sports"
+        ],
+        "precautions": [
+          "Maintain core stability"
+        ],
+        "criteria": [
+          "LSI > 95%"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Chronic Pain Syndrome (Generic)",
+    "category": "Systemic",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Central Desensitization",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Address fear of movement",
+          "Gentle movement rituals"
+        ],
+        "precautions": [
+          "Avoid \"stop at any pain\"",
+          "No heavy initial loading"
+        ],
+        "criteria": [
+          "Reduced fear avoidance (TSK score)"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Graded Exposure",
+        "timeline": "Week 4–12",
+        "goals": [
+          "Exposing the brain to feared moves safely"
+        ],
+        "precautions": [
+          "Stop if neuro signs spike"
+        ],
+        "criteria": [
+          "Improved tolerance to daily tasks"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Power & Strength",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Build muscle resilience",
+          "Social/Sport tasks"
+        ],
+        "precautions": [
+          "Pace volume spikes"
+        ],
+        "criteria": [
+          "Improved QoL and function"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Lifelong Habituation",
+        "timeline": "Ongoing",
+        "goals": [
+          "Independent care habit",
+          "Prevention of relapse"
+        ],
+        "precautions": [
+          "Manage lifestyle factors (Sleep/Stress)"
+        ],
+        "criteria": [
+          "Zero disability"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Post-Viral Fatigue Syndrome (Pacing)",
+    "category": "Systemic",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Baseline Establishment",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Find the \"energy envelope\"",
+          "Daily pacing rituals"
+        ],
+        "precautions": [
+          "Avoid Post-Exertional Malaise (PEM)",
+          "Listen to active rest cues"
+        ],
+        "criteria": [
+          "Zero PEM crashes for 14 days"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Minimal Graded Activity",
+        "timeline": "Week 4–12",
+        "goals": [
+          "Gently expand the envelope",
+          "Light movement"
+        ],
+        "precautions": [
+          "Stop if fatigue spikes"
+        ],
+        "criteria": [
+          "Stable energy through the week"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Functional Expansion",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Return to work/social tasks in blocks"
+        ],
+        "precautions": [
+          "Pace social volume"
+        ],
+        "criteria": [
+          "Improved function score"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Wellness Maintenance",
+        "timeline": "Ongoing",
+        "goals": [
+          "Prevention of relapse",
+          "Full social return"
+        ],
+        "precautions": [
+          "Manage lifestyle factors"
+        ],
+        "criteria": [
+          "Independent pacing mastery"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Suprascapular Nerve Entrapment",
+    "category": "Shoulder",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Neural Unloading",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Reduce nerve irritation",
+          "Improve scapular flow",
+          "Settle pain"
+        ],
+        "precautions": [
+          "Avoid repetitive heavy overhead activity",
+          "Limit forceful external rotation initially"
+        ],
+        "criteria": [
+          "Reduced focal throbbing",
+          "Stable ADL tolerance"
+        ],
+        "exercises": [
+          {
+            "name": "Shoulder Blade Pinches",
+            "parameters": "3 × 15 reps",
+            "cue": "Setting a stable base"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Cuff Strengthening",
+        "timeline": "Week 4–12",
+        "goals": [
+          "Build supra/infraspinatus power",
+          "Scapular control"
+        ],
+        "precautions": [
+          "No high velocity throwing"
+        ],
+        "criteria": [
+          "Full strength return"
+        ],
+        "exercises": [
+          {
+            "name": "Full Can Raises",
+            "parameters": "3 × 12 reps",
+            "cue": "Specific supraspinatus activation"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "title": "Advanced Integrated Load",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Restore overhead power",
+          "Endurance"
+        ],
+        "precautions": [
+          "Monitor post-activity neuro-ache"
+        ],
+        "criteria": [
+          "Symmetric power"
+        ],
+        "exercises": [
+          {
+            "name": "External Rotation with Band (Arm Elevated)",
+            "parameters": "3 × 15 reps",
+            "cue": "High level cuff loading"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "title": "Functional Maintenance",
+        "timeline": "Month 6+",
+        "goals": [
+          "Prevention",
+          "Performance"
+        ],
+        "precautions": [
+          "Maintain cuff endurance habit"
+        ],
+        "criteria": [
+          "Zero recurring symptoms"
+        ],
+        "exercises": [
+          {
+            "name": "Overhead Military Press (Light)",
+            "parameters": "3 × 10 reps",
+            "cue": "Functional maintenance"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Long Thoracic Nerve Palsy",
+    "category": "Shoulder",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Protective Serratus Initiation",
+        "timeline": "Week 0–6",
+        "goals": [
+          "Protect neural supply",
+          "Prevent winging",
+          "Shoulder range maintenance"
+        ],
+        "precautions": [
+          "Avoid end-range heavy pushing",
+          "No heavy carry"
+        ],
+        "criteria": [
+          "Neg night pain",
+          "Stable scapular tone"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Mobilization & Early Activation",
+        "timeline": "Week 6–12",
+        "goals": [
+          "Active serratus punch",
+          "Trap support"
+        ],
+        "precautions": [
+          "Stop if winging spikes during ex"
+        ],
+        "criteria": [
+          "ROM elevation > 140°"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Functional Strength",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Restore push power",
+          "Integrated power"
+        ],
+        "precautions": [
+          "Monitor for fatigue based shrugging"
+        ],
+        "criteria": [
+          "Zero winging in push-up"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Resilience Maintenance",
+        "timeline": "Month 6+",
+        "goals": [
+          "Full seasonal play",
+          "Prevention"
+        ],
+        "precautions": [
+          "Independent screen habit"
+        ],
+        "criteria": [
+          "Full seasonal return"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Pectoralis Minor Tightness (Management)",
+    "category": "Shoulder",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Myofascial Release & Stretching",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Improve muscle length",
+          "Settle neural tension"
+        ],
+        "precautions": [
+          "No aggressive over-stretching into pain"
+        ],
+        "criteria": [
+          "Improved Coracoid tenderness"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Antagonist Strengthening",
+        "timeline": "Week 4–8",
+        "goals": [
+          "Lower trap bulk",
+          "Scapular posterior tilt"
+        ],
+        "precautions": [
+          "Monitor for shrugging"
+        ],
+        "criteria": [
+          "Zero winging in active reach"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Integrated Mobility",
+        "timeline": "Week 8–16",
+        "goals": [
+          "Full range elevation with control",
+          "Power"
+        ],
+        "precautions": [
+          "Maintain posture habit"
+        ],
+        "criteria": [
+          "Full asymmetric symmetry"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Conditioning",
+        "timeline": "Month 4+",
+        "goals": [
+          "Prevention",
+          "Technique optimization"
+        ],
+        "precautions": [
+          "Daily stretching ritual"
+        ],
+        "criteria": [
+          "Zero recurring symptoms"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Infraspinatus Strain",
+    "category": "Shoulder",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Protection & Isometric Flow",
+        "timeline": "Week 0–2",
+        "goals": [
+          "Protect healing fibers",
+          "Reduce pain"
+        ],
+        "precautions": [
+          "No heavy external rotation"
+        ],
+        "criteria": [
+          "Painless daily arm use"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Isotonic Enrichment",
+        "timeline": "Week 2–6",
+        "goals": [
+          "Restore muscle bulk",
+          "Load tolerance"
+        ],
+        "precautions": [
+          "Stop at sharp focal pain"
+        ],
+        "criteria": [
+          "Full active ROM pain-free"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Power Return",
+        "timeline": "Week 6–12",
+        "goals": [
+          "High power throwing drills",
+          "Stability"
+        ],
+        "precautions": [
+          "Monitor post-activity ache"
+        ],
+        "criteria": [
+          "Symmetric power"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Full Play",
+        "timeline": "Month 3+",
+        "goals": [
+          "Full seasonal play",
+          "Prevention"
+        ],
+        "precautions": [
+          "Maintain cuff volume habit"
+        ],
+        "criteria": [
+          "Full return to play"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Teres Major Strain",
+    "category": "Shoulder",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Unloading & Settlement",
+        "timeline": "Week 0–2",
+        "goals": [
+          "Reduce axial pain"
+        ],
+        "precautions": [
+          "Avoid heavy pulling/adduction initially"
+        ],
+        "criteria": [
+          "Pain-free daily reach"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Range Initiation",
+        "timeline": "Week 2–6",
+        "goals": [
+          "Improve range",
+          "Activation"
+        ],
+        "precautions": [
+          "Stop if sharp pinch returns"
+        ],
+        "criteria": [
+          "Full range achieved"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Integrated Pull Load",
+        "timeline": "Week 6–12",
+        "goals": [
+          "Restore rowing power",
+          "Strength"
+        ],
+        "precautions": [
+          "Monitor for fatigue based shrugging"
+        ],
+        "criteria": [
+          "Symmetric power"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Performance Ready",
+        "timeline": "Month 3+",
+        "goals": [
+          "Prevention",
+          "Full work return"
+        ],
+        "precautions": [
+          "Maintain muscle habit"
+        ],
+        "criteria": [
+          "Full seasonal return"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Non-specific Low Back Pain (Acute)",
+    "category": "Spine",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Calming & Movement Re-education",
+        "timeline": "Week 0–2",
+        "goals": [
+          "Reduce pain/inflammation",
+          "Maintain mobility",
+          "Education on pacing"
+        ],
+        "precautions": [
+          "Avoid prolonged bed rest",
+          "No heavy lifting",
+          "Gentle movement within tolerated range"
+        ],
+        "criteria": [
+          "Pain VAS < 4/10",
+          "Improved tolerance to walking 10 min"
+        ],
+        "exercises": [
+          {
+            "name": "Knee to Chest (Bilateral)",
+            "parameters": "3 × 15 reps",
+            "cue": "Lower back unloading"
+          },
+          {
+            "name": "Pelvic Tilts",
+            "parameters": "3 × 20 reps",
+            "cue": "Gentle spinal mobilization"
+          },
+          {
+            "name": "Deep Diaphragmatic Breathing",
+            "parameters": "5 min daily",
+            "cue": "Parasympathetic activation for pain"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Stabilization & Global Power",
+        "timeline": "Week 2–6",
+        "goals": [
+          "Restore spinal neutrality",
+          "Gluteal strength"
+        ],
+        "precautions": [
+          "Avoid end-range flexion under load"
+        ],
+        "criteria": [
+          "Full ADL independence"
+        ],
+        "exercises": [
+          {
+            "name": "Bird-Dog",
+            "parameters": "3 × 12 reps",
+            "cue": "Anti-rotation stability"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "title": "Load Progression",
+        "timeline": "Week 6–12",
+        "goals": [
+          "Higher load deadlifts",
+          "Return to sport drills"
+        ],
+        "precautions": [
+          "Monitor for fatigue-based failure"
+        ],
+        "criteria": [
+          "Neg Oswestry Score change"
+        ],
+        "exercises": [
+          {
+            "name": "Kettlebell Deadlifts",
+            "parameters": "3 × 12 reps",
+            "cue": "Hip hinge with spinal neutral"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "title": "Lifetime Maintenance",
+        "timeline": "Month 3+",
+        "goals": [
+          "Lifetime spinal health",
+          "High threshold load"
+        ],
+        "precautions": [
+          "Pace volume spikes"
+        ],
+        "criteria": [
+          "Zero fear-avoidance"
+        ],
+        "exercises": [
+          {
+            "name": "Heavy Barbell Deadlifts (Maintenance)",
+            "parameters": "3 × 8 reps",
+            "cue": "High threshold robustness"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Lumbar Disc Herniation with Radiculopathy",
+    "category": "Spine",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Centralization & Protection",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Centralize leg pain",
+          "Reduce neural tension"
+        ],
+        "precautions": [
+          "No flexion-rotation",
+          "Avoid long sitting"
+        ],
+        "criteria": [
+          "Symptoms centralized from foot to calf/back"
+        ],
+        "exercises": [
+          {
+            "name": "McKenzie Extensions (Prone)",
+            "parameters": "10 reps, hourly",
+            "cue": "Drive centralization"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Neural Mobility & Global Strengthening",
+        "timeline": "Week 4–12",
+        "goals": [
+          "Restore SLR range",
+          "Improve core endurance"
+        ],
+        "precautions": [
+          "Stop if peripheralization occurs"
+        ],
+        "criteria": [
+          "SLR > 70° pain-free"
+        ],
+        "exercises": [
+          {
+            "name": "Sciatic Sliders (Nerve Gliding)",
+            "parameters": "3 × 15 reps",
+            "cue": "Improve neural excursion"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "title": "Advanced Strength & Return to Activity",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Restore push/pull capacity",
+          "Return to work/manual tasks"
+        ],
+        "precautions": [
+          "Gradual load into flexion"
+        ],
+        "criteria": [
+          "Neg neurological signs"
+        ],
+        "exercises": [
+          {
+            "name": "Farmers Walk",
+            "parameters": "3 × 30 meters",
+            "cue": "Global postural stabilization"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "title": "Performance Resilience",
+        "timeline": "Month 6+",
+        "goals": [
+          "Lifetime management",
+          "Postural robustness"
+        ],
+        "precautions": [
+          "Monitor for neuro signs during fatigue"
+        ],
+        "criteria": [
+          "Oswestry score < 5%"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Cervicogenic Headache",
+    "category": "Spine",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Aura Phase & Protection",
+        "timeline": "Week 0–2",
+        "goals": [
+          "Reduce headache frequency",
+          "Cervical mobility"
+        ],
+        "precautions": [
+          "Avoid long desk work"
+        ],
+        "criteria": [
+          "Headache reduction > 30%"
+        ],
+        "exercises": [
+          {
+            "name": "Suboccipital Release",
+            "parameters": "2 min",
+            "cue": "Reduce tension at C0-C1"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Endurance & Coordination",
+        "timeline": "Week 2–8",
+        "goals": [
+          "Deep neck flexor focus",
+          "Posture"
+        ],
+        "precautions": [
+          "No high velocity rotation"
+        ],
+        "criteria": [
+          "Full neck AROM"
+        ],
+        "exercises": [
+          {
+            "name": "Deep Neck Flexor Lifts",
+            "parameters": "3 × 10 reps",
+            "cue": "Coordination"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "title": "Integrated Strength",
+        "timeline": "Week 8–16",
+        "goals": [
+          "Trap/Levator strengthening",
+          "ADL endurance"
+        ],
+        "precautions": [
+          "Monitor post-ex HA"
+        ],
+        "criteria": [
+          "NDI < 15%"
+        ],
+        "exercises": [
+          {
+            "name": "Scapular Retractions (Band)",
+            "parameters": "3 × 15 reps",
+            "cue": "Proximal support"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "title": "Maintenance",
+        "timeline": "Month 4+",
+        "goals": [
+          "Independent care",
+          "Ergonomics"
+        ],
+        "precautions": [
+          "Frequent micro-breaks"
+        ],
+        "criteria": [
+          "Zero headaches"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Whiplash Associated Disorder (WAD)",
+    "category": "Spine",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Calming & Initial Mobilization",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Settle peak pain",
+          "Early range"
+        ],
+        "precautions": [
+          "No neck collars (unless fracture)",
+          "Gentle pacing"
+        ],
+        "criteria": [
+          "Reduced fear of movement"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Proprioception & Initial Strength",
+        "timeline": "Week 4–12",
+        "goals": [
+          "Restore neck sensing",
+          "Cervical stability"
+        ],
+        "precautions": [
+          "Stop if HA worsens"
+        ],
+        "criteria": [
+          "Full neck range"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Dynamic Stability",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Resisted neck drills",
+          "Integrated limb power"
+        ],
+        "precautions": [
+          "Avoid jarring moves"
+        ],
+        "criteria": [
+          "Return to work"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Functional Resilience",
+        "timeline": "Month 6+",
+        "goals": [
+          "Independent management",
+          "Full social return"
+        ],
+        "precautions": [
+          "Maintain ergonomics"
+        ],
+        "criteria": [
+          "Zero restrictions"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Spondylolysis / Spondylolisthesis",
+    "category": "Spine",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Unloading & Protection",
+        "timeline": "Week 0–6",
+        "goals": [
+          "Fracture healing (if acute)",
+          "Neutral posture"
+        ],
+        "precautions": [
+          "Avoid high velocity extension",
+          "No heavy impact"
+        ],
+        "criteria": [
+          "Bone healing confirmed or pain-free extension"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Anti-extension Stability",
+        "timeline": "Week 6–12",
+        "goals": [
+          "Strong core endurance",
+          "Maintain neural mobility"
+        ],
+        "precautions": [
+          "Avoid bridging or deep backbends"
+        ],
+        "criteria": [
+          "Stable neutral spine in ADLs"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Loading within Neutral",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Return to sports",
+          "Progressive leg/core loading"
+        ],
+        "precautions": [
+          "Clearance for impact"
+        ],
+        "criteria": [
+          "Zero pain with running/jumping"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Performance Maintenance",
+        "timeline": "Month 6+",
+        "goals": [
+          "Lifetime management",
+          "Integrated athletic tasks"
+        ],
+        "precautions": [
+          "Independent load monitoring"
+        ],
+        "criteria": [
+          "Full seasonal return"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Scoliosis (Adolescent Idiopathic - Conservative)",
+    "category": "Spine",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Self-Correction & Education",
+        "timeline": "Month 0–3",
+        "goals": [
+          "Establish active self-correction habit",
+          "Improve respiratory capacity",
+          "Postural awareness"
+        ],
+        "precautions": [
+          "Avoid excessive end-range axial loading initially",
+          "Consistent brace wear (if ordered)"
+        ],
+        "criteria": [
+          "Independent self-correction achieved",
+          "Stable Cobb angle"
+        ],
+        "exercises": [
+          {
+            "name": "Schroth Breathing (Rotational)",
+            "parameters": "10 min daily",
+            "cue": "De-rotate ribs through breath"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Stabilization & Global Power",
+        "timeline": "Month 3–9",
+        "goals": [
+          "Build core endurance in corrected posture",
+          "Lower limb strength"
+        ],
+        "precautions": [
+          "Monitor for compensation fatigue"
+        ],
+        "criteria": [
+          "Improved trunk rotation score"
+        ],
+        "exercises": [
+          {
+            "name": "Correction Plank",
+            "parameters": "3 × 45 sec",
+            "cue": "Maintain alignment under core load"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "title": "High Intensity Agility",
+        "timeline": "Month 9+",
+        "goals": [
+          "Return to sports in corrected form",
+          "Integrated power"
+        ],
+        "precautions": [
+          "Maintain corrected alignment during impact"
+        ],
+        "criteria": [
+          "Zero pain with seasonal sport"
+        ],
+        "exercises": [
+          {
+            "name": "Deadlifts (Corrected Position)",
+            "parameters": "3 × 12 reps",
+            "cue": "Integrated structural load"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "title": "Growth Maintenance",
+        "timeline": "Until Maturity",
+        "goals": [
+          "Maintain gains through growth spurts",
+          "Full life participation"
+        ],
+        "precautions": [
+          "Bi-annual checkups"
+        ],
+        "criteria": [
+          "Skeletal maturity reached stably"
+        ],
+        "exercises": [
+          {
+            "name": "Maintenance Yoga / Pilates",
+            "parameters": "2 sessions weekly",
+            "cue": "Lifetime mobility maintenance"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Rib Fracture (Conservative)",
+    "category": "Trunk",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Pain & Pulmonary Protection",
+        "timeline": "Week 0–3",
+        "goals": [
+          "Prevent pneumonia",
+          "Reduce focal pain",
+          "Settle fracture"
+        ],
+        "precautions": [
+          "Avoid heavy coughing (unsupported)",
+          "No heavy lifting"
+        ],
+        "criteria": [
+          "Painless deep breath"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Trunk Mobilization",
+        "timeline": "Week 3–6",
+        "goals": [
+          "Restore spinal rotation",
+          "Active breathing"
+        ],
+        "precautions": [
+          "Avoid high impact"
+        ],
+        "criteria": [
+          "Full spinal ROM"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Resisted Loading",
+        "timeline": "Week 6–12",
+        "goals": [
+          "Restore push/pull power",
+          "Core endurance"
+        ],
+        "precautions": [
+          "Monitor focal bony pain"
+        ],
+        "criteria": [
+          "Full union confirmed"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Full Return",
+        "timeline": "Month 3+",
+        "goals": [
+          "Contact sports return",
+          "Prevention"
+        ],
+        "precautions": [
+          "Independent load monitoring"
+        ],
+        "criteria": [
+          "Zero recurring symptoms"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Ankylosing Spondylitis (Early Stage)",
+    "category": "Spine",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Anti-inflammatory Mobility",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Settle stiffness",
+          "Morning mobility routine establishment"
+        ],
+        "precautions": [
+          "Avoid high impact during flares"
+        ],
+        "criteria": [
+          "BASDAI score reduction"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Postural Strengthening",
+        "timeline": "Week 4–12",
+        "goals": [
+          "Build extensor habit",
+          "Respiratory expansion"
+        ],
+        "precautions": [
+          "Monitor for uveitis / peripheral flare"
+        ],
+        "criteria": [
+          "Full expansion goals met"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Integrated Global Power",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Higher load deadlifts",
+          "Social tasks"
+        ],
+        "precautions": [
+          "Pace volume spikes"
+        ],
+        "criteria": [
+          "Stable QoL"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Lifelong Habituation",
+        "timeline": "Lifelong",
+        "goals": [
+          "Prevention of fusion habit",
+          "Full life participation"
+        ],
+        "precautions": [
+          "Independent monitoring"
+        ],
+        "criteria": [
+          "Stable motor function"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Thoracic Outlet Syndrome (TOS)",
+    "category": "Spine/Neck",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Neural Unloading",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Reduce neurovascular compression",
+          "First rib mobility"
+        ],
+        "precautions": [
+          "Avoid heavy shoulder bags",
+          "Limit overhead repetitive work"
+        ],
+        "criteria": [
+          "Reduced upper limb numbness"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Scapular Flow Re-education",
+        "timeline": "Week 4–12",
+        "goals": [
+          "Improve scapular tilt",
+          "Thoracic mobility"
+        ],
+        "precautions": [
+          "Monitor for venous congestion signs"
+        ],
+        "criteria": [
+          "Full nerve gliding tolerance"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Integrated Strength",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Postural endurance",
+          "Upper limb power"
+        ],
+        "precautions": [
+          "Monitor for neuro signs during fatigue"
+        ],
+        "criteria": [
+          "Symmetric power"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Ergonomic Resilience",
+        "timeline": "Ongoing",
+        "goals": [
+          "Prevention",
+          "Technique optimization"
+        ],
+        "precautions": [
+          "Independent breaks habit"
+        ],
+        "criteria": [
+          "Full functional return"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "SI Joint Dysfunction",
+    "category": "Hip/Pelvis",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Calming & Stability Intro",
+        "timeline": "Week 0–2",
+        "goals": [
+          "Reduce direct SI pain",
+          "Tear/Shear reduction"
+        ],
+        "precautions": [
+          "Avoid repetitive asymmetric lunges",
+          "No heavy twisting"
+        ],
+        "criteria": [
+          "Neg Fortin finger test pain"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Pelvic Girdle Load",
+        "timeline": "Week 2–8",
+        "goals": [
+          "Strengthen glutes/abs",
+          "Symmetric loading"
+        ],
+        "precautions": [
+          "Stop if sharp focal pain returns"
+        ],
+        "criteria": [
+          "Stable neutral pelvis in gait"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Agility & Impact",
+        "timeline": "Week 8–16",
+        "goals": [
+          "Return to running",
+          "Higher power"
+        ],
+        "precautions": [
+          "Monitor post-activity ache"
+        ],
+        "criteria": [
+          "Zero pain with impact"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Maintenance",
+        "timeline": "Month 4+",
+        "goals": [
+          "Prevention",
+          "Full seasonal play"
+        ],
+        "precautions": [
+          "Independent load monitoring"
+        ],
+        "criteria": [
+          "Zero recurring symptoms"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Post-Concussion Syndrome",
+    "category": "Sports Medicine",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Relative Rest & Cognitive Pacing",
+        "timeline": "Week 0–1",
+        "goals": [
+          "Reduce neuro-metabolic demand",
+          "Symptom management"
+        ],
+        "precautions": [
+          "No screen time initial 48h",
+          "Avoid taxing cognitive work"
+        ],
+        "criteria": [
+          "Cognitive tasks tolerated 30 min",
+          "Zero symptoms at rest"
+        ],
+        "exercises": [
+          {
+            "name": "Deep Breathing & Soft Music",
+            "parameters": "10 min",
+            "cue": "CNS calming"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Light Aerobic Integration",
+        "timeline": "Week 1–4",
+        "goals": [
+          "Determine Buffalo Treadmill threshold",
+          "Initial movement"
+        ],
+        "precautions": [
+          "Monitor for headache spikes"
+        ],
+        "criteria": [
+          "Stable cardiovascular response"
+        ],
+        "exercises": [
+          {
+            "name": "Stationary Biking (Sub-symptom)",
+            "parameters": "15 min",
+            "cue": "Improve blood flow safely"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "title": "Sport-Specific Non-contact",
+        "timeline": "Variable",
+        "goals": [
+          "Dual-tasking",
+          "Cognitive processing under load"
+        ],
+        "precautions": [
+          "Stop if dizziness returns"
+        ],
+        "criteria": [
+          "Tolerance of high-intensity exercise"
+        ],
+        "exercises": [
+          {
+            "name": "Agility Drills with Verbal Cues",
+            "parameters": "10 reps",
+            "cue": "Cognitive-motor dual tasking"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "title": "Full Contact Recovery",
+        "timeline": "Variable",
+        "goals": [
+          "Return to play",
+          "Unrestricted contact"
+        ],
+        "precautions": [
+          "Must carry Concussion Specialist clearance"
+        ],
+        "criteria": [
+          "Full Graduated Return-to-Play completion"
+        ],
+        "exercises": [
+          {
+            "name": "Full Practice (Non-contact to Contact)",
+            "parameters": "60 min",
+            "cue": "Final integration"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Total Hip Replacement (Arthroplasty)",
+    "category": "Post-operative",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Protection & Mobility",
+        "timeline": "Week 0–6",
+        "goals": [
+          "Hip precautions education",
+          "Wound healing",
+          "Initial gait"
+        ],
+        "precautions": [
+          "Avoid flexion > 90°",
+          "No ADduction past midline",
+          "Protect posterior capsule"
+        ],
+        "criteria": [
+          "Independent ambulation with walker",
+          "Surgical site closed"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Functional Strengthening",
+        "timeline": "Week 6–12",
+        "goals": [
+          "Wean off gait aids",
+          "Improve gluteal strength"
+        ],
+        "precautions": [
+          "Monitor for Trendelenburg sign"
+        ],
+        "criteria": [
+          "Normal gait without device"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Advanced Proprioception",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Return to independent ADLs",
+          "Power"
+        ],
+        "precautions": [
+          "Low impact focus"
+        ],
+        "criteria": [
+          "Symmetric power"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Activity Tolerance",
+        "timeline": "Month 6+",
+        "goals": [
+          "Return to golf/swimming/walking",
+          "Independence"
+        ],
+        "precautions": [
+          "Avoid high impact (running) long-term"
+        ],
+        "criteria": [
+          "Zero restrictions in low-impact activity"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Total Knee Replacement (Arthroplasty)",
+    "category": "Post-operative",
+    "phases": [
+      {
+        "number": 1,
+        "title": "ROM & Wound Control",
+        "timeline": "Week 0–2",
+        "goals": [
+          "Achieve 0-90° ROM",
+          "Reduce edema",
+          "Initial gait"
+        ],
+        "precautions": [
+          "Protect incision",
+          "Avoid over-flexion under load"
+        ],
+        "criteria": [
+          "90° flexion",
+          "0° extension"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Early Strengthening",
+        "timeline": "Week 2–8",
+        "goals": [
+          "Achieve 110-120° ROM",
+          "Normal gait progress"
+        ],
+        "precautions": [
+          "No high impact"
+        ],
+        "criteria": [
+          "Functional 115° ROM"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Endurance & Power",
+        "timeline": "Week 8–16",
+        "goals": [
+          "Step-ups symmetry",
+          "ADL power"
+        ],
+        "precautions": [
+          "Monitor for Baker's cyst"
+        ],
+        "criteria": [
+          "Symmetric chair stands"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Functional Discharge",
+        "timeline": "Month 4+",
+        "goals": [
+          "Unlimited walking",
+          "Return to bowling/golf"
+        ],
+        "precautions": [
+          "Maintain quad bulk"
+        ],
+        "criteria": [
+          "Zero disability"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Femoroacetabular Impingement (FAI - Surgical)",
+    "category": "Post-operative",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Joint Protection & ROM",
+        "timeline": "Week 0–6",
+        "goals": [
+          "Protect labral repair",
+          "Gentle range"
+        ],
+        "precautions": [
+          "Restrict WB (per surg)",
+          "Avoid flexion > 90°"
+        ],
+        "criteria": [
+          "Clinical range milestones met"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Functional Strength",
+        "timeline": "Week 6–12",
+        "goals": [
+          "Normal gait",
+          "Hip/Core flow"
+        ],
+        "precautions": [
+          "No deep lunges"
+        ],
+        "criteria": [
+          "Full WB gait"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Impact Initiation",
+        "timeline": "Month 4–6",
+        "goals": [
+          "Jogging return",
+          "Functional Drills"
+        ],
+        "precautions": [
+          "Maintain axial alignment"
+        ],
+        "criteria": [
+          "LSI > 80%"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Return to Play",
+        "timeline": "Month 6–9",
+        "goals": [
+          "Full agility",
+          "Contact sports"
+        ],
+        "precautions": [
+          "Monitor for joint pinching"
+        ],
+        "criteria": [
+          "LSI > 90%"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Osteochondritis Dissecans (Knee)",
+    "category": "Peds/Sports",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Joint Unloading",
+        "timeline": "Week 0–12",
+        "goals": [
+          "Bony healing",
+          "Pain control"
+        ],
+        "precautions": [
+          "PWB/NWB as per staging",
+          "No impact loading"
+        ],
+        "criteria": [
+          "X-ray signs of healing"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Graduated Loading",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Isotonic strength",
+          "ROM restoration"
+        ],
+        "precautions": [
+          "Monitor for focal effusion"
+        ],
+        "criteria": [
+          "Neg pressure pain at site"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Impact Progress",
+        "timeline": "Month 6–9",
+        "goals": [
+          "Jogging",
+          "Jump mechanics"
+        ],
+        "precautions": [
+          "Prioritize mechanics over volume"
+        ],
+        "criteria": [
+          "Zero symptoms post-run"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Full Performance",
+        "timeline": "Month 9+",
+        "goals": [
+          "Return to sport",
+          "Prevention"
+        ],
+        "precautions": [
+          "Maintain seasonal pacing"
+        ],
+        "criteria": [
+          "Full return to competition"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Fibromyalgia",
+    "category": "Systemic",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Education & Pacing Intro",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Settle peak flare",
+          "Establish \"boom-bust\" cycle awareness",
+          "Gentle movement"
+        ],
+        "precautions": [
+          "Avoid high-intensity effort initially",
+          "Prioritize sleep hygiene"
+        ],
+        "criteria": [
+          "Stable pain scores",
+          "Improved sleep quality"
+        ],
+        "exercises": [
+          {
+            "name": "Pool Walking (Hydrotherapy)",
+            "parameters": "15 min",
+            "cue": "Unloading of joints"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Graded Aerobic Conditioning",
+        "timeline": "Week 4–12",
+        "goals": [
+          "Increase O2 uptake",
+          "Gentle global loading"
+        ],
+        "precautions": [
+          "Stop before total exhaustion"
+        ],
+        "criteria": [
+          "Tolerate 20 min low-impact cardio"
+        ],
+        "exercises": [
+          {
+            "name": "Gentle Tai-Chi",
+            "parameters": "20 min",
+            "cue": "Mind-body coordination"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "title": "Resilience & Strength",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Improve muscle core endurance",
+          "Social re-integration"
+        ],
+        "precautions": [
+          "Monitor post-ex fatigue"
+        ],
+        "criteria": [
+          "Improved Fibromyalgia Impact Score"
+        ],
+        "exercises": [
+          {
+            "name": "Bodyweight Circuit (Large muscle groups)",
+            "parameters": "3 × 10 reps",
+            "cue": "Global metabolic enrichment"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "title": "Lifelong Wellness",
+        "timeline": "Ongoing",
+        "goals": [
+          "Independent pacing",
+          "Full participation in life"
+        ],
+        "precautions": [
+          "Manage flares through active rest"
+        ],
+        "criteria": [
+          "Stable QoL scores"
+        ],
+        "exercises": [
+          {
+            "name": "Daily Movement Ritual",
+            "parameters": "10 min morning",
+            "cue": "Maintenance of mobility"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Osteoarthritis Management",
+    "category": "Systemic",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Joint Unloading & Calming",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Reduce peak mechanical pain",
+          "Biomechanical fixes"
+        ],
+        "precautions": [
+          "Avoid repetitive high impact"
+        ],
+        "criteria": [
+          "Pain VAS < 4/10"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Neuromuscular Stabilization",
+        "timeline": "Week 4–12",
+        "goals": [
+          "Build muscle \"shock absorbers\"",
+          "Gait optimization"
+        ],
+        "precautions": [
+          "Monitor for joint effusion post-ex"
+        ],
+        "criteria": [
+          "Full independent walking"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Functional Loading",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Heavy-slow resistance (HSR)",
+          "Life integration"
+        ],
+        "precautions": [
+          "Monitor for \"locking\" signs"
+        ],
+        "criteria": [
+          "LSI > 80% strength"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Lifetime Protection",
+        "timeline": "Ongoing",
+        "goals": [
+          "Avoid surgery as long as possible",
+          "Prevention"
+        ],
+        "precautions": [
+          "Maintain weight management"
+        ],
+        "criteria": [
+          "Stable joint function"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Rheumatoid Arthritis (Stable Phase)",
+    "category": "Systemic",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Joint Protection & ROM",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Maintain active range",
+          "Protect in-flare joints"
+        ],
+        "precautions": [
+          "No heavy loading during active flare"
+        ],
+        "criteria": [
+          "Zero new morning stiffness"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Conditioning",
+        "timeline": "Week 4–12",
+        "goals": [
+          "Global aerobic fitness",
+          "Maintenance"
+        ],
+        "precautions": [
+          "Stop if warmth/redness occurs"
+        ],
+        "criteria": [
+          "Stable inflammatory markers"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Strength Integration",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Restore muscle bulk",
+          "ADL power"
+        ],
+        "precautions": [
+          "Avoid excessive axial loading"
+        ],
+        "criteria": [
+          "Improved HAQ-DI scores"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Maintenance",
+        "timeline": "Ongoing",
+        "goals": [
+          "Wellness",
+          "Participation"
+        ],
+        "precautions": [
+          "Adjust for flares"
+        ],
+        "criteria": [
+          "Stable motor function"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Hemophilia (Joint Bleed Prevention)",
+    "category": "Systemic",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Bleed Protection & ROM",
+        "timeline": "Acute",
+        "goals": [
+          "Settle hematoma",
+          "Gentle mobility"
+        ],
+        "precautions": [
+          "NWB as per hematologist",
+          "No aggressive stretching"
+        ],
+        "criteria": [
+          "Zero new swelling"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Stability Initiation",
+        "timeline": "Sub-acute",
+        "goals": [
+          "Improve joint sensing",
+          "Activation"
+        ],
+        "precautions": [
+          "Monitor for deep heat (sign of bleed)"
+        ],
+        "criteria": [
+          "Stable joint range"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Resistance Training",
+        "timeline": "Long-term",
+        "goals": [
+          "Build muscle armor to protect joints"
+        ],
+        "precautions": [
+          "Avoid high impact contact sports"
+        ],
+        "criteria": [
+          "Symmetric power"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Activity Maintenance",
+        "timeline": "Lifelong",
+        "goals": [
+          "Safe lifestyle",
+          "Conditioning"
+        ],
+        "precautions": [
+          "Independent bleed monitoring"
+        ],
+        "criteria": [
+          "Zero recurring joint disablement"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Systemic Lupus Erythematosus (SLE)",
+    "category": "Systemic",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Fatigue Management Intro",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Determine peak energy times",
+          "Gentle movement"
+        ],
+        "precautions": [
+          "Avoid sun exposure during ex"
+        ],
+        "criteria": [
+          "Reduced fatigue severity score"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Graduated Loading",
+        "timeline": "Week 4–12",
+        "goals": [
+          "Aerobic endurance",
+          "Joint mobility"
+        ],
+        "precautions": [
+          "Stop if skin lesions/heat spikes occur"
+        ],
+        "criteria": [
+          "Improved cardio capacity"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Active Wellness",
+        "timeline": "Month 3–6",
+        "goals": [
+          "Full core endurance",
+          "Social tasks"
+        ],
+        "precautions": [
+          "Maintain hydration"
+        ],
+        "criteria": [
+          "Stabilized QoL"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Lifelong Habitus",
+        "timeline": "Ongoing",
+        "goals": [
+          "Maintenance",
+          "Prevention of secondary issues"
+        ],
+        "precautions": [
+          "Independent flare monitoring"
+        ],
+        "criteria": [
+          "Full life participation"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Carpal Tunnel Syndrome (Conservative)",
+    "category": "Wrist/Hand",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Protective & Nerve Gliding",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Reduce median nerve compression",
+          "Night splinting",
+          "Restore neural excursion"
+        ],
+        "precautions": [
+          "Avoid prolonged wrist flexion",
+          "Limit heavy vibratory impact"
+        ],
+        "criteria": [
+          "Reduced night-time tingling",
+          "Stable symptoms"
+        ],
+        "exercises": [
+          {
+            "name": "Median Nerve Sliders",
+            "parameters": "3 × 15 reps",
+            "cue": "Improve nerve excursion"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Mobilization & Early Loading",
+        "timeline": "Week 4–8",
+        "goals": [
+          "Maintain range",
+          "Light grip strengthening"
+        ],
+        "precautions": [
+          "Avoid end-range loading"
+        ],
+        "criteria": [
+          "Pain-free grip > 50%"
+        ],
+        "exercises": [
+          {
+            "name": "Finger Tendolon Glides",
+            "parameters": "3 × 10 reps",
+            "cue": "Maintain mobility"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "title": "Advanced Strengthening",
+        "timeline": "Week 8–16",
+        "goals": [
+          "Restore full grip/pinch power",
+          "ADL integration"
+        ],
+        "precautions": [
+          "Monitor for returning numbness"
+        ],
+        "criteria": [
+          "Symmetric power"
+        ],
+        "exercises": [
+          {
+            "name": "Weighted Wrist Flexion/Extension",
+            "parameters": "3 × 15 reps",
+            "cue": "Strength build"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "title": "Ergonomic Resilience",
+        "timeline": "Month 4+",
+        "goals": [
+          "Prevention",
+          "Maintenance of neural mobility"
+        ],
+        "precautions": [
+          "Independent breaks"
+        ],
+        "criteria": [
+          "Full functional return"
+        ],
+        "exercises": [
+          {
+            "name": "Precision Pinch Drills",
+            "parameters": "5 min",
+            "cue": "Fine motor maintenance"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "De Quervain''s Tenosynovitis (Conservative)",
+    "category": "Wrist/Hand",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Immobilization & Calming",
+        "timeline": "Week 0–3",
+        "goals": [
+          "Settle peak pain",
+          "Protect APL/EPB tendons"
+        ],
+        "precautions": [
+          "Avoid repetitive thumb abduction"
+        ],
+        "criteria": [
+          "Neg Finkelstein test"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Mobilization & Early Loading",
+        "timeline": "Week 3–8",
+        "goals": [
+          "Active thumb ROM",
+          "Early isometric activation"
+        ],
+        "precautions": [
+          "Stop if sharp pain returns"
+        ],
+        "criteria": [
+          "Full active ROM thumb"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Advanced Strength",
+        "timeline": "Week 8–16",
+        "goals": [
+          "Restore grip/pinch power",
+          "Tendon loading into extension"
+        ],
+        "precautions": [
+          "Gradual load spikes"
+        ],
+        "criteria": [
+          "Symmetric grip"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Ergonomic Resilience",
+        "timeline": "Month 4+",
+        "goals": [
+          "Independent care",
+          "Prevention"
+        ],
+        "precautions": [
+          "Maintain flexibility"
+        ],
+        "criteria": [
+          "Full functional return"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Boutonniere Deformity",
+    "category": "Wrist/Hand",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Protection & Splinting",
+        "timeline": "Week 0–6",
+        "goals": [
+          "Heal central slip",
+          "Maintain DIP joint mobility"
+        ],
+        "precautions": [
+          "Continuous PIP splinting (24/7)"
+        ],
+        "criteria": [
+          "Full PIP passive extension"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "AAROM progression",
+        "timeline": "Week 6–10",
+        "goals": [
+          "Active extension",
+          "Maintain DIP flex"
+        ],
+        "precautions": [
+          "Avoid forceful flexion"
+        ],
+        "criteria": [
+          "Neg extensor lag"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Advanced Dexterity",
+        "timeline": "Week 10–16",
+        "goals": [
+          "Grip power",
+          "Hand coordination"
+        ],
+        "precautions": [
+          "Monitor for lag return"
+        ],
+        "criteria": [
+          "Full functional hand use"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Discharge",
+        "timeline": "Month 4+",
+        "goals": [
+          "Maintenance",
+          "Prevention"
+        ],
+        "precautions": [
+          "Independent monitoring"
+        ],
+        "criteria": [
+          "Stable recovery"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Mallet Finger",
+    "category": "Wrist/Hand",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Strict Splinting",
+        "timeline": "Week 0–8",
+        "goals": [
+          "Heal terminal extensor tendon"
+        ],
+        "precautions": [
+          "Continuous DIP splinting (NO dropping)"
+        ],
+        "criteria": [
+          "PIP joint full mobility"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Splint Weaning",
+        "timeline": "Week 8–10",
+        "goals": [
+          "Active extension initialization"
+        ],
+        "precautions": [
+          "Only night splinting"
+        ],
+        "criteria": [
+          "No lag after weaning"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Initial Loading",
+        "timeline": "Week 10–14",
+        "goals": [
+          "Load the tendon"
+        ],
+        "precautions": [
+          "Monitor for extension loss"
+        ],
+        "criteria": [
+          "Full active extension"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Functional Maintenance",
+        "timeline": "Month 4+",
+        "goals": [
+          "Maintenance",
+          "Prevention"
+        ],
+        "precautions": [
+          "Protective splint for impact"
+        ],
+        "criteria": [
+          "Zero recurring lag"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "TFCC Tear (Conservative)",
+    "category": "Wrist/Hand",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Acute Immobilization",
+        "timeline": "Week 0–6",
+        "goals": [
+          "Settle ulnar-sided pain",
+          "Wrist stability"
+        ],
+        "precautions": [
+          "Restrict rotation (supination/pronation)"
+        ],
+        "criteria": [
+          "Neg fovea sign pain"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Early Mobilization",
+        "timeline": "Week 6–10",
+        "goals": [
+          "Active range initialization"
+        ],
+        "precautions": [
+          "Avoid end-range deviation"
+        ],
+        "criteria": [
+          "Full pain-free range"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Proprioception & Grip",
+        "timeline": "Week 10–16",
+        "goals": [
+          "Stability",
+          "Strength"
+        ],
+        "precautions": [
+          "Monitor rotation load"
+        ],
+        "criteria": [
+          "Symmetric grip"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Functional Resilience",
+        "timeline": "Month 4+",
+        "goals": [
+          "Prevention",
+          "Full return"
+        ],
+        "precautions": [
+          "Independent maintenance"
+        ],
+        "criteria": [
+          "Zero recurring instability"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Scaphoid Fracture (Non-operative)",
+    "category": "Wrist/Hand",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Immobilization & Protection",
+        "timeline": "Week 0–12",
+        "goals": [
+          "Bony union achievement",
+          "Thumb/Finger mobility maintenance"
+        ],
+        "precautions": [
+          "Strict NWB",
+          "No heavy lifting or torque",
+          "Maintain cast integrity"
+        ],
+        "criteria": [
+          "X-ray confirmed union",
+          "Neg tenderness at anatomical snuffbox"
+        ],
+        "exercises": [
+          {
+            "name": "Finger Tendolon Glides",
+            "parameters": "3 × 15 reps",
+            "cue": "Prevent adhesion while in cast"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Mobilization",
+        "timeline": "Week 12–16",
+        "goals": [
+          "Restore active wrist ROM",
+          "Early grip initiation"
+        ],
+        "precautions": [
+          "Avoid heavy impact initially"
+        ],
+        "criteria": [
+          "Functional ROM achieveD"
+        ],
+        "exercises": [
+          {
+            "name": "Wrist Flexion/Extension (Active)",
+            "parameters": "3 × 10 reps",
+            "cue": "Gentle mobility return"
+          }
+        ]
+      },
+      {
+        "number": 3,
+        "title": "Strength Integration",
+        "timeline": "Week 16–24",
+        "goals": [
+          "Restore grip power",
+          "ADL independence"
+        ],
+        "precautions": [
+          "Monitor for site pain"
+        ],
+        "criteria": [
+          "Full strength return"
+        ],
+        "exercises": [
+          {
+            "name": "Grip Strengthening (Soft ball)",
+            "parameters": "3 × 12 reps",
+            "cue": "Early load intro"
+          }
+        ]
+      },
+      {
+        "number": 4,
+        "title": "Functional Maintenance",
+        "timeline": "Month 6+",
+        "goals": [
+          "Independent care",
+          "Prevention"
+        ],
+        "precautions": [
+          "Maintain flexibility habit"
+        ],
+        "criteria": [
+          "Full seasonal participation"
+        ],
+        "exercises": [
+          {
+            "name": "Full Weight Bearing Tasks",
+            "parameters": "5 min daily",
+            "cue": "Long-term maintenance"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Boxer''s Fracture (5th Metacarpal)",
+    "category": "Wrist/Hand",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Casting & Protection",
+        "timeline": "Week 0–6",
+        "goals": [
+          "Fracture union",
+          "Protect ulnar gutter"
+        ],
+        "precautions": [
+          "Strict NWB",
+          "No resistive digital move"
+        ],
+        "criteria": [
+          "Callus on X-ray"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Mobilization",
+        "timeline": "Week 6–10",
+        "goals": [
+          "Restore digital flexion",
+          "Wrist ROM"
+        ],
+        "precautions": [
+          "Avoid impact forces"
+        ],
+        "criteria": [
+          "Full digital flexion"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Grip Initiation",
+        "timeline": "Week 10–16",
+        "goals": [
+          "Grip power",
+          "Hand dexterity"
+        ],
+        "precautions": [
+          "Monitor site ache"
+        ],
+        "criteria": [
+          "Symmetric grip"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Discharge",
+        "timeline": "Month 4+",
+        "goals": [
+          "Maintenance",
+          "Prevention"
+        ],
+        "precautions": [
+          "Independent monitoring"
+        ],
+        "criteria": [
+          "Zero restrictions"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Trigger Finger (Conservative)",
+    "category": "Wrist/Hand",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Unloading & Splinting",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Settle peak inflammation",
+          "Gluten avoidance (no catching)"
+        ],
+        "precautions": [
+          "Avoid repetitive \"clicking\"",
+          "No heavy lifting"
+        ],
+        "criteria": [
+          "Morning stiffness reduction"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Early Glides",
+        "timeline": "Week 4–8",
+        "goals": [
+          "Maintain range",
+          "Gentle glides"
+        ],
+        "precautions": [
+          "Avoid heavy grip"
+        ],
+        "criteria": [
+          "Painless gliding"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Hand Strength",
+        "timeline": "Week 8–16",
+        "goals": [
+          "Functional grip power",
+          "Dexterity"
+        ],
+        "precautions": [
+          "Monitor for recurrence"
+        ],
+        "criteria": [
+          "Full functional use"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Independent Care",
+        "timeline": "Month 4+",
+        "goals": [
+          "Prevention",
+          "Maintenance"
+        ],
+        "precautions": [
+          "Identify early flare signs"
+        ],
+        "criteria": [
+          "Zero recurring symptoms"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Gamekeeper’s Thumb (UCL Sprain)",
+    "category": "Wrist/Hand",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Immobilization",
+        "timeline": "Week 0–6",
+        "goals": [
+          "Protection of UCL",
+          "Healing"
+        ],
+        "precautions": [
+          "Strict thumb spica splinting (24/7)"
+        ],
+        "criteria": [
+          "Neg valgus stress pain"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "AAROM & Weaning",
+        "timeline": "Week 6–10",
+        "goals": [
+          "Active ROM initiation",
+          "Wean splint"
+        ],
+        "precautions": [
+          "No pinch load yet"
+        ],
+        "criteria": [
+          "Full AROM achieved"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Pinch & Grip Strength",
+        "timeline": "Week 10–16",
+        "goals": [
+          "Restore full pinch power"
+        ],
+        "precautions": [
+          "Gradual load spikes"
+        ],
+        "criteria": [
+          "Symmetric pinch power"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Functional Resilience",
+        "timeline": "Month 4+",
+        "goals": [
+          "Full return to activity",
+          "Prevention"
+        ],
+        "precautions": [
+          "Maintain dexterity habit"
+        ],
+        "criteria": [
+          "Zero recurring symptoms"
+        ],
+        "exercises": []
+      }
+    ]
+  },
+  {
+    "name": "Guyon''s Canal Syndrome",
+    "category": "Wrist/Hand",
+    "phases": [
+      {
+        "number": 1,
+        "title": "Unloading & Desensitization",
+        "timeline": "Week 0–4",
+        "goals": [
+          "Reduce ulnar nerve compression",
+          "Nerve gliding"
+        ],
+        "precautions": [
+          "Avoid prolonged weight on ulnar palm"
+        ],
+        "criteria": [
+          "Reduced numbness"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 2,
+        "title": "Mobilization",
+        "timeline": "Week 4–8",
+        "goals": [
+          "Maintain range",
+          "Coordination"
+        ],
+        "precautions": [
+          "No heavy vibratory tool use"
+        ],
+        "criteria": [
+          "Pain-free grip > 50%"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 3,
+        "title": "Independent Power",
+        "timeline": "Week 8–16",
+        "goals": [
+          "Grip strength",
+          "Full ADL use"
+        ],
+        "precautions": [
+          "Monitor neuro signs"
+        ],
+        "criteria": [
+          "Symmetric power"
+        ],
+        "exercises": []
+      },
+      {
+        "number": 4,
+        "title": "Ergonomic Maintenance",
+        "timeline": "Month 4+",
+        "goals": [
+          "Prevention",
+          "Technique optimization"
+        ],
+        "precautions": [
+          "Maintain ergonomics"
+        ],
+        "criteria": [
+          "Zero recurring symptoms"
+        ],
+        "exercises": []
+      }
+    ]
+  }
+]
