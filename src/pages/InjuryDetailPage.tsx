@@ -8,7 +8,9 @@ import {getInjuryRehabLinks} from '../services/injuryRehabLinks';
 import {
   getLocalizedBodyRegion,
   getLocalizedCategory,
+  getLocalizedCommonInjuryContext,
   getLocalizedInjuryName,
+  getLocalizedInjuryOverview,
 } from '../services/injuryLocalization';
 import {
   getCatalogInjuries,
@@ -181,9 +183,18 @@ export default function InjuryDetailPage() {
   const injuryDisplayName = getLocalizedInjuryName(injury.id, injury.name, lang);
   const categoryDisplay = getLocalizedCategory(injury.category, lang);
   const bodyRegionDisplay = getLocalizedBodyRegion(injury.bodyRegion, lang);
+  const localizedOverview = getLocalizedInjuryOverview(
+    injuryDisplayName,
+    injury.category,
+    injury.bodyRegion,
+    injury.overview || '',
+    lang,
+  );
   const phases = injury.phases || [];
   const redFlags = normalizeStringList(injury.redFlags);
-  const commonIn = normalizeStringList(injury.commonIn);
+  const commonIn = (injury.commonIn || [])
+    .map((item) => getLocalizedCommonInjuryContext(normalizeCopy(item), lang))
+    .filter(Boolean);
   const medicationNotes = [...normalizeStringList(injury.safetyNotes?.medications), ...normalizeStringList(injury.safetyNotes?.supplements)];
   const symptoms = normalizeStringList(injury.pageContent?.symptoms);
   const rehabNotes = normalizeStringList(injury.pageContent?.rehabNotes);
@@ -271,7 +282,7 @@ export default function InjuryDetailPage() {
 
                 <div>
                   <h1 className="text-3xl font-black text-slate-900 sm:text-4xl">{injuryDisplayName}</h1>
-                  <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-600 sm:text-base">{normalizeCopy(injury.overview || labels.description)}</p>
+                  <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-600 sm:text-base">{normalizeCopy(localizedOverview)}</p>
                 </div>
 
                 <div className="flex flex-wrap gap-2">

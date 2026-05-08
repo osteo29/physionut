@@ -19,3 +19,21 @@ export function decodeMojibake(value?: string) {
     return value;
   }
 }
+
+export function decodeMojibakeDeep<T>(value: T): T {
+  if (typeof value === 'string') {
+    return decodeMojibake(value) as T;
+  }
+
+  if (Array.isArray(value)) {
+    return value.map((item) => decodeMojibakeDeep(item)) as T;
+  }
+
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value as Record<string, unknown>).map(([key, item]) => [key, decodeMojibakeDeep(item)]),
+    ) as T;
+  }
+
+  return value;
+}

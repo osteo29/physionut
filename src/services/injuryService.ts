@@ -13,6 +13,7 @@ import {
   getLocalizedInjuryName,
 } from './injuryLocalization';
 import type {InjuryProtocol} from './injuryDatabase';
+import {decodeMojibakeDeep} from './textEncoding';
 import type {Language} from './translations';
 
 export type InjuryCatalogSource = 'supabase' | 'generated' | 'local';
@@ -35,22 +36,23 @@ let remoteInjuryRowsPromise: Promise<RehabProtocolRow[]> | null = null;
 function mapGeneratedInjury(row: RehabProtocolRow, lang: Language, source: InjuryCatalogSource): InjuryCatalogEntry {
   const slug = getRehabProtocolSlug(row.name);
   const localizedName = getLocalizedInjuryName(slug.replace(/-/g, '_'), row.name, lang) || row.name;
+  const category = row.category || 'General';
   const bodyRegion = row.category || 'General';
   const overview =
     row.description ||
     `${row.name} rehab protocol with phased goals, precautions, and progression criteria.`;
 
-  return {
+  return decodeMojibakeDeep({
     id: slug.replace(/-/g, '_'),
     slug,
     name: localizedName,
-    category: getLocalizedCategory(bodyRegion, lang),
+    category: getLocalizedCategory(category, lang),
     bodyRegion: getLocalizedBodyRegion(bodyRegion, lang),
-    overview: getLocalizedInjuryOverview(localizedName, bodyRegion, bodyRegion, overview, lang),
+    overview: getLocalizedInjuryOverview(localizedName, category, bodyRegion, overview, lang),
     commonIn: [],
     source,
     remoteRef: row,
-  };
+  });
 }
 
 export async function getRemoteInjuryRows(options?: {force?: boolean}) {

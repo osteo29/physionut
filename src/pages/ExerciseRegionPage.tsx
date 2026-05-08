@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from 'react';
+﻿import {useEffect, useMemo, useState} from 'react';
 import {Activity, ArrowRight, ChevronRight, Dumbbell, Network} from 'lucide-react';
 import {Link, Navigate, useParams} from 'react-router-dom';
 
@@ -254,7 +254,7 @@ export default function ExerciseRegionPage() {
                     {injury.name}
                   </div>
                   <div className="mt-2 text-sm leading-7 text-slate-600">
-                    {`${injury.category} � ${injury.bodyRegion}`}
+                    {`${injury.category} • ${injury.bodyRegion}`}
                   </div>
                   <div className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-health-green transition group-hover:text-health-green-dark">
                     <span>{isAr ? 'افتح دليل الإصابة' : 'Open injury guide'}</span>
@@ -330,8 +330,3 @@ export default function ExerciseRegionPage() {
     </PageLayout>
   );
 }
-
-
-
-
-

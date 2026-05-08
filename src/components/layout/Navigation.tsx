@@ -393,21 +393,21 @@ const Navigation = memo(
             </>
           ) : null}
 
-        <nav className="sticky top-0 z-50 border-b border-slate-100 bg-white/85 px-3 backdrop-blur-md sm:px-6 lg:px-8">
-          <div className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-2 py-2 sm:gap-3">
-            <div className="flex items-center gap-2 sm:gap-3">
+        <nav className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/88 px-3 backdrop-blur-xl sm:px-5 lg:px-8">
+          <div className="mx-auto flex min-h-[4.25rem] max-w-7xl items-center justify-between gap-2 py-2 sm:gap-3">
+            <div className="flex items-center gap-2 sm:gap-2.5">
               <button
                 onClick={() => setIsSidebarOpen(true)}
-                className="rounded-xl p-2 text-slate-600 transition-colors hover:bg-slate-100"
+                className="rounded-xl border border-transparent p-2 text-slate-600 transition-colors hover:border-slate-200 hover:bg-slate-50"
                 aria-label={isAr ? 'فتح القائمة الرئيسية' : 'Open main menu'}
               >
-                <Menu className="h-6 w-6" />
+                <Menu className="h-5 w-5" />
               </button>
               {brand}
             </div>
 
-            <div className="flex items-center gap-1.5 sm:gap-3 lg:gap-4">
-              <div className="hidden items-center gap-6 lg:flex">
+            <div className="flex items-center gap-1.5 sm:gap-2.5 lg:gap-3">
+              <div className="hidden items-center gap-5 lg:flex">
                 <a href="#calculators" className="nav-link">
                   {t.nav.calculators}
                 </a>
@@ -442,7 +442,7 @@ const Navigation = memo(
 
               <Link
                 to={navigationPaths.assistant(lang)}
-                className="hidden items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-slate-700 transition-all hover:border-health-green/30 sm:flex"
+                className="hidden items-center gap-2 rounded-xl border border-slate-200 bg-slate-50/90 px-3 py-2 text-slate-700 transition-all hover:border-health-green/30 hover:bg-white sm:flex"
               >
                 <Stethoscope className="h-4 w-4 text-health-green" />
                 <span className="hidden text-xs font-bold lg:inline">
@@ -453,7 +453,7 @@ const Navigation = memo(
               {user ? (
                 <Link
                   to={navigationPaths.dashboard(lang)}
-                  className="hidden items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-700 transition-all hover:border-health-green/30 sm:flex"
+                  className="hidden items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-700 transition-all hover:border-health-green/30 hover:bg-slate-50 sm:flex"
                 >
                   <UserRound className="h-4 w-4 text-health-green" />
                   <span className="hidden text-xs font-bold lg:inline">{authLabel}</span>
@@ -462,13 +462,13 @@ const Navigation = memo(
                 <div className="hidden items-center gap-2 sm:flex">
                   <Link
                     to={navigationPaths.auth(lang)}
-                    className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-700 transition-all hover:border-health-green/30"
+                    className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-700 transition-all hover:border-health-green/30 hover:bg-slate-50"
                   >
                     <span className="text-xs font-bold">{isAr ? 'إنشاء حساب' : 'Create account'}</span>
                   </Link>
                   <Link
                     to={navigationPaths.auth(lang)}
-                    className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-3 py-2 text-white transition-all hover:bg-slate-800"
+                    className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-3 py-2 text-white shadow-sm transition-all hover:bg-slate-800"
                   >
                     <UserRound className="h-4 w-4" />
                     <span className="text-xs font-bold">{isAr ? 'تسجيل الدخول' : 'Sign in'}</span>
@@ -497,7 +497,7 @@ const Navigation = memo(
 
               <button
                 onClick={onToggleTheme}
-                className="hidden rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-slate-700 transition-all hover:border-health-green/30 sm:flex"
+                className="hidden rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-slate-700 transition-all hover:border-health-green/30 hover:bg-white sm:flex"
                 aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
               >
                 {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
@@ -505,7 +505,7 @@ const Navigation = memo(
 
               <button
                 onClick={() => scrollToId('calculators')}
-                className="rounded-full bg-health-green px-3 py-2 text-xs font-semibold text-white shadow-md shadow-health-green/10 transition-all hover:bg-health-green-dark sm:px-5 sm:text-sm"
+                className="rounded-full bg-health-green px-3 py-2 text-xs font-semibold text-white shadow-sm shadow-health-green/10 transition-all hover:bg-health-green-dark sm:px-4 sm:text-sm"
               >
                 {isAr ? 'ابدأ' : 'Start'}
               </button>

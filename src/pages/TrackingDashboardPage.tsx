@@ -340,24 +340,24 @@ export default function TrackingDashboardPage() {
         noIndex
       />
 
-      <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-        <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div>
             <div className="mb-2 text-[11px] font-bold uppercase tracking-[0.18em] text-health-green">
               {isAr ? 'لوحة المتابعة الآمنة' : 'Secure tracking dashboard'}
             </div>
-            <h1 className="text-3xl font-bold text-slate-900">
+            <h1 className="text-2xl font-bold text-slate-900 sm:text-[1.9rem]">
               {isAr ? 'سجل القياسات المرتبط بحسابك' : 'Assessment history linked to your account'}
             </h1>
-            <p className="mt-2 text-sm text-slate-500">{user.email}</p>
+            <p className="mt-1.5 text-sm text-slate-500">{user.email}</p>
           </div>
 
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-2.5">
             <button
               type="button"
               onClick={handleDownloadPdf}
               disabled={isGeneratingPdf}
-              className="inline-flex items-center gap-2 rounded-2xl bg-health-green px-4 py-3 font-bold text-white transition-all hover:bg-health-green-dark disabled:cursor-not-allowed disabled:opacity-60"
+              className="inline-flex items-center gap-2 rounded-2xl bg-health-green px-4 py-2.5 text-sm font-bold text-white transition-all hover:bg-health-green-dark disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isGeneratingPdf ? (
                 <LoaderCircle className="h-4 w-4 animate-spin" />
@@ -368,7 +368,7 @@ export default function TrackingDashboardPage() {
             </button>
             <Link
               to={navigationPaths.home(lang)}
-              className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 font-bold text-slate-700"
+              className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-700"
             >
               <ArrowLeft className={`h-4 w-4 ${isAr ? 'rotate-180' : ''}`} />
               <span>{isAr ? 'العودة للرئيسية' : 'Back home'}</span>
@@ -377,7 +377,7 @@ export default function TrackingDashboardPage() {
             <button
               type="button"
               onClick={handleLogout}
-              className="inline-flex items-center gap-2 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 font-bold text-rose-600 transition-all hover:bg-rose-100"
+              className="inline-flex items-center gap-2 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-2.5 text-sm font-bold text-rose-600 transition-all hover:bg-rose-100"
             >
               <LogOut className="h-4 w-4" />
               <span>{isAr ? 'تسجيل الخروج' : 'Log out'}</span>
@@ -391,20 +391,20 @@ export default function TrackingDashboardPage() {
           </div>
         ) : null}
 
-        <div className="mb-6 rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm">
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="mb-5 rounded-[1.75rem] border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-health-green">
                 {isAr ? 'عدسة المتابعة' : 'Recovery lens'}
               </div>
-              <p className="mt-2 max-w-2xl text-sm text-slate-600">
+              <p className="mt-1.5 max-w-2xl text-sm leading-6 text-slate-600">
                 {isAr
                   ? 'اعرض بياناتك حسب الفترة الزمنية التي تريد مراجعتها، ثم راقب المؤشر نفسه بصورة متسقة حتى تكون المقارنة مفيدة سريريًا.'
                   : 'Review one time window at a time, then keep tracking the same metric consistently so the comparisons stay clinically useful.'}
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5">
               {TIME_RANGE_OPTIONS.map((option) => {
                 const isActive = option.key === timeRange;
                 return (
@@ -412,7 +412,7 @@ export default function TrackingDashboardPage() {
                     key={option.key}
                     type="button"
                     onClick={() => setTimeRange(option.key)}
-                    className={`rounded-full px-4 py-2 text-sm font-semibold transition-all ${
+                    className={`rounded-full px-3.5 py-2 text-sm font-semibold transition-all ${
                       isActive
                         ? 'bg-slate-900 text-white'
                         : 'border border-slate-200 bg-white text-slate-600 hover:border-health-green/30 hover:text-slate-900'
@@ -425,12 +425,12 @@ export default function TrackingDashboardPage() {
             </div>
           </div>
 
-          <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-3">
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+          <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-3">
+            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3.5">
               <div className="mb-2 text-xs text-slate-500">{isAr ? 'السجلات في آخر 14 يومًا' : 'Records in the last 14 days'}</div>
               <div className="text-2xl font-bold text-slate-900">{dashboardSnapshot.recentRecordCount}</div>
             </div>
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3.5">
               <div className="mb-2 text-xs text-slate-500">{isAr ? 'أكثر مؤشر تمت متابعته' : 'Most tracked metric'}</div>
               <div className="text-lg font-bold text-slate-900">
                 {dashboardSnapshot.mostTrackedLabel || (isAr ? 'لا يوجد بعد' : 'Not available yet')}
@@ -443,7 +443,7 @@ export default function TrackingDashboardPage() {
                 </div>
               ) : null}
             </div>
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3.5">
               <div className="mb-2 text-xs text-slate-500">{isAr ? 'أحدث نتيجة في هذه الفترة' : 'Latest result in this window'}</div>
               <div className="text-lg font-bold text-slate-900">
                 {dashboardSnapshot.latestRecordLabel || (isAr ? 'لا توجد نتائج' : 'No results')}
@@ -452,8 +452,8 @@ export default function TrackingDashboardPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-          <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.24fr_0.76fr]">
+          <div className="rounded-[1.75rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
             <div className="mb-4 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-health-green">
               <LineChart className="h-3.5 w-3.5" />
               <span>{isAr ? 'الرسم البياني' : 'Trend chart'}</span>
@@ -535,33 +535,33 @@ export default function TrackingDashboardPage() {
             )}
           </div>
 
-          <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
+          <div className="rounded-[1.75rem] border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
             <div className="mb-4 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-health-green">
               <BarChart3 className="h-3.5 w-3.5" />
               <span>{isAr ? 'ملخص سريع' : 'Quick summary'}</span>
             </div>
 
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3.5">
                 <div className="mb-2 text-xs text-slate-500">{isAr ? 'السجلات في العرض الحالي' : 'Records in current view'}</div>
                 <div className="text-2xl font-bold text-slate-900">
                   {filteredRecords.length}
                   <span className="ml-2 text-sm font-medium text-slate-500">/ {records.length}</span>
                 </div>
               </div>
-              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3.5">
                 <div className="mb-2 text-xs text-slate-500">{isAr ? 'المؤشرات الرقمية المتاحة' : 'Tracked numeric metrics'}</div>
                 <div className="text-2xl font-bold text-slate-900">{dashboardSnapshot.trackedMetricCount}</div>
               </div>
             </div>
 
             {selectedMetric ? (
-              <div className="mt-4 rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4">
+              <div className="mt-3 rounded-[1.35rem] border border-slate-200 bg-slate-50 p-3.5">
                 <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
                   {isAr ? 'المؤشر النشط' : 'Active metric'}
                 </div>
                 <div className="mt-2 text-lg font-black text-slate-900">{selectedMetric.label}</div>
-                <p className="mt-2 text-sm text-slate-600">
+                <p className="mt-1.5 text-sm leading-6 text-slate-600">
                   {isAr
                     ? `يظهر الرسم لهذا المؤشر فقط عبر ${selectedMetric.records.length} قراءة في الفترة الحالية، حتى لا تختلط المقاييس المختلفة في منحنى واحد.`
                     : `The chart focuses on this metric only across ${selectedMetric.records.length} readings in the current window, so different measurements do not get mixed together.`}
@@ -570,7 +570,7 @@ export default function TrackingDashboardPage() {
             ) : null}
 
             {selectedMetricInsight ? (
-              <div className={`mt-4 rounded-[1.5rem] border p-4 ${insightToneClasses[selectedMetricInsight.tone]}`}>
+              <div className={`mt-3 rounded-[1.35rem] border p-3.5 ${insightToneClasses[selectedMetricInsight.tone]}`}>
                 <div className="flex items-start gap-3">
                   <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0" />
                   <div>
@@ -584,14 +584,14 @@ export default function TrackingDashboardPage() {
 
             <Link
               to={navigationPaths.injuries(lang)}
-              className="mt-4 flex items-center justify-between gap-4 rounded-[1.5rem] border border-health-green/20 bg-health-green/5 px-4 py-4 transition-all hover:border-health-green/40 hover:bg-health-green/10"
+              className="mt-3 flex items-center justify-between gap-3 rounded-[1.35rem] border border-health-green/20 bg-health-green/5 px-4 py-3.5 transition-all hover:border-health-green/40 hover:bg-health-green/10"
             >
               <div>
                 <div className="flex items-center gap-2 text-sm font-bold text-health-green-dark">
                   <ClipboardList className="h-4 w-4" />
                   <span>{isAr ? 'بروتوكولات الإصابات' : 'Injury protocols'}</span>
                 </div>
-                <p className="mt-2 text-sm text-slate-600">
+                <p className="mt-1.5 text-sm leading-6 text-slate-600">
                   {isAr
                     ? 'افتح مكتبة التعافي وخطط التغذية العلاجية مباشرة من لوحة المتابعة.'
                     : 'Open the rehab library and recovery nutrition plans directly from your dashboard.'}
@@ -602,14 +602,14 @@ export default function TrackingDashboardPage() {
 
             <Link
               to={navigationPaths.exercises(lang)}
-              className="mt-4 flex items-center justify-between gap-4 rounded-[1.5rem] border border-slate-200 bg-slate-50 px-4 py-4 transition-all hover:border-health-green/30 hover:bg-soft-blue"
+              className="mt-3 flex items-center justify-between gap-3 rounded-[1.35rem] border border-slate-200 bg-slate-50 px-4 py-3.5 transition-all hover:border-health-green/30 hover:bg-soft-blue"
             >
               <div>
                 <div className="flex items-center gap-2 text-sm font-bold text-slate-900">
                   <Dumbbell className="h-4 w-4 text-health-green" />
                   <span>{isAr ? 'دليل التمارين' : 'Exercise finder'}</span>
                 </div>
-                <p className="mt-2 text-sm text-slate-600">
+                <p className="mt-1.5 text-sm leading-6 text-slate-600">
                   {isAr
                     ? 'ارجع إلى صفحة التمارين لاختيار تمارين مناسبة ثم تابع تأثيرها هنا في السجل.'
                     : 'Go back to the exercise page to choose movements, then track how they affect your log here.'}
@@ -620,7 +620,7 @@ export default function TrackingDashboardPage() {
           </div>
         </div>
 
-        <div className="mt-8 rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="mt-6 rounded-[1.75rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
           <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-health-green">
               <Calendar className="h-3.5 w-3.5" />

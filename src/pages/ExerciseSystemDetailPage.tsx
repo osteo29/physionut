@@ -1,4 +1,4 @@
-import {ArrowRight, CalendarRange, ChevronRight, GitCompareArrows, Link2} from 'lucide-react';
+﻿import {ArrowRight, CalendarRange, ChevronRight, GitCompareArrows, Link2} from 'lucide-react';
 import {Link, Navigate, useParams} from 'react-router-dom';
 
 import {WeeklyPlanCard} from '../components/common/exercise-finder/WeeklyPlanCard';
