@@ -190,23 +190,19 @@ export default function InjuryProtocolsPage() {
                   <Link
                     key={injury.id}
                     to={`/${lang}/injuries/${injury.slug}`}
-                    className={`group rounded-[1.75rem] border p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg ${
-                      index === 0
-                        ? 'border-slate-900 bg-slate-950 text-white dark:border-health-green dark:bg-slate-900'
-                        : 'border-slate-200 bg-white/90 text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-white'
-                    }`}
+                    className="group rounded-[1.75rem] border border-slate-200 bg-white/90 p-5 text-slate-900 shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg dark:border-slate-700 dark:bg-slate-900 dark:text-white"
                   >
-                    <div className={`text-xs font-bold uppercase tracking-[0.18em] ${index === 0 ? 'text-white/60' : 'text-health-green'}`}>
+                    <div className="text-xs font-bold uppercase tracking-[0.18em] text-health-green">
                       {injury.category}
                     </div>
                     <div className="mt-2 text-xl font-black">{injury.name}</div>
-                    <div className={`mt-3 inline-flex rounded-full px-3 py-1 text-xs font-bold ${index === 0 ? 'bg-white/10 text-white/80' : 'bg-slate-100 text-slate-600 dark:bg-slate-950 dark:text-slate-300'}`}>
+                    <div className="mt-3 inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600 dark:bg-slate-950 dark:text-slate-300">
                       {injury.bodyRegion}
                     </div>
-                    <p className={`mt-3 line-clamp-3 text-sm leading-7 ${index === 0 ? 'text-white/75' : 'text-slate-600 dark:text-slate-300'}`}>
+                    <p className="mt-3 line-clamp-3 text-sm leading-7 text-slate-600 dark:text-slate-300">
                       {injury.overview}
                     </p>
-                    <div className={`mt-5 inline-flex items-center gap-2 text-sm font-bold ${index === 0 ? 'text-white' : 'text-health-green'}`}>
+                    <div className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-health-green">
                       {isAr ? ar('Ø§ÙØªØ­ Ø§Ù„ØªÙØ§ØµÙŠÙ„') : 'Open details'}
                       <ArrowRight className={`h-4 w-4 transition group-hover:translate-x-0.5 ${isAr ? 'rotate-180 group-hover:-translate-x-0.5 group-hover:translate-y-0' : ''}`} />
                     </div>
@@ -410,32 +406,28 @@ export default function InjuryProtocolsPage() {
                     <Link
                       key={injury.id}
                       to={`/${lang}/injuries/${injury.slug}`}
-                      className={`group rounded-[1.7rem] border p-5 transition hover:-translate-y-0.5 hover:shadow-lg ${
-                        index === 0
-                          ? 'border-slate-900 bg-slate-950 text-white shadow-xl shadow-slate-900/10 dark:border-health-green dark:bg-slate-950'
-                          : 'border-slate-200 bg-[linear-gradient(145deg,#ffffff,#f8fafc)] text-slate-900 dark:border-slate-700 dark:bg-[linear-gradient(145deg,#0f172a,#111827)] dark:text-white'
-                      }`}
+                      className="group rounded-[1.7rem] border border-slate-200 bg-[linear-gradient(145deg,#ffffff,#f8fafc)] p-5 text-slate-900 transition hover:-translate-y-0.5 hover:shadow-lg dark:border-slate-700 dark:bg-[linear-gradient(145deg,#0f172a,#111827)] dark:text-white"
                     >
                       <div className="flex flex-wrap items-start justify-between gap-4">
                         <div className="min-w-0 flex-1">
-                          <div className={`text-xs font-bold uppercase tracking-[0.18em] ${index === 0 ? 'text-white/60' : 'text-health-green'}`}>
+                          <div className="text-xs font-bold uppercase tracking-[0.18em] text-health-green">
                             {injury.category}
                           </div>
                           <div className="mt-3 text-xl font-black">{injury.name}</div>
                         </div>
-                        <div className={`rounded-full px-3 py-1 text-xs font-bold ${index === 0 ? 'bg-white/10 text-white/85' : 'bg-slate-100 text-slate-600 dark:bg-slate-900 dark:text-slate-300'}`}>
+                        <div className="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600 dark:bg-slate-900 dark:text-slate-300">
                           {injury.bodyRegion}
                         </div>
                       </div>
-                      <p className={`mt-3 line-clamp-4 text-sm leading-7 ${index === 0 ? 'text-white/75' : 'text-slate-600 dark:text-slate-300'}`}>
+                      <p className="mt-3 line-clamp-4 text-sm leading-7 text-slate-600 dark:text-slate-300">
                         {injury.overview}
                       </p>
 
                       <div className="mt-5 flex items-center justify-between gap-3">
-                        <div className={`text-xs font-bold uppercase tracking-[0.16em] ${index === 0 ? 'text-white/50' : 'text-slate-400 dark:text-slate-500'}`}>
+                        <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400 dark:text-slate-500">
                           {isAr ? ar('Ø¨Ø±ÙˆØªÙˆÙƒÙˆÙ„ ØªØ¹Ø§ÙÙ Ù…Ø±ØªØ¨') : 'Structured rehab protocol'}
                         </div>
-                        <div className={`inline-flex items-center gap-2 text-sm font-bold ${index === 0 ? 'text-white' : 'text-health-green'}`}>
+                        <div className="inline-flex items-center gap-2 text-sm font-bold text-health-green">
                           {isAr ? ar('Ø§ÙØªØ­') : 'Open'}
                           <ArrowRight className={`h-4 w-4 transition group-hover:translate-x-0.5 ${isAr ? 'rotate-180 group-hover:-translate-x-0.5 group-hover:translate-y-0' : ''}`} />
                         </div>
