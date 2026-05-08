@@ -183,6 +183,11 @@ export default function InjuryDetailPage() {
   const symptoms = injury.pageContent?.symptoms?.map(normalizeCopy) || [];
   const rehabNotes = injury.pageContent?.rehabNotes?.map(normalizeCopy) || [];
   const commonIn = injury.commonIn?.map(normalizeCopy).filter(Boolean) || [];
+  const totalExercisePlans = injury.phases.reduce((count, phase) => count + (phase.exercisePlans?.length || 0), 0);
+  const phasesWithNutrition = injury.phases.filter(
+    (phase) => phase.nutritionFocus.length || phase.recommendedFoods.length || phase.supplements.length,
+  ).length;
+  const phasesWithExercises = injury.phases.filter((phase) => (phase.exercisePlans?.length || 0) > 0).length;
 
   const relatedInjuries = useMemo(
     () =>
@@ -309,6 +314,30 @@ export default function InjuryDetailPage() {
                     </div>
                   </div>
                 ) : null}
+
+                <div className="grid gap-3 sm:grid-cols-3">
+                  <div className="rounded-[1.5rem] border border-slate-200 bg-slate-950 p-4 text-white shadow-lg shadow-slate-900/10">
+                    <div className="text-xs font-bold uppercase tracking-[0.16em] text-white/50">{isAr ? 'التمارين المسجلة' : 'Logged exercises'}</div>
+                    <div className="mt-2 text-3xl font-black">{totalExercisePlans}</div>
+                    <div className="mt-2 text-sm text-white/70">
+                      {isAr ? 'إجمالي التمارين التفصيلية عبر كل المراحل' : 'Detailed exercise entries across all phases'}
+                    </div>
+                  </div>
+                  <div className="rounded-[1.5rem] border border-slate-200 bg-white/90 p-4 shadow-sm">
+                    <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">{isAr ? 'مراحل التمارين' : 'Exercise phases'}</div>
+                    <div className="mt-2 text-3xl font-black text-slate-900">{phasesWithExercises}</div>
+                    <div className="mt-2 text-sm text-slate-500">
+                      {isAr ? 'مراحل فيها وصف حركي عملي' : 'Phases with actionable exercise plans'}
+                    </div>
+                  </div>
+                  <div className="rounded-[1.5rem] border border-slate-200 bg-white/90 p-4 shadow-sm">
+                    <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">{isAr ? 'مراحل التغذية' : 'Nutrition phases'}</div>
+                    <div className="mt-2 text-3xl font-black text-slate-900">{phasesWithNutrition}</div>
+                    <div className="mt-2 text-sm text-slate-500">
+                      {isAr ? 'مراحل فيها دعم غذائي أو مكملات' : 'Phases with nutrition or supplement guidance'}
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div className="space-y-4">

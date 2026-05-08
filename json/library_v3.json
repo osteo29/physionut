@@ -1,0 +1,5639 @@
+[
+  {
+    "id": "quad_sets",
+    "canonical_name": "Quad Sets",
+    "clinical_cue": "hold Flatten back of knee to bed, feel VMO contract",
+    "default_tags": [
+      "isometric",
+      "mobility",
+      "quad"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "ankle_pumps",
+    "canonical_name": "Ankle Pumps",
+    "clinical_cue": "Reduce DVT risk, improve circulation",
+    "default_tags": [
+      "ankle",
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "straight_leg_raise",
+    "canonical_name": "Straight Leg Raise",
+    "clinical_cue": "Lock knee before lifting, no lag allowed",
+    "default_tags": [
+      "strength",
+      "quad",
+      "open_chain"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "heel_slides",
+    "canonical_name": "Heel Slides",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "patellar_mobilisation",
+    "canonical_name": "Patellar Mobilisation",
+    "clinical_cue": "Medial, lateral, superior glides \u2014 painfree",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "mini_squats",
+    "canonical_name": "Mini Squats",
+    "clinical_cue": "Knees track over 2nd toe, weight through heels",
+    "default_tags": [
+      "closed_chain",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "step_ups",
+    "canonical_name": "Step-Ups",
+    "clinical_cue": "Lead with affected leg, control descent",
+    "default_tags": [
+      "closed_chain",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "leg_press",
+    "canonical_name": "Leg Press",
+    "clinical_cue": "Bilateral then unilateral, avoid locking out",
+    "default_tags": [
+      "closed_chain",
+      "quad",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "terminal_knee_extension",
+    "canonical_name": "Terminal Knee Extension",
+    "clinical_cue": "Focus on last 20\u00b0 \u2014 VMO activation",
+    "default_tags": [
+      "mobility",
+      "open_chain",
+      "quad",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "hip_abduction",
+    "canonical_name": "Hip Abduction",
+    "clinical_cue": "Maintain pelvic stability, control return",
+    "default_tags": [
+      "glute",
+      "hip",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "calf_raise",
+    "canonical_name": "Calf Raise",
+    "clinical_cue": "Full ROM, slow eccentric phase",
+    "default_tags": [
+      "calf",
+      "eccentric",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "stationary_bike",
+    "canonical_name": "Stationary Bike",
+    "clinical_cue": "ROM & cardiovascular \u2014 no pain",
+    "default_tags": [
+      "cardio",
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "bulgarian_split_squat",
+    "canonical_name": "Bulgarian Split Squat",
+    "clinical_cue": "Front foot flat, torso upright, 90\u00b0 knee flexion",
+    "default_tags": [
+      "closed_chain",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "romanian_deadlift",
+    "canonical_name": "Romanian Deadlift",
+    "clinical_cue": "Hip hinge pattern, neutral spine, feel hamstring load",
+    "default_tags": [
+      "hamstring",
+      "hip",
+      "spine",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "lateral_band_walk",
+    "canonical_name": "Lateral Band Walks",
+    "clinical_cue": "Maintain squat position, band around ankles",
+    "default_tags": [
+      "ankle",
+      "closed_chain",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "single_leg_press",
+    "canonical_name": "Single-Leg Press",
+    "clinical_cue": "",
+    "default_tags": [
+      "balance",
+      "closed_chain",
+      "quad",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "step_down",
+    "canonical_name": "Box Step-Down",
+    "clinical_cue": "",
+    "default_tags": [
+      "closed_chain",
+      "plyometric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "double_leg_squat_jump",
+    "canonical_name": "Double-leg Squat Jump",
+    "clinical_cue": "Soft landing, absorb force through hips and knees",
+    "default_tags": [
+      "closed_chain",
+      "plyometric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "forward_hop",
+    "canonical_name": "Forward Hop",
+    "clinical_cue": "",
+    "default_tags": [
+      "plyometric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "jogging_progression",
+    "canonical_name": "Linear Jog Program",
+    "clinical_cue": "",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "t_agility_test_drills",
+    "canonical_name": "T-Agility Test Drills",
+    "clinical_cue": "",
+    "default_tags": [
+      "neuromuscular"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "reactive_change_of_direction",
+    "canonical_name": "Reactive Change-of-Direction",
+    "clinical_cue": "Controlled, then progress to reactive cues",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "plyometric_progression",
+    "canonical_name": "Plyometric Progression",
+    "clinical_cue": "Lateral hops, bounding, depth jumps \u2014 master each before progressing",
+    "default_tags": [
+      "plyometric"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "sport_specific_drills",
+    "canonical_name": "Sport-Specific Drills",
+    "clinical_cue": "Cutting, deceleration, sport movement patterns",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "strength_maintenance",
+    "canonical_name": "Strength Maintenance",
+    "clinical_cue": "Maintain gains achieved in Phase 3",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "prone_knee_hang",
+    "canonical_name": "Prone Knee Hang",
+    "clinical_cue": "Achieve neutral 0\u00b0 extension",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "cryotherapy",
+    "canonical_name": "Cryotherapy",
+    "clinical_cue": "Post-exercise swelling management",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "wall_squat",
+    "canonical_name": "Wall Squat",
+    "clinical_cue": "",
+    "default_tags": [
+      "closed_chain",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "hip_strengthening_circuit",
+    "canonical_name": "Hip Strengthening Circuit",
+    "clinical_cue": "exercise Abductors, extensors, external rotators",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "single_leg_balance",
+    "canonical_name": "Single-Leg Balance",
+    "clinical_cue": "Eyes open then closed, unstable surface progression",
+    "default_tags": [
+      "balance",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "single_leg_squat",
+    "canonical_name": "Single-Leg Squat",
+    "clinical_cue": "Control valgus, depth to 60\u00b0 minimum.",
+    "default_tags": [
+      "balance",
+      "closed_chain",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "agility_ladder",
+    "canonical_name": "Agility Ladder",
+    "clinical_cue": "Speed progression, sharp direction changes",
+    "default_tags": [
+      "neuromuscular"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "aarom_flexion",
+    "canonical_name": "AAROM Flexion",
+    "clinical_cue": "Heel slides, stop at 90\u00b0 \u2014 respect repair",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "hip_strength_general",
+    "canonical_name": "Hip Strengthening",
+    "clinical_cue": "Abductors and extensors \u2014 key for knee stability",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "pool_walking",
+    "canonical_name": "Pool Walking",
+    "clinical_cue": "Offload joint while gaining ROM and strength",
+    "default_tags": [
+      "cardio",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "plyometrics",
+    "canonical_name": "Plyometrics",
+    "clinical_cue": "Bilateral jumps first, then unilateral hops",
+    "default_tags": [
+      "plyometric"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "agility_drills",
+    "canonical_name": "Agility Drills",
+    "clinical_cue": "Carioca, T-drill, shuttle runs",
+    "default_tags": [
+      "neuromuscular"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "sport_specific_skills",
+    "canonical_name": "Sport-Specific Skills",
+    "clinical_cue": "Full sport return month 6 with surgeon clearance",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "clamshell",
+    "canonical_name": "Clamshell",
+    "clinical_cue": "Band around knees, control movement",
+    "default_tags": [
+      "glute",
+      "hip"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "hip_thrust",
+    "canonical_name": "Hip Thrust",
+    "clinical_cue": "Glute activation and posterior chain loading",
+    "default_tags": [
+      "glute",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "running_on_flat_surface",
+    "canonical_name": "Running on flat surface",
+    "clinical_cue": "Pain-free only \u2014 cadence focus",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "running_program_intensity_progression",
+    "canonical_name": "Running Program Intensity Progression",
+    "clinical_cue": ". Sport-Specific Drills Full sessions Cutting, jumping, sport movement patterns",
+    "default_tags": [
+      "mobility",
+      "plyometric"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "hack_squat",
+    "canonical_name": "Hack Squat",
+    "clinical_cue": "",
+    "default_tags": [
+      "closed_chain",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "spanish_squat",
+    "canonical_name": "Spanish Squat",
+    "clinical_cue": "Band around fixed point, hip hinge position",
+    "default_tags": [
+      "closed_chain",
+      "hip",
+      "isometric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "drop_squat",
+    "canonical_name": "Drop Squat",
+    "clinical_cue": "Fast loading \u2014 energy storage introduction",
+    "default_tags": [
+      "closed_chain",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "double_leg_hop",
+    "canonical_name": "Double-leg Hop",
+    "clinical_cue": "Stick landing, then continuous hops",
+    "default_tags": [
+      "plyometric"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "single_leg_hop_progression",
+    "canonical_name": "Single-Leg Hop Progression",
+    "clinical_cue": "Forward, lateral, diagonal \u2014 pain <3/10",
+    "default_tags": [
+      "balance",
+      "plyometric"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "return_to_jumping_sport",
+    "canonical_name": "Return to Jumping Sport",
+    "clinical_cue": "",
+    "default_tags": [
+      "plyometric"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "hip_abductor_strengthening",
+    "canonical_name": "Hip Abductor Strengthening",
+    "clinical_cue": "Critical to reduce valgus stress on MCL",
+    "default_tags": [
+      "hip",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "lateral_bounds",
+    "canonical_name": "Lateral Bounds",
+    "clinical_cue": "Controlled landing, medial knee stability",
+    "default_tags": [
+      "plyometric"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "full_sessions",
+    "canonical_name": "Full sessions",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "sit_to_stand",
+    "canonical_name": "Sit-to-Stand",
+    "clinical_cue": "Use armrests, controlled movement",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "step_downs",
+    "canonical_name": "Step-downs",
+    "clinical_cue": "Eccentric control, good hip-knee alignment",
+    "default_tags": [
+      "closed_chain",
+      "eccentric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "cycling_outdoors",
+    "canonical_name": "Cycling outdoors",
+    "clinical_cue": "Low impact, excellent for ROM and strength",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "proprioception_training",
+    "canonical_name": "Proprioception Training",
+    "clinical_cue": "Single-leg balance, perturbation training",
+    "default_tags": [
+      "balance",
+      "neuromuscular"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "pendulum_exercise",
+    "canonical_name": "Pendulum Exercise",
+    "clinical_cue": "Gravity-assisted distraction \u2014 no muscle activation",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "prom_shoulder_flexion",
+    "canonical_name": "PROM Shoulder Flexion",
+    "clinical_cue": "tolerance Therapist-assisted, pain-free range",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "prom_er",
+    "canonical_name": "PROM ER",
+    "clinical_cue": "Elbow at side, cane-assisted to 40\u00b0",
+    "default_tags": [
+      "glute"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "elbow_rom_grip_strength",
+    "canonical_name": "Elbow ROM & grip strength",
+    "clinical_cue": "Maintain distal function while in sling",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "scapular_retraction",
+    "canonical_name": "Scapular Retraction",
+    "clinical_cue": "hold Maintain scapular function",
+    "default_tags": [
+      "isometric"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "pulleys",
+    "canonical_name": "Pulleys",
+    "clinical_cue": "Good arm assists \u2014 gradual range increase",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "supine_active_flexion",
+    "canonical_name": "Supine Active Flexion",
+    "clinical_cue": "Gravity-eliminated initially, progress to against gravity",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "er_with_band",
+    "canonical_name": "ER with band",
+    "clinical_cue": "Elbow at side, slow controlled \u2014 infraspinatus/teres minor",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "scapular_push_up",
+    "canonical_name": "Scapular Push-up",
+    "clinical_cue": "Serratus anterior \u2014 critical for scapular upward rotation",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "side_lying_er",
+    "canonical_name": "Side-lying ER",
+    "clinical_cue": "Light weight, focus on external rotators",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "prone_y_t_w_isometrics",
+    "canonical_name": "Prone Y/T/W",
+    "clinical_cue": "Scapular stabilisers \u2014 no weight initially",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "shoulder_press",
+    "canonical_name": "Shoulder Press",
+    "clinical_cue": "Begin below 90\u00b0 and progress",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "lateral_raises",
+    "canonical_name": "Lateral Raises",
+    "clinical_cue": "Thumbs up, scapular plane (30\u00b0 forward of frontal)",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "prone_t_y_w",
+    "canonical_name": "Prone T/Y/W",
+    "clinical_cue": "Progress from 0 kg to 2\u20134 kg",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "theraband_er_ir",
+    "canonical_name": "TheraBand ER/IR",
+    "clinical_cue": "Eccentric emphasis \u2014 tendon loading",
+    "default_tags": [
+      "eccentric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "push_up",
+    "canonical_name": "Push-up",
+    "clinical_cue": "Controlled, full scapular motion",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "pull_down",
+    "canonical_name": "Pull-down",
+    "clinical_cue": "Wide grip, engage lats and posterior cuff",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "progressive_overhead_loading",
+    "canonical_name": "Progressive Overhead Loading",
+    "clinical_cue": "Sport/work-specific movements Return-to-Throw Program (athletes) Structured stages 30 ft to 60 ft to 90 ft to full throw.",
+    "default_tags": [
+      "cardio",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "chin_tucks",
+    "canonical_name": "Chin Tucks",
+    "clinical_cue": "Correct forward head \u2014 affects scapular position",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "full_can_exercise",
+    "canonical_name": "Full Can Exercise",
+    "clinical_cue": "Thumbs up, scapular plane \u2014 less subacromial stress than empty can",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "push_up_plus",
+    "canonical_name": "Push-up Plus",
+    "clinical_cue": "Serratus anterior activation at end range",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "cable_row",
+    "canonical_name": "Cable Row",
+    "clinical_cue": "Retract and depress scapula at end range",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "shoulder_flexion",
+    "canonical_name": "Shoulder Flexion",
+    "clinical_cue": "Progress ROM as symptoms allow",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "overhead_press",
+    "canonical_name": "Overhead Press",
+    "clinical_cue": "Progress from below to above 90\u00b0",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "pull_ups_lat_pulldown",
+    "canonical_name": "Pull-ups / Lat Pulldown",
+    "clinical_cue": "Full range, control scapular movement",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "sport_work_specific_loading",
+    "canonical_name": "Sport/Work-Specific Loading",
+    "clinical_cue": "Mirror demands of the specific activity",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "er_stretching",
+    "canonical_name": "ER Stretching",
+    "clinical_cue": "Elbow at side, cane-assisted \u2014 no forcing",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "heat_before_exercise",
+    "canonical_name": "Heat before exercise",
+    "clinical_cue": "Reduce viscosity of synovial fluid \u2014 improve ROM",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "cross_body_stretch",
+    "canonical_name": "Cross-body Stretch",
+    "clinical_cue": "Horizontal adduction \u2014 posterior capsule",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "strengthening",
+    "canonical_name": "Strengthening",
+    "clinical_cue": "Band ER/IR, scapular exercises",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "full_rom_stretching_program",
+    "canonical_name": "Full ROM Stretching Program",
+    "clinical_cue": "",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "all_capsular_directions",
+    "canonical_name": "All capsular directions",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "4_10_reps",
+    "canonical_name": "4 \u00d7 10 reps",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "functional_overhead_training",
+    "canonical_name": "Functional Overhead Training",
+    "clinical_cue": "Work/sport-specific overhead movements",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "elbow_rom",
+    "canonical_name": "Elbow ROM",
+    "clinical_cue": "Maintain elbow mobility in sling",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "wrist_and_hand_strengthening",
+    "canonical_name": "Wrist and hand strengthening",
+    "clinical_cue": "Grip strength \u2014 prevent distal atrophy",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "arom_flexion_abduction",
+    "canonical_name": "AROM Flexion & Abduction",
+    "clinical_cue": "",
+    "default_tags": [
+      "glute",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "er_ir_band_exercises",
+    "canonical_name": "ER/IR Band Exercises",
+    "clinical_cue": "Elbow at side \u2014 avoid impingement position",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "toe_curls_marble_pickups",
+    "canonical_name": "Toe Curls / Marble pickups",
+    "clinical_cue": "Intrinsic foot muscle activation",
+    "default_tags": [
+      "hamstring"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "resistance_band_eversion",
+    "canonical_name": "Resistance Band Eversion",
+    "clinical_cue": "Peroneal strengthening \u2014 critical for lateral stability",
+    "default_tags": [
+      "ankle",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "alphabet_tracing",
+    "canonical_name": "Alphabet Tracing",
+    "clinical_cue": "Full ankle ROM in all planes",
+    "default_tags": [
+      "ankle",
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "heel_toe_walking",
+    "canonical_name": "Heel-Toe Walking",
+    "clinical_cue": "Gait retraining",
+    "default_tags": [
+      "cardio"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "jump_rope",
+    "canonical_name": "Jump Rope",
+    "clinical_cue": "Bilateral then unilateral \u2014 ankle loading",
+    "default_tags": [
+      "ankle",
+      "plyometric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "sport_specific_training",
+    "canonical_name": "Sport-Specific Training",
+    "clinical_cue": "Cutting, pivoting, sport demands",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "bike_swimming",
+    "canonical_name": "Bike / Swimming",
+    "clinical_cue": "Maintain cardiovascular fitness without Achilles load",
+    "default_tags": [
+      "cardio",
+      "isometric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "single_leg_eccentric_calf_drops",
+    "canonical_name": "Single-Leg Eccentric Calf Drops",
+    "clinical_cue": "straight Gastrocnemius \u2014 Alfredson protocol adapted Single-leg Eccentric Calf Drops",
+    "default_tags": [
+      "balance",
+      "calf",
+      "eccentric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "hip_and_glute_strengthening",
+    "canonical_name": "Hip and Glute Strengthening",
+    "clinical_cue": "Reduce Achilles load via proximal control",
+    "default_tags": [
+      "glute",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "pogo_hops",
+    "canonical_name": "Pogo Hops",
+    "clinical_cue": "Rapid energy storage in tendon \u2014 fast elastic rebound",
+    "default_tags": [
+      "plyometric"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "single_leg_bounding",
+    "canonical_name": "Single-Leg Bounding",
+    "clinical_cue": "Eccentric + energy storage loading Walk-Jog-Run Progression",
+    "default_tags": [
+      "balance",
+      "cardio",
+      "eccentric",
+      "plyometric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "stage_program",
+    "canonical_name": "Stage program",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "plantar_fascia_stretch",
+    "canonical_name": "Plantar Fascia Stretch",
+    "clinical_cue": "Pull toes back before stepping \u2014 preactivity",
+    "default_tags": [
+      "closed_chain",
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "calf_stretching",
+    "canonical_name": "Calf Stretching",
+    "clinical_cue": "Knee straight \u2014 reduce tension on fascia",
+    "default_tags": [
+      "calf",
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "towel_marble_scrunches",
+    "canonical_name": "Towel / Marble Scrunches",
+    "clinical_cue": "Intrinsic foot strength \u2014 key long-term solution",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "short_foot_exercise",
+    "canonical_name": "Short Foot Exercise",
+    "clinical_cue": "hold Arch activation \u2014 dome the foot without curling toes",
+    "default_tags": [
+      "hamstring"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "ice_massage",
+    "canonical_name": "Ice Massage",
+    "clinical_cue": "Frozen water bottle rolling \u2014 post activity",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "foot_doming",
+    "canonical_name": "Foot Doming",
+    "clinical_cue": "",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "toe_spread_control",
+    "canonical_name": "Toe Spread & Control",
+    "clinical_cue": "Hallux and lesser toe control \u2014 foot stability",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "plyometric_hopping",
+    "canonical_name": "Plyometric Hopping",
+    "clinical_cue": "Bilateral first \u2014 monitor plantar fascia response Running Gait Retraining",
+    "default_tags": [
+      "plyometric"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "if_indicated",
+    "canonical_name": "If indicated",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "ankle_rom",
+    "canonical_name": "Ankle ROM",
+    "clinical_cue": "direction Alphabet tracing \u2014 restore dorsiflexion priority",
+    "default_tags": [
+      "ankle",
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "step_ups_and_step_downs",
+    "canonical_name": "Step-Ups and Step-downs",
+    "clinical_cue": "Functional loading \u2014 eccentric control",
+    "default_tags": [
+      "closed_chain",
+      "eccentric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "begin_when_fwb_pain_free_and_strength",
+    "canonical_name": "Begin when FWB pain-free and strength",
+    "clinical_cue": "",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "walking",
+    "canonical_name": "Walking",
+    "clinical_cue": "Best evidence for acute LBP \u2014 maintain normal spinal loading",
+    "default_tags": [
+      "cardio",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "knee_to_chest_stretch",
+    "canonical_name": "Knee-to-Chest Stretch",
+    "clinical_cue": "Gentle lumbar flexion mobilisation \u2014 symptom-guide",
+    "default_tags": [
+      "mobility",
+      "spine"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "cat_camel",
+    "canonical_name": "Cat-Camel",
+    "clinical_cue": "Segmental lumbar mobility \u2014 promotes synovial fluid circulation",
+    "default_tags": [
+      "mobility",
+      "spine"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "prone_lying",
+    "canonical_name": "Prone Lying",
+    "clinical_cue": "McKenzie extension if pain peripheralises with flexion",
+    "default_tags": [
+      "mobility",
+      "spine"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "diaphragmatic_breathing",
+    "canonical_name": "Diaphragmatic Breathing",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "dead_bug",
+    "canonical_name": "Dead Bug",
+    "clinical_cue": "Deep abdominal + transversus abdominis \u2014 maintain neutral spine throughout",
+    "default_tags": [
+      "spine",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "bird_dog",
+    "canonical_name": "Bird Dog",
+    "clinical_cue": "Multifidus + contralateral glute \u2014 isometric spinal stabilisation",
+    "default_tags": [
+      "glute",
+      "isometric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "bridge",
+    "canonical_name": "Bridge",
+    "clinical_cue": "Glute max + hamstrings \u2014 posterior chain activation",
+    "default_tags": [
+      "glute",
+      "hamstring",
+      "isometric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "side_plank",
+    "canonical_name": "Side Plank",
+    "clinical_cue": "Lateral core stability \u2014 quadratus lumborum and obliques",
+    "default_tags": [
+      "quad",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "prone_plank",
+    "canonical_name": "Prone Plank",
+    "clinical_cue": "Global core endurance \u2014 neutral lumbar spine maintained",
+    "default_tags": [
+      "spine",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "hip_flexor_stretch",
+    "canonical_name": "Hip Flexor Stretch",
+    "clinical_cue": "Reduce anterior pelvic tilt \u2014 reduce lumbar lordosis stress",
+    "default_tags": [
+      "hip",
+      "mobility",
+      "spine",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "walking_program",
+    "canonical_name": "Walking Program",
+    "clinical_cue": "Best evidence intervention for LBP \u2014 graded increase",
+    "default_tags": [
+      "cardio",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "pallof_press",
+    "canonical_name": "Pallof Press",
+    "clinical_cue": "Trunk rotation control \u2014 functional sport and work demands",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "step_ups_and_lunges",
+    "canonical_name": "Step-Ups and Lunges",
+    "clinical_cue": "Unilateral loading \u2014 mirror real-world demands",
+    "default_tags": [
+      "closed_chain",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "sport_work_specific_training",
+    "canonical_name": "Sport/Work-Specific Training",
+    "clinical_cue": "Return to full demands with graduated loading protocol",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "self_management_education",
+    "canonical_name": "Self-Management Education",
+    "clinical_cue": "Exercise is medicine \u2014 daily movement as long-term strategy",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "neural_mobilisation",
+    "canonical_name": "Neural Mobilisation",
+    "clinical_cue": "Ankle DF/PF with straight leg \u2014 gentle nerve gliding, NOT if acute",
+    "default_tags": [
+      "ankle"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "lumbar_traction",
+    "canonical_name": "Lumbar Traction",
+    "clinical_cue": "Intermittent mechanical traction \u2014 evidence modest but may help selected patients",
+    "default_tags": [
+      "spine"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "sleeping_posture_education",
+    "canonical_name": "Sleeping Posture Education",
+    "clinical_cue": "Side-lying with pillow between knees \u2014 reduce disc pressure",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "co_activation",
+    "canonical_name": "co-activation",
+    "clinical_cue": "",
+    "default_tags": [
+      "spine",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "add_light_dumbbell_when_form_mastered",
+    "canonical_name": "Add light dumbbell when form mastered",
+    "clinical_cue": "",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "single_leg_bridge_when_bilateral_mastered",
+    "canonical_name": "Single-Leg bridge when bilateral mastered",
+    "clinical_cue": "",
+    "default_tags": [
+      "balance",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "lateral_stabiliser",
+    "canonical_name": "Lateral stabiliser",
+    "clinical_cue": "Seated slump to standing to walking neural tissue mobilisation",
+    "default_tags": [
+      "cardio",
+      "quad",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "lumbar_rotation_stretches",
+    "canonical_name": "Lumbar Rotation Stretches",
+    "clinical_cue": "Restore rotation ROM \u2014 pain-guided",
+    "default_tags": [
+      "mobility",
+      "spine",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "back_squat_goblet_squat",
+    "canonical_name": "Back Squat / Goblet Squat",
+    "clinical_cue": "",
+    "default_tags": [
+      "closed_chain"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "full_lower_limb_and_spinal_loading",
+    "canonical_name": "Full lower limb and spinal loading",
+    "clinical_cue": "",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "suitcase_carry_farmers_walk",
+    "canonical_name": "Suitcase Carry / Farmers Walk",
+    "clinical_cue": "Lateral trunk stability under asymmetric load",
+    "default_tags": [
+      "cardio",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "cervical_retraction",
+    "canonical_name": "Cervical Retraction",
+    "clinical_cue": "",
+    "default_tags": [
+      "spine"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "cervical_retraction_extension",
+    "canonical_name": "Cervical Retraction + Extension",
+    "clinical_cue": "",
+    "default_tags": [
+      "mobility",
+      "spine"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "upper_cervical_traction",
+    "canonical_name": "Upper Cervical Traction",
+    "clinical_cue": "Opens neural foramen \u2014 often immediate symptom relief",
+    "default_tags": [
+      "spine"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "cervical_rom",
+    "canonical_name": "Cervical ROM",
+    "clinical_cue": "Rotation, lateral flexion, flexion, extension \u2014 symptom-guided",
+    "default_tags": [
+      "mobility",
+      "spine",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "thoracic_extension_mobilisation",
+    "canonical_name": "Thoracic Extension Mobilisation",
+    "clinical_cue": "Restore thoracic kyphosis \u2014 reduce compensatory cervical stress",
+    "default_tags": [
+      "mobility",
+      "spine",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "shoulder_shrugs_strengthening",
+    "canonical_name": "Shoulder Shrugs + Strengthening",
+    "clinical_cue": "Upper and lower trapezius balanced loading Deep Cervical Flexor Training (craniocervical flexion) Prone Y/T/W",
+    "default_tags": [
+      "balance",
+      "spine",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "deep_neck_flexor_training",
+    "canonical_name": "Deep Neck Flexor Training",
+    "clinical_cue": "Add resistance or longer holds as endurance improves",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "deadlift",
+    "canonical_name": "Deadlift",
+    "clinical_cue": "Full spinal loading \u2014 after full symptom",
+    "default_tags": [
+      "hip",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "pelvic_tilt",
+    "canonical_name": "Pelvic Tilt",
+    "clinical_cue": "Reduce lumbar lordosis \u2014 reduces anterior shear force at slip level",
+    "default_tags": [
+      "spine"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "step_ups_and_split_squat",
+    "canonical_name": "Step-Ups and Split Squat",
+    "clinical_cue": "Unilateral lower limb loading \u2014 neutral spine maintained",
+    "default_tags": [
+      "closed_chain",
+      "spine",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "stationary_bike_pool_walking",
+    "canonical_name": "Stationary Bike / Pool Walking",
+    "clinical_cue": "Cardiovascular conditioning \u2014 spine-friendly modalities",
+    "default_tags": [
+      "cardio",
+      "spine"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "trap_bar_deadlift",
+    "canonical_name": "Trap Bar Deadlift",
+    "clinical_cue": "Safer spinal loading than barbell deadlift \u2014 reduced shear force",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "sport_specific_return_program",
+    "canonical_name": "Sport-Specific Return Program",
+    "clinical_cue": "Gradual return \u2014 avoid high-impact until 6 months symptom-free",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "core_maintenance_program",
+    "canonical_name": "Core Maintenance Program",
+    "clinical_cue": "Prevent deconditioning and recurrence \u2014 non-negotiable long-term",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "supine_hip_arom",
+    "canonical_name": "Supine Hip AROM",
+    "clinical_cue": "Maintain synovial fluid circulation \u2014 avoid impingement zone (90\u00b0 flexion + IR) Isometric Hip Abduction",
+    "default_tags": [
+      "glute",
+      "hip",
+      "isometric"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "therapy",
+    "canonical_name": "Therapy",
+    "clinical_cue": "Offloaded functional movement \u2014 excellent pain-free early option",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "single_leg_bridge",
+    "canonical_name": "Single-Leg Bridge",
+    "clinical_cue": "Unilateral glute max \u2014 reveals and corrects pelvic drop (Trendelenburg) Mini Squat / Wall Sit (0\u2013",
+    "default_tags": [
+      "balance",
+      "closed_chain",
+      "glute",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "step_up",
+    "canonical_name": "Step-up",
+    "clinical_cue": "Functional gluteus medius \u2014 cue level pelvis throughout Hip Hinge (Romanian",
+    "default_tags": [
+      "closed_chain",
+      "glute",
+      "hip",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "deadlift_light",
+    "canonical_name": "Deadlift, light)",
+    "clinical_cue": "Hip extensor loading pattern \u2014 critical for sport and daily function",
+    "default_tags": [
+      "hip",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "walk_run_progression",
+    "canonical_name": "Walk-Run Progression",
+    "clinical_cue": "Flat surface first \u2014 introduce change of direction at week 20 if pain-free Lateral Bounds (bilateral progression)",
+    "default_tags": [
+      "cardio",
+      "plyometric"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "agility_and_cutting_drills",
+    "canonical_name": "Agility and Cutting Drills",
+    "clinical_cue": "Controlled direction change \u2014 monitor for labral provocation",
+    "default_tags": [
+      "neuromuscular"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "weight_shift",
+    "canonical_name": "Weight Shift",
+    "clinical_cue": "Early WB re-education with frame or crutches Gait Training (frame (progression)",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "side_lying_hip_abduction",
+    "canonical_name": "Side-lying Hip Abduction",
+    "clinical_cue": "Gluteus medius \u2014 primary Trendelenburg correction exercise Standing Hip Abduction",
+    "default_tags": [
+      "glute",
+      "hip",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "stationary_bike_cycling",
+    "canonical_name": "Stationary Bike / Cycling",
+    "clinical_cue": "Aerobic conditioning \u2014 preferred long-term exercise for THA",
+    "default_tags": [
+      "cardio"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "balance_training",
+    "canonical_name": "Balance Training",
+    "clinical_cue": "Reduce fall risk \u2014 important for THA population Functional Strengthening",
+    "default_tags": [
+      "balance",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "maintenance",
+    "canonical_name": "Maintenance",
+    "clinical_cue": "Lifelong exercise program \u2014 THA longevity depends on muscle strength",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "wrist_arom",
+    "canonical_name": "Wrist AROM",
+    "clinical_cue": "Maintain joint mobility \u2014 avoid resisted extension in reactive phase Nerve Mobilisation (radial",
+    "default_tags": [
+      "isometric",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "eccentric",
+    "canonical_name": "+ eccentric)",
+    "clinical_cue": "Heavy slow resistance \u2014 standard dumbbell wrist curl variation Wrist Radial Deviation",
+    "default_tags": [
+      "eccentric",
+      "hamstring",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "supination",
+    "canonical_name": "Supination",
+    "clinical_cue": "Restore forearm rotation strength and mobility Grip Strengthening",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "drills",
+    "canonical_name": "Drills",
+    "clinical_cue": "Forehand backhand progression \u2014 technique coaching to reduce latearm ball contact Grip Training (functional",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "program",
+    "canonical_name": "Program",
+    "clinical_cue": "Wrist flexor and extensor gentle stretching \u2014 part of long-term selfcare",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "resistance_loaded_forearm_rotation",
+    "canonical_name": "Resistance-loaded forearm rotation",
+    "clinical_cue": "Radial/Ulnar Deviation",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "functional_task_practice",
+    "canonical_name": "Functional Task Practice",
+    "clinical_cue": "Typing, writing, cooking, dressing \u2014 graduated resumption of ADLs",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "sport_specific_grip_tasks",
+    "canonical_name": "Sport-Specific Grip Tasks",
+    "clinical_cue": "Bat, racquet, stick \u2014 graduated return to gripping demands",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "manual_work_tasks",
+    "canonical_name": "Manual Work Tasks",
+    "clinical_cue": "Return to full occupational demands with appropriate technique Bone Loading Program",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "bike",
+    "canonical_name": "Bike",
+    "clinical_cue": "Cardiovascular maintenance \u2014 knee ROM maintained throughout pedal cycle RICE Protocol / Compression",
+    "default_tags": [
+      "cardio",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "48_72h",
+    "canonical_name": "48\u201372h",
+    "clinical_cue": "4/day in first 48h; compression bandage",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "isolated_eccentric_hamstring_loading",
+    "canonical_name": "Isolated eccentric hamstring loading",
+    "clinical_cue": "Romanian Deadlift",
+    "default_tags": [
+      "eccentric",
+      "hamstring",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "begin_straight_line_jogging_week_3_4",
+    "canonical_name": "Begin straight-line jogging week 3\u20134",
+    "clinical_cue": "Hip Flexor and Quadriceps",
+    "default_tags": [
+      "eccentric",
+      "hip",
+      "mobility",
+      "quad",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "stretching",
+    "canonical_name": "Stretching",
+    "clinical_cue": "Reduce anterior pelvic tilt \u2014 decrease hamstring overload pattern",
+    "default_tags": [
+      "eccentric",
+      "hamstring",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "100_speed",
+    "canonical_name": "100% speed)",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "straight_sprints_first",
+    "canonical_name": "Straight sprints first",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "acceleration",
+    "canonical_name": "Acceleration",
+    "clinical_cue": "Week 7\u20138 when jogging and RDL criteria met \u2014 GPS monitoring ideal Kicking, Jumping, Cutting",
+    "default_tags": [
+      "plyometric"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "full_training_integration",
+    "canonical_name": "Full Training Integration",
+    "clinical_cue": "Return to team training before match return \u2014 10\u201314 day training baseline",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "stance",
+    "canonical_name": "Stance",
+    "clinical_cue": "Gluteus medius loading under controlled conditions \u2014 avoid Trendelenburg Stationary Bike (seat height",
+    "default_tags": [
+      "cardio",
+      "glute",
+      "isometric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "education",
+    "canonical_name": "Education",
+    "clinical_cue": "Side-lying: pillow between knees; avoid adducted position in bed",
+    "default_tags": [
+      "isometric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "heavy_slow_resistance",
+    "canonical_name": "Heavy slow resistance",
+    "clinical_cue": "loading exercise Standing Hip Abduction",
+    "default_tags": [
+      "glute",
+      "hip",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "flat_surface_first",
+    "canonical_name": "Flat surface first",
+    "clinical_cue": "Lateral Bounds (controlled",
+    "default_tags": [
+      "plyometric"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "foam_roll_it_band_glutes",
+    "canonical_name": "Foam Roll IT Band / Glutes",
+    "clinical_cue": "Release TFL and proximal IT band \u2014 not directly over knee Hip Abductor Strengthening",
+    "default_tags": [
+      "glute",
+      "hip",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "running_gait_retraining",
+    "canonical_name": "Running Gait Retraining",
+    "clinical_cue": "increase Reduces lateral knee stress \u2014 key intervention",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "elbow_and_wrist_rom",
+    "canonical_name": "Elbow and wrist ROM",
+    "clinical_cue": "Maintain distal function",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "isometric_shoulder_muscles",
+    "canonical_name": "Isometric shoulder muscles",
+    "clinical_cue": "Below painful range",
+    "default_tags": [
+      "isometric"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "scapular_stabilisation",
+    "canonical_name": "Scapular Stabilisation",
+    "clinical_cue": "Lower and mid trapezius priority",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "pectoralis_minor_stretch",
+    "canonical_name": "Pectoralis Minor Stretch",
+    "clinical_cue": "",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "scapular_retraction_depression",
+    "canonical_name": "Scapular Retraction + Depression",
+    "clinical_cue": "First rib depression via lower trapezius \u2014",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "serratus_anterior",
+    "canonical_name": "Serratus Anterior",
+    "clinical_cue": "Upward scapular rotation \u2014 opens costoclavicular space",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "first_rib_mobilisation",
+    "canonical_name": "First Rib Mobilisation",
+    "clinical_cue": "Posterior depression of first rib via towel \u2014 reduces scalene attachment tension",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "thoracic_extension",
+    "canonical_name": "Thoracic Extension",
+    "clinical_cue": "Restore thoracic extension \u2014 reduces compensatory cervical forward posture",
+    "default_tags": [
+      "mobility",
+      "spine",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "brachial_plexus_neural_tensioner",
+    "canonical_name": "Brachial Plexus Neural Tensioner",
+    "clinical_cue": "Progress from slider to tensioner as symptoms allow \u2014 maintain symptom control",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "shoulder_er_ir_band",
+    "canonical_name": "Shoulder ER/IR Band",
+    "clinical_cue": "Rotator cuff strength \u2014 maintain arm function without provoking TOS Deep Cervical Flexor Training (craniocervical flexion)",
+    "default_tags": [
+      "spine",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "scapular_depression_strength",
+    "canonical_name": "Scapular depression strength",
+    "clinical_cue": "",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "sport_specific_upper_body_loading",
+    "canonical_name": "Sport-Specific Upper Body Loading",
+    "clinical_cue": "Throwing, swimming, racquet sport \u2014 graded return program",
+    "default_tags": [
+      "cardio",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "postural_maintenance_education",
+    "canonical_name": "Postural Maintenance Education",
+    "clinical_cue": "Workstation, sleep position, carrying habits \u2014 long-term self-management",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "adjacent_joint_rom",
+    "canonical_name": "Adjacent Joint ROM",
+    "clinical_cue": "Maintain mobility in joints proximal and distal to injury Gentle Aerobic Conditioning",
+    "default_tags": [
+      "cardio",
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "cryotherapy_compression",
+    "canonical_name": "Cryotherapy / Compression",
+    "clinical_cue": "Oedema and pain management",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "concentric_eccentric_loading",
+    "canonical_name": "Concentric/eccentric loading",
+    "clinical_cue": "",
+    "default_tags": [
+      "eccentric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "neuromuscular_control_exercises",
+    "canonical_name": "Neuromuscular Control Exercises",
+    "clinical_cue": "Balance and proprioception \u2014 single-leg or single-arm",
+    "default_tags": [
+      "balance",
+      "neuromuscular",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "functional_movement_training",
+    "canonical_name": "Functional Movement Training",
+    "clinical_cue": "Squat, hinge, push, pull \u2014 based on injury region",
+    "default_tags": [
+      "closed_chain",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "flexibility_mobility_work",
+    "canonical_name": "Flexibility / Mobility Work",
+    "clinical_cue": "Address identified mobility deficits contributing to injury",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "cardiovascular_conditioning",
+    "canonical_name": "Cardiovascular Conditioning",
+    "clinical_cue": "Progressively increase intensity toward pre-injury level",
+    "default_tags": [
+      "cardio",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "sport_work_specific_drills",
+    "canonical_name": "Sport/Work-Specific Drills",
+    "clinical_cue": "Mirror demands of target activity",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "plyometrics_power_training",
+    "canonical_name": "Plyometrics / Power Training",
+    "clinical_cue": "Bilateral to unilateral progression",
+    "default_tags": [
+      "plyometric"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "agility_change_of_direction",
+    "canonical_name": "Agility & Change of Direction",
+    "clinical_cue": "Speed progression \u2014 reactive cues added",
+    "default_tags": [
+      "neuromuscular"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "strength_maintenance_program",
+    "canonical_name": "Strength Maintenance Program",
+    "clinical_cue": "Maintain gains to prevent recurrence",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "isometric_grip",
+    "canonical_name": "Isometric Grip",
+    "clinical_cue": "Flexor-pronator activation without provocative movement Isometric Pronation",
+    "default_tags": [
+      "isometric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "deviation",
+    "canonical_name": "Deviation",
+    "clinical_cue": "Restore full wrist motion under load Grip Strengthening",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "throwing_program",
+    "canonical_name": "Throwing Program",
+    "clinical_cue": "Short distances to long distances to full effort throws \u2014 UCL stress monitoring",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "manual_work_return",
+    "canonical_name": "Manual Work Return",
+    "clinical_cue": "Task-specific return \u2014 modify grip position and tool handle size",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "pronation_supination",
+    "canonical_name": "Pronation/Supination",
+    "clinical_cue": "Maintain forearm rotation \u2014 important for function",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "wrist_and_hand_arom",
+    "canonical_name": "Wrist and Hand AROM",
+    "clinical_cue": "Prevent distal stiffness during elbow protection phase Isometric Elbow Flexion/Extension",
+    "default_tags": [
+      "isometric",
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "compression",
+    "canonical_name": "Compression",
+    "clinical_cue": "Acute inflammation management \u2014 especially first 72h Shoulder and Scapular",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "grip_strengthening",
+    "canonical_name": "Grip Strengthening",
+    "clinical_cue": "Restore grip \u2014 functional hand function for sport Shoulder External Rotation",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "wrist_forearm_flexibility",
+    "canonical_name": "Wrist/Forearm Flexibility",
+    "clinical_cue": "Restore full forearm mobility for throwing arc",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "plyometric_elbow_loading",
+    "canonical_name": "Plyometric Elbow Loading",
+    "clinical_cue": "Medicine ball rotational throws \u2014 simulate throwing dynamics under progressive load",
+    "default_tags": [
+      "plyometric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "full_sport_integration",
+    "canonical_name": "Full Sport Integration",
+    "clinical_cue": "Bullpen to live batting practice to full match \u2014 final stages of return Year-Round Arm Care",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "neutral_wrist_splinting",
+    "canonical_name": "Neutral Wrist Splinting",
+    "clinical_cue": "Keeps carpal tunnel volume maximal \u2014 neutral wrist = lowest carpal canal pressure",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "median_nerve_slider",
+    "canonical_name": "Median Nerve Slider",
+    "clinical_cue": "Wrist neutral, extend fingers, oppose thumb, then extend wrist \u2014 gentle neural gliding",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "tendon_gliding_exercises",
+    "canonical_name": "Tendon Gliding Exercises",
+    "clinical_cue": "Hook fist, full fist, tabletop, straight \u2014 reduces adhesions around flexor tendons in canal Workplace Ergonomic Assessment Once (key intervention) Keyboard height, mouse position, wrist angle \u2014 major modifiable risk factor Median Nerve Tensioner",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "progression",
+    "canonical_name": "Progression",
+    "clinical_cue": "Typing, gripping, writing with wrist neutral \u2014 ergonomic technique Median Nerve Mobilisation",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "isometric_thumb_extension",
+    "canonical_name": "Isometric Thumb Extension",
+    "clinical_cue": "EPL + APL \u2014 combined isometric loading for first compartment Thumb and Wrist AROM",
+    "default_tags": [
+      "isometric",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "application",
+    "canonical_name": "Application",
+    "clinical_cue": "Neutral thumb position \u2014 radial abduction, MCP neutral; prevents provocative loading",
+    "default_tags": [
+      "glute",
+      "isometric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "pinch_strengthening",
+    "canonical_name": "Pinch Strengthening",
+    "clinical_cue": "Functional thumb loading \u2014 tip, key, palmar pinch variations",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "gentle_grip",
+    "canonical_name": "Gentle Grip",
+    "clinical_cue": "Begin very light \u2014 progress only when confirmed healed",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "contrast_bathing",
+    "canonical_name": "Contrast Bathing",
+    "clinical_cue": "Reduce stiffness \u2014 warm water flexibility + cold water analgesic effect",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "functional_adl_practice",
+    "canonical_name": "Functional ADL Practice",
+    "clinical_cue": "Typing, writing, cooking \u2014 graduated return with wrist neutral technique",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "impact_tasks",
+    "canonical_name": "Impact Tasks",
+    "clinical_cue": "Bat, racquet \u2014 graduated return to impact loading",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "grip_exercises",
+    "canonical_name": "Grip Exercises",
+    "clinical_cue": "Maintain basic grip function \u2014 isometric preferred initially",
+    "default_tags": [
+      "isometric"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "ulnar_sided_wrist_brace",
+    "canonical_name": "Ulnar-sided Wrist Brace",
+    "clinical_cue": "Restrict DRUJ motion \u2014 support healing; ensure custom-fit neutral position",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "progressive_druj_loading",
+    "canonical_name": "Progressive DRUJ loading",
+    "clinical_cue": "exercise ECU Strengthening (ulnar",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "progressive_weightbearing",
+    "canonical_name": "Progressive Weightbearing",
+    "clinical_cue": "Monitor DRUJ pain with axial load \u2014 progress from wall to incline to floor",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "exercises",
+    "canonical_name": "Exercises",
+    "clinical_cue": "Dumbbell pronation/supination \u2014 target symmetry",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "sport_specific_tasks",
+    "canonical_name": "Sport-Specific Tasks",
+    "clinical_cue": "Racquet, bat, gymnastics \u2014 graduated return with wrist brace initially",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "hip_arom",
+    "canonical_name": "Hip AROM",
+    "clinical_cue": "Maintain ROM in pain-free range \u2014 avoid end-range hip flexion with IR Posterior Capsule",
+    "default_tags": [
+      "hip",
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "rotation",
+    "canonical_name": "Rotation",
+    "clinical_cue": "Maintain external rotator strength \u2014 prevent IR-dominant movement pattern Core Stability (dead bug,",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "bridge_single_leg_bridge",
+    "canonical_name": "Bridge + Single-Leg Bridge",
+    "clinical_cue": "Gluteus maximus \u2014 posterior chain activation in neutral pelvis",
+    "default_tags": [
+      "balance",
+      "glute",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "hip_hinge_rdl",
+    "canonical_name": "Hip Hinge / RDL",
+    "clinical_cue": "Posterior chain loading \u2014 hipdominant pattern preferred over knee-dominant squat",
+    "default_tags": [
+      "closed_chain",
+      "hip",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "control",
+    "canonical_name": "Control",
+    "clinical_cue": "Frontal plane loading \u2014 land in ER position to avoid FADIR",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "sport_specific_return",
+    "canonical_name": "Sport-Specific Return",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "reverse_lunge",
+    "canonical_name": "Reverse Lunge",
+    "clinical_cue": "Eccentric hip flexor loading of rear leg \u2014 progressive and functional Hip Hinge / Romanian",
+    "default_tags": [
+      "closed_chain",
+      "eccentric",
+      "hip",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "straight_runs_first",
+    "canonical_name": "Straight runs first",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "kicking_progressions",
+    "canonical_name": "Kicking Progressions",
+    "clinical_cue": "Short kicks to full kicks to shooting \u2014 monitor anterior hip pain Iliopsoas Strengthening",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "direction",
+    "canonical_name": "Direction",
+    "clinical_cue": "Introduce week 8\u20139 when linear sprint criteria met",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "exercise",
+    "canonical_name": "Exercise",
+    "clinical_cue": "Gold standard adductor loading \u2014 begin with supported version, progress to full",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "sumo_squat",
+    "canonical_name": "Sumo Squat",
+    "clinical_cue": "Closed-chain adductor loading \u2014 keep adduction force within comfort Side-lying Adduction",
+    "default_tags": [
+      "closed_chain",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "isolated_eccentric_adductor_loading",
+    "canonical_name": "Isolated eccentric adductor loading",
+    "clinical_cue": "Lateral Band Walk (narrow",
+    "default_tags": [
+      "cardio",
+      "eccentric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "sprint_acceleration",
+    "canonical_name": "Sprint Acceleration",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "straight_then_curved_runs",
+    "canonical_name": "Straight then curved runs",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "region",
+    "canonical_name": "Region",
+    "clinical_cue": "Reduce local inflammation \u2014 piriformis deep to gluteus maximus Sitting Modification +",
+    "default_tags": [
+      "glute"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "movement_breaks",
+    "canonical_name": "Movement Breaks",
+    "clinical_cue": "Avoid sustained compression of piriformis \u2014 key early intervention",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "strengthening_maintenance",
+    "canonical_name": "Strengthening Maintenance",
+    "clinical_cue": "Clamshell, ER band work \u2014 maintain indefinitely to prevent recurrence",
+    "default_tags": [
+      "glute",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "hip_mobility_routine",
+    "canonical_name": "Hip Mobility Routine",
+    "clinical_cue": "Figure-4 stretch, hip 90/90 \u2014 maintain piriformis extensibility",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "seated_hip_arom",
+    "canonical_name": "Seated Hip AROM",
+    "clinical_cue": "Maintain synovial fluid circulation and prevent joint stiffening",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "gentle_walking",
+    "canonical_name": "Gentle Walking",
+    "clinical_cue": "Best evidence for hip OA \u2014 graded activity is the primary intervention Education: Weight",
+    "default_tags": [
+      "cardio",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "management",
+    "canonical_name": "Management",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "heat_therapy",
+    "canonical_name": "Heat Therapy",
+    "clinical_cue": "Increase soft tissue extensibility \u2014 reduce pre-exercise stiffness",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "aerobics",
+    "canonical_name": "Aerobics",
+    "clinical_cue": "Maintains cardiovascular fitness with minimal joint loading",
+    "default_tags": [
+      "cardio",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "training",
+    "canonical_name": "Training",
+    "clinical_cue": "Hip abductors, extensors, quadriceps \u2014 the definitive OA intervention",
+    "default_tags": [
+      "hip",
+      "mobility",
+      "quad"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "swimming",
+    "canonical_name": "Swimming",
+    "clinical_cue": "Low-impact aerobic \u2014 maintain cardiovascular and musculoskeletal health",
+    "default_tags": [
+      "cardio"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "tai_chi_or_yoga",
+    "canonical_name": "Tai Chi or Yoga",
+    "clinical_cue": "Balance, flexibility, and pain reduction \u2014 evidence-supported for hip OA Weight Management",
+    "default_tags": [
+      "balance",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "functional_iliopsoas_loading",
+    "canonical_name": "Functional iliopsoas loading",
+    "clinical_cue": "",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "isometric_eversion",
+    "canonical_name": "Isometric Eversion",
+    "clinical_cue": "Foot on floor, push outward against fixed band \u2014 immediate analgesic effect",
+    "default_tags": [
+      "isometric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "isometric_plantarflexion",
+    "canonical_name": "Isometric Plantarflexion",
+    "clinical_cue": "Maintain tendon activation without provoking pain",
+    "default_tags": [
+      "isometric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "eversion_with_resistance_band",
+    "canonical_name": "Eversion with Resistance Band",
+    "clinical_cue": "Heavy slow resistance protocol \u2014 gold standard for tendinopathy",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "step_up_with_lateral_load",
+    "canonical_name": "Step-up with Lateral Load",
+    "clinical_cue": "Functional closed chain peroneal activation",
+    "default_tags": [
+      "ankle",
+      "closed_chain",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "maintain_ankle_mobility_and_reduce_oedema",
+    "canonical_name": "Maintain ankle mobility and reduce oedema",
+    "clinical_cue": "Offloaded functional walking \u2014 excellent early option Pool Walking / Hydrotherapy",
+    "default_tags": [
+      "ankle",
+      "cardio",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "short_foot_arch_doming",
+    "canonical_name": "Short Foot / Arch Doming",
+    "clinical_cue": "",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "step_up_with_arch_control",
+    "canonical_name": "Step-up with Arch Control",
+    "clinical_cue": "",
+    "default_tags": [
+      "closed_chain",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "hip_abductor_glute_strengthening",
+    "canonical_name": "Hip Abductor & Glute Strengthening",
+    "clinical_cue": "Reduce tibial internal rotation \u2014 reduce TP tendon stress",
+    "default_tags": [
+      "glute",
+      "hip",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "begin_when_20_single_leg_raises_pain_free",
+    "canonical_name": "Begin when 20 single-leg raises pain-free",
+    "clinical_cue": "Bilateral first \u2014 monitor arch and pain response",
+    "default_tags": [
+      "balance",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "intrinsic_foot_strengthening",
+    "canonical_name": "Intrinsic Foot Strengthening",
+    "clinical_cue": "Maintain foot muscle activation while offloading subtalar joint",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "peroneal_eversion",
+    "canonical_name": "Peroneal Eversion",
+    "clinical_cue": "Lateral stabiliser strengthening \u2014 key for subtalar control",
+    "default_tags": [
+      "ankle",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "step_up_and_step_down",
+    "canonical_name": "Step-up and Step-down",
+    "clinical_cue": "Hip and Glute Strengthening",
+    "default_tags": [
+      "closed_chain",
+      "glute",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "lateral_agility_drills",
+    "canonical_name": "Lateral Agility Drills",
+    "clinical_cue": "Controlled direction changes \u2014 monitor sinus tarsi pain",
+    "default_tags": [
+      "neuromuscular"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "ankle_arom",
+    "canonical_name": "Ankle AROM",
+    "clinical_cue": "",
+    "default_tags": [
+      "ankle",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "peroneal_strengthening",
+    "canonical_name": "Peroneal Strengthening",
+    "clinical_cue": "Restore lateral foot stabilisers \u2014 protect zone II",
+    "default_tags": [
+      "ankle",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "begin_week_12_with_surgeon_clearance",
+    "canonical_name": "Begin week 12 with surgeon clearance",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "toe_splay",
+    "canonical_name": "Toe Splay",
+    "clinical_cue": "Lesser toe intrinsic activation \u2014 maintain while protecting hallux",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "knee_and_hip_rom_strengthening",
+    "canonical_name": "Knee and Hip ROM / Strengthening",
+    "clinical_cue": "Maintain proximal strength during protected phase Ankle Pumps",
+    "default_tags": [
+      "ankle",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "cryotherapy_and_elevation",
+    "canonical_name": "Cryotherapy and Elevation",
+    "clinical_cue": "Oedema control \u2014 critical first 2 weeks",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "hallux_strengthening",
+    "canonical_name": "Hallux Strengthening",
+    "clinical_cue": "Flexor hallucis brevis activation \u2014 hallux abductor strength Walk-Run Progression Stage program Begin when 20 single-leg calf raises pain-free",
+    "default_tags": [
+      "balance",
+      "calf",
+      "cardio",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "isometric_dorsiflexion",
+    "canonical_name": "Isometric Dorsiflexion",
+    "clinical_cue": "Immediate analgesic effect \u2014 key first-line exercise",
+    "default_tags": [
+      "isometric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "isometric_inversion",
+    "canonical_name": "Isometric Inversion",
+    "clinical_cue": "Combined tibialis anterior function \u2014 inversion + dorsiflexion",
+    "default_tags": [
+      "isometric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "resisted_dorsiflexion",
+    "canonical_name": "Resisted Dorsiflexion",
+    "clinical_cue": "",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "4_sec_down",
+    "canonical_name": "4-sec down",
+    "clinical_cue": "",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "resisted_inversion",
+    "canonical_name": "Resisted Inversion",
+    "clinical_cue": "Combined function loading \u2014 mirrors tibialis anterior action",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "heel_walking",
+    "canonical_name": "Heel Walking",
+    "clinical_cue": "Functional tibialis anterior loading \u2014 progressive distance",
+    "default_tags": [
+      "cardio",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "seated_lumbar_flexion",
+    "canonical_name": "Seated Lumbar Flexion",
+    "clinical_cue": "Canal opening position \u2014 useful rest position for symptom relief during walking",
+    "default_tags": [
+      "cardio",
+      "spine"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "aquatic_walking",
+    "canonical_name": "Aquatic Walking",
+    "clinical_cue": "Offloaded walking \u2014 allows greater distance before symptom onset",
+    "default_tags": [
+      "cardio",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "abdominal_isometrics",
+    "canonical_name": "Abdominal Isometrics",
+    "clinical_cue": "",
+    "default_tags": [
+      "isometric"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "sit_to_stand_progression",
+    "canonical_name": "Sit-to-Stand Progression",
+    "clinical_cue": "Functional quad and glute strengthening \u2014 critical for independence",
+    "default_tags": [
+      "cardio",
+      "glute",
+      "quad",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "treadmill_walking",
+    "canonical_name": "Treadmill Walking",
+    "clinical_cue": "Reduce lumbar extension moment \u2014 increases walking tolerance vs flat treadmill",
+    "default_tags": [
+      "cardio",
+      "mobility",
+      "spine",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "cycling",
+    "canonical_name": "Cycling",
+    "clinical_cue": "Sustained flexion-biased cardio \u2014 build tolerance progressively",
+    "default_tags": [
+      "cardio",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "nordic_walking",
+    "canonical_name": "Nordic Walking",
+    "clinical_cue": "Poles promote lumbar flexion \u2014 significantly increases walking tolerance in stenosis",
+    "default_tags": [
+      "cardio",
+      "eccentric",
+      "hamstring",
+      "spine"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "pool_walking_swimming",
+    "canonical_name": "Pool Walking / Swimming",
+    "clinical_cue": "Sustained pain-free cardiovascular loading",
+    "default_tags": [
+      "cardio",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "lifelong_recommendation",
+    "canonical_name": "",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "community_walking_program",
+    "canonical_name": "Community Walking Program",
+    "clinical_cue": "",
+    "default_tags": [
+      "cardio"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "knee_to_chest_stretches",
+    "canonical_name": "Knee-to-Chest Stretches",
+    "clinical_cue": "Flexion unloads facet joint \u2014 primary pain-relief position",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "lumbar_rotation_stretch",
+    "canonical_name": "Lumbar Rotation Stretch",
+    "clinical_cue": "Gentle facet mobilisation \u2014 stop at pain barrier, do not force",
+    "default_tags": [
+      "mobility",
+      "spine"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "posterior_pelvic_tilt",
+    "canonical_name": "Posterior Pelvic Tilt",
+    "clinical_cue": "Reduce lumbar lordosis \u2014 offload posterior",
+    "default_tags": [
+      "spine",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "goblet_squat",
+    "canonical_name": "Goblet Squat",
+    "clinical_cue": "Full squat \u2014 progress load as facet tolerance improves",
+    "default_tags": [
+      "closed_chain",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "sij_pain_response",
+    "canonical_name": "SIJ pain response",
+    "clinical_cue": "Gait normalisation \u2014 minimise pelvic drop (Trendelenburg) Walking (progressive)",
+    "default_tags": [
+      "cardio",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "single_leg_romanian_deadlift",
+    "canonical_name": "Single-Leg Romanian Deadlift",
+    "clinical_cue": "",
+    "default_tags": [
+      "balance"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "lateral_lunge",
+    "canonical_name": "Lateral Lunge",
+    "clinical_cue": "Frontal plane hip loading \u2014 SIJ compression in adduction Running Progression Stage program Begin when single-leg hop pain-free \u2014 straight then curves",
+    "default_tags": [
+      "balance",
+      "closed_chain",
+      "plyometric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "maintenance_sling_program",
+    "canonical_name": "Maintenance Sling Program",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "piriformis_stretch",
+    "canonical_name": "Piriformis Stretch",
+    "clinical_cue": "Pull knee toward opposite shoulder \u2014 gentle sustained stretch; most important exercise",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "hip_internal_rotation_arom",
+    "canonical_name": "Hip Internal Rotation AROM",
+    "clinical_cue": "Restore hip IR \u2014 often limited; reduces piriformis tension",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "sciatic_neural_mobilisation",
+    "canonical_name": "Sciatic Neural Mobilisation",
+    "clinical_cue": "Ankle DF + hip flexion \u2014 gentle nerve gliding; avoid provocative tension",
+    "default_tags": [
+      "ankle",
+      "hip",
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "prone_hip_extension",
+    "canonical_name": "Prone Hip Extension",
+    "clinical_cue": "Glute max activation \u2014 reduce piriformis",
+    "default_tags": [
+      "glute",
+      "hip",
+      "isometric",
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "excessive_ir_loading_on_piriformis",
+    "canonical_name": "excessive IR loading on piriformis",
+    "clinical_cue": "",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "heat_soft_tissue_therapy",
+    "canonical_name": "Heat + Soft Tissue Therapy",
+    "clinical_cue": "Reduce periarticular muscle spasm \u2014 improve mobility of treatment session Pillow Adjustment Education Immediate Correct sleeping position \u2014 avoid excessive cervical extension or lateral flexion overnight Cervical AROM (rotation, lateral flexion)",
+    "default_tags": [
+      "mobility",
+      "spine"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "deep_cervical_flexor_training",
+    "canonical_name": "Deep Cervical Flexor Training",
+    "clinical_cue": "Target 22\u201330 mmHg on pressure biofeedback \u2014 longus colli and capitis; avoid SCM substitution",
+    "default_tags": [
+      "spine",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "cervical_rotation_arom",
+    "canonical_name": "Cervical Rotation AROM",
+    "clinical_cue": "Progress to end-range as symptoms allow \u2014 facet joint mobility maintenance",
+    "default_tags": [
+      "spine",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "cervical_lateral_flexion_stretch",
+    "canonical_name": "Cervical Lateral Flexion Stretch",
+    "clinical_cue": "Contralateral scalene and levator scapulae stretch \u2014 reduce facet compression",
+    "default_tags": [
+      "mobility",
+      "spine",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "isometric_cervical_strengthening",
+    "canonical_name": "Isometric Cervical Strengthening",
+    "clinical_cue": "Flexion, extension, rotation resistance \u2014 cervical muscle endurance",
+    "default_tags": [
+      "isometric",
+      "mobility",
+      "spine",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "dcf_training",
+    "canonical_name": "DCF Training",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "postural_habit_education",
+    "canonical_name": "Postural Habit Education",
+    "clinical_cue": "Full overhead loading when cervical ROM and strength restored",
+    "default_tags": [
+      "mobility",
+      "spine",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "tackling_heading_combat_sport",
+    "canonical_name": "Tackling, heading, combat sport",
+    "clinical_cue": "Workstation, phone use, driving \u2014 lifelong self-management program",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "cervical_arom",
+    "canonical_name": "Cervical AROM",
+    "clinical_cue": "Early movement is the single most important intervention \u2014 prevents chronic WAD",
+    "default_tags": [
+      "spine"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "graded_activity_return_to_normal_activities",
+    "canonical_name": "Graded Activity + Return to Normal Activities",
+    "clinical_cue": "Reduce upper trapezius spasm \u2014",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "scapular_retraction_prone_y_t_w",
+    "canonical_name": "Scapular Retraction + Prone Y/T/W",
+    "clinical_cue": "Restore scapular and upper back control \u2014 reduce cervical compensatory tension",
+    "default_tags": [
+      "mobility",
+      "spine"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "cervical_isometrics",
+    "canonical_name": "Cervical Isometrics",
+    "clinical_cue": "Flexion, extension, lateral flexion, rotation \u2014 restore cervical strength symmetry",
+    "default_tags": [
+      "isometric",
+      "mobility",
+      "spine",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "graded_exercise_aerobic_conditioning",
+    "canonical_name": "Graded Exercise / Aerobic Conditioning",
+    "clinical_cue": "Exercise-induced analgesia \u2014 highly",
+    "default_tags": [
+      "cardio"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "breathing_exercises",
+    "canonical_name": "Breathing Exercises",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "isometric_gluteal_sets",
+    "canonical_name": "Isometric Gluteal Sets",
+    "clinical_cue": "Maintain hip extensor activation without spinal loading",
+    "default_tags": [
+      "glute",
+      "hip",
+      "isometric",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "hip_extension_in_standing",
+    "canonical_name": "Hip Extension in Standing",
+    "clinical_cue": "Posterior chain activation \u2014 neutral spine",
+    "default_tags": [
+      "hip",
+      "mobility",
+      "spine"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "prone_back_extension",
+    "canonical_name": "Prone Back Extension",
+    "clinical_cue": "Key exercise for osteoporotic fracture \u2014 spinal extensors protect vertebral body",
+    "default_tags": [
+      "isometric",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "standing_back_extension",
+    "canonical_name": "Standing Back Extension",
+    "clinical_cue": "Functional extension \u2014 thoracic kyphosis reversal; safe weight-bearing position",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "scapular_retraction_posterior_row",
+    "canonical_name": "Scapular Retraction + Posterior Row",
+    "clinical_cue": "Mid-thoracic extensor activation \u2014 reduce kyphosis load on fractured vertebrae",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "hip_hinge",
+    "canonical_name": "Hip Hinge",
+    "clinical_cue": "Posterior chain loading \u2014 maintain spine in extension during functional tasks",
+    "default_tags": [
+      "hip",
+      "mobility",
+      "spine",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "impact_loading",
+    "canonical_name": "Impact Loading",
+    "clinical_cue": "Stomping, jumping (if safe) \u2014 osteogenic loading stimulus at hip and spine Swimming (for cardiovascular) Non-primary bone loading Good cardiovascular \u2014 does NOT stimulate bone density; supplement with weight-bearing Multifactorial Fall Prevention Weekly program Balance, vision check, medication review,",
+    "default_tags": [
+      "balance",
+      "cardio",
+      "plyometric",
+      "spine",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "gravity_assisted_thoracic_extension",
+    "canonical_name": "Gravity-assisted thoracic extension",
+    "clinical_cue": "",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "pectoralis_major_stretch",
+    "canonical_name": "Pectoralis Major Stretch",
+    "clinical_cue": "Anterior chest tightness perpetuates kyphosis \u2014 critical to address",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "chin_tuck_cervical_retraction",
+    "canonical_name": "Chin Tuck + Cervical Retraction",
+    "clinical_cue": "Correct compensatory forward head posture \u2014 improve sagittal alignment Standing Postural Awareness Hourly cue Wall stand: head, shoulders, hips, heels touching \u2014 proprioceptive correction",
+    "default_tags": [
+      "mobility",
+      "spine"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "seated_row",
+    "canonical_name": "Seated Row",
+    "clinical_cue": "Retract and depress scapulae \u2014 mid and lower trapezius priority",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "thoracic_extension_daily_program",
+    "canonical_name": "Thoracic Extension Daily Program",
+    "clinical_cue": "Foam roller + prone extension + pec stretch",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "maintain_mobility_gains",
+    "canonical_name": "",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "thoracic_extension_strengthening",
+    "canonical_name": "Thoracic Extension Strengthening",
+    "clinical_cue": "Thoracic extensor and scapular retractor loading \u2014 reduces disc flexion stress",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "thoracic_rotation_mobility",
+    "canonical_name": "Thoracic Rotation Mobility",
+    "clinical_cue": "Restore thoracic rotation \u2014 segment above and below disc level",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "ergonomic_and_lifting_education",
+    "canonical_name": "Ergonomic and Lifting Education",
+    "clinical_cue": "Correct lifting technique, posture, load management \u2014 lifelong spine protection",
+    "default_tags": [
+      "spine",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "elbow_extension_splinting",
+    "canonical_name": "Elbow Extension Splinting",
+    "clinical_cue": "Reduces cubital tunnel pressure \u2014 most effective conservative intervention",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "nerve_gliding",
+    "canonical_name": "Nerve Gliding",
+    "clinical_cue": "Shoulder abduction + elbow extension with wrist flexion \u2014 gentle excursion, NOT if acute",
+    "default_tags": [
+      "glute",
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "cervical_rom_neural_tension_check",
+    "canonical_name": "Cervical ROM & Neural Tension Check",
+    "clinical_cue": "Rule out double crush \u2014 cervical C8/T1 contribution to ulnar symptoms",
+    "default_tags": [
+      "mobility",
+      "spine"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "intrinsic_hand_strengthening",
+    "canonical_name": "Intrinsic Hand Strengthening",
+    "clinical_cue": "Maintain hand strength \u2014 finger abduction, adduction, pinch Posture Education & Ergonomic",
+    "default_tags": [
+      "glute",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "modification",
+    "canonical_name": "Modification",
+    "clinical_cue": "Avoid elbow flexion >90\u00b0 at desk/phone \u2014 foam padding over medial elbow",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "ulnar_nerve_slider",
+    "canonical_name": "Ulnar Nerve Slider",
+    "clinical_cue": "Wrist extension + elbow extension + shoulder abduction \u2014 progressive excursion",
+    "default_tags": [
+      "glute",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "elbow_flexion_extension_arom",
+    "canonical_name": "Elbow Flexion/Extension AROM",
+    "clinical_cue": "Restore full elbow ROM \u2014 symptom-guided pace",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "wrist_flexor_extensor_strengthening",
+    "canonical_name": "Wrist Flexor/Extensor Strengthening",
+    "clinical_cue": "Restore forearm muscle balance \u2014 reduce nerve compression secondary to tightness",
+    "default_tags": [
+      "balance",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "grip_and_pinch_dynamometer_training",
+    "canonical_name": "Grip and Pinch Dynamometer Training",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "sport_specific_upper_limb_loading",
+    "canonical_name": "Sport-Specific Upper Limb Loading",
+    "clinical_cue": "Throwing, racquet sport, manual work \u2014 graduated return",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "ergonomic_reassessment",
+    "canonical_name": "Ergonomic Reassessment",
+    "clinical_cue": "Workstation height, phone use, elbow padding \u2014 permanent modification",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "radial_nerve_slider",
+    "canonical_name": "Radial Nerve Slider",
+    "clinical_cue": "Elbow extension + wrist flexion + ulnar deviation \u2014 gentle nerve mobilisation",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "wrist_extensor_stretching",
+    "canonical_name": "Wrist Extensor Stretching",
+    "clinical_cue": "Reduce muscle belly compression on PIN \u2014 symptom-guided Cervical Screen (C5\u2013C6 contribution) Clinical assessment Rule out cervical radiculopathy contributing to lateral arm symptoms",
+    "default_tags": [
+      "mobility",
+      "spine",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "wrist_extension",
+    "canonical_name": "Wrist Extension",
+    "clinical_cue": "ECRB/ECRL loading \u2014 progressive resistance band",
+    "default_tags": [
+      "eccentric",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "forearm_pronation_supination",
+    "canonical_name": "Forearm Pronation/Supination",
+    "clinical_cue": "Full ROM forearm rotation \u2014 restore normal mechanics",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "progressive_forearm_strengthening",
+    "canonical_name": "Progressive Forearm Strengthening",
+    "clinical_cue": "load",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "supination_pronation_wrist_extension",
+    "canonical_name": "Supination, pronation, wrist extension",
+    "clinical_cue": "",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "sport_specific_loading",
+    "canonical_name": "Sport-Specific Loading",
+    "clinical_cue": "",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "ergonomic_and_technique_coaching",
+    "canonical_name": "Ergonomic and Technique Coaching",
+    "clinical_cue": "Keyboard, power tools, sport technique \u2014 prevent recurrence",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "retrograde_massage",
+    "canonical_name": "Retrograde Massage",
+    "clinical_cue": "Elevate hand above heart \u2014 retrograde massage from fingertip to palm Intrinsic Stretching (MCP flexion, IP",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "tendon_gliding",
+    "canonical_name": "Tendon Gliding",
+    "clinical_cue": "Add light resistance putty to glide sequence \u2014 build flexor tendon load capacity",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "putty_squeeze",
+    "canonical_name": "Putty Squeeze",
+    "clinical_cue": "medium Restore flexor digitorum superficialis and profundus strength",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "scar_massage",
+    "canonical_name": "Scar Massage",
+    "clinical_cue": "Silicone gel or massage \u2014 begin when wound fully healed \u2014 prevent scar tethering",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "dexterity_tasks",
+    "canonical_name": "Dexterity Tasks",
+    "clinical_cue": "Functional restoration \u2014 simulates daily task demands",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "sport_work_specific_grip_tasks",
+    "canonical_name": "Sport/Work-Specific Grip Tasks",
+    "clinical_cue": "Racquet sport, climbing, keyboard \u2014 graduated exposure",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "strengthening_maintenance_program",
+    "canonical_name": "Strengthening Maintenance Program",
+    "clinical_cue": "Lifelong \u2014 prevent tendon sheath thickening recurrence",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "dip_extension_splinting",
+    "canonical_name": "DIP Extension Splinting",
+    "clinical_cue": "Zero flexion tolerance \u2014 patient must maintain extension with one hand while changing splint",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "pip_joint_arom",
+    "canonical_name": "PIP Joint AROM",
+    "clinical_cue": "Maintain PIP and MCP mobility while DIP immobilised Oedema Management (elevation,",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "active_dip_flexion",
+    "canonical_name": "Active DIP Flexion",
+    "clinical_cue": "Begin 25\u00b0 flexion \u2014 increase 10\u00b0/week guided by lag assessment",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "passive_dip_flexion",
+    "canonical_name": "Passive DIP Flexion",
+    "clinical_cue": "Restore joint mobility \u2014 do NOT force beyond comfort Active DIP Extension (tendon",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "putty_grip",
+    "canonical_name": "Putty Grip",
+    "clinical_cue": "Begin light tendon loading when lag <10\u00b0",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "composite_fist_and_tendon_gliding",
+    "canonical_name": "Composite Fist and Tendon Gliding",
+    "clinical_cue": "Full 4-position tendon glide \u2014 restore full FDP excursion",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "grip_and_pinch_strengthening",
+    "canonical_name": "Grip and Pinch Strengthening",
+    "clinical_cue": "",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "progressive_putty_and_spring_grippers",
+    "canonical_name": "Progressive putty and spring grippers",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "sport_work_specific_tasks",
+    "canonical_name": "Sport/Work-Specific Tasks",
+    "clinical_cue": "Ball catching, keyboard, tools \u2014 sport-specific DIP loading",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "pip_extension_splinting",
+    "canonical_name": "PIP Extension Splinting",
+    "clinical_cue": "weeks Cylinder or gutter splint \u2014 maintain central slip approximation",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "mcp_and_uninvolved_finger_arom",
+    "canonical_name": "MCP and uninvolved finger AROM",
+    "clinical_cue": "Prevent proximal joint stiffness during immobilisation Oedema control \u2014 elevation and",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "active_pip_flexion",
+    "canonical_name": "Active PIP Flexion",
+    "clinical_cue": "Week 6: 30\u00b0 flexion; week 7: 45\u00b0; week 8: 60\u00b0 \u2014 guided by deformity absence",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "active_pip_extension_re_education",
+    "canonical_name": "Active PIP Extension re-education",
+    "clinical_cue": "Central slip activation \u2014 ensure full active extension before flexion session",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "dip_active_flexion",
+    "canonical_name": "DIP Active Flexion",
+    "clinical_cue": "Continue lateral band mobilisation through phase 2 PhysioNutritionMSK Rehab Protocols Tendon Gliding \u2014 Modified Protocol",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "adapted_glide_sequence_maintaining_pip_extension_at",
+    "canonical_name": "Adapted glide sequence maintaining PIP extension at",
+    "clinical_cue": "",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "composite_fist_tendon_gliding",
+    "canonical_name": "Composite Fist Tendon Gliding",
+    "clinical_cue": "Full tendon glide protocol \u2014 restore FDS, FDP, and extensor balance",
+    "default_tags": [
+      "balance",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "place_and_hold",
+    "canonical_name": "Place-and-Hold",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "passively_position_finger_in_flexion",
+    "canonical_name": "Passively position finger in flexion",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "tendon_glide",
+    "canonical_name": "Tendon Glide",
+    "clinical_cue": "Passive flexion through full composite fist \u2014 FDS and FDP differential glide Oedema Management (elevation +",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "active_composite_fist",
+    "canonical_name": "Active Composite Fist",
+    "clinical_cue": "FDP and FDS active flexion \u2014 ensure full DIP and PIP flexion",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "hook_fist",
+    "canonical_name": "Hook Fist",
+    "clinical_cue": "DIP flexion with PIP extended \u2014 maximise FDP excursion",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "straight_fist",
+    "canonical_name": "Straight Fist",
+    "clinical_cue": "PIP flexion, DIP straight \u2014 maximise FDS excursion, key for Zone II",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "differential_tendon_gliding",
+    "canonical_name": "Differential Tendon Gliding",
+    "clinical_cue": "Tabletop to hook to straight to full fist \u2014 4-position protocol",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "progressive_putty_gripping",
+    "canonical_name": "Progressive Putty Gripping",
+    "clinical_cue": "",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "resisted_finger_curls",
+    "canonical_name": "Resisted Finger Curls",
+    "clinical_cue": "Full ROM flexion against resistance \u2014 FDP and FDS loading",
+    "default_tags": [
+      "hamstring",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "dexterity_and_fine_motor_tasks",
+    "canonical_name": "Dexterity and Fine Motor Tasks",
+    "clinical_cue": "Pegs, coins, typing, tools \u2014 functional TAM restoration",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "passive_mcp_flexion",
+    "canonical_name": "Passive MCP Flexion",
+    "clinical_cue": "Dynamic outrigger protocol \u2014 elastic traction returns finger to extension",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "active_mcp_extension",
+    "canonical_name": "Active MCP Extension",
+    "clinical_cue": "Within splint boundary \u2014 prevents adhesion formation Intrinsic Plus Position Maintenance Positioning throughout MCP flexed, IPs extended \u2014 protects extensor repair length Oedema management",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "elevation_retrograde",
+    "canonical_name": "Elevation + retrograde",
+    "clinical_cue": "Reduce dorsal hand oedema \u2014 direct effect on extensor tendon excursion",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "active_composite_flexion_extension",
+    "canonical_name": "Active Composite Flexion/Extension",
+    "clinical_cue": "Full active ROM \u2014 monitor for lag at MCP, PIP, DIP at each session",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "isolated_mcp_extension",
+    "canonical_name": "Isolated MCP Extension",
+    "clinical_cue": "EDC re-activation \u2014 ensure MCP reaches full extension",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "wrist_extension_arom",
+    "canonical_name": "Wrist Extension AROM",
+    "clinical_cue": "Zone VI\u2013VIII repair \u2014 restore wrist extensor tendon excursion",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "light_grip",
+    "canonical_name": "Light Grip",
+    "clinical_cue": "Balanced flexor-extensor loading \u2014 monitor for lag",
+    "default_tags": [
+      "balance",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "resisted_wrist_and_finger_extension",
+    "canonical_name": "Resisted Wrist and Finger Extension",
+    "clinical_cue": "load",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "band_resistance",
+    "canonical_name": "Band resistance",
+    "clinical_cue": "",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "4_20_reps",
+    "canonical_name": "4 \u00d7 20 reps",
+    "clinical_cue": "",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "functional_and_dexterity_tasks",
+    "canonical_name": "Functional and Dexterity Tasks",
+    "clinical_cue": "Typing, tools, sport \u2014 graduated return",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "active_finger_flexion_extension",
+    "canonical_name": "Active Finger Flexion/Extension",
+    "clinical_cue": "Begin day 1\u20132 post-op \u2014 prevent stiffness while respecting wound Intrinsic Plus Position Maintenance Positioning throughout day Avoid sustained MCP extension with PIP flexion \u2014 tension on repair Oedema Control \u2014 Elevation + Compression Glove Continuous elevation + glove during day Reduce dorsal hand oedema \u2014 direct effect on finger ROM",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "mcp_and_pip_extension_stretch",
+    "canonical_name": "MCP and PIP Extension Stretch",
+    "clinical_cue": "Low-load prolonged stretch \u2014 most effective for connective tissue remodelling",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "serial_splinting",
+    "canonical_name": "Serial Splinting",
+    "clinical_cue": "progressive splint Advance extension 5\u201310\u00b0 per week \u2014 document goniometric progress",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "scar_management",
+    "canonical_name": "Scar Management",
+    "clinical_cue": "Soften cord scar \u2014 reduce recurrence risk",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "progressive_grip_and_pinch_strengthening",
+    "canonical_name": "Progressive Grip and Pinch Strengthening",
+    "clinical_cue": "",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "thumb_spica_splinting",
+    "canonical_name": "Thumb Spica Splinting",
+    "clinical_cue": "weeks Custom thermoplastic \u2014 immobilise MCP; leave IP and wrist free IP Flexion/Extension AROM (uninvolved",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "continuous_retrograde",
+    "canonical_name": "Continuous + retrograde",
+    "clinical_cue": "Reduce MCP joint swelling \u2014 affects splint fit and compliance",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "thumb_mcp_active_flexion_extension",
+    "canonical_name": "Thumb MCP Active Flexion/Extension",
+    "clinical_cue": "Restore MCP ROM \u2014 symptom-guided; avoid end-range valgus provocation",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "palmar_abduction_opposition",
+    "canonical_name": "Palmar Abduction / Opposition",
+    "clinical_cue": "Restore full thumb mobility \u2014 abductor pollicis and opponens loading",
+    "default_tags": [
+      "glute",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "tip_to_tip_pinch",
+    "canonical_name": "Tip-to-tip Pinch",
+    "clinical_cue": "Restore functional pinch strength \u2014 begin light resistance week 5\u20136",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "key_pinch",
+    "canonical_name": "Key Pinch",
+    "clinical_cue": "Lateral pinch \u2014 adductor pollicis activation within UCL protection",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "progressive_pinch_and_grip_strengthening",
+    "canonical_name": "Progressive Pinch and Grip Strengthening",
+    "clinical_cue": "",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "pendular_exercises",
+    "canonical_name": "Pendular Exercises",
+    "clinical_cue": "Gravity-assisted \u2014 lean forward, arm hangs, small circles and pendular motion \u2014 passive glenohumeral motion",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "wrist_and_hand_arom_grip",
+    "canonical_name": "Wrist and Hand AROM + Grip",
+    "clinical_cue": "Prevent distal stiffness and oedema",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "ice_and_pain_management",
+    "canonical_name": "Ice and Pain Management",
+    "clinical_cue": "Reduce regional pain and muscle spasm \u2014 facilitates pendular motion compliance",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "supine_active_shoulder_flexion",
+    "canonical_name": "Supine Active Shoulder Flexion",
+    "clinical_cue": "Gravity-eliminated progression \u2014 build deltoid and rotator cuff activation",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "scapular_retraction_and_depression",
+    "canonical_name": "Scapular Retraction and Depression",
+    "clinical_cue": "Lower/middle trapezius \u2014 restore scapular motor control",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "isometric_rotator_cuff",
+    "canonical_name": "Isometric Rotator Cuff",
+    "clinical_cue": "IR, ER, abduction isometrics \u2014 begin week 4\u20136 when tolerated",
+    "default_tags": [
+      "glute",
+      "isometric",
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "rotator_cuff_strengthening",
+    "canonical_name": "Rotator Cuff Strengthening",
+    "clinical_cue": "load",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "ir_er_scaption",
+    "canonical_name": "IR, ER, scaption",
+    "clinical_cue": "",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "lateral_raise_and_scaption",
+    "canonical_name": "Lateral Raise and Scaption",
+    "clinical_cue": "Deltoid and supraspinatus strengthening \u2014 scapular plane preferred",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "pnf_diagonal_patterns",
+    "canonical_name": "PNF Diagonal Patterns",
+    "clinical_cue": "Functional overhead movement patterns \u2014 sport and ADL preparation",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "price_protocol",
+    "canonical_name": "PRICE Protocol",
+    "clinical_cue": "compression, elevation Reduce haematoma formation \u2014 critical first 48\u201372 hours",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "short_arc_quads",
+    "canonical_name": "Short Arc Quads",
+    "clinical_cue": "Partial ROM strengthening within pain-free arc",
+    "default_tags": [
+      "mobility",
+      "quad",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "prone_knee_flexion_stretch",
+    "canonical_name": "Prone Knee Flexion Stretch",
+    "clinical_cue": "Active quadriceps stretching \u2014 symptom-guided progress to end range",
+    "default_tags": [
+      "mobility",
+      "quad",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "straight_line_jogging",
+    "canonical_name": "Straight-line Jogging",
+    "clinical_cue": "week 3 Begin when walking pain-free and knee flexion \u2265110\u00b0",
+    "default_tags": [
+      "cardio",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "hamstring_curl",
+    "canonical_name": "Hamstring Curl",
+    "clinical_cue": "Eccentric strength for injury prevention \u2014 full lower limb",
+    "default_tags": [
+      "eccentric",
+      "hamstring",
+      "open_chain",
+      "quad",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "progressive_sessions",
+    "canonical_name": "Progressive sessions",
+    "clinical_cue": "7: full sprint",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "change_of_direction_and_agility_drills",
+    "canonical_name": "Change of Direction and Agility Drills",
+    "clinical_cue": "Reactive cutting and pivoting \u2014 sport-specific",
+    "default_tags": [
+      "neuromuscular"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "kicking_and_sport_specific_demands",
+    "canonical_name": "Kicking and Sport-Specific Demands",
+    "clinical_cue": "Ball sports \u2014 graduated kicking load with velocity and distance",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "maintenance_strengthening",
+    "canonical_name": "Maintenance Strengthening",
+    "clinical_cue": "Eccentric quadriceps protocol lifelong \u2014 prevent recurrence",
+    "default_tags": [
+      "eccentric",
+      "mobility",
+      "quad",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "sub_maximal_isometric_plantarflexion",
+    "canonical_name": "Sub-maximal Isometric Plantarflexion",
+    "clinical_cue": "Prevent complete atrophy without stressing tear \u2014 pain-free only",
+    "default_tags": [
+      "isometric"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "pogo_hops_and_skipping",
+    "canonical_name": "Pogo Hops and Skipping",
+    "clinical_cue": "unilateral Elastic energy storage \u2014 gastrocnemius plyometric",
+    "default_tags": [
+      "calf",
+      "plyometric"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "agility_and_change_of_direction_drills",
+    "canonical_name": "Agility and Change-of-Direction Drills",
+    "clinical_cue": "Reactive calf loading \u2014 sport-specific patterns",
+    "default_tags": [
+      "calf",
+      "neuromuscular",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "maintenance_eccentric_program",
+    "canonical_name": "Maintenance Eccentric Program",
+    "clinical_cue": "Lifelong \u2014 eccentric calf strength is primary recurrence prevention strategy",
+    "default_tags": [
+      "calf",
+      "eccentric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "hip_abductor_and_glute_strengthening",
+    "canonical_name": "Hip Abductor and Glute Strengthening",
+    "clinical_cue": "Maintain hip girdle strength without rectus loading",
+    "default_tags": [
+      "glute",
+      "hip",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "nordic_curl_progression_reverse_nordic",
+    "canonical_name": "Nordic Curl Progression + Reverse Nordic",
+    "clinical_cue": "Eccentric quadriceps load \u2014 reverse Nordic specifically loads rectus femoris at length",
+    "default_tags": [
+      "eccentric",
+      "hamstring",
+      "mobility",
+      "quad",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "prone_quad_stretch",
+    "canonical_name": "Prone Quad Stretch",
+    "clinical_cue": "Combined hip extension and knee flexion \u2014 addresses biarticular length",
+    "default_tags": [
+      "hip",
+      "mobility",
+      "quad",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "kneeling_hip_flexor_stretch",
+    "canonical_name": "Kneeling Hip Flexor Stretch",
+    "clinical_cue": "Restore hip extension mobility \u2014 reduces proximal rectus tension",
+    "default_tags": [
+      "hip",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "jogging",
+    "canonical_name": "Jogging",
+    "clinical_cue": "",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "reverse_nordic_curl",
+    "canonical_name": "Reverse Nordic Curl",
+    "clinical_cue": "Gold standard eccentric rectus femoris load \u2014 key",
+    "default_tags": [
+      "eccentric",
+      "hamstring",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "graduated_kicking_program",
+    "canonical_name": "Graduated Kicking Program",
+    "clinical_cue": "distance Short passing to long kick to power kick \u2014 technical monitoring",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "agility_and_change_of_direction",
+    "canonical_name": "Agility and Change-of-Direction",
+    "clinical_cue": "Reactive lower limb loading \u2014 sport-specific",
+    "default_tags": [
+      "neuromuscular",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "eccentric_maintenance_program",
+    "canonical_name": "Eccentric Maintenance Program",
+    "clinical_cue": "Reverse Nordic lifelong \u2014 prevent recurrence",
+    "default_tags": [
+      "eccentric",
+      "hamstring"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "isometric_gluteal_squeeze",
+    "canonical_name": "Isometric Gluteal Squeeze",
+    "clinical_cue": "Low-intensity glute max activation \u2014 prevent atrophy",
+    "default_tags": [
+      "glute",
+      "isometric",
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "isometric_hip_abduction",
+    "canonical_name": "Isometric Hip Abduction",
+    "clinical_cue": "Glute medius activation \u2014 pain-free only",
+    "default_tags": [
+      "glute",
+      "hip",
+      "isometric"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "glute_bridge",
+    "canonical_name": "Glute Bridge",
+    "clinical_cue": "Glute max loading in extension \u2014 progress to single-leg bridge then loaded",
+    "default_tags": [
+      "balance",
+      "glute",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "step_ups_and_reverse_lunges",
+    "canonical_name": "Step-Ups and Reverse Lunges",
+    "clinical_cue": "Functional gluteal loading \u2014 progress height and load",
+    "default_tags": [
+      "closed_chain",
+      "glute",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "lateral_and_multidirectional_agility_drills",
+    "canonical_name": "Lateral and Multidirectional Agility Drills",
+    "clinical_cue": "Glute medius reactive loading \u2014 change of direction demands",
+    "default_tags": [
+      "glute",
+      "neuromuscular",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "maintenance_strengthening_program",
+    "canonical_name": "Maintenance Strengthening Program",
+    "clinical_cue": "Hip thrust and RDL program lifelong \u2014 injury prevention",
+    "default_tags": [
+      "glute",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "deep_water_running",
+    "canonical_name": "Deep Water Running",
+    "clinical_cue": "Zero impact cardiovascular \u2014 maintains VO2max and running mechanics",
+    "default_tags": [
+      "cardio",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "upper_body_strength_training",
+    "canonical_name": "Upper Body Strength Training",
+    "clinical_cue": "Maintain neuromuscular fitness \u2014 seated exercises",
+    "default_tags": [
+      "neuromuscular",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "walk_run_program",
+    "canonical_name": "Walk-Run Program",
+    "clinical_cue": "",
+    "default_tags": [
+      "cardio"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "structured_run_program",
+    "canonical_name": "Structured Run Program",
+    "clinical_cue": "increase Full running program \u2014 3 non-consecutive days initially, build to full schedule",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "strength_training",
+    "canonical_name": "Strength Training",
+    "clinical_cue": "Heavy calf raises, RDL, squats \u2014 bone loading stimulus and shock absorption Plyometric Progression (bilateral progression)",
+    "default_tags": [
+      "calf",
+      "closed_chain",
+      "plyometric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "pool_running_aqua_jogging",
+    "canonical_name": "Pool Running / Aqua Jogging",
+    "clinical_cue": "Maintain cardiovascular fitness \u2014 zero tibial impact load",
+    "default_tags": [
+      "cardio",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "walk_run_intervals",
+    "canonical_name": "Walk-Run Intervals",
+    "clinical_cue": "Gradual tibial bone loading \u2014 begin on soft surface (grass/track)",
+    "default_tags": [
+      "cardio",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "run_walk_intervals",
+    "canonical_name": "Run-Walk Intervals",
+    "clinical_cue": "Progress tibial loading stimulus \u2014 painguided progression",
+    "default_tags": [
+      "cardio",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "continuous_easy_run",
+    "canonical_name": "Continuous Easy Run",
+    "clinical_cue": "increase Transition to sustained running \u2014 flat surface, controlled pace Single-leg Calf Raises (eccentric",
+    "default_tags": [
+      "balance",
+      "calf",
+      "eccentric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "running_cadence_training",
+    "canonical_name": "Running Cadence Training",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "higher_cadence",
+    "canonical_name": "Higher cadence",
+    "clinical_cue": "Foam Rolling (calf and tibialis",
+    "default_tags": [
+      "calf"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "tempo_runs",
+    "canonical_name": "Tempo Runs",
+    "clinical_cue": "HRmax",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "sport_specific_intensity",
+    "canonical_name": "Sport-specific intensity",
+    "clinical_cue": "",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "interval_training",
+    "canonical_name": "Interval Training",
+    "clinical_cue": "High-intensity tibial loading \u2014 begin week 14\u201316 if pain-free Plyometric Program (bilateral progression)",
+    "default_tags": [
+      "mobility",
+      "plyometric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "orthotics_footwear_review",
+    "canonical_name": "Orthotics / Footwear Review",
+    "clinical_cue": "Custom orthotic or motion-control shoe \u2014 modify pronation biomechanics Load Monitoring Diary Weekly Subjective pain score + training load tracking \u2014 athlete self-regulation",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "pool_walking_aqua_running",
+    "canonical_name": "Pool Walking / Aqua Running",
+    "clinical_cue": "Zero-impact cardiovascular fitness \u2014 fully offloaded in deep water",
+    "default_tags": [
+      "cardio",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "hip_abductor_isometrics",
+    "canonical_name": "Hip Abductor Isometrics",
+    "clinical_cue": "Maintain glute med activation without femoral neck loading",
+    "default_tags": [
+      "glute",
+      "hip",
+      "isometric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "land_walking",
+    "canonical_name": "Land Walking",
+    "clinical_cue": "Progress when FWB pain-free \u2014 flat surface only initially",
+    "default_tags": [
+      "cardio",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "hip_external_rotator_strengthening",
+    "canonical_name": "Hip External Rotator Strengthening",
+    "clinical_cue": "Clamshell, prone hip ER \u2014 reduce femoral neck shear forces Bilateral Squat (bodyweight (progression)",
+    "default_tags": [
+      "closed_chain",
+      "glute",
+      "hip",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "single_leg_stance",
+    "canonical_name": "Single-Leg Stance",
+    "clinical_cue": "Begin when bilateral squat pain-free \u2014 monitor Trendelenburg",
+    "default_tags": [
+      "balance",
+      "closed_chain",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "walk_run_protocol",
+    "canonical_name": "Walk-Run Protocol",
+    "clinical_cue": "Begin on flat, soft surface \u2014 monitor",
+    "default_tags": [
+      "cardio"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "cutting_change_of_direction",
+    "canonical_name": "Cutting, change of direction",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "bone_loading_program",
+    "canonical_name": "Bone Loading Program",
+    "clinical_cue": "Controlled impact loading \u2014 supports bone remodelling and adaptation",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "elbow_wrist_arom",
+    "canonical_name": "Elbow & Wrist AROM",
+    "clinical_cue": "Prevent distal stiffness during immobilisation",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "resisted_shoulder_ir",
+    "canonical_name": "Resisted Shoulder IR",
+    "clinical_cue": "Isolated pec major activation via internal rotation \u2014 pain-free Resisted Shoulder Horizontal",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "adduction",
+    "canonical_name": "Adduction",
+    "clinical_cue": "ecc Controlled pec loading \u2014 avoid endrange stretch across body Push-up (wall to incline,",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "cable_chest_fly",
+    "canonical_name": "Cable Chest Fly",
+    "clinical_cue": "Controlled load through pec \u2014 avoid full horizontal abduction stretch",
+    "default_tags": [
+      "glute",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "serratus_anterior_strengthening",
+    "canonical_name": "Serratus Anterior Strengthening",
+    "clinical_cue": "Scapular protraction control \u2014 prevents shoulder impingement",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "scapular_stabilisation_program",
+    "canonical_name": "Scapular Stabilisation Program",
+    "clinical_cue": "Lower and middle trapezius \u2014 restore force couple balance",
+    "default_tags": [
+      "balance",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "begin_with_light_dumbbells",
+    "canonical_name": "Begin with light dumbbells",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "barbell_bench_press",
+    "canonical_name": "Barbell Bench Press",
+    "clinical_cue": "Introduce barbell when DB press painfree at moderate load Incline and Decline Press",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "dumbbell_chest_fly",
+    "canonical_name": "Dumbbell Chest Fly",
+    "clinical_cue": "Eccentric lengthening phase \u2014 restore full ROM under load",
+    "default_tags": [
+      "eccentric",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "plyometric_push_up_progressions",
+    "canonical_name": "Plyometric Push-up Progressions",
+    "clinical_cue": "Power development \u2014 medicine ball, clap push-ups progressively",
+    "default_tags": [
+      "plyometric"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "sport_specific_upper_limb_drills",
+    "canonical_name": "Sport-Specific Upper Limb Drills",
+    "clinical_cue": "Throwing, pushing, tackling \u2014 controlled introduction of sport loads",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "wrist_finger_arom",
+    "canonical_name": "Wrist & Finger AROM",
+    "clinical_cue": "Prevent distal stiffness during elbow immobilisation Elbow PROM (flexion, within splint",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "elbow_arom_flexion",
+    "canonical_name": "Elbow AROM Flexion",
+    "clinical_cue": "Begin when cleared week 3\u20134 \u2014 forearm supported",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "cryotherapy_elevation",
+    "canonical_name": "Cryotherapy & Elevation",
+    "clinical_cue": "Post-operative oedema and pain management",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "elbow_arom",
+    "canonical_name": "Elbow AROM",
+    "clinical_cue": "Flexion, extension, pronation, supination \u2014 restore full ROM progressively",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "isometric_elbow_flexion",
+    "canonical_name": "Isometric Elbow Flexion",
+    "clinical_cue": "Begin tendon loading \u2014 submaximal effort initially Resisted Elbow Flexion (band, week",
+    "default_tags": [
+      "isometric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "progressive_biceps_loading",
+    "canonical_name": "Progressive biceps loading",
+    "clinical_cue": "Resisted Supination (band, week",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "wrist_curls_and_reverse_curls",
+    "canonical_name": "Wrist Curls and Reverse Curls",
+    "clinical_cue": "Forearm flexor/extensor balance \u2014 support elbow recovery",
+    "default_tags": [
+      "balance",
+      "hamstring",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "shoulder_strengthening",
+    "canonical_name": "Shoulder Strengthening",
+    "clinical_cue": "Restore full shoulder-elbow kinetic chain \u2014 proximal stability",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "dumbbell_bicep_curls",
+    "canonical_name": "Dumbbell Bicep Curls",
+    "clinical_cue": "",
+    "default_tags": [
+      "hamstring",
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "barbell_curl",
+    "canonical_name": "Barbell Curl",
+    "clinical_cue": "Introduce barbell when DB tolerated at moderate load",
+    "default_tags": [
+      "hamstring",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "chin_ups_assisted_chin_ups",
+    "canonical_name": "Chin-ups / Assisted Chin-ups",
+    "clinical_cue": "Full-load supinated grip compound exercise \u2014 high biceps demand Supination Resistance Training",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "eccentric_bicep_curls",
+    "canonical_name": "Eccentric Bicep Curls",
+    "clinical_cue": "Full eccentric loading \u2014 prevent rerupture via tendon adaptation",
+    "default_tags": [
+      "eccentric",
+      "hamstring",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "functional_upper_body_program",
+    "canonical_name": "Functional Upper Body Program",
+    "clinical_cue": "Rowing, pulling, pressing \u2014 integrated upper limb loading",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "60_70",
+    "canonical_name": "60\u201370\u00b0)",
+    "clinical_cue": "Mid-range isometric \u2014 immediate analgesic effect; avoid full extension Isometric Tricep Push (wall, elbow",
+    "default_tags": [
+      "isometric",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "rotator_cuff_maintenance",
+    "canonical_name": "Rotator Cuff Maintenance",
+    "clinical_cue": "Maintain shoulder strength \u2014 assess for proximal chain contributors",
+    "default_tags": [
+      "isometric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "wrist_and_forearm_flexibility",
+    "canonical_name": "Wrist and Forearm Flexibility",
+    "clinical_cue": "Address distal chain tightness \u2014 reduces elbow joint stress",
+    "default_tags": [
+      "isometric",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "close_grip_push_up",
+    "canonical_name": "Close-grip Push-up",
+    "clinical_cue": "Functional compound triceps loading \u2014 progress angle from wall to floor French Press / Skull Crusher",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "elbow_rom_exercises",
+    "canonical_name": "Elbow ROM Exercises",
+    "clinical_cue": "Maintain full flexion/extension \u2014 prevent joint stiffness",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "plyometric_push_up",
+    "canonical_name": "Plyometric Push-up",
+    "clinical_cue": "Power development \u2014 triceps energy storage and release",
+    "default_tags": [
+      "mobility",
+      "plyometric"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "medicine_ball_chest_pass",
+    "canonical_name": "Medicine Ball Chest Pass",
+    "clinical_cue": "Explosive pressing \u2014 triceps power for sport-specific demands",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "interval_throwing_progression",
+    "canonical_name": "Interval throwing program",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "bench_press",
+    "canonical_name": "Bench Press",
+    "clinical_cue": "Full upper body compound load \u2014 monitor elbow response",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "swimming_cycling",
+    "canonical_name": "Swimming / Cycling",
+    "clinical_cue": "Cardiovascular and leg fitness \u2014 low calcaneal impact",
+    "default_tags": [
+      "cardio",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "activity_modification",
+    "canonical_name": "Activity Modification",
+    "clinical_cue": "",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "full_sport_training",
+    "canonical_name": "Full Sport Training",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "build_to_full_training_volume_over_3_4",
+    "canonical_name": "Build to full training volume over 3\u20134",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "ongoing_calf_stretching",
+    "canonical_name": "Ongoing Calf Stretching",
+    "clinical_cue": "Lifelong habit during growth years \u2014 maintain flexibility",
+    "default_tags": [
+      "calf",
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "load_monitoring_education",
+    "canonical_name": "Load Monitoring Education",
+    "clinical_cue": "Teach family to recognise early warning signs \u2014 morning heel pain on waking",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "cardiovascular_fitness",
+    "canonical_name": "Cardiovascular Fitness",
+    "clinical_cue": "Bike, swimming, running \u2014 maintain general fitness",
+    "default_tags": [
+      "cardio"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "shoulder_flexibility",
+    "canonical_name": "Shoulder Flexibility",
+    "clinical_cue": "Pain-free shoulder ROM maintenance \u2014 no resistive loading",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "scapular_ypsilon_exercises",
+    "canonical_name": "Scapular YPSILON Exercises",
+    "clinical_cue": "Scapular stabiliser activation \u2014 bodyweight only",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "core_stabilisation",
+    "canonical_name": "Core Stabilisation",
+    "clinical_cue": "Dead bug, bird dog \u2014 develop kinetic chain for throwing",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "rotator_cuff_program",
+    "canonical_name": "Rotator Cuff Program",
+    "clinical_cue": "External and internal rotation \u2014 physeal stress reduced with careful load",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "scapular_strengthening",
+    "canonical_name": "Scapular Strengthening",
+    "clinical_cue": "Restore scapular stability \u2014 essential for throwing biomechanics Shoulder ER Strengthening (90/90",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "thrower_s_ten_program",
+    "canonical_name": "Thrower's Ten Program",
+    "clinical_cue": "Comprehensive rotator cuff and scapular program for throwing athletes",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "plyometric_ball_work",
+    "canonical_name": "Plyometric Ball Work",
+    "clinical_cue": "Rhythmic stabilisation \u2014 shoulder neuromuscular control",
+    "default_tags": [
+      "neuromuscular",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "hip_and_core_power_development",
+    "canonical_name": "Hip and Core Power Development",
+    "clinical_cue": "Rotational power from lower limb \u2014 reduce arm-dominant throwing pattern",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "begin_at_45_feet_50_effort",
+    "canonical_name": "Begin at 45 feet, 50% effort",
+    "clinical_cue": "Pitching Return (bullpen sessions) Gradual mound work Begin off mound \u2014 introduce mound when 90 feet ITP pain-free",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "continued_rotator_cuff_strength",
+    "canonical_name": "Continued Rotator Cuff Strength",
+    "clinical_cue": "Maintain rotator cuff endurance throughout season",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "scapular_stabilisation_maintenance",
+    "canonical_name": "Scapular Stabilisation Maintenance",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "hamstring_stretching",
+    "canonical_name": "Hamstring Stretching",
+    "clinical_cue": "Reduce knee flexion deficit \u2014 improve patellar tendon mechanics",
+    "default_tags": [
+      "hamstring",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "landing_mechanics_training",
+    "canonical_name": "Landing Mechanics Training",
+    "clinical_cue": "Soft landing coaching \u2014 reduce peak tibial loading on ground contact",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "quadriceps_stretching",
+    "canonical_name": "Quadriceps Stretching",
+    "clinical_cue": "Primary intervention \u2014 reduce quadriceps traction on patellar apophysis",
+    "default_tags": [
+      "mobility",
+      "quad",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "plyometric_program",
+    "canonical_name": "Plyometric Program",
+    "clinical_cue": "Jump training \u2014 bilateral then unilateral, flat then box",
+    "default_tags": [
+      "plyometric"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "pool_therapy_hydrotherapy",
+    "canonical_name": "Pool Therapy / Hydrotherapy",
+    "clinical_cue": "Optimal environment \u2014 buoyancy offloads femoral head while maintaining ROM",
+    "default_tags": [
+      "cardio",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "hip_abduction_arom",
+    "canonical_name": "Hip Abduction AROM",
+    "clinical_cue": "Maintain containment in acetabulum \u2014 critical range to preserve",
+    "default_tags": [
+      "glute",
+      "hip"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "hip_flexion_extension_arom",
+    "canonical_name": "Hip Flexion / Extension AROM",
+    "clinical_cue": "Full ROM maintenance \u2014 avoid forced ranges",
+    "default_tags": [
+      "hip",
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "core_strengthening",
+    "canonical_name": "Core Strengthening",
+    "clinical_cue": "Maintain lumbopelvic stability \u2014 no provocative hip loading",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "hip_extensor_strengthening",
+    "canonical_name": "Hip Extensor Strengthening",
+    "clinical_cue": "Glute max activation \u2014 posterior chain support for femoral head containment",
+    "default_tags": [
+      "glute",
+      "hip",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "hip_flexor_strengthening",
+    "canonical_name": "Hip Flexor Strengthening",
+    "clinical_cue": "Seated hip flexion, progressed \u2014 maintain iliopsoas strength",
+    "default_tags": [
+      "hip",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "hip_strengthening_maintenance",
+    "canonical_name": "Hip Strengthening Maintenance",
+    "clinical_cue": "Abductors, extensors, external rotators \u2014 maintain throughout childhood",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "flexibility_program",
+    "canonical_name": "Flexibility Program",
+    "clinical_cue": "Hip flexor, adductor, rotator flexibility \u2014 prevent stiffness Age-Appropriate Reintegration Gradual return Return to school sport and physical education \u2014 coordinate with orthopaedics",
+    "default_tags": [
+      "hip",
+      "mobility",
+      "plyometric"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "afo_provision",
+    "canonical_name": "AFO Provision",
+    "clinical_cue": "Foot drop correction \u2014 prevents equinus and fall risk during nerve recovery",
+    "default_tags": [
+      "ankle"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "passive_ankle_prom",
+    "canonical_name": "Passive Ankle PROM",
+    "clinical_cue": "Prevent equinus and peroneal contracture during flaccid phase",
+    "default_tags": [
+      "ankle"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "tibialis_anterior_nmes_fes",
+    "canonical_name": "Tibialis Anterior NMES / FES",
+    "clinical_cue": "Electrical stimulation maintains muscle mass during denervation",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "gait_training",
+    "canonical_name": "Gait Training",
+    "clinical_cue": "Safe ambulation \u2014 retrain normal gait pattern with orthotics support",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "hip_and_proximal_strengthening",
+    "canonical_name": "Hip and Proximal Strengthening",
+    "clinical_cue": "Maintain hip abductor and extensor strength \u2014 compensatory gait reduction",
+    "default_tags": [
+      "hip",
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "toe_extension_exercises",
+    "canonical_name": "Toe Extension Exercises",
+    "clinical_cue": "Extensor digitorum longus and hallucis \u2014 functional toe clearance in gait Proprioception Training (standing,",
+    "default_tags": [
+      "balance",
+      "mobility",
+      "neuromuscular",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "progressive_dorsiflexion_resistance",
+    "canonical_name": "Progressive Dorsiflexion Resistance",
+    "clinical_cue": "load Strength symmetry goal \u2014 use graded resistance band or weight boot Functional Gait Training (without",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "afo",
+    "canonical_name": "AFO)",
+    "clinical_cue": "Normal heel-strike gait retraining \u2014 progress distance and terrain",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "stair_and_ramp_training",
+    "canonical_name": "Stair and Ramp Training",
+    "clinical_cue": "Functional mobility requirements \u2014 prevent persistent foot drop adaptation",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "running_return",
+    "canonical_name": "Running Return",
+    "clinical_cue": "Running only when safe foot clearance \u2014 begin walk-jog with monitoring",
+    "default_tags": [
+      "cardio"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "home_exercise_program",
+    "canonical_name": "Home Exercise Program",
+    "clinical_cue": "Dorsiflexion and eversion strengthening \u2014 nerve recovery ongoing for 12 months",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "laterality_recognition",
+    "canonical_name": "Laterality Recognition",
+    "clinical_cue": "Normalise cortical body schema \u2014 Moseley program: identify left/right images Graded Motor Imagery \u2014 Imagined",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "movements",
+    "canonical_name": "Movements",
+    "clinical_cue": "Stage 2 GMI \u2014 mentally rehearse painfree movement without physical movement",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "mirror_therapy",
+    "canonical_name": "Mirror Therapy",
+    "clinical_cue": "Cortical reorganisation \u2014 watch reflected unaffected limb performing movements",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "desensitisation",
+    "canonical_name": "Desensitisation",
+    "clinical_cue": "Cotton wool to washcloth to towel to brush \u2014 progressive tactile stimulation",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "pain_free_arom",
+    "canonical_name": "Pain-free AROM",
+    "clinical_cue": "Maintain joint mobility \u2014 only movements that do NOT increase symptoms beyond 2/10",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "graded_activity",
+    "canonical_name": "Graded Activity",
+    "clinical_cue": "",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "graded_weight_bearing",
+    "canonical_name": "Graded Weight Bearing",
+    "clinical_cue": "Pool environment \u2014 warmth reduces sympathetic output; buoyancy reduces",
+    "default_tags": [
+      "cardio",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "isometric_strengthening",
+    "canonical_name": "Isometric Strengthening",
+    "clinical_cue": "Maintain muscle mass \u2014 low-grade isometrics below symptom threshold",
+    "default_tags": [
+      "isometric",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "aerobic_exercise",
+    "canonical_name": "Aerobic Exercise",
+    "clinical_cue": "Walking, cycling \u2014 systemic endogenous opioid and noradrenergic activation",
+    "default_tags": [
+      "cardio"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "progressive_strengthening_program",
+    "canonical_name": "Progressive Strengthening Program",
+    "clinical_cue": "",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "return_to_work_sport_program",
+    "canonical_name": "Return to Work / Sport Program",
+    "clinical_cue": "Graded return with occupational therapist or sports physiotherapist",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "shoulder_arom",
+    "canonical_name": "Shoulder AROM",
+    "clinical_cue": "Maintain shoulder mobility \u2014 no resistance during acute phase",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "ice_cryotherapy",
+    "canonical_name": "Ice / Cryotherapy",
+    "clinical_cue": "Reduce cervical muscle guarding and acute pain",
+    "default_tags": [
+      "mobility",
+      "spine"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "rest_from_contact_if_symptoms_15",
+    "canonical_name": "Rest from Contact (if symptoms >15",
+    "clinical_cue": "Until resolved Protect recovering neural structures \u2014 modified training only",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "cervical_proprioception_training",
+    "canonical_name": "Cervical Proprioception Training",
+    "clinical_cue": "Joint position sense retraining \u2014 laser or head pointer exercises",
+    "default_tags": [
+      "balance",
+      "mobility",
+      "neuromuscular",
+      "spine",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "full_contact_practice",
+    "canonical_name": "Full Contact Practice",
+    "clinical_cue": "Non-contact to contact drills to full scrimmage \u2014 over 1\u20132 weeks",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "cervical_strength_maintenance",
+    "canonical_name": "Cervical Strength Maintenance",
+    "clinical_cue": "Isometric and dynamic cervical strengthening \u2014 maintain throughout season",
+    "default_tags": [
+      "isometric",
+      "spine",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "shoulder_strength_maintenance",
+    "canonical_name": "Shoulder Strength Maintenance",
+    "clinical_cue": "Rotator cuff and scapular program \u2014 inseason maintenance mandatory Equipment Check (ongoing) Each game/practice Shoulder pad height, neck roll, helmet fit \u2014 check before each contact session",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "roller",
+    "canonical_name": "Roller",
+    "clinical_cue": "Passive thoracic extension \u2014 target midthoracic apex of kyphosis",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "thoracic_extension_over_chair_back",
+    "canonical_name": "Thoracic Extension over Chair Back",
+    "clinical_cue": "Accessible thoracic mobilisation \u2014 daily practice essential for change",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "chest_opener_stretch",
+    "canonical_name": "Chest Opener Stretch",
+    "clinical_cue": "Pectoralis minor and major stretch \u2014 reverses protraction and kyphosis posture",
+    "default_tags": [
+      "mobility"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "face_pull",
+    "canonical_name": "Face Pull",
+    "clinical_cue": "Rear deltoid and external rotators \u2014 correct protraction and IR dominance Thoracic Extension (prone, loaded",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "wall_angels",
+    "canonical_name": "Wall Angels",
+    "clinical_cue": "Simultaneous shoulder ER + thoracic extension \u2014 excellent posture integrator Ergonomic Assessment & Modification One-off assessment Screen, chair, keyboard, mouse \u2014 structural solution for postural problem",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "maintenance_strength_program",
+    "canonical_name": "Maintenance Strength Program",
+    "clinical_cue": "Y-T-W, rows, face pulls \u2014 permanent",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "jaw_rest_protocol",
+    "canonical_name": "Jaw Rest Protocol",
+    "clinical_cue": "Soft diet, small bites, no gum \u2014 reduce joint loading during reactive phase Occlusal Splint (dentist-provided) Night use (bruxism) Reduce nocturnal joint loading and clenching \u2014 primary TMD intervention",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "thermal_therapy",
+    "canonical_name": "Thermal Therapy",
+    "clinical_cue": "Reduce masseteric muscle tension \u2014 moist heat over masseter and TMJ Tongue-Up Rest Position Conscious habit all day Tongue on palate, teeth apart, lips together \u2014 reduces TMJ compression Relaxation Techniques / Stress",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "controlled_jaw_opening",
+    "canonical_name": "Controlled Jaw Opening",
+    "clinical_cue": "Mirror feedback \u2014 correct lateral deviation; maintain midline opening",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "jaw_opening_with_tongue_on_palate",
+    "canonical_name": "Jaw Opening with Tongue on Palate",
+    "clinical_cue": "Limits condylar translation \u2014 reduces anterior disc loading in early opening",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "lateral_jaw_deviation",
+    "canonical_name": "Lateral Jaw Deviation",
+    "clinical_cue": "Restore lateral pterygoid function \u2014 key for lateral jaw mobility",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "masseter_and_temporalis_selfmassage",
+    "canonical_name": "Masseter and Temporalis SelfMassage",
+    "clinical_cue": "Reduce hyperactive jaw closers \u2014 circular pressure at muscle belly",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "resisted_jaw_opening",
+    "canonical_name": "Resisted Jaw Opening",
+    "clinical_cue": "Lateral pterygoid strengthening \u2014 submaximal resistance under chin",
+    "default_tags": [
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "cervical_spine_treatment",
+    "canonical_name": "Cervical Spine Treatment",
+    "clinical_cue": "Upper cervical manipulation or mobilisation \u2014 C1-C3 referral to TMJ is common",
+    "default_tags": [
+      "spine"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "postural_correction_program",
+    "canonical_name": "Postural Correction Program",
+    "clinical_cue": "Thoracic extension, chin tuck \u2014 reduce forward head posture TMJ loading",
+    "default_tags": [
+      "mobility",
+      "strength"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "daily_jaw_exercise_program",
+    "canonical_name": "Daily Jaw Exercise Program",
+    "clinical_cue": "Controlled opening, lateral movements \u2014 maintain mobility permanently",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "stress_management_mindfulness",
+    "canonical_name": "Stress Management / Mindfulness",
+    "clinical_cue": "Primary driver of recurrence \u2014 integrate mindfulness or CBT techniques",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "postural_maintenance_program",
+    "canonical_name": "Postural Maintenance Program",
+    "clinical_cue": "Cervical and thoracic postural exercises \u2014 TMD-cervical link permanent",
+    "default_tags": [
+      "spine"
+    ],
+    "status": "validated"
+  },
+  {
+    "id": "occlusal_splint_compliance",
+    "canonical_name": "Occlusal Splint Compliance",
+    "clinical_cue": "Maintain splint use during sleep indefinitely if bruxism persists",
+    "default_tags": [],
+    "status": "validated"
+  },
+  {
+    "id": "self_monitoring",
+    "canonical_name": "Self-Monitoring",
+    "clinical_cue": "Awareness of daytime clenching habits \u2014 biofeedback app or timer reminders",
+    "default_tags": [],
+    "status": "validated"
+  }
+]

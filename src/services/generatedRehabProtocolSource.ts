@@ -1,7 +1,8 @@
+import rehabExerciseLibrary from '../../json/library_v3.json';
+import rehabProtocolsJson from '../../json/protocols_v3.json';
 import type {TableRow} from '../lib/supabaseDatabase';
 import type {InjuryPhase, InjuryProtocol, RecoveryWindow} from './injuryDatabase';
 import {getAllInjuries} from './injuryDatabase';
-import {generatedRehabProtocols} from './generatedRehabProtocols';
 import {decodeMojibake} from './textEncoding';
 import type {Language} from './translations';
 
@@ -9,9 +10,71 @@ export type RehabProtocolRow = TableRow<'protocols'>;
 export type RehabPhaseRow = TableRow<'phases'>;
 export type RehabExerciseRow = TableRow<'exercises'>;
 
+type JsonExerciseLibraryEntry = {
+  id: string;
+  canonical_name: string;
+  clinical_cue?: string;
+  default_tags?: string[];
+  status?: string;
+};
+
+type JsonProtocolExercise = {
+  exercise_ref: string;
+  dosage?: {
+    sets?: number | null;
+    reps?: number | null;
+    duration_sec?: number | null;
+    frequency_per_week?: number | null;
+    exercise_type?: string | null;
+    raw?: string | null;
+  };
+  tags?: string[];
+  clinical_cue_override?: string | null;
+};
+
+type JsonProtocolPhase = {
+  phase_number: number;
+  title: string;
+  timing: string;
+  goals: string[];
+  precautions: string[];
+  criteria_to_progress: string[];
+  exercises: JsonProtocolExercise[];
+  progression_logic?: {
+    rpe_target?: number;
+    load_progression?: string;
+    regression_options?: string[];
+  };
+};
+
+type JsonProtocol = {
+  id: number;
+  slug: string;
+  title: string;
+  region: string;
+  protocol_version?: string;
+  is_active?: boolean;
+  metadata?: {
+    body_region?: string;
+  };
+  references?: Array<{
+    raw?: string;
+    title?: string;
+    authors?: string;
+    journal?: string;
+    year?: number;
+    doi?: string;
+  }>;
+  phases: JsonProtocolPhase[];
+};
+
 type LocalNutritionMatch = InjuryProtocol & {
   score: number;
 };
+
+const generatedRehabProtocols = rehabProtocolsJson as JsonProtocol[];
+const rehabExerciseLibraryEntries = rehabExerciseLibrary as JsonExerciseLibraryEntry[];
+const rehabExerciseLibraryById = new Map(rehabExerciseLibraryEntries.map((entry) => [entry.id, entry]));
 
 function cleanText(value: string | null | undefined) {
   return value ? decodeMojibake(value).trim() : '';
@@ -19,6 +82,33 @@ function cleanText(value: string | null | undefined) {
 
 function cleanList(value: string[] | null | undefined) {
   return (value || []).map((item) => cleanText(item)).filter(Boolean);
+}
+
+function formatJsonDosage(dosage?: JsonProtocolExercise['dosage']) {
+  const raw = cleanText(dosage?.raw);
+  if (raw) return raw;
+
+  const parts: string[] = [];
+  if (typeof dosage?.sets === 'number') parts.push(`${dosage.sets} sets`);
+  if (typeof dosage?.reps === 'number') parts.push(`${dosage.reps} reps`);
+  if (typeof dosage?.duration_sec === 'number') parts.push(`${dosage.duration_sec} sec`);
+  if (typeof dosage?.frequency_per_week === 'number') parts.push(`${dosage.frequency_per_week}/week`);
+  return parts.join(', ');
+}
+
+function getExerciseLibraryEntry(exerciseRef: string) {
+  return rehabExerciseLibraryById.get(exerciseRef);
+}
+
+function getExerciseName(exercise: JsonProtocolExercise) {
+  return cleanText(getExerciseLibraryEntry(exercise.exercise_ref)?.canonical_name) || cleanText(exercise.exercise_ref);
+}
+
+function getExerciseCue(exercise: JsonProtocolExercise) {
+  return (
+    cleanText(exercise.clinical_cue_override || undefined) ||
+    cleanText(getExerciseLibraryEntry(exercise.exercise_ref)?.clinical_cue)
+  );
 }
 
 export function getGeneratedRehabProtocolSlug(name: string) {
@@ -37,7 +127,10 @@ function normalizeForMatch(value: string) {
     .replace(/&/g, ' and ')
     .replace(/[()'".,]/g, ' ')
     .replace(/[^a-z0-9\s]+/g, ' ')
-    .replace(/\b(post|postoperative|post-operative|conservative|grade|first|time|management|repair|reconstruction|rehabilitation|rehab|syndrome|injury)\b/g, ' ')
+    .replace(
+      /\b(post|postoperative|post-operative|conservative|grade|first|time|management|repair|reconstruction|rehabilitation|rehab|syndrome|injury)\b/g,
+      ' ',
+    )
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -65,6 +158,7 @@ export function inferGeneratedBodyRegion(category: string, fallback?: string) {
   if (normalized.includes('paediatric')) return 'Whole body';
   if (normalized.includes('neurological')) return 'Whole body';
   if (normalized.includes('sports')) return 'Whole body';
+  if (normalized.includes('trauma')) return 'Whole body';
 
   return cleanCategory || 'Whole body';
 }
@@ -72,11 +166,16 @@ export function inferGeneratedBodyRegion(category: string, fallback?: string) {
 export function inferGeneratedRecoveryWindow(timeline: string, phaseNumber: number, phaseCount: number): RecoveryWindow {
   const normalized = cleanText(timeline).toLowerCase();
 
-  if (/0\s*[-–]?\s*(2|3)\s*(day|days)/.test(normalized) || normalized.includes('immediate') || normalized.includes('acute')) {
+  if (/0\s*[-â€“]?\s*(2|3)\s*(day|days)/.test(normalized) || normalized.includes('immediate') || normalized.includes('acute')) {
     return 'under_48h';
   }
 
-  if (/week\s*0/.test(normalized) || /week\s*1/.test(normalized) || /week\s*2/.test(normalized) || /day\s*3/.test(normalized)) {
+  if (
+    /week\s*0/.test(normalized) ||
+    /week\s*1/.test(normalized) ||
+    /week\s*2/.test(normalized) ||
+    /day\s*3/.test(normalized)
+  ) {
     return 'days_3_14';
   }
 
@@ -84,7 +183,7 @@ export function inferGeneratedRecoveryWindow(timeline: string, phaseNumber: numb
     return 'weeks_2_6';
   }
 
-  if (/month/.test(normalized) || /week\s*(9|10|11|12)/.test(normalized) || normalized.includes('return to sport')) {
+  if (/month/.test(normalized) || /week\s*(9|10|11|12)/.test(normalized) || normalized.includes('return to sport') || normalized.includes('ongoing')) {
     return 'over_6_weeks';
   }
 
@@ -180,11 +279,21 @@ function buildOverview(name: string, category: string, phaseCount: number) {
   return `${cleanText(name)} is a structured rehab protocol for the ${region.toLowerCase()} with ${phaseCount} staged rehab phase${phaseCount === 1 ? '' : 's'}.`;
 }
 
+function buildPhaseNotes(phase: JsonProtocolPhase) {
+  const notes: string[] = [];
+  const loadProgression = cleanText(phase.progression_logic?.load_progression);
+  if (loadProgression) notes.push(loadProgression);
+  if (typeof phase.progression_logic?.rpe_target === 'number') {
+    notes.push(`Target effort: RPE ${phase.progression_logic.rpe_target}.`);
+  }
+  return notes;
+}
+
 export function getGeneratedRehabProtocolRows(): RehabProtocolRow[] {
   return generatedRehabProtocols.map((protocol, index) => ({
     id: index + 1,
-    name: cleanText(protocol.name),
-    category: cleanText(protocol.category),
+    name: cleanText(protocol.title),
+    category: cleanText(protocol.region),
     description: null,
     created_at: null,
   }));
@@ -197,12 +306,12 @@ export function getGeneratedRehabPhaseRows(protocolId: number): RehabPhaseRow[] 
   return protocol.phases.map((phase, index) => ({
     id: protocolId * 100 + index + 1,
     protocol_id: protocolId,
-    phase_number: phase.phaseNumber,
+    phase_number: phase.phase_number,
     title: cleanText(phase.title),
-    timeline: cleanText(phase.timeline),
+    timeline: cleanText(phase.timing),
     goals: cleanList(phase.goals),
     precautions: cleanList(phase.precautions),
-    criteria_to_progress: cleanList(phase.criteriaToProgress),
+    criteria_to_progress: cleanList(phase.criteria_to_progress),
     created_at: null,
   }));
 }
@@ -220,9 +329,9 @@ export function getGeneratedRehabExerciseRows(phaseIds: number[]): RehabExercise
         rows.push({
           id: phaseId * 1000 + exerciseIndex + 1,
           phase_id: phaseId,
-          name: cleanText(exercise.name),
-          parameters: cleanText(exercise.parameters) || null,
-          clinical_cue_rationale: cleanText(exercise.clinicalCueRationale) || null,
+          name: getExerciseName(exercise),
+          parameters: formatJsonDosage(exercise.dosage) || null,
+          clinical_cue_rationale: getExerciseCue(exercise) || null,
           created_at: null,
         });
       });
@@ -236,33 +345,39 @@ function mapGeneratedProtocol(protocolId: number, lang: Language): InjuryProtoco
   const protocol = generatedRehabProtocols[protocolId - 1];
   if (!protocol) return null;
 
-  const localNutritionMatch = findBestLocalNutritionMatch(protocol.name, protocol.category);
-  const bodyRegion = localNutritionMatch?.bodyRegion || inferGeneratedBodyRegion(protocol.category);
-  const category = localNutritionMatch?.category || cleanText(protocol.category) || bodyRegion;
+  const title = cleanText(protocol.title);
+  const region = cleanText(protocol.region);
+  const localNutritionMatch = findBestLocalNutritionMatch(title, region);
+  const bodyRegion =
+    localNutritionMatch?.bodyRegion || inferGeneratedBodyRegion(protocol.metadata?.body_region || region, region);
+  const category = localNutritionMatch?.category || region || bodyRegion;
 
   const mappedPhases: InjuryPhase[] = protocol.phases.map((phase, index) => {
-    const nutrition = mapPhaseNutrition(phase.phaseNumber, localNutritionMatch, lang);
+    const nutrition = mapPhaseNutrition(phase.phase_number, localNutritionMatch, lang);
+    const progressionNotes = buildPhaseNotes(phase);
+    const regressionNotes = cleanList(phase.progression_logic?.regression_options);
 
     return {
-      id: `protocol-${protocolId}-phase-${phase.phaseNumber}`,
+      id: `protocol-${protocolId}-phase-${index + 1}`,
       label: cleanText(phase.title),
-      duration: cleanText(phase.timeline),
-      window: inferGeneratedRecoveryWindow(cleanText(phase.timeline), phase.phaseNumber, protocol.phases.length),
+      duration: cleanText(phase.timing),
+      window: inferGeneratedRecoveryWindow(cleanText(phase.timing), phase.phase_number, protocol.phases.length),
       goals: cleanList(phase.goals),
       nutritionFocus: nutrition.nutritionFocus,
       recommendedFoods: nutrition.recommendedFoods,
       avoidFoods: nutrition.avoidFoods,
       supplements: nutrition.supplements,
-      exercises: phase.exercises.map((exercise) => cleanText(exercise.name)),
+      exercises: phase.exercises.map((exercise) => getExerciseName(exercise)),
       prohibitedMovements: nutrition.prohibitedMovements,
       exercisePlans: phase.exercises.map((exercise) => ({
-        label: cleanText(exercise.name),
-        sets: cleanText(exercise.parameters) || undefined,
-        cues: cleanText(exercise.clinicalCueRationale) ? [cleanText(exercise.clinicalCueRationale)] : [],
+        label: getExerciseName(exercise),
+        sets: formatJsonDosage(exercise.dosage) || undefined,
+        alternatives: cleanList(exercise.tags),
+        cues: getExerciseCue(exercise) ? [getExerciseCue(exercise)] : [],
       })),
-      focus: index === 0 ? buildOverview(protocol.name, protocol.category, protocol.phases.length) : undefined,
-      progressionMarkers: cleanList(phase.criteriaToProgress),
-      cautions: cleanList(phase.precautions),
+      focus: index === 0 ? buildOverview(title, region, protocol.phases.length) : undefined,
+      progressionMarkers: [...cleanList(phase.criteria_to_progress), ...progressionNotes],
+      cautions: [...cleanList(phase.precautions), ...regressionNotes],
       nutritionNotes: nutrition.nutritionNotes,
       meals: nutrition.meals,
       proteinPerKg: nutrition.proteinPerKg,
@@ -276,14 +391,14 @@ function mapGeneratedProtocol(protocolId: number, lang: Language): InjuryProtoco
   });
 
   return {
-    id: getGeneratedRehabProtocolSlug(protocol.name).replace(/-/g, '_'),
-    name: cleanText(protocol.name),
+    id: cleanText(protocol.slug).replace(/-/g, '_') || getGeneratedRehabProtocolSlug(title).replace(/-/g, '_'),
+    name: title,
     category: category as InjuryProtocol['category'],
     bodyRegion: bodyRegion as InjuryProtocol['bodyRegion'],
     commonIn: [],
-    overview: buildOverview(protocol.name, protocol.category, mappedPhases.length),
+    overview: buildOverview(title, region, mappedPhases.length),
     rehabSummary: mappedPhases.length
-      ? `Structured ${mappedPhases.length}-phase rehab progression with goals, precautions, criteria to progress, and exercise cues.`
+      ? `Structured ${mappedPhases.length}-phase rehab progression with goals, precautions, progression rules, and exercise cues.`
       : 'Structured rehab progression.',
     redFlags: [],
     relatedCalculators: ['Protein intake', 'Water intake'],
@@ -292,6 +407,10 @@ function mapGeneratedProtocol(protocolId: number, lang: Language): InjuryProtoco
     phases: mappedPhases,
     pageContent: localNutritionMatch?.pageContent
       ? {
+          intro: localNutritionMatch.pageContent.intro,
+          symptoms: localNutritionMatch.pageContent.symptoms,
+          faq: localNutritionMatch.pageContent.faq,
+          rehabNotes: localNutritionMatch.pageContent.rehabNotes,
           nutritionNotes: localNutritionMatch.pageContent.nutritionNotes,
         }
       : undefined,

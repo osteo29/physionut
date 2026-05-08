@@ -1,7 +1,11 @@
 import path from 'node:path';
 import * as dotenv from 'dotenv';
-import {generatedRehabProtocols} from '../src/services/generatedRehabProtocols';
 import type {TableInsert} from '../src/lib/supabaseDatabase';
+import {
+  getGeneratedRehabExerciseRows,
+  getGeneratedRehabPhaseRows,
+  getGeneratedRehabProtocolRows,
+} from '../src/services/generatedRehabProtocolSource';
 
 dotenv.config({path: path.resolve(process.cwd(), '.env.local')});
 dotenv.config({path: path.resolve(process.cwd(), '.env')});
@@ -63,60 +67,61 @@ async function signInIfConfigured() {
   }
 }
 
+function buildProtocolPayload() {
+  const protocolRows = getGeneratedRehabProtocolRows();
+  const phaseRows = protocolRows.flatMap((protocol) => getGeneratedRehabPhaseRows(protocol.id));
+  const exerciseRows = getGeneratedRehabExerciseRows(phaseRows.map((phase) => phase.id));
+
+  return {
+    protocolRows: protocolRows.map((row) => ({
+      id: row.id,
+      name: row.name,
+      category: row.category,
+      description: row.description,
+    })) satisfies TableInsert<'protocols'>[],
+    phaseRows: phaseRows.map((row) => ({
+      id: row.id,
+      protocol_id: row.protocol_id,
+      phase_number: row.phase_number,
+      title: row.title,
+      timeline: row.timeline,
+      goals: row.goals,
+      precautions: row.precautions,
+      criteria_to_progress: row.criteria_to_progress,
+    })) satisfies TableInsert<'phases'>[],
+    exerciseRows: exerciseRows.map((row) => ({
+      id: row.id,
+      phase_id: row.phase_id,
+      name: row.name,
+      parameters: row.parameters,
+      clinical_cue_rationale: row.clinical_cue_rationale,
+    })) satisfies TableInsert<'exercises'>[],
+  };
+}
+
 async function insertProtocols() {
   const db = await ensureSupabase();
-  const protocolRows: TableInsert<'protocols'>[] = generatedRehabProtocols.map((protocol, index) => ({
-    id: index + 1,
-    name: protocol.name,
-    category: protocol.category,
-    description: null,
-  }));
-
-  const phaseRows: TableInsert<'phases'>[] = [];
-  const exerciseRows: TableInsert<'exercises'>[] = [];
-
-  generatedRehabProtocols.forEach((protocol, protocolIndex) => {
-    protocol.phases.forEach((phase, phaseIndex) => {
-      const phaseId = (protocolIndex + 1) * 100 + phaseIndex + 1;
-      phaseRows.push({
-        id: phaseId,
-        protocol_id: protocolIndex + 1,
-        phase_number: phase.phaseNumber,
-        title: phase.title,
-        timeline: phase.timeline || null,
-        goals: phase.goals,
-        precautions: phase.precautions,
-        criteria_to_progress: phase.criteriaToProgress,
-      });
-
-      phase.exercises.forEach((exercise, exerciseIndex) => {
-        exerciseRows.push({
-          id: phaseId * 1000 + exerciseIndex + 1,
-          phase_id: phaseId,
-          name: exercise.name,
-          parameters: exercise.parameters || null,
-          clinical_cue_rationale: exercise.clinicalCueRationale || null,
-        });
-      });
-    });
-  });
+  const protocolTable = db.from('protocols') as any;
+  const phaseTable = db.from('phases') as any;
+  const exerciseTable = db.from('exercises') as any;
+  const {protocolRows, phaseRows, exerciseRows} = buildProtocolPayload();
 
   console.log('Clearing existing rehab protocol rows from Supabase...');
-  const {error: deleteError} = await db.from('protocols').delete().gt('id', 0);
+  const {error: deleteError} = await protocolTable.delete().gt('id', 0);
   if (deleteError) throw deleteError;
 
   for (const batch of chunk(protocolRows, 200)) {
-    const {error} = await db.from('protocols').insert(batch);
+    const {error} = await protocolTable.insert(batch);
     if (error) throw error;
   }
 
   for (const batch of chunk(phaseRows, 200)) {
-    const {error} = await db.from('phases').insert(batch);
+    const {error} = await phaseTable.insert(batch);
     if (error) throw error;
   }
 
   for (const batch of chunk(exerciseRows, 200)) {
-    const {error} = await db.from('exercises').insert(batch);
+    const {error} = await exerciseTable.insert(batch);
     if (error) throw error;
   }
 
