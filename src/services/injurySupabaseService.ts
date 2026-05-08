@@ -192,23 +192,27 @@ export async function fetchCompleteInjuryProtocol(
       fetchInjuryPageContentByInjuryId(injury.id),
     ]);
     const useArabic = lang === 'ar';
+    const normalizeList = (value: unknown): string[] => {
+      if (Array.isArray(value)) {
+        return value.map((v) => (typeof v === 'string' ? v.trim() : '')).filter(Boolean);
+      }
+      if (typeof value === 'string') {
+        return value
+          .split('\n')
+          .map((item) => item.trim())
+          .filter(Boolean);
+      }
+      return [];
+    };
+    const pickLocalizedList = (arabicValue: unknown, englishValue: unknown): string[] => {
+      const englishList = normalizeList(englishValue);
+      const arabicList = normalizeList(arabicValue);
+      return useArabic && arabicList.length ? arabicList : englishList;
+    };
 
     // Fetch supplements and meals for each phase
     const phasesWithData = await Promise.all(
       phases.map(async (phase) => {
-        const normalizeList = (value: unknown): string[] => {
-          if (Array.isArray(value)) {
-            return value.map((v) => (typeof v === 'string' ? v.trim() : '')).filter(Boolean);
-          }
-          if (typeof value === 'string') {
-            return value
-              .split('\n')
-              .map((item) => item.trim())
-              .filter(Boolean);
-          }
-          return [];
-        };
-
         const supplements = await fetchSupplementsByPhaseId(phase.id);
         const mealRows = await fetchMealsByPhaseId(phase.id);
 
@@ -249,21 +253,13 @@ export async function fetchCompleteInjuryProtocol(
           label: useArabic ? phase.label_ar || phase.label_en : phase.label_en,
           duration: useArabic ? phase.duration_ar || phase.duration_en : phase.duration_en,
           window: phase.recovery_window as any,
-          goals: useArabic && phase.goals_ar?.length ? phase.goals_ar : phase.goals_en,
-          nutritionFocus:
-            useArabic && phase.nutrition_focus_ar?.length ? phase.nutrition_focus_ar : phase.nutrition_focus_en,
-          recommendedFoods:
-            useArabic && phase.recommended_foods_ar?.length
-              ? phase.recommended_foods_ar
-              : phase.recommended_foods_en,
-          avoidFoods:
-            useArabic && phase.avoid_foods_ar?.length ? phase.avoid_foods_ar : phase.avoid_foods_en,
+          goals: pickLocalizedList(phase.goals_ar, phase.goals_en),
+          nutritionFocus: pickLocalizedList(phase.nutrition_focus_ar, phase.nutrition_focus_en),
+          recommendedFoods: pickLocalizedList(phase.recommended_foods_ar, phase.recommended_foods_en),
+          avoidFoods: pickLocalizedList(phase.avoid_foods_ar, phase.avoid_foods_en),
           supplements: supplementsConverted,
-          exercises: useArabic && phase.exercises_ar?.length ? phase.exercises_ar : phase.exercises_en,
-          prohibitedMovements:
-            useArabic && phase.prohibited_movements_ar?.length
-              ? phase.prohibited_movements_ar
-              : phase.prohibited_movements_en,
+          exercises: pickLocalizedList(phase.exercises_ar, phase.exercises_en),
+          prohibitedMovements: pickLocalizedList(phase.prohibited_movements_ar, phase.prohibited_movements_en),
           exercisePlans: (phase.exercise_plans || []).map((p: any) => ({
             label: useArabic
               ? (p?.label_ar ?? p?.exercise_ar ?? p?.label_en ?? p?.exercise_en ?? '')
@@ -276,9 +272,9 @@ export async function fetchCompleteInjuryProtocol(
             cues: useArabic ? normalizeList(p?.cues_ar ?? p?.cues) : normalizeList(p?.cues_en ?? p?.cues),
           })),
           focus: (useArabic ? phase.focus_ar : phase.focus_en) || undefined,
-          progressionMarkers: (useArabic ? phase.progression_markers_ar : phase.progression_markers_en) || [],
-          cautions: (useArabic ? phase.cautions_ar : phase.cautions_en) || [],
-          nutritionNotes: (useArabic ? phase.nutrition_notes_ar : phase.nutrition_notes_en) || [],
+          progressionMarkers: pickLocalizedList(phase.progression_markers_ar, phase.progression_markers_en),
+          cautions: pickLocalizedList(phase.cautions_ar, phase.cautions_en),
+          nutritionNotes: pickLocalizedList(phase.nutrition_notes_ar, phase.nutrition_notes_en),
           meals: mealsConverted,
           proteinPerKg:
             phase.protein_min_per_kg && phase.protein_max_per_kg
@@ -341,20 +337,16 @@ export async function fetchCompleteInjuryProtocol(
       name: useArabic ? injury.name_ar || injury.name_en : injury.name_en,
       category: injury.category as any,
       bodyRegion: (useArabic ? injury.body_region_ar || injury.body_region_en : injury.body_region_en) as any,
-      commonIn: injury.common_in,
+      commonIn: normalizeList(injury.common_in),
       overview: useArabic ? injury.overview_ar || injury.overview_en : injury.overview_en,
       rehabSummary: useArabic ? injury.rehab_summary_ar || injury.rehab_summary_en : injury.rehab_summary_en,
-      redFlags: injury.red_flags,
-      relatedCalculators: injury.related_calculators,
+      redFlags: normalizeList(injury.red_flags),
+      relatedCalculators: normalizeList(injury.related_calculators),
       safetyNotes: {
         medications:
-          useArabic && safetyNotes?.medications_ar?.length
-            ? safetyNotes.medications_ar
-            : safetyNotes?.medications_en || [],
+          pickLocalizedList(safetyNotes?.medications_ar, safetyNotes?.medications_en),
         supplements:
-          useArabic && safetyNotes?.supplements_ar?.length
-            ? safetyNotes.supplements_ar
-            : safetyNotes?.supplements_en || [],
+          pickLocalizedList(safetyNotes?.supplements_ar, safetyNotes?.supplements_en),
       },
       phases: phasesWithData,
       pageContent: mappedPageContent,

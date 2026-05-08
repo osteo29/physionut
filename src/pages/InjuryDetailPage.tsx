@@ -1,4 +1,4 @@
-import {lazy, Suspense, useEffect, useMemo, useState} from 'react';
+import {lazy, Suspense, useEffect, useState} from 'react';
 import {Activity, AlertTriangle, ArrowRight, CheckCircle2, Clock3, Pill, ShieldAlert, Sparkles, Stethoscope} from 'lucide-react';
 import {Link, Navigate, useParams} from 'react-router-dom';
 import Seo from '../components/seo/Seo';
@@ -25,6 +25,10 @@ const DrugNutrientChecker = lazy(() => import('../components/ai/DrugNutrientChec
 
 function normalizeCopy(value: string) {
   return decodeMojibake(value);
+}
+
+function normalizeStringList(items?: string[] | null) {
+  return (items || []).map(normalizeCopy).filter(Boolean);
 }
 
 function buildPath(id: string, lang: string) {
@@ -154,7 +158,8 @@ export default function InjuryDetailPage() {
   }, [lang, slug]);
 
   useEffect(() => {
-    if (injury && activeTab > injury.phases.length) {
+    const phaseCount = injury?.phases?.length ?? 0;
+    if (injury && activeTab > phaseCount) {
       setActiveTab(0);
     }
   }, [injury, activeTab]);
@@ -176,27 +181,25 @@ export default function InjuryDetailPage() {
   const injuryDisplayName = getLocalizedInjuryName(injury.id, injury.name, lang);
   const categoryDisplay = getLocalizedCategory(injury.category, lang);
   const bodyRegionDisplay = getLocalizedBodyRegion(injury.bodyRegion, lang);
-  const isNutritionTab = activeTab === injury.phases.length;
-  const currentPhase = !isNutritionTab ? injury.phases[activeTab] : null;
+  const phases = injury.phases || [];
+  const redFlags = normalizeStringList(injury.redFlags);
+  const commonIn = normalizeStringList(injury.commonIn);
+  const medicationNotes = [...normalizeStringList(injury.safetyNotes?.medications), ...normalizeStringList(injury.safetyNotes?.supplements)];
+  const symptoms = normalizeStringList(injury.pageContent?.symptoms);
+  const rehabNotes = normalizeStringList(injury.pageContent?.rehabNotes);
+  const isNutritionTab = activeTab === phases.length;
+  const currentPhase = !isNutritionTab ? phases[activeTab] : null;
   const sourceMeta = getSourceMeta(protocolSource, isAr);
-  const medicationNotes = [...injury.safetyNotes.medications, ...injury.safetyNotes.supplements].map(normalizeCopy);
-  const symptoms = injury.pageContent?.symptoms?.map(normalizeCopy) || [];
-  const rehabNotes = injury.pageContent?.rehabNotes?.map(normalizeCopy) || [];
-  const commonIn = injury.commonIn?.map(normalizeCopy).filter(Boolean) || [];
-  const totalExercisePlans = injury.phases.reduce((count, phase) => count + (phase.exercisePlans?.length || 0), 0);
-  const phasesWithNutrition = injury.phases.filter(
-    (phase) => phase.nutritionFocus.length || phase.recommendedFoods.length || phase.supplements.length,
+  const totalExercisePlans = phases.reduce((count, phase) => count + (phase.exercisePlans?.length || 0), 0);
+  const phasesWithNutrition = phases.filter(
+    (phase) => phase.nutritionFocus?.length || phase.recommendedFoods?.length || phase.supplements?.length,
   ).length;
-  const phasesWithExercises = injury.phases.filter((phase) => (phase.exercisePlans?.length || 0) > 0).length;
+  const phasesWithExercises = phases.filter((phase) => (phase.exercisePlans?.length || 0) > 0).length;
 
-  const relatedInjuries = useMemo(
-    () =>
-      catalogInjuries
-        .filter((item) => item.id !== injury.id)
-        .filter((item) => item.category === categoryDisplay || item.bodyRegion === bodyRegionDisplay)
-        .slice(0, 6),
-    [bodyRegionDisplay, catalogInjuries, categoryDisplay, injury.id],
-  );
+  const relatedInjuries = catalogInjuries
+    .filter((item) => item.id !== injury.id)
+    .filter((item) => item.category === categoryDisplay || item.bodyRegion === bodyRegionDisplay)
+    .slice(0, 6);
 
   const relatedExerciseLinks = getInjuryExerciseLinks({
     injuryId: injury.id,
@@ -279,7 +282,7 @@ export default function InjuryDetailPage() {
                     {bodyRegionDisplay}
                   </span>
                   <span className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200">
-                    {injury.phases.length} {isAr ? 'مراحل' : 'phases'}
+                    {phases.length} {isAr ? 'مراحل' : 'phases'}
                   </span>
                 </div>
 
@@ -292,7 +295,7 @@ export default function InjuryDetailPage() {
                   </div>
                   <div className="rounded-[1.5rem] border border-white/70 bg-white/90 p-4 shadow-sm">
                     <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">{isAr ? 'المخاطر المهمة' : 'Red flags'}</div>
-                    <div className="mt-2 text-2xl font-black text-slate-900">{injury.redFlags.length}</div>
+                    <div className="mt-2 text-2xl font-black text-slate-900">{redFlags.length}</div>
                   </div>
                   <div className="rounded-[1.5rem] border border-white/70 bg-white/90 p-4 shadow-sm">
                     <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">{isAr ? 'مصدر الداتا' : 'Data source'}</div>
@@ -372,7 +375,7 @@ export default function InjuryDetailPage() {
                     </Link>
                     <button
                       type="button"
-                      onClick={() => setActiveTab(injury.phases.length)}
+                      onClick={() => setActiveTab(phases.length)}
                       className="inline-flex items-center gap-2 rounded-2xl border border-white/15 bg-white/5 px-4 py-3 text-sm font-bold text-white/90 transition hover:bg-white/10"
                     >
                       <Pill className="h-4 w-4" />
@@ -381,13 +384,13 @@ export default function InjuryDetailPage() {
                   </div>
                 </div>
 
-                {injury.redFlags.length > 0 ? (
+                {redFlags.length > 0 ? (
                   <div className="rounded-[1.6rem] border border-amber-200 bg-amber-50 p-5 shadow-sm">
                     <div className="mb-3 flex items-center gap-2 text-sm font-black text-amber-900">
                       <AlertTriangle className="h-4 w-4" />
                       <span>{isAr ? 'علامات تستدعي الانتباه' : 'Watch-outs'}</span>
                     </div>
-                    {renderBulletList(injury.redFlags.map(normalizeCopy), 'warning')}
+                    {renderBulletList(redFlags, 'warning')}
                   </div>
                 ) : null}
               </div>
@@ -399,7 +402,7 @@ export default function InjuryDetailPage() {
               <div className="rounded-[1.8rem] border border-slate-200 bg-slate-50 p-4 shadow-sm">
                 <div className="mb-3 text-sm font-black text-slate-900">{isAr ? 'مراحل التعافي' : 'Recovery phases'}</div>
                 <div className="space-y-3">
-                  {injury.phases.map((phase, index) => (
+                  {phases.map((phase, index) => (
                     <PhaseSummaryCard
                       key={phase.id}
                       phase={phase}
@@ -411,7 +414,7 @@ export default function InjuryDetailPage() {
                   ))}
                   <button
                     type="button"
-                    onClick={() => setActiveTab(injury.phases.length)}
+                    onClick={() => setActiveTab(phases.length)}
                     className={`w-full rounded-[1.5rem] border px-4 py-4 text-left transition ${
                       isNutritionTab
                         ? 'border-amber-400 bg-amber-500 text-white shadow-lg shadow-amber-500/20'
