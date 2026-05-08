@@ -408,8 +408,8 @@ export default function InjuryDetailPage() {
             </div>
           </section>
 
-          <section className="grid gap-6 xl:grid-cols-[0.34fr_0.66fr]">
-            <aside className="space-y-4">
+          <section className="grid gap-6 xl:grid-cols-[0.32fr_0.68fr]">
+            <aside className="space-y-4 xl:sticky xl:top-24 xl:self-start">
               <div className="rounded-[1.8rem] border border-slate-200 bg-slate-50 p-4 shadow-sm">
                 <div className="mb-3 text-sm font-black text-slate-900">{isAr ? 'مراحل التعافي' : 'Recovery phases'}</div>
                 <div className="space-y-3">

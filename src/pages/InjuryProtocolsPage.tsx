@@ -74,7 +74,7 @@ export default function InjuryProtocolsPage() {
   }, [bodyRegion, category, deferredQuery, injuries]);
 
   const featured = filtered.slice(0, 6);
-  const spotlight = filtered.slice(0, 3);
+  const spotlight = filtered.slice(0, 2);
   const groupedCategories = categories
     .map((item) => ({
       name: item,
@@ -176,16 +176,16 @@ export default function InjuryProtocolsPage() {
 
                 <div className="grid gap-3 sm:grid-cols-3">
                   {insights.map((item) => (
-                    <div key={item.label} className="rounded-[1.6rem] border border-white/70 bg-white/85 p-4 shadow-sm backdrop-blur dark:border-slate-700 dark:bg-slate-900/85">
-                      <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400 dark:text-slate-500">{item.label}</div>
-                      <div className="mt-2 text-3xl font-black text-slate-950 dark:text-white">{item.value}</div>
-                      <div className="mt-2 text-sm leading-6 text-slate-500 dark:text-slate-300">{item.note}</div>
+                    <div key={item.label} className="rounded-[1.45rem] border border-white/70 bg-white/80 p-3.5 shadow-sm backdrop-blur dark:border-slate-700 dark:bg-slate-900/85">
+                      <div className="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400 dark:text-slate-500">{item.label}</div>
+                      <div className="mt-1.5 text-2xl font-black text-slate-950 dark:text-white">{item.value}</div>
+                      <div className="mt-1.5 text-xs leading-6 text-slate-500 dark:text-slate-300">{item.note}</div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="grid gap-4 sm:grid-cols-3 xl:grid-cols-1">
+              <div className="grid gap-4 xl:grid-cols-1">
                 {spotlight.map((injury, index) => (
                   <Link
                     key={injury.id}
@@ -200,6 +200,9 @@ export default function InjuryProtocolsPage() {
                       {injury.category}
                     </div>
                     <div className="mt-2 text-xl font-black">{injury.name}</div>
+                    <div className={`mt-3 inline-flex rounded-full px-3 py-1 text-xs font-bold ${index === 0 ? 'bg-white/10 text-white/80' : 'bg-slate-100 text-slate-600 dark:bg-slate-950 dark:text-slate-300'}`}>
+                      {injury.bodyRegion}
+                    </div>
                     <p className={`mt-3 line-clamp-3 text-sm leading-7 ${index === 0 ? 'text-white/75' : 'text-slate-600 dark:text-slate-300'}`}>
                       {injury.overview}
                     </p>
@@ -213,8 +216,8 @@ export default function InjuryProtocolsPage() {
             </div>
           </section>
 
-          <section className="grid gap-6 xl:grid-cols-[0.38fr_0.62fr]">
-            <div className="space-y-6">
+          <section className="grid gap-6 xl:grid-cols-[0.34fr_0.66fr]">
+            <div className="space-y-6 xl:sticky xl:top-24 xl:self-start">
               <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
                 <div className="mb-4 flex items-center gap-2 text-sm font-black text-slate-900 dark:text-white">
                   <Search className="h-4 w-4 text-health-green" />
@@ -368,6 +371,26 @@ export default function InjuryProtocolsPage() {
                 </div>
               </div>
 
+              {hasActiveFilters ? (
+                <div className="mb-5 flex flex-wrap gap-2">
+                  {category ? (
+                    <span className="rounded-full border border-health-green/20 bg-health-green/10 px-3 py-1 text-xs font-bold text-health-green">
+                      {isAr ? 'الفئة' : 'Category'}: {category}
+                    </span>
+                  ) : null}
+                  {bodyRegion ? (
+                    <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-bold text-slate-600 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200">
+                      {isAr ? 'المنطقة' : 'Region'}: {bodyRegion}
+                    </span>
+                  ) : null}
+                  {deferredQuery.trim() ? (
+                    <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-bold text-slate-600 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200">
+                      {isAr ? 'البحث' : 'Search'}: {deferredQuery.trim()}
+                    </span>
+                  ) : null}
+                </div>
+              ) : null}
+
               {filtered.length === 0 ? (
                 <div className="rounded-[1.75rem] border border-dashed border-slate-200 bg-slate-50 p-10 text-center dark:border-slate-700 dark:bg-slate-950">
                   <div className="text-lg font-black text-slate-900 dark:text-white">{isAr ? ar('Ù„Ø§ ØªÙˆØ¬Ø¯ Ù†ØªØ§Ø¦Ø¬ Ù…Ø·Ø§Ø¨Ù‚Ø©') : 'No matching protocols'}</div>
@@ -382,7 +405,7 @@ export default function InjuryProtocolsPage() {
                   </p>
                 </div>
               ) : (
-                <div className="grid gap-4 md:grid-cols-2">
+                <div className="grid gap-4">
                   {filtered.map((injury, index) => (
                     <Link
                       key={injury.id}
@@ -393,16 +416,17 @@ export default function InjuryProtocolsPage() {
                           : 'border-slate-200 bg-[linear-gradient(145deg,#ffffff,#f8fafc)] text-slate-900 dark:border-slate-700 dark:bg-[linear-gradient(145deg,#0f172a,#111827)] dark:text-white'
                       }`}
                     >
-                      <div className="flex flex-wrap items-center justify-between gap-3">
-                        <div className={`text-xs font-bold uppercase tracking-[0.18em] ${index === 0 ? 'text-white/60' : 'text-health-green'}`}>
-                          {injury.category}
+                      <div className="flex flex-wrap items-start justify-between gap-4">
+                        <div className="min-w-0 flex-1">
+                          <div className={`text-xs font-bold uppercase tracking-[0.18em] ${index === 0 ? 'text-white/60' : 'text-health-green'}`}>
+                            {injury.category}
+                          </div>
+                          <div className="mt-3 text-xl font-black">{injury.name}</div>
                         </div>
                         <div className={`rounded-full px-3 py-1 text-xs font-bold ${index === 0 ? 'bg-white/10 text-white/85' : 'bg-slate-100 text-slate-600 dark:bg-slate-900 dark:text-slate-300'}`}>
                           {injury.bodyRegion}
                         </div>
                       </div>
-
-                      <div className="mt-3 text-xl font-black">{injury.name}</div>
                       <p className={`mt-3 line-clamp-4 text-sm leading-7 ${index === 0 ? 'text-white/75' : 'text-slate-600 dark:text-slate-300'}`}>
                         {injury.overview}
                       </p>
