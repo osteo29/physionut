@@ -12,8 +12,8 @@ import {
   Search,
   Stethoscope,
   Sun,
-  Utensils,
   UserRound,
+  Utensils,
   X,
 } from 'lucide-react';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
@@ -66,13 +66,9 @@ const Navigation = memo(
     const location = useLocation();
     const navigate = useNavigate();
     const [user, setUser] = useState<User | null>(null);
-    const isActivePath = (path: string) => {
-      return location.pathname.startsWith(path);
-    };
 
-    /**
-     * Generate URL for language switch (e.g., /en/page -> /ar/page)
-     */
+    const isActivePath = (path: string) => location.pathname.startsWith(path);
+
     const generateLanguageSwitchUrl = (targetLang: Language): string => {
       const cleanPath = removeLangPrefix(location.pathname);
       const nextPath = cleanPath === '/' ? navigationPaths.home(targetLang) : `/${targetLang}${cleanPath}`;
@@ -118,7 +114,7 @@ const Navigation = memo(
       try {
         await signOutCurrentUser();
       } catch {
-        // Ignore here; dashboard/auth pages handle detailed auth feedback.
+        // Detailed auth feedback lives in dedicated auth views.
       } finally {
         setIsSidebarOpen(false);
       }
@@ -146,255 +142,250 @@ const Navigation = memo(
       </Link>
     );
 
+    const sectionItems = [
+      {
+        href: navigationPaths.injuries(lang),
+        icon: <ClipboardList className="h-5 w-5" />,
+        label: isAr ? 'بروتوكولات الإصابات' : 'Injury protocols',
+      },
+      {
+        href: navigationPaths.exercises(lang),
+        icon: <Dumbbell className="h-5 w-5" />,
+        label: isAr ? 'التمارين' : 'Exercises',
+      },
+      {
+        href: navigationPaths.dashboard(lang),
+        icon: <BarChart3 className="h-5 w-5" />,
+        label: isAr ? 'لوحة المتابعة' : 'Tracking dashboard',
+      },
+      {
+        href: '#architect',
+        icon: <Brain className="h-5 w-5" />,
+        label: t.architect.title,
+      },
+      {
+        href: '#food-db',
+        icon: <Search className="h-5 w-5" />,
+        label: isAr ? 'قاعدة الطعام' : 'Food data',
+      },
+      {
+        href: '#drug-nutrient-checker',
+        icon: <Pill className="h-5 w-5" />,
+        label: isAr ? 'فحص الدواء والغذاء' : 'Drug-nutrient checker',
+      },
+      {
+        href: navigationPaths.diets(lang),
+        icon: <Utensils className="h-5 w-5" />,
+        label: isAr ? 'الدايت والريجيم' : 'Diet & regimens',
+      },
+      {
+        href: '#blog',
+        icon: <BookOpen className="h-5 w-5" />,
+        label: t.nav.insights,
+      },
+    ];
+
     return (
       <>
         {isSidebarOpen ? (
-            <>
-              <div
-                onClick={() => setIsSidebarOpen(false)}
-                className="fixed inset-0 z-[60] bg-slate-900/60 backdrop-blur-sm"
-              />
-              <aside
-                className={`fixed top-0 z-[70] flex h-full w-[88vw] max-w-sm flex-col bg-white shadow-2xl ${
-                  isAr ? 'right-0' : 'left-0'
-                }`}
-              >
-                <div className="flex items-center justify-between border-b border-slate-100 p-5">
-                  {brand}
-                  <button
-                    onClick={() => setIsSidebarOpen(false)}
-                    className="rounded-full p-2 text-slate-500 transition-colors hover:bg-slate-100"
-                    aria-label={isAr ? 'إغلاق القائمة' : 'Close menu'}
-                  >
-                    <X className="h-5 w-5" />
-                  </button>
+          <>
+            <div
+              onClick={() => setIsSidebarOpen(false)}
+              className="fixed inset-0 z-[60] bg-slate-900/60 backdrop-blur-sm"
+            />
+            <aside
+              className={`fixed top-0 z-[70] flex h-full w-[88vw] max-w-sm flex-col bg-white shadow-2xl ${
+                isAr ? 'right-0' : 'left-0'
+              }`}
+            >
+              <div className="flex items-center justify-between border-b border-slate-100 p-5">
+                {brand}
+                <button
+                  onClick={() => setIsSidebarOpen(false)}
+                  className="rounded-full p-2 text-slate-500 transition-colors hover:bg-slate-100"
+                  aria-label={isAr ? 'إغلاق القائمة' : 'Close menu'}
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              <div className="flex-1 space-y-7 overflow-y-auto p-5">
+                <div className="rounded-[1.75rem] border border-slate-200 bg-slate-50 p-4">
+                  <div className="mb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400">
+                    {isAr ? 'ابدأ بسرعة' : 'Quick start'}
+                  </div>
+                  <div className="grid grid-cols-1 gap-2">
+                    <button
+                      onClick={() => {
+                        setIsSidebarOpen(false);
+                        scrollToId('calculators');
+                      }}
+                      className="rounded-2xl bg-health-green px-4 py-3 text-sm font-bold text-white transition-all hover:bg-health-green-dark"
+                    >
+                      {isAr ? 'افتح الحاسبات' : 'Open calculators'}
+                    </button>
+                    <Link
+                      to={navigationPaths.injuries(lang)}
+                      onClick={() => setIsSidebarOpen(false)}
+                      className="flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-700 transition-all hover:border-health-green/30"
+                    >
+                      <ClipboardList className="h-4 w-4 text-health-green" />
+                      <span>{isAr ? 'استعرض البروتوكولات' : 'Browse protocols'}</span>
+                    </Link>
+                  </div>
                 </div>
 
-                <div className="flex-1 space-y-7 overflow-y-auto p-5">
-                  <div className="rounded-[1.75rem] border border-slate-200 bg-slate-50 p-4">
-                    <div className="mb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400">
-                      {isAr ? 'ابدأ بسرعة' : 'Quick start'}
-                    </div>
-                    <div className="grid grid-cols-1 gap-2">
+                <div className="rounded-[1.75rem] border border-slate-200 bg-white p-4">
+                  <div className="mb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400">
+                    {isAr ? 'الحساب' : 'Account'}
+                  </div>
+                  {user ? (
+                    <div className="space-y-3">
+                      <div className="rounded-2xl bg-slate-50 p-3">
+                        <div className="text-sm font-bold text-slate-900">{authLabel}</div>
+                        <div className="mt-1 text-xs text-slate-500">{user.email}</div>
+                      </div>
+                      <Link
+                        to={navigationPaths.dashboard(lang)}
+                        onClick={() => setIsSidebarOpen(false)}
+                        className="flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-bold text-slate-700 transition-all hover:bg-soft-blue"
+                      >
+                        <BarChart3 className="h-4 w-4 text-health-green" />
+                        <span>{isAr ? 'افتح لوحة المتابعة' : 'Open dashboard'}</span>
+                      </Link>
                       <button
+                        onClick={handleLogout}
+                        className="flex w-full items-center justify-center gap-2 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-bold text-rose-600 transition-all hover:bg-rose-100"
+                      >
+                        <LogOut className="h-4 w-4" />
+                        <span>{isAr ? 'تسجيل الخروج' : 'Log out'}</span>
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 gap-2">
+                      <Link
+                        to={navigationPaths.auth(lang)}
+                        onClick={() => setIsSidebarOpen(false)}
+                        className="flex items-center justify-center gap-2 rounded-2xl bg-slate-900 px-4 py-3 text-sm font-bold text-white transition-all hover:bg-slate-800"
+                      >
+                        <UserRound className="h-4 w-4" />
+                        <span>{isAr ? 'تسجيل الدخول' : 'Sign in'}</span>
+                      </Link>
+                    </div>
+                  )}
+                </div>
+
+                <div>
+                  <h3 className="mb-3 px-1 text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400">
+                    {t.nav.calculators}
+                  </h3>
+                  <div className="grid grid-cols-1 gap-2">
+                    {calculators.map((calc) => (
+                      <button
+                        key={calc.id}
                         onClick={() => {
+                          setActiveCalculator(calc.id);
                           setIsSidebarOpen(false);
                           scrollToId('calculators');
                         }}
-                        className="rounded-2xl bg-health-green px-4 py-3 text-sm font-bold text-white transition-all hover:bg-health-green-dark"
+                        className="flex items-center gap-3 rounded-2xl border border-transparent bg-slate-50 p-3 text-left text-slate-700 transition-all hover:border-health-green/20 hover:bg-soft-blue"
                       >
-                        {isAr ? 'افتح الحاسبات' : 'Open calculators'}
-                      </button>
-                      <Link
-                        to={navigationPaths.assistant(lang)}
-                        onClick={() => setIsSidebarOpen(false)}
-                        className="flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-700 transition-all hover:border-health-green/30"
-                      >
-                        <Stethoscope className="h-4 w-4 text-health-green" />
-                        <span>{isAr ? 'المساعد السريري' : 'Clinical assistant'}</span>
-                      </Link>
-                    </div>
-                  </div>
-
-                  <div className="rounded-[1.75rem] border border-slate-200 bg-white p-4">
-                    <div className="mb-2 text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400">
-                      {isAr ? 'الحساب' : 'Account'}
-                    </div>
-                    {user ? (
-                      <div className="space-y-3">
-                        <div className="rounded-2xl bg-slate-50 p-3">
-                          <div className="text-sm font-bold text-slate-900">{authLabel}</div>
-                          <div className="mt-1 text-xs text-slate-500">{user.email}</div>
+                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-health-green shadow-sm">
+                          {calc.icon}
                         </div>
-                        <Link
-                          to={navigationPaths.dashboard(lang)}
-                          onClick={() => setIsSidebarOpen(false)}
-                          className="flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-bold text-slate-700 transition-all hover:bg-soft-blue"
-                        >
-                          <BarChart3 className="h-4 w-4 text-health-green" />
-                          <span>{isAr ? 'لوحة المتابعة' : 'Open dashboard'}</span>
-                        </Link>
-                        <button
-                          onClick={handleLogout}
-                          className="flex w-full items-center justify-center gap-2 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-bold text-rose-600 transition-all hover:bg-rose-100"
-                        >
-                          <LogOut className="h-4 w-4" />
-                          <span>{isAr ? 'تسجيل الخروج' : 'Log out'}</span>
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="grid grid-cols-1 gap-2">
-                        <Link
-                          to={navigationPaths.auth(lang)}
-                          onClick={() => setIsSidebarOpen(false)}
-                          className="flex items-center justify-center rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-700 transition-all hover:border-health-green/30"
-                        >
-                          {isAr ? 'إنشاء حساب' : 'Create account'}
-                        </Link>
-                        <Link
-                          to={navigationPaths.auth(lang)}
-                          onClick={() => setIsSidebarOpen(false)}
-                          className="flex items-center justify-center gap-2 rounded-2xl bg-slate-900 px-4 py-3 text-sm font-bold text-white transition-all hover:bg-slate-800"
-                        >
-                          <UserRound className="h-4 w-4" />
-                          <span>{isAr ? 'تسجيل الدخول' : 'Sign in'}</span>
-                        </Link>
-                      </div>
-                    )}
+                        <span className="text-sm font-semibold">{calc.title}</span>
+                      </button>
+                    ))}
                   </div>
+                </div>
 
-                  <div>
-                    <h3 className="mb-3 px-1 text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400">
-                      {t.nav.calculators}
-                    </h3>
-                    <div className="grid grid-cols-1 gap-2">
-                      {calculators.map((calc) => (
-                        <button
-                          key={calc.id}
-                          onClick={() => {
-                            setActiveCalculator(calc.id);
-                            setIsSidebarOpen(false);
-                            scrollToId('calculators');
-                          }}
-                          className="flex items-center gap-3 rounded-2xl border border-transparent bg-slate-50 p-3 text-left text-slate-700 transition-all hover:border-health-green/20 hover:bg-soft-blue"
+                <div>
+                  <h3 className="mb-3 px-1 text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400">
+                    {isAr ? 'الأقسام الرئيسية' : 'Main sections'}
+                  </h3>
+                  <div className="grid grid-cols-1 gap-2">
+                    {sectionItems.map((item) =>
+                      item.href.startsWith('/') ? (
+                        <Link
+                          key={item.href}
+                          to={item.href}
+                          onClick={() => setIsSidebarOpen(false)}
+                          className={`flex items-center gap-3 rounded-2xl p-3 transition-all ${
+                            location.pathname.startsWith(item.href)
+                              ? 'border border-health-green/20 bg-health-green/10 text-health-green'
+                              : 'bg-slate-50 text-slate-700 hover:bg-soft-blue'
+                          }`}
                         >
                           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-health-green shadow-sm">
-                            {calc.icon}
+                            {item.icon}
                           </div>
-                          <span className="text-sm font-semibold">{calc.title}</span>
-                        </button>
-                      ))}
-                    </div>
+                          <span className="text-sm font-semibold">{item.label}</span>
+                        </Link>
+                      ) : (
+                        <a
+                          key={item.href}
+                          href={item.href}
+                          onClick={() => setIsSidebarOpen(false)}
+                          className="flex items-center gap-3 rounded-2xl bg-slate-50 p-3 text-slate-700 transition-all hover:bg-soft-blue"
+                        >
+                          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-health-green shadow-sm">
+                            {item.icon}
+                          </div>
+                          <span className="text-sm font-semibold">{item.label}</span>
+                        </a>
+                      ),
+                    )}
                   </div>
+                </div>
+              </div>
 
-                  <div>
-                    <h3 className="mb-3 px-1 text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400">
-                      {isAr ? 'الأقسام الرئيسية' : 'Main sections'}
-                    </h3>
-                    <div className="grid grid-cols-1 gap-2">
-                      {[
-                        {
-                          href: '#architect',
-                          icon: <Brain className="h-5 w-5" />,
-                          label: t.architect.title,
-                        },
-                        {
-                          href: '#food-db',
-                          icon: <Search className="h-5 w-5" />,
-                          label: isAr ? 'قاعدة الطعام' : 'Food data',
-                        },
-                        {
-                          href: '#drug-nutrient-checker',
-                          icon: <Pill className="h-5 w-5" />,
-                          label: isAr ? 'فحص الدواء والغذاء' : 'Drug-nutrient checker',
-                        },
-                        {
-                          href: navigationPaths.dashboard(lang),
-                          icon: <BarChart3 className="h-5 w-5" />,
-                          label: isAr ? 'لوحة المتابعة' : 'Tracking dashboard',
-                        },
-                        {
-                          href: navigationPaths.injuries(lang),
-                          icon: <ClipboardList className="h-5 w-5" />,
-                          label: isAr ? 'بروتوكولات الإصابات' : 'Injury protocols',
-                        },
-                        {
-                          href: navigationPaths.exercises(lang),
-                          icon: <Dumbbell className="h-5 w-5" />,
-                          label: isAr ? 'التمارين' : 'Exercises',
-                        },
-                {
-                  href: navigationPaths.diets(lang),
-                  icon: <Utensils className="h-5 w-5" />,
-                  label: isAr ? 'الدايت والريجيم' : 'Diet & regimens',
-                },
-                        {
-                          href: '#blog',
-                          icon: <BookOpen className="h-5 w-5" />,
-                          label: t.nav.insights,
-                        },
-                      ].map((item) =>
-                        item.href.startsWith('/') ? (
-                          <Link
-                            key={item.href}
-                            to={item.href}
-                            onClick={() => setIsSidebarOpen(false)}
-                            className={`flex items-center gap-3 rounded-2xl p-3 transition-all ${
-                              location.pathname.startsWith(item.href)
-                                ? 'bg-health-green/10 border border-health-green/20 text-health-green'
-                                : 'bg-slate-50 text-slate-700 hover:bg-soft-blue'
-                            }`}
-                          >
-                            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-health-green shadow-sm">
-                              {item.icon}
-                            </div>
-                            <span className="text-sm font-semibold">{item.label}</span>
-                          </Link>
-                        ) : (
-                          <a
-                            key={item.href}
-                            href={item.href}
-                            onClick={() => setIsSidebarOpen(false)}
-                            className="flex items-center gap-3 rounded-2xl bg-slate-50 p-3 text-slate-700 transition-all hover:bg-soft-blue"
-                          >
-                            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-health-green shadow-sm">
-                              {item.icon}
-                            </div>
-                            <span className="text-sm font-semibold">{item.label}</span>
-                          </a>
-                        ),
-                      )}
-                    </div>
+              <div className="border-t border-slate-100 bg-slate-50/60 p-5">
+                <div className="mb-3 flex items-center justify-between">
+                  <span className="text-sm font-bold text-slate-500">
+                    {isAr ? 'اللغة' : 'Language'}
+                  </span>
+                  <div className="flex items-center gap-1 rounded-full border border-slate-200 bg-white p-1">
+                    <button
+                      onClick={() => handleLanguageSwitch('en')}
+                      className={`rounded-full px-3 py-1 text-[10px] font-black ${
+                        lang === 'en' ? 'bg-health-green text-white' : 'text-slate-700'
+                      }`}
+                    >
+                      EN
+                    </button>
+                    <button
+                      onClick={() => handleLanguageSwitch('ar')}
+                      className={`rounded-full px-3 py-1 text-[10px] font-black ${
+                        lang === 'ar' ? 'bg-health-green text-white' : 'text-slate-700'
+                      }`}
+                    >
+                      AR
+                    </button>
                   </div>
                 </div>
 
-                <div className="border-t border-slate-100 bg-slate-50/60 p-5">
-                  <div className="mb-3 flex items-center justify-between">
-                    <span className="text-sm font-bold text-slate-500">
-                      {isAr ? 'اللغة' : 'Language'}
-                    </span>
-                    <div className="flex items-center gap-1 rounded-full border border-slate-200 bg-white p-1">
-                      <button
-                        onClick={() => handleLanguageSwitch('en')}
-                        className={`rounded-full px-3 py-1 text-[10px] font-black ${
-                          lang === 'en' ? 'bg-health-green text-white' : 'text-slate-700'
-                        }`}
-                      >
-                        EN
-                      </button>
-                      <button
-                        onClick={() => handleLanguageSwitch('ar')}
-                        className={`rounded-full px-3 py-1 text-[10px] font-black ${
-                          lang === 'ar' ? 'bg-health-green text-white' : 'text-slate-700'
-                        }`}
-                      >
-                        AR
-                      </button>
-                    </div>
-                  </div>
-
-                  <button
-                    onClick={onToggleTheme}
-                    className="mb-3 flex w-full items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-700 transition-all hover:border-health-green/30"
-                  >
-                    {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-                    <span>
-                      {theme === 'dark'
-                        ? isAr
-                          ? 'الوضع الفاتح'
-                          : 'Switch to light mode'
-                        : isAr
-                          ? 'الوضع الداكن'
-                          : 'Switch to dark mode'}
-                    </span>
-                  </button>
-                </div>
-              </aside>
-            </>
-          ) : null}
+                <button
+                  onClick={onToggleTheme}
+                  className="flex w-full items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-700 transition-all hover:border-health-green/30"
+                >
+                  {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+                  <span>
+                    {theme === 'dark'
+                      ? isAr
+                        ? 'الوضع الفاتح'
+                        : 'Switch to light mode'
+                      : isAr
+                        ? 'الوضع الداكن'
+                        : 'Switch to dark mode'}
+                  </span>
+                </button>
+              </div>
+            </aside>
+          </>
+        ) : null}
 
         <nav className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/88 px-3 backdrop-blur-xl sm:px-5 lg:px-8">
-          <div className="mx-auto flex min-h-[4.25rem] max-w-7xl items-center justify-between gap-2 py-2 sm:gap-3">
+          <div className="mx-auto flex min-h-[4.25rem] max-w-7xl items-center justify-between gap-3 py-2">
             <div className="flex items-center gap-2 sm:gap-2.5">
               <button
                 onClick={() => setIsSidebarOpen(true)}
@@ -406,46 +397,37 @@ const Navigation = memo(
               {brand}
             </div>
 
-            <div className="flex items-center gap-1.5 sm:gap-2.5 lg:gap-3">
-              <div className="hidden items-center gap-5 lg:flex">
-                <a href="#calculators" className="nav-link">
-                  {t.nav.calculators}
-                </a>
-                <Link
-                  to={navigationPaths.injuries(lang)}
-                  className={`nav-link ${isActivePath(navigationPaths.injuries(lang)) ? 'text-health-green border-b-2 border-health-green pb-1' : ''}`}
-                >
-                  {isAr ? 'الإصابات' : 'Injuries'}
-                </Link>
-                <Link
-                  to={navigationPaths.exercises(lang)}
-                  className={`nav-link ${isActivePath(navigationPaths.exercises(lang)) ? 'text-health-green border-b-2 border-health-green pb-1' : ''}`}
-                >
-                  {isAr ? 'التمارين' : 'Exercises'}
-                </Link>
-                <Link
-                  to={navigationPaths.diets(lang)}
-                  className={`nav-link ${isActivePath(navigationPaths.diets(lang)) ? 'text-health-green border-b-2 border-health-green pb-1' : ''}`}
-                >
-                  {isAr ? 'الدايت والريجيم' : 'Diet & regimens'}
-                </Link>
-                <a href="#blog" className="nav-link">
-                  {t.nav.insights}
-                </a>
-                <Link
-                  to={navigationPaths.dashboard(lang)}
-                  className={`nav-link ${isActivePath(navigationPaths.dashboard(lang)) ? 'text-health-green border-b-2 border-health-green pb-1' : ''}`}
-                >
-                  {isAr ? 'المتابعة' : 'Tracking'}
-                </Link>
-              </div>
+            <div className="hidden items-center gap-4 xl:flex">
+              <a href="#calculators" className="nav-link">
+                {t.nav.calculators}
+              </a>
+              <Link
+                to={navigationPaths.injuries(lang)}
+                className={`nav-link ${isActivePath(navigationPaths.injuries(lang)) ? 'border-b-2 border-health-green pb-1 text-health-green' : ''}`}
+              >
+                {isAr ? 'الإصابات' : 'Injuries'}
+              </Link>
+              <Link
+                to={navigationPaths.exercises(lang)}
+                className={`nav-link ${isActivePath(navigationPaths.exercises(lang)) ? 'border-b-2 border-health-green pb-1 text-health-green' : ''}`}
+              >
+                {isAr ? 'التمارين' : 'Exercises'}
+              </Link>
+              <Link
+                to={navigationPaths.dashboard(lang)}
+                className={`nav-link ${isActivePath(navigationPaths.dashboard(lang)) ? 'border-b-2 border-health-green pb-1 text-health-green' : ''}`}
+              >
+                {isAr ? 'المتابعة' : 'Tracking'}
+              </Link>
+            </div>
 
+            <div className="flex items-center gap-1.5 sm:gap-2">
               <Link
                 to={navigationPaths.assistant(lang)}
-                className="hidden items-center gap-2 rounded-xl border border-slate-200 bg-slate-50/90 px-3 py-2 text-slate-700 transition-all hover:border-health-green/30 hover:bg-white sm:flex"
+                className="hidden items-center gap-2 rounded-full border border-slate-200 bg-slate-50/90 px-3 py-2 text-slate-700 transition-all hover:border-health-green/30 hover:bg-white md:flex"
               >
                 <Stethoscope className="h-4 w-4 text-health-green" />
-                <span className="hidden text-xs font-bold lg:inline">
+                <span className="hidden text-xs font-bold xl:inline">
                   {isAr ? 'المساعد' : 'Assistant'}
                 </span>
               </Link>
@@ -453,27 +435,19 @@ const Navigation = memo(
               {user ? (
                 <Link
                   to={navigationPaths.dashboard(lang)}
-                  className="hidden items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-700 transition-all hover:border-health-green/30 hover:bg-slate-50 sm:flex"
+                  className="hidden items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-2 text-slate-700 transition-all hover:border-health-green/30 hover:bg-slate-50 md:flex"
                 >
                   <UserRound className="h-4 w-4 text-health-green" />
-                  <span className="hidden text-xs font-bold lg:inline">{authLabel}</span>
+                  <span className="hidden text-xs font-bold xl:inline">{authLabel}</span>
                 </Link>
               ) : (
-                <div className="hidden items-center gap-2 sm:flex">
-                  <Link
-                    to={navigationPaths.auth(lang)}
-                    className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-700 transition-all hover:border-health-green/30 hover:bg-slate-50"
-                  >
-                    <span className="text-xs font-bold">{isAr ? 'إنشاء حساب' : 'Create account'}</span>
-                  </Link>
-                  <Link
-                    to={navigationPaths.auth(lang)}
-                    className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-3 py-2 text-white shadow-sm transition-all hover:bg-slate-800"
-                  >
-                    <UserRound className="h-4 w-4" />
-                    <span className="text-xs font-bold">{isAr ? 'تسجيل الدخول' : 'Sign in'}</span>
-                  </Link>
-                </div>
+                <Link
+                  to={navigationPaths.auth(lang)}
+                  className="hidden items-center gap-2 rounded-full bg-slate-900 px-3.5 py-2 text-white shadow-sm transition-all hover:bg-slate-800 md:inline-flex"
+                >
+                  <UserRound className="h-4 w-4" />
+                  <span className="text-xs font-bold">{isAr ? 'تسجيل الدخول' : 'Sign in'}</span>
+                </Link>
               )}
 
               <div className="hidden items-center gap-1 rounded-full border border-slate-200 bg-slate-100 p-1 sm:flex">
@@ -502,13 +476,6 @@ const Navigation = memo(
               >
                 {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
               </button>
-
-              <button
-                onClick={() => scrollToId('calculators')}
-                className="rounded-full bg-health-green px-3 py-2 text-xs font-semibold text-white shadow-sm shadow-health-green/10 transition-all hover:bg-health-green-dark sm:px-4 sm:text-sm"
-              >
-                {isAr ? 'ابدأ' : 'Start'}
-              </button>
             </div>
           </div>
         </nav>
@@ -518,4 +485,5 @@ const Navigation = memo(
 );
 
 Navigation.displayName = 'Navigation';
+
 export default Navigation;

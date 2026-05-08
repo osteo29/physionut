@@ -1,17 +1,8 @@
 import {memo} from 'react';
 import {Link} from 'react-router-dom';
-import {
-  Activity,
-  ArrowRight,
-  Calculator,
-  GraduationCap,
-  MessageSquareText,
-  ShieldCheck,
-  UserRoundPlus,
-} from 'lucide-react';
+import {Activity, ArrowRight, Calculator, GraduationCap, ShieldCheck, Stethoscope} from 'lucide-react';
 import type {Language} from '../../services/translations';
 import {navigationPaths} from '../../utils/langUrlHelper';
-import PwaActions from '../pwa/PwaActions';
 
 const Hero = memo(({lang}: {lang: Language}) => {
   const isAr = lang === 'ar';
@@ -19,45 +10,37 @@ const Hero = memo(({lang}: {lang: Language}) => {
   const highlights = isAr
     ? [
         {
-          label: 'ابدأ من أرقامك',
-          desc: 'حاسبات عملية للسعرات والماء والبروتين بدون تعقيد.',
+          label: 'ابدأ من الخطوة الأقرب لك',
+          desc: 'افتح الحاسبات أو البروتوكولات مباشرة بدون التنقل بين أقسام كثيرة.',
         },
         {
-          label: 'اربط التغذية بالتعافي',
-          desc: 'خطوات أوضح تربط الإصابة بالحركة والمتابعة اليومية.',
-        },
-        {
-          label: 'خطّة أسهل للتنفيذ',
-          desc: 'نتائج مبنية على معادلات معروفة وموجهة للاستخدام التعليمي.',
+          label: 'اربط التغذية بالتأهيل',
+          desc: 'مسار أوضح يجمع الحركة والمتابعة والتغذية في نقطة بداية واحدة.',
         },
       ]
     : [
         {
-          label: 'Start from your numbers',
-          desc: 'Use practical calculators for calories, hydration, and protein.',
+          label: 'Start from the nearest next step',
+          desc: 'Jump into calculators or protocols without bouncing through crowded sections.',
         },
         {
-          label: 'Connect food to recovery',
-          desc: 'Bring injury rehab, movement, and nutrition into one flow.',
-        },
-        {
-          label: 'Leave with a clearer plan',
-          desc: 'Follow conservative, educational outputs you can act on.',
+          label: 'Connect nutrition to rehab',
+          desc: 'A calmer flow that brings movement, follow-up, and nutrition together.',
         },
       ];
 
   const valuePoints = isAr
-    ? ['تغذية + تأهيل', 'مبني على معادلات معروفة', 'تعليمي وليس تشخيصيًا']
-    : ['Nutrition + rehab', 'Built on established formulas', 'Educational, not diagnostic'];
+    ? ['تغذية + تأهيل', 'مبني على مراجع ومعادلات معروفة']
+    : ['Nutrition + rehab', 'Built on established formulas'];
 
   return (
     <section className="hero-surface home-band relative overflow-hidden pb-12 pt-10 sm:pb-16 lg:pb-20">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(49,95,74,0.12),transparent_30%),linear-gradient(180deg,rgba(255,255,255,0.3),transparent_32%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(49,95,74,0.12),transparent_30%),linear-gradient(180deg,rgba(255,255,255,0.34),transparent_34%)]" />
       <div className="pointer-events-none absolute right-0 top-0 h-72 w-72 translate-x-1/4 -translate-y-1/4 rounded-full bg-health-green/8 blur-[110px]" />
       <div className="pointer-events-none absolute bottom-0 left-0 h-72 w-72 -translate-x-1/4 translate-y-1/4 rounded-full bg-medical-blue/10 blur-[110px]" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1.08fr)_minmax(300px,0.88fr)] lg:items-center">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1.04fr)_minmax(320px,0.84fr)] lg:items-center">
           <div className={`max-w-3xl ${isAr ? 'lg:text-right' : 'lg:text-left'}`}>
             <div className="glass-panel mb-5 inline-flex items-center gap-2 rounded-full border border-health-green/15 px-4 py-2 text-[11px] font-bold text-health-green sm:text-xs">
               <GraduationCap className="h-4 w-4" />
@@ -68,17 +51,17 @@ const Hero = memo(({lang}: {lang: Language}) => {
               </span>
             </div>
 
-            <h1 className="max-w-4xl text-3xl font-black leading-[1.02] tracking-tight text-slate-900 sm:text-5xl lg:text-[3.5rem]">
+            <h1 className="max-w-3xl text-3xl font-black leading-[1.02] tracking-tight text-slate-900 sm:text-5xl lg:text-[3.35rem]">
               {isAr ? 'رتّب رحلة تعافيك' : 'Organize your recovery'}{' '}
               <span className="bg-gradient-to-r from-health-green to-health-green-dark bg-clip-text text-transparent">
-                {isAr ? 'بشكل أوضح' : 'with more clarity'}
+                {isAr ? 'بصورة أهدأ وأوضح' : 'with less noise and more clarity'}
               </span>
             </h1>
 
             <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-600 sm:text-base">
               {isAr
-                ? 'PhysioNutrition يجمع الحاسبات الغذائية، أدوات المتابعة، وبروتوكولات الإصابات في مسار أبسط يساعدك تفهم الخطوة التالية بدل التنقل بين أجزاء كثيرة.'
-                : 'PhysioNutrition brings calculators, tracking tools, and injury protocols into a calmer flow so the next step feels obvious.'}
+                ? 'PhysioNutrition يجمع الحاسبات الغذائية وبروتوكولات الإصابات وأدوات المتابعة في بداية أبسط، حتى تعرف ما الذي تفتحه أولًا وما الخطوة التالية بعدها.'
+                : 'PhysioNutrition brings calculators, injury protocols, and tracking into a simpler starting point so the next step feels obvious.'}
             </p>
 
             <div className="mt-5 flex flex-wrap gap-2">
@@ -95,40 +78,29 @@ const Hero = memo(({lang}: {lang: Language}) => {
 
             <div className="mt-7 flex flex-col gap-2.5 sm:flex-row">
               <Link
-                to={navigationPaths.auth(lang)}
+                to={navigationPaths.injuries(lang)}
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-slate-900 px-5 py-3.5 text-sm font-bold text-white shadow-md transition-colors hover:bg-slate-800"
               >
-                <UserRoundPlus className="h-5 w-5" />
-                <span>{isAr ? 'ابدأ رحلتك مجانًا' : 'Start your journey free'}</span>
-              </Link>
-              <Link
-                to={navigationPaths.injuries(lang)}
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white/85 px-5 py-3.5 text-sm font-bold text-slate-900 shadow-sm transition-colors hover:border-health-green/40 hover:bg-white"
-              >
-                <Activity className="h-5 w-5 text-health-green" />
+                <Activity className="h-5 w-5" />
                 <span>{isAr ? 'استكشف بروتوكولات الإصابات' : 'Browse injury protocols'}</span>
-              </Link>
-            </div>
-
-            <div className="mt-3.5 flex flex-wrap gap-2.5">
-              <Link
-                to={navigationPaths.assistant(lang)}
-                className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/55 px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:border-health-green/35 hover:text-slate-900"
-              >
-                <MessageSquareText className="h-4 w-4 text-health-green" />
-                {isAr ? 'اسأل المساعد' : 'Ask the assistant'}
               </Link>
               <a
                 href="#calculators"
-                className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/55 px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:border-health-green/35 hover:text-slate-900"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white/85 px-5 py-3.5 text-sm font-bold text-slate-900 shadow-sm transition-colors hover:border-health-green/40 hover:bg-white"
               >
-                <Calculator className="h-4 w-4 text-health-green" />
-                {isAr ? 'افتح الحاسبات' : 'Open calculators'}
+                <Calculator className="h-5 w-5 text-health-green" />
+                <span>{isAr ? 'افتح الحاسبات' : 'Open calculators'}</span>
               </a>
             </div>
 
-            <div className={`mt-6 flex ${isAr ? 'lg:justify-end' : 'lg:justify-start'}`}>
-              <PwaActions lang={lang} />
+            <div className="mt-4">
+              <Link
+                to={navigationPaths.assistant(lang)}
+                className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 transition-colors hover:text-slate-900"
+              >
+                <Stethoscope className="h-4 w-4 text-health-green" />
+                <span>{isAr ? 'أو اسأل المساعد السريري مباشرة' : 'Or ask the clinical assistant directly'}</span>
+              </Link>
             </div>
           </div>
 
@@ -140,19 +112,19 @@ const Hero = memo(({lang}: {lang: Language}) => {
                     {isAr ? 'مسار مبسّط' : 'Simplified flow'}
                   </div>
                   <div className="mt-1.5 text-xl font-black text-slate-900">
-                    {isAr ? '3 محطات رئيسية' : '3 focused steps'}
+                    {isAr ? 'خطوتان واضحتان' : '2 focused steps'}
                   </div>
                 </div>
                 <div className="rounded-full bg-slate-900 px-3 py-1 text-[11px] font-bold tracking-[0.18em] text-white">
-                  01-03
+                  01-02
                 </div>
               </div>
 
-              <div className="space-y-2.5">
+              <div className="space-y-3">
                 {highlights.map((item, index) => (
                   <div
                     key={item.label}
-                    className="rounded-[1.5rem] border border-slate-200 bg-white/88 p-3.5 shadow-sm transition-[box-shadow,border-color] hover:border-health-green/25 hover:shadow-md"
+                    className="rounded-[1.5rem] border border-slate-200 bg-white/88 p-4 shadow-sm transition-[box-shadow,border-color] hover:border-health-green/25 hover:shadow-md"
                   >
                     <div className="mb-2.5 flex items-center justify-between gap-3">
                       <div className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-health-green/10 text-health-green">
@@ -172,8 +144,8 @@ const Hero = memo(({lang}: {lang: Language}) => {
                 </div>
                 <p className="mt-2 text-sm leading-6 text-slate-300">
                   {isAr
-                    ? 'بدل أقسام متفرقة، عندك الآن نقطة بداية أوضح ثم انتقال طبيعي للحاسبات والبروتوكولات والمتابعة.'
-                    : 'Instead of disconnected sections, you now get a clearer starting point that leads naturally into calculators, protocols, and tracking.'}
+                    ? 'واجهة أخف في البداية، ثم انتقال طبيعي إلى البروتوكولات أو الحاسبات أو المتابعة حسب ما تحتاجه الآن.'
+                    : 'A lighter first screen, then a natural handoff into protocols, calculators, or tracking depending on what you need now.'}
                 </p>
               </div>
             </div>

@@ -1,4 +1,5 @@
 import {supabase} from '../lib/supabase';
+import type {TableInsert, TableUpdate} from '../lib/supabaseDatabase';
 import type {InjuryPhase, InjuryProtocol} from './injuryDatabase';
 import {getAllInjuries} from './injuryDatabase';
 import {
@@ -233,6 +234,13 @@ export function getLastRehabProtocolSource() {
   return lastRehabProtocolSource;
 }
 
+export type RehabProtocolInsert = TableInsert<'protocols'>;
+export type RehabProtocolUpdate = TableUpdate<'protocols'>;
+export type RehabPhaseInsert = TableInsert<'phases'>;
+export type RehabPhaseUpdate = TableUpdate<'phases'>;
+export type RehabExerciseInsert = TableInsert<'exercises'>;
+export type RehabExerciseUpdate = TableUpdate<'exercises'>;
+
 export async function fetchRehabProtocolsFromSupabase(): Promise<RehabProtocolRow[]> {
   const db = getSupabaseClient();
   if (!db) {
@@ -322,4 +330,81 @@ export async function fetchCompleteRehabProtocol(
   const phaseRows = await fetchRehabPhasesByProtocolId(protocolRow.id);
   const exerciseRows = await fetchRehabExercisesByPhaseIds(phaseRows.map((phase) => phase.id));
   return buildProtocolFromRows(protocolRow, phaseRows, exerciseRows, lang);
+}
+
+function ensureSupabase() {
+  if (!supabase) {
+    throw new Error('Supabase is not configured.');
+  }
+
+  return supabase;
+}
+
+export async function createRehabProtocol(data: RehabProtocolInsert) {
+  const db = ensureSupabase();
+  const {data: result, error} = await (db.from('protocols') as any).insert([data as any]).select().single();
+  if (error) throw error;
+  lastRehabProtocolSource = 'supabase';
+  return result as RehabProtocolRow;
+}
+
+export async function updateRehabProtocol(id: number, data: RehabProtocolUpdate) {
+  const db = ensureSupabase();
+  const {data: result, error} = await (db.from('protocols') as any).update(data as any).eq('id', id).select().single();
+  if (error) throw error;
+  lastRehabProtocolSource = 'supabase';
+  return result as RehabProtocolRow;
+}
+
+export async function deleteRehabProtocol(id: number) {
+  const db = ensureSupabase();
+  const {error} = await db.from('protocols').delete().eq('id', id);
+  if (error) throw error;
+  lastRehabProtocolSource = 'supabase';
+}
+
+export async function createRehabPhase(data: RehabPhaseInsert) {
+  const db = ensureSupabase();
+  const {data: result, error} = await (db.from('phases') as any).insert([data as any]).select().single();
+  if (error) throw error;
+  lastRehabProtocolSource = 'supabase';
+  return result as RehabPhaseRow;
+}
+
+export async function updateRehabPhase(id: number, data: RehabPhaseUpdate) {
+  const db = ensureSupabase();
+  const {data: result, error} = await (db.from('phases') as any).update(data as any).eq('id', id).select().single();
+  if (error) throw error;
+  lastRehabProtocolSource = 'supabase';
+  return result as RehabPhaseRow;
+}
+
+export async function deleteRehabPhase(id: number) {
+  const db = ensureSupabase();
+  const {error} = await db.from('phases').delete().eq('id', id);
+  if (error) throw error;
+  lastRehabProtocolSource = 'supabase';
+}
+
+export async function createRehabExercise(data: RehabExerciseInsert) {
+  const db = ensureSupabase();
+  const {data: result, error} = await (db.from('exercises') as any).insert([data as any]).select().single();
+  if (error) throw error;
+  lastRehabProtocolSource = 'supabase';
+  return result as RehabExerciseRow;
+}
+
+export async function updateRehabExercise(id: number, data: RehabExerciseUpdate) {
+  const db = ensureSupabase();
+  const {data: result, error} = await (db.from('exercises') as any).update(data as any).eq('id', id).select().single();
+  if (error) throw error;
+  lastRehabProtocolSource = 'supabase';
+  return result as RehabExerciseRow;
+}
+
+export async function deleteRehabExercise(id: number) {
+  const db = ensureSupabase();
+  const {error} = await db.from('exercises').delete().eq('id', id);
+  if (error) throw error;
+  lastRehabProtocolSource = 'supabase';
 }
