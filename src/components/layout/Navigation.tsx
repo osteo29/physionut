@@ -128,7 +128,7 @@ const Navigation = memo(
 
     const handleBrandClick = () => {
       setIsSidebarOpen(false);
-      if (location.pathname === '/') {
+      if (location.pathname === navigationPaths.home(lang)) {
         window.scrollTo({top: 0, behavior: 'smooth'});
       }
     };

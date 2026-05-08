@@ -1,6 +1,6 @@
-import { memo } from 'react';
-import type { Language } from '../../services/translations';
-import { ShieldCheck, Target, HeartPulse } from 'lucide-react';
+import {memo} from 'react';
+import type {Language} from '../../services/translations';
+import {HeartPulse, ShieldCheck, Target} from 'lucide-react';
 
 interface QuickSection {
   id: string;
@@ -14,97 +14,101 @@ interface FeaturesShowcaseProps {
   quickSections: QuickSection[];
 }
 
-const FeaturesShowcase = memo(({ lang, quickSections }: FeaturesShowcaseProps) => {
+const FeaturesShowcase = memo(({lang, quickSections}: FeaturesShowcaseProps) => {
   const isEn = lang === 'en';
 
-  const features = [
+  const principles = [
     {
       icon: HeartPulse,
-      title: isEn ? 'Built for rehab and recovery' : 'مصمم للتعافي وإعادة التأهيل',
+      title: isEn ? 'Recovery first' : 'التعافي أولًا',
       desc: isEn
-        ? 'The positioning is now centered around injured users, recovery, and physio workflows.'
-        : 'تم توجيه الرسالة لتناسب المصابين، التعافي، وسيناريوهات العلاج الطبيعي.',
+        ? 'The layout now emphasizes recovery use-cases instead of scattering attention.'
+        : 'الترتيب يركز على استخدامات التعافي بدل توزيع الانتباه على أكثر من اتجاه.',
     },
     {
       icon: Target,
-      title: isEn ? 'Clinical formulas + context' : 'معادلات سريرية + سياق',
+      title: isEn ? 'Clearer priorities' : 'أولويات أوضح',
       desc: isEn
-        ? 'Results are based on established formulas, then translated into easier next actions.'
-        : 'النتائج مبنية على معادلات معروفة، ثم تتحول إلى خطوات أوضح وأسهل.',
+        ? 'Each section now has a cleaner role: start, calculate, explore, then follow up.'
+        : 'كل قسم له دور أوضح: ابدأ، احسب، استكشف، ثم تابع.',
     },
     {
       icon: ShieldCheck,
-      title: isEn ? 'Educational, not diagnostic' : 'إرشادي وليس تشخيصيًا',
+      title: isEn ? 'Safer guidance' : 'إرشاد أكثر أمانًا',
       desc: isEn
-        ? 'Useful for planning and education, while medical decisions should still involve professionals.'
-        : 'مفيد للتخطيط والتوعية، مع بقاء القرارات الطبية عند المختصين.',
+        ? 'Educational framing stays visible without dominating the whole page.'
+        : 'التأطير التعليمي يظل حاضرًا بدون أن يهيمن على الصفحة بالكامل.',
     },
   ];
 
   return (
-    <section className="relative py-16 sm:py-24 bg-slate-50/50 overflow-hidden">
-      {/* Background Ornaments */}
-      <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-health-green/5 blur-3xl" />
-      <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 rounded-full bg-medical-blue/5 blur-3xl" />
+    <section className="section-surface home-band relative overflow-hidden bg-slate-50/70 py-16 sm:py-20">
+      <div className="absolute right-0 top-0 h-80 w-80 translate-x-1/4 -translate-y-1/4 rounded-full bg-health-green/5 blur-[110px]" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        
-        {/* Quick Sections Bento Grid */}
-        <div className="mb-16">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-black text-slate-900 sm:text-4xl">
-              {isEn ? 'Core Tools' : 'الأدوات الأساسية'}
-            </h2>
-            <p className="mt-4 text-slate-600 max-w-2xl mx-auto text-lg">
-              {isEn 
-                ? 'Everything you need for precise tracking and recovery.'
-                : 'كل ما تحتاجه لتتبع دقيق وتعافي أسرع.'}
-            </p>
+        <div className="mb-10 max-w-3xl">
+          <div className="text-xs font-bold uppercase tracking-[0.18em] text-health-green">
+            {isEn ? 'Core workflow' : 'المسار الأساسي'}
           </div>
+          <h2 className="mt-3 text-3xl font-black text-slate-900 sm:text-4xl">
+            {isEn ? 'The homepage now leads with the essentials' : 'الواجهة تبدأ الآن بالأساسيات فعلًا'}
+          </h2>
+          <p className="mt-4 text-base leading-7 text-slate-600 sm:text-lg">
+            {isEn
+              ? 'Jump into the right area faster, with fewer oversized panels and less duplicated messaging.'
+              : 'وصل إلى القسم المناسب أسرع، مع بطاقات أقل ازدحامًا ورسائل أقل تكرارًا.'}
+          </p>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {quickSections.map((section, idx) => (
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,1.25fr)_minmax(300px,0.75fr)]">
+          <div className="grid gap-4 md:grid-cols-3">
+            {quickSections.map((section, index) => (
               <a
                 key={section.id}
                 href={`#${section.id}`}
-                className="group relative flex flex-col justify-between overflow-hidden rounded-[2.5rem] bg-white p-8 shadow-sm border border-slate-100 hover:border-health-green/30 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                className="panel-soft group rounded-[2rem] p-6 transition-[box-shadow,border-color] hover:border-health-green/30 hover:shadow-lg"
               >
-                <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
-                  <section.icon className="w-32 h-32 text-health-green" />
-                </div>
-                
-                <div>
-                  <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-soft-blue to-health-green/10 text-health-green shadow-sm group-hover:scale-110 transition-transform duration-300">
-                    <section.icon className="h-6 w-6" />
+                <div className="mb-5 flex items-center justify-between gap-3">
+                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-health-green/10 text-health-green">
+                    <section.icon className="h-5 w-5" />
                   </div>
-                  <h3 className="mb-3 text-xl font-bold text-slate-900">{section.title}</h3>
-                  <p className="text-base leading-relaxed text-slate-600 relative z-10">{section.desc}</p>
+                  <div className="text-xs font-black tracking-[0.18em] text-slate-400">
+                    {String(index + 1).padStart(2, '0')}
+                  </div>
+                </div>
+                <h3 className="text-lg font-bold text-slate-900">{section.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-slate-600">{section.desc}</p>
+                <div className="mt-5 text-sm font-semibold text-health-green">
+                  {isEn ? 'Open section' : 'افتح القسم'}
                 </div>
               </a>
             ))}
           </div>
-        </div>
 
-        {/* Philosophy Features */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {features.map((item) => (
-            <div 
-              key={item.title} 
-              className="relative overflow-hidden rounded-[2rem] bg-white/60 backdrop-blur-xl border border-white p-6 shadow-sm hover:shadow-md transition-shadow"
-            >
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 mt-1">
-                  <item.icon className="w-6 h-6 text-slate-400" />
-                </div>
-                <div>
-                  <h4 className="mb-2 text-lg font-bold text-slate-900">{item.title}</h4>
-                  <p className="text-sm leading-relaxed text-slate-600">{item.desc}</p>
-                </div>
-              </div>
+          <div className="panel-soft rounded-[2rem] p-6">
+            <div className="text-xs font-bold uppercase tracking-[0.18em] text-slate-400">
+              {isEn ? 'Why it feels better' : 'لماذا الشكل أفضل'}
             </div>
-          ))}
+            <div className="mt-5 space-y-4">
+              {principles.map((item) => (
+                <div
+                  key={item.title}
+                  className="rounded-[1.5rem] border border-slate-200/80 bg-white/85 p-4"
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-100 text-health-green">
+                      <item.icon className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h3 className="text-base font-bold text-slate-900">{item.title}</h3>
+                      <p className="mt-2 text-sm leading-6 text-slate-600">{item.desc}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-
       </div>
     </section>
   );

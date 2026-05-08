@@ -36,7 +36,7 @@ export default function SupportToolsSection({
   const isAr = lang === 'ar';
 
   return (
-    <section id="nutrition-tools" className="section-surface bg-white py-24">
+    <section id="nutrition-tools" className="section-surface home-band bg-white py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-12 flex flex-col gap-6">
           <div className="inline-flex w-fit items-center gap-2 rounded-full bg-health-green/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-health-green">
@@ -58,7 +58,7 @@ export default function SupportToolsSection({
         </div>
 
         <div className="mb-10 grid gap-5 lg:grid-cols-2">
-          <div className="rounded-[2rem] border border-slate-200 bg-slate-50 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+          <div className="panel-soft rounded-[2rem] p-6 transition-[box-shadow,border-color] duration-200 hover:shadow-lg">
             <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-health-green shadow-sm">
               <Search className="h-5 w-5" />
             </div>
@@ -78,7 +78,7 @@ export default function SupportToolsSection({
             </a>
           </div>
 
-          <div className="rounded-[2rem] border border-slate-200 bg-slate-50 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+          <div className="panel-soft rounded-[2rem] p-6 transition-[box-shadow,border-color] duration-200 hover:shadow-lg">
             <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-medical-blue shadow-sm">
               <Pill className="h-5 w-5" />
             </div>
@@ -104,7 +104,7 @@ export default function SupportToolsSection({
           </div>
         </div>
 
-        <div className="mb-10 rounded-[2rem] border border-slate-200 bg-slate-50 p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+        <div className="panel-soft mb-10 rounded-[2rem] p-6 transition-[box-shadow,border-color] duration-200 hover:shadow-lg">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <h3 className="text-xl font-bold text-slate-900">
@@ -125,7 +125,7 @@ export default function SupportToolsSection({
           </div>
         </div>
 
-        <div className="mb-10 rounded-[2rem] border border-slate-200 bg-slate-50 p-6">
+        <div className="panel-soft mb-10 rounded-[2rem] p-6">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <h3 className="text-xl font-bold text-slate-900">
@@ -146,7 +146,7 @@ export default function SupportToolsSection({
           </div>
         </div>
 
-        <div id="food-db" className="rounded-[2.25rem] border border-slate-200 bg-slate-50 p-6 sm:p-8">
+        <div id="food-db" className="panel-soft rounded-[2.25rem] p-6 sm:p-8">
           <div className="mb-8 flex flex-col gap-6">
             <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
               <div>

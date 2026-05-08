@@ -1,5 +1,4 @@
 import {memo} from 'react';
-import {motion} from 'motion/react';
 import {Brain, ChevronRight, ClipboardList, Sparkles, Zap} from 'lucide-react';
 import {Link} from 'react-router-dom';
 import type {Language} from '../../services/translations';
@@ -64,7 +63,7 @@ const WhatsNew = memo(({lang}: {lang: Language}) => {
   return (
     <section className="section-surface relative overflow-hidden bg-white py-20">
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+        <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
             <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-medical-blue/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-medical-blue">
               <Zap className="h-3 w-3" />
@@ -83,18 +82,11 @@ const WhatsNew = memo(({lang}: {lang: Language}) => {
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {updates.map((update, idx) => (
-            <motion.div
+            <div
               key={idx}
-              initial={{opacity: 0, y: 20}}
-              whileInView={{opacity: 1, y: 0}}
-              viewport={{once: true}}
-              transition={{delay: idx * 0.1}}
-              whileHover={{y: -8}}
-              className="group block rounded-[2.5rem] border border-slate-100 bg-slate-50 p-8 transition-all duration-500 hover:bg-white hover:shadow-2xl hover:shadow-slate-200/50"
+              className="group block rounded-[2.5rem] border border-slate-100 bg-slate-50 p-8 transition-[box-shadow,border-color,background-color] duration-200 hover:bg-white hover:shadow-md"
             >
-              <div
-                className={`${update.bg} mb-6 flex h-16 w-16 items-center justify-center rounded-2xl transition-transform duration-500 group-hover:scale-110`}
-              >
+              <div className={`${update.bg} mb-6 flex h-16 w-16 items-center justify-center rounded-2xl`}>
                 <update.icon className={`h-8 w-8 ${update.color}`} />
               </div>
               <h3 className="mb-3 text-xl font-bold text-slate-900 transition-colors group-hover:text-health-green">
@@ -102,23 +94,17 @@ const WhatsNew = memo(({lang}: {lang: Language}) => {
               </h3>
               <p className="mb-6 leading-relaxed text-slate-600">{update.desc}</p>
               {update.href.startsWith('#') ? (
-                <a
-                  href={update.href}
-                  className="inline-flex items-center gap-2 text-sm font-bold text-health-green opacity-0 transition-opacity group-hover:opacity-100"
-                >
+                <a href={update.href} className="inline-flex items-center gap-2 text-sm font-bold text-health-green">
                   <span>{lang === 'en' ? `Explore ${update.title}` : `استكشف ${update.title}`}</span>
                   <ChevronRight className={`h-4 w-4 ${lang === 'ar' ? 'rotate-180' : ''}`} />
                 </a>
               ) : (
-                <Link
-                  to={update.href}
-                  className="inline-flex items-center gap-2 text-sm font-bold text-health-green opacity-0 transition-opacity group-hover:opacity-100"
-                >
+                <Link to={update.href} className="inline-flex items-center gap-2 text-sm font-bold text-health-green">
                   <span>{lang === 'en' ? `Explore ${update.title}` : `استكشف ${update.title}`}</span>
                   <ChevronRight className={`h-4 w-4 ${lang === 'ar' ? 'rotate-180' : ''}`} />
                 </Link>
               )}
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
