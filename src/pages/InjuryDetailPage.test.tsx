@@ -22,10 +22,14 @@ vi.mock('./usePreferredLang', () => ({
   default: () => 'en',
 }));
 
-vi.mock('../services/injuryLocalization', () => ({
-  getLocalizedBodyRegion: (value: string) => value,
-  getLocalizedCategory: (value: string) => value,
-  getLocalizedInjuryName: (_id: string, value: string) => value,
+vi.mock('../services/injuryI18n', () => ({
+  translateInjury: (input: {nameEn?: string; overviewEn?: string; category?: string; bodyRegion?: string}) => ({
+    name: input.nameEn || 'Test Injury',
+    category: input.category || 'Ligament',
+    bodyRegion: input.bodyRegion || 'Knee',
+    overview: input.overviewEn || 'Overview text',
+  }),
+  translateActivityContext: (value: string) => value,
 }));
 
 vi.mock('../services/injuryExerciseLinks', () => ({

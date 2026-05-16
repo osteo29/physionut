@@ -2,13 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {getAllInjuries} from '../src/services/injuryDatabase';
 import {injuryPageContentCatalog} from '../src/services/injuryPageContentCatalog';
-import {
-  getLocalizedBodyRegion,
-  getLocalizedCategory,
-  getLocalizedInjuryName,
-  getLocalizedInjuryOverview,
-} from '../src/services/injuryLocalization';
-import {decodeMojibake} from '../src/services/textEncoding';
+import {translateInjury} from '../src/services/injuryI18n';
 
 function sqlText(value?: string | null) {
   if (value == null) return 'null';
@@ -24,9 +18,6 @@ function sqlJson(value: unknown) {
   return `'${JSON.stringify(value ?? []).replace(/'/g, "''")}'::jsonb`;
 }
 
-function decode(value: string) {
-  return decodeMojibake(value);
-}
 
 function fallbackArabicSummary(injuryNameAr: string, bodyRegionAr: string) {
   return `${injuryNameAr} ????? ??? ??? ????? ?????? ????? ????? ??????? ???????? ???????? ?????? ??????? ?????? ?????? ?? ${bodyRegionAr}.`;
@@ -44,9 +35,19 @@ function translatePhaseLabel(label: string, phaseNumber: number) {
 const injuries = getAllInjuries();
 
 const seedChunks = injuries.map((injury) => {
-  const nameAr = decode(getLocalizedInjuryName(injury.id, injury.name, 'ar'));
-  const bodyRegionAr = decode(getLocalizedBodyRegion(injury.bodyRegion, 'ar'));
-  const overviewAr = decode(getLocalizedInjuryOverview(nameAr, injury.category, injury.bodyRegion, injury.overview, 'ar'));
+  const translated = translateInjury(
+    {
+      slugOrId: injury.id,
+      nameEn: injury.name,
+      category: injury.category,
+      regionEn: injury.bodyRegion,
+      overviewEn: injury.overview,
+    },
+    'ar',
+  );
+  const nameAr = translated.name;
+  const bodyRegionAr = translated.bodyRegion;
+  const overviewAr = translated.overview;
   const rehabSummaryAr = fallbackArabicSummary(nameAr, bodyRegionAr);
   const pageContent = injuryPageContentCatalog[injury.id];
 
@@ -62,15 +63,15 @@ const seedChunks = injuries.map((injury) => {
     phase_id, name, dose_en, dose_ar, reason_en, reason_ar, timing_en, timing_ar, caution_en, caution_ar, order_index
   ) values (
     v_phase_id,
-    ${sqlText(decode(supplement.name))},
-    ${sqlText(decode(supplement.dose))},
-    ${sqlText(decode(supplement.dose))},
-    ${sqlText(decode(supplement.reason))},
-    ${sqlText(decode(supplement.reason))},
-    ${sqlText(supplement.timing ? decode(supplement.timing) : null)},
-    ${sqlText(supplement.timing ? decode(supplement.timing) : null)},
-    ${sqlText(supplement.caution ? decode(supplement.caution) : null)},
-    ${sqlText(supplement.caution ? decode(supplement.caution) : null)},
+    ${sqlText(supplement.name)},
+    ${sqlText(supplement.dose)},
+    ${sqlText(supplement.dose)},
+    ${sqlText(supplement.reason)},
+    ${sqlText(supplement.reason)},
+    ${sqlText(supplement.timing ?? null)},
+    ${sqlText(supplement.timing ?? null)},
+    ${sqlText(supplement.caution ?? null)},
+    ${sqlText(supplement.caution ?? null)},
     ${supplementIndex}
   );`,
       ),
@@ -87,31 +88,31 @@ const seedChunks = injuries.map((injury) => {
   ) values (
     v_injury_id,
     ${phaseNumber},
-    ${sqlText(decode(phase.label))},
+    ${sqlText((phase.label))},
     ${sqlText(phaseLabelAr)},
-    ${sqlText(decode(phase.duration))},
-    ${sqlText(decode(phase.duration))},
+    ${sqlText((phase.duration))},
+    ${sqlText((phase.duration))},
     ${sqlText(phase.window)},
-    ${sqlArray(phase.goals.map(decode))},
+    ${sqlArray(phase.goals)},
     ARRAY[]::text[],
-    ${sqlArray(phase.nutritionFocus.map(decode))},
+    ${sqlArray(phase.nutritionFocus)},
     ARRAY[]::text[],
-    ${sqlArray(phase.recommendedFoods.map(decode))},
+    ${sqlArray(phase.recommendedFoods)},
     ARRAY[]::text[],
-    ${sqlArray(phase.avoidFoods.map(decode))},
+    ${sqlArray(phase.avoidFoods)},
     ARRAY[]::text[],
-    ${sqlText(phase.focus ? decode(phase.focus) : null)},
-    ${sqlText(phase.focus ? decode(phase.focus) : null)},
-    ${sqlArray(phase.progressionMarkers?.map(decode) || [])},
+    ${sqlText(phase.focus ? (phase.focus) : null)},
+    ${sqlText(phase.focus ? (phase.focus) : null)},
+    ${sqlArray(phase.progressionMarkers || [])},
     ARRAY[]::text[],
-    ${sqlArray(phase.cautions?.map(decode) || [])},
+    ${sqlArray(phase.cautions || [])},
     ARRAY[]::text[],
-    ${sqlArray(phase.nutritionNotes?.map(decode) || [])},
+    ${sqlArray(phase.nutritionNotes || [])},
     ARRAY[]::text[],
     ${sqlJson(phase.exercisePlans ?? [])},
-    ${sqlArray(phase.exercises.map(decode))},
+    ${sqlArray(phase.exercises)},
     ARRAY[]::text[],
-    ${sqlArray(phase.prohibitedMovements.map(decode))},
+    ${sqlArray(phase.prohibitedMovements)},
     ARRAY[]::text[],
     ${phase.proteinPerKg?.min ?? 'null'},
     ${phase.proteinPerKg?.max ?? 'null'},
@@ -158,15 +159,15 @@ const seedChunks = injuries.map((injury) => {
   ) values (
     v_phase_id,
     'omnivore',
-    ${sqlText(decode(phase.meals.breakfast))},
-    ${sqlText(decode(phase.meals.breakfast))},
-    ${sqlText(decode(phase.meals.lunch))},
-    ${sqlText(decode(phase.meals.lunch))},
-    ${sqlText(decode(phase.meals.dinner))},
-    ${sqlText(decode(phase.meals.dinner))},
-    ${sqlText(phase.meals.snack ? decode(phase.meals.snack) : null)},
-    ${sqlText(phase.meals.snack ? decode(phase.meals.snack) : null)},
-    ${sqlArray(phase.meals.shoppingList.map(decode))},
+    ${sqlText((phase.meals.breakfast))},
+    ${sqlText((phase.meals.breakfast))},
+    ${sqlText((phase.meals.lunch))},
+    ${sqlText((phase.meals.lunch))},
+    ${sqlText((phase.meals.dinner))},
+    ${sqlText((phase.meals.dinner))},
+    ${sqlText(phase.meals.snack ? (phase.meals.snack) : null)},
+    ${sqlText(phase.meals.snack ? (phase.meals.snack) : null)},
+    ${sqlArray(phase.meals.shoppingList)},
     ARRAY[]::text[]
   )
   on conflict (phase_id, diet_style) do update set
@@ -191,20 +192,20 @@ const seedChunks = injuries.map((injury) => {
     nutrition_notes_en, nutrition_notes_ar, faq_items
   ) values (
     v_injury_id,
-    ${sqlText(decode(pageContent.intro || injury.overview))},
+    ${sqlText((pageContent.intro || injury.overview))},
     ${sqlText(overviewAr)},
-    ${sqlArray((pageContent.symptoms || []).map(decode))},
+    ${sqlArray((pageContent.symptoms || []))},
     ARRAY[]::text[],
-    ${sqlArray((pageContent.rehabNotes || []).map(decode))},
+    ${sqlArray((pageContent.rehabNotes || []))},
     ARRAY[]::text[],
-    ${sqlArray((pageContent.nutritionNotes || []).map(decode))},
+    ${sqlArray((pageContent.nutritionNotes || []))},
     ARRAY[]::text[],
     ${sqlJson(
       (pageContent.faq || []).map((item) => ({
-        q_en: decode(item.q),
-        a_en: decode(item.a),
-        q_ar: decode(item.q),
-        a_ar: decode(item.a),
+        q_en: (item.q),
+        a_en: (item.a),
+        q_ar: (item.q),
+        a_ar: (item.a),
       })),
     )}
   )
@@ -230,18 +231,18 @@ begin
     common_in, red_flags, related_calculators
   ) values (
     ${sqlText(injury.id)},
-    ${sqlText(decode(injury.name))},
+    ${sqlText((injury.name))},
     ${sqlText(nameAr)},
-    ${sqlText(decode(injury.category))},
-    ${sqlText(decode(injury.bodyRegion))},
+    ${sqlText((injury.category))},
+    ${sqlText((injury.bodyRegion))},
     ${sqlText(bodyRegionAr)},
-    ${sqlText(decode(injury.overview))},
+    ${sqlText((injury.overview))},
     ${sqlText(overviewAr)},
-    ${sqlText(decode(injury.rehabSummary))},
+    ${sqlText((injury.rehabSummary))},
     ${sqlText(rehabSummaryAr)},
-    ${sqlArray(injury.commonIn.map(decode))},
-    ${sqlArray(injury.redFlags.map(decode))},
-    ${sqlArray(injury.relatedCalculators.map(decode))}
+    ${sqlArray(injury.commonIn)},
+    ${sqlArray(injury.redFlags)},
+    ${sqlArray(injury.relatedCalculators)}
   )
   on conflict (injury_id_slug) do update set
     name_en = excluded.name_en,
@@ -264,12 +265,12 @@ begin
     contraindication_medications, contraindication_supplements
   ) values (
     v_injury_id,
-    ${sqlArray(injury.safetyNotes.medications.map(decode))},
+    ${sqlArray(injury.safetyNotes.medications)},
     ARRAY[]::text[],
-    ${sqlArray(injury.safetyNotes.supplements.map(decode))},
+    ${sqlArray(injury.safetyNotes.supplements)},
     ARRAY[]::text[],
-    ${sqlArray((injury.contraindications?.medications || []).map(decode))},
-    ${sqlArray((injury.contraindications?.supplements || []).map(decode))}
+    ${sqlArray((injury.contraindications?.medications || []))},
+    ${sqlArray((injury.contraindications?.supplements || []))}
   )
   on conflict (injury_id) do update set
     medications_en = excluded.medications_en,

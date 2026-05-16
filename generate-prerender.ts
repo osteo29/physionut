@@ -4,12 +4,9 @@ import {getArticles as getLocalArticles} from './src/services/articles';
 import {dietRegimensCatalog} from './src/services/dietRegimensCatalog';
 import {getInjuryPath, type InjuryProtocol} from './src/services/injuryDatabase';
 import {
-  getLocalizedBodyRegion,
-  getLocalizedCategory,
-  getLocalizedCommonInjuryContext,
-  getLocalizedInjuryName,
-  getLocalizedInjuryOverview,
-} from './src/services/injuryLocalization';
+  translateActivityContext,
+  translateInjury,
+} from './src/services/injuryI18n';
 import {decodeMojibake} from './src/services/textEncoding';
 import {EXERCISE_FINDER_STATIC_ARABIC_LABELS, EXERCISE_FINDER_STATIC_LABELS, EXERCISE_FINDER_STATIC_SLUGS} from './src/components/common/exercise-finder/constants';
 import {CALCULATOR_PAGE_CONFIGS} from './src/services/calculatorPages';
@@ -83,13 +80,16 @@ function getLocalizedOverview(injury: InjuryProtocol, lang: Lang) {
   if (lang === 'ar') {
     return (
       withLocalizedFields.overview_ar ||
-      getLocalizedInjuryOverview(
-        getLocalizedInjuryName(injury.id, injury.name, 'ar'),
-        injury.category,
-        injury.bodyRegion,
-        withLocalizedFields.overview_en || injury.overview,
+      translateInjury(
+        {
+          slugOrId: injury.id.replace(/_/g, '-'),
+          nameEn: injury.name,
+          category: injury.category,
+          regionEn: injury.bodyRegion,
+          overviewEn: withLocalizedFields.overview_en || injury.overview,
+        },
         'ar',
-      )
+      ).overview
     );
   }
 
@@ -97,7 +97,7 @@ function getLocalizedOverview(injury: InjuryProtocol, lang: Lang) {
 }
 
 function getLocalizedCommonIn(lang: Lang, commonIn: string[]) {
-  return commonIn.map((item) => getLocalizedCommonInjuryContext(item, lang));
+  return commonIn.map((item) => translateActivityContext(item, lang));
 }
 
 function getPhaseLabel(phase: InjuryProtocol['phases'][number], lang: Lang) {
@@ -542,9 +542,19 @@ function injuriesRoute(lang: Lang): RouteDefinition {
 
 function injuryRoute(lang: Lang, injury: InjuryProtocol): RouteDefinition {
   const isAr = lang === 'ar';
-  const localizedName = getLocalizedInjuryName(injury.id, injury.name, lang);
-  const localizedBodyRegion = getLocalizedBodyRegion(injury.bodyRegion, lang);
-  const localizedCategory = getLocalizedCategory(injury.category, lang);
+  const injuryTranslation = translateInjury(
+    {
+      slugOrId: injury.id.replace(/_/g, '-'),
+      nameEn: injury.name,
+      category: injury.category,
+      regionEn: injury.bodyRegion,
+      overviewEn: injury.overview,
+    },
+    lang,
+  );
+  const localizedName = injuryTranslation.name;
+  const localizedBodyRegion = injuryTranslation.bodyRegion;
+  const localizedCategory = injuryTranslation.category;
   const relatedArticles = getArticles(lang).slice(0, 3);
   const localizedDescription = isAr
     ? `دليل عملي لإصابة ${localizedName} يشمل الأعراض الشائعة، مراحل التعافي، التمارين المناسبة، والتركيز الغذائي المرتبط بـ ${localizedBodyRegion}.`

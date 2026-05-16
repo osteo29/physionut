@@ -5,13 +5,7 @@ import Seo from '../components/seo/Seo';
 import type {InjuryPhase, InjuryProtocol} from '../services/injuryDatabase';
 import {getInjuryExerciseLinks} from '../services/injuryExerciseLinks';
 import {getInjuryRehabLinks} from '../services/injuryRehabLinks';
-import {
-  getLocalizedBodyRegion,
-  getLocalizedCategory,
-  getLocalizedCommonInjuryContext,
-  getLocalizedInjuryName,
-  getLocalizedInjuryOverview,
-} from '../services/injuryLocalization';
+import {translateActivityContext, translateInjury} from '../services/injuryI18n';
 import {
   getCatalogInjuries,
   getInjuryProtocolBySlugWithFallback,
@@ -20,6 +14,18 @@ import {
 } from '../services/injuryService';
 import {INJURY_CANONICAL_PARENT_MAP} from '../services/seoAliases';
 import {decodeMojibake} from '../services/textEncoding';
+import {
+  injuryBadge,
+  injuryHeading,
+  injuryHeroShell,
+  injuryHeroTitle,
+  injuryPanel,
+  injuryPanelInset,
+  injuryPanelMuted,
+  injuryStatCard,
+  injurySubtle,
+  injuryTitle,
+} from './injuryPageStyles';
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
 
@@ -44,7 +50,8 @@ function getSourceMeta(source: InjuryCatalogSource, isAr: boolean) {
       description: isAr
         ? 'الصفحة معروضة من نفس بيانات الباك إند الحالية.'
         : 'This page is rendering from the current backend protocol record.',
-      className: 'border-emerald-200 bg-emerald-50 text-emerald-700',
+      className:
+        'border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-500/40 dark:bg-emerald-950/50 dark:text-emerald-200',
     };
   }
 
@@ -54,7 +61,8 @@ function getSourceMeta(source: InjuryCatalogSource, isAr: boolean) {
       description: isAr
         ? 'تم استخدام البروتوكول المستورد مع تغذية وربط محليين عند الحاجة.'
         : 'The imported protocol is being used, with local nutrition enrichment when needed.',
-      className: 'border-sky-200 bg-sky-50 text-sky-700',
+      className:
+        'border-sky-200 bg-sky-50 text-sky-800 dark:border-sky-500/40 dark:bg-sky-950/50 dark:text-sky-200',
     };
   }
 
@@ -63,7 +71,8 @@ function getSourceMeta(source: InjuryCatalogSource, isAr: boolean) {
     description: isAr
       ? 'تعذر الوصول للسجل البعيد، لذلك تم استخدام نسخة محلية للحفاظ على تماسك الصفحة.'
       : 'The remote record was unavailable, so the page is using the local fallback to stay consistent.',
-    className: 'border-amber-200 bg-amber-50 text-amber-800',
+    className:
+      'border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-500/40 dark:bg-amber-950/50 dark:text-amber-200',
   };
 }
 
@@ -78,7 +87,7 @@ function renderBulletList(items: string[], tone: 'neutral' | 'success' | 'warnin
           : 'text-slate-400';
 
   return (
-    <ul className="space-y-3 text-sm text-slate-700">
+    <ul className="space-y-3 text-sm text-slate-700 dark:text-slate-200">
       {items.map((item) => (
         <li key={item} className="flex items-start gap-3">
           <span className={`mt-1 text-base leading-none ${dotClass}`}>•</span>
@@ -106,10 +115,10 @@ function PhaseSummaryCard({
     <button
       type="button"
       onClick={onClick}
-      className={`w-full rounded-[1.5rem] border px-4 py-4 text-left transition ${
+      className={`w-full rounded-[1.5rem] border px-4 py-4 text-start transition ${
         active
           ? 'border-health-green bg-health-green text-white shadow-lg shadow-health-green/20'
-          : 'border-slate-200 bg-white text-slate-800 hover:border-health-green/30 hover:bg-health-green/5'
+          : 'border-slate-200 bg-white text-slate-800 hover:border-health-green/30 hover:bg-health-green/5 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-health-green/10'
       }`}
     >
       <div className="flex items-center justify-between gap-3">
@@ -119,7 +128,7 @@ function PhaseSummaryCard({
         <div className={`text-xs ${active ? 'text-white/80' : 'text-slate-500'}`}>{normalizeCopy(phase.duration)}</div>
       </div>
       <div className="mt-2 text-base font-black">{normalizeCopy(phase.label)}</div>
-      <div className={`mt-2 text-sm leading-6 ${active ? 'text-white/90' : 'text-slate-600'}`}>
+      <div className={`mt-2 text-sm leading-6 ${active ? 'text-white/90' : 'text-slate-600 dark:text-slate-300'}`}>
         {phase.focus ? normalizeCopy(phase.focus) : normalizeCopy(phase.goals[0] || '')}
       </div>
     </button>
@@ -172,28 +181,32 @@ export default function InjuryDetailPage() {
 
   if (!injury) {
     return (
-      <PageLayout title={isAr ? 'جارٍ تحميل البروتوكول' : 'Loading protocol'}>
-        <div className="rounded-[2rem] border border-slate-200 bg-slate-50 p-6 text-sm text-slate-500">
+      <PageLayout title={isAr ? 'جارٍ تحميل البروتوكول' : 'Loading protocol'} hideTitle wide flat>
+        <div className={`${injuryPanelMuted} text-sm text-slate-500 dark:text-slate-400`}>
           {isAr ? 'جارٍ تحميل تفاصيل الإصابة...' : 'Loading injury details...'}
         </div>
       </PageLayout>
     );
   }
 
-  const injuryDisplayName = getLocalizedInjuryName(injury.id, injury.name, lang);
-  const categoryDisplay = getLocalizedCategory(injury.category, lang);
-  const bodyRegionDisplay = getLocalizedBodyRegion(injury.bodyRegion, lang);
-  const localizedOverview = getLocalizedInjuryOverview(
-    injuryDisplayName,
-    injury.category,
-    injury.bodyRegion,
-    injury.overview || '',
+  const translated = translateInjury(
+    {
+      slugOrId: injury.id,
+      nameEn: injury.name,
+      category: injury.category,
+      regionEn: injury.bodyRegion,
+      overviewEn: injury.overview || '',
+    },
     lang,
   );
+  const injuryDisplayName = translated.name;
+  const categoryDisplay = translated.category;
+  const bodyRegionDisplay = translated.bodyRegion;
+  const localizedOverview = translated.overview;
   const phases = injury.phases || [];
   const redFlags = normalizeStringList(injury.redFlags);
   const commonIn = (injury.commonIn || [])
-    .map((item) => getLocalizedCommonInjuryContext(normalizeCopy(item), lang))
+    .map((item) => translateActivityContext(normalizeCopy(item), lang))
     .filter(Boolean);
   const medicationNotes = [...normalizeStringList(injury.safetyNotes?.medications), ...normalizeStringList(injury.safetyNotes?.supplements)];
   const symptoms = normalizeStringList(injury.pageContent?.symptoms);
@@ -270,9 +283,9 @@ export default function InjuryDetailPage() {
         structuredData={[]}
         hreflangs={hreflangs}
       />
-      <PageLayout title={labels.title}>
+      <PageLayout title={labels.title} hideTitle wide flat>
         <div className="space-y-8 not-prose">
-          <section className="overflow-hidden rounded-[2.2rem] border border-slate-200 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.16),transparent_35%),linear-gradient(145deg,#ffffff,#f8fafc)] p-6 shadow-sm sm:p-8">
+          <section className={injuryHeroShell}>
             <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
               <div className="space-y-5">
                 <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] ${sourceMeta.className}`}>
@@ -281,36 +294,34 @@ export default function InjuryDetailPage() {
                 </div>
 
                 <div>
-                  <h1 className="text-3xl font-black text-slate-900 sm:text-4xl">{injuryDisplayName}</h1>
-                  <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-600 sm:text-base">{normalizeCopy(localizedOverview)}</p>
+                  <h1 className={injuryHeroTitle}>{injuryDisplayName}</h1>
+                  <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-300 sm:text-base">
+                    {normalizeCopy(localizedOverview)}
+                  </p>
                 </div>
 
                 <div className="flex flex-wrap gap-2">
-                  <span className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200">
-                    {categoryDisplay}
-                  </span>
-                  <span className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200">
-                    {bodyRegionDisplay}
-                  </span>
-                  <span className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200">
+                  <span className={injuryBadge}>{categoryDisplay}</span>
+                  <span className={injuryBadge}>{bodyRegionDisplay}</span>
+                  <span className={injuryBadge}>
                     {phases.length} {isAr ? 'مراحل' : 'phases'}
                   </span>
                 </div>
 
                 <div className="grid gap-3 sm:grid-cols-3">
-                  <div className="rounded-[1.5rem] border border-white/70 bg-white/90 p-4 shadow-sm">
+                  <div className={injuryStatCard}>
                     <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">{isAr ? 'ملخص الخطة' : 'Plan focus'}</div>
-                    <div className="mt-2 text-sm font-semibold leading-6 text-slate-700">
+                    <div className="mt-2 text-sm font-semibold leading-6 text-slate-700 dark:text-slate-200">
                       {normalizeCopy(injury.rehabSummary || (currentPhase?.focus || ''))}
                     </div>
                   </div>
-                  <div className="rounded-[1.5rem] border border-white/70 bg-white/90 p-4 shadow-sm">
+                  <div className={injuryStatCard}>
                     <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">{isAr ? 'المخاطر المهمة' : 'Red flags'}</div>
-                    <div className="mt-2 text-2xl font-black text-slate-900">{redFlags.length}</div>
+                    <div className="mt-2 text-2xl font-black text-slate-900 dark:text-white">{redFlags.length}</div>
                   </div>
-                  <div className="rounded-[1.5rem] border border-white/70 bg-white/90 p-4 shadow-sm">
+                  <div className={injuryStatCard}>
                     <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">{isAr ? 'مصدر الداتا' : 'Data source'}</div>
-                    <div className="mt-2 text-sm font-semibold leading-6 text-slate-700">{sourceMeta.description}</div>
+                    <div className="mt-2 text-sm font-semibold leading-6 text-slate-700 dark:text-slate-200">{sourceMeta.description}</div>
                   </div>
                 </div>
 
@@ -337,17 +348,17 @@ export default function InjuryDetailPage() {
                       {isAr ? 'إجمالي التمارين التفصيلية عبر كل المراحل' : 'Detailed exercise entries across all phases'}
                     </div>
                   </div>
-                  <div className="rounded-[1.5rem] border border-slate-200 bg-white/90 p-4 shadow-sm">
-                    <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">{isAr ? 'مراحل التمارين' : 'Exercise phases'}</div>
-                    <div className="mt-2 text-3xl font-black text-slate-900">{phasesWithExercises}</div>
-                    <div className="mt-2 text-sm text-slate-500">
+                  <div className={injuryStatCard}>
+                    <div className={injurySubtle}>{isAr ? 'مراحل التمارين' : 'Exercise phases'}</div>
+                    <div className="mt-2 text-3xl font-black text-slate-900 dark:text-white">{phasesWithExercises}</div>
+                    <div className="mt-2 text-sm text-slate-500 dark:text-slate-400">
                       {isAr ? 'مراحل فيها وصف حركي عملي' : 'Phases with actionable exercise plans'}
                     </div>
                   </div>
-                  <div className="rounded-[1.5rem] border border-slate-200 bg-white/90 p-4 shadow-sm">
-                    <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">{isAr ? 'مراحل التغذية' : 'Nutrition phases'}</div>
-                    <div className="mt-2 text-3xl font-black text-slate-900">{phasesWithNutrition}</div>
-                    <div className="mt-2 text-sm text-slate-500">
+                  <div className={injuryStatCard}>
+                    <div className={injurySubtle}>{isAr ? 'مراحل التغذية' : 'Nutrition phases'}</div>
+                    <div className="mt-2 text-3xl font-black text-slate-900 dark:text-white">{phasesWithNutrition}</div>
+                    <div className="mt-2 text-sm text-slate-500 dark:text-slate-400">
                       {isAr ? 'مراحل فيها دعم غذائي أو مكملات' : 'Phases with nutrition or supplement guidance'}
                     </div>
                   </div>
@@ -396,8 +407,8 @@ export default function InjuryDetailPage() {
                 </div>
 
                 {redFlags.length > 0 ? (
-                  <div className="rounded-[1.6rem] border border-amber-200 bg-amber-50 p-5 shadow-sm">
-                    <div className="mb-3 flex items-center gap-2 text-sm font-black text-amber-900">
+                  <div className="rounded-[1.6rem] border border-amber-200 bg-amber-50 p-5 shadow-sm dark:border-amber-500/40 dark:bg-amber-950/50">
+                    <div className="mb-3 flex items-center gap-2 text-sm font-black text-amber-900 dark:text-amber-200">
                       <AlertTriangle className="h-4 w-4" />
                       <span>{isAr ? 'علامات تستدعي الانتباه' : 'Watch-outs'}</span>
                     </div>
@@ -410,8 +421,8 @@ export default function InjuryDetailPage() {
 
           <section className="grid gap-6 xl:grid-cols-[0.32fr_0.68fr]">
             <aside className="space-y-4 xl:sticky xl:top-24 xl:self-start">
-              <div className="rounded-[1.8rem] border border-slate-200 bg-slate-50 p-4 shadow-sm">
-                <div className="mb-3 text-sm font-black text-slate-900">{isAr ? 'مراحل التعافي' : 'Recovery phases'}</div>
+              <div className={`${injuryPanel} p-4`}>
+                <div className={`mb-3 ${injuryHeading}`}>{isAr ? 'مراحل التعافي' : 'Recovery phases'}</div>
                 <div className="space-y-3">
                   {phases.map((phase, index) => (
                     <PhaseSummaryCard
@@ -426,10 +437,10 @@ export default function InjuryDetailPage() {
                   <button
                     type="button"
                     onClick={() => setActiveTab(phases.length)}
-                    className={`w-full rounded-[1.5rem] border px-4 py-4 text-left transition ${
+                    className={`w-full rounded-[1.5rem] border px-4 py-4 text-start transition ${
                       isNutritionTab
                         ? 'border-amber-400 bg-amber-500 text-white shadow-lg shadow-amber-500/20'
-                        : 'border-slate-200 bg-white text-slate-800 hover:border-amber-300 hover:bg-amber-50'
+                        : 'border-slate-200 bg-white text-slate-800 hover:border-amber-300 hover:bg-amber-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-amber-950/40'
                     }`}
                   >
                     <div className={`text-xs font-bold uppercase tracking-[0.18em] ${isNutritionTab ? 'text-white/80' : 'text-slate-400'}`}>
@@ -441,8 +452,8 @@ export default function InjuryDetailPage() {
               </div>
 
               {(symptoms.length > 0 || rehabNotes.length > 0) && (
-                <div className="rounded-[1.8rem] border border-slate-200 bg-white p-5 shadow-sm">
-                  <div className="mb-4 text-sm font-black text-slate-900">{isAr ? 'لمحة سريعة' : 'Quick context'}</div>
+                <div className={injuryPanel}>
+                  <div className={`mb-4 ${injuryHeading}`}>{isAr ? 'لمحة سريعة' : 'Quick context'}</div>
                   {symptoms.length > 0 ? (
                     <div className="mb-5">
                       <div className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-400">{isAr ? 'الأعراض' : 'Symptoms'}</div>
@@ -462,36 +473,36 @@ export default function InjuryDetailPage() {
             <div className="space-y-6">
               {currentPhase ? (
                 <>
-                  <section className="rounded-[1.9rem] border border-slate-200 bg-white p-6 shadow-sm">
+                  <section className={injuryPanel}>
                     <div className="flex flex-wrap items-center justify-between gap-4">
                       <div>
                         <div className="text-xs font-bold uppercase tracking-[0.18em] text-slate-400">
                           {isAr ? `المرحلة ${activeTab + 1}` : `Phase ${activeTab + 1}`}
                         </div>
-                        <h2 className="mt-2 text-2xl font-black text-slate-900">{normalizeCopy(currentPhase.label)}</h2>
+                        <h2 className="mt-2 text-2xl font-black text-slate-900 dark:text-white">{normalizeCopy(currentPhase.label)}</h2>
                       </div>
-                      <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-700">
+                      <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-200">
                         <Clock3 className="h-4 w-4 text-health-green" />
                         <span>{normalizeCopy(currentPhase.duration)}</span>
                       </div>
                     </div>
 
                     {currentPhase.focus ? (
-                      <div className="mt-5 rounded-[1.5rem] border border-health-green/15 bg-health-green/5 p-4 text-sm leading-7 text-slate-700">
+                      <div className="mt-5 rounded-[1.5rem] border border-health-green/15 bg-health-green/5 p-4 text-sm leading-7 text-slate-700 dark:border-health-green/30 dark:bg-health-green/10 dark:text-slate-200">
                         {normalizeCopy(currentPhase.focus)}
                       </div>
                     ) : null}
 
                     <div className="mt-6 grid gap-4 md:grid-cols-3">
-                      <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4">
-                        <div className="mb-3 flex items-center gap-2 text-sm font-black text-slate-900">
+                      <div className={injuryPanelMuted}>
+                        <div className="mb-3 flex items-center gap-2 text-sm font-black text-slate-900 dark:text-white">
                           <CheckCircle2 className="h-4 w-4 text-emerald-500" />
                           <span>{isAr ? 'الأهداف' : 'Goals'}</span>
                         </div>
                         {renderBulletList(currentPhase.goals.map(normalizeCopy), 'success')}
                       </div>
-                      <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4">
-                        <div className="mb-3 flex items-center gap-2 text-sm font-black text-slate-900">
+                      <div className={injuryPanelMuted}>
+                        <div className="mb-3 flex items-center gap-2 text-sm font-black text-slate-900 dark:text-white">
                           <AlertTriangle className="h-4 w-4 text-amber-500" />
                           <span>{isAr ? 'المحاذير' : 'Precautions'}</span>
                         </div>
@@ -500,8 +511,8 @@ export default function InjuryDetailPage() {
                           'warning',
                         )}
                       </div>
-                      <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4">
-                        <div className="mb-3 flex items-center gap-2 text-sm font-black text-slate-900">
+                      <div className={injuryPanelMuted}>
+                        <div className="mb-3 flex items-center gap-2 text-sm font-black text-slate-900 dark:text-white">
                           <Activity className="h-4 w-4 text-health-green" />
                           <span>{isAr ? 'الانتقال للمرحلة التالية' : 'Progression markers'}</span>
                         </div>
@@ -515,36 +526,36 @@ export default function InjuryDetailPage() {
                     </div>
                   </section>
 
-                  <section className="rounded-[1.9rem] border border-slate-200 bg-white p-6 shadow-sm">
-                    <div className="mb-4 flex items-center gap-2 text-sm font-black text-slate-900">
+                  <section className={injuryPanel}>
+                    <div className="mb-4 flex items-center gap-2 text-sm font-black text-slate-900 dark:text-white">
                       <Sparkles className="h-4 w-4 text-health-green" />
                       <span>{isAr ? 'التمارين العلاجية' : 'Therapeutic exercises'}</span>
                     </div>
                     {currentPhase.exercisePlans?.length ? (
                       <div className="grid gap-4">
                         {currentPhase.exercisePlans.map((plan, idx) => (
-                          <div key={`${plan.label}-${idx}`} className="rounded-[1.6rem] border border-slate-200 bg-slate-50 p-5">
+                          <div key={`${plan.label}-${idx}`} className={injuryPanelInset}>
                             <div className="flex flex-wrap items-start justify-between gap-3">
                               <div>
-                                <div className="text-lg font-black text-slate-900">{normalizeCopy(plan.label)}</div>
+                                <div className="text-lg font-black text-slate-900 dark:text-white">{normalizeCopy(plan.label)}</div>
                                 <div className="mt-2 flex flex-wrap gap-2">
                                   {plan.sets ? (
-                                    <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-slate-700 ring-1 ring-slate-200">
+                                    <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-slate-700 ring-1 ring-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:ring-slate-700">
                                       {isAr ? 'الجرعة' : 'Dose'}: {normalizeCopy(plan.sets)}
                                     </span>
                                   ) : null}
                                   {plan.reps ? (
-                                    <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-slate-700 ring-1 ring-slate-200">
+                                    <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-slate-700 ring-1 ring-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:ring-slate-700">
                                       {isAr ? 'العدّات' : 'Reps'}: {normalizeCopy(plan.reps)}
                                     </span>
                                   ) : null}
                                   {plan.rest ? (
-                                    <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-slate-700 ring-1 ring-slate-200">
+                                    <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-slate-700 ring-1 ring-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:ring-slate-700">
                                       {isAr ? 'الراحة' : 'Rest'}: {normalizeCopy(plan.rest)}
                                     </span>
                                   ) : null}
                                   {plan.equipment ? (
-                                    <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-slate-700 ring-1 ring-slate-200">
+                                    <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-slate-700 ring-1 ring-slate-200 dark:bg-slate-900 dark:text-slate-200 dark:ring-slate-700">
                                       {isAr ? 'الأداة' : 'Equipment'}: {normalizeCopy(plan.equipment)}
                                     </span>
                                   ) : null}
@@ -571,8 +582,8 @@ export default function InjuryDetailPage() {
                   </section>
 
                   <section className="grid gap-6 lg:grid-cols-2">
-                    <div className="rounded-[1.9rem] border border-slate-200 bg-white p-6 shadow-sm">
-                      <div className="mb-4 text-sm font-black text-slate-900">{isAr ? 'تغذية هذه المرحلة' : 'Phase nutrition'}</div>
+                    <div className={injuryPanel}>
+                      <div className="mb-4 text-sm font-black text-slate-900 dark:text-white">{isAr ? 'تغذية هذه المرحلة' : 'Phase nutrition'}</div>
                       {currentPhase.nutritionFocus?.length ? (
                         <div className="mb-5">
                           <div className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-400">{isAr ? 'نقاط التركيز' : 'Focus points'}</div>
@@ -593,22 +604,22 @@ export default function InjuryDetailPage() {
                       ) : null}
                     </div>
 
-                    <div className="rounded-[1.9rem] border border-slate-200 bg-white p-6 shadow-sm">
-                      <div className="mb-4 text-sm font-black text-slate-900">{isAr ? 'الوجبات والمكملات' : 'Meals and supplements'}</div>
+                    <div className={injuryPanel}>
+                      <div className="mb-4 text-sm font-black text-slate-900 dark:text-white">{isAr ? 'الوجبات والمكملات' : 'Meals and supplements'}</div>
                       <div className="grid gap-3">
                         {currentPhase.meals.breakfast ? (
-                          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm leading-7 text-slate-700">
-                            <span className="font-bold text-slate-900">{isAr ? 'فطور:' : 'Breakfast:'}</span> {normalizeCopy(currentPhase.meals.breakfast)}
+                          <div className={`${injuryPanelMuted} text-sm leading-7 text-slate-700 dark:text-slate-200`}>
+                            <span className="font-bold text-slate-900 dark:text-white">{isAr ? 'فطور:' : 'Breakfast:'}</span> {normalizeCopy(currentPhase.meals.breakfast)}
                           </div>
                         ) : null}
                         {currentPhase.meals.lunch ? (
-                          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm leading-7 text-slate-700">
-                            <span className="font-bold text-slate-900">{isAr ? 'غداء:' : 'Lunch:'}</span> {normalizeCopy(currentPhase.meals.lunch)}
+                          <div className={`${injuryPanelMuted} text-sm leading-7 text-slate-700 dark:text-slate-200`}>
+                            <span className="font-bold text-slate-900 dark:text-white">{isAr ? 'غداء:' : 'Lunch:'}</span> {normalizeCopy(currentPhase.meals.lunch)}
                           </div>
                         ) : null}
                         {currentPhase.meals.dinner ? (
-                          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm leading-7 text-slate-700">
-                            <span className="font-bold text-slate-900">{isAr ? 'عشاء:' : 'Dinner:'}</span> {normalizeCopy(currentPhase.meals.dinner)}
+                          <div className={`${injuryPanelMuted} text-sm leading-7 text-slate-700 dark:text-slate-200`}>
+                            <span className="font-bold text-slate-900 dark:text-white">{isAr ? 'عشاء:' : 'Dinner:'}</span> {normalizeCopy(currentPhase.meals.dinner)}
                           </div>
                         ) : null}
                       </div>
@@ -618,8 +629,8 @@ export default function InjuryDetailPage() {
                           <div className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-400">{isAr ? 'مكملات داعمة' : 'Supportive supplements'}</div>
                           <div className="space-y-3">
                             {currentPhase.supplements.map((item) => (
-                              <div key={`${item.name}-${item.dose}`} className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                                <div className="font-bold text-slate-900">{normalizeCopy(item.name)}</div>
+                              <div key={`${item.name}-${item.dose}`} className={injuryPanelMuted}>
+                                <div className="font-bold text-slate-900 dark:text-white">{normalizeCopy(item.name)}</div>
                                 <div className="mt-1 text-sm text-slate-600">{normalizeCopy(item.dose)}</div>
                                 <div className="mt-2 text-sm leading-7 text-slate-700">{normalizeCopy(item.reason)}</div>
                               </div>
@@ -632,29 +643,29 @@ export default function InjuryDetailPage() {
                 </>
               ) : (
                 <section className="grid gap-6 lg:grid-cols-2">
-                  <div className="rounded-[1.9rem] border border-slate-200 bg-white p-6 shadow-sm">
-                    <div className="mb-4 flex items-center gap-2 text-sm font-black text-slate-900">
+                  <div className={injuryPanel}>
+                    <div className="mb-4 flex items-center gap-2 text-sm font-black text-slate-900 dark:text-white">
                       <Pill className="h-4 w-4 text-health-green" />
                       <span>{isAr ? 'ملاحظات التغذية' : 'Nutrition notes'}</span>
                     </div>
                     {injury.pageContent?.nutritionNotes?.length ? (
                       renderBulletList(injury.pageContent.nutritionNotes.map(normalizeCopy), 'accent')
                     ) : (
-                      <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
+                      <div className={`${injuryPanelMuted} text-sm text-slate-600 dark:text-slate-300`}>
                         {isAr ? 'حافظ على نظام غذائي متوازن وغني بالبروتين لدعم الاستشفاء.' : 'Maintain a balanced, protein-rich diet to support recovery.'}
                       </div>
                     )}
                   </div>
 
-                  <div className="rounded-[1.9rem] border border-slate-200 bg-white p-6 shadow-sm">
-                    <div className="mb-4 flex items-center gap-2 text-sm font-black text-slate-900">
+                  <div className={injuryPanel}>
+                    <div className="mb-4 flex items-center gap-2 text-sm font-black text-slate-900 dark:text-white">
                       <ShieldAlert className="h-4 w-4 text-health-green" />
                       <span>{isAr ? 'السلامة الدوائية والمكملات' : 'Supplement safety'}</span>
                     </div>
                     {medicationNotes.length > 0 ? (
                       renderBulletList(medicationNotes, 'warning')
                     ) : (
-                      <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
+                      <div className={`${injuryPanelMuted} text-sm text-slate-600 dark:text-slate-300`}>
                         {isAr ? 'لا توجد ملاحظات خاصة مسجلة لهذه الإصابة.' : 'No specific safety notes are recorded for this injury.'}
                       </div>
                     )}
@@ -670,29 +681,29 @@ export default function InjuryDetailPage() {
                 </section>
               )}
 
-              <section className="rounded-[1.9rem] border border-slate-200 bg-white p-6 shadow-sm">
-                <div className="mb-4 text-sm font-black text-slate-900">{isAr ? 'أسئلة شائعة' : 'FAQ'}</div>
+              <section className={injuryPanel}>
+                <div className="mb-4 text-sm font-black text-slate-900 dark:text-white">{isAr ? 'أسئلة شائعة' : 'FAQ'}</div>
                 <div className="grid gap-3 md:grid-cols-2">
                   {faqItems.map((item) => (
                     <div key={item.q} className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5">
-                      <div className="font-bold text-slate-900">{normalizeCopy(item.q)}</div>
-                      <p className="mt-2 text-sm leading-7 text-slate-700">{normalizeCopy(item.a)}</p>
+                      <div className="font-bold text-slate-900 dark:text-white">{normalizeCopy(item.q)}</div>
+                      <p className="mt-2 text-sm leading-7 text-slate-700 dark:text-slate-300">{normalizeCopy(item.a)}</p>
                     </div>
                   ))}
                 </div>
               </section>
 
               {relatedExerciseLinks.length > 0 && (
-                <section className="rounded-[1.9rem] border border-slate-200 bg-white p-6 shadow-sm">
-                  <div className="mb-4 text-sm font-black text-slate-900">{isAr ? 'تمارين مرتبطة' : 'Related exercises'}</div>
+                <section className={injuryPanel}>
+                  <div className="mb-4 text-sm font-black text-slate-900 dark:text-white">{isAr ? 'تمارين مرتبطة' : 'Related exercises'}</div>
                   <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                     {relatedExerciseLinks.map((item) => (
                       <Link
                         key={item.slug}
                         to={item.href}
-                        className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5 transition hover:border-health-green/30 hover:bg-health-green/5"
+                        className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5 transition hover:border-health-green/30 hover:bg-health-green/5 dark:border-slate-700 dark:bg-slate-950 dark:hover:bg-health-green/10"
                       >
-                        <div className="text-lg font-black text-slate-900">{item.label}</div>
+                        <div className="text-lg font-black text-slate-900 dark:text-white">{item.label}</div>
                         <div className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-health-green">
                           {isAr ? 'افتح القسم' : 'Open section'}
                           <ArrowRight className={`h-4 w-4 ${isAr ? 'rotate-180' : ''}`} />
@@ -704,16 +715,16 @@ export default function InjuryDetailPage() {
               )}
 
               {relatedRehabLinks.length > 0 && (
-                <section className="rounded-[1.9rem] border border-slate-200 bg-white p-6 shadow-sm">
-                  <div className="mb-4 text-sm font-black text-slate-900">{isAr ? 'صفحات تأهيل مرتبطة' : 'Related rehab pages'}</div>
+                <section className={injuryPanel}>
+                  <div className="mb-4 text-sm font-black text-slate-900 dark:text-white">{isAr ? 'صفحات تأهيل مرتبطة' : 'Related rehab pages'}</div>
                   <div className="grid gap-4 md:grid-cols-2">
                     {relatedRehabLinks.map((item) => (
                       <Link
                         key={item.slug}
                         to={item.href}
-                        className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5 transition hover:border-health-green/30 hover:bg-health-green/5"
+                        className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5 transition hover:border-health-green/30 hover:bg-health-green/5 dark:border-slate-700 dark:bg-slate-950 dark:hover:bg-health-green/10"
                       >
-                        <div className="text-lg font-black text-slate-900">{item.label}</div>
+                        <div className="text-lg font-black text-slate-900 dark:text-white">{item.label}</div>
                         <div className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-health-green">
                           {isAr ? 'افتح الصفحة' : 'Open page'}
                           <ArrowRight className={`h-4 w-4 ${isAr ? 'rotate-180' : ''}`} />
@@ -725,18 +736,18 @@ export default function InjuryDetailPage() {
               )}
 
               {relatedInjuries.length > 0 && (
-                <section className="rounded-[1.9rem] border border-slate-200 bg-white p-6 shadow-sm">
-                  <div className="mb-4 text-sm font-black text-slate-900">{isAr ? 'إصابات مشابهة' : 'Related injury pages'}</div>
+                <section className={injuryPanel}>
+                  <div className="mb-4 text-sm font-black text-slate-900 dark:text-white">{isAr ? 'إصابات مشابهة' : 'Related injury pages'}</div>
                   <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
                     {relatedInjuries.map((item) => (
                       <Link
                         key={item.id}
                         to={buildPath(item.id, lang)}
-                        className="flex items-center justify-between rounded-[1.5rem] border border-slate-200 bg-slate-50 px-4 py-4 transition hover:border-health-green/30 hover:bg-health-green/5"
+                        className="flex items-center justify-between rounded-[1.5rem] border border-slate-200 bg-slate-50 px-4 py-4 transition hover:border-health-green/30 hover:bg-health-green/5 dark:border-slate-700 dark:bg-slate-950 dark:hover:bg-health-green/10"
                       >
                         <div>
-                          <div className="font-bold text-slate-900">{getLocalizedInjuryName(item.id, item.name, lang)}</div>
-                          <div className="mt-1 text-xs text-slate-500">{item.category} • {item.bodyRegion}</div>
+                          <div className="font-bold text-slate-900 dark:text-white">{item.name}</div>
+                          <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">{item.category} • {item.bodyRegion}</div>
                         </div>
                         <ArrowRight className={`h-4 w-4 text-slate-400 ${isAr ? 'rotate-180' : ''}`} />
                       </Link>

@@ -1,4 +1,4 @@
-import {startTransition, useDeferredValue, useEffect, useMemo, useState} from 'react';
+﻿import {startTransition, useDeferredValue, useEffect, useMemo, useState} from 'react';
 import {
   ArrowRight,
   ClipboardList,
@@ -12,8 +12,9 @@ import {
 import {Link} from 'react-router-dom';
 import Seo from '../components/seo/Seo';
 import {getCatalogInjuries, type InjuryCatalogEntry} from '../services/injuryService';
-import {decodeMojibake} from '../services/textEncoding';
+import {injuryUiStrings} from '../services/injuryI18n/uiStrings';
 import {buildHreflangs, navigationPaths} from '../utils/langUrlHelper';
+import {injuryBody, injuryHeroShell, injuryInput, injuryPanel} from './injuryPageStyles';
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
 
@@ -26,7 +27,7 @@ type InsightCard = {
 export default function InjuryProtocolsPage() {
   const lang = usePreferredLang();
   const isAr = lang === 'ar';
-  const ar = (text: string) => decodeMojibake(text);
+  const lib = injuryUiStrings[lang].library;
   const [injuries, setInjuries] = useState<InjuryCatalogEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [category, setCategory] = useState('');
@@ -84,25 +85,25 @@ export default function InjuryProtocolsPage() {
 
   const insights: InsightCard[] = [
     {
-      label: isAr ? ar('Ø¥Ø¬Ù…Ø§Ù„ÙŠ Ø§Ù„Ø¨Ø±ÙˆØªÙˆÙƒÙˆÙ„Ø§Øª') : 'Protocol count',
+      label: isAr ? lib.protocolCount : 'Protocol count',
       value: injuries.length,
-      note: isAr ? ar('Ø§Ù„Ù…ÙƒØªØ¨Ø© Ø§Ù„Ù…Ø¹ØªÙ…Ø¯Ø© ÙÙ‚Ø·') : 'Curated source-of-truth set',
+      note: isAr ? lib.curatedNote : 'Curated source-of-truth set',
     },
     {
-      label: isAr ? ar('Ø§Ù„ÙØ¦Ø§Øª Ø§Ù„Ø±Ø¦ÙŠØ³ÙŠØ©') : 'Top categories',
+      label: isAr ? lib.topCategories : 'Top categories',
       value: categories.length,
-      note: isAr ? ar('ØªÙ‚Ø³ÙŠÙ… Ø£Ø³Ø±Ø¹ Ù„Ù„ØªØµÙØ­') : 'Fast entry points for browsing',
+      note: isAr ? lib.fastBrowse : 'Fast entry points for browsing',
     },
     {
-      label: isAr ? ar('Ù…Ù†Ø§Ø·Ù‚ Ø§Ù„Ø¬Ø³Ù…') : 'Body regions',
+      label: isAr ? lib.bodyRegions : 'Body regions',
       value: bodyRegions.length,
-      note: isAr ? ar('ØªÙ†Ù‚Ù„ Ø­Ø³Ø¨ Ø§Ù„Ù…Ù†Ø·Ù‚Ø©') : 'Body-region based navigation',
+      note: isAr ? lib.regionNav : 'Body-region based navigation',
     },
   ];
 
-  const title = isAr ? ar('Ù…ÙƒØªØ¨Ø© Ø¨Ø±ÙˆØªÙˆÙƒÙˆÙ„Ø§Øª Ø§Ù„Ø¥ØµØ§Ø¨Ø§Øª') : 'Injury Protocol Library';
+  const title = isAr ? lib.title : 'Injury Protocol Library';
   const description = isAr
-    ? ar('ÙˆØ§Ø¬Ù‡Ø© Ù…Ø±ØªØ¨Ø© Ù„Ù„Ù…Ø¦Ø© Ø¨Ø±ÙˆØªÙˆÙƒÙˆÙ„ Ø§Ù„Ø£Ø³Ø§Ø³ÙŠØ© ÙÙ‚Ø·ØŒ Ù…Ø¹ ØªØµÙØ­ Ø£Ø³Ø±Ø¹ Ø­Ø³Ø¨ Ø§Ù„Ù…Ù†Ø·Ù‚Ø© ÙˆØ§Ù„ÙØ¦Ø© ÙˆØ§Ù„Ù…Ø±Ø­Ù„Ø© Ø§Ù„Ø¹Ù„Ø§Ø¬ÙŠØ©.')
+    ? lib.description
     : 'A sharper interface for the curated 100 injury protocols only, with faster browsing by region, category, and rehab focus.';
 
   const structuredData = [
@@ -140,19 +141,19 @@ export default function InjuryProtocolsPage() {
         hreflangs={buildHreflangs('/injuries')}
         structuredData={structuredData}
       />
-      <PageLayout title={title}>
-        <div className="space-y-8 not-prose">
-          <section className="overflow-hidden rounded-[2.25rem] border border-slate-200 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.2),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(15,23,42,0.08),transparent_38%),linear-gradient(145deg,#ffffff,#f5f7fb)] p-6 shadow-sm dark:border-slate-800 dark:bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.18),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(148,163,184,0.12),transparent_40%),linear-gradient(145deg,#0f172a,#111827)] sm:p-8">
+      <PageLayout title={title} hideTitle wide flat>
+        <div className="space-y-8">
+          <section className={injuryHeroShell}>
             <div className="grid gap-8 xl:grid-cols-[1.12fr_0.88fr]">
               <div className="space-y-6">
                 <div className="inline-flex items-center gap-2 rounded-full border border-health-green/20 bg-white/80 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-health-green shadow-sm dark:bg-slate-900/80">
                   <ClipboardList className="h-3.5 w-3.5" />
-                  <span>{isAr ? ar('Ø§Ù„Ù…ÙƒØªØ¨Ø© Ø§Ù„Ø£Ø³Ø§Ø³ÙŠØ© Ø§Ù„Ù…Ø¹ØªÙ…Ø¯Ø©') : 'Curated protocol source'}</span>
+                  <span>{isAr ? lib.curatedSource : 'Curated protocol source'}</span>
                 </div>
 
                 <div className="max-w-3xl">
                   <h2 className="text-3xl font-black tracking-tight text-slate-950 dark:text-white sm:text-5xl">
-                    {isAr ? ar('Ø§Ù„Ù…Ø¦Ø© Ø¨Ø±ÙˆØªÙˆÙƒÙˆÙ„ Ø§Ù„Ù…Ø±ØªØ¨ÙŠÙ† ÙÙŠ ÙˆØ§Ø¬Ù‡Ø© Ø£ÙˆØ¶Ø­ ÙˆØ£Ø³Ø±Ø¹') : 'The ordered 100 protocols in a cleaner, faster clinical library'}
+                    {isAr ? lib.heroTitle : 'The ordered 100 protocols in a cleaner, faster clinical library'}
                   </h2>
                   <p className="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-300 sm:text-base">{description}</p>
                 </div>
@@ -162,7 +163,7 @@ export default function InjuryProtocolsPage() {
                     to={featured[0] ? `/${lang}/injuries/${featured[0].slug}` : `/${lang}/injuries`}
                     className="inline-flex items-center gap-2 rounded-2xl bg-slate-950 px-5 py-3 text-sm font-bold text-white transition hover:bg-slate-800 dark:bg-health-green dark:hover:bg-health-green-dark"
                   >
-                    {isAr ? ar('Ø§ÙØªØ­ Ø£ÙˆÙ„ Ø¨Ø±ÙˆØªÙˆÙƒÙˆÙ„') : 'Open first protocol'}
+                    {isAr ? lib.openFirst : 'Open first protocol'}
                     <ArrowRight className={`h-4 w-4 ${isAr ? 'rotate-180' : ''}`} />
                   </Link>
                   <Link
@@ -170,14 +171,14 @@ export default function InjuryProtocolsPage() {
                     className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-700 transition hover:border-health-green/30 hover:bg-health-green/5 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
                   >
                     <Sparkles className="h-4 w-4 text-health-green" />
-                    {isAr ? ar('Ø§Ø³Ø£Ù„ Ø¹Ù† Ø®Ø·Ø© Ø§Ù„ØªØ¹Ø§ÙÙŠ') : 'Ask about recovery'}
+                    {isAr ? lib.askRecovery : 'Ask about recovery'}
                   </Link>
                 </div>
 
                 <div className="grid gap-3 sm:grid-cols-3">
                   {insights.map((item) => (
                     <div key={item.label} className="rounded-[1.45rem] border border-white/70 bg-white/80 p-3.5 shadow-sm backdrop-blur dark:border-slate-700 dark:bg-slate-900/85">
-                      <div className="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400 dark:text-slate-500">{item.label}</div>
+                      <div className="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">{item.label}</div>
                       <div className="mt-1.5 text-2xl font-black text-slate-950 dark:text-white">{item.value}</div>
                       <div className="mt-1.5 text-xs leading-6 text-slate-500 dark:text-slate-300">{item.note}</div>
                     </div>
@@ -203,7 +204,7 @@ export default function InjuryProtocolsPage() {
                       {injury.overview}
                     </p>
                     <div className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-health-green">
-                      {isAr ? ar('Ø§ÙØªØ­ Ø§Ù„ØªÙØ§ØµÙŠÙ„') : 'Open details'}
+                      {isAr ? lib.openDetails : 'Open details'}
                       <ArrowRight className={`h-4 w-4 transition group-hover:translate-x-0.5 ${isAr ? 'rotate-180 group-hover:-translate-x-0.5 group-hover:translate-y-0' : ''}`} />
                     </div>
                   </Link>
@@ -214,15 +215,17 @@ export default function InjuryProtocolsPage() {
 
           <section className="grid gap-6 xl:grid-cols-[0.34fr_0.66fr]">
             <div className="space-y-6 xl:sticky xl:top-24 xl:self-start">
-              <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <section className={injuryPanel}>
                 <div className="mb-4 flex items-center gap-2 text-sm font-black text-slate-900 dark:text-white">
                   <Search className="h-4 w-4 text-health-green" />
-                  <span>{isAr ? ar('Ø¨Ø­Ø« ÙˆØªØµÙÙŠØ©') : 'Search and filter'}</span>
+                  <span>{isAr ? lib.searchFilter : 'Search and filter'}</span>
                 </div>
 
                 <div className="space-y-4">
                   <div className="relative">
-                    <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                    <Search
+                      className={`pointer-events-none absolute top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-slate-500 ${isAr ? 'right-4' : 'left-4'}`}
+                    />
                     <input
                       value={query}
                       onChange={(e) =>
@@ -230,28 +233,28 @@ export default function InjuryProtocolsPage() {
                           setQuery(e.target.value);
                         })
                       }
-                      placeholder={isAr ? ar('Ø§Ø¨Ø­Ø« Ø¨Ø§Ø³Ù… Ø§Ù„Ø¥ØµØ§Ø¨Ø© Ø£Ùˆ Ø§Ù„Ø¨Ø±ÙˆØªÙˆÙƒÙˆÙ„') : 'Search by injury or protocol name'}
-                      className="w-full rounded-2xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 outline-none transition focus:border-health-green focus:bg-white focus:ring-2 focus:ring-health-green/20 dark:border-slate-700 dark:bg-slate-950 dark:text-white"
+                      placeholder={isAr ? lib.searchPlaceholder : 'Search by injury or protocol name'}
+                      className={`${injuryInput} ${isAr ? 'pr-11 pl-4' : 'pl-11 pr-4'}`}
                     />
                   </div>
 
                   <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-950">
                     <div className="mb-3 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-500">
                       <SlidersHorizontal className="h-3.5 w-3.5" />
-                      <span>{isAr ? ar('Ù…Ù„Ø®Øµ Ø§Ù„Ù†ØªØ§Ø¦Ø¬ Ø§Ù„Ø­Ø§Ù„ÙŠØ©') : 'Current result snapshot'}</span>
+                      <span>{isAr ? lib.resultSnapshot : 'Current result snapshot'}</span>
                     </div>
                     <div className="grid gap-3 sm:grid-cols-3 xl:grid-cols-1">
                       <div>
                         <div className="text-2xl font-black text-slate-950 dark:text-white">{filtered.length}</div>
-                        <div className="text-sm text-slate-500 dark:text-slate-300">{isAr ? ar('Ù†ØªØ§Ø¦Ø¬ Ù…Ø·Ø§Ø¨Ù‚Ø©') : 'Matching protocols'}</div>
+                        <div className="text-sm text-slate-500 dark:text-slate-300">{isAr ? lib.matching : 'Matching protocols'}</div>
                       </div>
                       <div>
                         <div className="text-2xl font-black text-slate-950 dark:text-white">{categories.length}</div>
-                        <div className="text-sm text-slate-500 dark:text-slate-300">{isAr ? ar('ÙØ¦Ø§Øª Ù…ØªØ§Ø­Ø©') : 'Visible categories'}</div>
+                        <div className="text-sm text-slate-500 dark:text-slate-300">{isAr ? lib.visibleCategories : 'Visible categories'}</div>
                       </div>
                       <div>
                         <div className="text-2xl font-black text-slate-950 dark:text-white">{bodyRegions.length}</div>
-                        <div className="text-sm text-slate-500 dark:text-slate-300">{isAr ? ar('Ù…Ù†Ø§Ø·Ù‚ Ø¬Ø³Ù…') : 'Body regions'}</div>
+                        <div className="text-sm text-slate-500 dark:text-slate-300">{isAr ? lib.bodyRegions : 'Body regions'}</div>
                       </div>
                     </div>
                   </div>
@@ -267,16 +270,16 @@ export default function InjuryProtocolsPage() {
                       className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-bold text-slate-600 transition hover:border-health-green/30 hover:bg-health-green/5 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
                     >
                       <X className="h-3.5 w-3.5" />
-                      {isAr ? ar('Ù…Ø³Ø­ Ø§Ù„ÙÙ„Ø§ØªØ±') : 'Clear filters'}
+                      {isAr ? lib.clearFilters : 'Clear filters'}
                     </button>
                   ) : null}
                 </div>
               </section>
 
-              <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <section className={injuryPanel}>
                 <div className="mb-4 flex items-center gap-2 text-sm font-black text-slate-900 dark:text-white">
                   <Layers3 className="h-4 w-4 text-health-green" />
-                  <span>{isAr ? ar('Ø§Ù„ÙØ¦Ø§Øª Ø§Ù„Ø±Ø¦ÙŠØ³ÙŠØ©') : 'Primary categories'}</span>
+                  <span>{isAr ? lib.topCategories : 'Primary categories'}</span>
                 </div>
                 <div className="grid gap-3">
                   <button
@@ -288,9 +291,9 @@ export default function InjuryProtocolsPage() {
                         : 'border-slate-200 bg-slate-50 text-slate-800 hover:border-health-green/30 hover:bg-health-green/5 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100'
                     }`}
                   >
-                    <div className="font-bold">{isAr ? ar('ÙƒÙ„ Ø§Ù„ÙØ¦Ø§Øª') : 'All categories'}</div>
+                    <div className="font-bold">{isAr ? lib.allCategories : 'All categories'}</div>
                     <div className={`mt-2 text-sm ${!category ? 'text-white/70' : 'text-slate-500 dark:text-slate-300'}`}>
-                      {injuries.length} {isAr ? ar('Ø¨Ø±ÙˆØªÙˆÙƒÙˆÙ„') : 'protocols'}
+                      {injuries.length} {isAr ? lib.protocolsWord : 'protocols'}
                     </div>
                   </button>
 
@@ -316,10 +319,10 @@ export default function InjuryProtocolsPage() {
                 </div>
               </section>
 
-              <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <section className={injuryPanel}>
                 <div className="mb-4 flex items-center gap-2 text-sm font-black text-slate-900 dark:text-white">
                   <Timer className="h-4 w-4 text-health-green" />
-                  <span>{isAr ? ar('Ù…Ù†Ø§Ø·Ù‚ Ø§Ù„Ø¬Ø³Ù…') : 'Body regions'}</span>
+                  <span>{isAr ? lib.bodyRegions : 'Body regions'}</span>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <button
@@ -331,7 +334,7 @@ export default function InjuryProtocolsPage() {
                         : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-health-green/30 hover:bg-health-green/5 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100'
                     }`}
                   >
-                    {isAr ? ar('ÙƒÙ„ Ø§Ù„Ù…Ù†Ø§Ø·Ù‚') : 'All regions'}
+                    {isAr ? lib.allRegions : 'All regions'}
                   </button>
                   {bodyRegions.map((item) => (
                     <button
@@ -351,19 +354,19 @@ export default function InjuryProtocolsPage() {
               </section>
             </div>
 
-            <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <section className={injuryPanel}>
               <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
                 <div>
-                  <div className="text-sm font-black text-slate-900 dark:text-white">{isAr ? ar('Ù†ØªØ§Ø¦Ø¬ Ø§Ù„Ù…ÙƒØªØ¨Ø©') : 'Library results'}</div>
+                  <div className="text-sm font-black text-slate-900 dark:text-white">{isAr ? lib.libraryResults : 'Library results'}</div>
                   <p className="mt-1 text-sm text-slate-500 dark:text-slate-300">
                     {isAr
-                      ? `${ar('Ù…ØµØ¯Ø± Ø§Ù„Ø¹Ø±Ø¶ Ø§Ù„Ø­Ø§Ù„ÙŠ')}: ${loading ? ar('Ø¬Ø§Ø±ÙŠ Ø§Ù„ØªØ­Ù…ÙŠÙ„') : ar('Ø§Ù„Ù…ÙƒØªØ¨Ø© Ø§Ù„Ù…Ø±ØªØ¨Ø©')}`
+                      ? `${lib.currentView}: ${loading ? lib.loading : lib.curatedLibrary}`
                       : `Current display source: ${loading ? 'loading' : 'ordered protocol set'}`}
                   </p>
                 </div>
                 <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100">
                   <ClipboardList className="h-4 w-4 text-health-green" />
-                  <span>{filtered.length} {isAr ? ar('Ù†ØªÙŠØ¬Ø©') : 'results'}</span>
+                  <span>{filtered.length} {isAr ? lib.results : 'results'}</span>
                 </div>
               </div>
 
@@ -389,14 +392,14 @@ export default function InjuryProtocolsPage() {
 
               {filtered.length === 0 ? (
                 <div className="rounded-[1.75rem] border border-dashed border-slate-200 bg-slate-50 p-10 text-center dark:border-slate-700 dark:bg-slate-950">
-                  <div className="text-lg font-black text-slate-900 dark:text-white">{isAr ? ar('Ù„Ø§ ØªÙˆØ¬Ø¯ Ù†ØªØ§Ø¦Ø¬ Ù…Ø·Ø§Ø¨Ù‚Ø©') : 'No matching protocols'}</div>
+                  <div className="text-lg font-black text-slate-900 dark:text-white">{isAr ? lib.noResults : 'No matching protocols'}</div>
                   <p className="mx-auto mt-3 max-w-md text-sm leading-7 text-slate-500 dark:text-slate-300">
                     {loading
                       ? isAr
-                        ? ar('Ø¬Ø§Ø±ÙŠ ØªØ­Ù…ÙŠÙ„ Ø§Ù„Ø¨Ø±ÙˆØªÙˆÙƒÙˆÙ„Ø§Øª...')
+                        ? lib.loadingProtocols
                         : 'Loading protocols...'
                       : isAr
-                        ? ar('Ø¬Ø±Ù‘Ø¨ Ø¥Ø²Ø§Ù„Ø© Ø¨Ø¹Ø¶ Ø§Ù„ÙÙ„Ø§ØªØ± Ø£Ùˆ Ø§Ø³ØªØ®Ø¯Ø§Ù… Ø§Ø³Ù… Ø£Ù‚ØµØ± Ù„Ù„Ø¥ØµØ§Ø¨Ø©.')
+                        ? lib.tryFilters
                         : 'Try clearing one of the filters or using a shorter search phrase.'}
                   </p>
                 </div>
@@ -425,10 +428,10 @@ export default function InjuryProtocolsPage() {
 
                       <div className="mt-5 flex items-center justify-between gap-3">
                         <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400 dark:text-slate-500">
-                          {isAr ? ar('Ø¨Ø±ÙˆØªÙˆÙƒÙˆÙ„ ØªØ¹Ø§ÙÙ Ù…Ø±ØªØ¨') : 'Structured rehab protocol'}
+                          {isAr ? lib.structuredProtocol : 'Structured rehab protocol'}
                         </div>
                         <div className="inline-flex items-center gap-2 text-sm font-bold text-health-green">
-                          {isAr ? ar('Ø§ÙØªØ­') : 'Open'}
+                          {isAr ? lib.open : 'Open'}
                           <ArrowRight className={`h-4 w-4 transition group-hover:translate-x-0.5 ${isAr ? 'rotate-180 group-hover:-translate-x-0.5 group-hover:translate-y-0' : ''}`} />
                         </div>
                       </div>
@@ -443,3 +446,4 @@ export default function InjuryProtocolsPage() {
     </>
   );
 }
+

@@ -6,14 +6,8 @@ import {
   getRehabProtocolSlug,
   type RehabProtocolRow,
 } from './rehabProtocolSupabaseService';
-import {
-  getLocalizedBodyRegion,
-  getLocalizedCategory,
-  getLocalizedInjuryOverview,
-  getLocalizedInjuryName,
-} from './injuryLocalization';
+import {translateInjury} from './injuryI18n';
 import type {InjuryProtocol} from './injuryDatabase';
-import {decodeMojibakeDeep} from './textEncoding';
 import type {Language} from './translations';
 
 export type InjuryCatalogSource = 'supabase' | 'generated' | 'local';
@@ -35,24 +29,32 @@ let remoteInjuryRowsPromise: Promise<RehabProtocolRow[]> | null = null;
 
 function mapGeneratedInjury(row: RehabProtocolRow, lang: Language, source: InjuryCatalogSource): InjuryCatalogEntry {
   const slug = getRehabProtocolSlug(row.name);
-  const localizedName = getLocalizedInjuryName(slug.replace(/-/g, '_'), row.name, lang) || row.name;
-  const category = row.category || 'General';
-  const bodyRegion = row.category || 'General';
-  const overview =
+  const regionEn = row.category || 'General';
+  const overviewEn =
     row.description ||
     `${row.name} rehab protocol with phased goals, precautions, and progression criteria.`;
 
-  return decodeMojibakeDeep({
+  const translated = translateInjury(
+    {
+      slugOrId: slug,
+      nameEn: row.name,
+      regionEn,
+      overviewEn,
+    },
+    lang,
+  );
+
+  return {
     id: slug.replace(/-/g, '_'),
     slug,
-    name: localizedName,
-    category: getLocalizedCategory(category, lang),
-    bodyRegion: getLocalizedBodyRegion(bodyRegion, lang),
-    overview: getLocalizedInjuryOverview(localizedName, category, bodyRegion, overview, lang),
+    name: translated.name,
+    category: translated.bodyRegion,
+    bodyRegion: translated.bodyRegion,
+    overview: translated.overview,
     commonIn: [],
     source,
     remoteRef: row,
-  });
+  };
 }
 
 export async function getRemoteInjuryRows(options?: {force?: boolean}) {
@@ -87,7 +89,7 @@ export async function getCatalogInjuries(
   const source = getLastRehabProtocolSource() === 'supabase' ? 'supabase' : 'generated';
 
   return {
-    injuries: rows.map((row) => mapGeneratedInjury(row, lang, source)).sort((left, right) => left.name.localeCompare(right.name)),
+    injuries: rows.map((row) => mapGeneratedInjury(row, lang, source)).sort((left, right) => left.name.localeCompare(right.name, lang)),
     source,
   };
 }
@@ -131,12 +133,12 @@ export async function getRelatedCatalogInjuriesByIds(
 
 function getGeneratedProtocolCatalog(lang: Language) {
   return remoteInjuryRowsCache
-    ? remoteInjuryRowsCache.map((row) => mapGeneratedInjury(row, lang, 'generated')).sort((left, right) => left.name.localeCompare(right.name))
+    ? remoteInjuryRowsCache.map((row) => mapGeneratedInjury(row, lang, 'generated')).sort((left, right) => left.name.localeCompare(right.name, lang))
     : getGeneratedRowsSnapshot(lang);
 }
 
 function getGeneratedRowsSnapshot(lang: Language) {
   return getGeneratedRehabProtocolRows()
     .map((row) => mapGeneratedInjury(row, lang, 'generated'))
-    .sort((left, right) => left.name.localeCompare(right.name));
+    .sort((left, right) => left.name.localeCompare(right.name, lang));
 }
