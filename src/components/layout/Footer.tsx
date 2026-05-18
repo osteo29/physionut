@@ -32,7 +32,7 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
 
             <div className="flex flex-wrap gap-3">
               <a
-                href="https://www.facebook.com/Physionutrition.official/"
+                href="https://www.facebook.com/share/1E1dS4G8Kn/"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-semibold text-slate-200 transition-colors hover:text-health-green"
