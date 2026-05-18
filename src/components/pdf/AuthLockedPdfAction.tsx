@@ -60,8 +60,8 @@ export default function AuthLockedPdfAction({
             </h3>
             <p className="mt-3 text-sm leading-7 text-slate-600">
               {isAr
-                ? 'أنشئ حسابًا في PhysioNutrition لتقرأ تقريرك الاحترافي وتحمله كملف PDF بتصميم أنيق، مع ملخص النتائج، الروابط، وملف يمكنك الرجوع له لاحقًا من أي جهاز.'
-                : 'Create an account in PhysioNutrition to open and download your polished PDF report with your results, links, and a reusable copy you can revisit later.'}
+                ? 'أنشئ حسابًا في Active Rehab لتقرأ تقريرك الاحترافي وتحمله كملف PDF بتصميم أنيق، مع ملخص النتائج، الروابط، وملف يمكنك الرجوع له لاحقًا من أي جهاز.'
+                : 'Create an account in Active Rehab to open and download your polished PDF report with your results, links, and a reusable copy you can revisit later.'}
             </p>
             <div className="mt-5 rounded-2xl bg-slate-50 p-4 text-sm leading-7 text-slate-700">
               {isAr

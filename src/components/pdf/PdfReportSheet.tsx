@@ -206,7 +206,7 @@ function SignatureArea({report}: {report: PdfReportData}) {
         {isAr ? `تم إنشاء هذا التقرير للمستخدم ${report.userName}` : `Generated for ${report.userName}`}
       </div>
       <div style={{fontSize: 13, color: MUTED, marginBottom: 18}}>
-        {isAr ? 'PhysioNutrition System - نسخة مخصصة للطباعة والمراجعة' : 'PhysioNutrition System - a personalized report for review and printing'}
+        {isAr ? 'Active Rehab System - نسخة مخصصة للطباعة والمراجعة' : 'Active Rehab System - a personalized report for review and printing'}
       </div>
       <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24}}>
         <div>

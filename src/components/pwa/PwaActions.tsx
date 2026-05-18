@@ -316,8 +316,8 @@ export default function PwaActions({lang}: {lang: Language}) {
 
         <p className="text-center text-xs leading-6 text-slate-500">
           {isAr
-            ? 'ثبّت PhysioNutrition على جهازك للوصول السريع، وفعّل الإشعارات استعدادًا للتذكيرات والمتابعة لاحقًا.'
-            : 'Install PhysioNutrition for faster access, and enable notifications so follow-up reminders are ready later.'}
+            ? 'ثبّت Active Rehab على جهازك للوصول السريع، وفعّل الإشعارات استعدادًا للتذكيرات والمتابعة لاحقًا.'
+            : 'Install Active Rehab for faster access, and enable notifications so follow-up reminders are ready later.'}
         </p>
 
         {installHint ? <p className="text-center text-xs leading-6 text-health-green-dark">{installHint}</p> : null}

@@ -14,7 +14,7 @@ export type PdfBranding = {
 };
 
 const SITE_URL = 'https://physionutrition.vercel.app';
-const SITE_NAME = 'PhysioNutrition';
+const SITE_NAME = 'Active Rehab';
 const EMAIL = 'physionutritionofficial@gmail.com';
 const SOCIAL_LINKS: BrandingLink[] = [
   {label: 'Facebook', url: 'https://www.facebook.com/Physionutrition.official/'},

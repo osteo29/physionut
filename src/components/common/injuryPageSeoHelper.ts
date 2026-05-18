@@ -33,8 +33,8 @@ export function generateInjuryPageSeo({injury, lang, phase}: InjuryPageSeoConfig
   const injuryName = lang === 'ar' ? getArabicInjuryName(injury.name) : injury.name;
 
   const title = phase
-    ? `${injuryName} - ${phase.label} (${lang === 'ar' ? ar('المرحلة') : 'Phase'}) | PhysioNutrition`
-    : `${injuryName} Recovery Guide | PhysioNutrition`;
+    ? `${injuryName} - ${phase.label} (${lang === 'ar' ? ar('المرحلة') : 'Phase'}) | Active Rehab`
+    : `${injuryName} Recovery Guide | Active Rehab`;
 
   const description = phase
     ? `Evidence-based ${phase.label.toLowerCase()} phase recovery plan for ${injuryName.toLowerCase()}. Nutrition, exercises, and rehab guidelines.`

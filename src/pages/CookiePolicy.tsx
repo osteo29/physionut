@@ -30,8 +30,8 @@ export default function CookiePolicy() {
         title={isAr ? 'سياسة الكوكيز' : 'Cookie Policy'}
         description={
           isAr
-            ? 'سياسة الكوكيز في PhysioNutrition الخاصة بالتفضيلات والموافقة والتحليلات والإعلانات.'
-            : 'PhysioNutrition cookie policy covering essential preferences, consent choices, analytics, and advertising cookies.'
+            ? 'سياسة الكوكيز في Active Rehab الخاصة بالتفضيلات والموافقة والتحليلات والإعلانات.'
+            : 'Active Rehab cookie policy covering essential preferences, consent choices, analytics, and advertising cookies.'
         }
         canonicalPath="/cookies"
         hreflangs={buildHreflangs('/cookies')}
@@ -39,7 +39,7 @@ export default function CookiePolicy() {
       <PageLayout title={isAr ? 'سياسة الكوكيز' : 'Cookie Policy'} relatedLinks={relatedLinks}>
         {isAr ? (
           <>
-            <p>الكوكيز هي ملفات صغيرة تُحفظ داخل المتصفح. يستخدم PhysioNutrition عددًا محدودًا من الكوكيز أو التخزين المحلي حتى يظل الموقع قابلًا للاستخدام ويتذكر تفضيلاتك.</p>
+            <p>الكوكيز هي ملفات صغيرة تُحفظ داخل المتصفح. يستخدم Active Rehab عددًا محدودًا من الكوكيز أو التخزين المحلي حتى يظل الموقع قابلًا للاستخدام ويتذكر تفضيلاتك.</p>
 
             <h2>التقنيات الأساسية</h2>
             <p>يتم استخدامها لتذكر إعدادات مثل اللغة والمظهر واختيارات الموافقة حتى يعمل الموقع بشكل ثابت.</p>
@@ -52,7 +52,7 @@ export default function CookiePolicy() {
           </>
         ) : (
           <>
-            <p>Cookies are small files stored in your browser. PhysioNutrition uses a limited set of cookies or local storage entries to keep the site functional and remember your preferences.</p>
+            <p>Cookies are small files stored in your browser. Active Rehab uses a limited set of cookies or local storage entries to keep the site functional and remember your preferences.</p>
 
             <h2>Essential technologies</h2>
             <p>These are used to remember settings such as language, theme, and consent choices so the site works consistently.</p>

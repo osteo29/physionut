@@ -1,5 +1,5 @@
 /**
- * Evidence-based medical articles for PhysioNutrition
+ * Evidence-based medical articles for Active Rehab
  * Topics: physical therapy, rehabilitation, and nutrition
  */
 
@@ -197,7 +197,7 @@ export const getArticles = (lang: Language): Article[] => {
 ## العلاقة بين الحركة والتغذية
 من السهل أن تكون ملتزمًا بالأكل أو السعرات، لكن إذا كانت الحركة نفسها ضعيفة أو غير فعالة، فقد يظل التقدم محدودًا.
 
-في PhysioNutrition الفكرة ببساطة:
+في Active Rehab الفكرة ببساطة:
 * التغذية = الوقود.
 * الحركة = طريقة استخدام الوقود.
 
@@ -264,7 +264,7 @@ export const getArticles = (lang: Language): Article[] => {
 هذا لا يعني الحرمان، بل يعني أن يأكل بشكل طبيعي لكن داخل حدود رقم مفهوم يمكن متابعته.
 
 ## الحل العملي
-بدل التخمين أو تقليل الأكل بعشوائية، ابدأ بالحساب. استخدم [حاسبات السعرات والماكروز](/calculators) في PhysioNutrition حتى تعرف:
+بدل التخمين أو تقليل الأكل بعشوائية، ابدأ بالحساب. استخدم [حاسبات السعرات والماكروز](/calculators) في Active Rehab حتى تعرف:
 * احتياجك اليومي التقريبي.
 * العجز المناسب لك.
 * توزيع البروتين والدهون والكربوهيدرات بشكل أقرب لوضعك.
@@ -814,7 +814,7 @@ Physical therapy may help you:
 ## Movement and nutrition work together
 Someone may be consistent with diet and calorie targets, but if movement quality is poor or strength deficits remain, progress may still feel limited.
 
-Within PhysioNutrition, the simple idea is:
+Within Active Rehab, the simple idea is:
 * nutrition is the fuel,
 * movement is how that fuel gets used.
 
@@ -879,7 +879,7 @@ If someone needs about 2500 calories per day, a practical starting range for fat
 That does not mean starvation. It means eating normally, but within a target that makes sense.
 
 ## The practical starting point
-Instead of guessing, calculate first. Use the [calorie and macro calculators](/calculators) in PhysioNutrition to estimate:
+Instead of guessing, calculate first. Use the [calorie and macro calculators](/calculators) in Active Rehab to estimate:
 * daily needs,
 * an appropriate deficit,
 * and a more useful protein, fat, and carbohydrate split.

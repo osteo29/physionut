@@ -25,7 +25,7 @@ const AboutSection = memo(({lang}: {lang: Language}) => {
           <div>
             <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-health-green/20 bg-health-green/10 px-4 py-1.5 text-sm font-bold text-health-green">
               <Info className="h-4 w-4" />
-              <span>{isAr ? 'عن PhysioNutrition' : 'About PhysioNutrition'}</span>
+              <span>{isAr ? 'عن Active Rehab' : 'About Active Rehab'}</span>
             </div>
 
             <h2 className="mb-8 text-4xl font-bold leading-tight tracking-tight text-slate-900 md:text-5xl">
@@ -38,8 +38,8 @@ const AboutSection = memo(({lang}: {lang: Language}) => {
             <div className="space-y-6 text-lg leading-relaxed text-slate-600">
               <p>
                 {isAr
-                  ? 'PhysioNutrition مبني ليخدم المصابين والتعافي والـ rehab بدل أن يكون موقع تغذية عام. الهدف هو تحويل الحسابات الأساسية إلى قرارات أوضح وأكثر فائدة داخل رحلة المستخدم.'
-                  : 'PhysioNutrition is being shaped for injury recovery, rehab, and physio-related nutrition rather than generic wellness. The goal is to turn core calculations into clearer, more useful decisions for real users.'}
+                  ? 'Active Rehab مبني ليخدم المصابين والتعافي والـ rehab بدل أن يكون موقع تغذية عام. الهدف هو تحويل الحسابات الأساسية إلى قرارات أوضح وأكثر فائدة داخل رحلة المستخدم.'
+                  : 'Active Rehab is being shaped for injury recovery, rehab, and physio-related nutrition rather than generic wellness. The goal is to turn core calculations into clearer, more useful decisions for real users.'}
               </p>
               <p>
                 {isAr

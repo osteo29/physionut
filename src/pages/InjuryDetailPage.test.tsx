@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 
 import {Suspense, type ReactNode} from 'react';
-import {render, screen, waitFor} from '@testing-library/react';
+import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import {MemoryRouter, Route, Routes} from 'react-router-dom';
 import {describe, expect, it, vi} from 'vitest';
 
@@ -52,6 +52,18 @@ vi.mock('../components/ai/DrugNutrientChecker', () => ({
   default: () => <div>checker</div>,
 }));
 
+vi.mock('../lib/supabase', () => ({
+  getCurrentUser: vi.fn(async () => null),
+  isSupabaseConfigured: true,
+  onSupabaseAuthChange: vi.fn(() => ({
+    data: {
+      subscription: {
+        unsubscribe: vi.fn(),
+      },
+    },
+  })),
+}));
+
 vi.mock('../services/injuryService', () => ({
   getCatalogInjuries: vi.fn(async () => ({injuries: []})),
   getInjuryProtocolBySlugWithFallback: vi.fn(async () => ({
@@ -89,6 +101,44 @@ vi.mock('../services/injuryService', () => ({
             shoppingList: [],
           },
         },
+        {
+          id: 'phase-2',
+          label: 'Phase 2',
+          duration: '2 weeks',
+          window: 'days_3_14',
+          goals: ['Restore motion'],
+          nutritionFocus: ['Protein'],
+          recommendedFoods: ['Yogurt'],
+          avoidFoods: ['Alcohol'],
+          supplements: [],
+          exercises: [],
+          prohibitedMovements: [],
+          meals: {
+            breakfast: 'Oats',
+            lunch: 'Rice',
+            dinner: 'Fish',
+            shoppingList: [],
+          },
+        },
+        {
+          id: 'phase-3',
+          label: 'Phase 3',
+          duration: '3 weeks',
+          window: 'weeks_2_6',
+          goals: ['Build strength'],
+          nutritionFocus: ['Creatine'],
+          recommendedFoods: ['Chicken'],
+          avoidFoods: ['Skipping meals'],
+          supplements: [],
+          exercises: [],
+          prohibitedMovements: [],
+          meals: {
+            breakfast: 'Eggs',
+            lunch: 'Potatoes',
+            dinner: 'Steak',
+            shoppingList: [],
+          },
+        },
       ],
     },
   })),
@@ -114,5 +164,27 @@ describe('InjuryDetailPage', () => {
 
     expect(screen.getByText('Overview text')).toBeInTheDocument();
     expect(screen.queryByText(/loading injury details/i)).not.toBeInTheDocument();
+  });
+
+  it('locks phases after the first two for signed-out users', async () => {
+    render(
+      <Suspense fallback={<div>loading</div>}>
+        <MemoryRouter initialEntries={['/en/injuries/test-injury']}>
+          <Routes>
+            <Route path="/:lang/injuries/:slug" element={<InjuryDetailPage />} />
+          </Routes>
+        </MemoryRouter>
+      </Suspense>,
+    );
+
+    await waitFor(() => {
+      expect(screen.getAllByText(/Test Injury/i).length).toBeGreaterThan(0);
+    });
+
+    fireEvent.click(screen.getAllByRole('button', {name: /phase 3/i})[0]);
+
+    expect(screen.getAllByText('Unlock the rest of this protocol').length).toBeGreaterThan(0);
+    expect(screen.getAllByRole('link', {name: /create account/i})[0]).toHaveAttribute('href', '/en/auth?mode=signup');
+    expect(screen.getAllByRole('link', {name: /sign in/i})[0]).toHaveAttribute('href', '/en/auth?mode=signin');
   });
 });

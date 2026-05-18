@@ -84,7 +84,7 @@ export default function PageLayout({
         <div className={`mx-auto ${maxWidth} px-4 sm:px-6 lg:px-8`}>
           <div className="flex h-16 items-center justify-between gap-4">
             <Link to={`/${lang}/`} className="shrink-0" onClick={() => setMobileOpen(false)}>
-              <BrandLogo title="PhysioNutrition" subtitle={isAr ? 'تعافي سريري' : 'Clinical Recovery'} />
+              <BrandLogo title="Active Rehab" subtitle={isAr ? 'تعافي سريري' : 'Clinical Recovery'} />
             </Link>
 
             <nav className="hidden items-center gap-0.5 lg:flex" aria-label={isAr ? 'التنقل الرئيسي' : 'Main navigation'}>

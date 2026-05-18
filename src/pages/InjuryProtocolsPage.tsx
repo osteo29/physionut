@@ -1,4 +1,4 @@
-﻿import {startTransition, useDeferredValue, useEffect, useMemo, useState} from 'react';
+import {startTransition, useDeferredValue, useEffect, useMemo, useState} from 'react';
 import {
   ArrowRight,
   ClipboardList,

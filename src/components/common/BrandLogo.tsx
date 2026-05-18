@@ -12,7 +12,7 @@ export default function BrandLogo({
   textTone = 'dark',
   className = '',
   imageClassName = '',
-  title = 'PhysioNutrition',
+  title = 'Active Rehab',
   subtitle = 'Clinical Recovery',
 }: BrandLogoProps) {
   const isLight = textTone === 'light';
@@ -23,7 +23,7 @@ export default function BrandLogo({
     <div className={`flex items-center gap-3 ${className}`.trim()}>
       <img
         src="/brand-logo.png"
-        alt="PhysioNutrition logo"
+        alt="Active Rehab logo"
         className={`h-11 w-11 rounded-full border border-slate-200/80 bg-white object-cover shadow-sm ${imageClassName}`.trim()}
       />
       {showText ? (

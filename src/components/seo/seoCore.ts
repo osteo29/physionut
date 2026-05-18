@@ -8,7 +8,7 @@ export type SeoConfig = {
   hreflangs?: Array<{lang: string; href: string}>; // [{ lang: 'en', href: '/en/...' }, { lang: 'ar', href: '/ar/...' }]
 };
 
-const DEFAULT_SITE_NAME = 'PhysioNutrition';
+const DEFAULT_SITE_NAME = 'Active Rehab';
 const SEO_JSON_LD_SELECTOR = 'script[type="application/ld+json"][data-seo-id]';
 const SEO_ALT_SELECTOR = 'link[rel="alternate"][hreflang]';
 
@@ -139,8 +139,8 @@ function getPageKeywords(canonicalPath: string, lang: string): string {
       : 'gym exercises, exercise finder, muscle workouts, training program, chest exercises, back exercises, leg exercises, shoulder exercises, arm exercises';
   }
   return isAr
-    ? 'PhysioNutrition، علاج طبيعي، تغذية علاجية، حاسبات صحية، تعافي'
-    : 'PhysioNutrition, physical therapy, clinical nutrition, health calculators, recovery';
+    ? 'Active Rehab، علاج طبيعي، تغذية علاجية، حاسبات صحية، تعافي'
+    : 'Active Rehab, physical therapy, clinical nutrition, health calculators, recovery';
 }
 
 function getOgType(canonicalPath: string): string {
@@ -180,7 +180,7 @@ export function applySeo(config: SeoConfig) {
 
   upsertMeta({property: 'og:type'}, getOgType(normalizedPath));
   if (getOgType(normalizedPath) === 'article') {
-    upsertMeta({property: 'article:author'}, 'PhysioNutrition');
+    upsertMeta({property: 'article:author'}, 'Active Rehab');
     upsertMeta({property: 'article:publisher'}, 'https://www.facebook.com/Physionutrition.official/');
   }
   upsertMeta({property: 'og:site_name'}, DEFAULT_SITE_NAME);

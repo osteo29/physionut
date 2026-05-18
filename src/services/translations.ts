@@ -1,5 +1,5 @@
 /**
- * Professional Medical Translations for PhysioNutrition
+ * Professional Medical Translations for Active Rehab
  * English (EN) & Arabic (AR)
  */
 
@@ -145,7 +145,7 @@ export const translations = {
       mealNote: "Total meal calories are the sum of all individual ingredients provided.",
     },
     architect: {
-      title: "PhysioNutrition Architect",
+      title: "Active Rehab Architect",
       subtitle: "Integrated Health & Recovery Dashboard",
       formTitle: "Health Profile",
       metricsTitle: "Your Health Metrics",
@@ -230,7 +230,7 @@ export const translations = {
     footer: {
       tagline: 'Developed by a Physical Therapy Student',
       disclaimerTitle: 'Medical Disclaimer',
-      disclaimerText: 'The information and tools provided on PhysioNutrition are for educational purposes only. Always seek professional medical advice.',
+      disclaimerText: 'The information and tools provided on Active Rehab are for educational purposes only. Always seek professional medical advice.',
       categories: {
         product: 'Product',
         company: 'Company',
@@ -486,7 +486,7 @@ export const translations = {
     footer: {
       tagline: 'تطوير طالب علاج طبيعي',
       disclaimerTitle: 'إخلاء مسؤولية طبي',
-      disclaimerText: 'المعلومات والأدوات المقدمة في PhysioNutrition هي لأغراض تعليمية فقط. اطلب دائماً المشورة الطبية المهنية.',
+      disclaimerText: 'المعلومات والأدوات المقدمة في Active Rehab هي لأغراض تعليمية فقط. اطلب دائماً المشورة الطبية المهنية.',
       categories: {
         product: 'المنتج',
         company: 'الشركة',

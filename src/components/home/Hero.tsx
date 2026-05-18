@@ -91,8 +91,8 @@ const Hero = memo(({lang}: {lang: Language}) => {
 
             <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-600 sm:text-base">
               {isAr
-                ? 'PhysioNutrition يجمع الحاسبات الغذائية وبروتوكولات الإصابات وأدوات المتابعة في بداية أبسط، حتى تعرف ما الذي تفتحه أولًا وما الخطوة التالية بعدها.'
-                : 'PhysioNutrition brings calculators, injury protocols, and tracking into a simpler starting point so the next step feels obvious.'}
+                ? 'Active Rehab يجمع الحاسبات الغذائية وبروتوكولات الإصابات وأدوات المتابعة في بداية أبسط، حتى تعرف ما الذي تفتحه أولًا وما الخطوة التالية بعدها.'
+                : 'Active Rehab brings calculators, injury protocols, and tracking into a simpler starting point so the next step feels obvious.'}
             </p>
 
             <div className="mt-5 flex flex-wrap gap-2">

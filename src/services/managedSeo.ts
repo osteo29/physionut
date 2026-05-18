@@ -54,12 +54,12 @@ const SEO_PAGE_DEFINITIONS: SeoPageDefinition[] = [
     variables: [],
     defaults: {
       en: {
-        title: 'PhysioNutrition | Clinical Calculators for Therapy & Nutrition',
+        title: 'Active Rehab | Clinical Calculators for Therapy & Nutrition',
         description:
           'Evidence-based clinical calculators for physical therapists, nutritionists, and fitness enthusiasts. BMI, BMR, TDEE, and more.',
       },
       ar: {
-        title: 'PhysioNutrition | حاسبات العلاج الطبيعي والتغذية العلاجية',
+        title: 'Active Rehab | حاسبات العلاج الطبيعي والتغذية العلاجية',
         description:
           'حاسبات ومحتوى عملي مبني على الأدلة لدعم العلاج الطبيعي والتغذية العلاجية والتعافي والمتابعة الصحية.',
       },
@@ -75,12 +75,12 @@ const SEO_PAGE_DEFINITIONS: SeoPageDefinition[] = [
       en: {
         title: 'Clinical Calculators',
         description:
-          'Open PhysioNutrition calculators for BMI, BMR, TDEE, protein, macros, hydration, and more in one place.',
+          'Open Active Rehab calculators for BMI, BMR, TDEE, protein, macros, hydration, and more in one place.',
       },
       ar: {
         title: 'الحاسبات الصحية',
         description:
-          'افتح حاسبات PhysioNutrition للصحة والتغذية في مكان واحد، من مؤشر كتلة الجسم إلى البروتين والسعرات والماء.',
+          'افتح حاسبات Active Rehab للصحة والتغذية في مكان واحد، من مؤشر كتلة الجسم إلى البروتين والسعرات والماء.',
       },
     },
   },
@@ -110,11 +110,11 @@ const SEO_PAGE_DEFINITIONS: SeoPageDefinition[] = [
     defaults: {
       en: {
         title: 'Privacy Policy',
-        description: 'Learn how PhysioNutrition handles data, privacy requests, and consent choices.',
+        description: 'Learn how Active Rehab handles data, privacy requests, and consent choices.',
       },
       ar: {
         title: 'سياسة الخصوصية',
-        description: 'تعرّف على طريقة تعامل PhysioNutrition مع البيانات والخصوصية وطلبات المستخدمين.',
+        description: 'تعرّف على طريقة تعامل Active Rehab مع البيانات والخصوصية وطلبات المستخدمين.',
       },
     },
   },
@@ -127,11 +127,11 @@ const SEO_PAGE_DEFINITIONS: SeoPageDefinition[] = [
     defaults: {
       en: {
         title: 'Terms of Service',
-        description: 'Review the usage terms that apply across PhysioNutrition.',
+        description: 'Review the usage terms that apply across Active Rehab.',
       },
       ar: {
         title: 'شروط الاستخدام',
-        description: 'راجع شروط استخدام منصة PhysioNutrition وما ينطبق على المحتوى والخدمات داخلها.',
+        description: 'راجع شروط استخدام منصة Active Rehab وما ينطبق على المحتوى والخدمات داخلها.',
       },
     },
   },
@@ -144,11 +144,11 @@ const SEO_PAGE_DEFINITIONS: SeoPageDefinition[] = [
     defaults: {
       en: {
         title: 'Cookie Policy',
-        description: 'Understand how cookies and browser storage are used across PhysioNutrition.',
+        description: 'Understand how cookies and browser storage are used across Active Rehab.',
       },
       ar: {
         title: 'سياسة الكوكيز',
-        description: 'اعرف كيف يستخدم PhysioNutrition ملفات الكوكيز وخيارات الحفظ والموافقة داخل المتصفح.',
+        description: 'اعرف كيف يستخدم Active Rehab ملفات الكوكيز وخيارات الحفظ والموافقة داخل المتصفح.',
       },
     },
   },
@@ -161,11 +161,11 @@ const SEO_PAGE_DEFINITIONS: SeoPageDefinition[] = [
     defaults: {
       en: {
         title: 'Medical Disclaimer',
-        description: 'Read the medical disclaimer that frames the educational content on PhysioNutrition.',
+        description: 'Read the medical disclaimer that frames the educational content on Active Rehab.',
       },
       ar: {
         title: 'إخلاء طبي',
-        description: 'راجع الإخلاء الطبي الذي يوضح حدود المحتوى التعليمي داخل PhysioNutrition.',
+        description: 'راجع الإخلاء الطبي الذي يوضح حدود المحتوى التعليمي داخل Active Rehab.',
       },
     },
   },
@@ -177,12 +177,12 @@ const SEO_PAGE_DEFINITIONS: SeoPageDefinition[] = [
     variables: [],
     defaults: {
       en: {
-        title: 'About PhysioNutrition',
-        description: 'See the mission, publishing approach, and direction behind PhysioNutrition.',
+        title: 'About Active Rehab',
+        description: 'See the mission, publishing approach, and direction behind Active Rehab.',
       },
       ar: {
-        title: 'عن PhysioNutrition',
-        description: 'تعرّف على رؤية PhysioNutrition ورسالة المنصة وطريقة إعداد المحتوى.',
+        title: 'عن Active Rehab',
+        description: 'تعرّف على رؤية Active Rehab ورسالة المنصة وطريقة إعداد المحتوى.',
       },
     },
   },
@@ -194,12 +194,12 @@ const SEO_PAGE_DEFINITIONS: SeoPageDefinition[] = [
     variables: [],
     defaults: {
       en: {
-        title: 'Contact PhysioNutrition',
-        description: 'Reach out to PhysioNutrition for feedback, questions, or partnership requests.',
+        title: 'Contact Active Rehab',
+        description: 'Reach out to Active Rehab for feedback, questions, or partnership requests.',
       },
       ar: {
-        title: 'تواصل مع PhysioNutrition',
-        description: 'أرسل ملاحظاتك أو استفساراتك أو طلبات التعاون إلى فريق PhysioNutrition.',
+        title: 'تواصل مع Active Rehab',
+        description: 'أرسل ملاحظاتك أو استفساراتك أو طلبات التعاون إلى فريق Active Rehab.',
       },
     },
   },
@@ -213,11 +213,11 @@ const SEO_PAGE_DEFINITIONS: SeoPageDefinition[] = [
       en: {
         title: 'Insights',
         description:
-          'Browse all PhysioNutrition articles about nutrition, recovery, rehabilitation, and fat loss.',
+          'Browse all Active Rehab articles about nutrition, recovery, rehabilitation, and fat loss.',
       },
       ar: {
         title: 'المقالات',
-        description: 'تصفح كل مقالات PhysioNutrition عن التغذية والتعافي والتأهيل وخسارة الدهون.',
+        description: 'تصفح كل مقالات Active Rehab عن التغذية والتعافي والتأهيل وخسارة الدهون.',
       },
     },
   },
@@ -326,7 +326,7 @@ const SEO_PAGE_DEFINITIONS: SeoPageDefinition[] = [
       ar: {
         title: 'دليل التمارين',
         description:
-          'بوابة موحدة لمكتبة التمارين وصفحات المناطق العضلية وصفحات التأهيل وأنظمة التدريب داخل PhysioNutrition.',
+          'بوابة موحدة لمكتبة التمارين وصفحات المناطق العضلية وصفحات التأهيل وأنظمة التدريب داخل Active Rehab.',
       },
     },
   },
@@ -393,12 +393,12 @@ const SEO_PAGE_DEFINITIONS: SeoPageDefinition[] = [
     variables: [],
     defaults: {
       en: {
-        title: 'PhysioNutrition AI Assistant',
+        title: 'Active Rehab AI Assistant',
         description:
           'Ask a Senior Physical Therapist and Clinical Nutritionist about recovery, rehab, nutrition, and calculator results.',
       },
       ar: {
-        title: 'مساعد PhysioNutrition الذكي',
+        title: 'مساعد Active Rehab الذكي',
         description:
           'اسأل مساعدًا متخصصًا في العلاج الطبيعي والتغذية العلاجية عن التعافي والتدريب ونتائج الحاسبات.',
       },
@@ -417,7 +417,7 @@ const SEO_PAGE_DEFINITIONS: SeoPageDefinition[] = [
       },
       ar: {
         title: 'الدخول إلى الحساب',
-        description: 'سجّل الدخول لحفظ النتائج وفتح لوحة المتابعة ومواصلة تقدمك داخل PhysioNutrition.',
+        description: 'سجّل الدخول لحفظ النتائج وفتح لوحة المتابعة ومواصلة تقدمك داخل Active Rehab.',
       },
     },
   },
@@ -430,11 +430,11 @@ const SEO_PAGE_DEFINITIONS: SeoPageDefinition[] = [
     defaults: {
       en: {
         title: 'Tracking Dashboard',
-        description: 'Review saved assessments and result history inside your PhysioNutrition account.',
+        description: 'Review saved assessments and result history inside your Active Rehab account.',
       },
       ar: {
         title: 'لوحة المتابعة',
-        description: 'راجع سجل القياسات والنتائج المحفوظة داخل حسابك في PhysioNutrition.',
+        description: 'راجع سجل القياسات والنتائج المحفوظة داخل حسابك في Active Rehab.',
       },
     },
   },
@@ -447,11 +447,11 @@ const SEO_PAGE_DEFINITIONS: SeoPageDefinition[] = [
     defaults: {
       en: {
         title: 'Page Not Found',
-        description: 'The page you requested could not be found on PhysioNutrition.',
+        description: 'The page you requested could not be found on Active Rehab.',
       },
       ar: {
         title: 'الصفحة غير موجودة',
-        description: 'تعذر العثور على الصفحة المطلوبة داخل PhysioNutrition.',
+        description: 'تعذر العثور على الصفحة المطلوبة داخل Active Rehab.',
       },
     },
   },
@@ -624,7 +624,7 @@ export function getSeoPageKeyForCanonicalPath(canonicalPath: string): SeoPageKey
 }
 
 function stripSiteSuffix(title: string) {
-  return title.replace(/\s*\|\s*PhysioNutrition$/i, '').trim();
+  return title.replace(/\s*\|\s*Active Rehab$/i, '').trim();
 }
 
 function extractPrefixValue(title: string, prefix: string) {

@@ -8,7 +8,7 @@ export default function ContactPage() {
   const isAr = lang === 'ar';
   const relatedLinks = [
     {
-      label: isAr ? 'من نحن' : 'About PhysioNutrition',
+      label: isAr ? 'من نحن' : 'About Active Rehab',
       href: navigationPaths.about(lang),
       description: isAr ? 'اعرف رسالة المنصة وطريقة إعداد المحتوى.' : 'See the platform mission and editorial approach.',
     },
@@ -27,11 +27,11 @@ export default function ContactPage() {
   return (
     <>
       <Seo
-        title={isAr ? 'اتصل بنا' : 'Contact PhysioNutrition'}
+        title={isAr ? 'اتصل بنا' : 'Contact Active Rehab'}
         description={
           isAr
-            ? 'تواصل مع PhysioNutrition للاستفسارات العامة أو طلبات الخصوصية أو التعاون.'
-            : 'Contact PhysioNutrition for general questions, privacy requests, or partnership inquiries.'
+            ? 'تواصل مع Active Rehab للاستفسارات العامة أو طلبات الخصوصية أو التعاون.'
+            : 'Contact Active Rehab for general questions, privacy requests, or partnership inquiries.'
         }
         canonicalPath="/contact"
         hreflangs={buildHreflangs('/contact')}
@@ -39,11 +39,11 @@ export default function ContactPage() {
       <PageLayout title={isAr ? 'اتصل بنا' : 'Contact'} relatedLinks={relatedLinks}>
         {isAr ? (
           <>
-            <p>للاستفسارات العامة أو طلبات الخصوصية أو الملاحظات أو التعاون، يمكنك التواصل مع PhysioNutrition عبر البريد الإلكتروني.</p>
+            <p>للاستفسارات العامة أو طلبات الخصوصية أو الملاحظات أو التعاون، يمكنك التواصل مع Active Rehab عبر البريد الإلكتروني.</p>
 
             <h2>البريد الإلكتروني</h2>
             <p>
-              <a href="mailto:physionutritionofficial@gmail.com">physionutritionofficial@gmail.com</a>
+              <a href="mailto:physionutritionofficial@gmail.com">{isAr ? 'راسلنا عبر البريد' : 'Email us'}</a>
             </p>
 
             <h2>ما الذي يفضل إرساله</h2>
@@ -51,11 +51,11 @@ export default function ContactPage() {
           </>
         ) : (
           <>
-            <p>For general questions, privacy requests, feedback, or collaboration inquiries, you can contact PhysioNutrition by email.</p>
+            <p>For general questions, privacy requests, feedback, or collaboration inquiries, you can contact Active Rehab by email.</p>
 
             <h2>Email</h2>
             <p>
-              <a href="mailto:physionutritionofficial@gmail.com">physionutritionofficial@gmail.com</a>
+              <a href="mailto:physionutritionofficial@gmail.com">{isAr ? 'راسلنا عبر البريد' : 'Email us'}</a>
             </p>
 
             <h2>What to include</h2>

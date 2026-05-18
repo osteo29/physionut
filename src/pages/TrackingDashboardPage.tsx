@@ -291,7 +291,7 @@ export default function TrackingDashboardPage() {
       const safeName = (user.email?.split('@')[0] || 'dashboard').replace(/[^a-z0-9-_]/gi, '-');
       await generatePdfReport({
         element: pdfRef.current,
-        fileName: `${safeName}-physionutrition-dashboard-report.pdf`,
+        fileName: `${safeName}-active-rehab-dashboard-report.pdf`,
       });
     } catch (error) {
       setMessage(
@@ -333,8 +333,8 @@ export default function TrackingDashboardPage() {
         title={isAr ? 'لوحة المتابعة' : 'Tracking Dashboard'}
         description={
           isAr
-            ? 'راجع سجل القياسات والنتائج المحفوظة داخل حسابك في PhysioNutrition.'
-            : 'Review saved assessments and result history inside your PhysioNutrition account.'
+            ? 'راجع سجل القياسات والنتائج المحفوظة داخل حسابك في Active Rehab.'
+            : 'Review saved assessments and result history inside your Active Rehab account.'
         }
         canonicalPath="/dashboard"
         noIndex

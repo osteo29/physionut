@@ -240,7 +240,7 @@ export default function ArticlePage() {
           title={lang === 'en' ? 'Article Not Found' : 'المقال غير موجود'}
           description={
             lang === 'en'
-              ? 'The requested PhysioNutrition article could not be found.'
+              ? 'The requested Active Rehab article could not be found.'
               : 'تعذر العثور على المقال المطلوب.'
           }
           canonicalPath={`/insights/${slug}`}
@@ -284,11 +284,11 @@ export default function ArticlePage() {
         url: canonicalUrl,
         author: {
           '@type': 'Organization',
-          name: 'PhysioNutrition',
+          name: 'Active Rehab',
         },
         publisher: {
           '@type': 'Organization',
-          name: 'PhysioNutrition',
+          name: 'Active Rehab',
         },
         hasPart: headings.map((heading) => ({
           '@type': 'WebPageElement',

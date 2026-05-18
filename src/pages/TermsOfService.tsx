@@ -18,7 +18,7 @@ export default function TermsOfService() {
       description: isAr ? 'راجع كيفية التعامل مع التفضيلات والموافقة والبيانات.' : 'Review how preferences, consent, and data are handled.',
     },
     {
-      label: isAr ? 'من نحن' : 'About PhysioNutrition',
+      label: isAr ? 'من نحن' : 'About Active Rehab',
       href: navigationPaths.about(lang),
       description: isAr ? 'تعرف على هدف المنصة والفئة التي تخدمها.' : 'See who the platform is for and what it aims to provide.',
     },
@@ -30,8 +30,8 @@ export default function TermsOfService() {
         title={isAr ? 'الشروط والأحكام' : 'Terms of Service'}
         description={
           isAr
-            ? 'شروط استخدام PhysioNutrition لحاسبات العلاج الطبيعي وأدوات التغذية العلاجية.'
-            : 'PhysioNutrition terms for using physical therapy calculators and clinical nutrition tools.'
+            ? 'شروط استخدام Active Rehab لحاسبات العلاج الطبيعي وأدوات التغذية العلاجية.'
+            : 'Active Rehab terms for using physical therapy calculators and clinical nutrition tools.'
         }
         canonicalPath="/terms"
         hreflangs={buildHreflangs('/terms')}
@@ -39,13 +39,13 @@ export default function TermsOfService() {
       <PageLayout title={isAr ? 'الشروط والأحكام' : 'Terms of Service'} relatedLinks={relatedLinks}>
         {isAr ? (
           <>
-            <p>تقدم PhysioNutrition حاسبات سريرية ومحتوى تعليمي. باستخدامك للمنصة فأنت توافق على هذه الشروط.</p>
+            <p>تقدم Active Rehab حاسبات سريرية ومحتوى تعليمي. باستخدامك للمنصة فأنت توافق على هذه الشروط.</p>
 
             <h2>استخدام تعليمي فقط</h2>
             <p>الأدوات والنتائج لأغراض استرشادية مبنية على معادلات معتمدة. النتائج تقديرية وقد لا تكون مناسبة لجميع الحالات أو السيناريوهات السريرية.</p>
 
             <h2>ليست نصيحة طبية</h2>
-            <p>PhysioNutrition لا تقدم تشخيصًا أو علاجًا. استخدام المنصة لا ينشئ علاقة طبيب أو معالج ومريض. يرجى استشارة مختص مرخص لاتخاذ أي قرار طبي.</p>
+            <p>Active Rehab لا تقدم تشخيصًا أو علاجًا. استخدام المنصة لا ينشئ علاقة طبيب أو معالج ومريض. يرجى استشارة مختص مرخص لاتخاذ أي قرار طبي.</p>
 
             <h2>الاستخدام المقبول</h2>
             <ul>
@@ -58,13 +58,13 @@ export default function TermsOfService() {
           </>
         ) : (
           <>
-            <p>PhysioNutrition provides clinical calculators and educational resources. By using this platform, you agree to these terms.</p>
+            <p>Active Rehab provides clinical calculators and educational resources. By using this platform, you agree to these terms.</p>
 
             <h2>Educational use only</h2>
             <p>Tools and outputs are intended for informational purposes and are based on established equations. Results are estimates and may not be appropriate for all individuals or clinical scenarios.</p>
 
             <h2>No medical advice</h2>
-            <p>PhysioNutrition does not provide diagnosis or treatment. Using the platform does not create a clinician-patient relationship. Always consult a licensed professional for medical decisions.</p>
+            <p>Active Rehab does not provide diagnosis or treatment. Using the platform does not create a clinician-patient relationship. Always consult a licensed professional for medical decisions.</p>
 
             <h2>Acceptable use</h2>
             <ul>

@@ -193,7 +193,7 @@ export default function AuthPage({
   return (
     <div className="min-h-screen bg-soft-blue">
       <Seo
-        title={isAr ? 'تسجيل الدخول | PhysioNutrition' : 'Login | PhysioNutrition'}
+        title={isAr ? 'تسجيل الدخول | Active Rehab' : 'Login | Active Rehab'}
         description={
           isAr
             ? 'أنشئ حسابًا أو سجّل الدخول لحفظ النتائج وربطها بسجل متابعة آمن.'

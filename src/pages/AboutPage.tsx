@@ -27,20 +27,20 @@ export default function AboutPage() {
   return (
     <>
       <Seo
-        title={isAr ? 'من نحن' : 'About PhysioNutrition'}
+        title={isAr ? 'من نحن' : 'About Active Rehab'}
         description={
           isAr
-            ? 'تعرّف على منصة PhysioNutrition ورسالتها التعليمية وكيف بُنيت أدواتها الخاصة بالتغذية والتأهيل.'
-            : 'Learn about PhysioNutrition, its educational purpose, and how its clinical calculators and nutrition tools are built.'
+            ? 'تعرّف على منصة Active Rehab ورسالتها التعليمية وكيف بُنيت أدواتها الخاصة بالتغذية والتأهيل.'
+            : 'Learn about Active Rehab, its educational purpose, and how its clinical calculators and nutrition tools are built.'
         }
         canonicalPath="/about"
         hreflangs={buildHreflangs('/about')}
       />
-      <PageLayout title={isAr ? 'من نحن' : 'About PhysioNutrition'} relatedLinks={relatedLinks}>
+      <PageLayout title={isAr ? 'من نحن' : 'About Active Rehab'} relatedLinks={relatedLinks}>
         {isAr ? (
           <>
             <p>
-              PhysioNutrition منصة تعليمية تركّز على العلاج الطبيعي، والتعافي، والتغذية العلاجية. الهدف منها هو تبسيط
+              Active Rehab منصة تعليمية تركّز على العلاج الطبيعي، والتعافي، والتغذية العلاجية. الهدف منها هو تبسيط
               الحاسبات الشائعة وتقديمها بشكل أوضح وأكثر فائدة للطلاب والممارسين والمهتمين بالصحة.
             </p>
 
@@ -53,19 +53,19 @@ export default function AboutPage() {
             <h2>المنهج التحريري</h2>
             <p>
               يتم إعداد المحتوى بطابع تعليمي مع الرجوع إلى مراجع معروفة مثل WHO وNIH وأبحاث PubMed عند الحاجة. تسعى
-              PhysioNutrition إلى تقديم المعلومة بوضوح دون ادعاء أنها بديل عن التقييم الطبي المباشر.
+              Active Rehab إلى تقديم المعلومة بوضوح دون ادعاء أنها بديل عن التقييم الطبي المباشر.
             </p>
 
             <h2>ملاحظة مهمة</h2>
             <p>
-              PhysioNutrition لا يقدم تشخيصًا أو علاجًا، ولا ينشئ علاقة طبيب أو معالج ومريض. القرارات الطبية أو
+              Active Rehab لا يقدم تشخيصًا أو علاجًا، ولا ينشئ علاقة طبيب أو معالج ومريض. القرارات الطبية أو
               التأهيلية أو التغذوية المهمة يجب مراجعتها مع مختص مرخص.
             </p>
           </>
         ) : (
           <>
             <p>
-              PhysioNutrition is an educational platform focused on physical therapy, recovery, and clinical nutrition.
+              Active Rehab is an educational platform focused on physical therapy, recovery, and clinical nutrition.
               It is designed to make common calculations clearer and more useful for students, clinicians, and
               health-conscious users.
             </p>
@@ -80,13 +80,13 @@ export default function AboutPage() {
             <h2>Editorial approach</h2>
             <p>
               Content is written with an educational tone and checked against established references such as WHO, NIH,
-              and PubMed-indexed literature when relevant. PhysioNutrition aims to explain clinical ideas clearly
+              and PubMed-indexed literature when relevant. Active Rehab aims to explain clinical ideas clearly
               without presenting itself as a replacement for medical evaluation.
             </p>
 
             <h2>Important note</h2>
             <p>
-              PhysioNutrition does not provide diagnosis, treatment, or a clinician-patient relationship. Users should
+              Active Rehab does not provide diagnosis, treatment, or a clinician-patient relationship. Users should
               review important medical, rehabilitation, or nutrition decisions with a licensed professional.
             </p>
           </>

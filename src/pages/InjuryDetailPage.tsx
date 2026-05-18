@@ -1,7 +1,8 @@
 import {lazy, Suspense, useEffect, useState} from 'react';
-import {Activity, AlertTriangle, ArrowRight, CheckCircle2, Clock3, Pill, ShieldAlert, Sparkles, Stethoscope} from 'lucide-react';
+import {Activity, AlertTriangle, ArrowRight, CheckCircle2, Clock3, LockKeyhole, Pill, ShieldAlert, Sparkles, Stethoscope} from 'lucide-react';
 import {Link, Navigate, useParams} from 'react-router-dom';
 import Seo from '../components/seo/Seo';
+import {getCurrentUser, isSupabaseConfigured, onSupabaseAuthChange, type User} from '../lib/supabase';
 import type {InjuryPhase, InjuryProtocol} from '../services/injuryDatabase';
 import {getInjuryExerciseLinks} from '../services/injuryExerciseLinks';
 import {getInjuryRehabLinks} from '../services/injuryRehabLinks';
@@ -27,6 +28,7 @@ import {
   injuryTitle,
 } from './injuryPageStyles';
 import PageLayout from './PageLayout';
+import {navigationPaths} from '../utils/langUrlHelper';
 import usePreferredLang from './usePreferredLang';
 
 const DrugNutrientChecker = lazy(() => import('../components/ai/DrugNutrientChecker'));
@@ -103,12 +105,14 @@ function PhaseSummaryCard({
   index,
   active,
   isAr,
+  locked,
   onClick,
 }: {
   phase: InjuryPhase;
   index: number;
   active: boolean;
   isAr: boolean;
+  locked: boolean;
   onClick: () => void;
 }) {
   return (
@@ -125,7 +129,10 @@ function PhaseSummaryCard({
         <div className={`text-xs font-bold uppercase tracking-[0.18em] ${active ? 'text-white/80' : 'text-slate-400'}`}>
           {isAr ? `المرحلة ${index + 1}` : `Phase ${index + 1}`}
         </div>
-        <div className={`text-xs ${active ? 'text-white/80' : 'text-slate-500'}`}>{normalizeCopy(phase.duration)}</div>
+        <div className="flex items-center gap-2">
+          {locked ? <LockKeyhole className={`h-3.5 w-3.5 ${active ? 'text-white/80' : 'text-amber-500'}`} /> : null}
+          <div className={`text-xs ${active ? 'text-white/80' : 'text-slate-500'}`}>{normalizeCopy(phase.duration)}</div>
+        </div>
       </div>
       <div className="mt-2 text-base font-black">{normalizeCopy(phase.label)}</div>
       <div className={`mt-2 text-sm leading-6 ${active ? 'text-white/90' : 'text-slate-600 dark:text-slate-300'}`}>
@@ -135,11 +142,52 @@ function PhaseSummaryCard({
   );
 }
 
+function LockedProtocolGate({
+  lang,
+  isAr,
+}: {
+  lang: 'en' | 'ar';
+  isAr: boolean;
+}) {
+  return (
+    <div className="absolute inset-0 z-10 flex items-center justify-center rounded-[1.8rem] bg-slate-950/45 p-5 backdrop-blur-[2px]">
+      <div className="w-full max-w-xl rounded-[1.8rem] border border-white/20 bg-white/95 p-6 text-center shadow-2xl shadow-slate-900/20">
+        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-amber-100 text-amber-700">
+          <LockKeyhole className="h-5 w-5" />
+        </div>
+        <h3 className="mt-4 text-xl font-black text-slate-950">
+          {isAr ? 'افتح باقي البروتوكول بالحساب' : 'Unlock the rest of this protocol'}
+        </h3>
+        <p className="mt-3 text-sm leading-7 text-slate-600">
+          {isAr
+            ? 'أول مرحلتين ظاهرين بالكامل. باقي المراحل ومحتوى التغذية متاحين بعد إنشاء حساب أو تسجيل الدخول.'
+            : 'The first two phases stay fully visible. The remaining phases and nutrition guidance unlock after signup or sign in.'}
+        </p>
+        <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+          <Link
+            to={`${navigationPaths.auth(lang)}?mode=signup`}
+            className="inline-flex items-center justify-center rounded-2xl bg-slate-950 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-slate-800"
+          >
+            {isAr ? 'إنشاء حساب' : 'Create account'}
+          </Link>
+          <Link
+            to={`${navigationPaths.auth(lang)}?mode=signin`}
+            className="inline-flex items-center justify-center rounded-2xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-slate-700 transition hover:border-health-green/40 hover:text-slate-950"
+          >
+            {isAr ? 'تسجيل الدخول' : 'Sign in'}
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function InjuryDetailPage() {
   const {slug = ''} = useParams();
   const lang = usePreferredLang();
   const isAr = lang === 'ar';
   const [injury, setInjury] = useState<InjuryProtocol | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [catalogInjuries, setCatalogInjuries] = useState<InjuryCatalogEntry[]>([]);
   const [protocolSource, setProtocolSource] = useState<InjuryCatalogSource>('local');
@@ -167,6 +215,34 @@ export default function InjuryDetailPage() {
       active = false;
     };
   }, [lang, slug]);
+
+  useEffect(() => {
+    let mounted = true;
+
+    const loadUser = async () => {
+      if (!isSupabaseConfigured) return;
+      try {
+        const currentUser = await getCurrentUser();
+        if (mounted) setUser(currentUser);
+      } catch {
+        if (mounted) setUser(null);
+      }
+    };
+
+    void loadUser();
+
+    const subscription = isSupabaseConfigured
+      ? onSupabaseAuthChange((_, session) => {
+          if (!mounted) return;
+          setUser(session?.user || null);
+        }).data.subscription
+      : null;
+
+    return () => {
+      mounted = false;
+      subscription?.unsubscribe();
+    };
+  }, []);
 
   useEffect(() => {
     const phaseCount = injury?.phases?.length ?? 0;
@@ -219,6 +295,9 @@ export default function InjuryDetailPage() {
     (phase) => phase.nutritionFocus?.length || phase.recommendedFoods?.length || phase.supplements?.length,
   ).length;
   const phasesWithExercises = phases.filter((phase) => (phase.exercisePlans?.length || 0) > 0).length;
+  const isLockedPhase = activeTab >= 2 && activeTab < phases.length && !user;
+  const isLockedNutritionTab = activeTab === phases.length && phases.length > 2 && !user;
+  const showLockedOverlay = isLockedPhase || isLockedNutritionTab;
 
   const relatedInjuries = catalogInjuries
     .filter((item) => item.id !== injury.id)
@@ -431,6 +510,7 @@ export default function InjuryDetailPage() {
                       index={index}
                       active={activeTab === index}
                       isAr={isAr}
+                      locked={index >= 2 && !user}
                       onClick={() => setActiveTab(index)}
                     />
                   ))}
@@ -473,8 +553,9 @@ export default function InjuryDetailPage() {
             <div className="space-y-6">
               {currentPhase ? (
                 <>
-                  <section className={injuryPanel}>
-                    <div className="flex flex-wrap items-center justify-between gap-4">
+                  <section className={`${injuryPanel} relative overflow-hidden`}>
+                    <div className={showLockedOverlay ? 'pointer-events-none select-none blur-[5px]' : ''}>
+                      <div className="flex flex-wrap items-center justify-between gap-4">
                       <div>
                         <div className="text-xs font-bold uppercase tracking-[0.18em] text-slate-400">
                           {isAr ? `المرحلة ${activeTab + 1}` : `Phase ${activeTab + 1}`}
@@ -493,7 +574,7 @@ export default function InjuryDetailPage() {
                       </div>
                     ) : null}
 
-                    <div className="mt-6 grid gap-4 md:grid-cols-3">
+                      <div className="mt-6 grid gap-4 md:grid-cols-3">
                       <div className={injuryPanelMuted}>
                         <div className="mb-3 flex items-center gap-2 text-sm font-black text-slate-900 dark:text-white">
                           <CheckCircle2 className="h-4 w-4 text-emerald-500" />
@@ -524,13 +605,16 @@ export default function InjuryDetailPage() {
                         )}
                       </div>
                     </div>
+                    </div>
+                    {showLockedOverlay ? <LockedProtocolGate lang={lang} isAr={isAr} /> : null}
                   </section>
 
-                  <section className={injuryPanel}>
+                  <section className={`${injuryPanel} relative overflow-hidden`}>
                     <div className="mb-4 flex items-center gap-2 text-sm font-black text-slate-900 dark:text-white">
                       <Sparkles className="h-4 w-4 text-health-green" />
                       <span>{isAr ? 'التمارين العلاجية' : 'Therapeutic exercises'}</span>
                     </div>
+                    <div className={showLockedOverlay ? 'pointer-events-none select-none blur-[5px]' : ''}>
                     {currentPhase.exercisePlans?.length ? (
                       <div className="grid gap-4">
                         {currentPhase.exercisePlans.map((plan, idx) => (
@@ -579,11 +663,14 @@ export default function InjuryDetailPage() {
                         {isAr ? 'لا توجد تمارين مفصلة مسجلة لهذه المرحلة بعد.' : 'No detailed exercises are recorded for this phase yet.'}
                       </div>
                     )}
+                    </div>
+                    {showLockedOverlay ? <LockedProtocolGate lang={lang} isAr={isAr} /> : null}
                   </section>
 
                   <section className="grid gap-6 lg:grid-cols-2">
-                    <div className={injuryPanel}>
+                    <div className={`${injuryPanel} relative overflow-hidden`}>
                       <div className="mb-4 text-sm font-black text-slate-900 dark:text-white">{isAr ? 'تغذية هذه المرحلة' : 'Phase nutrition'}</div>
+                      <div className={showLockedOverlay ? 'pointer-events-none select-none blur-[5px]' : ''}>
                       {currentPhase.nutritionFocus?.length ? (
                         <div className="mb-5">
                           <div className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-400">{isAr ? 'نقاط التركيز' : 'Focus points'}</div>
@@ -602,10 +689,13 @@ export default function InjuryDetailPage() {
                           {renderBulletList(currentPhase.avoidFoods.map(normalizeCopy), 'warning')}
                         </div>
                       ) : null}
+                      </div>
+                      {showLockedOverlay ? <LockedProtocolGate lang={lang} isAr={isAr} /> : null}
                     </div>
 
-                    <div className={injuryPanel}>
+                    <div className={`${injuryPanel} relative overflow-hidden`}>
                       <div className="mb-4 text-sm font-black text-slate-900 dark:text-white">{isAr ? 'الوجبات والمكملات' : 'Meals and supplements'}</div>
+                      <div className={showLockedOverlay ? 'pointer-events-none select-none blur-[5px]' : ''}>
                       <div className="grid gap-3">
                         {currentPhase.meals.breakfast ? (
                           <div className={`${injuryPanelMuted} text-sm leading-7 text-slate-700 dark:text-slate-200`}>
@@ -638,16 +728,19 @@ export default function InjuryDetailPage() {
                           </div>
                         </div>
                       ) : null}
+                      </div>
+                      {showLockedOverlay ? <LockedProtocolGate lang={lang} isAr={isAr} /> : null}
                     </div>
                   </section>
                 </>
               ) : (
                 <section className="grid gap-6 lg:grid-cols-2">
-                  <div className={injuryPanel}>
+                  <div className={`${injuryPanel} relative overflow-hidden`}>
                     <div className="mb-4 flex items-center gap-2 text-sm font-black text-slate-900 dark:text-white">
                       <Pill className="h-4 w-4 text-health-green" />
                       <span>{isAr ? 'ملاحظات التغذية' : 'Nutrition notes'}</span>
                     </div>
+                    <div className={showLockedOverlay ? 'pointer-events-none select-none blur-[5px]' : ''}>
                     {injury.pageContent?.nutritionNotes?.length ? (
                       renderBulletList(injury.pageContent.nutritionNotes.map(normalizeCopy), 'accent')
                     ) : (
@@ -655,13 +748,16 @@ export default function InjuryDetailPage() {
                         {isAr ? 'حافظ على نظام غذائي متوازن وغني بالبروتين لدعم الاستشفاء.' : 'Maintain a balanced, protein-rich diet to support recovery.'}
                       </div>
                     )}
+                    </div>
+                    {showLockedOverlay ? <LockedProtocolGate lang={lang} isAr={isAr} /> : null}
                   </div>
 
-                  <div className={injuryPanel}>
+                  <div className={`${injuryPanel} relative overflow-hidden`}>
                     <div className="mb-4 flex items-center gap-2 text-sm font-black text-slate-900 dark:text-white">
                       <ShieldAlert className="h-4 w-4 text-health-green" />
                       <span>{isAr ? 'السلامة الدوائية والمكملات' : 'Supplement safety'}</span>
                     </div>
+                    <div className={showLockedOverlay ? 'pointer-events-none select-none blur-[5px]' : ''}>
                     {medicationNotes.length > 0 ? (
                       renderBulletList(medicationNotes, 'warning')
                     ) : (
@@ -677,6 +773,8 @@ export default function InjuryDetailPage() {
                         <DrugNutrientChecker lang={lang} embedded initialQuery="" />
                       </Suspense>
                     </div>
+                    </div>
+                    {showLockedOverlay ? <LockedProtocolGate lang={lang} isAr={isAr} /> : null}
                   </div>
                 </section>
               )}

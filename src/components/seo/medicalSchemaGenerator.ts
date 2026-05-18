@@ -19,7 +19,7 @@ export function generateMedicalWebPageSchema({
   url,
   dateModified,
   medicalAudience = 'Patient',
-  author = 'PhysioNutrition',
+  author = 'Active Rehab',
 }: {
   title: string;
   description: string;

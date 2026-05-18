@@ -222,8 +222,8 @@ function writeRootShell() {
   const canonical = absoluteUrl('/en/');
   const rootBody = `
     <main class="seo-shell" dir="ltr">
-      <span class="eyebrow">PhysioNutrition</span>
-      <h1>PhysioNutrition</h1>
+      <span class="eyebrow">Active Rehab</span>
+      <h1>Active Rehab</h1>
       <p class="muted">Choose your preferred language to continue to the main site sections.</p>
       <section class="card">
         <h2>Choose a language</h2>
@@ -238,8 +238,8 @@ function writeRootShell() {
   const html = injectRoot(
     replaceMeta(
       template,
-      'PhysioNutrition',
-      'Language gateway for the PhysioNutrition website.',
+      'Active Rehab',
+      'Language gateway for the Active Rehab website.',
       canonical,
       'en',
       true,
@@ -322,14 +322,14 @@ function homeRoute(lang: Lang): RouteDefinition {
   return {
     path: `/${lang}/`,
     lang,
-    title: isAr ? 'PhysioNutrition | حاسبات ومكتبة علاج طبيعي وتغذية' : 'PhysioNutrition | Rehab, nutrition, and calculator hub',
+    title: isAr ? 'Active Rehab | حاسبات ومكتبة علاج طبيعي وتغذية' : 'Active Rehab | Rehab, nutrition, and calculator hub',
     description: isAr
       ? 'منصة تعليمية تضم حاسبات صحية ومقالات علاج طبيعي وتغذية وصفحات إصابات قابلة للفهرسة.'
       : 'Educational rehab and nutrition platform with calculator tools, injury recovery pages, and evidence-based articles.',
     body: layout(
       lang,
       isAr ? 'منصة تعليمية' : 'Educational platform',
-      isAr ? 'PhysioNutrition: أدوات ومحتوى واضح للتغذية العلاجية والعلاج الطبيعي' : 'PhysioNutrition: practical rehab and nutrition tools with readable content',
+      isAr ? 'Active Rehab: أدوات ومحتوى واضح للتغذية العلاجية والعلاج الطبيعي' : 'Active Rehab: practical rehab and nutrition tools with readable content',
       isAr
         ? 'هذه الصفحة تجمع بين الحاسبات الصحية، مكتبة بروتوكولات الإصابات، ومقالات تعليمية تساعد الزائر على فهم التعافي، التغذية، وتتبع التقدم.'
         : 'This page connects practical calculators, injury recovery protocols, and educational articles so visitors can understand rehab, nutrition, and measurable progress in one place.',
@@ -339,7 +339,7 @@ function homeRoute(lang: Lang): RouteDefinition {
       {
         '@context': 'https://schema.org',
         '@type': 'WebSite',
-        name: 'PhysioNutrition',
+        name: 'Active Rehab',
         url: absoluteUrl(`/${lang}/`),
         inLanguage: lang,
       },
@@ -361,7 +361,7 @@ function calculatorsRoute(lang: Lang): RouteDefinition {
       isAr ? 'حاسبات' : 'Calculators',
       isAr ? 'حاسبات سريرية تساعدك على فهم الأرقام قبل اتخاذ قرار عملي' : 'Clinical calculators that help you understand the numbers before acting on them',
       isAr
-        ? 'صفحة الحاسبات في PhysioNutrition تقدم أدوات لحساب BMI، احتياج البروتين، السعرات، الماكروز، واحتياج الماء، مع ربط النتائج بالمقالات ولوحة المتابعة.'
+        ? 'صفحة الحاسبات في Active Rehab تقدم أدوات لحساب BMI، احتياج البروتين، السعرات، الماكروز، واحتياج الماء، مع ربط النتائج بالمقالات ولوحة المتابعة.'
         : 'The calculators page includes BMI, protein, calorie, macro, and hydration tools, with links to related article guidance and follow-up pages.',
       [
         section(
@@ -433,7 +433,7 @@ function insightsRoute(lang: Lang): RouteDefinition {
   return {
     path: `/${lang}/insights`,
     lang,
-    title: isAr ? 'مقالات PhysioNutrition' : 'PhysioNutrition insights and articles',
+    title: isAr ? 'مقالات Active Rehab' : 'Active Rehab insights and articles',
     description: isAr
       ? 'مقالات عن التغذية العلاجية، التعافي، الألم، الحاسبات، وإدارة الوزن.'
       : 'Evidence-based articles about rehab nutrition, injury recovery, pain, calculators, and weight management.',
@@ -497,8 +497,8 @@ function articleRoute(lang: Lang, article: ReturnType<typeof getArticles>[number
         dateModified: article.date,
         inLanguage: lang,
         url: absoluteUrl(`/${lang}/insights/${article.slug}`),
-        author: {'@type': 'Organization', name: 'PhysioNutrition'},
-        publisher: {'@type': 'Organization', name: 'PhysioNutrition'},
+        author: {'@type': 'Organization', name: 'Active Rehab'},
+        publisher: {'@type': 'Organization', name: 'Active Rehab'},
       },
     ],
   };
@@ -773,15 +773,15 @@ function infoPageRoute(lang: Lang, page: 'about' | 'contact' | 'privacy' | 'term
 
   const config = {
     about: {
-      title: isAr ? 'من نحن' : 'About PhysioNutrition',
+      title: isAr ? 'من نحن' : 'About Active Rehab',
       description: isAr
-        ? 'تعرّف على PhysioNutrition ورسالة الموقع التعليمية وكيف تم بناء أدواته في التغذية والعلاج الطبيعي.'
-        : 'Learn about PhysioNutrition, its educational purpose, and how its clinical calculators and nutrition tools are built.',
+        ? 'تعرّف على Active Rehab ورسالة الموقع التعليمية وكيف تم بناء أدواته في التغذية والعلاج الطبيعي.'
+        : 'Learn about Active Rehab, its educational purpose, and how its clinical calculators and nutrition tools are built.',
       eyebrow: isAr ? 'About the platform' : 'About the platform',
-      heading: isAr ? 'معلومات عن PhysioNutrition' : 'About PhysioNutrition',
+      heading: isAr ? 'معلومات عن Active Rehab' : 'About Active Rehab',
       intro: isAr
-        ? 'PhysioNutrition منصة تعليمية تجمع بين العلاج الطبيعي والتغذية العلاجية والحاسبات العملية.'
-        : 'PhysioNutrition is an educational platform combining rehab, clinical nutrition, and practical health calculators.',
+        ? 'Active Rehab منصة تعليمية تجمع بين العلاج الطبيعي والتغذية العلاجية والحاسبات العملية.'
+        : 'Active Rehab is an educational platform combining rehab, clinical nutrition, and practical health calculators.',
       sections: [
         section(
           isAr ? 'ماذا يقدم الموقع؟' : 'What the site offers',
@@ -794,25 +794,25 @@ function infoPageRoute(lang: Lang, page: 'about' | 'contact' | 'privacy' | 'term
     contact: {
       title: isAr ? 'اتصل بنا' : 'Contact',
       description: isAr
-        ? 'طرق التواصل مع PhysioNutrition للاستفسارات العامة والتعاون والملاحظات.'
-        : 'Ways to contact PhysioNutrition for general questions, collaboration, or feedback.',
+        ? 'طرق التواصل مع Active Rehab للاستفسارات العامة والتعاون والملاحظات.'
+        : 'Ways to contact Active Rehab for general questions, collaboration, or feedback.',
       eyebrow: isAr ? 'التواصل' : 'Contact',
-      heading: isAr ? 'تواصل مع PhysioNutrition' : 'Contact PhysioNutrition',
+      heading: isAr ? 'تواصل مع Active Rehab' : 'Contact Active Rehab',
       intro: isAr
         ? 'للاستفسارات العامة أو الملاحظات أو التعاون، يمكنك التواصل عبر البريد الإلكتروني.'
         : 'For general questions, feedback, or collaboration requests, you can reach out by email.',
       sections: [
         section(
           isAr ? 'البريد الإلكتروني' : 'Email',
-          '<p><a href="mailto:physionutritionofficial@gmail.com">physionutritionofficial@gmail.com</a></p>',
+          isAr ? '<p><a href="mailto:physionutritionofficial@gmail.com">راسلنا عبر البريد</a></p>' : '<p><a href="mailto:physionutritionofficial@gmail.com">Email us</a></p>',
         ),
       ],
     },
     privacy: {
       title: isAr ? 'سياسة الخصوصية' : 'Privacy Policy',
       description: isAr
-        ? 'سياسة خصوصية PhysioNutrition الخاصة بالحاسبات والمحتوى التعليمي والكوكيز والموافقة الإعلانية.'
-        : 'PhysioNutrition privacy policy for calculators, educational content, cookies, and advertising consent.',
+        ? 'سياسة خصوصية Active Rehab الخاصة بالحاسبات والمحتوى التعليمي والكوكيز والموافقة الإعلانية.'
+        : 'Active Rehab privacy policy for calculators, educational content, cookies, and advertising consent.',
       eyebrow: isAr ? 'الخصوصية' : 'Privacy',
       heading: isAr ? 'سياسة الخصوصية' : 'Privacy Policy',
       intro: isAr
@@ -830,8 +830,8 @@ function infoPageRoute(lang: Lang, page: 'about' | 'contact' | 'privacy' | 'term
     terms: {
       title: isAr ? 'الشروط والأحكام' : 'Terms of Service',
       description: isAr
-        ? 'شروط استخدام PhysioNutrition لحاسبات العلاج الطبيعي وأدوات التغذية العلاجية.'
-        : 'PhysioNutrition terms for using physical therapy calculators and clinical nutrition tools.',
+        ? 'شروط استخدام Active Rehab لحاسبات العلاج الطبيعي وأدوات التغذية العلاجية.'
+        : 'Active Rehab terms for using physical therapy calculators and clinical nutrition tools.',
       eyebrow: isAr ? 'الشروط' : 'Terms',
       heading: isAr ? 'الشروط والأحكام' : 'Terms of Service',
       intro: isAr
@@ -849,8 +849,8 @@ function infoPageRoute(lang: Lang, page: 'about' | 'contact' | 'privacy' | 'term
     cookies: {
       title: isAr ? 'سياسة الكوكيز' : 'Cookie Policy',
       description: isAr
-        ? 'سياسة الكوكيز في PhysioNutrition الخاصة بالتفضيلات والموافقة والتحليلات والإعلانات.'
-        : 'PhysioNutrition cookie policy covering essential preferences, consent choices, analytics, and advertising cookies.',
+        ? 'سياسة الكوكيز في Active Rehab الخاصة بالتفضيلات والموافقة والتحليلات والإعلانات.'
+        : 'Active Rehab cookie policy covering essential preferences, consent choices, analytics, and advertising cookies.',
       eyebrow: isAr ? 'الكوكيز' : 'Cookies',
       heading: isAr ? 'سياسة الكوكيز' : 'Cookie Policy',
       intro: isAr
@@ -868,8 +868,8 @@ function infoPageRoute(lang: Lang, page: 'about' | 'contact' | 'privacy' | 'term
     disclaimer: {
       title: isAr ? 'إخلاء المسؤولية الطبي' : 'Medical Disclaimer',
       description: isAr
-        ? 'إخلاء المسؤولية الطبي لمنصة PhysioNutrition وحاسبات العلاج الطبيعي والتغذية العلاجية.'
-        : 'Medical disclaimer for PhysioNutrition physical therapy calculators and clinical nutrition tools.',
+        ? 'إخلاء المسؤولية الطبي لمنصة Active Rehab وحاسبات العلاج الطبيعي والتغذية العلاجية.'
+        : 'Medical disclaimer for Active Rehab physical therapy calculators and clinical nutrition tools.',
       eyebrow: isAr ? 'إخلاء المسؤولية' : 'Disclaimer',
       heading: isAr ? 'إخلاء المسؤولية الطبي' : 'Medical Disclaimer',
       intro: isAr

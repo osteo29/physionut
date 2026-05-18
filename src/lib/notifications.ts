@@ -6,8 +6,8 @@ const AUTO_NOTIFICATION_PROMPT_KEY = 'physiohub:auto-notification-prompted';
 
 function getNotificationTitle(lang: AppLanguage) {
   return lang === 'ar'
-    ? decodeMojibake('إشعارات PhysioNutrition جاهزة')
-    : 'PhysioNutrition notifications are ready';
+    ? decodeMojibake('إشعارات Active Rehab جاهزة')
+    : 'Active Rehab notifications are ready';
 }
 
 function getNotificationBody(lang: AppLanguage) {

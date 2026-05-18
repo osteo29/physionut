@@ -9,7 +9,7 @@ const WhatsNew = memo(({lang}: {lang: Language}) => {
     lang === 'en'
       ? [
           {
-            title: 'PhysioNutrition Architect',
+            title: 'Active Rehab Architect',
             desc: 'An integrated health and recovery dashboard powered by AI.',
             icon: Brain,
             color: 'text-medical-blue',

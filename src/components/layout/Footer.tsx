@@ -21,7 +21,7 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
             <BrandLogo
               textTone="light"
               imageClassName="h-12 w-12 border-white/15"
-              title="PhysioNutrition"
+              title="Active Rehab"
               subtitle="Clinical Recovery"
             />
             <p className="max-w-sm leading-7 text-slate-300">
@@ -106,7 +106,7 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
                     href="mailto:physionutritionofficial@gmail.com"
                     className="text-slate-300 transition-colors hover:text-health-green"
                   >
-                    physionutritionofficial@gmail.com
+                    {lang === 'en' ? 'Email us' : 'راسلنا بالبريد'}
                   </a>
                 </div>
               </li>
@@ -139,7 +139,7 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
 
         <div className="mt-8 flex flex-col gap-4 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-slate-400">
-            © {currentYear} PhysioNutrition. {t.footer.rights}
+            © {currentYear} Active Rehab. {t.footer.rights}
           </p>
           <div className="flex flex-wrap gap-4">
             <Link to={navigationPaths.privacy(lang)} className="text-sm text-slate-400 transition-colors hover:text-white">
