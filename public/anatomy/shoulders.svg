@@ -1,0 +1,15 @@
+<svg width="960" height="720" viewBox="0 0 960 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="960" height="720" rx="40" fill="#F8FAFC"/>
+  <rect x="110" y="70" width="740" height="580" rx="32" fill="white" stroke="#E2E8F0" stroke-width="2"/>
+  <ellipse cx="480" cy="148" rx="70" ry="78" fill="#CBD5E1"/>
+  <rect x="408" y="210" width="144" height="250" rx="72" fill="#CBD5E1"/>
+  <rect x="346" y="226" width="72" height="220" rx="36" fill="#CBD5E1"/>
+  <rect x="542" y="226" width="72" height="220" rx="36" fill="#CBD5E1"/>
+  <rect x="422" y="456" width="50" height="146" rx="25" fill="#CBD5E1"/>
+  <rect x="488" y="456" width="50" height="146" rx="25" fill="#CBD5E1"/>
+  <ellipse cx="382" cy="256" rx="54" ry="48" fill="#F97316"/>
+  <ellipse cx="578" cy="256" rx="54" ry="48" fill="#F97316"/>
+  <path d="M438 248C454 236 468 232 480 232C492 232 506 236 522 248" stroke="#C2410C" stroke-width="10" stroke-linecap="round"/>
+  <rect x="152" y="116" width="210" height="70" rx="20" fill="#FFF7ED"/>
+  <text x="182" y="160" fill="#C2410C" font-family="Arial, sans-serif" font-size="30" font-weight="700">Shoulder Region</text>
+</svg>

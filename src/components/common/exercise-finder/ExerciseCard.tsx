@@ -1,6 +1,7 @@
-import {useState, type ReactNode} from 'react';
+import {useEffect, useState, type ReactNode} from 'react';
 
 import {Badge} from './FilterField';
+import {EXERCISE_FALLBACK_THUMBNAIL} from './media';
 import {toTitle, translateBadge} from './filter-utils';
 import type {Exercise} from './types';
 
@@ -28,13 +29,47 @@ function ExerciseCard({exercise, isAr, searchQuery = ''}: {exercise: Exercise; i
   };
   const isMultiMuscle = new Set(exercise.muscles.map((item) => item.split('_')[0])).size > 1;
   const [isExpanded, setIsExpanded] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageErrored, setImageErrored] = useState(false);
+  const imageSrc = imageErrored ? EXERCISE_FALLBACK_THUMBNAIL : exercise.imageUrl || EXERCISE_FALLBACK_THUMBNAIL;
+
+  useEffect(() => {
+    setImageLoaded(false);
+    setImageErrored(false);
+  }, [exercise.imageUrl, exercise.name]);
 
   return (
     <article className={`medical-card h-full border-l-4 p-5 sm:p-6 ${difficultyBorderMap[exercise.level]}`}>
       <div className="flex h-full flex-col gap-4">
+        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-[linear-gradient(180deg,#f8fafc,#eef2ff)]">
+          <div className="relative aspect-[16/10]">
+            {!imageLoaded ? (
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 animate-pulse bg-[linear-gradient(110deg,rgba(226,232,240,0.85),rgba(241,245,249,1),rgba(226,232,240,0.85))]"
+              />
+            ) : null}
+            <img
+              src={imageSrc}
+              alt={exercise.imageAlt || `${exercise.name} exercise illustration`}
+              className={`h-full w-full object-cover transition duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+              loading="lazy"
+              onLoad={() => setImageLoaded(true)}
+              onError={() => {
+                if (!imageErrored) {
+                  setImageLoaded(false);
+                  setImageErrored(true);
+                  return;
+                }
+                setImageLoaded(true);
+              }}
+            />
+          </div>
+        </div>
+
         {isExpanded && exercise.videoUrl ? (
           <div className="overflow-hidden rounded-2xl border border-slate-200 bg-black">
-            <div className="relative aspect-video">
+            <div className="relative aspect-[16/10]">
               <iframe
                 src={exercise.videoUrl.replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/')}
                 title={`${exercise.name} exercise tutorial`}

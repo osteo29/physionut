@@ -11,6 +11,8 @@ export const EXERCISES: Exercise[] = [
     description: 'Emphasizes the upper chest with a stable incline pressing angle.',
     tips: 'Keep the shoulder blades tucked and avoid turning it into a high-shoulder press.',
     rehabTip: 'Useful when horizontal pressing is tolerated but heavy flat pressing still feels irritable.',
+    imageUrl: '/exercises/thumbnails/incline-bench-press-thumb.svg',
+    imageAlt: 'Incline bench press chest exercise thumbnail',
     videoUrl: '',
   },
   {
@@ -23,6 +25,8 @@ export const EXERCISES: Exercise[] = [
     description: 'Builds upper-chest strength with a friendlier range than a steep incline.',
     tips: 'Use a 15 to 30 degree bench instead of chasing a near-overhead angle.',
     rehabTip: 'A useful bridge when shoulder tolerance is improving but barbell work still feels stiff.',
+    imageUrl: '/exercises/thumbnails/low-incline-dumbbell-press-thumb.svg',
+    imageAlt: 'Low incline dumbbell press chest exercise thumbnail',
     videoUrl: '',
   },
   {
@@ -35,6 +39,8 @@ export const EXERCISES: Exercise[] = [
     description: 'A classic chest builder with more arm freedom than a barbell bench.',
     tips: 'Lower with control and stop short of painful shoulder stretch if needed.',
     rehabTip: 'Dumbbells let users find a more joint-friendly pressing path than a fixed bar.',
+    imageUrl: '/exercises/thumbnails/flat-dumbbell-bench-press-thumb.svg',
+    imageAlt: 'Flat dumbbell bench press chest exercise thumbnail',
     videoUrl: '',
   },
   {
@@ -47,6 +53,8 @@ export const EXERCISES: Exercise[] = [
     description: 'Develops chest strength and trunk stiffness with easy scaling options.',
     tips: 'Elevate the hands if full-floor reps turn into sagging or shoulder shrugging.',
     rehabTip: 'Incline push-ups are often a smart entry point before returning to heavier pressing.',
+    imageUrl: '/exercises/thumbnails/push-up-thumb.svg',
+    imageAlt: 'Push-up chest exercise thumbnail',
     videoUrl: '',
   },
   {
@@ -58,6 +66,8 @@ export const EXERCISES: Exercise[] = [
     exerciseType: 'strength',
     description: 'Biases the lower chest through deep shoulder extension and bodyweight loading.',
     tips: 'Lean slightly forward and control the bottom instead of bouncing into range.',
+    imageUrl: '/exercises/thumbnails/chest-dip-thumb.svg',
+    imageAlt: 'Chest dip chest exercise thumbnail',
     videoUrl: '',
   },
   {
@@ -69,6 +79,8 @@ export const EXERCISES: Exercise[] = [
     exerciseType: 'hypertrophy',
     description: 'A bodyweight press that increases chest loading by elevating the feet.',
     tips: 'Keep the ribs tucked so the movement stays chest-dominant instead of lumbar-heavy.',
+    imageUrl: '/exercises/thumbnails/decline-push-up-thumb.svg',
+    imageAlt: 'Decline push-up chest exercise thumbnail',
     videoUrl: '',
   },
   {
@@ -80,6 +92,8 @@ export const EXERCISES: Exercise[] = [
     exerciseType: 'strength',
     description: 'A high-value vertical pull for upper-back and lat strength.',
     tips: 'Initiate with the shoulder blades instead of yanking with the neck and elbows only.',
+    imageUrl: '/exercises/thumbnails/pull-up-thumb.svg',
+    imageAlt: 'Pull-up back exercise thumbnail',
     videoUrl: '',
   },
   {
@@ -92,6 +106,8 @@ export const EXERCISES: Exercise[] = [
     description: 'Builds the lats through a guided vertical pull with easier load control.',
     tips: 'Pull to the upper chest and keep the torso mostly tall instead of leaning back hard.',
     rehabTip: 'Often easier to tolerate than pull-ups when shoulder control is still improving.',
+    imageUrl: '/exercises/thumbnails/neutral-grip-lat-pulldown-thumb.svg',
+    imageAlt: 'Neutral-grip lat pulldown back exercise thumbnail',
     videoUrl: '',
   },
   {
@@ -103,6 +119,8 @@ export const EXERCISES: Exercise[] = [
     exerciseType: 'endurance',
     description: 'Teaches lat engagement without heavy elbow flexion or body swing.',
     tips: 'Keep the rib cage quiet and think about pulling from the armpits.',
+    imageUrl: '/exercises/thumbnails/straight-arm-band-pulldown-thumb.svg',
+    imageAlt: 'Straight-arm band pulldown back exercise thumbnail',
     videoUrl: '',
   },
   {
@@ -115,6 +133,8 @@ export const EXERCISES: Exercise[] = [
     description: 'Loads the entire posterior chain while building upper-back density.',
     tips: 'Set the torso angle first and row without turning the hinge into a shrug.',
     rehabTip: 'If trunk tolerance is limited, chest-supported rows are usually the smarter entry point.',
+    imageUrl: '/exercises/thumbnails/barbell-row-thumb.svg',
+    imageAlt: 'Barbell row back exercise thumbnail',
     videoUrl: '',
   },
   {
@@ -127,6 +147,8 @@ export const EXERCISES: Exercise[] = [
     description: 'Targets the upper back without asking the lower back to hold a hinge.',
     tips: 'Drive the elbows back and pause briefly without craning the neck.',
     rehabTip: 'A good option when users want back work without extra spinal fatigue.',
+    imageUrl: '/exercises/thumbnails/chest-supported-dumbbell-row-thumb.svg',
+    imageAlt: 'Chest-supported dumbbell row back exercise thumbnail',
     videoUrl: '',
   },
   {
@@ -138,6 +160,8 @@ export const EXERCISES: Exercise[] = [
     exerciseType: 'endurance',
     description: 'Improves scapular control and posterior shoulder endurance.',
     tips: 'Finish with the hands high and wide rather than letting the elbows drop.',
+    imageUrl: '/exercises/thumbnails/band-face-pull-thumb.svg',
+    imageAlt: 'Band face pull back exercise thumbnail',
     videoUrl: '',
   },
   {
@@ -149,6 +173,8 @@ export const EXERCISES: Exercise[] = [
     exerciseType: 'hypertrophy',
     description: 'Direct trap work with simple loading and easy progression.',
     tips: 'Lift straight up and down instead of rolling the shoulders around.',
+    imageUrl: '/exercises/thumbnails/barbell-shrug-thumb.svg',
+    imageAlt: 'Barbell shrug back exercise thumbnail',
     videoUrl: '',
   },
   {
@@ -161,6 +187,8 @@ export const EXERCISES: Exercise[] = [
     description: 'Targets the lower traps and scapular upward-rotation pattern.',
     tips: 'Use very light load and focus on clean motion instead of height.',
     rehabTip: 'Helpful for lifters who lose upper-back control during pressing and overhead work.',
+    imageUrl: '/exercises/thumbnails/prone-y-raise-thumb.svg',
+    imageAlt: 'Prone Y raise back exercise thumbnail',
     videoUrl: '',
   },
   {
@@ -173,6 +201,8 @@ export const EXERCISES: Exercise[] = [
     description: 'Builds spinal extensor endurance with a simple setup.',
     tips: 'Move from the hips and stop before the low back hinges into end-range extension.',
     rehabTip: 'Start with shorter ranges and tempo control before adding load.',
+    imageUrl: '/exercises/thumbnails/back-extension-thumb.svg',
+    imageAlt: 'Back extension back exercise thumbnail',
     videoUrl: '',
   },
   {
@@ -184,6 +214,8 @@ export const EXERCISES: Exercise[] = [
     exerciseType: 'strength',
     description: 'A direct shoulder strength builder that also challenges trunk control.',
     tips: 'Press in a smooth arc and avoid leaning back to force the last few degrees.',
+    imageUrl: '/exercises/thumbnails/seated-dumbbell-overhead-press-thumb.svg',
+    imageAlt: 'Seated dumbbell overhead press shoulder exercise thumbnail',
     videoUrl: '',
   },
   {
@@ -196,6 +228,8 @@ export const EXERCISES: Exercise[] = [
     description: 'Offers a shoulder-friendly pressing path between flat and overhead.',
     tips: 'Press forward and up while keeping the ribs stacked over the pelvis.',
     rehabTip: 'Often a cleaner return-to-pressing option than strict overhead work.',
+    imageUrl: '/exercises/thumbnails/landmine-press-thumb.svg',
+    imageAlt: 'Landmine press shoulder exercise thumbnail',
     videoUrl: '',
   },
   {
@@ -207,6 +241,8 @@ export const EXERCISES: Exercise[] = [
     exerciseType: 'hypertrophy',
     description: 'A simple isolation drill for side-delt size and shoulder shape.',
     tips: 'Lift in the scapular plane and stop before shrugging takes over.',
+    imageUrl: '/exercises/thumbnails/dumbbell-lateral-raise-thumb.svg',
+    imageAlt: 'Dumbbell lateral raise shoulder exercise thumbnail',
     videoUrl: '',
   },
   {
@@ -218,6 +254,8 @@ export const EXERCISES: Exercise[] = [
     exerciseType: 'hypertrophy',
     description: 'Keeps tension on the rear delts through a long arc.',
     tips: 'Move from the shoulder and keep the torso still instead of yanking with momentum.',
+    imageUrl: '/exercises/thumbnails/cable-rear-delt-fly-thumb.svg',
+    imageAlt: 'Cable rear delt fly shoulder exercise thumbnail',
     videoUrl: '',
   },
   {
@@ -230,6 +268,8 @@ export const EXERCISES: Exercise[] = [
     description: 'Supports shoulder control and cuff endurance around pressing volume.',
     tips: 'Keep the elbow anchored and rotate without letting the chest spin open.',
     rehabTip: 'Useful as accessory work for lifters who need cleaner shoulder mechanics.',
+    imageUrl: '/exercises/thumbnails/band-external-rotation-thumb.svg',
+    imageAlt: 'Band external rotation shoulder exercise thumbnail',
     videoUrl: '',
   },
   {

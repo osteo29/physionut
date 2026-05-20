@@ -18,6 +18,7 @@ import {
 import {TrainingSystemCard} from '../components/common/exercise-finder/TrainingSystemCard';
 import {WeeklyPlanCard} from '../components/common/exercise-finder/WeeklyPlanCard';
 import type {StaticMuscleSlug} from '../components/common/exercise-finder/types';
+import {REGION_ANATOMY_ART} from '../components/common/exercise-finder/media';
 import Seo from '../components/seo/Seo';
 import {getLocalCatalogInjuries, getRelatedCatalogInjuriesByIds, type InjuryCatalogEntry} from '../services/injuryService';
 import {REHAB_REGION_CONFIG} from '../services/rehabRegionConfig';
@@ -78,6 +79,7 @@ export default function ExerciseRegionPage() {
   const systems = getSystemsForRegion(region).slice(0, 3);
   const visibleRelatedInjuries = relatedInjuries.length ? relatedInjuries : fallbackRelatedInjuries;
   const canonicalPath = `/exercises/${normalizeExerciseUrlSlug(region)}`;
+  const anatomyArt = REGION_ANATOMY_ART[region];
   const seoTitle = isAr
     ? `تمارين ${label} | تشريح مبسط وخطة تمارين كاملة`
     : `${label} Exercises | Anatomy, exercise library, and workout systems`;
@@ -195,6 +197,16 @@ export default function ExerciseRegionPage() {
               <Network className="h-4 w-4 text-health-green" />
               <span>{isAr ? 'تشريح مبسط' : 'Simple anatomy'}</span>
             </div>
+            {anatomyArt ? (
+              <div className="mt-5 overflow-hidden rounded-[1.5rem] border border-slate-200 bg-[radial-gradient(circle_at_top,rgba(14,165,233,0.08),transparent_48%),linear-gradient(180deg,#ffffff,#f8fafc)] p-4">
+                <img
+                  src={anatomyArt}
+                  alt={`${label} anatomy illustration`}
+                  className="mx-auto aspect-[4/3] w-full max-w-md object-contain"
+                  loading="lazy"
+                />
+              </div>
+            ) : null}
             <div className="mt-4 space-y-3">
               {(isAr ? content.anatomyAr : content.anatomyEn).map((item) => (
                 <div key={item} className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm leading-7 text-slate-700">

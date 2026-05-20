@@ -21,6 +21,8 @@ export type Exercise = {
   description: string;
   tips: string;
   rehabTip?: string;
+  imageUrl?: string;
+  imageAlt?: string;
   videoUrl?: string;
 };
 
