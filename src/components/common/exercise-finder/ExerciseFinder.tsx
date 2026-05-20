@@ -4,6 +4,7 @@ import {CalendarRange, Dumbbell, Flame, Search, Share2, SlidersHorizontal, Spark
 import {Link} from 'react-router-dom';
 
 import Seo from '../../seo/Seo';
+import {useExerciseCatalog} from '../../../hooks/useExerciseCatalog';
 import {normalizeExerciseUrlSlug} from '../../../services/seoAliases';
 import {useDebounce} from '../../../hooks/useDebounce';
 import {buildHreflangs, navigationPaths} from '../../../utils/langUrlHelper';
@@ -16,7 +17,6 @@ import {
   MAIN_MUSCLE_TO_STATIC_GROUP,
   MUSCLE_TREE,
 } from './constants';
-import {EXERCISES, POPULAR_BY_MUSCLE} from './data/exercises';
 import {Badge, ChipGroup, FilterField} from './FilterField';
 import {
   createStructuredData,
@@ -299,12 +299,13 @@ export function ExerciseFinder({
 
   const staticContext = useMemo(() => getStaticSlugFilters(pathMuscle), [pathMuscle]);
   const subMuscleOptions = useMemo(() => getSubMuscleOptions(filters.muscle, isAr), [filters.muscle, isAr]);
+  const {exercises: exerciseRecords, loading: catalogLoading} = useExerciseCatalog();
 
   const filteredExercises = useMemo(() => {
     const scopedExercises =
       staticContext?.staticMuscles?.length
-        ? EXERCISES.filter((exercise) => staticContext.staticMuscles.includes(exercise.mainMuscle))
-        : EXERCISES;
+        ? exerciseRecords.filter((exercise) => staticContext.staticMuscles.includes(exercise.mainMuscle))
+        : exerciseRecords;
 
     const search = normalizeValue(filters.search);
 
@@ -325,12 +326,12 @@ export function ExerciseFinder({
 
       return matchesSearch && matchesMainMuscle && matchesSubMuscle && matchesLevel && matchesEquipment && matchesType;
     });
-  }, [filters, staticContext]);
+  }, [exerciseRecords, filters, staticContext]);
 
   const selectedMainMuscle = filters.muscle !== 'all' ? filters.muscle : staticContext?.staticMuscles?.[0] || null;
   const anatomyList = selectedMainMuscle ? MUSCLE_TREE[selectedMainMuscle] : [];
   const popularExercises = selectedMainMuscle
-    ? filteredExercises.filter((exercise) => POPULAR_BY_MUSCLE[selectedMainMuscle].includes(exercise.name)).slice(0, 3)
+    ? filteredExercises.slice(0, 3)
     : filteredExercises.slice(0, 3);
   const selectedStaticGroup = selectedMainMuscle ? MAIN_MUSCLE_TO_STATIC_GROUP[selectedMainMuscle] : pathMuscle || null;
   const recommendedSystems = useMemo(
@@ -341,7 +342,7 @@ export function ExerciseFinder({
   const totalBeginnerExercises = filteredExercises.filter((exercise) => exercise.level === 'beginner').length;
   const totalStrengthExercises = filteredExercises.filter((exercise) => exercise.exerciseType === 'strength').length;
   const totalEquipmentOptions = new Set(filteredExercises.map((exercise) => exercise.equipment)).size;
-  const totalExercises = EXERCISES.length;
+  const totalExercises = exerciseRecords.length;
   const percentage = Math.round((filteredExercises.length / totalExercises) * 100);
   const resetFilters = () => {
     setSearchInput('');
@@ -594,11 +595,12 @@ export function ExerciseFinder({
                     {isAr ? 'النتائج' : 'Results'}
                   </a>
                 </div>
-                <div className="text-sm text-slate-600" aria-live="polite">
-                  <span className="font-semibold text-slate-900">{filteredExercises.length}</span>
-                  {isAr ? ' تمرين' : ' exercises'}
+                  <div className="text-sm text-slate-600" aria-live="polite">
+                    <span className="font-semibold text-slate-900">{filteredExercises.length}</span>
+                    {isAr ? ' تمرين' : ' exercises'}
+                    {catalogLoading ? <span className="ml-2 text-slate-400">{isAr ? 'يتم التحديث...' : 'updating...'}</span> : null}
+                  </div>
                 </div>
-              </div>
 
               {filtersOpen ? (
                 <button

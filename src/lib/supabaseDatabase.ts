@@ -248,6 +248,44 @@ export type Database = {
           created_at?: string | null;
         };
       };
+      exercise_library_entries: {
+        Row: {
+          id: string;
+          slug: string;
+          name: string;
+          region: string;
+          description: string | null;
+          difficulty: string | null;
+          video_url: string | null;
+          thumbnail_path: string | null;
+          source: string | null;
+          created_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          slug: string;
+          name: string;
+          region: string;
+          description?: string | null;
+          difficulty?: string | null;
+          video_url?: string | null;
+          thumbnail_path?: string | null;
+          source?: string | null;
+          created_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          slug?: string;
+          name?: string;
+          region?: string;
+          description?: string | null;
+          difficulty?: string | null;
+          video_url?: string | null;
+          thumbnail_path?: string | null;
+          source?: string | null;
+          created_at?: string | null;
+        };
+      };
       injuries: {
         Row: {
           id: string;

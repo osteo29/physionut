@@ -4,9 +4,9 @@ import {Link, Navigate, useParams} from 'react-router-dom';
 
 import {ExerciseCard} from '../components/common/exercise-finder/ExerciseCard';
 import {Badge} from '../components/common/exercise-finder/FilterField';
+import {useExerciseCatalog} from '../hooks/useExerciseCatalog';
 import {
   REGION_CONTENT,
-  getExercisesForRegion,
   getSystemsForRegion,
   getWeeklyPlanForSystem,
 } from '../components/common/exercise-finder/content';
@@ -38,6 +38,7 @@ export default function ExerciseRegionPage() {
   const normalizedMuscle = denormalizeExerciseUrlSlug(muscle || '');
   const region = isStaticMuscleSlug(normalizedMuscle) ? normalizedMuscle : null;
   const rehabConfig = region ? REHAB_REGION_CONFIG[region] : undefined;
+  const {exercises: catalogExercises, loading: catalogLoading} = useExerciseCatalog();
   const [relatedInjuries, setRelatedInjuries] = useState<InjuryCatalogEntry[]>([]);
   const fallbackRelatedInjuries = useMemo(
     () => (rehabConfig ? getLocalCatalogInjuries(lang).filter((injury) => rehabConfig.relatedInjuryIds.includes(injury.id)) : []),
@@ -75,7 +76,7 @@ export default function ExerciseRegionPage() {
 
   const label = isAr ? EXERCISE_FINDER_STATIC_ARABIC_LABELS[region] : EXERCISE_FINDER_STATIC_LABELS[region];
   const content = REGION_CONTENT[region];
-  const exercises = getExercisesForRegion(region);
+  const exercises = catalogExercises.filter((exercise) => exercise.region === region);
   const systems = getSystemsForRegion(region).slice(0, 3);
   const visibleRelatedInjuries = relatedInjuries.length ? relatedInjuries : fallbackRelatedInjuries;
   const canonicalPath = `/exercises/${normalizeExerciseUrlSlug(region)}`;
@@ -123,6 +124,7 @@ export default function ExerciseRegionPage() {
               <div className="rounded-2xl border border-white/70 bg-white/80 p-4">
                 <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">{isAr ? 'عدد التمارين' : 'Exercises'}</div>
                 <div className="mt-2 text-2xl font-black text-slate-900">{exercises.length}</div>
+                {catalogLoading ? <div className="mt-1 text-xs text-slate-400">{isAr ? 'تحديث الكتالوج...' : 'Catalog updating...'}</div> : null}
               </div>
               <div className="rounded-2xl border border-white/70 bg-white/80 p-4">
                 <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">{isAr ? 'أنظمة مرتبطة' : 'Related systems'}</div>

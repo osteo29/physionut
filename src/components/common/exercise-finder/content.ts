@@ -2,10 +2,9 @@
   EXERCISE_FINDER_STATIC_ARABIC_LABELS,
   EXERCISE_FINDER_STATIC_LABELS,
   MAIN_MUSCLE_TO_STATIC_GROUP,
-  STATIC_GROUP_MUSCLES,
 } from './constants';
 import {decodeMojibake} from '../../../services/textEncoding';
-import {EXERCISES} from './data/exercises';
+import {getExercisesByRegion} from '../../../services/exerciseService';
 import {TRAINING_SYSTEMS} from './data/training-systems';
 import {WEEKLY_PLANS} from './data/weekly-plans';
 import type {Exercise, StaticMuscleSlug} from './types';
@@ -341,8 +340,7 @@ for (const content of Object.values(SYSTEM_DETAIL_CONTENT)) {
 }
 
 export function getExercisesForRegion(region: StaticMuscleSlug): Exercise[] {
-  const allowed = new Set(STATIC_GROUP_MUSCLES[region]);
-  return EXERCISES.filter((exercise) => allowed.has(exercise.mainMuscle));
+  return getExercisesByRegion(region);
 }
 
 export function getExerciseRegion(exercise: Exercise): StaticMuscleSlug {
