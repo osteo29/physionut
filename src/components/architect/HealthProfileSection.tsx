@@ -38,6 +38,18 @@ export default function HealthProfileSection({
   t,
   updateArchitectDraft,
 }: Props) {
+  const integerInputProps = {
+    type: 'text' as const,
+    inputMode: 'numeric' as const,
+    dir: 'ltr' as const,
+  };
+
+  const decimalInputProps = {
+    type: 'text' as const,
+    inputMode: 'decimal' as const,
+    dir: 'ltr' as const,
+  };
+
   return (
     <section id="architect" className="py-24 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -61,17 +73,17 @@ export default function HealthProfileSection({
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div className="space-y-1">
                     <label htmlFor="architect-age" className="text-xs font-bold text-slate-700 uppercase">{t.forms.age}</label>
-                    <input id="architect-age" type="number" inputMode="numeric" value={architectDraft.age} onChange={(e) => updateArchitectDraft('age', e.target.value, {profileKey: 'age', min: 1})} placeholder="25" className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm" />
+                    <input id="architect-age" {...integerInputProps} value={architectDraft.age} onChange={(e) => updateArchitectDraft('age', e.target.value, {profileKey: 'age', min: 1})} placeholder="25" className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm" />
                   </div>
                   <div className="space-y-1">
                     <label htmlFor="architect-weight" className="text-xs font-bold text-slate-700 uppercase">{t.forms.weight}</label>
-                    <input id="architect-weight" type="number" inputMode="decimal" value={architectDraft.weight} onChange={(e) => updateArchitectDraft('weight', e.target.value, {profileKey: 'weight', min: 1})} placeholder="70" className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm" />
+                    <input id="architect-weight" {...decimalInputProps} value={architectDraft.weight} onChange={(e) => updateArchitectDraft('weight', e.target.value, {profileKey: 'weight', min: 1})} placeholder="70" className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm" />
                   </div>
                 </div>
 
                 <div className="space-y-1">
                   <label htmlFor="architect-height" className="text-xs font-bold text-slate-700 uppercase">{t.forms.height}</label>
-                  <input id="architect-height" type="number" inputMode="numeric" value={architectDraft.height} onChange={(e) => updateArchitectDraft('height', e.target.value, {profileKey: 'height', min: 1})} placeholder="175" className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm" />
+                  <input id="architect-height" {...integerInputProps} value={architectDraft.height} onChange={(e) => updateArchitectDraft('height', e.target.value, {profileKey: 'height', min: 1})} placeholder="175" className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm" />
                 </div>
 
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -117,18 +129,18 @@ export default function HealthProfileSection({
                 {architectProfile.injuryType && (
                   <div className="space-y-1">
                     <label htmlFor="architect-recovery-week" className="text-xs font-bold text-slate-700 uppercase">{t.architect.recoveryWeek}</label>
-                    <input id="architect-recovery-week" type="number" min="1" max="52" inputMode="numeric" value={architectDraft.recoveryWeek} onChange={(e) => updateArchitectDraft('recoveryWeek', e.target.value, {profileKey: 'recoveryWeek', min: 1})} className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm" />
-                  </div>
+                  <input id="architect-recovery-week" {...integerInputProps} value={architectDraft.recoveryWeek} onChange={(e) => updateArchitectDraft('recoveryWeek', e.target.value, {profileKey: 'recoveryWeek', min: 1})} className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm" />
+                </div>
                 )}
 
                 <div className="space-y-1">
                   <label htmlFor="architect-waist" className="text-xs font-bold text-slate-700 uppercase">{t.forms.waist} (cm)</label>
-                  <input id="architect-waist" type="number" inputMode="numeric" value={architectDraft.waist} onChange={(e) => updateArchitectDraft('waist', e.target.value, {profileKey: 'waist', min: 1})} placeholder="80" className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm" />
+                  <input id="architect-waist" {...integerInputProps} value={architectDraft.waist} onChange={(e) => updateArchitectDraft('waist', e.target.value, {profileKey: 'waist', min: 1})} placeholder="80" className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm" />
                 </div>
 
                 <div className="space-y-1">
                   <label htmlFor="architect-neck" className="text-xs font-bold text-slate-700 uppercase">{t.forms.neck} (cm)</label>
-                  <input id="architect-neck" type="number" inputMode="numeric" value={architectDraft.neck} onChange={(e) => updateArchitectDraft('neck', e.target.value, {profileKey: 'neck', min: 1})} placeholder="38" className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm" />
+                  <input id="architect-neck" {...integerInputProps} value={architectDraft.neck} onChange={(e) => updateArchitectDraft('neck', e.target.value, {profileKey: 'neck', min: 1})} placeholder="38" className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm" />
                 </div>
 
                 <div className="space-y-1">
@@ -143,7 +155,7 @@ export default function HealthProfileSection({
 
                 <div className="space-y-1">
                   <label htmlFor="architect-water-intake" className="text-xs font-bold text-slate-700 uppercase">{t.architect.water}</label>
-                  <input id="architect-water-intake" type="number" inputMode="numeric" value={architectDraft.waterIntake} onChange={(e) => updateArchitectDraft('waterIntake', e.target.value, {profileKey: 'waterIntake', min: 1})} placeholder="2500" className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm" />
+                  <input id="architect-water-intake" {...integerInputProps} value={architectDraft.waterIntake} onChange={(e) => updateArchitectDraft('waterIntake', e.target.value, {profileKey: 'waterIntake', min: 1})} placeholder="2500" className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-medical-blue outline-none text-sm" />
                 </div>
 
                 <div className="space-y-1">

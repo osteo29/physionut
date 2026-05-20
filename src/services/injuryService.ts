@@ -8,6 +8,7 @@ import {
 } from './rehabProtocolSupabaseService';
 import {translateInjury} from './injuryI18n';
 import type {InjuryProtocol} from './injuryDatabase';
+import {safeMedicalText, safeMedicalTextDeep} from './textEncoding';
 import type {Language} from './translations';
 
 export type InjuryCatalogSource = 'supabase' | 'generated' | 'local';
@@ -27,6 +28,10 @@ export type InjuryCatalogEntry = {
 let remoteInjuryRowsCache: RehabProtocolRow[] | null = null;
 let remoteInjuryRowsPromise: Promise<RehabProtocolRow[]> | null = null;
 
+function sanitizeCatalogEntry(entry: InjuryCatalogEntry): InjuryCatalogEntry {
+  return safeMedicalTextDeep(entry);
+}
+
 function mapGeneratedInjury(row: RehabProtocolRow, lang: Language, source: InjuryCatalogSource): InjuryCatalogEntry {
   const slug = getRehabProtocolSlug(row.name);
   const regionEn = row.category || 'General';
@@ -44,17 +49,17 @@ function mapGeneratedInjury(row: RehabProtocolRow, lang: Language, source: Injur
     lang,
   );
 
-  return {
+  return sanitizeCatalogEntry({
     id: slug.replace(/-/g, '_'),
     slug,
-    name: translated.name,
-    category: translated.bodyRegion,
-    bodyRegion: translated.bodyRegion,
-    overview: translated.overview,
+    name: safeMedicalText(translated.name),
+    category: safeMedicalText(translated.bodyRegion),
+    bodyRegion: safeMedicalText(translated.bodyRegion),
+    overview: safeMedicalText(translated.overview),
     commonIn: [],
     source,
     remoteRef: row,
-  };
+  });
 }
 
 export async function getRemoteInjuryRows(options?: {force?: boolean}) {
@@ -70,8 +75,9 @@ export async function getRemoteInjuryRows(options?: {force?: boolean}) {
   if (!remoteInjuryRowsPromise) {
     remoteInjuryRowsPromise = fetchRehabProtocolsFromSupabase()
       .then((rows) => {
-        remoteInjuryRowsCache = rows;
-        return rows;
+        const sanitizedRows = rows.map((row) => safeMedicalTextDeep(row));
+        remoteInjuryRowsCache = sanitizedRows;
+        return sanitizedRows;
       })
       .catch((error) => {
         remoteInjuryRowsPromise = null;
@@ -106,7 +112,7 @@ export async function getInjuryProtocolBySlugWithFallback(
   const source = getLastRehabProtocolSource() === 'supabase' ? 'supabase' : 'generated';
 
   return {
-    injury: protocol,
+    injury: protocol ? safeMedicalTextDeep(protocol) : null,
     source,
     remoteIds: rows.map((row) => getRehabProtocolSlug(row.name).replace(/-/g, '_')),
   };

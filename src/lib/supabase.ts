@@ -5,7 +5,7 @@ import {
   type User,
 } from '@supabase/supabase-js';
 import type {Article} from '../services/articles';
-import {decodeMojibake} from '../services/textEncoding';
+import {decodeMojibake, MedicalTextCore} from '../services/textEncoding';
 import type {Language} from '../services/translations';
 import type {Database, TableInsert, TableRow} from './supabaseDatabase';
 
@@ -280,7 +280,7 @@ export async function listAssessmentsForCurrentUser() {
     .order('created_at', {ascending: false});
 
   if (error) throw error;
-  return data || [];
+  return MedicalTextCore.parseDeep(data || []);
 }
 
 export async function updateAssessmentNote(id: string, note: string) {
@@ -288,7 +288,7 @@ export async function updateAssessmentNote(id: string, note: string) {
   const {data, error} = await client.from('assessments').update({note}).eq('id', id).select('*').single();
 
   if (error) throw error;
-  return data;
+  return data ? MedicalTextCore.parseDeep(data) : data;
 }
 
 export async function deleteAssessment(id: string) {
@@ -298,7 +298,7 @@ export async function deleteAssessment(id: string) {
 }
 
 function mapRecordToArticle(record: PublishedArticleRecord, index: number): Article {
-  return {
+  return MedicalTextCore.parseDeep({
     id: index + 1,
     slug: record.slug,
     title: record.title,
@@ -308,7 +308,7 @@ function mapRecordToArticle(record: PublishedArticleRecord, index: number): Arti
     date: record.date,
     icon: record.icon,
     image: record.image || undefined,
-  };
+  });
 }
 
 export async function listPublishedArticles(lang: Language) {

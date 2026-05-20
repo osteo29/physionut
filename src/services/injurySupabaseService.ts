@@ -15,6 +15,7 @@ import type {
 import type {Language} from './translations';
 import type {ImportedInjuryProtocol, ProtocolImportSummary} from './injuryProtocolImport';
 import {getAllInjuries, type RecoveryWindow} from './injuryDatabase';
+import {MedicalTextCore} from './textEncoding';
 
 function getSupabaseClient() {
   if (!supabase) {
@@ -55,7 +56,7 @@ export async function fetchInjuriesFromSupabase(): Promise<InjuryRow[]> {
       .order('name_en');
 
     if (error) throw error;
-    return data || [];
+    return MedicalTextCore.parseDeep(data || []);
   } catch (err) {
     console.error('Error fetching injuries:', err);
     return [];
@@ -75,7 +76,7 @@ export async function fetchInjuryBySlug(slug: string): Promise<InjuryRow | null>
       .maybeSingle();
 
     if (error) throw error;
-    return data;
+    return data ? MedicalTextCore.parseDeep(data) : null;
   } catch (err) {
     console.error(`Error fetching injury ${slug}:`, err);
     return null;
@@ -95,7 +96,7 @@ export async function fetchPhasesByInjuryId(injuryId: string): Promise<PhaseRow[
       .order('phase_number');
 
     if (error) throw error;
-    return data || [];
+    return MedicalTextCore.parseDeep(data || []);
   } catch (err) {
     console.error(`Error fetching phases for injury ${injuryId}:`, err);
     return [];
@@ -115,7 +116,7 @@ export async function fetchSupplementsByPhaseId(phaseId: string): Promise<Supple
       .order('order_index');
 
     if (error) throw error;
-    return data || [];
+    return MedicalTextCore.parseDeep(data || []);
   } catch (err) {
     console.error(`Error fetching supplements for phase ${phaseId}:`, err);
     return [];
@@ -134,7 +135,7 @@ export async function fetchMealsByPhaseId(phaseId: string): Promise<MealRow[]> {
       .eq('phase_id', phaseId);
 
     if (error) throw error;
-    return data || [];
+    return MedicalTextCore.parseDeep(data || []);
   } catch (err) {
     console.error(`Error fetching meals for phase ${phaseId}:`, err);
     return [];
@@ -151,7 +152,7 @@ export async function fetchSafetyNotesByInjuryId(injuryId: string): Promise<Safe
       .maybeSingle();
 
     if (error) throw error;
-    return data;
+    return data ? MedicalTextCore.parseDeep(data) : null;
   } catch (err) {
     console.error(`Error fetching safety notes for injury ${injuryId}:`, err);
     return null;
@@ -168,7 +169,7 @@ export async function fetchInjuryPageContentByInjuryId(injuryId: string): Promis
       .maybeSingle();
 
     if (error) throw error;
-    return data;
+    return data ? MedicalTextCore.parseDeep(data) : null;
   } catch (err) {
     console.error(`Error fetching page content for injury ${injuryId}:`, err);
     return null;
@@ -352,7 +353,7 @@ export async function fetchCompleteInjuryProtocol(
       pageContent: mappedPageContent,
     };
 
-    return protocol;
+    return MedicalTextCore.parseDeep(protocol);
   } catch (err) {
     console.error(`Error fetching complete protocol for ${slug}:`, err);
     return null;

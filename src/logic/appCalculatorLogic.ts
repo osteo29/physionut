@@ -1,6 +1,7 @@
 import {ClinicalCalculators, type BodyType, type GoalType, type HealthInterpretation} from './physioNutritionLogic';
 import type {CalculatorType, MealItem} from '../features/tools/app/types';
 import {translations, type Language} from '../services/translations';
+import {parseLocalizedNumber} from '../utils/numericInput';
 
 type AppTranslations = (typeof translations)[Language];
 
@@ -47,7 +48,7 @@ function includesCalculator(list: readonly Exclude<CalculatorType, null>[], calc
 }
 
 function toPositiveNumber(value: string) {
-  const parsed = Number(value);
+  const parsed = parseLocalizedNumber(value);
   return Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
 }
 
@@ -76,12 +77,12 @@ export function validateCalculatorInputs({values, lang, t}: ValidationOptions) {
 }
 
 export function calculateCalculatorResult({values, lang}: CalculationOptions): CalculatorResultPayload {
-  const w = Number(values.weight);
-  const h = Number(values.height);
-  const a = Number(values.age);
-  const wa = Number(values.waist);
-  const ne = Number(values.neck);
-  const hi = Number(values.hip);
+  const w = parseLocalizedNumber(values.weight);
+  const h = parseLocalizedNumber(values.height);
+  const a = parseLocalizedNumber(values.age);
+  const wa = parseLocalizedNumber(values.waist);
+  const ne = parseLocalizedNumber(values.neck);
+  const hi = parseLocalizedNumber(values.hip);
 
   switch (values.activeCalculator) {
     case 'BMI': {

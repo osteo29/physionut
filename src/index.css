@@ -1,16 +1,25 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Segoe UI", "Helvetica Neue", Arial, ui-sans-serif, system-ui, sans-serif;
-  --font-arabic: Tahoma, Arial, "Segoe UI", sans-serif;
+  --font-sans: "Aptos", "Trebuchet MS", "Segoe UI", "Helvetica Neue", Arial, ui-sans-serif, system-ui, sans-serif;
+  --font-arabic: "Noto Sans Arabic", Cairo, Tahoma, Arial, "Segoe UI", sans-serif;
 
-  --color-health-green: #315f4a;
-  --color-health-green-dark: #234536;
-  --color-soft-blue: #f4efe7;
-  --color-medical-blue: #6d7a72;
+  --color-health-green: #c49a42;
+  --color-health-green-dark: #8b6627;
+  --color-soft-blue: #f4efe1;
+  --color-medical-blue: #aeb4bc;
 }
 
 @layer base {
+  :root {
+    --brand-ink: #0f0d0a;
+    --brand-ink-soft: #181511;
+    --brand-paper: #fbf7ef;
+    --brand-paper-strong: #f2ead8;
+    --brand-line: rgba(196, 154, 66, 0.18);
+    --brand-shadow: rgba(15, 13, 10, 0.12);
+  }
+
   html {
     scroll-behavior: smooth;
   }
@@ -18,14 +27,16 @@
   body {
     @apply bg-slate-50 text-slate-900 antialiased;
     background-image:
-      radial-gradient(circle at top right, rgba(49, 95, 74, 0.09), transparent 26%),
-      radial-gradient(circle at bottom left, rgba(109, 122, 114, 0.08), transparent 24%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(244, 239, 231, 0.74));
+      radial-gradient(circle at top right, rgba(196, 154, 66, 0.14), transparent 28%),
+      radial-gradient(circle at bottom left, rgba(174, 180, 188, 0.1), transparent 26%),
+      linear-gradient(180deg, rgba(251, 247, 239, 0.98), rgba(244, 239, 225, 0.92));
     overflow-x: hidden;
     transition:
       background-color 200ms ease,
       color 200ms ease,
       border-color 200ms ease;
+    direction: inherit;
+    text-align: start;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -45,6 +56,11 @@
 
   html[dir="rtl"] {
     font-family: var(--font-arabic);
+    unicode-bidi: plaintext;
+  }
+
+  html[dir="rtl"] body {
+    text-align: right;
   }
 
   html[dir="ltr"] {
@@ -52,12 +68,12 @@
   }
 
   .dark body {
-    background-color: #020617;
-    color: #e2e8f0;
+    background-color: #0b0907;
+    color: #f3ede3;
     background-image:
-      radial-gradient(circle at top right, rgba(49, 95, 74, 0.14), transparent 24%),
-      radial-gradient(circle at bottom left, rgba(109, 122, 114, 0.14), transparent 24%),
-      linear-gradient(180deg, rgba(2, 6, 23, 0.95), rgba(15, 23, 42, 0.98));
+      radial-gradient(circle at top right, rgba(196, 154, 66, 0.12), transparent 24%),
+      radial-gradient(circle at bottom left, rgba(174, 180, 188, 0.12), transparent 24%),
+      linear-gradient(180deg, rgba(11, 9, 7, 0.98), rgba(24, 21, 17, 0.98));
   }
 
   .dark input,
@@ -205,12 +221,15 @@
 
 .medical-card {
   @apply rounded-[1.75rem] border border-slate-200 bg-white shadow-sm transition-[box-shadow,border-color] duration-200 hover:shadow-md;
+  border-color: var(--brand-line);
+  box-shadow: 0 18px 40px var(--brand-shadow);
 }
 
 .hero-surface {
   background:
-    linear-gradient(135deg, rgba(244, 239, 231, 0.92), rgba(255, 255, 255, 0.94)),
-    radial-gradient(circle at top left, rgba(49, 95, 74, 0.08), transparent 32%);
+    radial-gradient(circle at top right, rgba(212, 172, 86, 0.18), transparent 26%),
+    radial-gradient(circle at bottom left, rgba(255, 255, 255, 0.08), transparent 22%),
+    linear-gradient(135deg, rgba(15, 13, 10, 0.98), rgba(24, 21, 17, 0.96));
 }
 
 .home-band {
@@ -239,61 +258,65 @@
   inset: 0;
   z-index: -1;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.45), transparent 22%, transparent 78%, rgba(255, 255, 255, 0.36)),
-    radial-gradient(circle at top left, rgba(49, 95, 74, 0.06), transparent 28%);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.56), transparent 22%, transparent 78%, rgba(255, 255, 255, 0.4)),
+    radial-gradient(circle at top left, rgba(196, 154, 66, 0.08), transparent 28%);
   pointer-events: none;
 }
 
 .glass-panel {
-  background: rgba(255, 255, 255, 0.76);
+  background: rgba(28, 24, 19, 0.72);
+  border: 1px solid rgba(196, 154, 66, 0.2);
   box-shadow:
-    0 18px 45px rgba(15, 23, 42, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    0 24px 56px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .panel-soft {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(248, 250, 252, 0.82));
-  border: 1px solid rgba(226, 232, 240, 0.9);
+  background:
+    linear-gradient(180deg, rgba(255, 250, 244, 0.98), rgba(247, 241, 229, 0.9)),
+    radial-gradient(circle at top right, rgba(196, 154, 66, 0.08), transparent 36%);
+  border: 1px solid rgba(196, 154, 66, 0.16);
   box-shadow:
-    0 18px 40px rgba(15, 23, 42, 0.06),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    0 22px 46px rgba(15, 13, 10, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.62);
 }
 
 .panel-strong {
   background:
-    linear-gradient(160deg, rgba(23, 37, 84, 0.98), rgba(15, 23, 42, 0.95)),
-    radial-gradient(circle at top right, rgba(74, 222, 128, 0.18), transparent 38%);
-  border: 1px solid rgba(148, 163, 184, 0.12);
-  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.22);
+    radial-gradient(circle at top right, rgba(212, 172, 86, 0.22), transparent 36%),
+    linear-gradient(160deg, rgba(15, 13, 10, 0.98), rgba(24, 21, 17, 0.96));
+  border: 1px solid rgba(196, 154, 66, 0.16);
+  box-shadow: 0 28px 68px rgba(0, 0, 0, 0.28);
 }
 
 .metric-chip {
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(226, 232, 240, 0.95);
-  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+  background: rgba(255, 248, 239, 0.78);
+  border: 1px solid rgba(196, 154, 66, 0.16);
+  box-shadow: 0 12px 28px rgba(15, 13, 10, 0.06);
 }
 
 .dark .medical-card {
   @apply bg-slate-900 border-slate-700;
+  border-color: rgba(196, 154, 66, 0.18) !important;
 }
 
 .dark .hero-surface {
   background:
-    linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(2, 6, 23, 0.98)),
-    radial-gradient(circle at top left, rgba(49, 95, 74, 0.12), transparent 30%);
+    radial-gradient(circle at top right, rgba(212, 172, 86, 0.16), transparent 24%),
+    linear-gradient(135deg, rgba(11, 9, 7, 0.98), rgba(24, 21, 17, 0.96));
 }
 
 .dark .section-surface::before {
   background:
-    linear-gradient(180deg, rgba(15, 23, 42, 0.3), transparent 20%, transparent 80%, rgba(15, 23, 42, 0.25)),
-    radial-gradient(circle at top left, rgba(49, 95, 74, 0.08), transparent 24%);
+    linear-gradient(180deg, rgba(24, 21, 17, 0.28), transparent 20%, transparent 80%, rgba(24, 21, 17, 0.24)),
+    radial-gradient(circle at top left, rgba(196, 154, 66, 0.08), transparent 24%);
 }
 
 .dark .glass-panel {
-  background: rgba(15, 23, 42, 0.72);
+  background: rgba(24, 21, 17, 0.74);
   box-shadow:
-    0 18px 45px rgba(2, 6, 23, 0.32),
-    inset 0 1px 0 rgba(148, 163, 184, 0.08);
+    0 18px 45px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .dark .home-band::after {
@@ -301,33 +324,38 @@
 }
 
 .dark .panel-soft {
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.88), rgba(15, 23, 42, 0.74));
-  border-color: rgba(51, 65, 85, 0.9);
+  background: linear-gradient(180deg, rgba(24, 21, 17, 0.92), rgba(30, 26, 21, 0.82));
+  border-color: rgba(196, 154, 66, 0.18);
   box-shadow:
-    0 18px 40px rgba(2, 6, 23, 0.28),
-    inset 0 1px 0 rgba(148, 163, 184, 0.06);
+    0 18px 40px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 .dark .panel-strong {
   background:
-    linear-gradient(165deg, rgba(2, 6, 23, 0.98), rgba(15, 23, 42, 0.96)),
-    radial-gradient(circle at top right, rgba(49, 95, 74, 0.18), transparent 36%);
-  border-color: rgba(51, 65, 85, 0.9);
-  box-shadow: 0 24px 60px rgba(2, 6, 23, 0.38);
+    radial-gradient(circle at top right, rgba(212, 172, 86, 0.16), transparent 34%),
+    linear-gradient(165deg, rgba(11, 9, 7, 0.98), rgba(24, 21, 17, 0.96));
+  border-color: rgba(196, 154, 66, 0.18);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.38);
 }
 
 .dark .metric-chip {
-  background: rgba(15, 23, 42, 0.84);
-  border-color: rgba(51, 65, 85, 0.9);
-  box-shadow: 0 12px 28px rgba(2, 6, 23, 0.25);
+  background: rgba(24, 21, 17, 0.9);
+  border-color: rgba(196, 154, 66, 0.16);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.26);
 }
 
 .nav-link {
-  @apply text-slate-600 hover:text-health-green font-medium transition-colors;
+  @apply font-medium text-slate-200 transition-colors hover:text-health-green;
+}
+
+.mixed-text {
+  unicode-bidi: isolate;
+  direction: inherit;
 }
 
 .dark .nav-link {
-  @apply text-slate-300 hover:text-health-green;
+  @apply text-slate-200 hover:text-health-green;
 }
 
 .identity-watermark {
@@ -341,6 +369,18 @@
   color: rgba(49, 95, 74, 0.06);
   pointer-events: none;
   user-select: none;
+}
+
+.brand-metal-text {
+  background: linear-gradient(110deg, #f3d78a 0%, #c79c3f 40%, #fff4d0 56%, #ab7c2c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.brand-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(196, 154, 66, 0.4), transparent);
 }
 
 *::-webkit-scrollbar {

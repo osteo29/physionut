@@ -1,13 +1,13 @@
 {
-  "name": "Active Rehab - جهز تأهيلك مع التغذية الصحيحة",
+  "name": "Active Rehab - Injury Recovery and Clinical Nutrition",
   "short_name": "Active Rehab",
-  "description": "بروتوكولات إصابات طبية + خطط تغذية مخصصة + ذكاء اصطناعي. Clinical protocols + personalized nutrition + AI assistant for injury recovery.",
+  "description": "Injury protocols, clinical nutrition tools, recovery calculators, and follow-up support in one rehab-focused experience.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#ffffff",
-  "theme_color": "#1f4d3b",
+  "background_color": "#0f0d0a",
+  "theme_color": "#0f0d0a",
   "prefer_related_applications": false,
   "icons": [
     {
@@ -35,17 +35,17 @@
       "purpose": "any"
     }
   ],
-  "categories": ["health", "medical", "productivity", "utilities"],
+  "categories": ["health", "medical", "lifestyle", "productivity"],
   "screenshots": [
     {
-      "src": "/icon-512.png",
-      "sizes": "512x512",
+      "src": "/og-image.png",
+      "sizes": "1200x630",
       "type": "image/png",
       "form_factor": "wide"
     },
     {
-      "src": "/icon-192.png",
-      "sizes": "192x192",
+      "src": "/icon-512.png",
+      "sizes": "512x512",
       "type": "image/png",
       "form_factor": "narrow"
     }
@@ -59,16 +59,16 @@
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     },
     {
-      "name": "AI Assistant",
-      "short_name": "Ask AI",
-      "description": "Ask medical questions",
+      "name": "Clinical Assistant",
+      "short_name": "Assistant",
+      "description": "Ask the rehab assistant",
       "url": "/en/assistant",
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     },
     {
       "name": "Calculators",
       "short_name": "Calc",
-      "description": "Health calculators",
+      "description": "Open recovery and nutrition calculators",
       "url": "/en/calculators",
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     }

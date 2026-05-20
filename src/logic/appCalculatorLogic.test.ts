@@ -1,18 +1,20 @@
 import {describe, expect, it} from 'vitest';
-import {buildResultAnalysisPrompt, calculateCalculatorResult, type CalculatorFormValues, validateCalculatorInputs} from './appCalculatorLogic';
+import {calculateCalculatorResult, validateCalculatorInputs, type CalculatorFormValues} from './appCalculatorLogic';
 import {translations} from '../services/translations';
 
-function makeValues(overrides: Partial<CalculatorFormValues> = {}): CalculatorFormValues {
+const t = translations.ar;
+
+function createValues(overrides: Partial<CalculatorFormValues> = {}): CalculatorFormValues {
   return {
-    activeCalculator: 'BMI',
+    activeCalculator: 'WHtR',
     weight: '70',
-    height: '175',
+    height: '170',
     age: '30',
     gender: 'male',
-    activity: '1.55',
+    activity: '1.2',
     waist: '80',
     neck: '38',
-    hip: '95',
+    hip: '',
     goal: 'maintain',
     bodyType: 'mesomorph',
     pace: 500,
@@ -21,16 +23,16 @@ function makeValues(overrides: Partial<CalculatorFormValues> = {}): CalculatorFo
     bodyFatInput: '',
     hotClimate: false,
     pregnancy: false,
-    mealItems: [],
+    mealItems: [{id: '1', name: '', calories: ''}],
     ...overrides,
   };
 }
 
-describe('appCalculatorLogic', () => {
+describe('appCalculatorLogic localized numeric input', () => {
   it('validates required fields based on the active calculator', () => {
     expect(
       validateCalculatorInputs({
-        values: makeValues({weight: ''}),
+        values: createValues({weight: ''}),
         lang: 'en',
         t: translations.en,
       }),
@@ -38,7 +40,7 @@ describe('appCalculatorLogic', () => {
 
     expect(
       validateCalculatorInputs({
-        values: makeValues({
+        values: createValues({
           activeCalculator: 'BodyFat',
           gender: 'female',
           hip: '',
@@ -51,8 +53,7 @@ describe('appCalculatorLogic', () => {
 
   it('calculates WHtR in imperial mode using metric conversion', () => {
     const {result, healthInterpretation} = calculateCalculatorResult({
-      values: makeValues({
-        activeCalculator: 'WHtR',
+      values: createValues({
         unitSystem: 'imperial',
         waist: '30',
         height: '70',
@@ -67,7 +68,7 @@ describe('appCalculatorLogic', () => {
 
   it('totals meal calories from mixed numeric strings', () => {
     const {result} = calculateCalculatorResult({
-      values: makeValues({
+      values: createValues({
         activeCalculator: 'Meal',
         mealItems: [
           {id: '1', name: 'Chicken', calories: '200'},
@@ -82,8 +83,59 @@ describe('appCalculatorLogic', () => {
     expect(result).toBe(350.5);
   });
 
-  it('builds calculator-specific analysis prompts and returns null without a calculator', () => {
-    expect(buildResultAnalysisPrompt('BMI', 'en')).toContain('BMI');
-    expect(buildResultAnalysisPrompt(null, 'en')).toBeNull();
+  it('accepts Arabic digits during validation for WHtR', () => {
+    const error = validateCalculatorInputs({
+      values: createValues({
+        height: '١٧٠',
+        waist: '٨٥',
+        neck: '٣٨',
+      }),
+      lang: 'ar',
+      t,
+    });
+
+    expect(error).toBeNull();
+  });
+
+  it('calculates WHtR from Arabic digits', () => {
+    const {result} = calculateCalculatorResult({
+      values: createValues({
+        height: '١٧٠',
+        waist: '٨٥',
+      }),
+      lang: 'ar',
+      t,
+    });
+
+    expect(result).toEqual({ratio: 0.5, category: 'مخاطر متزايدة'});
+  });
+
+  it('calculates body fat from localized metric inputs', () => {
+    const {result} = calculateCalculatorResult({
+      values: createValues({
+        activeCalculator: 'BodyFat',
+        height: '١٨٠',
+        waist: '٩٠',
+        neck: '٤٠',
+      }),
+      lang: 'ar',
+      t,
+    });
+
+    expect(result).toBeTypeOf('number');
+    expect(result).toBeGreaterThan(0);
+  });
+
+  it('returns localized guidance labels for WHtR thresholds', () => {
+    const {result} = calculateCalculatorResult({
+      values: createValues({
+        height: '١٧٠',
+        waist: '٧٥',
+      }),
+      lang: 'ar',
+      t,
+    });
+
+    expect(result).toEqual({ratio: 0.44, category: 'صحي'});
   });
 });

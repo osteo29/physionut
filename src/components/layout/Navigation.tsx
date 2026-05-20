@@ -137,7 +137,7 @@ const Navigation = memo(
       >
         <BrandLogo
           imageClassName="transition-transform duration-300 group-hover:rotate-3"
-          subtitle={isAr ? 'Clinical Recovery' : 'Clinical Recovery'}
+          subtitle="MOVE BETTER • FEEL BETTER"
         />
       </Link>
     );
@@ -384,12 +384,12 @@ const Navigation = memo(
           </>
         ) : null}
 
-        <nav className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/88 px-3 backdrop-blur-xl sm:px-5 lg:px-8">
+        <nav className="sticky top-0 z-50 border-b border-amber-200/15 bg-[rgba(15,13,10,0.82)] px-3 backdrop-blur-xl sm:px-5 lg:px-8">
           <div className="mx-auto flex min-h-[4.25rem] max-w-7xl items-center justify-between gap-3 py-2">
             <div className="flex items-center gap-2 sm:gap-2.5">
               <button
                 onClick={() => setIsSidebarOpen(true)}
-                className="rounded-xl border border-transparent p-2 text-slate-600 transition-colors hover:border-slate-200 hover:bg-slate-50"
+                className="rounded-xl border border-transparent p-2 text-slate-200 transition-colors hover:border-white/10 hover:bg-white/6"
                 aria-label={isAr ? 'فتح القائمة الرئيسية' : 'Open main menu'}
               >
                 <Menu className="h-5 w-5" />
@@ -424,7 +424,7 @@ const Navigation = memo(
             <div className="flex items-center gap-1.5 sm:gap-2">
               <Link
                 to={navigationPaths.assistant(lang)}
-                className="hidden items-center gap-2 rounded-full border border-slate-200 bg-slate-50/90 px-3 py-2 text-slate-700 transition-all hover:border-health-green/30 hover:bg-white md:flex"
+                className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/6 px-3 py-2 text-slate-100 transition-all hover:border-health-green/30 hover:bg-white/10 md:flex"
               >
                 <Stethoscope className="h-4 w-4 text-health-green" />
                 <span className="hidden text-xs font-bold xl:inline">
@@ -435,7 +435,7 @@ const Navigation = memo(
               {user ? (
                 <Link
                   to={navigationPaths.dashboard(lang)}
-                  className="hidden items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-2 text-slate-700 transition-all hover:border-health-green/30 hover:bg-slate-50 md:flex"
+                  className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/6 px-3 py-2 text-slate-100 transition-all hover:border-health-green/30 hover:bg-white/10 md:flex"
                 >
                   <UserRound className="h-4 w-4 text-health-green" />
                   <span className="hidden text-xs font-bold xl:inline">{authLabel}</span>
@@ -443,18 +443,18 @@ const Navigation = memo(
               ) : (
                 <Link
                   to={navigationPaths.auth(lang)}
-                  className="hidden items-center gap-2 rounded-full bg-slate-900 px-3.5 py-2 text-white shadow-sm transition-all hover:bg-slate-800 md:inline-flex"
+                  className="hidden items-center gap-2 rounded-full bg-health-green px-3.5 py-2 text-slate-950 shadow-[0_12px_28px_rgba(196,154,66,0.2)] transition-all hover:bg-[#d3aa54] md:inline-flex"
                 >
                   <UserRound className="h-4 w-4" />
                   <span className="text-xs font-bold">{isAr ? 'تسجيل الدخول' : 'Sign in'}</span>
                 </Link>
               )}
 
-              <div className="hidden items-center gap-1 rounded-full border border-slate-200 bg-slate-100 p-1 sm:flex">
+              <div className="hidden items-center gap-1 rounded-full border border-white/10 bg-white/6 p-1 sm:flex">
                 <button
                   onClick={() => handleLanguageSwitch('en')}
                   className={`rounded-full px-3 py-1 text-xs font-bold ${
-                    lang === 'en' ? 'bg-white text-health-green shadow-sm' : 'text-slate-700'
+                    lang === 'en' ? 'bg-white text-health-green shadow-sm' : 'text-slate-200'
                   }`}
                 >
                   EN
@@ -462,7 +462,7 @@ const Navigation = memo(
                 <button
                   onClick={() => handleLanguageSwitch('ar')}
                   className={`rounded-full px-3 py-1 text-xs font-bold ${
-                    lang === 'ar' ? 'bg-white text-health-green shadow-sm' : 'text-slate-700'
+                    lang === 'ar' ? 'bg-white text-health-green shadow-sm' : 'text-slate-200'
                   }`}
                 >
                   AR
@@ -471,7 +471,7 @@ const Navigation = memo(
 
               <button
                 onClick={onToggleTheme}
-                className="hidden rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-slate-700 transition-all hover:border-health-green/30 hover:bg-white sm:flex"
+                className="hidden rounded-xl border border-white/10 bg-white/6 px-3 py-2 text-slate-100 transition-all hover:border-health-green/30 hover:bg-white/10 sm:flex"
                 aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
               >
                 {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}

@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import type {CalculatorWorkspaceController} from '../../hooks/useCalculatorWorkspace';
 import {statusToTextClass} from '../../logic/physioNutritionLogic';
 import {translations, type Language} from '../../services/translations';
+import {normalizeNumericInput} from '../../utils/numericInput';
 
 const ResultCharts = lazy(() => import('../results/ResultCharts'));
 const ResultAssistantPanel = lazy(() => import('../results/ResultAssistantPanel'));
@@ -16,6 +17,18 @@ type Props = {
   lang: Language;
   practicalGuide: {title: string; items: string[]} | null;
   t: AppTranslations;
+};
+
+const decimalInputProps = {
+  type: 'text',
+  inputMode: 'decimal' as const,
+  dir: 'ltr' as const,
+};
+
+const integerInputProps = {
+  type: 'text',
+  inputMode: 'numeric' as const,
+  dir: 'ltr' as const,
 };
 
 export default function CalculatorSection({assessmentSnapshot, controller, lang, practicalGuide, t}: Props) {
@@ -67,6 +80,7 @@ export default function CalculatorSection({assessmentSnapshot, controller, lang,
     setIsTooltipModalOpen,
     setIsWristModalOpen,
     setKnowBodyFat,
+    setNeck,
     setNewFood,
     setPace,
     setPregnancy,
@@ -209,9 +223,9 @@ export default function CalculatorSection({assessmentSnapshot, controller, lang,
                       <div className="text-[10px] font-bold uppercase tracking-widest text-slate-600">Required</div>
                     </div>
                     <input
-                      type="number"
+                      {...decimalInputProps}
                       value={weight}
-                      onChange={(event) => setWeight(event.target.value)}
+                      onChange={(event) => setWeight(normalizeNumericInput(event.target.value))}
                       placeholder={t.forms.placeholderWeight}
                       className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:ring-2 focus:ring-health-green"
                     />
@@ -228,9 +242,9 @@ export default function CalculatorSection({assessmentSnapshot, controller, lang,
                         )}
                       </label>
                       <input
-                        type="number"
+                        {...integerInputProps}
                         value={height}
-                        onChange={(event) => setHeight(event.target.value)}
+                        onChange={(event) => setHeight(normalizeNumericInput(event.target.value, {allowDecimal: false}))}
                         placeholder={t.forms.placeholderHeight}
                         className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:ring-2 focus:ring-health-green"
                       />
@@ -248,9 +262,9 @@ export default function CalculatorSection({assessmentSnapshot, controller, lang,
                         )}
                       </label>
                       <input
-                        type="number"
+                        {...integerInputProps}
                         value={age}
-                        onChange={(event) => setAge(event.target.value)}
+                        onChange={(event) => setAge(normalizeNumericInput(event.target.value, {allowDecimal: false}))}
                         placeholder={t.forms.placeholderAge}
                         className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:ring-2 focus:ring-health-green"
                       />
@@ -308,9 +322,9 @@ export default function CalculatorSection({assessmentSnapshot, controller, lang,
                       <div className="space-y-2">
                         <label className="text-sm font-semibold text-slate-700">{t.forms.waist} ({unitSystem === 'metric' ? 'cm' : 'in'})</label>
                         <input
-                          type="number"
+                          {...decimalInputProps}
                           value={waist}
-                          onChange={(event) => setWaist(event.target.value)}
+                          onChange={(event) => setWaist(normalizeNumericInput(event.target.value))}
                           placeholder={t.forms.placeholderWaist}
                           className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:ring-2 focus:ring-health-green"
                         />
@@ -318,9 +332,9 @@ export default function CalculatorSection({assessmentSnapshot, controller, lang,
                       <div className="space-y-2">
                         <label className="text-sm font-semibold text-slate-700">{t.forms.neck} ({unitSystem === 'metric' ? 'cm' : 'in'})</label>
                         <input
-                          type="number"
+                          {...decimalInputProps}
                           value={neck}
-                          onChange={(event) => setNeck(event.target.value)}
+                          onChange={(event) => setNeck(normalizeNumericInput(event.target.value))}
                           placeholder={t.forms.placeholderNeck}
                           className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:ring-2 focus:ring-health-green"
                         />
@@ -329,9 +343,9 @@ export default function CalculatorSection({assessmentSnapshot, controller, lang,
                         <div className="space-y-2">
                           <label className="text-sm font-semibold text-slate-700">{t.forms.hip} ({unitSystem === 'metric' ? 'cm' : 'in'})</label>
                           <input
-                            type="number"
+                            {...decimalInputProps}
                             value={hip}
-                            onChange={(event) => setHip(event.target.value)}
+                            onChange={(event) => setHip(normalizeNumericInput(event.target.value))}
                             placeholder={t.forms.placeholderHip}
                             className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:ring-2 focus:ring-health-green"
                           />
@@ -396,9 +410,9 @@ export default function CalculatorSection({assessmentSnapshot, controller, lang,
                         <div className="space-y-2">
                           <label className="text-sm font-semibold text-slate-700">{t.forms.bodyFat}</label>
                           <input
-                            type="number"
+                            {...decimalInputProps}
                             value={bodyFatInput}
-                            onChange={(event) => setBodyFatInput(event.target.value)}
+                            onChange={(event) => setBodyFatInput(normalizeNumericInput(event.target.value))}
                             placeholder="e.g. 15"
                             className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:ring-2 focus:ring-health-green"
                           />
@@ -536,7 +550,7 @@ export default function CalculatorSection({assessmentSnapshot, controller, lang,
                             className="flex-1 rounded-xl border border-slate-200 px-4 py-3 outline-none focus:ring-2 focus:ring-health-green"
                           />
                           <input
-                            type="number"
+                            {...decimalInputProps}
                             placeholder={t.forms.calories}
                             value={item.calories}
                             onChange={(event) => updateMealItem(item.id, 'calories', event.target.value)}
@@ -711,7 +725,7 @@ export default function CalculatorSection({assessmentSnapshot, controller, lang,
                 ].map((field) => (
                   <div key={field.key}>
                     <label className="mb-1 block text-sm font-semibold text-slate-700">{field.label}</label>
-                    <input type="number" value={newFood[field.key as keyof typeof newFood]} onChange={(event) => setNewFood({...newFood, [field.key]: event.target.value})} className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:ring-2 focus:ring-health-green" />
+                    <input {...decimalInputProps} value={newFood[field.key as keyof typeof newFood]} onChange={(event) => setNewFood({...newFood, [field.key]: normalizeNumericInput(event.target.value)})} className="w-full rounded-xl border border-slate-200 px-4 py-3 outline-none focus:ring-2 focus:ring-health-green" />
                   </div>
                 ))}
               </div>

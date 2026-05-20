@@ -1,5 +1,6 @@
 import {useEffect, useMemo, useRef, useState} from 'react';
 import {HealthProfile, type HealthMetrics, PhysioNutritionLogic} from '../services/physioNutritionLogic';
+import {normalizeNumericInput, parseLocalizedNumber} from '../utils/numericInput';
 
 const ARCHITECT_STORAGE_KEY = 'physiohub_architect_profile';
 
@@ -64,7 +65,7 @@ const hasMeaningfulArchitectData = (profile: HealthProfile) =>
 
 const parseArchitectNumber = (value: string) => {
   if (!value.trim()) return 0;
-  const parsed = Number(value);
+  const parsed = parseLocalizedNumber(value);
   return Number.isFinite(parsed) ? parsed : 0;
 };
 
@@ -134,11 +135,13 @@ export function useArchitectProfile() {
       min?: number;
     },
   ) => {
-    setArchitectDraft((prev) => ({...prev, [field]: value}));
+    const allowDecimal = field === 'weight';
+    const normalizedValue = normalizeNumericInput(value, {allowDecimal});
+    setArchitectDraft((prev) => ({...prev, [field]: normalizedValue}));
 
     if (!sync) return;
 
-    const parsedValue = parseArchitectNumber(value);
+    const parsedValue = parseArchitectNumber(normalizedValue);
     const minValue = sync.min ?? 0;
     const nextValue = parsedValue > 0 ? Math.max(parsedValue, minValue) : 0;
 

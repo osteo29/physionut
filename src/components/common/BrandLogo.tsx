@@ -12,19 +12,19 @@ export default function BrandLogo({
   textTone = 'dark',
   className = '',
   imageClassName = '',
-  title = 'Active Rehab',
-  subtitle = 'Clinical Recovery',
+  title = 'ACTIVE REHAB',
+  subtitle = 'MOVE BETTER • FEEL BETTER',
 }: BrandLogoProps) {
   const isLight = textTone === 'light';
-  const titleClassName = isLight ? 'text-white' : 'text-slate-900';
-  const subtitleClassName = isLight ? 'text-slate-300' : 'text-health-green';
+  const titleClassName = isLight ? 'brand-metal-text' : 'text-slate-900';
+  const subtitleClassName = isLight ? 'text-amber-100/90' : 'text-health-green';
 
   return (
     <div className={`flex items-center gap-3 ${className}`.trim()}>
       <img
         src="/brand-logo.png"
         alt="Active Rehab logo"
-        className={`h-11 w-11 rounded-full border border-slate-200/80 bg-white object-cover shadow-sm ${imageClassName}`.trim()}
+        className={`h-12 w-12 rounded-[1.05rem] border border-amber-200/40 bg-[radial-gradient(circle_at_top,#25201a,#0f0d0a)] object-cover shadow-[0_18px_32px_rgba(15,13,10,0.16)] ${imageClassName}`.trim()}
       />
       {showText ? (
         <div className="flex flex-col text-left">

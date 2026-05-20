@@ -6,7 +6,7 @@
     <link rel="icon" href="/favicon.png" type="image/png" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <meta name="theme-color" content="#1f4d3b" />
+    <meta name="theme-color" content="#0f0d0a" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -19,13 +19,13 @@
     <style>
       :root {
         color-scheme: light;
-        --boot-bg: #edf6f1;
-        --boot-card: #ffffff;
-        --boot-deep: #1f4d3b;
-        --boot-mid: #4c8b6c;
-        --boot-soft: #8fc6a8;
-        --boot-text: #16382c;
-        --boot-muted: #628474;
+        --boot-bg: #0f0d0a;
+        --boot-card: rgba(24, 21, 17, 0.92);
+        --boot-deep: #0f0d0a;
+        --boot-mid: #c49a42;
+        --boot-soft: #f3d78a;
+        --boot-text: #f7f0e4;
+        --boot-muted: #d8ccb4;
       }
 
       html,
@@ -33,12 +33,12 @@
         margin: 0;
         min-height: 100%;
         background:
-          radial-gradient(circle at top, rgba(143, 198, 168, 0.22), transparent 34%),
-          linear-gradient(180deg, #f7fcf8 0%, var(--boot-bg) 100%);
+          radial-gradient(circle at top, rgba(196, 154, 66, 0.18), transparent 30%),
+          linear-gradient(180deg, #181511 0%, var(--boot-bg) 100%);
       }
 
       body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        font-family: "Aptos", "Trebuchet MS", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       }
 
       #boot-splash {
@@ -50,8 +50,8 @@
         justify-content: center;
         padding: 24px;
         background:
-          radial-gradient(circle at 50% 18%, rgba(143, 198, 168, 0.24), transparent 28%),
-          linear-gradient(180deg, #f7fcf8 0%, var(--boot-bg) 100%);
+          radial-gradient(circle at 50% 18%, rgba(196, 154, 66, 0.22), transparent 24%),
+          linear-gradient(180deg, #181511 0%, var(--boot-bg) 100%);
         transition: opacity 0.35s ease, visibility 0.35s ease;
       }
 
@@ -71,64 +71,18 @@
 
       .boot-mark {
         position: relative;
-        display: grid;
-        place-items: center;
-        width: 104px;
-        height: 104px;
-        border-radius: 32px;
-        background: linear-gradient(145deg, var(--boot-deep), var(--boot-mid));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 112px;
+        height: 112px;
+        border-radius: 34px;
+        padding: 10px;
+        background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(196,154,66,0.12));
+        border: 1px solid rgba(196, 154, 66, 0.24);
         box-shadow:
-          0 22px 44px rgba(31, 77, 59, 0.18),
-          inset 0 1px 0 rgba(255, 255, 255, 0.16);
-      }
-
-      .boot-mark::before {
-        content: "";
-        position: absolute;
-        inset: 26px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.97);
-      }
-
-      .boot-mark::after {
-        content: "";
-        position: absolute;
-        top: 17px;
-        right: 15px;
-        width: 28px;
-        height: 28px;
-        border-radius: 28px 4px 28px 4px;
-        transform: rotate(22deg);
-        background: linear-gradient(145deg, #d8f3dc, #95d5b2);
-        box-shadow: 0 6px 16px rgba(216, 243, 220, 0.35);
-      }
-
-      .boot-plus {
-        position: relative;
-        z-index: 1;
-        width: 38px;
-        height: 38px;
-      }
-
-      .boot-plus::before,
-      .boot-plus::after {
-        content: "";
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        border-radius: 999px;
-        background: var(--boot-deep);
-        transform: translate(-50%, -50%);
-      }
-
-      .boot-plus::before {
-        width: 8px;
-        height: 38px;
-      }
-
-      .boot-plus::after {
-        width: 38px;
-        height: 8px;
+          0 26px 52px rgba(0, 0, 0, 0.32),
+          inset 0 1px 0 rgba(255, 255, 255, 0.08);
       }
 
       .boot-title {
@@ -136,6 +90,7 @@
         font-weight: 800;
         letter-spacing: -0.03em;
         color: var(--boot-text);
+        text-transform: uppercase;
       }
 
       .boot-title span {
@@ -154,7 +109,7 @@
         height: 4px;
         overflow: hidden;
         border-radius: 999px;
-        background: rgba(31, 77, 59, 0.12);
+        background: rgba(196, 154, 66, 0.14);
       }
 
       .boot-loader::after {
@@ -172,20 +127,20 @@
         100% { transform: translateX(240%); }
       }
     </style>
-    <title>Active Rehab | Clinical Calculators for Therapy & Nutrition</title>
-    <meta name="description" content="Evidence-based clinical calculators for physical therapists, nutritionists, and fitness enthusiasts. BMI, BMR, TDEE, and more." />
-    <meta name="keywords" content="Physical Therapy Calculators, Clinical Nutrition Tools, Active Rehab, BMI, BMR, TDEE, Macro Calculator, Ideal Body Weight, Body Fat Percentage, Water Intake, Protein Calculator" />
+    <title>Active Rehab | Injury Recovery, Clinical Nutrition, and Smarter Follow-up</title>
+    <meta name="description" content="Active Rehab brings injury protocols, clinical nutrition tools, recovery calculators, and follow-up support into one clearer rehab-focused experience." />
+    <meta name="keywords" content="Active Rehab, injury recovery, rehab nutrition, physical therapy tools, clinical nutrition, recovery calculator, injury protocols, follow-up dashboard" />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Active Rehab | Clinical Calculators for Therapy & Nutrition" />
-    <meta property="og:description" content="Evidence-based clinical calculators for physical therapists, nutritionists, and fitness enthusiasts. BMI, BMR, TDEE, and more." />
+    <meta property="og:title" content="Active Rehab | Injury Recovery, Clinical Nutrition, and Smarter Follow-up" />
+    <meta property="og:description" content="A rehab-first platform for injury protocols, nutrition support, calculators, and clearer follow-up." />
     <meta property="og:image" content="https://physionutrition.vercel.app/og-image.png" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Active Rehab | Clinical Calculators for Therapy & Nutrition" />
-    <meta name="twitter:description" content="Evidence-based clinical calculators for physical therapists, nutritionists, and fitness enthusiasts. BMI, BMR, TDEE, and more." />
+    <meta name="twitter:title" content="Active Rehab | Injury Recovery, Clinical Nutrition, and Smarter Follow-up" />
+    <meta name="twitter:description" content="A rehab-first platform for injury protocols, nutrition support, calculators, and clearer follow-up." />
     <meta name="twitter:image" content="https://physionutrition.vercel.app/og-image.png" />
 
     <!-- Schema.org JSON-LD -->
@@ -195,7 +150,7 @@
         "@type": "WebApplication",
         "name": "Active Rehab",
         "url": "https://physionutrition.vercel.app",
-        "description": "Evidence-based clinical calculators for physical therapy and clinical nutrition.",
+        "description": "A rehab-first platform for injury protocols, clinical nutrition tools, and recovery follow-up.",
         "applicationCategory": "HealthApplication",
         "operatingSystem": "All",
         "author": {
@@ -210,12 +165,12 @@
   </head>
   <body>
     <div id="boot-splash" aria-hidden="true">
-      <div class="boot-shell">
+        <div class="boot-shell">
         <div class="boot-mark">
-          <div class="boot-plus"></div>
+          <img src="/brand-logo.png" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:24px;" />
         </div>
         <div class="boot-title">Active<span> Rehab</span></div>
-        <div class="boot-subtitle">Clinical recovery tools loading with a cleaner app-like experience.</div>
+        <div class="boot-subtitle">Loading a cleaner recovery experience with the new Active Rehab identity.</div>
         <div class="boot-loader"></div>
       </div>
       <script>

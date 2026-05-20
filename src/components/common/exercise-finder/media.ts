@@ -1,9 +1,9 @@
 import type {StaticMuscleSlug} from './types';
 
-export const REGION_ANATOMY_ART: Partial<Record<StaticMuscleSlug, string>> = {
-  chest: '/anatomy/chest.svg',
-  back: '/anatomy/back.svg',
-  shoulders: '/anatomy/shoulders.svg',
+export const REGION_VISUAL_ACCENTS: Partial<Record<StaticMuscleSlug, string>> = {
+  chest: 'from-rose-100 via-white to-rose-50',
+  back: 'from-sky-100 via-white to-cyan-50',
+  shoulders: 'from-amber-100 via-white to-orange-50',
 };
 
 export const EXERCISE_MEDIA_BUCKET = 'exercise-media';

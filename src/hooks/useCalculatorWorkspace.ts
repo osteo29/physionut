@@ -8,6 +8,7 @@ import {buildResultAnalysisPrompt, calculateCalculatorResult, validateCalculator
 import type {BodyType, GoalType, HealthInterpretation} from '../logic/physioNutritionLogic';
 import type {HealthProfile} from '../logic/physioNutritionEngine';
 import {architectNumberToInput} from './useArchitectProfile';
+import {normalizeNumericInput, parseLocalizedNumber} from '../utils/numericInput';
 
 const CUSTOM_FOODS_STORAGE_KEY = 'physiohub_custom_foods';
 
@@ -55,7 +56,7 @@ function loadCustomFoods() {
 }
 
 function toPositiveNumber(value: string) {
-  const parsed = Number(value);
+  const parsed = parseLocalizedNumber(value);
   return Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
 }
 
@@ -312,7 +313,16 @@ export function useCalculatorWorkspace({
   }
 
   function updateMealItem(id: string, field: 'name' | 'calories', value: string) {
-    setMealItems((previous) => previous.map((item) => item.id === id ? {...item, [field]: value} : item));
+    setMealItems((previous) =>
+      previous.map((item) =>
+        item.id === id
+          ? {
+              ...item,
+              [field]: field === 'calories' ? normalizeNumericInput(value) : value,
+            }
+          : item,
+      ),
+    );
   }
 
   function addFoodToMeal(food: FoodItem) {
@@ -345,10 +355,10 @@ export function useCalculatorWorkspace({
         ar: newFood.nameAr || newFood.nameEn,
       },
       category: 'cooked',
-      calories: Number(newFood.calories),
-      protein: Number(newFood.protein) || 0,
-      carbs: Number(newFood.carbs) || 0,
-      fats: Number(newFood.fats) || 0,
+      calories: parseLocalizedNumber(newFood.calories),
+      protein: parseLocalizedNumber(newFood.protein) || 0,
+      carbs: parseLocalizedNumber(newFood.carbs) || 0,
+      fats: parseLocalizedNumber(newFood.fats) || 0,
     };
 
     setCustomFoods((previous) => [food, ...previous]);

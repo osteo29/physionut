@@ -1,5 +1,5 @@
-﻿import {useEffect, useMemo, useState} from 'react';
-import {Activity, ArrowRight, ChevronRight, Dumbbell, Network} from 'lucide-react';
+import {useEffect, useMemo, useState, type ComponentType} from 'react';
+import {Accessibility, Activity, ArrowRight, Bone, ChevronRight, Dumbbell, Network, type LucideProps} from 'lucide-react';
 import {Link, Navigate, useParams} from 'react-router-dom';
 
 import {ExerciseCard} from '../components/common/exercise-finder/ExerciseCard';
@@ -18,11 +18,12 @@ import {
 import {TrainingSystemCard} from '../components/common/exercise-finder/TrainingSystemCard';
 import {WeeklyPlanCard} from '../components/common/exercise-finder/WeeklyPlanCard';
 import type {StaticMuscleSlug} from '../components/common/exercise-finder/types';
-import {REGION_ANATOMY_ART} from '../components/common/exercise-finder/media';
+import {REGION_VISUAL_ACCENTS} from '../components/common/exercise-finder/media';
 import Seo from '../components/seo/Seo';
 import {getLocalCatalogInjuries, getRelatedCatalogInjuriesByIds, type InjuryCatalogEntry} from '../services/injuryService';
 import {REHAB_REGION_CONFIG} from '../services/rehabRegionConfig';
 import {denormalizeExerciseUrlSlug, normalizeExerciseUrlSlug} from '../services/seoAliases';
+import {prepareMedicalText} from '../services/textEncoding';
 import {buildHreflangs, navigationPaths} from '../utils/langUrlHelper';
 import PageLayout from './PageLayout';
 import usePreferredLang from './usePreferredLang';
@@ -31,9 +32,16 @@ function isStaticMuscleSlug(value: string | undefined): value is StaticMuscleSlu
   return Boolean(value && EXERCISE_FINDER_STATIC_SLUGS.includes(value as StaticMuscleSlug));
 }
 
+const REGION_ICON_MAP: Partial<Record<StaticMuscleSlug, ComponentType<LucideProps>>> = {
+  chest: Activity,
+  back: Bone,
+  shoulders: Accessibility,
+};
+
 export default function ExerciseRegionPage() {
   const lang = usePreferredLang();
   const isAr = lang === 'ar';
+  const safeText = prepareMedicalText;
   const {muscle} = useParams<{muscle: string}>();
   const normalizedMuscle = denormalizeExerciseUrlSlug(muscle || '');
   const region = isStaticMuscleSlug(normalizedMuscle) ? normalizedMuscle : null;
@@ -80,16 +88,19 @@ export default function ExerciseRegionPage() {
   const systems = getSystemsForRegion(region).slice(0, 3);
   const visibleRelatedInjuries = relatedInjuries.length ? relatedInjuries : fallbackRelatedInjuries;
   const canonicalPath = `/exercises/${normalizeExerciseUrlSlug(region)}`;
-  const anatomyArt = REGION_ANATOMY_ART[region];
+  const AnatomyIcon = REGION_ICON_MAP[region] || Network;
+  const anatomyAccent = REGION_VISUAL_ACCENTS[region] || 'from-slate-100 via-white to-slate-50';
   const seoTitle = isAr
-    ? `تمارين ${label} | تشريح مبسط وخطة تمارين كاملة`
-    : `${label} Exercises | Anatomy, exercise library, and workout systems`;
+    ? safeText(`تمارين ${label} | تشريح مبسط وخطة تمارين كاملة`)
+    : safeText(`${label} Exercises | Anatomy, exercise library, and workout systems`);
   const seoDescription = isAr
-    ? `${content.introAr} ستجد أيضًا صفحات الأنظمة المناسبة وروابط الخطة الأسبوعية وتمارين ${label} الكاملة.`
-    : `${content.introEn} Explore full ${EXERCISE_FINDER_STATIC_LABELS[region].toLowerCase()} exercises, simple anatomy notes, linked workout systems, and weekly plan guidance.`;
+    ? safeText(`${content.introAr} ستجد أيضًا صفحات الأنظمة المناسبة وروابط الخطة الأسبوعية وتمارين ${label} الكاملة.`)
+    : safeText(
+        `${content.introEn} Explore full ${EXERCISE_FINDER_STATIC_LABELS[region].toLowerCase()} exercises, simple anatomy notes, linked workout systems, and weekly plan guidance.`,
+      );
 
   return (
-    <PageLayout title={isAr ? `دليل تمارين ${label}` : `${label} Exercise Guide`}>
+    <PageLayout title={safeText(isAr ? `دليل تمارين ${label}` : `${label} Exercise Guide`)}>
       <Seo
         title={seoTitle}
         description={seoDescription}
@@ -113,10 +124,10 @@ export default function ExerciseRegionPage() {
                 <Activity className="h-4 w-4" />
                 <span>{rehabConfig ? (isAr ? 'دليل تأهيل' : 'Rehab guide') : isAr ? 'منطقة عضلية' : 'Region page'}</span>
               </div>
-              <p className="text-base leading-8 text-slate-700">{isAr ? content.introAr : content.introEn}</p>
+              <p className="mixed-text text-base leading-8 text-slate-700">{safeText(isAr ? content.introAr : content.introEn)}</p>
               {rehabConfig ? (
-                <div className="rounded-[1.5rem] border border-health-green/15 bg-white/75 p-4 text-sm leading-7 text-slate-700">
-                  {isAr ? rehabConfig.summaryAr : rehabConfig.summaryEn}
+                <div className="mixed-text rounded-[1.5rem] border border-health-green/15 bg-white/75 p-4 text-sm leading-7 text-slate-700">
+                  {safeText(isAr ? rehabConfig.summaryAr : rehabConfig.summaryEn)}
                 </div>
               ) : null}
             </div>
@@ -141,7 +152,7 @@ export default function ExerciseRegionPage() {
 
           <div className="mt-6 flex flex-wrap gap-3">
             <a href="#region-anatomy" className="rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-health-green/30 hover:text-health-green">
-              {isAr ? 'التشريح المبسط' : 'Simple anatomy'}
+              {isAr ? 'ملخص المنطقة' : 'Region overview'}
             </a>
             {rehabConfig ? (
               <a href="#rehab-guidance" className="rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-health-green/30 hover:text-health-green">
@@ -171,8 +182,8 @@ export default function ExerciseRegionPage() {
               </div>
               <div className="mt-4 space-y-3">
                 {(isAr ? rehabConfig.medicalNotesAr : rehabConfig.medicalNotesEn).map((item) => (
-                  <div key={item} className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm leading-7 text-slate-700">
-                    {item}
+                  <div key={item} className="mixed-text rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm leading-7 text-slate-700">
+                    {safeText(item)}
                   </div>
                 ))}
               </div>
@@ -184,8 +195,8 @@ export default function ExerciseRegionPage() {
               </div>
               <div className="mt-4 space-y-3">
                 {(isAr ? rehabConfig.redFlagNotesAr : rehabConfig.redFlagNotesEn).map((item) => (
-                  <div key={item} className="rounded-2xl border border-amber-200 bg-white/80 px-4 py-3 text-sm leading-7 text-slate-700">
-                    {item}
+                  <div key={item} className="mixed-text rounded-2xl border border-amber-200 bg-white/80 px-4 py-3 text-sm leading-7 text-slate-700">
+                    {safeText(item)}
                   </div>
                 ))}
               </div>
@@ -197,22 +208,29 @@ export default function ExerciseRegionPage() {
           <article className="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
             <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-slate-500">
               <Network className="h-4 w-4 text-health-green" />
-              <span>{isAr ? 'تشريح مبسط' : 'Simple anatomy'}</span>
+              <span>{isAr ? 'عرض محايد للمنطقة' : 'Neutral region visual'}</span>
             </div>
-            {anatomyArt ? (
-              <div className="mt-5 overflow-hidden rounded-[1.5rem] border border-slate-200 bg-[radial-gradient(circle_at_top,rgba(14,165,233,0.08),transparent_48%),linear-gradient(180deg,#ffffff,#f8fafc)] p-4">
-                <img
-                  src={anatomyArt}
-                  alt={`${label} anatomy illustration`}
-                  className="mx-auto aspect-[4/3] w-full max-w-md object-contain"
-                  loading="lazy"
-                />
+            <div className={`mt-5 overflow-hidden rounded-[1.5rem] border border-slate-200 bg-gradient-to-br ${anatomyAccent} p-5`}>
+              <div className="flex min-h-[240px] flex-col items-center justify-center rounded-[1.25rem] border border-white/80 bg-white/85 px-6 py-8 text-center">
+                <div className="flex h-20 w-20 items-center justify-center rounded-full border border-slate-200 bg-slate-50 text-slate-700">
+                  <AnatomyIcon className="h-10 w-10" aria-hidden="true" />
+                </div>
+                <div className="mt-5 max-w-md space-y-2">
+                  <div className="text-sm font-bold uppercase tracking-[0.18em] text-slate-500">
+                    {isAr ? 'الرسوم التشريحية قيد الاستبدال' : 'Anatomy visual paused'}
+                  </div>
+                  <p className="mixed-text text-sm leading-7 text-slate-600">
+                    {isAr
+                      ? 'تم إيقاف الرسوم التشريحية المؤقتة لأننا لا نعرض إلا صورًا طبية موثقة. هذه المساحة تعرض الآن أيقونة محايدة إلى حين إضافة ملفات معتمدة.'
+                      : 'The temporary anatomy SVG has been removed. We only surface verified medical visuals here, so this section uses a neutral icon until curated anatomy assets are approved.'}
+                  </p>
+                </div>
               </div>
-            ) : null}
+            </div>
             <div className="mt-4 space-y-3">
               {(isAr ? content.anatomyAr : content.anatomyEn).map((item) => (
-                <div key={item} className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm leading-7 text-slate-700">
-                  {item}
+                <div key={item} className="mixed-text rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm leading-7 text-slate-700">
+                  {safeText(item)}
                 </div>
               ))}
             </div>
@@ -225,8 +243,8 @@ export default function ExerciseRegionPage() {
             </div>
             <div className="mt-4 space-y-3">
               {(isAr ? content.cuesAr : content.cuesEn).map((item) => (
-                <div key={item} className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm leading-7 text-slate-700">
-                  {item}
+                <div key={item} className="mixed-text rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm leading-7 text-slate-700">
+                  {safeText(item)}
                 </div>
               ))}
             </div>
@@ -236,7 +254,7 @@ export default function ExerciseRegionPage() {
               </div>
               <div className="mt-3 flex flex-wrap gap-2">
                 {(isAr ? content.keywordsAr : content.keywordsEn).map((keyword) => (
-                  <Badge key={keyword}>{keyword}</Badge>
+                  <Badge key={keyword}>{safeText(keyword)}</Badge>
                 ))}
               </div>
             </div>
@@ -247,7 +265,7 @@ export default function ExerciseRegionPage() {
           <section id="related-injuries" className="space-y-5">
             <div>
               <h2 className="text-2xl font-black text-slate-900">{isAr ? 'إصابات مرتبطة بهذا التأهيل' : 'Related injury pages'}</h2>
-              <p className="mt-2 text-sm leading-7 text-slate-600">
+              <p className="mixed-text mt-2 text-sm leading-7 text-slate-600">
                 {isAr
                   ? 'هذه الروابط تجمع بين صفحة التأهيل العامة وصفحات الإصابات الأقرب لها، حتى يقرأ المستخدم التمرين داخل سياق إصابة أو مرحلة تعافٍ أكثر دقة.'
                   : 'These links connect the general rehab page with the injury guides most likely to need this exercise focus, giving users more condition-specific context.'}
@@ -264,11 +282,11 @@ export default function ExerciseRegionPage() {
                   <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">
                     {isAr ? 'صفحة إصابة' : 'Injury guide'}
                   </div>
-                  <div className="mt-3 text-lg font-black leading-8 text-slate-900">
-                    {injury.name}
+                  <div className="mixed-text mt-3 text-lg font-black leading-8 text-slate-900">
+                    {safeText(injury.name)}
                   </div>
-                  <div className="mt-2 text-sm leading-7 text-slate-600">
-                    {`${injury.category} • ${injury.bodyRegion}`}
+                  <div className="mixed-text mt-2 text-sm leading-7 text-slate-600">
+                    {safeText(`${injury.category} • ${injury.bodyRegion}`)}
                   </div>
                   <div className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-health-green transition group-hover:text-health-green-dark">
                     <span>{isAr ? 'افتح دليل الإصابة' : 'Open injury guide'}</span>
@@ -284,7 +302,7 @@ export default function ExerciseRegionPage() {
           <div className="flex items-center justify-between gap-4">
             <div>
               <h2 className="text-2xl font-black text-slate-900">{isAr ? 'أنظمة مناسبة لهذه المنطقة' : 'Related training systems'}</h2>
-              <p className="mt-2 text-sm leading-7 text-slate-600">
+              <p className="mixed-text mt-2 text-sm leading-7 text-slate-600">
                 {isAr ? 'كل نظام من دول له صفحة مفصلة وخطة أسبوعية وروابط مباشرة للتمارين.' : 'Each system below has its own detail page, weekly template, and direct exercise links.'}
               </p>
             </div>
@@ -310,7 +328,7 @@ export default function ExerciseRegionPage() {
         <section id="region-exercises" className="space-y-5">
           <div>
             <h2 className="text-2xl font-black text-slate-900">{isAr ? `كل تمارين ${label}` : `All ${EXERCISE_FINDER_STATIC_LABELS[region]} exercises`}</h2>
-            <p className="mt-2 text-sm leading-7 text-slate-600">
+            <p className="mixed-text mt-2 text-sm leading-7 text-slate-600">
               {isAr
                 ? 'القائمة هنا مخصصة بالكامل لهذه المنطقة، مع ملاحظات تقنية وتفاصيل إضافية عند الفتح.'
                 : 'This page collects the full exercise library for the region, with technique notes and expandable details.'}
@@ -327,7 +345,7 @@ export default function ExerciseRegionPage() {
           <section className="space-y-5">
             <div>
               <h2 className="text-2xl font-black text-slate-900">{isAr ? 'مثال ربط مع الخطة الأسبوعية' : 'Linked weekly plan example'}</h2>
-              <p className="mt-2 text-sm leading-7 text-slate-600">
+              <p className="mixed-text mt-2 text-sm leading-7 text-slate-600">
                 {isAr
                   ? 'الجزء ده يوضح كيف ترتبط تمارين هذه المنطقة مباشرة بأسبوع تدريبي حقيقي.'
                   : 'This section shows how the region connects to a real weekly training structure.'}

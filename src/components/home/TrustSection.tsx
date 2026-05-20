@@ -45,11 +45,11 @@ const TrustSection = memo(({lang}: {lang: Language}) => {
       ];
 
   return (
-    <section className="border-b border-slate-100 bg-white py-16">
+    <section className="border-b border-amber-100/60 bg-[linear-gradient(180deg,rgba(255,252,247,0.96),rgba(248,242,232,0.92))] py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.1fr_1.4fr]">
-          <div className="rounded-[2rem] border border-slate-200 bg-slate-50 p-6">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-health-green/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-health-green">
+          <div className="panel-soft rounded-[2rem] p-6">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-slate-950 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-health-green">
               <ShieldCheck className="h-3.5 w-3.5" />
               <span>{isAr ? 'الأمان والموثوقية' : 'Safety and trust'}</span>
             </div>
@@ -64,7 +64,7 @@ const TrustSection = memo(({lang}: {lang: Language}) => {
             <div className="space-y-3">
               {principles.map((item, index) => (
                 <div key={item} className="flex items-start gap-3 text-sm leading-6 text-slate-700">
-                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-xs font-black text-health-green">
+                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-health-green/20 bg-white text-xs font-black text-health-green">
                     {index + 1}
                   </div>
                   <p>{item}</p>
@@ -80,9 +80,9 @@ const TrustSection = memo(({lang}: {lang: Language}) => {
                 href={source.href}
                 target="_blank"
                 rel="noreferrer"
-                className="group rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm transition-[box-shadow,border-color] hover:border-health-green/30 hover:shadow-md"
+                className="group rounded-[2rem] border border-health-green/12 bg-white/90 p-5 shadow-sm transition-[box-shadow,border-color,transform] hover:-translate-y-1 hover:border-health-green/30 hover:shadow-md"
               >
-                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-soft-blue text-health-green">
+                  <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-950 text-health-green">
                   <BookOpenCheck className="h-5 w-5" />
                 </div>
                 <div className="mb-2 flex items-center justify-between gap-3">
@@ -96,8 +96,8 @@ const TrustSection = memo(({lang}: {lang: Language}) => {
           </div>
         </div>
 
-        <div className="mt-6 flex items-start gap-4 rounded-[2rem] border border-amber-200 bg-amber-50 p-5">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-amber-200 bg-white text-amber-600">
+        <div className="mt-6 flex items-start gap-4 rounded-[2rem] border border-health-green/20 bg-[#fff6e4] p-5">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-health-green/20 bg-white text-health-green">
             <TriangleAlert className="h-5 w-5" />
           </div>
           <div>

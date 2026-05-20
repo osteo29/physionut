@@ -14,7 +14,7 @@ const AboutSection = memo(({lang}: {lang: Language}) => {
   const isAr = lang === 'ar';
 
   return (
-    <section id="about" className="relative overflow-hidden bg-white py-24">
+    <section id="about" className="relative overflow-hidden bg-[linear-gradient(180deg,rgba(255,252,247,0.98),rgba(248,242,232,0.96))] py-24">
       <div className="pointer-events-none absolute left-0 top-0 h-full w-full overflow-hidden">
         <div className="absolute -left-20 top-1/4 h-96 w-96 rounded-full bg-health-green/5 blur-[100px]" />
         <div className="absolute -right-20 bottom-1/4 h-96 w-96 rounded-full bg-medical-blue/5 blur-[100px]" />
@@ -23,14 +23,14 @@ const AboutSection = memo(({lang}: {lang: Language}) => {
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
           <div>
-            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-health-green/20 bg-health-green/10 px-4 py-1.5 text-sm font-bold text-health-green">
+            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-health-green/20 bg-slate-950 px-4 py-1.5 text-sm font-bold text-health-green">
               <Info className="h-4 w-4" />
               <span>{isAr ? 'عن Active Rehab' : 'About Active Rehab'}</span>
             </div>
 
             <h2 className="mb-8 text-4xl font-bold leading-tight tracking-tight text-slate-900 md:text-5xl">
               {isAr ? 'ربط العلاج الطبيعي' : 'Bridging'} <br />
-              <span className="mt-2 inline-block text-health-green">
+              <span className="brand-metal-text mt-2 inline-block">
                 {isAr ? 'بالتغذية العلاجية' : 'Physical Therapy and Clinical Nutrition'}
               </span>
             </h2>
@@ -49,8 +49,8 @@ const AboutSection = memo(({lang}: {lang: Language}) => {
             </div>
 
             <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2">
-              <div className="flex items-center gap-4 rounded-[2rem] border border-slate-100 bg-slate-50 p-6 transition-[box-shadow,border-color] hover:bg-white hover:shadow-md">
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-health-green/10">
+              <div className="flex items-center gap-4 rounded-[2rem] border border-health-green/12 bg-white/80 p-6 transition-[box-shadow,border-color] hover:bg-white hover:shadow-md">
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-950">
                   <Calculator className="h-7 w-7 text-health-green" />
                 </div>
                 <div>
@@ -60,8 +60,8 @@ const AboutSection = memo(({lang}: {lang: Language}) => {
                   </div>
                 </div>
               </div>
-              <div className="flex items-center gap-4 rounded-[2rem] border border-slate-100 bg-slate-50 p-6 transition-[box-shadow,border-color] hover:bg-white hover:shadow-md">
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-medical-blue/10">
+              <div className="flex items-center gap-4 rounded-[2rem] border border-health-green/12 bg-white/80 p-6 transition-[box-shadow,border-color] hover:bg-white hover:shadow-md">
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#f6edda]">
                   <BadgeCheck className="h-7 w-7 text-medical-blue" />
                 </div>
                 <div>
@@ -77,7 +77,7 @@ const AboutSection = memo(({lang}: {lang: Language}) => {
           </div>
 
           <div className="relative">
-            <div className="relative z-10 flex aspect-square items-center justify-center overflow-hidden rounded-[4rem] border border-slate-100 bg-gradient-to-br from-soft-blue to-white p-16 shadow-2xl">
+            <div className="relative z-10 flex aspect-square items-center justify-center overflow-hidden rounded-[4rem] border border-health-green/12 bg-gradient-to-br from-[#f7efdf] via-white to-[#efe4cc] p-16 shadow-2xl">
               <div className="absolute inset-0 opacity-10">
                 <div
                   className="absolute left-0 top-0 h-full w-full"
@@ -87,13 +87,13 @@ const AboutSection = memo(({lang}: {lang: Language}) => {
                   }}
                 />
               </div>
-              <div className="relative flex h-full w-full items-center justify-center rounded-[3rem] bg-white shadow-2xl">
-                <HeartPulse className="absolute h-48 w-48 text-health-green opacity-5" />
-                <Stethoscope className="relative z-10 h-32 w-32 text-medical-blue" />
+              <div className="relative flex h-full w-full items-center justify-center rounded-[3rem] bg-[radial-gradient(circle_at_top,#1b1712,#0f0d0a)] shadow-2xl">
+                <HeartPulse className="absolute h-48 w-48 text-health-green opacity-10" />
+                <Stethoscope className="relative z-10 h-32 w-32 text-white" />
               </div>
             </div>
 
-            <div className="absolute -bottom-10 -right-10 z-20 max-w-[320px] rounded-[2.5rem] border border-slate-100 bg-white p-8 shadow-2xl md:right-0">
+            <div className="absolute -bottom-10 -right-10 z-20 max-w-[320px] rounded-[2.5rem] border border-health-green/12 bg-white p-8 shadow-2xl md:right-0">
               <div className="mb-4 flex items-center gap-4">
                 <div className="rounded-2xl bg-health-green/10 p-3">
                   <Sparkles className="h-6 w-6 text-health-green" />

@@ -9,10 +9,11 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative overflow-hidden border-t border-white/5 bg-slate-900 pb-10 pt-18">
-      <div className="pointer-events-none absolute inset-0 opacity-10">
-        <div className="absolute right-0 top-0 h-80 w-80 translate-x-1/2 -translate-y-1/2 rounded-full bg-health-green blur-[120px]" />
-        <div className="absolute bottom-0 left-0 h-80 w-80 -translate-x-1/2 translate-y-1/2 rounded-full bg-medical-blue blur-[120px]" />
+    <footer className="relative overflow-hidden border-t border-white/5 bg-[#0f0d0a] pb-10 pt-18">
+      <div className="pointer-events-none absolute inset-0 opacity-100">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(212,172,86,0.14),transparent_24%),linear-gradient(180deg,rgba(15,13,10,0.98),rgba(24,21,17,0.98))]" />
+        <div className="absolute right-0 top-0 h-80 w-80 translate-x-1/2 -translate-y-1/2 rounded-full bg-health-green/20 blur-[120px]" />
+        <div className="absolute bottom-0 left-0 h-80 w-80 -translate-x-1/2 translate-y-1/2 rounded-full bg-white/6 blur-[120px]" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -21,13 +22,13 @@ const Footer = memo(({t, lang}: {t: any; lang: Language}) => {
             <BrandLogo
               textTone="light"
               imageClassName="h-12 w-12 border-white/15"
-              title="Active Rehab"
-              subtitle="Clinical Recovery"
+              title="ACTIVE REHAB"
+              subtitle="MOVE BETTER • FEEL BETTER"
             />
             <p className="max-w-sm leading-7 text-slate-300">
               {lang === 'en'
-                ? 'Educational tools and clinical insights for recovery, nutrition, and safer day-to-day decision support.'
-                : 'أدوات تعليمية ورؤى عملية للتعافي والتغذية ودعم القرار الصحي اليومي بشكل أوضح وأكثر هدوءًا.'}
+                ? 'A recovery-focused platform that combines injury guidance, nutrition thinking, and calmer follow-up tools under one clearer identity.'
+                : 'منصة تركّز على التعافي وتجمع بين إرشاد الإصابات والتغذية والمتابعة داخل هوية أوضح وأكثر ثباتًا.'}
             </p>
 
             <div className="flex flex-wrap gap-3">

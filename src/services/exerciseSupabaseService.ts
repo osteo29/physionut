@@ -1,5 +1,6 @@
 import {supabase, isSupabaseConfigured} from '../lib/supabase';
 import type {TableRow} from '../lib/supabaseDatabase';
+import {MedicalTextCore} from './textEncoding';
 
 export type ExerciseLibraryRow = TableRow<'exercise_library_entries'>;
 const EXERCISE_SUPABASE_TIMEOUT_MS = 4000;
@@ -25,7 +26,7 @@ export async function fetchExerciseLibraryEntriesFromSupabase(): Promise<Exercis
       return [];
     }
 
-    return data || [];
+    return MedicalTextCore.parseDeep(data || []);
   } catch (error) {
     console.error('Exercise library fetch timed out or failed:', error);
     return [];
