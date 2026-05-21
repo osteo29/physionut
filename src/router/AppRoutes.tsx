@@ -18,7 +18,11 @@ const InjuryProtocolsPage = lazy(() => import('../pages/InjuryProtocolsPage'));
 const InjuryDetailPage = lazy(() => import('../pages/InjuryDetailPage'));
 const ArticleStudioPage = lazy(() => import('../pages/ArticleStudioPage'));
 const AdminDashboardPage = lazy(() => import('../pages/AdminDashboardPage'));
+const AdminContentPage = lazy(() => import('../pages/AdminContentPage'));
+const AdminHomepagePage = lazy(() => import('../pages/AdminHomepagePage'));
+const AdminExercisesPage = lazy(() => import('../pages/AdminExercisesPage'));
 const AdminSeoPage = lazy(() => import('../pages/AdminSeoPage'));
+const AdminUsersPage = lazy(() => import('../pages/AdminUsersPage'));
 const AssistantPage = lazy(() => import('../pages/AssistantPage'));
 const AdminInjuryManager = lazy(() => import('../pages/AdminInjuryManager'));
 const DietsRegimensPage = lazy(() => import('../pages/DietsRegimensPage'));
@@ -87,9 +91,13 @@ export default function AppRoutes({theme, onToggleTheme}: {theme: 'light' | 'dar
       <Route path="/:lang/injuries" element={<InjuryProtocolsPage />} />
       <Route path="/:lang/injuries/:slug" element={<InjuryDetailPage />} />
       <Route path="/:lang/admin" element={<AdminDashboardPage />} />
+      <Route path="/:lang/admin/content" element={<AdminContentPage />} />
+      <Route path="/:lang/admin/homepage" element={<AdminHomepagePage />} />
       <Route path="/:lang/admin/injuries" element={<AdminInjuryManager />} />
       <Route path="/:lang/admin/articles" element={<ArticleStudioPage />} />
+      <Route path="/:lang/admin/exercises" element={<AdminExercisesPage />} />
       <Route path="/:lang/admin/seo" element={<AdminSeoPage />} />
+      <Route path="/:lang/admin/users" element={<AdminUsersPage />} />
       <Route path="/:lang/diets" element={<DietsRegimensPage />} />
       <Route path="/:lang/diets/:slug" element={<DietDetailPage />} />
       <Route path="/:lang/exercises" element={<ExercisesPage />} />
@@ -120,9 +128,13 @@ export default function AppRoutes({theme, onToggleTheme}: {theme: 'light' | 'dar
         '/injuries/:slug',
         '/insights/:slug',
         '/admin',
+        '/admin/content',
+        '/admin/homepage',
         '/admin/injuries',
         '/admin/articles',
+        '/admin/exercises',
         '/admin/seo',
+        '/admin/users',
         '/studio/articles',
         '/assistant',
         '/auth',

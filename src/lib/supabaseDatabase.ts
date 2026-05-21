@@ -286,6 +286,59 @@ export type Database = {
           created_at?: string | null;
         };
       };
+      homepage_settings: {
+        Row: {
+          id: string;
+          lang: 'en' | 'ar';
+          hero_badge: string | null;
+          hero_title: string;
+          hero_description: string | null;
+          hero_cta_label: string | null;
+          hero_cta_href: string | null;
+          featured_post_slugs: string[] | null;
+          section_order: string[] | null;
+          banner_title: string | null;
+          banner_body: string | null;
+          banner_cta_label: string | null;
+          banner_cta_href: string | null;
+          created_at: string | null;
+          updated_at: string | null;
+        };
+        Insert: {
+          id?: string;
+          lang: 'en' | 'ar';
+          hero_badge?: string | null;
+          hero_title: string;
+          hero_description?: string | null;
+          hero_cta_label?: string | null;
+          hero_cta_href?: string | null;
+          featured_post_slugs?: string[] | null;
+          section_order?: string[] | null;
+          banner_title?: string | null;
+          banner_body?: string | null;
+          banner_cta_label?: string | null;
+          banner_cta_href?: string | null;
+          created_at?: string | null;
+          updated_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          lang?: 'en' | 'ar';
+          hero_badge?: string | null;
+          hero_title?: string;
+          hero_description?: string | null;
+          hero_cta_label?: string | null;
+          hero_cta_href?: string | null;
+          featured_post_slugs?: string[] | null;
+          section_order?: string[] | null;
+          banner_title?: string | null;
+          banner_body?: string | null;
+          banner_cta_label?: string | null;
+          banner_cta_href?: string | null;
+          created_at?: string | null;
+          updated_at?: string | null;
+        };
+      };
       injuries: {
         Row: {
           id: string;

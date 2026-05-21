@@ -88,6 +88,29 @@ export function getArticleAdminEmail() {
   return articleAdminEmail;
 }
 
+export async function getCurrentAdminRecord() {
+  const client = ensureSupabase();
+  const user = await getCurrentUser();
+
+  if (!user?.id) {
+    return null;
+  }
+
+  const {data, error} = await client.from('admin_users').select('*').eq('user_id', user.id).maybeSingle();
+  if (error) throw error;
+  return data;
+}
+
+export async function canCurrentUserManageArticles() {
+  const user = await getCurrentUser();
+  if (!user) return false;
+  if (isArticleAdminUser(user)) return true;
+
+  const adminRecord = await getCurrentAdminRecord();
+  const normalizedRole = typeof adminRecord?.role === 'string' ? adminRecord.role.trim().toLowerCase() : '';
+  return normalizedRole === 'admin' || normalizedRole === 'editor' || normalizedRole === 'writer';
+}
+
 export function getSupabaseActionErrorMessage(
   error: unknown,
   lang: 'en' | 'ar',
@@ -326,10 +349,9 @@ export async function listPublishedArticles(lang: Language) {
 
 export async function replacePublishedArticles(lang: Language, articles: Article[]) {
   const client = ensureSupabase();
-  const user = await getCurrentUser();
 
-  if (!isArticleAdminUser(user)) {
-    throw new Error('Only the article admin can publish changes.');
+  if (!(await canCurrentUserManageArticles())) {
+    throw new Error('Only content roles can publish article changes.');
   }
 
   const {error: deleteError} = await client.from('articles').delete().eq('lang', lang);

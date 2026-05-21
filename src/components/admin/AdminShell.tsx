@@ -1,29 +1,56 @@
 import type {ReactNode} from 'react';
 import type {User} from '@supabase/supabase-js';
-import {Activity, FileText, Search, ShieldCheck, Stethoscope} from 'lucide-react';
+import {
+  Activity,
+  FileText,
+  FolderKanban,
+  Home,
+  Image,
+  Search,
+  ShieldCheck,
+  Stethoscope,
+  UserCog,
+} from 'lucide-react';
 import {Link, useLocation} from 'react-router-dom';
 import PageLayout from '../../pages/PageLayout';
 import usePreferredLang from '../../pages/usePreferredLang';
 import {navigationPaths} from '../../utils/langUrlHelper';
 
-type AdminTab = 'dashboard' | 'injuries' | 'articles' | 'seo';
+type AdminTab =
+  | 'dashboard'
+  | 'content'
+  | 'homepage'
+  | 'injuries'
+  | 'articles'
+  | 'exercises'
+  | 'seo'
+  | 'users';
 
 function shellCopy(lang: 'en' | 'ar') {
   return {
     workspace: lang === 'ar' ? 'مساحة الإدارة' : 'Admin Workspace',
-    dashboard: lang === 'ar' ? 'لوحة التحكم' : 'Overview',
+    dashboard: lang === 'ar' ? 'نظرة عامة' : 'Overview',
+    content: lang === 'ar' ? 'المحتوى' : 'Content',
+    homepage: lang === 'ar' ? 'الصفحة الرئيسية' : 'Homepage',
     injuries: lang === 'ar' ? 'الإصابات' : 'Injuries',
     articles: lang === 'ar' ? 'المقالات' : 'Articles',
-    seo: lang === 'ar' ? 'إدارة SEO' : 'SEO',
+    exercises: lang === 'ar' ? 'التمارين' : 'Exercises',
+    seo: lang === 'ar' ? 'SEO' : 'SEO',
+    users: lang === 'ar' ? 'المستخدمون' : 'Users',
     account: lang === 'ar' ? 'الحساب الحالي' : 'Current account',
     capabilities: lang === 'ar' ? 'الصلاحيات' : 'Permissions',
-    articleAdmin: lang === 'ar' ? 'مسؤول المقالات' : 'Article admin',
-    injuryAdmin: lang === 'ar' ? 'إدارة الإصابات' : 'Injury manager',
+    articleAdmin: lang === 'ar' ? 'إدارة المقالات' : 'Article management',
+    injuryAdmin: lang === 'ar' ? 'إدارة الإصابات' : 'Injury management',
+    homepageAdmin: lang === 'ar' ? 'إدارة الصفحة الرئيسية' : 'Homepage management',
+    exercisesAdmin: lang === 'ar' ? 'إدارة التمارين' : 'Exercise management',
+    usersAdmin: lang === 'ar' ? 'إدارة المستخدمين' : 'User management',
     connected: lang === 'ar' ? 'متصل بسوبابيز' : 'Connected to Supabase',
     quickLinks: lang === 'ar' ? 'روابط سريعة' : 'Quick links',
     publicSite: lang === 'ar' ? 'الموقع العام' : 'Public site',
     protocols: lang === 'ar' ? 'بروتوكولات الإصابات' : 'Injury protocols',
     insights: lang === 'ar' ? 'صفحة المقالات' : 'Insights page',
+    media: lang === 'ar' ? 'الوسائط' : 'Media',
+    role: lang === 'ar' ? 'الدور' : 'Role',
   };
 }
 
@@ -32,16 +59,26 @@ export default function AdminShell({
   description,
   currentTab,
   user,
+  adminRole,
   canManageInjuries,
   canManageArticles,
+  canManageSeo,
+  canManageHomepage,
+  canManageExercises,
+  canManageUsers,
   children,
 }: {
   title: string;
   description: string;
   currentTab: AdminTab;
   user: User | null;
+  adminRole: string;
   canManageInjuries: boolean;
   canManageArticles: boolean;
+  canManageSeo: boolean;
+  canManageHomepage: boolean;
+  canManageExercises: boolean;
+  canManageUsers: boolean;
   children: ReactNode;
 }) {
   const lang = usePreferredLang();
@@ -57,11 +94,18 @@ export default function AdminShell({
       enabled: true,
     },
     {
-      key: 'injuries',
-      label: copy.injuries,
-      icon: Stethoscope,
-      to: navigationPaths.adminInjuries(lang),
-      enabled: canManageInjuries,
+      key: 'content',
+      label: copy.content,
+      icon: FolderKanban,
+      to: navigationPaths.adminContent(lang),
+      enabled: canManageArticles || canManageInjuries || canManageExercises,
+    },
+    {
+      key: 'homepage',
+      label: copy.homepage,
+      icon: Home,
+      to: navigationPaths.adminHomepage(lang),
+      enabled: canManageHomepage,
     },
     {
       key: 'articles',
@@ -71,11 +115,32 @@ export default function AdminShell({
       enabled: canManageArticles,
     },
     {
+      key: 'injuries',
+      label: copy.injuries,
+      icon: Stethoscope,
+      to: navigationPaths.adminInjuries(lang),
+      enabled: canManageInjuries,
+    },
+    {
+      key: 'exercises',
+      label: copy.exercises,
+      icon: Image,
+      to: navigationPaths.adminExercises(lang),
+      enabled: canManageExercises,
+    },
+    {
       key: 'seo',
       label: copy.seo,
       icon: Search,
       to: navigationPaths.adminSeo(lang),
-      enabled: canManageInjuries || canManageArticles,
+      enabled: canManageSeo,
+    },
+    {
+      key: 'users',
+      label: copy.users,
+      icon: UserCog,
+      to: navigationPaths.adminUsers(lang),
+      enabled: canManageUsers,
     },
   ] as const;
 
@@ -85,25 +150,24 @@ export default function AdminShell({
         <section className="rounded-3xl border border-slate-200 bg-slate-50 p-6">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div className="space-y-2">
-              <div className="text-xs font-black uppercase tracking-[0.24em] text-health-green">
-                {copy.workspace}
-              </div>
+              <div className="text-xs font-black uppercase tracking-[0.24em] text-health-green">{copy.workspace}</div>
               <h2 className="text-2xl font-black text-slate-900">{title}</h2>
               <p className="max-w-3xl text-sm leading-7 text-slate-600">{description}</p>
             </div>
             <div className="rounded-2xl border border-emerald-200 bg-white px-4 py-3 text-sm text-slate-700">
               <div className="font-bold text-slate-900">{copy.account}</div>
               <div>{user?.email || 'unknown'}</div>
+              <div className="mt-1 text-xs uppercase tracking-[0.18em] text-slate-400">
+                {copy.role}: {adminRole}
+              </div>
             </div>
           </div>
         </section>
 
-        <div className="grid gap-6 xl:grid-cols-[260px,minmax(0,1fr)]">
+        <div className="grid gap-6 xl:grid-cols-[280px,minmax(0,1fr)]">
           <aside className="space-y-4 rounded-3xl border border-slate-200 bg-white p-5">
             <div>
-              <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">
-                {copy.workspace}
-              </div>
+              <div className="text-xs font-black uppercase tracking-[0.18em] text-slate-400">{copy.workspace}</div>
               <nav className="mt-4 space-y-2">
                 {items.map((item) => {
                   const Icon = item.icon;
@@ -145,10 +209,19 @@ export default function AdminShell({
               </div>
               <div>{copy.connected}</div>
               <div>
+                {copy.articleAdmin}: {canManageArticles ? 'Yes' : 'No'}
+              </div>
+              <div>
                 {copy.injuryAdmin}: {canManageInjuries ? 'Yes' : 'No'}
               </div>
               <div>
-                {copy.articleAdmin}: {canManageArticles ? 'Yes' : 'No'}
+                {copy.homepageAdmin}: {canManageHomepage ? 'Yes' : 'No'}
+              </div>
+              <div>
+                {copy.exercisesAdmin}: {canManageExercises ? 'Yes' : 'No'}
+              </div>
+              <div>
+                {copy.usersAdmin}: {canManageUsers ? 'Yes' : 'No'}
               </div>
             </div>
 

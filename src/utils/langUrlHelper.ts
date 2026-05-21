@@ -83,9 +83,13 @@ export const navigationPaths = {
   
   // Features
   adminHome: (lang: Language) => `/${lang}/admin`,
+  adminContent: (lang: Language) => `/${lang}/admin/content`,
+  adminHomepage: (lang: Language) => `/${lang}/admin/homepage`,
   adminInjuries: (lang: Language) => `/${lang}/admin/injuries`,
   adminArticles: (lang: Language) => `/${lang}/admin/articles`,
+  adminExercises: (lang: Language) => `/${lang}/admin/exercises`,
   adminSeo: (lang: Language) => `/${lang}/admin/seo`,
+  adminUsers: (lang: Language) => `/${lang}/admin/users`,
   studio: (lang: Language) => `/${lang}/admin/articles`,
   assistant: (lang: Language) => `/${lang}/assistant`,
   auth: (lang: Language) => `/${lang}/auth`,

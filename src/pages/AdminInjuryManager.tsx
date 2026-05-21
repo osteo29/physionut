@@ -52,13 +52,13 @@ function confirmText(message: string) {
 }
 
 async function canManageInjuries(user: User | null) {
-  if (!user?.email || !supabase) return false;
+  if (!user?.id || !supabase) return false;
   if (isArticleAdminUser(user)) return true;
 
   const {data} = await supabase
     .from('admin_users')
-    .select('email')
-    .eq('email', user.email.trim().toLowerCase())
+    .select('id')
+    .eq('user_id', user.id)
     .maybeSingle();
 
   return Boolean(data);
@@ -346,8 +346,13 @@ export default function AdminInjuryManager() {
         }
         currentTab="injuries"
         user={user}
+        adminRole={canEdit ? 'editor' : isArticleAdminUser(user) ? 'writer' : 'unknown'}
         canManageInjuries={canEdit}
         canManageArticles={isArticleAdminUser(user)}
+        canManageSeo={canEdit || isArticleAdminUser(user)}
+        canManageHomepage={canEdit || isArticleAdminUser(user)}
+        canManageExercises={canEdit}
+        canManageUsers={false}
       >
         <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
           <div className="flex flex-wrap items-center justify-between gap-4">

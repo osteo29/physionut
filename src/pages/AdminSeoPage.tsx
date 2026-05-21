@@ -161,6 +161,7 @@ export default function AdminSeoPage() {
         lang={uiLang}
         title={isAr ? 'إدارة SEO' : 'SEO Manager'}
         canonicalPath="/admin/seo"
+        requiredPermission="seo"
       >
         <AdminShell
           title={isAr ? 'تحكم كامل في عناوين ووصف الصفحات' : 'Control titles and descriptions across the site'}
@@ -171,8 +172,13 @@ export default function AdminSeoPage() {
           }
           currentTab="seo"
           user={access.user}
+          adminRole={access.adminRole}
           canManageInjuries={access.canManageInjuries}
           canManageArticles={access.canManageArticles}
+          canManageSeo={access.canManageSeo}
+          canManageHomepage={access.canManageHomepage}
+          canManageExercises={access.canManageExercises}
+          canManageUsers={access.canManageUsers}
         >
           <div className="space-y-6">
             <div className="rounded-3xl border border-slate-200 bg-white p-5">

@@ -13,11 +13,13 @@ import type {Language} from '../services/translations';
 import type {TableRow} from '../lib/supabaseDatabase';
 
 type AdminRecord = TableRow<'admin_users'>;
+type AdminRole = 'admin' | 'editor' | 'writer' | 'unknown';
 
 export type AdminAccessState = {
   authChecked: boolean;
   user: User | null;
   adminRecord: AdminRecord | null;
+  adminRole: AdminRole;
   isSupabaseConfigured: boolean;
   configMessage: string;
   configuredAdminEmail: string;
@@ -25,15 +27,19 @@ export type AdminAccessState = {
   canAccessAdminArea: boolean;
   canManageInjuries: boolean;
   canManageArticles: boolean;
+  canManageSeo: boolean;
+  canManageHomepage: boolean;
+  canManageExercises: boolean;
+  canManageUsers: boolean;
 };
 
 async function loadAdminRecord(user: User | null) {
-  if (!user?.email || !supabase) return null;
+  if (!user?.id || !supabase) return null;
 
   const {data, error} = await supabase
     .from('admin_users')
     .select('*')
-    .eq('email', user.email.trim().toLowerCase())
+    .eq('user_id', user.id)
     .maybeSingle();
 
   if (error) {
@@ -44,21 +50,40 @@ async function loadAdminRecord(user: User | null) {
 }
 
 function buildAccessState(lang: Language, user: User | null, adminRecord: AdminRecord | null): AdminAccessState {
+  const normalizedRole = typeof adminRecord?.role === 'string' ? adminRecord.role.trim().toLowerCase() : '';
+  const adminRole: AdminRole =
+    normalizedRole === 'admin' || normalizedRole === 'editor' || normalizedRole === 'writer'
+      ? normalizedRole
+      : 'unknown';
   const isArticleAdmin = isArticleAdminUser(user);
-  const canManageInjuries = isArticleAdmin || Boolean(adminRecord?.can_edit_injuries ?? adminRecord);
-  const canManageArticles = isArticleAdmin;
+  const isRoleBasedAdmin = adminRole === 'admin';
+  const isRoleBasedEditor = adminRole === 'editor';
+  const isRoleBasedWriter = adminRole === 'writer';
+  const canManageInjuries =
+    isRoleBasedAdmin || Boolean(adminRecord?.can_edit_injuries) || Boolean(adminRecord?.can_edit_phases);
+  const canManageArticles = isArticleAdmin || isRoleBasedAdmin || isRoleBasedEditor || isRoleBasedWriter;
+  const canManageSeo = isRoleBasedAdmin || isRoleBasedEditor || canManageInjuries;
+  const canManageHomepage = isRoleBasedAdmin || isRoleBasedEditor;
+  const canManageExercises = canManageInjuries || isRoleBasedAdmin || isRoleBasedEditor;
+  const canManageUsers = isRoleBasedAdmin;
 
   return {
     authChecked: true,
     user,
     adminRecord,
+    adminRole,
     isSupabaseConfigured,
     configMessage: getSupabaseConfigurationMessage(lang),
     configuredAdminEmail: getArticleAdminEmail(),
     isArticleAdmin,
-    canAccessAdminArea: canManageInjuries || canManageArticles,
+    canAccessAdminArea:
+      canManageInjuries || canManageArticles || canManageSeo || canManageHomepage || canManageExercises || canManageUsers,
     canManageInjuries,
     canManageArticles,
+    canManageSeo,
+    canManageHomepage,
+    canManageExercises,
+    canManageUsers,
   };
 }
 
@@ -71,9 +96,14 @@ export default function useAdminAccess(lang: Language) {
     configMessage: getSupabaseConfigurationMessage(lang),
     configuredAdminEmail: getArticleAdminEmail(),
     isArticleAdmin: false,
+    adminRole: 'unknown',
     canAccessAdminArea: false,
     canManageInjuries: false,
     canManageArticles: false,
+    canManageSeo: false,
+    canManageHomepage: false,
+    canManageExercises: false,
+    canManageUsers: false,
   });
 
   useEffect(() => {

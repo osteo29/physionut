@@ -44,7 +44,6 @@ export default function ArticleStudioPage() {
   const user = access.user;
   const authChecked = access.authChecked;
   const isAdmin = access.canManageArticles;
-  const adminEmail = access.configuredAdminEmail;
   const isSupabaseConfigured = access.isSupabaseConfigured;
 
   useEffect(() => {
@@ -252,8 +251,7 @@ export default function ArticleStudioPage() {
             {uiLang === 'en' ? 'Signed in as:' : 'أنت مسجل الدخول بالحساب:'} <strong>{user.email}</strong>
           </p>
           <p>
-            {uiLang === 'en' ? 'Admin email configured:' : 'إيميل الأدمن المضبوط:'}{' '}
-            <strong>{adminEmail || (uiLang === 'en' ? 'not set' : 'غير مضبوط')}</strong>
+            {uiLang === 'en' ? 'Current role:' : 'دورك الحالي:'} <strong>{access.adminRole}</strong>
           </p>
           <p>
             <Link to={navigationPaths.home(uiLang)} className="font-semibold text-health-green hover:underline">
@@ -293,8 +291,13 @@ export default function ArticleStudioPage() {
         }
         currentTab="articles"
         user={user}
+        adminRole={access.adminRole}
         canManageInjuries={access.canManageInjuries}
         canManageArticles={access.canManageArticles}
+        canManageSeo={access.canManageSeo}
+        canManageHomepage={access.canManageHomepage}
+        canManageExercises={access.canManageExercises}
+        canManageUsers={access.canManageUsers}
       >
         <div className="space-y-8">
           <div className="rounded-2xl border border-emerald-100 bg-emerald-50 p-4 text-sm leading-7 text-slate-700">

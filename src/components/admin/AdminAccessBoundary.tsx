@@ -6,19 +6,29 @@ import {navigationPaths} from '../../utils/langUrlHelper';
 import type {Language} from '../../services/translations';
 import type {AdminAccessState} from '../../hooks/useAdminAccess';
 
-type RequiredPermission = 'area' | 'injuries' | 'articles';
+type RequiredPermission = 'area' | 'injuries' | 'articles' | 'seo' | 'homepage' | 'exercises' | 'users';
 
 function getPermissionState(access: AdminAccessState, requiredPermission: RequiredPermission) {
   if (requiredPermission === 'articles') return access.canManageArticles;
   if (requiredPermission === 'injuries') return access.canManageInjuries;
+  if (requiredPermission === 'seo') return access.canManageSeo;
+  if (requiredPermission === 'homepage') return access.canManageHomepage;
+  if (requiredPermission === 'exercises') return access.canManageExercises;
+  if (requiredPermission === 'users') return access.canManageUsers;
   return access.canAccessAdminArea;
 }
 
 function getRestrictedMessage(lang: Language, requiredPermission: RequiredPermission) {
   if (requiredPermission === 'articles') {
     return lang === 'ar'
-      ? 'هذه الصفحة متاحة لحساب مسؤول المقالات فقط في الإعدادات الحالية.'
-      : 'This page is currently restricted to the article admin account only.';
+      ? 'هذه الصفحة متاحة فقط لأدوار إدارة المحتوى.'
+      : 'This page is restricted to content roles only.';
+  }
+
+  if (requiredPermission === 'users') {
+    return lang === 'ar'
+      ? 'هذه الصفحة متاحة لمديري النظام فقط.'
+      : 'This page is restricted to admin users only.';
   }
 
   return lang === 'ar'
@@ -95,8 +105,7 @@ export default function AdminAccessBoundary({
             {isAr ? 'أنت مسجل الدخول بالحساب:' : 'Signed in as:'} <strong>{access.user.email}</strong>
           </p>
           <p>
-            {isAr ? 'إيميل مسؤول المقالات المضبوط:' : 'Configured article admin email:'}{' '}
-            <strong>{access.configuredAdminEmail || (isAr ? 'غير مضبوط' : 'not set')}</strong>
+            {isAr ? 'دورك الحالي:' : 'Current role:'} <strong>{access.adminRole}</strong>
           </p>
         </PageLayout>
       </>

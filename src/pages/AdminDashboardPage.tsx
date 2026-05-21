@@ -119,8 +119,13 @@ export default function AdminDashboardPage() {
           }
           currentTab="dashboard"
           user={access.user}
+          adminRole={access.adminRole}
           canManageInjuries={access.canManageInjuries}
           canManageArticles={access.canManageArticles}
+          canManageSeo={access.canManageSeo}
+          canManageHomepage={access.canManageHomepage}
+          canManageExercises={access.canManageExercises}
+          canManageUsers={access.canManageUsers}
         >
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {cards.map((card) => {
