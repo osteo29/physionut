@@ -503,7 +503,7 @@ export async function loadSeoOverrides(force = false) {
       return seoOverridesCache;
     }
 
-    const {data, error} = await supabase.from('seo_pages').select('*').order('page_key');
+    const {data, error} = await supabase.from('seo_pages').select('*').order('page_key') as { data: SeoOverrideRow[] | null; error: any };
     if (error) {
       throw error;
     }

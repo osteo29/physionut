@@ -597,7 +597,7 @@ export async function deleteMeal(id: string) {
 export async function upsertSafetyNotes(injuryId: string, data: Omit<TableInsert<'safety_notes'>, 'id' | 'injury_id' | 'created_at' | 'updated_at'>) {
   try {
     const db = getSupabaseClient();
-    const { data: existing } = await db.from('safety_notes').select('id').eq('injury_id', injuryId).maybeSingle();
+    const { data: existing } = await db.from('safety_notes').select('id').eq('injury_id', injuryId).maybeSingle() as { data: { id: string } | null };
     
     if (existing) {
       const { data: result, error } = await (db.from('safety_notes') as any).update(data as any).eq('id', existing.id).select().single();
@@ -617,7 +617,7 @@ export async function upsertSafetyNotes(injuryId: string, data: Omit<TableInsert
 export async function upsertInjuryPageContent(injuryId: string, data: Omit<TableInsert<'injury_page_content'>, 'id' | 'injury_id' | 'created_at' | 'updated_at'>) {
   try {
     const db = getSupabaseClient();
-    const { data: existing } = await db.from('injury_page_content').select('id').eq('injury_id', injuryId).maybeSingle();
+    const { data: existing } = await db.from('injury_page_content').select('id').eq('injury_id', injuryId).maybeSingle() as { data: { id: string } | null };
     
     if (existing) {
       const { data: result, error } = await (db.from('injury_page_content') as any).update(data as any).eq('id', existing.id).select().single();

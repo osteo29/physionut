@@ -12,7 +12,11 @@ const ResultAssistantPanel = lazy(() => import('../results/ResultAssistantPanel'
 type AppTranslations = (typeof translations)[Language];
 
 type Props = {
-  assessmentSnapshot: string | null;
+  assessmentSnapshot: {
+    valueLabel: string;
+    valueNumeric: number | null;
+    valueUnit: string | null;
+  };
   controller: CalculatorWorkspaceController;
   lang: Language;
   practicalGuide: {title: string; items: string[]} | null;
