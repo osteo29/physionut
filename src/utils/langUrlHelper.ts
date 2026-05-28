@@ -6,6 +6,7 @@
 
 import type { Language } from '../services/translations';
 import {normalizeExerciseUrlSlug} from '../services/seoAliases';
+import {getSiteUrl} from '../services/site';
 
 /**
  * Get the base path without language prefix
@@ -88,6 +89,7 @@ export const navigationPaths = {
   adminInjuries: (lang: Language) => `/${lang}/admin/injuries`,
   adminArticles: (lang: Language) => `/${lang}/admin/articles`,
   adminExercises: (lang: Language) => `/${lang}/admin/exercises`,
+  adminMedia: (lang: Language) => `/${lang}/admin/media`,
   adminSeo: (lang: Language) => `/${lang}/admin/seo`,
   adminUsers: (lang: Language) => `/${lang}/admin/users`,
   studio: (lang: Language) => `/${lang}/admin/articles`,
@@ -117,19 +119,20 @@ export function getNavigationPath(page: NavigationPage, lang: Language, ...args:
  */
 export function buildHreflangs(
   cleanPath: string,
-  siteUrl: string = 'https://physionutrition.vercel.app',
+  siteUrl: string = getSiteUrl(),
 ): Array<{lang: string; href: string}> {
   const cleanedPath = removeLangPrefix(cleanPath);
   const basePath = cleanedPath === '/' ? '/' : cleanedPath;
-  
+  const siteOrigin = siteUrl.replace(/\/+$/, '');
+
   return [
     {
       lang: 'en',
-      href: `${siteUrl.replace(/\/$/, '')}/en${basePath}`,
+      href: `${siteOrigin}/en${basePath === '/' ? '/' : basePath}`,
     },
     {
       lang: 'ar',
-      href: `${siteUrl.replace(/\/$/, '')}/ar${basePath}`,
+      href: `${siteOrigin}/ar${basePath === '/' ? '/' : basePath}`,
     },
   ];
 }

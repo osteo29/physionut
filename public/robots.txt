@@ -37,4 +37,4 @@ Disallow: /private
 Disallow: /dist
 Disallow: *?_vercel_analytics
 
-Sitemap: https://physionutrition.vercel.app/sitemap.xml
+Sitemap: https://activerehab.vercel.app/sitemap.xml

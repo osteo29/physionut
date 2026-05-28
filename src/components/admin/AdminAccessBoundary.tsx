@@ -6,7 +6,7 @@ import {navigationPaths} from '../../utils/langUrlHelper';
 import type {Language} from '../../services/translations';
 import type {AdminAccessState} from '../../hooks/useAdminAccess';
 
-type RequiredPermission = 'area' | 'injuries' | 'articles' | 'seo' | 'homepage' | 'exercises' | 'users';
+type RequiredPermission = 'area' | 'injuries' | 'articles' | 'seo' | 'homepage' | 'exercises' | 'media' | 'users';
 
 function getPermissionState(access: AdminAccessState, requiredPermission: RequiredPermission) {
   if (requiredPermission === 'articles') return access.canManageArticles;
@@ -14,6 +14,7 @@ function getPermissionState(access: AdminAccessState, requiredPermission: Requir
   if (requiredPermission === 'seo') return access.canManageSeo;
   if (requiredPermission === 'homepage') return access.canManageHomepage;
   if (requiredPermission === 'exercises') return access.canManageExercises;
+  if (requiredPermission === 'media') return access.canManageMedia;
   if (requiredPermission === 'users') return access.canManageUsers;
   return access.canAccessAdminArea;
 }

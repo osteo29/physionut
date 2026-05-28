@@ -11,6 +11,7 @@ import {decodeMojibake} from './src/services/textEncoding';
 import {EXERCISE_FINDER_STATIC_ARABIC_LABELS, EXERCISE_FINDER_STATIC_LABELS, EXERCISE_FINDER_STATIC_SLUGS} from './src/components/common/exercise-finder/constants';
 import {CALCULATOR_PAGE_CONFIGS} from './src/services/calculatorPages';
 import {normalizeExerciseUrlSlug} from './src/services/seoAliases';
+import {buildAbsoluteUrl, getSiteUrl} from './src/services/site';
 import {TRAINING_SYSTEMS} from './src/components/common/exercise-finder/data/training-systems';
 import {getBuildArticles, getBuildInjuries} from './scripts/buildContentSource';
 
@@ -26,7 +27,7 @@ type RouteDefinition = {
   noIndex?: boolean;
 };
 
-const SITE_URL = 'https://physionutrition.vercel.app';
+const SITE_URL = getSiteUrl();
 const DIST_DIR = resolve(process.cwd(), 'dist');
 const TEMPLATE_PATH = resolve(DIST_DIR, 'index.html');
 const template = readFileSync(TEMPLATE_PATH, 'utf8');
@@ -136,7 +137,7 @@ function getPhaseBreakfast(phase: InjuryProtocol['phases'][number], lang: Lang) 
 }
 
 function absoluteUrl(path: string) {
-  return `${SITE_URL}${path}`;
+  return buildAbsoluteUrl(path);
 }
 
 function buildHreflangs(path: string) {
@@ -915,7 +916,6 @@ const staticRoutes: RouteDefinition[] = [
 staticRoutes.forEach(writeRoute);
 writeRootShell();
 console.log(`Generated prerendered HTML for ${staticRoutes.length} routes.`);
-
 
 
 

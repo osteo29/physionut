@@ -13,6 +13,7 @@ import {Link} from 'react-router-dom';
 import Seo from '../components/seo/Seo';
 import {getCatalogInjuries, type InjuryCatalogEntry} from '../services/injuryService';
 import {injuryUiStrings} from '../services/injuryI18n/uiStrings';
+import {buildAbsoluteUrl} from '../services/site';
 import {buildHreflangs, navigationPaths} from '../utils/langUrlHelper';
 import {injuryBody, injuryHeroShell, injuryInput, injuryPanel} from './injuryPageStyles';
 import PageLayout from './PageLayout';
@@ -114,7 +115,7 @@ export default function InjuryProtocolsPage() {
         '@type': 'CollectionPage',
         name: title,
         description,
-        url: `https://physionutrition.vercel.app${navigationPaths.injuries(lang)}`,
+        url: buildAbsoluteUrl(navigationPaths.injuries(lang)),
       },
     },
     {
@@ -126,7 +127,7 @@ export default function InjuryProtocolsPage() {
           '@type': 'ListItem',
           position: index + 1,
           name: injury.name,
-          url: `https://physionutrition.vercel.app/${lang}/injuries/${injury.slug}`,
+          url: buildAbsoluteUrl(`/${lang}/injuries/${injury.slug}`),
         })),
       },
     },
@@ -446,4 +447,3 @@ export default function InjuryProtocolsPage() {
     </>
   );
 }
-

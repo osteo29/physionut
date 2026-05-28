@@ -30,6 +30,7 @@ export type AdminAccessState = {
   canManageSeo: boolean;
   canManageHomepage: boolean;
   canManageExercises: boolean;
+  canManageMedia: boolean;
   canManageUsers: boolean;
 };
 
@@ -65,6 +66,7 @@ function buildAccessState(lang: Language, user: User | null, adminRecord: AdminR
   const canManageSeo = isRoleBasedAdmin || isRoleBasedEditor || canManageInjuries;
   const canManageHomepage = isRoleBasedAdmin || isRoleBasedEditor;
   const canManageExercises = canManageInjuries || isRoleBasedAdmin || isRoleBasedEditor;
+  const canManageMedia = canManageArticles || canManageExercises || canManageHomepage || canManageInjuries;
   const canManageUsers = isRoleBasedAdmin;
 
   return {
@@ -83,6 +85,7 @@ function buildAccessState(lang: Language, user: User | null, adminRecord: AdminR
     canManageSeo,
     canManageHomepage,
     canManageExercises,
+    canManageMedia,
     canManageUsers,
   };
 }
@@ -103,6 +106,7 @@ export default function useAdminAccess(lang: Language) {
     canManageSeo: false,
     canManageHomepage: false,
     canManageExercises: false,
+    canManageMedia: false,
     canManageUsers: false,
   });
 

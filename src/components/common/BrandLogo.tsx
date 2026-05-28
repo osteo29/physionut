@@ -25,6 +25,8 @@ export default function BrandLogo({
         src="/brand-logo.png"
         alt="Active Rehab logo"
         className={`h-12 w-12 rounded-[1.05rem] border border-amber-200/40 bg-[radial-gradient(circle_at_top,#25201a,#0f0d0a)] object-cover shadow-[0_18px_32px_rgba(15,13,10,0.16)] ${imageClassName}`.trim()}
+        loading="lazy"
+        decoding="async"
       />
       {showText ? (
         <div className="flex flex-col text-left">

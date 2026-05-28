@@ -200,39 +200,51 @@ create policy "safety_notes_admin_delete" on public.safety_notes
 for delete to authenticated
 using (public.is_admin_editor(true));
 
-drop policy if exists "injury_page_content_admin_insert" on public.injury_page_content;
-drop policy if exists "injury_page_content_admin_update" on public.injury_page_content;
-drop policy if exists "injury_page_content_admin_delete" on public.injury_page_content;
+do $$
+begin
+  if to_regclass('public.injury_page_content') is not null then
+    execute 'drop policy if exists "injury_page_content_admin_insert" on public.injury_page_content';
+    execute 'drop policy if exists "injury_page_content_admin_update" on public.injury_page_content';
+    execute 'drop policy if exists "injury_page_content_admin_delete" on public.injury_page_content';
 
-create policy "injury_page_content_admin_insert" on public.injury_page_content
-for insert to authenticated
-with check (public.is_admin_user());
+    execute 'create policy "injury_page_content_admin_insert" on public.injury_page_content
+      for insert to authenticated
+      with check (public.is_admin_user())';
 
-create policy "injury_page_content_admin_update" on public.injury_page_content
-for update to authenticated
-using (public.is_admin_user())
-with check (public.is_admin_user());
+    execute 'create policy "injury_page_content_admin_update" on public.injury_page_content
+      for update to authenticated
+      using (public.is_admin_user())
+      with check (public.is_admin_user())';
 
-create policy "injury_page_content_admin_delete" on public.injury_page_content
-for delete to authenticated
-using (public.is_admin_editor(true));
+    execute 'create policy "injury_page_content_admin_delete" on public.injury_page_content
+      for delete to authenticated
+      using (public.is_admin_editor(true))';
+  end if;
+end
+$$;
 
-drop policy if exists "injury_protocol_import_runs_read" on public.injury_protocol_import_runs;
-drop policy if exists "injury_protocol_import_runs_insert" on public.injury_protocol_import_runs;
-drop policy if exists "injury_protocol_import_runs_update" on public.injury_protocol_import_runs;
+do $$
+begin
+  if to_regclass('public.injury_protocol_import_runs') is not null then
+    execute 'drop policy if exists "injury_protocol_import_runs_read" on public.injury_protocol_import_runs';
+    execute 'drop policy if exists "injury_protocol_import_runs_insert" on public.injury_protocol_import_runs';
+    execute 'drop policy if exists "injury_protocol_import_runs_update" on public.injury_protocol_import_runs';
 
-create policy "injury_protocol_import_runs_read" on public.injury_protocol_import_runs
-for select to authenticated
-using (public.is_admin_user());
+    execute 'create policy "injury_protocol_import_runs_read" on public.injury_protocol_import_runs
+      for select to authenticated
+      using (public.is_admin_user())';
 
-create policy "injury_protocol_import_runs_insert" on public.injury_protocol_import_runs
-for insert to authenticated
-with check (public.is_admin_user());
+    execute 'create policy "injury_protocol_import_runs_insert" on public.injury_protocol_import_runs
+      for insert to authenticated
+      with check (public.is_admin_user())';
 
-create policy "injury_protocol_import_runs_update" on public.injury_protocol_import_runs
-for update to authenticated
-using (public.is_admin_user())
-with check (public.is_admin_user());
+    execute 'create policy "injury_protocol_import_runs_update" on public.injury_protocol_import_runs
+      for update to authenticated
+      using (public.is_admin_user())
+      with check (public.is_admin_user())';
+  end if;
+end
+$$;
 
 drop policy if exists "phase_goals_insert" on public.phase_goals;
 drop policy if exists "phase_goals_update" on public.phase_goals;

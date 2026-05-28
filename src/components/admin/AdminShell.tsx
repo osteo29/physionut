@@ -23,6 +23,7 @@ type AdminTab =
   | 'injuries'
   | 'articles'
   | 'exercises'
+  | 'media'
   | 'seo'
   | 'users';
 
@@ -65,6 +66,7 @@ export default function AdminShell({
   canManageSeo,
   canManageHomepage,
   canManageExercises,
+  canManageMedia,
   canManageUsers,
   children,
 }: {
@@ -78,12 +80,17 @@ export default function AdminShell({
   canManageSeo: boolean;
   canManageHomepage: boolean;
   canManageExercises: boolean;
+  canManageMedia?: boolean;
   canManageUsers: boolean;
   children: ReactNode;
 }) {
   const lang = usePreferredLang();
   const copy = shellCopy(lang);
   const location = useLocation();
+  const resolvedCanManageMedia =
+    typeof canManageMedia === 'boolean'
+      ? canManageMedia
+      : canManageArticles || canManageExercises || canManageHomepage || canManageInjuries;
 
   const items = [
     {
@@ -127,6 +134,13 @@ export default function AdminShell({
       icon: Image,
       to: navigationPaths.adminExercises(lang),
       enabled: canManageExercises,
+    },
+    {
+      key: 'media',
+      label: copy.media,
+      icon: Image,
+      to: navigationPaths.adminMedia(lang),
+      enabled: resolvedCanManageMedia,
     },
     {
       key: 'seo',
@@ -219,6 +233,9 @@ export default function AdminShell({
               </div>
               <div>
                 {copy.exercisesAdmin}: {canManageExercises ? 'Yes' : 'No'}
+              </div>
+              <div>
+                {copy.media}: {resolvedCanManageMedia ? 'Yes' : 'No'}
               </div>
               <div>
                 {copy.usersAdmin}: {canManageUsers ? 'Yes' : 'No'}

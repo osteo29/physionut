@@ -22,9 +22,9 @@ describe('langUrlHelper', () => {
   it('extracts language and builds hreflang links without duplicate slashes', () => {
     expect(extractLangFromPath('/en/contact/')).toBe('en');
     expect(extractLangFromPath('/contact')).toBeNull();
-    expect(buildHreflangs('/ar/injuries/acl', 'https://physionutrition.vercel.app/')).toEqual([
-      {lang: 'en', href: 'https://physionutrition.vercel.app/en/injuries/acl'},
-      {lang: 'ar', href: 'https://physionutrition.vercel.app/ar/injuries/acl'},
+    expect(buildHreflangs('/ar/injuries/acl', 'https://activerehab.vercel.app/')).toEqual([
+      {lang: 'en', href: 'https://activerehab.vercel.app/en/injuries/acl'},
+      {lang: 'ar', href: 'https://activerehab.vercel.app/ar/injuries/acl'},
     ]);
   });
 

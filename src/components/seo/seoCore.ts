@@ -1,3 +1,5 @@
+import {buildAbsoluteUrl, getSiteUrl} from '../../services/site';
+
 export type SeoConfig = {
   title: string;
   description: string;
@@ -154,14 +156,14 @@ function getOgType(canonicalPath: string): string {
 }
 
 export function applySeo(config: SeoConfig) {
-  const siteUrl = import.meta.env.VITE_SITE_URL || 'https://physionutrition.vercel.app';
+  const siteUrl = getSiteUrl();
 
   const currentLangMatch =
     typeof window !== 'undefined' ? window.location.pathname.match(/^\/(en|ar)(?:\/|$)/) : null;
   const currentLang = currentLangMatch?.[1];
   const normalizedPath = normalizeCanonicalPath(config.canonicalPath, currentLang);
-  const canonicalUrl = `${siteUrl.replace(/\/$/, '')}${normalizedPath}`;
-  const ogImage = config.ogImage || `${siteUrl.replace(/\/$/, '')}/og-image.png`;
+  const canonicalUrl = buildAbsoluteUrl(normalizedPath);
+  const ogImage = config.ogImage || buildAbsoluteUrl('/og-image.png');
 
   if (currentLang) {
     document.documentElement.lang = currentLang;

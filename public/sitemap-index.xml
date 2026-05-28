@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
-    <loc>https://physionutrition.vercel.app/sitemap-static.xml</loc>
-    <lastmod>2026-05-21</lastmod>
+    <loc>https://activerehab.vercel.app/sitemap-static.xml</loc>
+    <lastmod>2026-05-28</lastmod>
   </sitemap>
   <sitemap>
-    <loc>https://physionutrition.vercel.app/sitemap-articles.xml</loc>
-    <lastmod>2026-05-21</lastmod>
+    <loc>https://activerehab.vercel.app/sitemap-articles.xml</loc>
+    <lastmod>2026-05-28</lastmod>
   </sitemap>
   <sitemap>
-    <loc>https://physionutrition.vercel.app/sitemap-injuries.xml</loc>
-    <lastmod>2026-05-21</lastmod>
+    <loc>https://activerehab.vercel.app/sitemap-injuries.xml</loc>
+    <lastmod>2026-05-28</lastmod>
   </sitemap>
   <sitemap>
-    <loc>https://physionutrition.vercel.app/sitemap-diets.xml</loc>
-    <lastmod>2026-05-21</lastmod>
+    <loc>https://activerehab.vercel.app/sitemap-diets.xml</loc>
+    <lastmod>2026-05-28</lastmod>
   </sitemap>
 </sitemapindex>

@@ -114,6 +114,7 @@ const Hero = memo(({lang}: {lang: Language}) => {
                   alt="Active Rehab brand cover"
                   className="h-full min-h-[280px] w-full object-cover"
                   loading="eager"
+                  decoding="async"
                 />
               </div>
               <div className="brand-divider my-4" />

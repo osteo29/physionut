@@ -1,4 +1,5 @@
 import QRCode from 'qrcode';
+import {getSiteUrl} from './site';
 
 type BrandingLink = {
   label: string;
@@ -13,7 +14,7 @@ export type PdfBranding = {
   qrDataUrl: string;
 };
 
-const SITE_URL = 'https://physionutrition.vercel.app';
+const SITE_URL = getSiteUrl();
 const SITE_NAME = 'Active Rehab';
 const EMAIL = 'physionutritionofficial@gmail.com';
 const SOCIAL_LINKS: BrandingLink[] = [

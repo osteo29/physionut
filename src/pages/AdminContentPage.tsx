@@ -1,4 +1,4 @@
-import {FileText, Home, Image, Search, Stethoscope, Users} from 'lucide-react';
+import {FileText, Home, Image, Search, Stethoscope, UploadCloud, Users} from 'lucide-react';
 import {Link} from 'react-router-dom';
 import Seo from '../components/seo/Seo';
 import AdminAccessBoundary from '../components/admin/AdminAccessBoundary';
@@ -50,6 +50,15 @@ export default function AdminContentPage() {
       status: isAr ? 'جديد' : 'New',
     },
     {
+      key: 'media',
+      title: isAr ? 'Ø§Ù„ÙˆØ³Ø§Ø¦Ø·' : 'Media',
+      description: isAr ? 'Ø±ÙØ¹ Ø§Ù„ØµÙˆØ±ØŒ ØªÙ†Ø¸ÙŠÙ…Ù‡Ø§ØŒ ÙˆÙ…ØªØ§Ø¨Ø¹Ø© Ù…ÙˆØ§Ø¶Ø¹ Ø§Ø³ØªØ®Ø¯Ø§Ù…Ù‡Ø§ ÙÙŠ Ø§Ù„Ù…Ø­ØªÙˆÙ‰.' : 'Upload images, organize them, and track where they are used in content.',
+      icon: UploadCloud,
+      to: navigationPaths.adminMedia(uiLang),
+      enabled: access.canManageMedia,
+      status: isAr ? 'Ø¬Ø¯ÙŠØ¯' : 'New',
+    },
+    {
       key: 'seo',
       title: isAr ? 'SEO' : 'SEO',
       description: isAr ? 'تحرير البيانات الوصفية المركزية وربط صفحات السيو.' : 'Edit central metadata and SEO page overrides.',
@@ -98,6 +107,7 @@ export default function AdminContentPage() {
           canManageSeo={access.canManageSeo}
           canManageHomepage={access.canManageHomepage}
           canManageExercises={access.canManageExercises}
+          canManageMedia={access.canManageMedia}
           canManageUsers={access.canManageUsers}
         >
           <div className="grid gap-4 lg:grid-cols-2">

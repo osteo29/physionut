@@ -6,6 +6,7 @@ import {
 } from '@supabase/supabase-js';
 import type {Article} from '../services/articles';
 import {decodeMojibake, MedicalTextCore} from '../services/textEncoding';
+import {getSiteUrl} from '../services/site';
 import type {Language} from '../services/translations';
 import type {Database, TableInsert, TableRow} from './supabaseDatabase';
 
@@ -201,7 +202,7 @@ export async function signInWithSocial(provider: 'google' | 'facebook') {
     configuredSiteUrl ||
     (typeof window !== 'undefined' && window.location.origin
       ? window.location.origin.replace(/\/+$/, '')
-      : 'https://physionutrition.vercel.app');
+      : getSiteUrl());
   const {data, error} = await client.auth.signInWithOAuth({
     provider,
     options: {

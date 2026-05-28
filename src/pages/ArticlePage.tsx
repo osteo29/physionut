@@ -1,3 +1,4 @@
+import {ArrowRight, Compass, Sparkles, Stethoscope} from 'lucide-react';
 import {Fragment, type ReactNode} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import ManagedSeo from '../components/seo/ManagedSeo';
@@ -6,6 +7,7 @@ import usePreferredLang from './usePreferredLang';
 import Seo from '../components/seo/Seo';
 import {usePublishedArticles} from '../services/articleStudio';
 import type {Article} from '../services/articles';
+import {buildAbsoluteUrl} from '../services/site';
 import type {Language} from '../services/translations';
 
 type ArticleBlock =
@@ -16,6 +18,13 @@ type ArticleBlock =
 type ArticleFaqItem = {
   question: string;
   answer: string;
+};
+
+type GrowthLink = {
+  title: string;
+  description: string;
+  to: string;
+  icon: typeof Compass;
 };
 
 function slugifyHeading(text: string, fallbackIndex: number) {
@@ -200,6 +209,62 @@ function getRelatedArticles(
   return result;
 }
 
+function hasKeyword(article: Pick<Article, 'title' | 'excerpt' | 'content' | 'category'>, pattern: RegExp) {
+  return pattern.test(`${article.title} ${article.excerpt} ${article.category} ${article.content}`);
+}
+
+function getGrowthLinks(article: Article, lang: Language): GrowthLink[] {
+  const links: GrowthLink[] = [];
+
+  if (hasKeyword(article, /(injury|pain|rehab|recovery|knee|shoulder|acl|hamstring|tendon)/i)) {
+    links.push({
+      title: lang === 'en' ? 'Explore rehab pathways' : 'استكشف مسارات التأهيل',
+      description:
+        lang === 'en'
+          ? 'Move from reading into guided injury and rehab journeys.'
+          : 'انتقل من القراءة إلى مسارات إصابات وتأهيل عملية.',
+      to: `/${lang}/injuries`,
+      icon: Stethoscope,
+    });
+  }
+
+  if (hasKeyword(article, /(nutrition|protein|calorie|diet|supplement|meal|creatine|hydration)/i)) {
+    links.push({
+      title: lang === 'en' ? 'Use smart calculators' : 'استخدم الحاسبات الذكية',
+      description:
+        lang === 'en'
+          ? 'Turn the advice into calorie, protein, and intake targets.'
+          : 'حوّل النصائح إلى أهداف عملية للسعرات والبروتين والاحتياج اليومي.',
+      to: `/${lang}/calculators`,
+      icon: Sparkles,
+    });
+  }
+
+  if (hasKeyword(article, /(assessment|tracking|progress|measure|dashboard|baseline|monitor)/i)) {
+    links.push({
+      title: lang === 'en' ? 'Track recovery progress' : 'تابع تقدم التعافي',
+      description:
+        lang === 'en'
+          ? 'Log assessments and keep the article connected to measurable change.'
+          : 'سجل التقييمات واجعل المقال مرتبطًا بتغير يمكن قياسه.',
+      to: `/${lang}/dashboard`,
+      icon: Compass,
+    });
+  }
+
+  links.push({
+    title: lang === 'en' ? 'Browse more guides' : 'تصفح المزيد من الأدلة',
+    description:
+      lang === 'en'
+        ? 'Discover related content built around rehab, nutrition, and performance.'
+        : 'اكتشف محتوى مرتبطًا بالتأهيل والتغذية والأداء.',
+    to: `/${lang}/insights`,
+    icon: Compass,
+  });
+
+  return links.slice(0, 3);
+}
+
 function getReadingTime(content: string, lang: Language): string {
   const wordsPerMinute = lang === 'ar' ? 180 : 200;
   const wordCount = content.trim().split(/\s+/).length;
@@ -260,11 +325,12 @@ export default function ArticlePage() {
 
   const {blocks, headings, faqItems} = parseArticleContent(article.content);
   const relatedArticles = getRelatedArticles(articles, article);
+  const growthLinks = getGrowthLinks(article, lang);
   const canonicalPath = `/${lang}/insights/${article.slug}`;
-  const canonicalUrl = `https://physionutrition.vercel.app${canonicalPath}`;
+  const canonicalUrl = buildAbsoluteUrl(canonicalPath);
   const hreflangs = [
-    {lang: 'en', href: `https://physionutrition.vercel.app/en/insights/${article.slug}`},
-    {lang: 'ar', href: `https://physionutrition.vercel.app/ar/insights/${article.slug}`},
+    {lang: 'en', href: buildAbsoluteUrl(`/en/insights/${article.slug}`)},
+    {lang: 'ar', href: buildAbsoluteUrl(`/ar/insights/${article.slug}`)},
   ];
 
   const structuredData: Array<{id: string; json: unknown}> = [
@@ -368,6 +434,45 @@ export default function ArticlePage() {
           ) : null}
 
           <div className="mt-8 space-y-5 leading-8 text-slate-700">{renderBlocks(blocks, lang)}</div>
+
+          {growthLinks.length > 0 ? (
+            <section className="mt-10 rounded-[2rem] border border-health-green/15 bg-gradient-to-br from-health-green/5 via-white to-sky-50 p-6 sm:p-8">
+              <div className="mb-5">
+                <h2 className="text-2xl font-black text-slate-900">
+                  {lang === 'en' ? 'What to do next' : 'ما الخطوة التالية؟'}
+                </h2>
+                <p className="mt-2 text-sm leading-7 text-slate-600">
+                  {lang === 'en'
+                    ? 'Keep the momentum going by turning this article into an action, tool, or deeper rehab path.'
+                    : 'حافظ على الزخم وحول هذا المقال إلى خطوة عملية أو أداة أو مسار تأهيل أعمق.'}
+                </p>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-3">
+                {growthLinks.map((link) => {
+                  const Icon = link.icon;
+
+                  return (
+                    <Link
+                      key={link.to}
+                      to={link.to}
+                      className="group rounded-3xl border border-white/80 bg-white/90 p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-health-green/30 hover:shadow-md"
+                    >
+                      <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-health-green/10 text-health-green-dark">
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <h3 className="text-lg font-bold text-slate-900">{link.title}</h3>
+                      <p className="mt-2 text-sm leading-7 text-slate-600">{link.description}</p>
+                      <div className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-health-green-dark">
+                        <span>{lang === 'en' ? 'Open next step' : 'افتح الخطوة التالية'}</span>
+                        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            </section>
+          ) : null}
 
           {relatedArticles.length > 0 ? (
             <section className="mt-10 rounded-[2rem] border border-slate-200 bg-slate-50 p-6 sm:p-8">

@@ -15,6 +15,7 @@ import {
 } from '../services/injuryService';
 import {INJURY_CANONICAL_PARENT_MAP} from '../services/seoAliases';
 import {decodeMojibake} from '../services/textEncoding';
+import {buildAbsoluteUrl} from '../services/site';
 import {
   injuryBadge,
   injuryHeading,
@@ -349,8 +350,8 @@ export default function InjuryDetailPage() {
   } as const;
 
   const hreflangs = [
-    {lang: 'en', href: `https://physionutrition.vercel.app${buildPath(canonicalInjuryId, 'en')}`},
-    {lang: 'ar', href: `https://physionutrition.vercel.app${buildPath(canonicalInjuryId, 'ar')}`},
+    {lang: 'en', href: buildAbsoluteUrl(buildPath(canonicalInjuryId, 'en'))},
+    {lang: 'ar', href: buildAbsoluteUrl(buildPath(canonicalInjuryId, 'ar'))},
   ];
 
   return (

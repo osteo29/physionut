@@ -21,6 +21,7 @@ const AdminDashboardPage = lazy(() => import('../pages/AdminDashboardPage'));
 const AdminContentPage = lazy(() => import('../pages/AdminContentPage'));
 const AdminHomepagePage = lazy(() => import('../pages/AdminHomepagePage'));
 const AdminExercisesPage = lazy(() => import('../pages/AdminExercisesPage'));
+const AdminMediaPage = lazy(() => import('../pages/AdminMediaPage'));
 const AdminSeoPage = lazy(() => import('../pages/AdminSeoPage'));
 const AdminUsersPage = lazy(() => import('../pages/AdminUsersPage'));
 const AssistantPage = lazy(() => import('../pages/AssistantPage'));
@@ -96,6 +97,7 @@ export default function AppRoutes({theme, onToggleTheme}: {theme: 'light' | 'dar
       <Route path="/:lang/admin/injuries" element={<AdminInjuryManager />} />
       <Route path="/:lang/admin/articles" element={<ArticleStudioPage />} />
       <Route path="/:lang/admin/exercises" element={<AdminExercisesPage />} />
+      <Route path="/:lang/admin/media" element={<AdminMediaPage />} />
       <Route path="/:lang/admin/seo" element={<AdminSeoPage />} />
       <Route path="/:lang/admin/users" element={<AdminUsersPage />} />
       <Route path="/:lang/diets" element={<DietsRegimensPage />} />
@@ -133,6 +135,7 @@ export default function AppRoutes({theme, onToggleTheme}: {theme: 'light' | 'dar
         '/admin/injuries',
         '/admin/articles',
         '/admin/exercises',
+        '/admin/media',
         '/admin/seo',
         '/admin/users',
         '/studio/articles',

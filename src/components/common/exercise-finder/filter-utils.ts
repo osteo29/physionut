@@ -8,6 +8,7 @@ import {
   STATIC_GROUP_MUSCLES,
 } from './constants';
 import type {Exercise, FilterState, MainMuscle, StaticMuscleSlug, SubMuscle, TrainingSystem, WeeklyPlan} from './types';
+import {getSiteUrl} from '../../../services/site';
 
 export function normalizeValue(value: string | null | undefined) {
   return (value || '').trim().toLowerCase();
@@ -140,7 +141,7 @@ export function createStructuredData(
   description: string,
   canonicalPath: string,
   exercises: Exercise[],
-  siteOrigin = 'https://physionutrition.vercel.app',
+  siteOrigin = getSiteUrl(),
 ) {
   const pageUrl = `${siteOrigin}${canonicalPath}`;
 

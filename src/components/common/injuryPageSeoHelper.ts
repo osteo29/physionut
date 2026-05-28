@@ -6,6 +6,7 @@
 import type {InjuryPhase, InjuryProtocol} from '../../services/injuryDatabase';
 import type {Language} from '../../services/translations';
 import {decodeMojibake} from '../../services/textEncoding';
+import {buildAbsoluteUrl} from '../../services/site';
 import {
   generateBreadcrumbSchema,
   generateFAQSchema,
@@ -23,12 +24,10 @@ function ar(text: string) {
   return decodeMojibake(text);
 }
 
-const siteUrl = import.meta.env.VITE_SITE_URL || 'https://physionutrition.vercel.app';
-
 export function generateInjuryPageSeo({injury, lang, phase}: InjuryPageSeoConfig) {
   const slug = injury.id.replace(/_/g, '-');
   const langPath = lang === 'ar' ? 'ar' : 'en';
-  const pageUrl = `${siteUrl}/${langPath}/injuries/${slug}`;
+  const pageUrl = buildAbsoluteUrl(`/${langPath}/injuries/${slug}`);
 
   const injuryName = lang === 'ar' ? getArabicInjuryName(injury.name) : injury.name;
 
@@ -42,8 +41,8 @@ export function generateInjuryPageSeo({injury, lang, phase}: InjuryPageSeoConfig
       `Complete recovery protocol for ${injuryName}. Rehabilitation nutrition and clinical guidelines.`;
 
   const hreflangs = [
-    {lang: 'en', href: `${siteUrl}/en/injuries/${slug}`},
-    {lang: 'ar', href: `${siteUrl}/ar/injuries/${slug}`},
+    {lang: 'en', href: buildAbsoluteUrl(`/en/injuries/${slug}`)},
+    {lang: 'ar', href: buildAbsoluteUrl(`/ar/injuries/${slug}`)},
   ];
 
   const faqs = [
@@ -96,10 +95,10 @@ export function generateInjuryPageSeo({injury, lang, phase}: InjuryPageSeoConfig
 
   const breadcrumbSchema = generateBreadcrumbSchema({
     items: [
-      {name: lang === 'ar' ? ar('الرئيسية') : 'Home', url: `${siteUrl}/${langPath}/`},
+      {name: lang === 'ar' ? ar('الرئيسية') : 'Home', url: buildAbsoluteUrl(`/${langPath}/`)},
       {
         name: lang === 'ar' ? ar('بروتوكولات الإصابات') : 'Injury Protocols',
-        url: `${siteUrl}/${langPath}/injuries`,
+        url: buildAbsoluteUrl(`/${langPath}/injuries`),
       },
       {name: injuryName, url: pageUrl},
     ],

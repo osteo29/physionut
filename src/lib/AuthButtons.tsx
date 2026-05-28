@@ -20,7 +20,7 @@ type AuthButtonsProps = {
 
 type SocialProvider = 'google' | 'facebook';
 
-const REDIRECT_URL = 'https://physionutrition.vercel.app';
+const REDIRECT_URL = 'https://activerehab.vercel.app';
 
 export default function AuthButtons({
   lang = 'en',

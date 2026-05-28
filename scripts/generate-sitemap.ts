@@ -6,9 +6,10 @@ import {CALCULATOR_PAGE_CONFIGS} from '../src/services/calculatorPages';
 import {dietRegimensCatalog} from '../src/services/dietRegimensCatalog';
 import {getInjuryPath} from '../src/services/injuryDatabase';
 import {INJURY_CANONICAL_PARENT_MAP, normalizeExerciseUrlSlug} from '../src/services/seoAliases';
+import {buildAbsoluteUrl, getSiteUrl} from '../src/services/site';
 import {getBuildArticles, getBuildInjuries} from './buildContentSource';
 
-const SITE_URL = 'https://physionutrition.vercel.app';
+const SITE_URL = getSiteUrl();
 const LANGUAGES = ['en', 'ar'] as const;
 type Language = (typeof LANGUAGES)[number];
 const GENERATED_LASTMOD = new Date().toISOString().slice(0, 10);
@@ -66,7 +67,7 @@ const staticRoutes: RouteEntry[] = [
 ];
 
 function absoluteUrl(path: string) {
-  return `${SITE_URL}${path}`;
+  return buildAbsoluteUrl(path);
 }
 
 function buildRouteGroup(
