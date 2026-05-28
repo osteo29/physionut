@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-sans: "Aptos", "Trebuchet MS", "Segoe UI", "Helvetica Neue", Arial, ui-sans-serif, system-ui, sans-serif;
   --font-arabic: "Noto Sans Arabic", Cairo, Tahoma, Arial, "Segoe UI", sans-serif;
