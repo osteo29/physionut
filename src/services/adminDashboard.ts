@@ -29,13 +29,22 @@ async function fetchCount(table: DashboardTable) {
   return count || 0;
 }
 
+async function fetchCountSafe(table: DashboardTable) {
+  try {
+    return await fetchCount(table);
+  } catch (error) {
+    console.warn(`Failed to load admin dashboard metric for ${table}`, error);
+    return 0;
+  }
+}
+
 export async function fetchAdminDashboardMetrics(): Promise<AdminDashboardMetrics> {
   const [injuries, phases, articles, assessments, leads] = await Promise.all([
-    fetchCount('injuries'),
-    fetchCount('injury_phases'),
-    fetchCount('articles'),
-    fetchCount('assessments'),
-    fetchCount('assessment_leads'),
+    fetchCountSafe('injuries'),
+    fetchCountSafe('injury_phases'),
+    fetchCountSafe('articles'),
+    fetchCountSafe('assessments'),
+    fetchCountSafe('assessment_leads'),
   ]);
 
   return {
