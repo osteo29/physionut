@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://activerehab.vercel.app/en/insights/metabolic-aspects-of-exercise</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://activerehab.vercel.app/ar/insights/metabolic-aspects-of-exercise" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://activerehab.vercel.app/en/insights/metabolic-aspects-of-exercise" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activerehab.vercel.app/en/insights/metabolic-aspects-of-exercise" />
+    <lastmod>2026-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://activerehab.vercel.app/en/insights/protein-after-acl-reconstruction</loc>
     <xhtml:link rel="alternate" hreflang="ar" href="https://activerehab.vercel.app/ar/insights/protein-after-acl-reconstruction" />
     <xhtml:link rel="alternate" hreflang="en" href="https://activerehab.vercel.app/en/insights/protein-after-acl-reconstruction" />
@@ -105,6 +114,15 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://activerehab.vercel.app/en/insights/how-exercise-changes-your-body-complete-guide" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://activerehab.vercel.app/en/insights/how-exercise-changes-your-body-complete-guide" />
     <lastmod>2026-03-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://activerehab.vercel.app/ar/insights/metabolic-aspects-of-exercise</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://activerehab.vercel.app/ar/insights/metabolic-aspects-of-exercise" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://activerehab.vercel.app/en/insights/metabolic-aspects-of-exercise" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activerehab.vercel.app/en/insights/metabolic-aspects-of-exercise" />
+    <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

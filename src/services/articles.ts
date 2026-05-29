@@ -21,6 +21,118 @@ export const getArticles = (lang: Language): Article[] => {
   if (lang === 'ar') {
     return [
       {
+        id: 13,
+        slug: 'metabolic-aspects-of-exercise',
+        title: 'الجوانب الأيضية للتمرين: كيف ينتج الجسم الطاقة أثناء النشاط البدني؟',
+        excerpt:
+          'شرح عملي لكيفية إنتاج الجسم للطاقة أثناء التمرين، من ATP ومعدل الأيض إلى أنظمة الطاقة الثلاثة واللاكتات والتكيفات التدريبية.',
+        content: `يُعتبر النشاط البدني واحدًا من أكبر التحديات الفسيولوجية التي يتعرض لها جسم الإنسان، حيث يؤدي التمرين إلى زيادة كبيرة في احتياجات الجسم من الطاقة والأكسجين. وخلال أي نشاط بدني، تعمل أجهزة الجسم المختلفة مثل الجهاز العضلي، والجهاز التنفسي، والجهاز القلبي الوعائي بصورة متكاملة للحفاظ على استمرار الأداء الحركي وتوفير الطاقة اللازمة للعضلات العاملة.
+
+## مفهوم الأيض أثناء التمرين
+الأيض أو الـ Metabolism هو مجموعة العمليات الكيميائية التي تحدث داخل الجسم لإنتاج الطاقة والمحافظة على الوظائف الحيوية. أثناء ممارسة التمارين الرياضية يرتفع معدل الأيض بشكل ملحوظ نتيجة زيادة احتياجات العضلات للطاقة، مما يؤدي إلى زيادة استهلاك الأكسجين وارتفاع درجة حرارة الجسم وزيادة معدل إنتاج الطاقة.
+
+يعتمد الجسم على الطاقة للقيام بكل العمليات الحيوية، بداية من التنفس وضربات القلب وحتى الحركة والانقباض العضلي. ويتم الحصول على هذه الطاقة من خلال أكسدة العناصر الغذائية مثل الكربوهيدرات والدهون والبروتينات.
+
+## معدل الأيض الأساسي BMR
+يشير معدل الأيض الأساسي أو Basal Metabolic Rate إلى أقل كمية من الطاقة يحتاجها الجسم للحفاظ على الوظائف الحيوية أثناء الراحة. وتشمل هذه الوظائف عمل القلب والرئتين والمخ والكلى وتنظيم حرارة الجسم.
+
+في المتوسط، يستهلك الرجل البالغ الذي يزن حوالي 70 كيلوجرامًا ما يقارب 70 كيلو كالوري في الساعة أثناء الراحة. ومع بدء النشاط البدني ترتفع احتياجات الجسم للطاقة بشكل كبير تبعًا لشدة التمرين ومدته.
+
+## الطاقة ووحدات القياس
+يتم قياس الطاقة في الجسم باستخدام وحدة الكيلو كالوري (Kcal)، وهي الوحدة المستخدمة أيضًا في التغذية. ويمكن تقدير شدة التمارين الرياضية باستخدام وحدات أخرى مثل استهلاك الأكسجين (VO2) أو الوحدات الأيضية المعروفة باسم METs.
+
+ويمثل 1 MET معدل استهلاك الطاقة أثناء الراحة، ويعادل تقريبًا 3.5 مللي لتر من الأكسجين لكل كيلوجرام من وزن الجسم في الدقيقة. وكلما ارتفعت قيمة الـ MET زادت شدة النشاط البدني.
+
+فعلى سبيل المثال:
+
+* الجلوس الهادئ يساوي تقريبًا 1 MET
+* المشي السريع قد يصل إلى 3 أو 4 METs
+* الجري العنيف قد يتجاوز 10 METs
+
+## ATP: عملة الطاقة في الجسم
+تُعد مادة الأدينوسين ثلاثي الفوسفات أو ATP المصدر المباشر للطاقة داخل الخلايا. تستخدم العضلات الـ ATP لإنتاج الانقباض العضلي، كما يستخدمه الجسم في عمليات النقل النشط والإشارات العصبية وتصنيع العديد من المركبات الحيوية.
+
+لكن المشكلة أن مخزون الـ ATP داخل العضلات محدود جدًا، لذلك يحتاج الجسم باستمرار إلى إعادة تصنيعه أثناء النشاط البدني.
+
+## أنظمة إنتاج الطاقة أثناء التمرين
+يعتمد الجسم على ثلاثة أنظمة رئيسية لإنتاج الطاقة، ويختلف النظام المسيطر حسب شدة التمرين ومدته.
+
+### أولًا: نظام ATP-PC
+يُعتبر أسرع نظام لإنتاج الطاقة، ويعتمد على مادة الكرياتين فوسفات الموجودة داخل العضلات. يقوم هذا النظام بإعادة تصنيع الـ ATP بسرعة كبيرة دون الحاجة إلى الأكسجين.
+
+يُستخدم هذا النظام في الأنشطة القصيرة والعنيفة مثل:
+
+* العدو السريع
+* القفز
+* رفع الأثقال
+
+لكن هذا النظام لا يستطيع الاستمرار لفترة طويلة، حيث يمد الجسم بالطاقة لمدة تتراوح بين 5 إلى 8 ثوانٍ فقط.
+
+### ثانيًا: التحلل اللاهوائي للجلوكوز
+عندما يبدأ مخزون الـ ATP والكرياتين فوسفات في النفاد، يعتمد الجسم على تكسير الجلوكوز بدون استخدام الأكسجين، وهي العملية المعروفة باسم Glycolysis.
+
+ينتج عن هذه العملية كمية سريعة من الطاقة بالإضافة إلى اللاكتات، لذلك يُطلق عليها النظام اللاهوائي.
+
+يعمل هذا النظام بكفاءة أثناء الأنشطة عالية الشدة التي تستمر من 10 إلى 60 ثانية مثل سباقات 400 متر أو تدريبات الـ HIIT.
+
+ورغم سرعته، إلا أن تراكم اللاكتات يؤدي إلى الشعور بالتعب والحرقان العضلي.
+
+### ثالثًا: النظام الهوائي
+يُستخدم النظام الهوائي في الأنشطة الطويلة والمتوسطة أو منخفضة الشدة، ويعتمد على وجود الأكسجين لإنتاج كميات كبيرة من الـ ATP.
+
+ويستطيع هذا النظام استخدام:
+
+* الكربوهيدرات
+* الدهون
+* البروتينات في بعض الحالات
+
+تحدث معظم عمليات إنتاج الطاقة الهوائية داخل الميتوكوندريا من خلال دورة كريبس وسلسلة نقل الإلكترونات.
+
+ويُعد هذا النظام هو الأساسي أثناء:
+
+* المشي الطويل
+* الجري لمسافات طويلة
+* ركوب الدراجات
+* السباحة
+
+## الدهون كمصدر للطاقة
+في التمارين منخفضة الشدة وطويلة المدة، يعتمد الجسم بشكل أكبر على الدهون كمصدر للطاقة. ولهذا تُعرف بعض مستويات التمرين باسم Fat Burning Zone، حيث يكون معدل حرق الدهون مرتفعًا نسبيًا.
+
+وتتميز الدهون بأنها مصدر طاقة ضخم مقارنة بالكربوهيدرات، مما يسمح للجسم بالاستمرار في النشاط لفترات طويلة.
+
+## استهلاك الأكسجين وVO2 Max
+كلما زادت شدة التمرين، زادت حاجة الجسم إلى الأكسجين. ويُستخدم مصطلح VO2 Max للتعبير عن أقصى كمية من الأكسجين يستطيع الجسم استخدامها أثناء المجهود البدني.
+
+ويُعتبر VO2 Max من أهم مؤشرات اللياقة القلبية التنفسية، حيث ترتبط القيم المرتفعة بقدرة أفضل على التحمل والأداء الرياضي.
+
+## العتبة اللاكتاتية Lactate Threshold
+تشير العتبة اللاكتاتية إلى النقطة التي يبدأ عندها إنتاج اللاكتات في العضلات بمعدل أكبر من قدرة الجسم على التخلص منه.
+
+بعد هذه النقطة يبدأ الشعور السريع بالإجهاد وانخفاض الأداء الرياضي. ويؤدي التدريب المنتظم إلى تحسين قدرة الجسم على تحمل اللاكتات وتأخير ظهور التعب.
+
+## التكيفات الفسيولوجية الناتجة عن التدريب
+تؤدي التمارين الهوائية المنتظمة إلى العديد من التكيفات الإيجابية داخل الجسم، ومنها:
+
+* زيادة حجم القلب وكفاءته
+* زيادة حجم الضربة القلبية
+* زيادة عدد الشعيرات الدموية
+* زيادة عدد الميتوكوندريا
+* تحسين استخلاص الأكسجين من الدم
+* انخفاض معدل ضربات القلب أثناء الراحة
+* تحسين مستويات الكوليسترول
+* زيادة القدرة على حرق الدهون
+
+كما تؤدي التدريبات المنتظمة إلى ارتفاع VO2 Max وتحسين القدرة على الأداء لفترات أطول مع تعب أقل.
+
+## الخاتمة
+يعتمد الأداء البدني على قدرة الجسم على إنتاج الطاقة بكفاءة من خلال أنظمة متعددة تعمل بصورة متكاملة. فخلال الثواني الأولى من التمرين يعتمد الجسم على نظام ATP-PC، ثم ينتقل إلى التحلل اللاهوائي للجلوكوز، وأخيرًا يعتمد بصورة أكبر على النظام الهوائي أثناء الأنشطة طويلة المدة.
+
+وفهم الجوانب الأيضية للتمرين يساعد المتخصصين في العلاج الطبيعي والطب الرياضي على تصميم برامج تدريب وتأهيل أكثر كفاءة، كما يساعد الرياضيين على تحسين الأداء وتقليل التعب والإصابات.`,
+        category: 'فسيولوجيا التمرين',
+        date: '2026-05-29',
+        icon: 'Zap',
+      },
+      {
         id: 1,
         slug: 'protein-after-acl-reconstruction',
         title: 'هل تأكل بروتين بكثرة ولا تلاحظ نمواً عضلياً؟ اعرف احتياجك الفعلي',
@@ -643,6 +755,213 @@ TDEE أو إجمالي الطاقة اليومية هو مجموع ما يحرق
   }
 
   return [
+    {
+      id: 13,
+      slug: 'metabolic-aspects-of-exercise',
+      title: 'Metabolic Aspects of Exercise: How the Body Produces Energy During Physical Activity',
+      excerpt:
+        'A practical guide to how the body makes energy during exercise, from ATP and BMR to the ATP-PC, anaerobic, and aerobic systems.',
+      content: `Exercise is considered one of the greatest physiological stresses placed on the human body. During physical activity, the body must rapidly increase energy production to meet the demands of working muscles. This requires the coordination of several body systems, including the muscular, cardiovascular, and respiratory systems.
+
+Understanding the metabolic aspects of exercise is essential for students, athletes, physical therapists, and healthcare professionals because it explains how the body produces and utilizes energy during movement and physical performance.
+
+## What is Metabolism?
+Metabolism refers to all chemical reactions that occur inside the body to maintain life and produce energy. These reactions allow the body to:
+
+* Generate energy
+* Build and repair tissues
+* Maintain normal body functions
+* Support movement and exercise
+
+During exercise, the metabolic rate increases significantly because muscles require more energy to contract and perform work.
+
+## Exercise and Homeostasis
+Homeostasis is the body’s ability to maintain a stable internal environment, including body temperature, blood pressure, oxygen levels, and pH balance.
+
+Exercise challenges homeostasis because it causes:
+
+* Increased oxygen consumption
+* Increased body temperature
+* Increased heart rate
+* Increased respiratory rate
+* Increased energy expenditure
+
+To maintain balance, the body activates multiple physiological mechanisms to supply muscles with oxygen and nutrients while removing waste products such as carbon dioxide and heat.
+
+## Basal Metabolic Rate (BMR)
+Basal Metabolic Rate, or BMR, is the minimum amount of energy required to maintain vital body functions while the body is at rest.
+
+These functions include:
+
+* Breathing
+* Heart activity
+* Brain function
+* Kidney function
+* Temperature regulation
+
+An average 70 kg adult male has a BMR of approximately 70 kilocalories per hour. However, during exercise, energy requirements can increase dramatically depending on the intensity and duration of the activity.
+
+## Measuring Energy Expenditure
+Energy expenditure refers to the amount of energy used by the body during physical activity.
+
+The most common unit used to measure energy is the kilocalorie (Kcal). Exercise intensity can also be estimated using:
+
+* Oxygen consumption (VO2)
+* Metabolic equivalents (METs)
+
+One MET represents the amount of energy used while resting and equals approximately 3.5 mL of oxygen per kilogram of body weight per minute.
+
+Examples include:
+
+* Quiet sitting = 1 MET
+* Walking = 3–4 METs
+* Running = 8–12 METs or higher
+
+The higher the MET value, the greater the exercise intensity.
+
+## ATP: The Energy Currency of the Body
+Adenosine Triphosphate (ATP) is the immediate source of energy used by cells. Every muscular contraction depends on ATP.
+
+ATP is essential for:
+
+* Muscle contraction
+* Active transport across cell membranes
+* Nerve conduction
+* Cellular synthesis processes
+
+However, the body stores only a small amount of ATP inside muscles. Therefore, ATP must be continuously re-synthesized during exercise.
+
+## Energy Systems During Exercise
+The body uses three major energy systems to produce ATP. The dominant system depends on the intensity and duration of exercise.
+
+### 1. ATP-PC System
+The ATP-PC system, also called the phosphagen system, is the fastest energy-producing system in the body.
+
+It relies on creatine phosphate (CP) stored in muscles to rapidly regenerate ATP without requiring oxygen.
+
+This system is primarily used during:
+
+* Sprinting
+* Jumping
+* Heavy lifting
+* Explosive movements
+
+The ATP-PC system can sustain maximal activity for approximately 5 to 8 seconds.
+
+Although extremely fast, its energy supply is very limited.
+
+## 2. Anaerobic Glycolysis
+When ATP-PC stores become depleted, the body begins breaking down glucose without oxygen through a process called glycolysis.
+
+This system:
+
+* Produces ATP quickly
+* Does not require oxygen
+* Produces lactate as a byproduct
+
+Anaerobic glycolysis is effective during high-intensity activities lasting approximately 10 to 60 seconds, such as:
+
+* 400-meter running
+* High-intensity interval training (HIIT)
+* Repeated explosive efforts
+
+One major limitation of this system is the accumulation of lactate, which contributes to muscle fatigue and the burning sensation experienced during intense exercise.
+
+## 3. Aerobic Energy System
+The aerobic system uses oxygen to produce large amounts of ATP.
+
+Unlike anaerobic metabolism, aerobic metabolism can utilize:
+
+* Carbohydrates
+* Fats
+* Proteins in some situations
+
+Most aerobic energy production occurs inside the mitochondria through the Krebs cycle and electron transport chain.
+
+This system supports long-duration activities such as:
+
+* Walking
+* Jogging
+* Cycling
+* Swimming
+* Long-distance running
+
+Although aerobic metabolism produces ATP more slowly, it is highly efficient and capable of sustaining exercise for long periods.
+
+## Fat as a Source of Energy
+During low-intensity and long-duration exercise, the body relies heavily on fatty acids as the primary fuel source.
+
+This is often referred to as the “fat-burning zone.” Since fat stores in the body are relatively large, they provide a long-lasting energy source for prolonged exercise.
+
+As exercise duration increases, fat metabolism becomes increasingly important for maintaining performance.
+
+## Respiratory Quotient (RQ)
+The Respiratory Quotient (RQ) is the ratio between carbon dioxide production and oxygen consumption during metabolism.
+
+RQ helps determine which fuel source the body is primarily using:
+
+* An RQ close to 0.7 indicates fat metabolism
+* An RQ close to 1.0 indicates carbohydrate metabolism
+
+RQ is commonly used in exercise physiology to study metabolic responses during exercise.
+
+## Cardiovascular Fitness
+Cardiovascular fitness refers to the ability of the cardiovascular and respiratory systems to supply oxygen to working muscles during prolonged physical activity.
+
+The main goals of aerobic conditioning are:
+
+1. To improve oxygen delivery to muscles
+2. To improve the muscles’ ability to use oxygen efficiently
+
+Individuals with better cardiovascular fitness can perform exercise longer with less fatigue.
+
+## VO2 Max
+VO2 Max is the maximum amount of oxygen the body can utilize during intense exercise.
+
+It is considered one of the best indicators of aerobic fitness and endurance performance.
+
+Higher VO2 Max values are associated with:
+
+* Better endurance
+* Improved cardiovascular health
+* Greater exercise capacity
+
+Regular aerobic training can significantly improve VO2 Max.
+
+## Lactate Threshold
+The lactate threshold is the point during exercise at which lactate production exceeds the body’s ability to remove it.
+
+Beyond this threshold:
+
+* Fatigue develops rapidly
+* Muscle performance decreases
+* Exercise becomes more difficult to sustain
+
+Training improves lactate tolerance and delays the onset of fatigue.
+
+## Physiological Adaptations to Training
+Regular exercise produces several important physiological adaptations, including:
+
+* Increased blood volume
+* Increased hemoglobin levels
+* Increased capillary density
+* Increased mitochondrial number and size
+* Increased myoglobin content in muscles
+* Increased cardiac output
+* Increased stroke volume
+* Lower resting heart rate
+* Improved oxygen extraction from blood
+
+Exercise also improves lipid profiles by reducing LDL cholesterol and increasing HDL cholesterol.
+
+## Conclusion
+The body depends on multiple energy systems to produce ATP during exercise. The ATP-PC system provides immediate energy for explosive movements, anaerobic glycolysis supports short high-intensity activity, and aerobic metabolism supplies long-term energy for endurance exercise.
+
+Understanding the metabolic aspects of exercise is essential in sports science, physical therapy, rehabilitation, and fitness training. It allows healthcare professionals and athletes to optimize performance, improve endurance, and develop more effective training and rehabilitation programs.`,
+      category: 'Exercise Physiology',
+      date: '2026-05-29',
+      icon: 'Zap',
+    },
     {
       id: 1,
       slug: 'protein-after-acl-reconstruction',
