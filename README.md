@@ -1,298 +1,242 @@
-# PhysioNutrition - Recovery Protocol Platform
+# Active Rehab
 
-> **Injury Recovery Made Smart**: Clinical protocols + personalized nutrition + AI assistant  
-> بروتوكولات الإصابات الطبية + خطط تغذية مخصصة + مساعد ذكي
+> AI-powered rehabilitation and recovery platform for injury protocols, nutrition planning, clinical calculators, exercise guidance, and progress tracking.
 
 <div align="center">
-  
+
 ![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen)
 ![Version](https://img.shields.io/badge/Version-1.0.0-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
 ![Languages](https://img.shields.io/badge/Languages-English%20%7C%20Arabic-blue)
 
-[Live App](https://physionutrition.vercel.app) • [Documentation](./IMPLEMENTATION_GUIDE.md) • [Quick Reference](./QUICK_REFERENCE.md)
+[Live App](https://activerehab.vercel.app) | [Documentation](./IMPLEMENTATION_GUIDE.md) | [Quick Reference](./QUICK_REFERENCE.md)
 
 </div>
 
 ---
 
-## 🎯 What is PhysioNutrition?
+## What is Active Rehab?
 
-PhysioNutrition is a comprehensive web platform that combines:
+Active Rehab is a bilingual recovery platform that combines:
 
-- **📚 95+ Medical Injury Protocols** - Evidence-based recovery plans for musculoskeletal injuries
-- **🥗 AI-Powered Nutrition Plans** - Personalized dietary guidance based on injury type, phase, and profile
-- **🧮 Clinical Calculators** - BMI, calorie needs, protein requirements, recovery timeline
-- **🤖 AI Assistant** - Powered by Google Gemini for medical Q&A
-- **📊 Progress Tracking** - Monitor measurements, pain levels, and recovery milestones
-- **📄 PDF Reports** - Professional printable recovery plans
-- **🌐 Full Bilingual Support** - Complete English & Arabic interface
+- Evidence-based injury recovery protocols
+- Clinical nutrition guidance and diet plans
+- Rehab and fitness calculators
+- Exercise libraries and training systems
+- AI assistant support
+- Progress tracking and PDF-ready outputs
 
----
-
-## ✨ Key Features
-
-### 🏥 Injury Protocol Library
-- **13 Muscle Strains** | **8 Ligament Injuries** | **9 Tendon Issues** | **9 Bone Fractures** | **12 Joint Disorders** | **6+ Overuse Conditions**
-- Each protocol includes:
-  - 5-phase recovery roadmap
-  - Detailed exercises & prohibited movements  
-  - Professional medical terminology
-  - Arabic medical translations
-
-### 🎯 Smart Customization
-Personalize recovery plans by:
-- Activity Profile (General, Athlete, Senior, Post-Op)
-- Recovery Goals (Anti-inflammation, Mobility, Strength, Sport Return)
-- Timeline (0-48h, 3-14 days, 2-6 weeks, 6+ weeks)
-- Diet Style (Omnivore or Vegetarian)
-
-### 📱 Progressive Web App (PWA)
-- Works offline after first load
-- Install as standalone app
-- Mobile-optimized interface
-- Fast loading (< 2.3s)
-
-### 🔍 Advanced SEO
-- 202 indexed URLs (Sitemap)
-- Hreflang tags for multi-language
-- JSON-LD structured data
-- Medical schema markup
-- Google recommended headers
-
-### 🛡️ Security First
-- HTTPS/HSTS enforcement
-- XSS & MIME-sniffing protection
-- Content Security Policy
-- No data sold or shared
+The site is designed for rehabilitation, movement education, and nutrition support in both English and Arabic.
 
 ---
 
-## 🚀 Quick Start
+## Current Content Snapshot
+
+| Content Type | Current Count | Notes |
+|---|---:|---|
+| Total indexed URLs | 348 | Current sitemap total across all public sections |
+| Published injury protocols | 100 | Public injury protocol set used in sitemap generation |
+| Internal injury library | 138 | Full local clinical injury catalog |
+| Articles | 13 | Bilingual insights content |
+| Diet plans | 10 | Nutrition regimen guides |
+| Calculators | 11 | BMI, BMR, TDEE, macros, protein, water, and more |
+| Exercise categories | 20 | Muscle-region and rehab exercise pages |
+| Training systems | 7 | Structured workout system pages |
+
+---
+
+## Core Features
+
+### Injury Recovery Library
+- Public injury protocols with multilingual routing
+- Internal clinical injury catalog for broader coverage
+- Phase-based recovery guidance
+- Related exercises, rehab pages, and nutrition notes
+- Safety notes and FAQ content
+
+### Nutrition Tools
+- Anti-inflammatory and recovery-focused diet plans
+- High-protein rehab nutrition
+- Calorie deficit and recomposition guidance
+- Mediterranean, DASH, intermittent fasting, low-carb, and plant-based plans
+
+### Calculators
+- BMI
+- Waist-to-height ratio
+- Body fat
+- Ideal body weight
+- BMR
+- TDEE
+- Calorie deficit
+- Macros
+- Protein intake
+- Water intake
+- Meal calories
+
+### Exercise Content
+- Muscle-region exercise pages
+- Rehab-oriented exercise categories
+- Training systems for different goals and equipment levels
+- Internal links between exercises and injury protocols
+
+### Platform Features
+- Bilingual routing: `/en/*` and `/ar/*`
+- AI assistant
+- Dashboard and tracking pages
+- Authentication flow
+- SEO metadata, canonical URLs, hreflang, and structured data
+- Sitemap generation and prerendered output
+
+---
+
+## Routes
+
+### Public Routes
+- `/`
+- `/en/*`
+- `/ar/*`
+
+### Main Sections
+- `/calculators`
+- `/injuries`
+- `/insights`
+- `/diets`
+- `/exercises`
+- `/assistant`
+- `/dashboard`
+
+### Policy and Info Pages
+- `/about`
+- `/contact`
+- `/privacy`
+- `/terms`
+- `/cookies`
+- `/disclaimer`
+
+### Auth
+- `/auth`
+- `/auth/callback`
+
+### Admin
+- `/admin`
+- `/admin/content`
+- `/admin/homepage`
+- `/admin/injuries`
+- `/admin/articles`
+- `/admin/exercises`
+- `/admin/media`
+- `/admin/seo`
+- `/admin/users`
+
+---
+
+## Tech Stack
+
+| Technology | Purpose |
+|---|---|
+| React | UI framework |
+| TypeScript | Type safety |
+| Vite | Build and development |
+| React Router | Language-aware routing |
+| Tailwind CSS | Styling |
+| Supabase | Backend and auth |
+| Google Gemini | AI assistant |
+| Chart.js | Data visualization |
+| html2canvas + jsPDF | PDF export |
+
+---
+
+## Project Structure
+
+```text
+src/
+|-- components/   # UI, SEO, charts, exercise finder, AI tools
+|-- pages/        # Public pages, admin pages, auth, dashboard
+|-- services/     # Content catalogs, injury data, calculators, SEO, Supabase
+|-- router/       # Route definitions
+|-- utils/        # URL helpers and shared utilities
+`-- lib/          # Supabase and app integration helpers
+
+public/
+|-- sitemap.xml
+|-- sitemap-articles.xml
+|-- sitemap-injuries.xml
+|-- sitemap-diets.xml
+|-- robots.txt
+`-- _headers
+```
+
+---
+
+## SEO and Indexing
+
+- Canonical site URL: `https://activerehab.vercel.app`
+- Bilingual hreflang support
+- Prerendered HTML output for public routes
+- Route-level sitemap generation
+- Robots.txt configured for public sections and admin exclusions
+
+---
+
+## Development
 
 ### Prerequisites
 - Node.js 18+
-- npm or pnpm
-- Vercel account (for deployment)
+- npm
 
-### Installation
+### Install
 
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/physionutrition.git
-cd physionutrition
-
-# Install dependencies
 npm install
+```
 
-# Set up environment variables
-cp .env.example .env.local
-# Edit .env.local with your API keys:
-# GEMINI_API_KEY=your_google_gemini_key
-# VITE_SUPABASE_URL=your_supabase_url
-# VITE_SUPABASE_ANON_KEY=your_supabase_key
+### Run locally
 
-# Run development server
+```bash
 npm run dev
+```
 
-# Build for production
+### Build
+
+```bash
 npm run build
+```
 
-# Preview production build
+### Preview build
+
+```bash
 npm run preview
 ```
 
-### Access Locally
-- **English**: http://localhost:5173/en
-- **Arabic**: http://localhost:5173/ar
-
 ---
 
-## 📁 Project Structure
+## Environment Variables
 
-```
-src/
-├── App.tsx                          # Main app component
-├── RouterApp.tsx                    # Language-aware routing
-├── pages/
-│   ├── InjuryProtocolsPage.tsx     # 95+ injury protocols
-│   ├── InjuryDetailPage.tsx        # Detailed protocol view
-│   ├── HomeRoute.tsx               # Landing page
-│   └── [other pages]
-├── components/
-│   ├── seo/                        # SEO & schema generation
-│   ├── charts/                     # Data visualization
-│   ├── calculators/                # BMI, calories, protein
-│   ├── ai/                         # Gemini AI integration
-│   └── [other components]
-├── services/
-│   ├── injuryDatabase.ts           # Injury protocols
-│   ├── injuryLocalization.ts       # Arabic translations (95+)
-│   ├── medicalTerminology.ts       # Professional terms
-│   ├── supabase.ts                 # Supabase client
-│   └── [other services]
-└── utils/
-    ├── langUrlHelper.ts            # Language-aware URL generation
-    └── [other utilities]
+Create a `.env.local` file based on `.env.example`.
 
-public/
-├── robots.txt                      # SEO crawler rules
-├── _headers                        # Vercel security headers
-├── .htaccess                       # Apache configuration
-├── ads.txt & app-ads.txt          # Ad network authorization
-├── sitemap.xml                     # All 202 URLs
-├── manifest.json                   # PWA configuration
-└── .well-known/security.txt       # Security policy
-```
+Key values include:
 
----
+- `GEMINI_API_KEY`
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_ANON_KEY`
+- `VITE_SITE_URL`
 
-## 🛠️ Tech Stack
-
-| Technology | Purpose |
-|-----------|---------|
-| **React 18** | UI Framework |
-| **TypeScript** | Type Safety |
-| **React Router v6** | Language-aware routing (/en/*, /ar/*) |
-| **Vite** | Build & Development |
-| **Tailwind CSS** | Styling |
-| **Supabase** | Backend & Auth |
-| **Google Gemini** | AI Assistant |
-| **html2canvas & jsPDF** | PDF generation |
-| **Chart.js** | Data visualization |
-
----
-
-## 📚 Documentation
-
-- **[IMPLEMENTATION_GUIDE.md](./IMPLEMENTATION_GUIDE.md)** - Complete setup & SEO guide
-- **[QUICK_REFERENCE.md](./QUICK_REFERENCE.md)** - API & component reference
-
----
-
-## 🌐 Deployment
-
-### Deploy to Vercel (Recommended)
+For SEO and canonical URLs, the current public domain should be:
 
 ```bash
-# Install Vercel CLI
-npm i -g vercel
-
-# Deploy
-vercel
-
-# Set environment variables in Vercel dashboard
-# Go to: Project Settings → Environment Variables
+VITE_SITE_URL="https://activerehab.vercel.app"
 ```
 
-**Vercel optimizations** (auto-enabled):
-- Edge caching for static assets
-- Automatic compression
-- Security headers via `_headers`
-- URL rewriting for SPA via `vercel.json`
+---
+
+## Notes
+
+- The internal injury library is larger than the published injury set.
+- Sitemap generation uses the generated/public protocol source, not every internal record.
+- Update the README whenever the published content set changes.
 
 ---
 
-## 🔐 Security Checklist
+## License
 
-- ✅ HTTPS/HSTS enforced
-- ✅ XSS protection headers
-- ✅ MIME-type sniffing prevention
-- ✅ Clickjacking protection (X-Frame-Options)
-- ✅ Content Security Policy
-- ✅ Permissions Policy (camera, microphone disabled)
-- ✅ Sensitive files blocked (.env, .sql, etc)
-- ✅ Rate limiting configured
-- ✅ CORS properly configured
-- ✅ No credentials in public files
-
----
-
-## 📊 SEO Status
-
-| Metric | Value |
-|--------|-------|
-| Total URLs | 202 |
-| Languages | 2 (English, Arabic) |
-| Injury Protocols | 95+ |
-| Articles | 7 |
-| Hreflang Support | ✅ |
-| JSON-LD Schemas | ✅ |
-| Sitemap | ✅ |
-| Robots.txt | ✅ |
-| Mobile Friendly | ✅ |
-| Core Web Vitals | ✅ |
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add AmazingFeature'`)
-4. Push to branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
----
-
-## 📞 Support & Contact
-
-- **Email**: ahmed@physionutrition.vercel.app
-- **Issues**: GitHub Issues
-- **Discussion**: GitHub Discussions
-
----
-
-## 🙏 Acknowledgments
-
-- Medical content reviewed by rehabilitation specialists
-- Arabic translations by medical terminology experts
-- Icons from Lucide React
-- Hosting & deployment by Vercel
-
----
-
-## 🗺️ Roadmap
-
-- [ ] Video demonstrations for exercises
-- [ ] Wearable device integration (Apple Health, Google Fit)
-- [ ] Telemedicine integration
-- [ ] Mobile app (React Native)
-- [ ] Offline-first database
-- [ ] Community forum
-
----
-
-<div align="center">
-
-**Made with ❤️ by the PhysioNutrition Team**
-
-If this project was helpful, please consider giving it a ⭐
-
-</div>
-
-## Run Locally
-
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the server-side `GEMINI_API_KEY` in [.env.local](.env.local)
-3. Run the app:
-   `npm run dev`
-
-## Pages (Routes)
-
-- `/`: Main application (home)
-- `/privacy`: Privacy Policy
-- `/terms`: Terms of Service
-- `/cookies`: Cookie Policy
+MIT
