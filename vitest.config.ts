@@ -5,5 +5,7 @@ export default defineConfig({
     environment: 'node',
     setupFiles: ['./src/test/setup.ts'],
     css: false,
+    include: ['src/**/*.{test,spec}.{ts,tsx}'],
+    exclude: ['dist/**', 'node_modules/**', 'physiorehab-protocols-database/**'],
   },
 });

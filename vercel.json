@@ -107,6 +107,6 @@
     }
   ],
   "env": {
-    "VITE_SITE_URL": "https://physionutrition.vercel.app"
+    "VITE_SITE_URL": "https://activerehab.vercel.app"
   }
 }
