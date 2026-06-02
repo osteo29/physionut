@@ -8,6 +8,10 @@
       "handle": "filesystem"
     },
     {
+      "src": "/.*\\.(xml|txt)$",
+      "status": 404
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.html"
     }
