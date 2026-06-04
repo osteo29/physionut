@@ -8,6 +8,55 @@
       "handle": "filesystem"
     },
     {
+      "src": "/(en|ar)/injuries/perthes-disease",
+      "status": 301,
+      "headers": {
+        "Location": "/$1/injuries/perthes-disease-rehabilitation"
+      }
+    },
+    {
+      "src": "/(en|ar)/injuries/carpal-tunnel-syndrome",
+      "status": 301,
+      "headers": {
+        "Location": "/$1/injuries/carpal-tunnel-syndrome-conservative"
+      }
+    },
+    {
+      "src": "/(en|ar)/injuries/rotator-cuff-repair",
+      "status": 301,
+      "headers": {
+        "Location": "/$1/injuries/rotator-cuff-repair-post-operative"
+      }
+    },
+    {
+      "src": "/(en|ar)/injuries/cervical-disc-herniation",
+      "status": 301,
+      "headers": {
+        "Location": "/$1/injuries/cervical-radiculopathy"
+      }
+    },
+    {
+      "src": "/(en|ar)/injuries/ankle-fracture-orif-rehab",
+      "status": 301,
+      "headers": {
+        "Location": "/$1/injuries/ankle-fracture-orif-post-operative"
+      }
+    },
+    {
+      "src": "/(en|ar)/injuries/femoroacetabular-impingement",
+      "status": 301,
+      "headers": {
+        "Location": "/$1/injuries/femoroacetabular-impingement-fai"
+      }
+    },
+    {
+      "src": "/(en|ar)/injuries/complex-regional-pain-syndrome-crps-type-i",
+      "status": 301,
+      "headers": {
+        "Location": "/$1/injuries/complex-regional-pain-syndrome"
+      }
+    },
+    {
       "src": "/.*\\.(xml|txt)$",
       "status": 404
     },

@@ -665,6 +665,70 @@ function dietsRoute(lang: Lang): RouteDefinition {
   };
 }
 
+function dietDetailRoute(lang: Lang, diet: (typeof dietRegimensCatalog)[number]): RouteDefinition {
+  const isAr = lang === 'ar';
+  const title = isAr ? diet.title.ar : diet.title.en;
+  const summary = isAr ? diet.summary.ar : diet.summary.en;
+  const goals = isAr ? diet.goals.ar : diet.goals.en;
+  const principles = isAr ? diet.keyPrinciples.ar : diet.keyPrinciples.en;
+  const practicalGuide = isAr ? diet.practicalGuide.ar : diet.practicalGuide.en;
+  const cautions = isAr ? diet.cautions.ar : diet.cautions.en;
+  const exampleDay = diet.exampleDay;
+
+  return {
+    path: `/${lang}/diets/${diet.id}`,
+    lang,
+    title: `${decodeMojibake(title)} | Active Rehab`,
+    description: decodeMojibake(summary),
+    body: layout(
+      lang,
+      isAr ? 'Ø¯Ù„ÙŠÙ„ ØºØ°Ø§Ø¦ÙŠ' : 'Diet guide',
+      title,
+      summary,
+      [
+        section(
+          isAr ? 'Ø§Ù„Ø£Ù‡Ø¯Ø§Ù' : 'Goals',
+          `<ul>${goals.map((item) => `<li>${text(item)}</li>`).join('')}</ul>`,
+        ),
+        section(
+          isAr ? 'Ø§Ù„Ù…Ø¨Ø§Ø¯Ø¦ Ø§Ù„Ø£Ø³Ø§Ø³ÙŠØ©' : 'Key principles',
+          `<ul>${principles.map((item) => `<li>${text(item)}</li>`).join('')}</ul>`,
+        ),
+        section(
+          isAr ? 'ØªØ·Ø¨ÙŠÙ‚ Ø¹Ù…Ù„ÙŠ' : 'Practical guide',
+          `<ul>${practicalGuide.map((item) => `<li>${text(item)}</li>`).join('')}</ul>`,
+        ),
+        section(
+          isAr ? 'Ù…Ø«Ø§Ù„ ÙŠÙˆÙ… ØºØ°Ø§Ø¦ÙŠ' : 'Example day',
+          `<ul>
+            <li><strong>${isAr ? 'Ø§Ù„ÙØ·Ø§Ø±' : 'Breakfast'}:</strong> ${text(isAr ? exampleDay.breakfast.ar : exampleDay.breakfast.en)}</li>
+            <li><strong>${isAr ? 'Ø§Ù„ØºØ¯Ø§Ø¡' : 'Lunch'}:</strong> ${text(isAr ? exampleDay.lunch.ar : exampleDay.lunch.en)}</li>
+            <li><strong>${isAr ? 'Ø§Ù„Ø¹Ø´Ø§Ø¡' : 'Dinner'}:</strong> ${text(isAr ? exampleDay.dinner.ar : exampleDay.dinner.en)}</li>
+            ${
+              exampleDay.snack
+                ? `<li><strong>${isAr ? 'ÙˆØ¬Ø¨Ø© Ø®ÙÙŠÙØ©' : 'Snack'}:</strong> ${text(isAr ? exampleDay.snack.ar : exampleDay.snack.en)}</li>`
+                : ''
+            }
+          </ul>`,
+        ),
+        section(
+          isAr ? 'ØªÙ†Ø¨ÙŠÙ‡Ø§Øª' : 'Cautions',
+          `<ul>${cautions.map((item) => `<li>${text(item)}</li>`).join('')}</ul>`,
+        ),
+      ],
+    ),
+    structuredData: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: decodeMojibake(title),
+        description: decodeMojibake(summary),
+        url: absoluteUrl(`/${lang}/diets/${diet.id}`),
+      },
+    ],
+  };
+}
+
 function exercisesRoute(lang: Lang, slug?: (typeof EXERCISE_FINDER_STATIC_SLUGS)[number]): RouteDefinition {
   const isAr = lang === 'ar';
   const pageTitle = slug
@@ -903,6 +967,7 @@ const staticRoutes: RouteDefinition[] = [
     insightsRoute(lang),
     injuriesRoute(lang),
     dietsRoute(lang),
+    ...dietRegimensCatalog.map((diet) => dietDetailRoute(lang, diet)),
     ...(['about', 'contact', 'privacy', 'terms', 'cookies', 'disclaimer'] as const).map((page) => infoPageRoute(lang, page)),
     exercisesRoute(lang),
     ...EXERCISE_FINDER_STATIC_SLUGS.map((slug) => exercisesRoute(lang, slug)),
@@ -916,7 +981,6 @@ const staticRoutes: RouteDefinition[] = [
 staticRoutes.forEach(writeRoute);
 writeRootShell();
 console.log(`Generated prerendered HTML for ${staticRoutes.length} routes.`);
-
 
 
 
