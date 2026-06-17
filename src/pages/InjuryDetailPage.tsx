@@ -340,7 +340,11 @@ export default function InjuryDetailPage() {
           },
         ];
 
-  const canonicalInjuryId = INJURY_CANONICAL_PARENT_MAP[injury.id] || injury.id;
+  const canonicalParentId = INJURY_CANONICAL_PARENT_MAP[injury.id];
+  const canonicalInjuryId =
+    canonicalParentId && catalogInjuries.some((item) => item.id === canonicalParentId)
+      ? canonicalParentId
+      : injury.id;
   const canonicalPath = buildPath(canonicalInjuryId, lang);
   const labels = {
     title: isAr ? `بروتوكول ${injuryDisplayName}` : `${injuryDisplayName} Recovery Protocol`,

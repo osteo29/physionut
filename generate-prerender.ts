@@ -10,7 +10,7 @@ import {
 import {decodeMojibake} from './src/services/textEncoding';
 import {EXERCISE_FINDER_STATIC_ARABIC_LABELS, EXERCISE_FINDER_STATIC_LABELS, EXERCISE_FINDER_STATIC_SLUGS} from './src/components/common/exercise-finder/constants';
 import {CALCULATOR_PAGE_CONFIGS} from './src/services/calculatorPages';
-import {normalizeExerciseUrlSlug} from './src/services/seoAliases';
+import {INJURY_CANONICAL_PARENT_MAP, normalizeExerciseUrlSlug} from './src/services/seoAliases';
 import {buildAbsoluteUrl, getSiteUrl} from './src/services/site';
 import {TRAINING_SYSTEMS} from './src/components/common/exercise-finder/data/training-systems';
 import {getBuildArticles, getBuildInjuries} from './scripts/buildContentSource';
@@ -37,6 +37,12 @@ const buildArticlesByLang = Object.fromEntries(
 const buildInjuries = await getBuildInjuries();
 const getArticles = (lang: Lang) => buildArticlesByLang[lang] || getLocalArticles(lang);
 const getAllInjuries = () => buildInjuries;
+const canonicalInjuryIds = new Set(buildInjuries.map((injury) => injury.id));
+const getCanonicalInjuries = () =>
+  buildInjuries.filter((injury) => {
+    const canonicalParent = INJURY_CANONICAL_PARENT_MAP[injury.id];
+    return !canonicalParent || !canonicalInjuryIds.has(canonicalParent);
+  });
 
 const SEO_SHELL_CSS = `
 <style data-prerender-seo="true">
@@ -243,7 +249,7 @@ function writeRootShell() {
       'Language gateway for the Active Rehab website.',
       canonical,
       'en',
-      true,
+      false,
     ),
     rootBody,
     [],
@@ -975,14 +981,12 @@ const staticRoutes: RouteDefinition[] = [
     ...TRAINING_SYSTEMS.map((system) => exerciseSystemDetailRoute(lang, system)),
   ]),
   ...(['en', 'ar'] as Lang[]).flatMap((lang) => getArticles(lang).map((article) => articleRoute(lang, article))),
-  ...(['en', 'ar'] as Lang[]).flatMap((lang) => getAllInjuries().map((injury) => injuryRoute(lang, injury))),
+  ...(['en', 'ar'] as Lang[]).flatMap((lang) => getCanonicalInjuries().map((injury) => injuryRoute(lang, injury))),
 ];
 
 staticRoutes.forEach(writeRoute);
 writeRootShell();
 console.log(`Generated prerendered HTML for ${staticRoutes.length} routes.`);
-
-
 
 
 

@@ -289,7 +289,6 @@ export default function ArticlePage() {
           title={lang === 'en' ? 'Loading article' : 'جار تحميل المقال'}
           description={lang === 'en' ? 'Loading article content.' : 'جار تحميل محتوى المقال.'}
           canonicalPath={`/insights/${slug}`}
-          noIndex
         />
         <PageLayout title={lang === 'en' ? 'Loading article' : 'جار تحميل المقال'}>
           <p>{lang === 'en' ? 'Please wait a moment.' : 'انتظر لحظة من فضلك.'}</p>
