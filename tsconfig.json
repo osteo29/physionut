@@ -22,5 +22,19 @@
     },
     "allowImportingTsExtensions": true,
     "noEmit": true
-  }
+  },
+  "include": [
+    "src",
+    "vite.config.ts",
+    "vitest.config.ts",
+    "generate-prerender.ts",
+    "scripts/generate-sitemap.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "physiorehab-protocols-database",
+    "supabase/functions",
+    "tmp"
+  ]
 }

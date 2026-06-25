@@ -9,8 +9,6 @@ import {setPreferredLanguage} from './services/languagePreference';
 import {translations, type Language} from './services/translations';
 import {usePublishedArticles} from './services/articleStudio';
 import {HomeSectionFallback, IconComponent} from './components/home/AppShellHelpers';
-import CalculatorSection from './components/app/CalculatorSection';
-import HealthProfileSection from './components/architect/HealthProfileSection';
 import Hero from './components/home/Hero';
 import FeaturesShowcase from './components/home/FeaturesShowcase';
 import InjuryProtocolsHighlight from './components/home/InjuryProtocolsHighlight';
@@ -24,6 +22,8 @@ const AboutSection = lazy(() => import('./components/home/AboutSection'));
 const BlogSection = lazy(() => import('./components/home/BlogSection'));
 const TrustSection = lazy(() => import('./components/home/TrustSection'));
 const SupportToolsSection = lazy(() => import('./components/home/SupportToolsSection'));
+const HealthProfileSection = lazy(() => import('./components/architect/HealthProfileSection'));
+const CalculatorSection = lazy(() => import('./components/app/CalculatorSection'));
 
 export default function App({
   theme,
@@ -107,28 +107,32 @@ export default function App({
 
         <InjuryProtocolsHighlight lang={lang} />
 
-        <HealthProfileSection
-          aiDietPlan={aiDietPlan}
-          architectDraft={architectDraft}
-          architectMetrics={architectMetrics}
-          architectProfile={architectProfile}
-          architectResultsRef={architectResultsRef}
-          calculateArchitectProfile={calculateArchitectProfile}
-          generateAIDietPlan={generateAIDietPlan}
-          isGeneratingPlan={isGeneratingPlan}
-          lang={lang}
-          setArchitectProfile={setArchitectProfile}
-          t={t}
-          updateArchitectDraft={updateArchitectDraft}
-        />
+        <Suspense fallback={<HomeSectionFallback className="bg-slate-50 py-20" />}>
+          <HealthProfileSection
+            aiDietPlan={aiDietPlan}
+            architectDraft={architectDraft}
+            architectMetrics={architectMetrics}
+            architectProfile={architectProfile}
+            architectResultsRef={architectResultsRef}
+            calculateArchitectProfile={calculateArchitectProfile}
+            generateAIDietPlan={generateAIDietPlan}
+            isGeneratingPlan={isGeneratingPlan}
+            lang={lang}
+            setArchitectProfile={setArchitectProfile}
+            t={t}
+            updateArchitectDraft={updateArchitectDraft}
+          />
+        </Suspense>
 
-        <CalculatorSection
-          assessmentSnapshot={assessmentSnapshot}
-          controller={calculator}
-          lang={lang}
-          practicalGuide={practicalGuide}
-          t={t}
-        />
+        <Suspense fallback={<HomeSectionFallback className="bg-white py-20" />}>
+          <CalculatorSection
+            assessmentSnapshot={assessmentSnapshot}
+            controller={calculator}
+            lang={lang}
+            practicalGuide={practicalGuide}
+            t={t}
+          />
+        </Suspense>
 
         <Suspense fallback={<HomeSectionFallback className="bg-white py-20" />}>
           <SupportToolsSection

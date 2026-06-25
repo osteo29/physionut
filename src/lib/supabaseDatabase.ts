@@ -1117,5 +1117,3 @@ export type TableInsert<TableName extends keyof Database['public']['Tables']> =
   Database['public']['Tables'][TableName]['Insert'];
 export type TableUpdate<TableName extends keyof Database['public']['Tables']> =
   Database['public']['Tables'][TableName]['Update'];
-
-

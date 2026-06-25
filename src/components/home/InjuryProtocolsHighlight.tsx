@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {ArrowRight, ClipboardList, ShieldAlert, Timer} from 'lucide-react';
 import {Link} from 'react-router-dom';
-import {getCatalogInjuries, type InjuryCatalogEntry} from '../../services/injuryService';
+import type {InjuryCatalogEntry} from '../../services/injuryService';
 import type {Language} from '../../services/translations';
 import {navigationPaths} from '../../utils/langUrlHelper';
 
@@ -13,6 +13,7 @@ export default function InjuryProtocolsHighlight({lang}: {lang: Language}) {
     let active = true;
 
     const load = async () => {
+      const {getCatalogInjuries} = await import('../../services/injuryService');
       const {injuries: nextInjuries} = await getCatalogInjuries(lang);
       if (!active) return;
       setInjuries(nextInjuries);

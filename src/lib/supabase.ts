@@ -8,7 +8,7 @@ import type {Article} from '../services/articles';
 import {decodeMojibake, MedicalTextCore} from '../services/textEncoding';
 import {getSiteUrl} from '../services/site';
 import type {Language} from '../services/translations';
-import type {Database, TableInsert, TableRow} from './supabaseDatabase';
+import type {TableInsert, TableRow} from './supabaseDatabase';
 
 const rawSupabaseUrl = (typeof import.meta !== 'undefined' && import.meta.env) ? import.meta.env.VITE_SUPABASE_URL : (typeof process !== 'undefined' ? process.env.VITE_SUPABASE_URL : '');
 const rawSupabaseAnonKey = (typeof import.meta !== 'undefined' && import.meta.env) ? import.meta.env.VITE_SUPABASE_ANON_KEY : (typeof process !== 'undefined' ? process.env.VITE_SUPABASE_ANON_KEY : '');
@@ -22,7 +22,7 @@ const isBrowser = typeof window !== 'undefined';
 export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey);
 
 export const supabase = isSupabaseConfigured
-  ? createClient<Database>(supabaseUrl, supabaseAnonKey, {
+  ? createClient(supabaseUrl, supabaseAnonKey, {
       auth: {
         persistSession: isBrowser,
         autoRefreshToken: isBrowser,
@@ -108,7 +108,9 @@ export async function canCurrentUserManageArticles() {
   if (isArticleAdminUser(user)) return true;
 
   const adminRecord = await getCurrentAdminRecord();
-  const normalizedRole = typeof adminRecord?.role === 'string' ? adminRecord.role.trim().toLowerCase() : '';
+  if (!adminRecord) return false;
+
+  const normalizedRole = adminRecord.role.trim().toLowerCase();
   return normalizedRole === 'admin' || normalizedRole === 'editor' || normalizedRole === 'writer';
 }
 
