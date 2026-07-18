@@ -17,6 +17,7 @@
         "lint": "tsc --noEmit",
         "test": "vitest run",
         "test:watch": "vitest",
+        "report:injury-content": "tsx scripts/generate-injury-content-report.ts",
         "organize:injury-data": "tsx scripts/organize-injury-data.ts",
         "protocols:sync": "tsx scripts/organize-injury-data.ts --sync-supabase",
         "rehab:sync-supabase": "tsx scripts/sync-rehab-protocols-to-supabase.ts"

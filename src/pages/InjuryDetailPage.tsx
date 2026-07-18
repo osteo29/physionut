@@ -5,6 +5,7 @@ import Seo from '../components/seo/Seo';
 import {getCurrentUser, isSupabaseConfigured, onSupabaseAuthChange, type User} from '../lib/supabase';
 import type {InjuryPhase, InjuryProtocol} from '../services/injuryDatabase';
 import {getInjuryExerciseLinks} from '../services/injuryExerciseLinks';
+import {getNutritionGoalMatches} from '../services/injuryNutritionMatcher';
 import {getInjuryRehabLinks} from '../services/injuryRehabLinks';
 import {translateActivityContext, translateInjury} from '../services/injuryI18n';
 import {
@@ -299,6 +300,7 @@ export default function InjuryDetailPage() {
   const isLockedPhase = activeTab >= 2 && activeTab < phases.length && !user;
   const isLockedNutritionTab = activeTab === phases.length && phases.length > 2 && !user;
   const showLockedOverlay = isLockedPhase || isLockedNutritionTab;
+  const nutritionGoalMatches = currentPhase ? getNutritionGoalMatches(injury, currentPhase).slice(0, 4) : [];
 
   const relatedInjuries = catalogInjuries
     .filter((item) => item.id !== injury.id)
@@ -676,6 +678,21 @@ export default function InjuryDetailPage() {
                     <div className={`${injuryPanel} relative overflow-hidden`}>
                       <div className="mb-4 text-sm font-black text-slate-900 dark:text-white">{isAr ? 'تغذية هذه المرحلة' : 'Phase nutrition'}</div>
                       <div className={showLockedOverlay ? 'pointer-events-none select-none blur-[5px]' : ''}>
+                      {nutritionGoalMatches.length ? (
+                        <div className="mb-5">
+                          <div className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-400">
+                            {isAr ? 'أهداف التعافي' : 'Recovery goals'}
+                          </div>
+                          <div className="grid gap-3">
+                            {nutritionGoalMatches.map((goal) => (
+                              <div key={goal.key} className={injuryPanelMuted}>
+                                <div className="font-bold text-slate-900 dark:text-white">{goal.label}</div>
+                                <p className="mt-2 text-sm leading-7 text-slate-700 dark:text-slate-300">{goal.reason}</p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      ) : null}
                       {currentPhase.nutritionFocus?.length ? (
                         <div className="mb-5">
                           <div className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-400">{isAr ? 'نقاط التركيز' : 'Focus points'}</div>
