@@ -359,6 +359,67 @@ export default function InjuryDetailPage() {
     {lang: 'en', href: buildAbsoluteUrl(buildPath(canonicalInjuryId, 'en'))},
     {lang: 'ar', href: buildAbsoluteUrl(buildPath(canonicalInjuryId, 'ar'))},
   ];
+  const canonicalUrl = buildAbsoluteUrl(canonicalPath);
+  const structuredData = [
+    {
+      id: `injury-page-${canonicalInjuryId}`,
+      json: {
+        '@context': 'https://schema.org',
+        '@type': 'MedicalWebPage',
+        name: labels.title,
+        description: labels.description,
+        url: canonicalUrl,
+        inLanguage: lang,
+        about: {
+          '@type': 'MedicalCondition',
+          name: injuryDisplayName,
+          bodyLocation: bodyRegionDisplay,
+        },
+      },
+    },
+    {
+      id: `injury-breadcrumb-${canonicalInjuryId}`,
+      json: {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: isAr ? 'الرئيسية' : 'Home',
+            item: buildAbsoluteUrl(`/${lang}/`),
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: isAr ? 'الإصابات' : 'Injuries',
+            item: buildAbsoluteUrl(navigationPaths.injuries(lang)),
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: injuryDisplayName,
+            item: canonicalUrl,
+          },
+        ],
+      },
+    },
+    {
+      id: `injury-faq-${canonicalInjuryId}`,
+      json: {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqItems.map((item) => ({
+          '@type': 'Question',
+          name: normalizeCopy(item.q),
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: normalizeCopy(item.a),
+          },
+        })),
+      },
+    },
+  ];
 
   return (
     <>
@@ -366,7 +427,7 @@ export default function InjuryDetailPage() {
         title={labels.title}
         description={labels.description}
         canonicalPath={canonicalPath}
-        structuredData={[]}
+        structuredData={structuredData}
         hreflangs={hreflangs}
       />
       <PageLayout title={labels.title} hideTitle wide flat>

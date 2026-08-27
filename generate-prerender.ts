@@ -471,8 +471,10 @@ function insightsRoute(lang: Lang): RouteDefinition {
 
 function articleRoute(lang: Lang, article: ReturnType<typeof getArticles>[number]): RouteDefinition {
   const isAr = lang === 'ar';
+  const articlePath = `/${lang}/insights/${article.slug}`;
+  const articleUrl = absoluteUrl(articlePath);
   return {
-    path: `/${lang}/insights/${article.slug}`,
+    path: articlePath,
     lang,
     title: decodeMojibake(article.title),
     description: decodeMojibake(article.excerpt),
@@ -503,9 +505,33 @@ function articleRoute(lang: Lang, article: ReturnType<typeof getArticles>[number
         datePublished: article.date,
         dateModified: article.date,
         inLanguage: lang,
-        url: absoluteUrl(`/${lang}/insights/${article.slug}`),
+        url: articleUrl,
         author: {'@type': 'Organization', name: 'Active Rehab'},
         publisher: {'@type': 'Organization', name: 'Active Rehab'},
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: isAr ? 'الرئيسية' : 'Home',
+            item: absoluteUrl(`/${lang}/`),
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: isAr ? 'المقالات' : 'Insights',
+            item: absoluteUrl(`/${lang}/insights`),
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: decodeMojibake(article.title),
+            item: articleUrl,
+          },
+        ],
       },
     ],
   };
@@ -567,8 +593,26 @@ function injuryRoute(lang: Lang, injury: InjuryProtocol): RouteDefinition {
     ? `دليل عملي لإصابة ${localizedName} يشمل الأعراض الشائعة، مراحل التعافي، التمارين المناسبة، والتركيز الغذائي المرتبط بـ ${localizedBodyRegion}.`
     : `${injury.name} recovery guide covering common symptoms, staged rehab, exercise focus, and nutrition considerations for the ${injury.bodyRegion.toLowerCase()}.`;
 
+  const injuryPath = getInjuryPath(injury, lang);
+  const injuryUrl = absoluteUrl(injuryPath);
+  const fallbackFaqItems = [
+    {
+      q: isAr ? 'ما هو الهدف الأساسي من هذا البروتوكول؟' : 'What is the main goal of this protocol?',
+      a: isAr
+        ? 'التدرج الآمن في التحميل وإعادة الأنسجة لطبيعتها لتجنب الإصابة مرة أخرى.'
+        : 'Gradual safe loading and restoring tissue capacity to prevent re-injury.',
+    },
+    {
+      q: isAr ? 'متى أراجع طبيبًا؟' : 'When should I see a doctor?',
+      a: isAr
+        ? 'إذا زاد الألم بشكل حاد، أو ظهر تورم مفاجئ، أو عدم استقرار ملحوظ في المفصل.'
+        : 'If you experience sharp pain, sudden swelling, or noticeable joint instability.',
+    },
+  ];
+  const faqItems = injury.pageContent?.faq?.length ? injury.pageContent.faq : fallbackFaqItems;
+
   return {
-    path: getInjuryPath(injury, lang),
+    path: injuryPath,
     lang,
     title: isAr ? `${decodeMojibake(localizedName)} | بروتوكول التعافي` : `${injury.name} recovery protocol`,
     description: localizedDescription,
@@ -622,8 +666,49 @@ function injuryRoute(lang: Lang, injury: InjuryProtocol): RouteDefinition {
         '@type': 'MedicalWebPage',
         name: decodeMojibake(localizedName),
         description: localizedDescription,
-        url: absoluteUrl(getInjuryPath(injury, lang)),
-        about: {'@type': 'MedicalCondition', name: decodeMojibake(localizedName)},
+        url: injuryUrl,
+        inLanguage: lang,
+        about: {
+          '@type': 'MedicalCondition',
+          name: decodeMojibake(localizedName),
+          bodyLocation: decodeMojibake(localizedBodyRegion),
+        },
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: isAr ? 'الرئيسية' : 'Home',
+            item: absoluteUrl(`/${lang}/`),
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: isAr ? 'الإصابات' : 'Injuries',
+            item: absoluteUrl(`/${lang}/injuries`),
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: decodeMojibake(localizedName),
+            item: injuryUrl,
+          },
+        ],
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqItems.map((item) => ({
+          '@type': 'Question',
+          name: decodeMojibake(item.q),
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: decodeMojibake(item.a),
+          },
+        })),
       },
     ],
   };
@@ -987,6 +1072,3 @@ const staticRoutes: RouteDefinition[] = [
 staticRoutes.forEach(writeRoute);
 writeRootShell();
 console.log(`Generated prerendered HTML for ${staticRoutes.length} routes.`);
-
-
-

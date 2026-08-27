@@ -274,9 +274,18 @@ function mapPhaseNutrition(phaseNumber: number, localMatch: InjuryProtocol | nul
   };
 }
 
-function buildOverview(name: string, category: string, phaseCount: number) {
+function buildOverview(name: string, category: string, phaseCount: number, phases: JsonProtocolPhase[] = []) {
   const region = inferGeneratedBodyRegion(category);
-  return `${cleanText(name)} is a structured rehab protocol for the ${region.toLowerCase()} with ${phaseCount} staged rehab phase${phaseCount === 1 ? '' : 's'}.`;
+  const firstGoals = cleanList(phases[0]?.goals).slice(0, 2);
+  const laterGoals = cleanList(phases[phases.length - 1]?.goals).slice(0, 2);
+  const progression = [...firstGoals, ...laterGoals].filter(Boolean);
+
+  return [
+    `${cleanText(name)} is a ${region.toLowerCase()} rehabilitation pathway with ${phaseCount} staged phase${phaseCount === 1 ? '' : 's'}.`,
+    progression.length
+      ? `It starts with ${progression[0].toLowerCase()} and progresses toward ${progression[progression.length - 1].toLowerCase()}.`
+      : 'It is organized around symptom control, progressive loading, and return-to-activity decisions.',
+  ].join(' ');
 }
 
 function buildPhaseNotes(phase: JsonProtocolPhase) {
@@ -287,6 +296,109 @@ function buildPhaseNotes(phase: JsonProtocolPhase) {
     notes.push(`Target effort: RPE ${phase.progression_logic.rpe_target}.`);
   }
   return notes;
+}
+
+function hasAnyKeyword(value: string, keywords: string[]) {
+  const normalized = cleanText(value).toLowerCase();
+  return keywords.some((keyword) => normalized.includes(keyword));
+}
+
+function buildGeneratedCommonIn(name: string, bodyRegion: string, category: string) {
+  const contexts: string[] = [];
+
+  if (hasAnyKeyword(name, ['acl', 'meniscus', 'mcl', 'pcl', 'patellar', 'jumper'])) {
+    contexts.push('Pivoting sports', 'Jumping sports', 'Gym training');
+  } else if (bodyRegion === 'Shoulder') {
+    contexts.push('Overhead sports', 'Gym training', 'Manual work');
+  } else if (bodyRegion === 'Ankle' || bodyRegion === 'Foot') {
+    contexts.push('Running', 'Field sports', 'Walking or standing loads');
+  } else if (bodyRegion === 'Spine' || bodyRegion === 'Back' || bodyRegion === 'Neck') {
+    contexts.push('Desk work', 'Lifting tasks', 'Daily activity');
+  } else if (bodyRegion === 'Hip') {
+    contexts.push('Running', 'Field sports', 'Single-leg loading');
+  } else if (bodyRegion === 'Elbow' || bodyRegion === 'Wrist' || bodyRegion === 'Hand' || bodyRegion === 'Arm') {
+    contexts.push('Gripping tasks', 'Racket or throwing sports', 'Manual work');
+  } else {
+    contexts.push('Sport', 'Daily activity', 'Return-to-training');
+  }
+
+  if (category === 'Post-surgery') contexts.unshift('Post-operative rehab');
+  if (category === 'Pediatric') contexts.unshift('Growing athletes');
+  if (category === 'Geriatric') contexts.unshift('Older adults');
+  if (category === 'Bone') contexts.unshift('Bone-loading sports');
+
+  return [...new Set(contexts)].slice(0, 4);
+}
+
+function buildGeneratedRedFlags(name: string, bodyRegion: string, category: string) {
+  const redFlags = ['Rapidly worsening pain or swelling', 'Loss of function that does not match the expected rehab phase'];
+
+  if (category === 'Post-surgery') {
+    redFlags.push('Fever, wound changes, calf swelling, chest pain, or shortness of breath after surgery');
+  }
+  if (category === 'Bone' || hasAnyKeyword(name, ['fracture', 'stress reaction'])) {
+    redFlags.push('Night pain, pain at rest, or pain that worsens with normal walking');
+  }
+  if (hasAnyKeyword(name, ['nerve', 'radiculopathy', 'tunnel', 'plexus'])) {
+    redFlags.push('New numbness, spreading tingling, or progressive weakness');
+  }
+  if (bodyRegion === 'Spine' || bodyRegion === 'Back' || bodyRegion === 'Neck') {
+    redFlags.push('Changes in bladder or bowel control, saddle symptoms, or severe neurological changes');
+  }
+  if (bodyRegion === 'Knee' || bodyRegion === 'Ankle' || bodyRegion === 'Hip') {
+    redFlags.push('Inability to bear weight, giving way, or a locked joint');
+  }
+  if (bodyRegion === 'Shoulder' || bodyRegion === 'Elbow' || bodyRegion === 'Wrist' || bodyRegion === 'Hand' || bodyRegion === 'Arm') {
+    redFlags.push('Sudden deformity, marked weakness, or loss of hand sensation');
+  }
+
+  return [...new Set(redFlags)].slice(0, 4);
+}
+
+function buildGeneratedSymptoms(name: string, bodyRegion: string, category: string) {
+  const symptoms = [`Pain or sensitivity around the ${bodyRegion.toLowerCase()}`, 'Reduced tolerance to normal loading'];
+
+  if (category === 'Tendon') symptoms.push('Stiffness or discomfort that changes with warm-up and load');
+  if (category === 'Ligament') symptoms.push('Instability, swelling, or apprehension during direction changes');
+  if (category === 'Muscle') symptoms.push('Local tenderness, weakness, or pain with resisted movement');
+  if (category === 'Joint') symptoms.push('Stiffness, catching, or discomfort near end-range movement');
+  if (category === 'Bone') symptoms.push('Focal pain that increases with impact or repeated loading');
+  if (category === 'Post-surgery') symptoms.push('Expected post-operative stiffness, swelling, and strength loss');
+  if (hasAnyKeyword(name, ['tunnel', 'nerve', 'radiculopathy'])) symptoms.push('Numbness, tingling, or symptoms spreading along a nerve path');
+
+  return [...new Set(symptoms)].slice(0, 4);
+}
+
+function buildGeneratedRehabNotes(phases: JsonProtocolPhase[]) {
+  const firstPhase = phases[0];
+  const lastPhase = phases[phases.length - 1];
+  const notes = [
+    ...cleanList(firstPhase?.goals).slice(0, 2),
+    ...cleanList(firstPhase?.precautions).slice(0, 1),
+    ...cleanList(lastPhase?.criteria_to_progress).slice(0, 2),
+  ];
+
+  return [...new Set(notes)].slice(0, 5);
+}
+
+function buildGeneratedFaq(name: string, bodyRegion: string, phases: JsonProtocolPhase[], exerciseCount: number) {
+  const firstDuration = cleanText(phases[0]?.timing) || 'the first phase';
+  const lastDuration = cleanText(phases[phases.length - 1]?.timing) || 'the final phase';
+
+  return [
+    {
+      q: `What does the ${cleanText(name)} protocol focus on?`,
+      a: `It organizes ${bodyRegion.toLowerCase()} rehab into ${phases.length} phases, starting around ${firstDuration} and progressing toward ${lastDuration}.`,
+    },
+    {
+      q: `How many exercises are included?`,
+      a: `This pathway includes ${exerciseCount} exercise entries across the visible phases, with dosage, cues, precautions, and progression markers where available.`,
+    },
+    {
+      q: `When should this plan be adjusted?`,
+      a: 'Scale back and seek qualified clinical advice if pain, swelling, instability, neurological symptoms, or post-operative warning signs increase.',
+    },
+  ];
 }
 
 export function getGeneratedRehabProtocolRows(): RehabProtocolRow[] {
@@ -390,30 +502,45 @@ function mapGeneratedProtocol(protocolId: number, lang: Language): InjuryProtoco
     };
   });
 
+  const exercisePlanCount = mappedPhases.reduce((total, phase) => total + (phase.exercisePlans?.length || 0), 0);
+  const generatedPageContent = {
+    intro: buildOverview(title, region, mappedPhases.length, protocol.phases),
+    symptoms: buildGeneratedSymptoms(title, bodyRegion, category),
+    faq: buildGeneratedFaq(title, bodyRegion, protocol.phases, exercisePlanCount),
+    rehabNotes: buildGeneratedRehabNotes(protocol.phases),
+    nutritionNotes: mappedPhases.flatMap((phase) => phase.nutritionFocus).filter(Boolean).slice(0, 5),
+  };
+
   return {
     id: cleanText(protocol.slug).replace(/-/g, '_') || getGeneratedRehabProtocolSlug(title).replace(/-/g, '_'),
     name: title,
     category: category as InjuryProtocol['category'],
     bodyRegion: bodyRegion as InjuryProtocol['bodyRegion'],
-    commonIn: [],
-    overview: buildOverview(title, region, mappedPhases.length),
+    commonIn: buildGeneratedCommonIn(title, bodyRegion, category),
+    overview: generatedPageContent.intro,
     rehabSummary: mappedPhases.length
-      ? `Structured ${mappedPhases.length}-phase rehab progression with goals, precautions, progression rules, and exercise cues.`
+      ? `${mappedPhases.length}-phase ${bodyRegion.toLowerCase()} rehab progression with ${exercisePlanCount} exercise entries, phase goals, precautions, and progression rules.`
       : 'Structured rehab progression.',
-    redFlags: [],
+    redFlags: buildGeneratedRedFlags(title, bodyRegion, category),
     relatedCalculators: ['Protein intake', 'Water intake'],
     safetyNotes: localNutritionMatch?.safetyNotes || {medications: [], supplements: []},
     contraindications: localNutritionMatch?.contraindications || {medications: [], supplements: []},
     phases: mappedPhases,
     pageContent: localNutritionMatch?.pageContent
       ? {
-          intro: localNutritionMatch.pageContent.intro,
-          symptoms: localNutritionMatch.pageContent.symptoms,
-          faq: localNutritionMatch.pageContent.faq,
-          rehabNotes: localNutritionMatch.pageContent.rehabNotes,
-          nutritionNotes: localNutritionMatch.pageContent.nutritionNotes,
+          intro: localNutritionMatch.pageContent.intro || generatedPageContent.intro,
+          symptoms: localNutritionMatch.pageContent.symptoms?.length
+            ? localNutritionMatch.pageContent.symptoms
+            : generatedPageContent.symptoms,
+          faq: localNutritionMatch.pageContent.faq?.length ? localNutritionMatch.pageContent.faq : generatedPageContent.faq,
+          rehabNotes: localNutritionMatch.pageContent.rehabNotes?.length
+            ? localNutritionMatch.pageContent.rehabNotes
+            : generatedPageContent.rehabNotes,
+          nutritionNotes: localNutritionMatch.pageContent.nutritionNotes?.length
+            ? localNutritionMatch.pageContent.nutritionNotes
+            : generatedPageContent.nutritionNotes,
         }
-      : undefined,
+      : generatedPageContent,
   };
 }
 

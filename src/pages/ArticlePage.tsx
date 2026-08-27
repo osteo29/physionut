@@ -362,6 +362,33 @@ export default function ArticlePage() {
         })),
       },
     },
+    {
+      id: `article-breadcrumb-${article.slug}`,
+      json: {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: lang === 'en' ? 'Home' : 'الرئيسية',
+            item: buildAbsoluteUrl(`/${lang}/`),
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: lang === 'en' ? 'Insights' : 'المقالات',
+            item: buildAbsoluteUrl(`/${lang}/insights`),
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: article.title,
+            item: canonicalUrl,
+          },
+        ],
+      },
+    },
   ];
 
   if (faqItems.length) {

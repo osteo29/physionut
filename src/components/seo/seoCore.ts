@@ -229,6 +229,16 @@ export function applySeo(config: SeoConfig) {
         ],
       },
     },
+    {
+      id: 'website',
+      json: {
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: DEFAULT_SITE_NAME,
+        url: siteUrl,
+        inLanguage: currentLang || 'en',
+      },
+    },
     ...(config.structuredData ?? []),
   ]);
 }
